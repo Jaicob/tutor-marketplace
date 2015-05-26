@@ -1,0 +1,1 @@
+{"virtualbox":{"/web-app":{"rsync":true,"guestpath":"/web-app","hostpath":"/Users/johnthomasjobe/axon/web-app","disabled":false}}}
