@@ -27,15 +27,16 @@ Rails.application.configure do
   # number of complex assets.
   config.assets.debug = true
 
-  config.action_mailer.smtp_settings = {
-  :user_name => ENV['sendgrid_username'],
-  :password => ENV['sendgrid_password'],
-  :domain => ENV['sendgrid_domain'],
-  :address => 'smtp.sendgrid.net',
-  :port => 587,
-  :authentication => :plain,
-  :enable_starttls_auto => true
-}
+  # This is already defined in config/environment.rb
+  #   config.action_mailer.smtp_settings = {
+  #   :user_name => ENV['sendgrid_username'],
+  #   :password => ENV['sendgrid_password'],
+  #   :domain => ENV['sendgrid_domain'],
+  #   :address => 'smtp.sendgrid.net',
+  #   :port => 587,
+  #   :authentication => :plain,
+  #   :enable_starttls_auto => true
+  # }
 
   # ActionMailer Config
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }

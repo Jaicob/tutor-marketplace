@@ -71,15 +71,16 @@ Rails.application.configure do
   # Send deprecation notices to registered listeners.
   config.active_support.deprecation = :notify
 
-  config.action_mailer.smtp_settings = {
-  :user_name => ENV['sendgrid_username'],
-  :password => ENV['sendgrid_password'],
-  :domain => ENV['sendgrid_domain'],
-  :address => 'smtp.sendgrid.net',
-  :port => 587,
-  :authentication => :plain,
-  :enable_starttls_auto => true
-}
+  # This is already defined in config/environment.rb
+  #   config.action_mailer.smtp_settings = {
+  #   :user_name => ENV['sendgrid_username'],
+  #   :password => ENV['sendgrid_password'],
+  #   :domain => ENV['sendgrid_domain'],
+  #   :address => 'smtp.sendgrid.net',
+  #   :port => 587,
+  #   :authentication => :plain,
+  #   :enable_starttls_auto => true
+  # }
 
   # ActionMailer Config
   config.action_mailer.default_url_options = { :host => Rails.application.secrets.domain_name }
