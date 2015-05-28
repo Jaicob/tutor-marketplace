@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150528174233) do
+ActiveRecord::Schema.define(version: 20150528204821) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,8 +22,10 @@ ActiveRecord::Schema.define(version: 20150528174233) do
     t.string   "friendly_name"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.integer  "school_id"
   end
 
+  add_index "courses", ["school_id"], name: "index_courses_on_school_id", using: :btree
   add_index "courses", ["subject_id"], name: "index_courses_on_subject_id", using: :btree
 
   create_table "schools", force: :cascade do |t|
@@ -51,7 +53,6 @@ ActiveRecord::Schema.define(version: 20150528174233) do
   add_index "tutor_courses", ["tutor_id"], name: "index_tutor_courses_on_tutor_id", using: :btree
 
   create_table "tutors", force: :cascade do |t|
-    t.integer  "school_id"
     t.integer  "user_id"
     t.integer  "rating"
     t.integer  "status"
@@ -65,7 +66,6 @@ ActiveRecord::Schema.define(version: 20150528174233) do
     t.datetime "updated_at",      null: false
   end
 
-  add_index "tutors", ["school_id"], name: "index_tutors_on_school_id", using: :btree
   add_index "tutors", ["user_id"], name: "index_tutors_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
@@ -107,9 +107,9 @@ ActiveRecord::Schema.define(version: 20150528174233) do
   add_index "users", ["invited_by_id"], name: "index_users_on_invited_by_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "courses", "schools"
   add_foreign_key "courses", "subjects"
   add_foreign_key "tutor_courses", "courses"
   add_foreign_key "tutor_courses", "tutors"
-  add_foreign_key "tutors", "schools"
   add_foreign_key "tutors", "users"
 end
