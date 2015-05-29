@@ -1,0 +1,16 @@
+<h1>Start tutoring with Axon</h1>
+
+<%= form_for @tutor do |f| %>
+  <%= f.label :extra_info, "Very Short Bio" %>
+  <%= f.text_field :extra_info %>
+
+  <div id="courses">
+    <%= render :partial => 'course', :collection => @tutor.courses %>
+  </div>
+
+  <%= f.submit "Next" %>
+<% end %>
+
+
+
+

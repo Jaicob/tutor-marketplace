@@ -1,0 +1,14 @@
+<div class="course">
+  <!-- Not sure if these two lines below are needed, review during refactoring -->
+  <% new_or_existing = course.new_record? ? 'new' : 'existing' %>
+  <% prefix = "tutor[#{new_or_existing}_course_attributes][]" %>
+  
+  <%= fields_for prefix, course do |course_form| %>
+    <%= course_form.text_field :friendly_name %>
+    <%= course_form.text_field :friendly_name %>
+    <%= course_form.collection_select :school_id, School.all, :id, :name, prompt: "University" %>
+    <%= course_form.collection_select :subject_id, Subject.all, :id, :name, prompt: "Subject" %>
+    <%= course_form.select :call_number, Course.list_courses, prompt: "Course" %>
+  <% end %>
+
+</div>
