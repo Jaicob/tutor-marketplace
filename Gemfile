@@ -21,9 +21,9 @@ gem 'simple_form'
 gem 'unicorn'
 gem 'unicorn-rails'
 gem 'upmin-admin'
+gem 'figaro'
 group :development do
   gem 'better_errors'
-  gem 'foreman'
   gem 'rails_layout'
   gem 'spring-commands-rspec'
 end
