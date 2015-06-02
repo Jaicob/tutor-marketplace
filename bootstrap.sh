@@ -8,7 +8,7 @@ rbenv install 2.2.0
 
 rbenv global 2.2.0
 
-cd /the-doctor
+cd /web-app
 
 gem install bundler
 
