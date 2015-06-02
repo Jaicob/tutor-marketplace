@@ -292,3 +292,6 @@ DEPENDENCIES
   unicorn-rails
   upmin-admin
   web-console (~> 2.0)
+
+BUNDLED WITH
+   1.10.2
