@@ -3,7 +3,7 @@
 </div>
 
 <div class="row">
-  <%= form_for @tutor, :url => tutors_path, :html => { :multipart => true } do |f| %>
+  <%= form_for @tutor_course do |f| %>
 
     <h4>What courses do you want to tutor?</h4>
     
@@ -23,21 +23,25 @@
       <% end %>
 
       <div class="small-3 columns">
-        <%= fields_for :tutor_course do |tutor_course| %>
-          <%= tutor_course.label :rate %>
-          <%= tutor_course.number_field :rate %>
-        <% end %>
+        <%= f.label :rate %>
+        <%= f.number_field :rate %>
       </div>
 
     <h4>Why would you be a great tutor?</h4>
 
-      <%= f.label :extra_info, "Qualifications, noteworthy experiences, goals, fun facts etc. (Students will see this on your tutor profile)" %>
-      <%= f.text_field :extra_info %>
+      <%= fields_for :tutor do |tutor| %>
+        <%= tutor.label :extra_info, "Qualifications, noteworthy experiences, goals, fun facts etc. (Students will see this on your tutor profile)" %>
+        <%= tutor.text_field :extra_info %>
+      <% end %>
 
     <h4>Now, upload your unofficial transcript</h4>
 
-      <%= f.file_field :transcript %>
+      <%= fields_for :tutor, :html => { :multipart => true } do |form| %>
+        <%= form.file_field :transcript %>
+      <% end %>
+
+      <%= "UPLOAD UNOFFICIAL TRANSCRIPT" %>
     
-      <%= f.submit "Next", class: 'button' %>
+    <%= f.submit "Next", class: 'button' %>
   <% end %>
 </div>

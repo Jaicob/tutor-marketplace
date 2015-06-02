@@ -1,0 +1,20 @@
+<h1>Tutors</h1>
+
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Courses</th>
+    <th>Transcript</th>
+  </tr>
+  <tr>
+    <% @tutors.each do |tutor| %>
+    <td><%= tutor.id %></td>
+    <td>
+      <% tutor.courses.each do |course| %>
+        <p><%= course.id %></p>
+      <% end %>
+    </td>
+    <td><%= image_tag tutor.transcript.url(:small) %></td>
+    <% end %>
+  </tr>
+</table>

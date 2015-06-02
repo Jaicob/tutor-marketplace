@@ -23,7 +23,7 @@ gem 'unicorn-rails'
 gem 'upmin-admin'
 gem 'figaro'
 gem 'annotate'
-gem 'simple_form'
+gem "paperclip", "~> 4.2"
 group :development do
   gem 'better_errors'
   gem 'rails_layout'

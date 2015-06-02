@@ -13,9 +13,9 @@
 
 FactoryGirl.define do
   factory :course do
-    subject nil
-call_number 1
-friendly_name "MyString"
+    subject
+    call_number 101
+    friendly_name "Intro to Chemistry"
   end
 
 end

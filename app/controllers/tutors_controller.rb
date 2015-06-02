@@ -1,5 +1,9 @@
 class TutorsController < ApplicationController
 
+  def index
+    @tutors = Tutor.all
+  end
+
   def new
     @tutor = Tutor.new
     @tutor.tutor_courses.build
@@ -7,21 +11,27 @@ class TutorsController < ApplicationController
   end
 
   def create
-    @tutor = Tutor.create(params[:tutor_params])
+    puts "Tutor params = #{tutor_params}"
+    puts "Params = #{params}"
+    @tutor = Tutor.create(tutor_params)
 
     if @tutor.save
-      redirect_to root_path
+      redirect_to tutor_path(@tutor)
     else
       render :new
     end
-
   end
+
+  def show
+    @tutor = Tutor.find(params[:id])
+  end
+
 
 
   private
 
     def tutor_params
-      params.require(:tutor).permit(:extra_info)
+      params.require(:tutor).permit(:extra_info, :transcript)
     end
 
 

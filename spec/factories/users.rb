@@ -33,6 +33,8 @@
 #  avatar_content_type    :string
 #  avatar_file_size       :integer
 #  avatar_updated_at      :datetime
+#  first_name             :datetime
+#  last_name              :string
 #
 
 FactoryGirl.define do

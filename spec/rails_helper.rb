@@ -29,6 +29,12 @@ RSpec.configure do |config|
   # Add LoginMacros to enable sign_in method
   config.include LoginMacros
 
+  # To fix a compatability issue with Spring and Factory Girl
+  # details here: https://github.com/thoughtbot/factory_girl_rails/issues/120
+  config.before(:suite) do
+    FactoryGirl.reload
+  end
+
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   # config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
