@@ -81,6 +81,9 @@ pickle-email-*.html
 #ignore vagrant files
 .vagrant/
 
+#ignore env files, sensitive info could go in here
+.env.*
+
 # Ignore application configuration
 /config/application.yml
 
