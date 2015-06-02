@@ -22,16 +22,16 @@
 
 FactoryGirl.define do
   factory :tutor do
-    school nil
-user nil
-rating 1
-status 1
-birthdate "2015-05-28"
-degree "MyString"
-major "MyString"
-extra_info "MyString"
-graduation_year "MyString"
-phone_number "MyString"
+    user nil
+    rating 1
+    status 1
+    birthdate "2015-05-28"
+    degree "B.A."
+    major "Biology"
+    extra_info "Student Research Assistant for Biology Department"
+    graduation_year "2019"
+    phone_number "706-213-9987"
+    transcript 
   end
 
 end

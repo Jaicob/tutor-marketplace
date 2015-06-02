@@ -24,15 +24,16 @@ class Tutor < ActiveRecord::Base
   belongs_to :user
   has_many :tutor_courses, dependent: :destroy
   has_many :courses, through: :tutor_courses, dependent: :destroy
-
   has_attached_file :transcript, styles: { small: "64x64", med: "100x100", large: "200x200" }
-
+  validates :extra_info, presence: true
   validates_attachment :transcript, 
-    :presence => true,
-    :content_type => { :content_type => [
-      "image/jpeg", "image/jpg", "image/gif", "image/png", "application/pdf", 
+    presence: true,
+    content_type: { 
+      content_type: ["image/jpeg", "image/jpg", "image/gif", "image/png", "application/pdf", 
       "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ] },
-    :size => { :in => 0..20.megabytes }
+      size: { in: 0..20.megabytes }
+ # Cannot add validations for other attributes because Tutor sign-up form creates Tutor before they are asked for. We should create a method that checks if a tutor profile is complete before allowing them to access some functionalities (what is required for a tutor to start working and taking appointments?)
+
 
 
 end

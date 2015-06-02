@@ -40,7 +40,8 @@
 FactoryGirl.define do
   factory :user do
     confirmed_at Time.now
-    name "Test User"
+    first_name "Bob"
+    last_name "Dole"
     email "test@example.com"
     password "please123"
 
