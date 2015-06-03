@@ -13,6 +13,9 @@
   <body>
     <header>
       <%= render 'layouts/navigation' %>
+      <% if show_dashboard_nav? %>
+        <%= render 'layouts/dashboard_nav' %> 
+      <% end %>
     </header>
     <main role="main">
        <%= render 'layouts/messages' %>

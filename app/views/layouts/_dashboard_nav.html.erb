@@ -1,0 +1,5 @@
+<nav class="breadcrumbs dashboard-nav">
+  <% @dashboard_links.each do |name, link| %>
+    <%= link_to "#{name}", link , class: (if @current == name.downcase then 'current' else '' end) %>
+  <% end %>
+</nav>
