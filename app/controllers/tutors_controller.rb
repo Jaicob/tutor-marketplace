@@ -13,9 +13,10 @@ class TutorsController < ApplicationController
 
   def create
     @tutor = Tutor.create(tutor_params)
-    @tutor.set_tutor_course(@tutor, params)
 
     if @tutor.save
+      @tutor.set_tutor_course(@tutor, params)
+      flash[:notice] = "Tutor account succesfully created!"
       redirect_to tutor_path(@tutor)
     else
       flash[:error] = "Tutor account was not created. Please fill in all fields and attach your unofficial transcript."
@@ -39,9 +40,9 @@ class TutorsController < ApplicationController
 
   def visitor_create
     @tutor = Tutor.create(tutor_params)
-    @tutor.set_tutor_course(@tutor, params)
 
     if @tutor.save
+      @tutor.set_tutor_course(@tutor, params)
       flash[:notice] = "Tutor account succesfully created!"
       redirect_to register_or_sign_in_tutor_path(@tutor)
     else
