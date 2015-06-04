@@ -32,8 +32,12 @@ class Tutor < ActiveRecord::Base
       content_type: ["image/jpeg", "image/jpg", "image/gif", "image/png", "application/pdf", 
       "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ] },
       size: { in: 0..20.megabytes }
- # Cannot add validations for other attributes because Tutor sign-up form creates Tutor before they are asked for. We should create a method that checks if a tutor profile is complete before allowing them to access some functionalities (what is required for a tutor to start working and taking appointments?)
+  # Cannot add validations for other attributes because Tutor sign-up form creates Tutor before they are asked for. We should create a method that checks if a tutor profile is complete before allowing them to access some functionalities (what is required for a tutor to start working and taking appointments?)
 
-
+   def set_tutor_course(tutor, params)
+    course_id = params[:course][:course_id]
+    rate = params[:tutor_course][:rate]
+    tutor.tutor_courses.create(tutor_id: tutor.id, course_id: course_id, rate: rate)
+   end
 
 end

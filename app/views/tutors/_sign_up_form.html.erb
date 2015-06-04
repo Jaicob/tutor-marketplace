@@ -1,0 +1,43 @@
+<div class="row">
+  <h1>Start tutoring with Axon</h1>
+</div>
+
+<div class="row">
+  <%= form_for @tutor, :url => (form_url) , :html => { :multipart => true } do |f| %>
+
+    <h4>What courses do you want to tutor?</h4>
+    
+      <%= fields_for :course do |course| %>
+        <div class="small-3 columns">
+          <%= course.label "University" %>
+          <%= course.collection_select :school_id, School.all, :id, :name, include_blank: true %>
+        </div>
+        <div class="small-3 columns">
+          <%= course.label "Subject" %>
+          <%= course.collection_select :subject_id, Subject.all, :id, :name, include_blank: true  %>
+        </div>
+        <div class="small-3 columns">
+          <%= course.label "Course" %>
+          <%= course.select :course_id, Course.list_courses, include_blank: true  %>
+        </div>
+      <% end %>
+
+      <div class="small-3 columns">
+        <%= fields_for :tutor_course do |tutor_course| %>
+          <%= tutor_course.label :rate %>
+          <%= tutor_course.number_field :rate %>
+        <% end %>
+      </div>
+
+    <h4>Why would you be a great tutor?</h4>
+
+      <%= f.label :extra_info, "Qualifications, noteworthy experiences, goals, fun facts etc. (Students will see this on your tutor profile)" %>
+      <%= f.text_field :extra_info %>
+
+    <h4>Now, upload your unofficial transcript</h4>
+
+      <%= f.file_field :transcript %>
+    
+      <%= f.submit "Next", class: 'button' %>
+  <% end %>
+</div>

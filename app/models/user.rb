@@ -40,7 +40,7 @@
 class User < ActiveRecord::Base
   enum role: [:user, :vip, :admin]
   after_initialize :set_default_role, :if => :new_record?
-  has_one :tutor
+  has_one :tutor, dependent: :destroy
 
   def set_default_role
     self.role ||= :user
@@ -50,4 +50,13 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :invitable, :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable
+
+
+  def set_tutor(user, params)
+    unless params[:tutor_id] == nil
+      user.tutor=Tutor.find(params[:tutor_id])
+    end
+  end
+
+
 end

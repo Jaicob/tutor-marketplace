@@ -80,3 +80,6 @@ pickle-email-*.html
 
 # Ignore application configuration
 /config/application.yml
+
+# My personal notes & to-do list
+Z-notes.rb

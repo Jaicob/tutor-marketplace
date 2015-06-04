@@ -10,4 +10,16 @@ class ApplicationController < ActionController::Base
       devise_parameter_sanitizer.for(:sign_up) << [:first_name, :last_name]
     end
 
+    def after_sign_in_path_for(resource)
+      dashboard_placeholder_tutor_path(resource.tutor)
+    end
+
+    def after_sign_up_path_for(resource)
+      dashboard_placeholder_tutor_path(resource.tutor)
+    end
+
+    def after_inactive_sign_up_path_for(resource)
+      dashboard_placeholder_tutor_path(resource.tutor)
+    end
+
 end
