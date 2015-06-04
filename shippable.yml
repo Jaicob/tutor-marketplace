@@ -2,13 +2,10 @@ language: Ruby
 rvm:
   - 2.2.0
 
- env:
-  global:
-    - APP_NAME=web-app
-    # - CI_REPORTS=shippable/testresults COVERAGE_REPORTS=shippable/codecoverage
-    # - secure: MRuHkLbL9HPkJPU5lzkKM1+NOq1
-
 before_script:
   - cp config/database.shippable.yml config/database.yml
   - psql -c 'create database web_test;' -U postgres
   - rake db:migrate
+
+script:
+  - rake test
