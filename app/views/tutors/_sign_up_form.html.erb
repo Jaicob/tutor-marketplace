@@ -1,43 +1,60 @@
 <div class="row">
+  <div class="small-11 small-centered columns">
+<div class="row">
   <h1>Start tutoring with Axon</h1>
+  <h4 class="subheader">...it's as simple as 1-2-3</h4>
 </div>
 
 <div class="row">
   <%= form_for @tutor, :url => (form_url) , :html => { :multipart => true } do |f| %>
 
-    <h4>What courses do you want to tutor?</h4>
-    
-      <%= fields_for :course do |course| %>
-        <div class="small-3 columns">
-          <%= course.label "University" %>
-          <%= course.collection_select :school_id, School.all, :id, :name, include_blank: true %>
-        </div>
-        <div class="small-3 columns">
-          <%= course.label "Subject" %>
-          <%= course.collection_select :subject_id, Subject.all, :id, :name, include_blank: true  %>
-        </div>
-        <div class="small-3 columns">
-          <%= course.label "Course" %>
-          <%= course.select :course_id, Course.list_courses, include_blank: true  %>
-        </div>
-      <% end %>
-
-      <div class="small-3 columns">
-        <%= fields_for :tutor_course do |tutor_course| %>
-          <%= tutor_course.label :rate %>
-          <%= tutor_course.number_field :rate %>
+    <fieldset>
+      <h4>1) Select one class to tutor:</h4>
+      
+      <div class="row">
+        <%= fields_for :course do |course| %>
+          <div class="small-3 columns">
+            <%= course.label "University" %>
+            <%= course.collection_select :school_id, School.all, :id, :name, include_blank: true %>
+          </div>
+          <div class="small-3 columns">
+            <%= course.label "Subject" %>
+            <%= course.collection_select :subject_id, Subject.all, :id, :name, include_blank: true  %>
+          </div>
+          <div class="small-3 columns">
+            <%= course.label "Course" %>
+            <%= course.select :course_id, Course.list_courses, include_blank: true  %>
+          </div>
         <% end %>
+
+        <div class="small-3 columns">
+          <%= fields_for :tutor_course do |tutor_course| %>
+            <%= tutor_course.label :rate %>
+            <%= tutor_course.number_field :rate %>
+          <% end %>
+        </div>
       </div>
 
-    <h4>Why would you be a great tutor?</h4>
+      <h6 class="subheader">You can add more classes and manage them all from your tutor dashboard after sign-up</h6>
+    </fieldset>
 
-      <%= f.label :extra_info, "Qualifications, noteworthy experiences, goals, fun facts etc. (Students will see this on your tutor profile)" %>
-      <%= f.text_field :extra_info %>
+    <fieldset>
+      <h4>2) Tell us one thing you want your students to know about you:</h4>
 
-    <h4>Now, upload your unofficial transcript</h4>
+        <%= f.label :extra_info, "Qualifications, noteworthy experiences, goals, fun facts etc. (Students will see this on your tutor profile)" %>
+        <%= f.text_field :extra_info %>
+    </fieldset>
 
-      <%= f.file_field :transcript %>
+    <fieldset>
+      <h4>3) Upload your unofficial transcript</h4>
+
+        <%= f.file_field :transcript %>
+
+    </fieldset>
+
     
-      <%= f.submit "Next", class: 'button' %>
+      <%= f.submit "Next", class: 'button expand success' %>
   <% end %>
+</div>
+</div>
 </div>

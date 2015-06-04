@@ -8,6 +8,12 @@
 #       visitor_sign_up_tutor GET    /tutors/:id/visitor_sign_up(.:format)       tutors#visitor_sign_up
 # dashboard_placeholder_tutor GET    /tutors/:id/dashboard_placeholder(.:format) static_pages#dashboard_placeholder
 #               profile_tutor GET    /tutors/:id/profile(.:format)               users#show
+#        dashboard_home_tutor GET    /tutors/:id/dashboard/home(.:format)        dashboard#home
+#    dashboard_schedule_tutor GET    /tutors/:id/dashboard/schedule(.:format)    dashboard#schedule
+#     dashboard_courses_tutor GET    /tutors/:id/dashboard/courses(.:format)     dashboard#courses
+#     dashboard_profile_tutor GET    /tutors/:id/dashboard/profile(.:format)     dashboard#profile
+#    dashboard_settings_tutor GET    /tutors/:id/dashboard/settings(.:format)    dashboard#settings
+#   create_tutor_course_tutor POST   /tutors/:id/create_tutor_course(.:format)   tutors#create_tutor_course
 #          visitor_new_tutors GET    /tutors/visitor_new(.:format)               tutors#visitor_new
 #       visitor_create_tutors POST   /tutors/visitor_create(.:format)            tutors#visitor_create
 #                      tutors GET    /tutors(.:format)                           tutors#index
@@ -18,6 +24,14 @@
 #                             PATCH  /tutors/:id(.:format)                       tutors#update
 #                             PUT    /tutors/:id(.:format)                       tutors#update
 #                             DELETE /tutors/:id(.:format)                       tutors#destroy
+#               tutor_courses GET    /tutor_courses(.:format)                    tutor_courses#index
+#                             POST   /tutor_courses(.:format)                    tutor_courses#create
+#            new_tutor_course GET    /tutor_courses/new(.:format)                tutor_courses#new
+#           edit_tutor_course GET    /tutor_courses/:id/edit(.:format)           tutor_courses#edit
+#                tutor_course GET    /tutor_courses/:id(.:format)                tutor_courses#show
+#                             PATCH  /tutor_courses/:id(.:format)                tutor_courses#update
+#                             PUT    /tutor_courses/:id(.:format)                tutor_courses#update
+#                             DELETE /tutor_courses/:id(.:format)                tutor_courses#destroy
 #                     courses GET    /courses(.:format)                          courses#index
 #                             POST   /courses(.:format)                          courses#create
 #                  new_course GET    /courses/new(.:format)                      courses#new
@@ -81,6 +95,7 @@
 #
 
 Rails.application.routes.draw do
+
   resources :tutors do 
     member do
       get 'courses'
@@ -90,13 +105,19 @@ Rails.application.routes.draw do
       get 'visitor_sign_up'
       get 'dashboard_placeholder', to: 'static_pages#dashboard_placeholder'
       get 'profile', to: 'users#show'
+      get 'dashboard/home'
+      get 'dashboard/schedule'
+      get 'dashboard/courses'
+      get 'dashboard/profile'
+      get 'dashboard/settings'
+      post 'create_tutor_course'
     end
     collection do
       get 'visitor_new'
       post 'visitor_create'
     end
   end
-
+  resources :tutor_courses
   resources :courses
   resources :subjects
   resources :schools

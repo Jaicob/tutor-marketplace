@@ -2,6 +2,8 @@
 
 <p><%= "Tutor ID: #{@tutor.id}" %></p>
 
+<p><%= "User ID: #{@tutor.user.id}" %></p>
+
 <p><%= image_tag @tutor.transcript.url(:large) %></p>
 
 <p><%= "Extra Info: #{@tutor.extra_info}" %></p>

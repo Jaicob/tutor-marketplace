@@ -1,5 +1,5 @@
 class TutorsController < ApplicationController
-  before_action :set_tutor, only: [:show, :edit, :update, :register_or_sign_in, :visitor_sign_in, :visitor_sign_up]
+  before_action :set_tutor, only: [:show, :edit, :update, :register_or_sign_in, :visitor_sign_in, :visitor_sign_up, :create_tutor_course]
 
   def index
     @tutors = Tutor.all
@@ -12,7 +12,7 @@ class TutorsController < ApplicationController
   end
 
   def create
-    @tutor = Tutor.create(tutor_params)
+    @tutor = current_user.create_tutor(tutor_params)
 
     if @tutor.save
       @tutor.set_tutor_course(@tutor, params)
@@ -63,7 +63,6 @@ class TutorsController < ApplicationController
   def courses
     @tutor_courses = Tutor.find(params[:id]).courses
   end
-
 
   private
 

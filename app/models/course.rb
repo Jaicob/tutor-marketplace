@@ -24,6 +24,17 @@ class Course < ActiveRecord::Base
     courses
   end
 
+  def subject_name
+    subject = Subject.find(self.subject_id)
+    subject.name
+  end
+
+  def school_name
+    school = School.find(self.school_id)
+    school.name
+  end
+
+
 end
 
 

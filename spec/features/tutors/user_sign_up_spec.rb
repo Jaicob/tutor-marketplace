@@ -21,7 +21,7 @@ feature 'Tutor sign up for registered users' do
   end
 
   scenario 'user cannot create a tutor account without uploading a transcript' do 
-    "Adding validations on page, maybe disable 'Next' button until all fields are set, will handle this"
+    sign_in(user)
     visit '/tutors/new'
     school
     course
@@ -36,7 +36,7 @@ feature 'Tutor sign up for registered users' do
   end
 
   scenario 'user cannot create a tutor account without adding a class' do
-    "Adding validations on page, maybe disable 'Next' button until all fields are set, will handle this"
+    user
     visit '/tutors/new'
     school
     course
