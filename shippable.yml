@@ -1,4 +1,4 @@
-language: Ruby
+language: ruby
 rvm:
   - 2.2.0
 
