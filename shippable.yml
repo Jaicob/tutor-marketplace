@@ -5,6 +5,7 @@ rvm:
 before_script:
   - cp config/database.shippable.yml config/database.yml
   - psql -c 'create database web_test;' -U postgres
+  - rake db:create
   - rake db:migrate
 
 script:
