@@ -11,7 +11,9 @@ class DashboardController < ApplicationController
   end
 
   def courses
-    @content = 'courses page is here'
+    @tutor = Tutor.find(params[:id])
+    @tutor_course = TutorCourse.new
+    @tutor_courses = @tutor.tutor_courses
   end
 
   def profile
