@@ -7,12 +7,12 @@ addons:
 
 before_script:
 #  - cp config/database.shippable.yml config/database.yml
-  - shippable_retry sudo apt-get update
-  - shippable_retry sudo apt-get install -y python-dev
-  - shippable_retry sudo apt-get install -y postgresql-9.3 postgresql-contrib-9.3 postgresql-server-dev-9.3
-  - sudo echo "host all all localhost trust" > /etc/postgresql/9.3/main/pg_hba.conf
-  - sudo echo "local all all trust" >> /etc/postgresql/9.3/main/pg_hba.conf
-  - sudo service postgresql start
+  # - shippable_retry sudo apt-get update
+  # - shippable_retry sudo apt-get install -y python-dev
+  # - shippable_retry sudo apt-get install -y postgresql-9.3 postgresql-contrib-9.3 postgresql-server-dev-9.3
+  # - sudo echo "host all all localhost trust" > /etc/postgresql/9.3/main/pg_hba.conf
+  # - sudo echo "local all all trust" >> /etc/postgresql/9.3/main/pg_hba.conf
+  # - sudo service postgresql start
   - psql -c 'create database web_test;' -U postgres
   - rake db:create
   - rake db:migrate
