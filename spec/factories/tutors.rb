@@ -5,7 +5,7 @@
 #  id                      :integer          not null, primary key
 #  user_id                 :integer
 #  rating                  :integer
-#  status                  :integer
+#  status                  :integer          default(0)
 #  birthdate               :date
 #  degree                  :string
 #  major                   :string
@@ -22,16 +22,22 @@
 
 FactoryGirl.define do
   factory :tutor do
-    user
-    rating 1
-    status 1
-    birthdate "2015-05-28"
-    degree "B.A."
-    major "Biology"
     extra_info "Student Research Assistant for Biology Department"
-    graduation_year "2019"
-    phone_number "706-213-9987"
-    transcript 
+    transcript_file_name    'unofficial_transcript'
+    transcript_content_type 'application/pdf'
+    transcript_file_size    '726932'
+    transcript_updated_at   DateTime.now
+  
+      factory :complete_tutor do
+        user
+        rating 1
+        status 1
+        birthdate "2015-05-28"
+        degree "B.A."
+        major "Biology"
+        graduation_year "2019"
+        phone_number "706-213-9987"
+      end
   end
 
 end
