@@ -1,5 +1,5 @@
 <div class="row">
-  <%= form_for @tutor_course, :html => {:data => {:abide => 'data-abide'}} do |f| %>
+  <%= form_for @tutor_course do |f| %>
   <%= fields_for :course do |course| %>
     <div class="small-3 columns">
       <%= course.label "University" %>

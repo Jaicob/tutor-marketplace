@@ -34,7 +34,7 @@ class Tutor < ActiveRecord::Base
       size: { in: 0..20.megabytes }
   # Cannot add validations for other attributes because Tutor sign-up form creates Tutor before they are asked for. We should create a method that checks if a tutor profile is complete before allowing them to access some functionalities (what is required for a tutor to start working and taking appointments?)
 
-   def set_tutor_course(tutor, params)
+   def set_initial_tutor_course(tutor, params)
     course_id = params[:course][:course_id]
     rate = params[:tutor_course][:rate]
     tutor.tutor_courses.create(tutor_id: tutor.id, course_id: course_id, rate: rate)

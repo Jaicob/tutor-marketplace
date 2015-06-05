@@ -52,7 +52,8 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
 
-  def set_tutor(user, params)
+  # This method is for when a Tutor profile has been created without a User (by a visitor or non-signed in user) and the Tutor needs to be assigned to the User after log-in or sign-up
+  def set_tutor_for_devise(user, params)
     unless params[:tutor_id] == nil
       user.tutor=Tutor.find(params[:tutor_id])
     end

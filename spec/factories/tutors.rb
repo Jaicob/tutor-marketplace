@@ -22,7 +22,7 @@
 
 FactoryGirl.define do
   factory :tutor do
-    user nil
+    user
     rating 1
     status 1
     birthdate "2015-05-28"

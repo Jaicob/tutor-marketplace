@@ -20,6 +20,8 @@ class TutorCoursesController < ApplicationController
     
     if @tutor_course.update_attributes(rate: params[:update_tutor_course_rate][:new_rate])
       redirect_to dashboard_courses_tutor_path(@tutor_course.tutor)
+    else
+      flash[:error] = "Course was not edited."
     end
 
   end

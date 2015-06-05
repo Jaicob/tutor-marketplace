@@ -15,7 +15,8 @@ class TutorsController < ApplicationController
     @tutor = current_user.create_tutor(tutor_params)
 
     if @tutor.save
-      @tutor.set_tutor_course(@tutor, params)
+      # The method below only creates a tutor_course for the initial sign-up, all other CRUD operations relating to tutor_courses go through the TutorCoursesController
+      @tutor.set_initial_tutor_course(@tutor, params)
       flash[:notice] = "Tutor account succesfully created!"
       redirect_to tutor_path(@tutor)
     else
@@ -28,9 +29,9 @@ class TutorsController < ApplicationController
     @tutor = Tutor.find(params[:id])
   end
 
-  #=============================================
-  # Custom Actions
-  #=============================================
+  #======================================================================================
+  # Custom Actions for handling Tutor Account creation by visitors or non-signed in users
+  #======================================================================================
 
   def visitor_new
     @tutor = Tutor.new
@@ -42,7 +43,8 @@ class TutorsController < ApplicationController
     @tutor = Tutor.create(tutor_params)
 
     if @tutor.save
-      @tutor.set_tutor_course(@tutor, params)
+      # The method below only creates a tutor_course for the initial sign-up, all other CRUD operations relating to tutor_courses go through the TutorCoursesController
+      @tutor.set_initial_tutor_course(@tutor, params)
       flash[:notice] = "Tutor account succesfully created!"
       redirect_to register_or_sign_in_tutor_path(@tutor)
     else
@@ -60,10 +62,6 @@ class TutorsController < ApplicationController
   def visitor_sign_up
   end
 
-  def courses
-    @tutor_courses = Tutor.find(params[:id]).courses
-  end
-
   private
 
     def set_tutor
@@ -75,4 +73,3 @@ class TutorsController < ApplicationController
     end
 
 end
-

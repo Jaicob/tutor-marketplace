@@ -31,12 +31,11 @@ feature 'Tutor sign up for registered users' do
     fill_in 'Rate', with: '35'
     fill_in 'tutor_extra_info', with: 'I love chemistry so freaking much...'
     click_button 'Next'
-    puts page.body
     expect(page).to have_content "Tutor account was not created. Please fill in all fields and attach your unofficial transcript"  
   end
 
   scenario 'user cannot create a tutor account without adding a class' do
-    user
+    sign_in(user)
     visit '/tutors/new'
     school
     course
