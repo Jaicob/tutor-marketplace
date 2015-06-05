@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150528204821) do
+ActiveRecord::Schema.define(version: 20150605185616) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,15 +55,19 @@ ActiveRecord::Schema.define(version: 20150528204821) do
   create_table "tutors", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "rating"
-    t.integer  "status"
+    t.integer  "status",                  default: 0
     t.date     "birthdate"
     t.string   "degree"
     t.string   "major"
     t.string   "extra_info"
     t.string   "graduation_year"
     t.string   "phone_number"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.string   "transcript_file_name"
+    t.string   "transcript_content_type"
+    t.integer  "transcript_file_size"
+    t.datetime "transcript_updated_at"
   end
 
   add_index "tutors", ["user_id"], name: "index_tutors_on_user_id", using: :btree
@@ -99,6 +103,8 @@ ActiveRecord::Schema.define(version: 20150528204821) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.datetime "first_name"
+    t.string   "last_name"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
