@@ -6,7 +6,7 @@ feature 'Tutor sign up for registered users' do
   given!(:course) { create(:course) }
 
   scenario 'user can create a tutor account' do 
-    user
+    sign_in(user)
     visit '/tutors/new'
     school
     course
@@ -17,10 +17,11 @@ feature 'Tutor sign up for registered users' do
     attach_file('tutor_transcript', 'app/assets/images/doge.png')
     fill_in 'tutor_extra_info', with: 'I love chemistry so freaking much...'
     click_button 'Next'
-    expect(page).to have_content "Tutor account succesfully created!"
+    expect(page.body).to have_content "Dashboard"
   end
 
   scenario 'user cannot create a tutor account without uploading a transcript' do 
+    user
     sign_in(user)
     visit '/tutors/new'
     school
@@ -35,6 +36,7 @@ feature 'Tutor sign up for registered users' do
   end
 
   scenario 'user cannot create a tutor account without adding a class' do
+    user
     sign_in(user)
     visit '/tutors/new'
     school

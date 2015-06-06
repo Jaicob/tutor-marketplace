@@ -4,8 +4,7 @@ module LoginMacros
     visit '/users/sign_in'
     fill_in 'Email', with: user.email
     fill_in 'Password', with: user.password
-    click_button 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
+    click_button 'sign_up_form_button'
   end
 
 end

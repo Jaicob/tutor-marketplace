@@ -3,14 +3,14 @@ module DashboardNavHelper
   def show_dashboard_nav
     # user must be signed in to view dashbar pages
     return false unless user_signed_in?
-    tutor_id = current_user.tutor.id
-    dashboard_link          = dashboard_tutor_path(tutor_id)
-    schedule_link           = schedule_tutor_path(tutor_id)
-    courses_link            = courses_tutor_path(tutor_id)
-    profile_link            = profile_tutor_path(tutor_id)
-    settings_link           = settings_tutor_path(tutor_id)
-    school_and_courses_link = dashboard_link
-    reports_link            = dashboard_link
+      dashboard_link          = dashboard_user_path(current_user)
+      schedule_link           = schedule_user_path(current_user)
+      courses_link            = courses_user_path(current_user)
+      profile_link            = profile_user_path(current_user)
+      settings_link           = settings_user_path(current_user)
+      school_and_courses_link = dashboard_link
+      reports_link            = dashboard_link
+      become_a_tutor_link     = new_tutor_path
 
     user_type = if current_user.tutor then :tutor else :student end
 
@@ -27,7 +27,7 @@ module DashboardNavHelper
       student: {
         'Dashboard'      => dashboard_link,
         'Settings'       => settings_link,
-        'Become a Tutor' => '/becometutor'
+        'Become a Tutor' => become_a_tutor_link
       },
 
       admin: {
@@ -39,7 +39,7 @@ module DashboardNavHelper
       }
     }
 
-    @dashboard_links = all_dashboard_links[:tutor]
+    @dashboard_links = all_dashboard_links[user_type]
 
     @dashboard_links.each do |name, link|
       @current = name if request.fullpath.start_with? link
