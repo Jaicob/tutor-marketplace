@@ -3,11 +3,9 @@ class DashboardController < ApplicationController
   before_action :set_tutor
 
   def home
-    @content = 'dashboard page is here'
   end
 
   def schedule
-    @content = 'schedule page is here'
   end
 
   def courses
