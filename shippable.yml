@@ -49,10 +49,9 @@ before_script:
   - "rm -rf $CI_REPORTS && mkdir -p $CI_REPORTS"
   - "rm -rf $COVERAGE_REPORTS && mkdir -p $COVERAGE_REPORTS"
   - cp config/database.yml.shippable config/database.yml
-  - mkdir -p shippable/testresults
   - psql -c 'create database web_test;' -U postgres
   - rake db:create
   - rake db:migrate
 
 script:
-  - bundle exec rake spec 
+  - bundle exec rake spec --trace
