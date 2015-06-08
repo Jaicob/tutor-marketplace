@@ -15,10 +15,6 @@ class DashboardController < ApplicationController
   end
 
   def profile
-    @profile_degree          = @tutor.degree
-    @profile_major           = @tutor.major
-    @profile_extra_info      = @tutor.extra_info
-    @profile_graduation_year = @tutor.graduation_year
   end
 
   def apply_profile
@@ -30,10 +26,6 @@ class DashboardController < ApplicationController
   end
 
   def settings
-    @settings_name = @user.name
-    @settings_email = @user.email
-    @settings_birthdate = @tutor.birthdate
-    @settings_phone_number = @tutor.phone_number
   end
 
   def apply_settings
