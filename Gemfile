@@ -39,6 +39,5 @@ group :test do
   gem 'launchy'
   gem 'selenium-webdriver'
   gem 'ci_reporter_rspec'
-  gem 'ci_reporter'
 
 end
