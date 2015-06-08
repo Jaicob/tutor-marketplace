@@ -1,45 +1,17 @@
-# language: ruby
-# rvm:
-#   - 2.2.0
-
-# addons:
-#  postgresql : "9.3"
-
-# before_script:
-# #  - cp config/database.shippable.yml config/database.yml
-#   - shippable_retry sudo apt-get update
-#   - shippable_retry sudo apt-get install -y python-dev
-#   - shippable_retry sudo apt-get install -y postgresql-9.3 postgresql-contrib-9.3 postgresql-server-dev-9.3
-#   - sudo echo "host all all localhost trust" > /etc/postgresql/9.3/main/pg_hba.conf
-#   - sudo echo "local all all trust" >> /etc/postgresql/9.3/main/pg_hba.conf
-#   - sudo service postgresql start
-#   - psql -c 'create database web_test;' -U postgres
-#   - rake db:create
-#   - rake db:migrate
-
-# script:
-#   - rake test
-
 language: ruby
 rvm: 
   - 2.2.0
-
 cache: true
-
 env: 
-  - CI_REPORTS=shippable/testresults COVERAGE_REPORTS=shippable/codecoverage
-  - RAILS_ENV=test
-
+  - CI_REPORTS=shippable/testresults COVERAGE_REPORTS=shippable/codecoverage RAILS_ENV=test
 before_install:
   # setup rvm
   - source ~/.rvm/scripts/rvm
   - rvm install $SHIPPABLE_RUBY --verify-downloads 1
   - source ~/.bashrc && ~/.rvm/scripts/rvm && rvm use $SHIPPABLE_RUBY
-
 install:
   - bundle install --gemfile="Gemfile"
   - ruby -v
-
 before_script:
 	#Databse setup
   # - shippable_retry sudo apt-get update
@@ -54,6 +26,5 @@ before_script:
   - psql -c 'create database web_test;' -U postgres
   - rake db:create
   - rake db:migrate
-
 script:
   - bundle exec rake spec --trace
