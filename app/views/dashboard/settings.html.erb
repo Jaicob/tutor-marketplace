@@ -1,6 +1,8 @@
 <%= form_for :settings_data, url: "/tutors/#{@tutor.id}/settings" do |f| %>
-  <%= f.label :name %>
-  <%= f.text_field :name, value: @user.name %>
+  <%= f.label :first_name %>
+  <%= f.text_field :first_name, value: @user.first_name %>
+  <%= f.label :last_name %>
+  <%= f.text_field :last_name, value: @user.last_name %>
   <%= f.label :email %>
   <%= f.text_field :email, value: @user.email %>
   <%= f.label :birthdate %>

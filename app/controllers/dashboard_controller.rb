@@ -9,7 +9,8 @@ class DashboardController < ApplicationController
   end
 
   def courses
-    @tutor = Tutor.find(params[:id])
+    friendly_id_to_user_id
+    friendly_id_to_tutor_id
     @tutor_course = TutorCourse.new
     @tutor_courses = @tutor.tutor_courses
   end
@@ -17,7 +18,7 @@ class DashboardController < ApplicationController
   def profile
   end
 
-  def apply_profile
+  def update_profile
     if @tutor.update_attributes(tutor_params)
       redirect_to profile_tutor_path(@tutor.id)
     else
@@ -28,7 +29,7 @@ class DashboardController < ApplicationController
   def settings
   end
 
-  def apply_settings
+  def update_settings
     if @user.update_attributes(user_params) && @tutor.update_attributes(tutor_params)
       redirect_to settings_tutor_path(@tutor.id)
     else
@@ -38,12 +39,22 @@ class DashboardController < ApplicationController
 
   private
 
-  def user_params
-    params.require(:settings_data).permit(:name, :email)
-  end
+    def user_params
+      params.require(:settings_data).permit(:name, :email)
+    end
 
-  def tutor_params
-    params.require(:settings_data).permit(:birthdate, :phone_number, :degree, :major, :extra_info, :graduation_year)
-  end
+    def tutor_params
+      params.require(:settings_data).permit(:birthdate, :phone_number, :degree, :major, :extra_info, :graduation_year)
+    end
+
+    def friendly_id_to_user_id
+      @user = User.friendly.find(params[:id])
+    end
+
+    def friendly_id_to_tutor_id
+      @user.tutor
+    end
+
+
 
 end

@@ -73,14 +73,13 @@
 #       new_user_invitation GET    /users/invitation/new(.:format)           devise/invitations#new
 #                           PATCH  /users/invitation(.:format)               devise/invitations#update
 #                           PUT    /users/invitation(.:format)               devise/invitations#update
-#            dashboard_user GET    /users/:id/dashboard(.:format)            dashboard#home
-#             schedule_user GET    /users/:id/schedule(.:format)             dashboard#schedule
-#              courses_user GET    /users/:id/courses(.:format)              dashboard#courses
-#              profile_user GET    /users/:id/profile(.:format)              dashboard#profile
-#             settings_user GET    /users/:id/settings(.:format)             dashboard#settings
-#                           POST   /users/:id/profile(.:format)              dashboard#apply_profile
-#                           POST   /users/:id/settings(.:format)             dashboard#apply_settings
-#                     users GET    /users(.:format)                          users#index
+#            dashboard_user GET    /:id/dashboard(.:format)                  dashboard#home
+#             schedule_user GET    /:id/schedule(.:format)                   dashboard#schedule
+#              courses_user GET    /:id/courses(.:format)                    dashboard#courses
+#              profile_user GET    /:id/profile(.:format)                    dashboard#profile
+#             settings_user GET    /:id/settings(.:format)                   dashboard#settings
+#                           POST   /:id/profile(.:format)                    dashboard#apply_profile
+#                           POST   /:id/settings(.:format)                   dashboard#apply_settings
 #                     upmin        /admin                                    Upmin::Engine
 #                      root GET    /                                         static_pages#home
 #
@@ -115,7 +114,8 @@ Rails.application.routes.draw do
   resources :subjects
   resources :schools
   devise_for :users
-  resources :users, only: [:index] do 
+
+  resources :users, only: [], path: '' do 
     member do       
       get  '/dashboard' => 'dashboard#home'
       get  '/schedule'  => 'dashboard#schedule'
