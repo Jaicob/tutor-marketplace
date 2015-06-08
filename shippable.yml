@@ -26,6 +26,7 @@ rvm:
 
 env: 
   - CI_REPORTS=shippable/testresults COVERAGE_REPORTS=shippable/codecoverage
+  - RAILS_ENV=test
 
 before_install:
   # setup rvm
@@ -45,6 +46,10 @@ before_script:
   # - sudo echo "host all all localhost trust" > /etc/postgresql/9.3/main/pg_hba.conf
   # - sudo echo "local all all trust" >> /etc/postgresql/9.3/main/pg_hba.conf
   # - sudo service postgresql start
+  - "rm -rf $CI_REPORTS && mkdir -p $CI_REPORTS"
+  - "rm -rf $COVERAGE_REPORTS && mkdir -p $COVERAGE_REPORTS"
+  - cp config/database.yml.shippable config/database.yml
+  - mkdir -p shippable/testresults
   - psql -c 'create database web_test;' -U postgres
   - rake db:create
   - rake db:migrate

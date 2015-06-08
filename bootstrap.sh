@@ -1,15 +1,13 @@
 #!/bin/sh
-echo "source /home/vagrant/zsh-git-prompt/zshrc.sh" >> ~/.zshrc
-echo "PROMPT='%B%m%~%b\$(git_super_status) $ '" >> ~/.zshrc
+brew update
+brew install boot2docker
+boot2docker init
+boot2docker up
 
-cd "$(rbenv root)"/plugins/ruby-build && git pull
+#I would reccomend adding this line to your .zshrc or .bshrc
+eval "$(boot2docker shellinit)"
 
-rbenv install 2.2.0
+brew install docker
+docker version
 
-rbenv global 2.2.0
-
-cd /web-app
-
-gem install bundler
-
-bundle install
+#use "boot2docker ip 2"  to get the host ip address
