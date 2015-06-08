@@ -28,6 +28,7 @@ group :development do
   gem 'better_errors'
   gem 'rails_layout'
   gem 'spring-commands-rspec'
+  gem 'web-console', '~> 2.0'
 end
 group :development, :test do
   gem 'factory_girl_rails'

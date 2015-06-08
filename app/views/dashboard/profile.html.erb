@@ -1,2 +1,13 @@
-<h1>Dashboard#profile</h1>
-<p>Find me in app/views/dashboard/profile.html.erb</p>
+<%= form_for :profile_data, url: "/tutors/#{@tutor.id}/profile" do |f| %>
+  <%= f.label :degree %>
+  <%= f.text_field :degree, value: @profile_degree %>
+  <%= f.label :major %>
+  <%= f.text_field :major, value: @profile_major %>
+  <%= f.label :extra_info %>
+  <%= f.text_field :extra_info, value: @profile_extra_info %>
+  <%= f.label :graduation_year %>
+  <%= f.text_field :graduation_year, value: @profile_graduation_year %>
+  <%= f.submit 'Submit' %>
+<% end %>
+User: <%= @user.to_json %>
+Tutor: <%= @tutor.to_json %>

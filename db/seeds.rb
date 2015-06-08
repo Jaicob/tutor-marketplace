@@ -27,13 +27,13 @@ subject_list.each do |subject|
   Subject.create( name: subject )
 end
 
-# 30 and 60 refer respectively to a school_id and a subject_id currently in the DB, 
+# 1 and 1 refer respectively to a school_id and a subject_id currently in the DB, 
 # these are otherwise arbitrary values
 course_list = [
-  [30, 60, "101", "Intro to Something"],
-  [30, 60, "202", "Intermediate Something"],
-  [30, 60, "303", "Advanced Something"],
-  [30, 60, "9999", "Rocket Fucking Science"]
+  [1, 1, "101", "Intro to Something"],
+  [1, 1, "202", "Intermediate Something"],
+  [1, 1, "303", "Advanced Something"],
+  [1, 1, "9999", "Rocket Fucking Science"]
 ]
 
 course_list.each do |school_id, subject_id, call_number, friendly_name|

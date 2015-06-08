@@ -49,8 +49,7 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :invitable, :database_authenticatable, :registerable, :confirmable,
-         :recoverable, :rememberable, :trackable, :validatable
-
+    :recoverable, :rememberable, :trackable, :validatable
 
   # This method is for when a Tutor profile has been created without a User (by a visitor or non-signed in user) and the Tutor needs to be assigned to the User after log-in or sign-up
   def set_tutor_for_devise(user, params)
@@ -58,6 +57,5 @@ class User < ActiveRecord::Base
       user.tutor=Tutor.find(params[:tutor_id])
     end
   end
-
 
 end

@@ -13,8 +13,7 @@ class TutorsController < ApplicationController
     if @tutor.save
       # The method below only creates a tutor_course for the initial sign-up, all other CRUD operations relating to tutor_courses go through the TutorCoursesController
       @tutor.set_first_tutor_course(@tutor, params)
-      flash[:notice] = "Tutor account succesfully created!"
-      redirect_to dashboard_courses_tutor_path(@tutor)
+      redirect_to dashboard_user_path(current_user)
     else
       flash[:error] = "Tutor account was not created. Please fill in all fields and attach your unofficial transcript."
       render :new
@@ -37,7 +36,6 @@ class TutorsController < ApplicationController
     if @tutor.save
       # The method below only creates a tutor_course for the initial sign-up, all other CRUD operations relating to tutor_courses go through the TutorCoursesController
       @tutor.set_first_tutor_course(@tutor, params)
-      flash[:notice] = "Tutor account succesfully created!"
       redirect_to register_or_sign_in_tutor_path(@tutor)
     else
       flash[:error] = "Tutor account was not created. Please fill in all fields and attach your unofficial transcript."

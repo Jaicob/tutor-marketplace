@@ -1,2 +1,13 @@
-<h1>Dashboard#settings</h1>
-<p>Find me in app/views/dashboard/settings.html.erb</p>
+<%= form_for :settings_data, url: "/tutors/#{@tutor.id}/settings" do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name, value: @user.name %>
+  <%= f.label :email %>
+  <%= f.text_field :email, value: @user.email %>
+  <%= f.label :birthdate %>
+  <%= f.date_select :birthdate, value: @tutor.birthdate %>
+  <%= f.label :phone_number %>
+  <%= f.text_field :phone_number, value: @tutor.phone_number %>
+  <%= f.submit 'Submit' %>
+<% end %>
+User: <%= @user.to_json %>
+Tutor: <%= @tutor.to_json %>
