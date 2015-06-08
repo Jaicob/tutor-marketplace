@@ -38,6 +38,7 @@ group :test do
   gem 'database_cleaner'
   gem 'launchy'
   gem 'selenium-webdriver'
+  gem 'ci_reporter'
   gem 'ci_reporter_rspec'
 
 end
