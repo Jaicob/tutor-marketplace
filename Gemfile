@@ -23,8 +23,9 @@ gem 'unicorn-rails'
 gem 'upmin-admin'
 gem 'figaro'
 gem 'annotate'
-gem "paperclip", "~> 4.2"
 gem 'friendly_id', '~> 5.1.0'
+gem 'carrierwave'
+gem 'rmagick'
 group :development do
   gem 'better_errors'
   gem 'rails_layout'

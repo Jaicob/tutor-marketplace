@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150608175512) do
+ActiveRecord::Schema.define(version: 20150610214601) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,6 +81,7 @@ ActiveRecord::Schema.define(version: 20150608175512) do
     t.string   "transcript_content_type"
     t.integer  "transcript_file_size"
     t.datetime "transcript_updated_at"
+    t.string   "profile_pic"
   end
 
   add_index "tutors", ["user_id"], name: "index_tutors_on_user_id", using: :btree

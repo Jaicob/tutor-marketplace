@@ -10,10 +10,9 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery.jcrop
-//= require papercrop
 //= require jquery
 //= require jquery_ujs
+//= require jquery.Jcrop.min
 //= require turbolinks
 //= require foundation
 //= require_tree .

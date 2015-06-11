@@ -1,47 +1,20 @@
-<% content_for(:header) do %>
-  <%= stylesheet_link_tag "jquery.Jcrop.min" %>
-  <%= javascript_include_tag "jquery.Jcrop.min" %>
-  <script type="text/javascript">
-    $(function() {
-      $('#cropbox').Jcrop({
-        onChange: update_crop,
-        onSelect: update_crop,
-        setSelect: [0, 0, 500, 500],
-        aspectRatio: 1
-      });
-    });
 
-    function update_crop(coords) {
-      $('#crop_x').val(coords.x);
-      $('#crop_y').val(coords.y);
-      $('#crop_w').val(coords.w);
-      $('#crop_h').val(coords.h);  
-    }
-  </script>
-<% end %>
+  <h1>Your Profile Picture</h1>
 
+  <%= image_tag @tutor.profile_pic_url(:large), id: 'cropbox' %>
 
-
-
-<%= image_tag @tutor.profile_pic.url(:large), id: 'cropbox' %>
-
-<%= form_for :profile_pic, url: "/#{@user.id}/update_profile_pic", method: 'put' do |f| %>
-  <%= fields_for :crop_attributes do |f|  %>
-    <%= f.text_field :crop_x, id: 'crop_x' %>
-    <%= f.text_field :crop_y, id: 'crop_y' %>
-    <%= f.text_field :crop_w, id: 'crop_w' %>
-    <%= f.text_field :crop_h, id: 'crop_h' %>
+  <%= form_for :profile_pic, url: "/#{@user.id}/crop_profile_pic", method: 'put' do |f| %>
+    <% %w[x y w h].each do |attribute| %>
+      <%= f.hidden_field "crop_#{attribute}" %>
+    <% end %>
+    <div class="actions">
+      <%= f.submit "Crop" %>
+    </div>
   <% end %>
-  <%= f.submit 'Crop' %>
-<% end %>
 
-<br>
-<br>
-<br>
-<br>
+  <%= form_for :profile_pic, url: "/#{@user.id}/change_profile_pic", method: 'put' do |f| %>
+    <%= f.file_field :profile_pic %>
+    <%= f.submit 'Update Profile Picture' %>
+  <% end %>
 
 
-# <%= form_for :profile_pic, url: "/#{@user.id}/update_profile_pic", method: 'put' do |f| %>
-#   <%= f.file_field :profile_pic %>
-#   <%= f.submit 'Update Profile Picture' %>
-# <% end %>

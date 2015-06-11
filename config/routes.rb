@@ -78,8 +78,11 @@
 #              courses_user GET    /:id/courses(.:format)                    dashboard#courses
 #              profile_user GET    /:id/profile(.:format)                    dashboard#profile
 #             settings_user GET    /:id/settings(.:format)                   dashboard#settings
-#                           POST   /:id/profile(.:format)                    dashboard#apply_profile
-#                           POST   /:id/settings(.:format)                   dashboard#apply_settings
+#                           POST   /:id/profile(.:format)                    dashboard#update_profile
+#                           POST   /:id/settings(.:format)                   dashboard#update_settings
+#          profile_pic_user GET    /:id/profile_pic(.:format)                dashboard#profile_pic
+#     crop_profile_pic_user PUT    /:id/crop_profile_pic(.:format)           dashboard#crop_profile_pic
+#   change_profile_pic_user PUT    /:id/change_profile_pic(.:format)         dashboard#change_profile_pic
 #                     upmin        /admin                                    Upmin::Engine
 #                      root GET    /                                         static_pages#home
 #
@@ -122,8 +125,10 @@ Rails.application.routes.draw do
       get  '/courses'   => 'dashboard#courses'
       get  '/profile'   => 'dashboard#profile'
       get  '/settings'  => 'dashboard#settings'
-      post '/profile'   => 'dashboard#apply_profile'
-      post '/settings'  => 'dashboard#apply_settings'
+      post '/profile'   => 'dashboard#update_profile'
+      post '/settings'  => 'dashboard#update_settings'
+      put  '/crop_profile_pic' => 'dashboard#crop_profile_pic'
+      put  '/change_profile_pic' => 'dashboard#change_profile_pic'
     end
   end
 

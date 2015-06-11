@@ -20,6 +20,9 @@ module WebApp
       g.fixture_replacement :factory_girl, dir: "spec/factories"
     end
 
+    # This tells Rails to include our Carrierwave uploaders for file attachments
+    config.autoload_paths += %W(#{config.root}/app/uploaders)
+
     # Added to get rid of error messages in server log per advice here:
     # http://stackoverflow.com/questions/29417328/how-to-disable-cannot-render-console-from-on-rails
     config.web_console.whitelisted_ips = '10.0.2.2'
