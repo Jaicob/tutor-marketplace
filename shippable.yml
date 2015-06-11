@@ -31,7 +31,7 @@ before_script:
 script:
   - bundle exec rake spec --trace
 after_success:
-  - eb init && eb deploy --timeout 20
+  - eb init && eb deploy --timeout 40
 
   #Databse setup
   # - shippable_retry sudo apt-get update
