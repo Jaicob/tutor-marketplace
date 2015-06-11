@@ -4,22 +4,23 @@ rvm:
 cache: true
 env: 
   - CI_REPORTS=shippable/testresults COVERAGE_REPORTS=shippable/codecoverage RAILS_ENV=test
+  - RDS_HOSTNAME=127.0.0.1 RDS_USERNAME=shippable RDS_PASSWORD="" RDS_DB_NAME=test RDS_PORT=5432
+  - AWSAccessKeyId=AKIAJB54OD53S37ZUIEA
+  - secure: aEbpp26sOcxB06BKzepkZCL6EDIbIZTQH1lHsZRrjXI2fPixOM+XuthXlVF6y8t0+7ZA7n5fn7UIuUO5f3bDYi/fQ5tAPch2sYqtDH/z60BnL9T32oDTDXG5M0qAQ+84PdU3GcW/hAC4WoGqj0ikPoWFvVCH/Rn2/FTCYEN2n6bUJHTxuPcnctK6RVL4MdJi7BEFl0bXvL2/LEvA89+Ba5RQED6rmph9GPQkDC5vvYvIT7WUV4pzoeohQH/x8nZIs08qhmCSnIBsQuT/4+NlhXqQg4bl47nIIg4CCxB48sbv3MryTDnFPxXKl95RcYURpBTJNwEnwDeiC7JgMTUdoQ==
 before_install:
   # setup rvm
   - source ~/.rvm/scripts/rvm
   - rvm install $SHIPPABLE_RUBY --verify-downloads 1
   - source ~/.bashrc && ~/.rvm/scripts/rvm && rvm use $SHIPPABLE_RUBY
+  - pip install awsebcli
 install:
   - bundle install --gemfile="Gemfile"
   - ruby -v
 before_script:
-	#Databse setup
-  # - shippable_retry sudo apt-get update
-  # - shippable_retry sudo apt-get install -y python-dev
-  # - shippable_retry sudo apt-get install -y postgresql-9.3 postgresql-contrib-9.3 postgresql-server-dev-9.3
-  # - sudo echo "host all all localhost trust" > /etc/postgresql/9.3/main/pg_hba.conf
-  # - sudo echo "local all all trust" >> /etc/postgresql/9.3/main/pg_hba.conf
-  # - sudo service postgresql start
+  - "mkdir -p ~/.aws"
+  - "echo '[profile eb-cli]' > ~/.aws/config"
+  - "echo "aws_access_key_id = $AWSAccessKeyId" >> ~/.aws/config"
+  - "echo "aws_secret_access_key = $AWSSecretKey" >> ~/.aws/config"
   - "rm -rf $CI_REPORTS && mkdir -p $CI_REPORTS"
   - "rm -rf $COVERAGE_REPORTS && mkdir -p $COVERAGE_REPORTS"
   - cp config/database.yml.shippable config/database.yml
@@ -28,3 +29,15 @@ before_script:
   - rake db:migrate
 script:
   - bundle exec rake spec --trace
+after_success:
+  - eb init && eb deploy --timeout 20
+
+  #Databse setup
+  # - shippable_retry sudo apt-get update
+  # - shippable_retry sudo apt-get install -y python-dev
+  # - shippable_retry sudo apt-get install -y postgresql-9.3 postgresql-contrib-9.3 postgresql-server-dev-9.3
+  # - sudo echo "host all all localhost trust" > /etc/postgresql/9.3/main/pg_hba.conf
+  # - sudo echo "local all all trust" >> /etc/postgresql/9.3/main/pg_hba.conf
+  # - sudo service postgresql start
+
+

@@ -1,0 +1,12 @@
+branch-defaults:
+  develop:
+    environment: axon-web-dev
+  default:
+    environment: axon-web-dev
+global:
+  application_name: axon-web 
+  default_ec2_keyname: null
+  default_platform: Docker 1.5.0
+  default_region: us-east-1
+  profile: eb-cli
+  sc: git

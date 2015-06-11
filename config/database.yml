@@ -22,11 +22,11 @@ test: &test
   database: web_test
 
 # production:
-#   host: <%= ENV['DB_HOST'] %>
-#   port: <%= ENV['DB_PORT'] || "5432" %>
-#   database: <%= ENV['DB_DATABASE'] %>
-#   username: <%= ENV['DB_USERNAME'] %>
-#   password: <%= ENV['DB_PASSWORD'] %>
+#   host: <%= <%= ENV['DB_HOST'] %>
+#   port: <%= <%= ENV['DB_PORT'] || "5432" %>
+#   database: <%= <%= ENV['DB_DATABASE'] %>
+#   username: <%= <%= ENV['DB_USERNAME'] %>
+#   password: <%= <%= ENV['DB_PASSWORD'] %>
 
 
 
@@ -51,7 +51,12 @@ test: &test
 production:
   adapter: postgresql
   encoding: unicode
-  database: web_production
-  pool: 5
-  username: jaicob
-  password:
+  host: <%= ENV['RDS_HOSTNAME'] %>
+  username: <%= ENV['RDS_USERNAME'] %>
+  password: <%= ENV['RDS_PASSWORD'] %>
+  port: <%= ENV['RDS_PORT'] %>
+  database: <%= ENV['RDS_DB_NAME'] %>
+  # database: web_production
+  # pool: 5
+  # username: axon
+  # password:
