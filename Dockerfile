@@ -1,4 +1,4 @@
-FROM jaicob/web:base
+FROM ruby:2.2.0
 RUN apt-get update -qq && apt-get install -y build-essential nodejs npm nodejs-legacy vim
 
 # for postgres
@@ -20,4 +20,4 @@ RUN bundle install
 ADD . /web-app
 WORKDIR /web-app
 RUN RAILS_ENV=production bundle exec rake assets:precompile --trace
-CMD ["rails","server","-b","0.0.0.0"]
+CMD ["rails","server"]
