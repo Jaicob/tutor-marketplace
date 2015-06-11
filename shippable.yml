@@ -18,10 +18,10 @@ install:
   - bundle install --gemfile="Gemfile"
   - ruby -v
 before_script:
-  - "mkdir -p ~/.aws"
-  - "echo '[profile eb-cli]' > ~/.aws/config"
-  - "echo "aws_access_key_id = $AWSAccessKeyId" >> ~/.aws/config"
-  - "echo "aws_secret_access_key = $AWSSecretKey" >> ~/.aws/config"
+  - mkdir -p ~/.aws
+  - echo '[profile eb-cli]' > ~/.aws/config
+  - echo "aws_access_key_id = $AWSAccessKeyId" >> ~/.aws/config
+  - echo "aws_secret_access_key = $AWSSecretKey" >> ~/.aws/config
   - "rm -rf $CI_REPORTS && mkdir -p $CI_REPORTS"
   - "rm -rf $COVERAGE_REPORTS && mkdir -p $COVERAGE_REPORTS"
   - cp config/database.yml.shippable config/database.yml
