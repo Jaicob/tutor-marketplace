@@ -1,6 +1,7 @@
 class DashboardController < ApplicationController
   before_action :set_user
   before_action :set_tutor
+  respond_to :html, :js
 
   def home
   end
@@ -31,7 +32,14 @@ class DashboardController < ApplicationController
     redirect_to profile_user_path(@user.id)
   end
 
-  def crop_profile_pic 
+  def view_profile_pic_crop
+    respond_to do |format|
+      format.html
+      format.js
+    end
+  end
+
+  def save_profile_pic_crop
     @tutor.update_attributes(profile_pic_params) 
     @tutor.crop_profile_pic
     flash[:notice] = "Successfully updated Image."  

@@ -26,6 +26,7 @@ gem 'annotate'
 gem 'friendly_id', '~> 5.1.0'
 gem 'carrierwave'
 gem 'rmagick'
+gem 'foundation-icons-sass-rails'
 group :development do
   gem 'better_errors'
   gem 'rails_layout'

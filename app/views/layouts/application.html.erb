@@ -15,13 +15,7 @@
     <header>
       <%= render 'layouts/navigation' %>
     </header>
-    <main role="main">
-      <!--  The messages partial below is causing the double flash messages
-            It looks like this was created by Zurb Foundation but I think the
-            plain old alert messages we include below look better. Commenting 
-            this out rather than deleting it just in case we want to use the 
-            partial instead.git s
-      <%= render 'layouts/messages' %>-->      
+    <main role="main">     
       <p class="notice"><%= notice %></p>
       <p class="alert"><%= alert %></p>
       <%= yield %>

@@ -14,7 +14,7 @@ class AvatarCropper
       onChange: @update
   
   update: (coords) =>
-    $('#user_crop_x').val(coords.x)
-    $('#user_crop_y').val(coords.y)
-    $('#user_crop_w').val(coords.w)
-    $('#user_crop_h').val(coords.h)
+    $('#profile_pic_crop_x').val(coords.x)
+    $('#profile_pic_crop_y').val(coords.y)
+    $('#profile_pic_crop_w').val(coords.w)
+    $('#profile_pic_crop_h').val(coords.h)

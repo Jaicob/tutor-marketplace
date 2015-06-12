@@ -1,31 +1,50 @@
-<h2>Info</h2>
-<p>Degree: <%= @tutor.degree %></p>
-<p>Major: <%= @tutor.major %></p>
-<p>Extra Info <%= @tutor.extra_info %></p>
-<p>Graduation Year: <%= @tutor.graduation_year %></p>
-<p>Profile Pic: <%= image_tag @tutor.profile_pic_url(:thumb) %></p>
+<div class="row">
+  <div class="large-4 columns">
+    <!-- Profile Pic -->
+    <div class="profile-pic-container">
+      <%= image_tag(@tutor.profile_pic_url(:thumb), class: 'profile-pic') %>
+      <a href="#" data-reveal-id="myModal" class="profile-pic-link">
+        <p class="profile-pic-text">Update Profile Picture</p>    
+      </a>
+    </div>
 
-<a href="#" data-reveal-id="myModal">Edit Profile Picture</a>
-  <div id="myModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
-    <h4 id="modalTitle">Edit Profile Picture</h4>
-    <h4 class="lead">Reposition current photo or upload a new one</h4>
-      <%= render 'edit_profile_pic' %>
-  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+  
+    <!-- Name -->
+    <h4><%= @tutor.user.full_name %></h4>
+  </div>
+
+  <div class="large-8 columns">
+    <h2>General Info</h2>
+    <p>Degree: <%= @tutor.degree %></p>
+    <p>Major: <%= @tutor.major %></p>
+    <p>Extra Info: <%= @tutor.extra_info %></p>
+    <p>Graduation Year: <%= @tutor.graduation_year %></p>
+  </div>
 </div>
 
-<h2>Edit Form</h2>
+<!-- Update Profile Pic Modal -->
+<!-- The link to this modal is above under Profile Pic, but this needs to be outside of the row for formatting reasons -->
+  <div id="myModal" class="reveal-modal medium" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+    <%= render 'update_profile_pic' %>
+  </div>
 
-<%= form_for :profile_data, url: "/#{@user.id}/profile" do |f| %>
-  <%= f.label :degree %>
-  <%= f.text_field :degree, value: @profile_degree %>
-  <%= f.label :major %>
-  <%= f.text_field :major, value: @profile_major %>
-  <%= f.label :extra_info %>
-  <%= f.text_field :extra_info, value: @profile_extra_info %>
-  <%= f.label :graduation_year %>
-  <%= f.text_field :graduation_year, value: @profile_graduation_year %>
-  <%= f.file_field :profile_pic %>
-  <%= f.submit 'Submit' %>
-<% end %>
-User: <%= @user.to_json %>
-Tutor: <%= @tutor.to_json %>
+
+<div class="row">
+  <div class="large-12 columns">
+    <h2>Edit Form</h2>
+
+    <%= form_for :profile_data, url: "/#{@user.id}/profile" do |f| %>
+      <%= f.label :degree %>
+      <%= f.text_field :degree, value: @profile_degree %>
+      <%= f.label :major %>
+      <%= f.text_field :major, value: @profile_major %>
+      <%= f.label :extra_info %>
+      <%= f.text_field :extra_info, value: @profile_extra_info %>
+      <%= f.label :graduation_year %>
+      <%= f.text_field :graduation_year, value: @profile_graduation_year %>
+      <%= f.submit 'Submit', class: 'button' %>
+    <% end %>
+  </div>
+</div>
+
+

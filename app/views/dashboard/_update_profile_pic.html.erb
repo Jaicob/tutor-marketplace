@@ -1,1 +1,82 @@
-_update_profile_pic.html.erb
+<div class="row">
+  <div class="small-6 columns">
+    <a href="#" data-reveal-id="newPhotoModal">
+      <p class="profile-pic-modal-link">
+        Upload New Photo
+        <br>
+        <i class="fi-page-add big-icon"></i>
+      </p>
+    </a>
+  </div>
+  <div class="small-6 columns">
+    <a href="#" data-reveal-id="cropCurrentPhotoModal">
+      <p class="profile-pic-modal-link">
+        Crop Current Photo
+        <br>
+      <i class="fi-page-edit big-icon"></i>
+      </p>
+    </a>
+  </div>
+</div>
+
+
+<!-- Modal for Uploading a New Profile Picture -->
+
+<div id="newPhotoModal" class="reveal-modal small" data-reveal aria-labelledby="secondModalTitle" aria-hidden="true" role="dialog">
+  <h4 id="secondModalTitle" class="text-center">Upload a new profile picture</h4>
+
+    <div class="row">
+      <div class="small-8 small-centered columns">
+        <div class="text-center">
+          <%= form_for :profile_pic, url: "/#{@user.id}/change_profile_pic", method: 'put' do |f| %>
+            <%= f.file_field :profile_pic %>
+            <%= f.submit 'Update Profile Picture', class: 'button radius' %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <a href="#" data-reveal-id="myModal">
+      <i class="fi-arrow-left"></i>&nbsp;Back
+    </a>
+
+  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+</div>
+
+
+<!-- Modal for Cropping/Re-cropping Current Profile Picture -->
+
+<div id="cropCurrentPhotoModal" class="reveal-modal medium" data-reveal aria-labelledby="secondModalTitle" aria-hidden="true" role="dialog">
+  <h4 id="secondModalTitle" class="text-center">Crop your current profile picture</h4>
+
+    <div class="row">
+      <div class="small-6 small-centered columns">
+        <%= image_tag @tutor.profile_pic_url(:large), id: 'cropbox', class: 'center-pic' %>
+        <br>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="small-6 small-centered columns">
+        <div class="text-center"
+          <%= form_for :profile_pic, url: "/#{@user.id}/save_profile_pic_crop", method: 'put' do |f| %>
+            <% %w[x y w h].each do |attribute| %>
+              <%= f.hidden_field "crop_#{attribute}" %>
+            <% end %>
+            <div class="actions">
+              <%= f.submit "Crop", class: 'button radius expand' %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <a href="#" data-reveal-id="myModal">
+      <i class="fi-arrow-left"></i>&nbsp;Back
+    </a>
+
+  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+</div>
+
+
+
