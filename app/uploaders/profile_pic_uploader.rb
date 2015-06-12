@@ -25,7 +25,24 @@ class ProfilePicUploader < CarrierWave::Uploader::Base
   # end
 
   # Process files as they are uploaded:
-  # process :scale => [200, 300]
+  # process :save_original_and_create_centered_thumbnail
+
+  #  def save_original_and_create_centered_thumbnail
+  #  end
+
+
+
+
+  #     process :do_stuff => 10.0
+
+  #     def do_stuff(blur_factor)
+  #       manipulate! do |img|
+  #         img = img.sepiatone
+  #         img = img.auto_orient
+  #         img = img.radial_blur blur_factor
+  #       end
+  #     end
+  #   end
   #
   # def scale(width, height)
   #   # do something
@@ -51,6 +68,8 @@ class ProfilePicUploader < CarrierWave::Uploader::Base
         h = model.crop_h.to_i
         img.crop!(x, y, w, h)
       end
+    else
+      resize_to_fill(500,500)
     end
   end
 
