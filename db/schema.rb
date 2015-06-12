@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150610214601) do
+ActiveRecord::Schema.define(version: 20150612212142) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,20 +68,17 @@ ActiveRecord::Schema.define(version: 20150610214601) do
   create_table "tutors", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "rating"
-    t.integer  "status",                  default: 0
+    t.integer  "status",          default: 0
     t.date     "birthdate"
     t.string   "degree"
     t.string   "major"
     t.string   "extra_info"
     t.string   "graduation_year"
     t.string   "phone_number"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
-    t.string   "transcript_file_name"
-    t.string   "transcript_content_type"
-    t.integer  "transcript_file_size"
-    t.datetime "transcript_updated_at"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.string   "profile_pic"
+    t.string   "transcript"
   end
 
   add_index "tutors", ["user_id"], name: "index_tutors_on_user_id", using: :btree
