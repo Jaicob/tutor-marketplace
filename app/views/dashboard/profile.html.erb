@@ -33,15 +33,17 @@
   <div class="large-12 columns">
     <h2>Edit Form</h2>
 
-    <%= form_for :profile_data, url: "/#{@user.id}/profile" do |f| %>
-      <%= f.label :degree %>
-      <%= f.text_field :degree, value: @profile_degree %>
-      <%= f.label :major %>
-      <%= f.text_field :major, value: @profile_major %>
-      <%= f.label :extra_info %>
-      <%= f.text_field :extra_info, value: @profile_extra_info %>
-      <%= f.label :graduation_year %>
-      <%= f.text_field :graduation_year, value: @profile_graduation_year %>
+    <%= form_for :data, url: "/#{@user.id}/profile", method: 'put' do |f| %>
+      <%= f.fields_for :tutor do |tutor| %>
+        <%= tutor.label :degree %>
+        <%= tutor.text_field :degree, value: @profile_degree %>
+        <%= tutor.label :major %>
+        <%= tutor.text_field :major, value: @profile_major %>
+        <%= tutor.label :extra_info %>
+        <%= tutor.text_field :extra_info, value: @profile_extra_info %>
+        <%= tutor.label :graduation_year %>
+        <%= tutor.text_field :graduation_year, value: @profile_graduation_year %>
+      <% end %>
       <%= f.submit 'Submit', class: 'button' %>
     <% end %>
   </div>

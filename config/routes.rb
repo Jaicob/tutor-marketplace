@@ -77,14 +77,11 @@
 #              schedule_user GET    /:id/schedule(.:format)                   dashboard#schedule
 #               courses_user GET    /:id/courses(.:format)                    dashboard#courses
 #               profile_user GET    /:id/profile(.:format)                    dashboard#profile
+#                            PUT    /:id/profile(.:format)                    dashboard#update_profile
 #              settings_user GET    /:id/settings(.:format)                   dashboard#settings
-#                            POST   /:id/profile(.:format)                    dashboard#update_profile
-#                            POST   /:id/settings(.:format)                   dashboard#update_settings
-# view_profile_pic_crop_user GET    /:id/view_profile_pic_crop(.:format)      dashboard#view_profile_pic_crop
-# save_profile_pic_crop_user PUT    /:id/save_profile_pic_crop(.:format)      dashboard#save_profile_pic_crop
+#                            PUT    /:id/settings(.:format)                   dashboard#update_settings
 #    change_profile_pic_user PUT    /:id/change_profile_pic(.:format)         dashboard#change_profile_pic
-#               example_user GET    /:id/example(.:format)                    dashboard#example
-#                  crop_user GET    /:id/crop(.:format)                       dashboard#crop
+# save_profile_pic_crop_user PUT    /:id/save_profile_pic_crop(.:format)      dashboard#save_profile_pic_crop
 #                      upmin        /admin                                    Upmin::Engine
 #                       root GET    /                                         static_pages#home
 #
@@ -126,14 +123,11 @@ Rails.application.routes.draw do
       get  '/schedule'  => 'dashboard#schedule'
       get  '/courses'   => 'dashboard#courses'
       get  '/profile'   => 'dashboard#profile'
+      put  '/profile'   => 'dashboard#update_profile'
       get  '/settings'  => 'dashboard#settings'
-      post '/profile'   => 'dashboard#update_profile'
-      post '/settings'  => 'dashboard#update_settings'
-      get  '/view_profile_pic_crop' => 'dashboard#view_profile_pic_crop'
-      put  '/save_profile_pic_crop' => 'dashboard#save_profile_pic_crop'
+      put  '/settings'  => 'dashboard#update_settings'
       put  '/change_profile_pic' => 'dashboard#change_profile_pic'
-      get  '/example' => 'dashboard#example'
-      get  '/crop' => 'dashboard#crop'
+      put  '/save_profile_pic_crop' => 'dashboard#save_profile_pic_crop'
     end
   end
 

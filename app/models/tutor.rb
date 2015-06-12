@@ -48,6 +48,5 @@ class Tutor < ActiveRecord::Base
     profile_pic.recreate_versions! if crop_x.present?
   end
 
-
 end
 
