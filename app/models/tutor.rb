@@ -27,9 +27,6 @@ class Tutor < ActiveRecord::Base
   has_many :courses, through: :tutor_courses, dependent: :destroy
   enum status: [:applied, :awaiting_approval, :approved]
 
-
-  # NEED TO ADD UPLOADER FOR TRANSCRIPT, AFTER SWITCHING TO CARRIERWAVE
-
   # Carrierwave setup for uploading files
   mount_uploader :profile_pic, ProfilePicUploader
   mount_uploader :transcript, TranscriptUploader
@@ -51,4 +48,3 @@ class Tutor < ActiveRecord::Base
   end
 
 end
-

@@ -2,19 +2,51 @@
   <div class="large-4 columns">
     <!-- Profile Pic -->
     <div class="profile-pic-container">
-      <%= image_tag(@tutor.profile_pic_url(:thumb), class: 'profile-pic') %>git s
+      <%= image_tag(@tutor.profile_pic_url(:thumb), class: 'profile-pic') %>
     </div>
 
-  
     <!-- Name -->
     <h4><%= @tutor.user.full_name %></h4>
   </div>
 
   <div class="large-8 columns">
-    <h2>General Info</h2>
+    <h4>General Info</h4>
     <p>Degree: <%= @tutor.degree %></p>
     <p>Major: <%= @tutor.major %></p>
     <p>Extra Info: <%= @tutor.extra_info %></p>
     <p>Graduation Year: <%= @tutor.graduation_year %></p>
   </div>
+</div>
+
+<div class="row">
+  <h4>Classes</h4>
+  <table>
+    <thead>
+      <tr>
+        <th width="400">School</th>
+        <th width="150">Subject</th>
+        <th width="150">Call Number</th>
+        <th width="400">Course Name</th>
+        <th>Rate</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @tutor.tutor_courses.each do |tutor_course| %>
+        <tr>
+          <td><%= tutor_course.course.school_name %></td>
+          <td><%= tutor_course.course.subject_name %></td>
+          <td><%= tutor_course.course.call_number %></td>
+          <td><%= tutor_course.course.friendly_name %></td>
+          <td>$<%= tutor_course.rate %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<div class="row">
+  <%= link_to(tutors_path) do %>
+    <i class="fi-arrow-left"></i>&nbsp;All Tutors
+  <% end %>
 </div>
