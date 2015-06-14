@@ -1,0 +1,20 @@
+<div class="row">
+  <div class="large-4 columns">
+    <!-- Profile Pic -->
+    <div class="profile-pic-container">
+      <%= image_tag(@tutor.profile_pic_url(:thumb), class: 'profile-pic') %>git s
+    </div>
+
+  
+    <!-- Name -->
+    <h4><%= @tutor.user.full_name %></h4>
+  </div>
+
+  <div class="large-8 columns">
+    <h2>General Info</h2>
+    <p>Degree: <%= @tutor.degree %></p>
+    <p>Major: <%= @tutor.major %></p>
+    <p>Extra Info: <%= @tutor.extra_info %></p>
+    <p>Graduation Year: <%= @tutor.graduation_year %></p>
+  </div>
+</div>

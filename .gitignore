@@ -87,3 +87,6 @@ pickle-email-*.html
 
 # My personal notes & to-do list
 Z-notes.rb
+
+# Ignore uploads
+/public/uploads
