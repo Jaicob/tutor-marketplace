@@ -24,12 +24,11 @@ class ApplicationController < ActionController::Base
   end
 
   def set_user
-    @user = current_user
+    @user = User.friendly.find(current_user.id)
   end
 
   def set_tutor
     @tutor = @user.tutor || nil
   end
-
 
 end

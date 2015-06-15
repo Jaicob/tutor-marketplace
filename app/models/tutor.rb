@@ -18,6 +18,7 @@
 #  transcript_content_type :string
 #  transcript_file_size    :integer
 #  transcript_updated_at   :datetime
+#  profile_pic             :string
 #
 
 class Tutor < ActiveRecord::Base
@@ -25,20 +26,26 @@ class Tutor < ActiveRecord::Base
   has_many :tutor_courses, dependent: :destroy
   has_many :courses, through: :tutor_courses, dependent: :destroy
   enum status: [:applied, :awaiting_approval, :approved]
-  has_attached_file :transcript, styles: { small: "64x64", med: "100x100", large: "200x200" }
+
+  # Carrierwave setup for uploading files
+  mount_uploader :profile_pic, ProfilePicUploader
+  mount_uploader :transcript, TranscriptUploader
+
+  # Dimensions for cropping profile pics
+  attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
+  
   validates :extra_info, presence: true
-  validates_attachment :transcript, 
-    presence: true,
-    content_type: { 
-      content_type: ["image/jpeg", "image/jpg", "image/gif", "image/png", "application/pdf", 
-      "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ] },
-      size: { in: 0..20.megabytes }
   # Cannot add validations for other attributes because Tutor sign-up form creates Tutor before they are asked for. We should create a method that checks if a tutor profile is complete before allowing them to access some functionalities (what is required for a tutor to start working and taking appointments?)
 
-   def set_first_tutor_course(tutor, params)
+  def set_first_tutor_course(tutor, params)
     course_id = params[:course][:course_id]
     rate = params[:tutor_course][:rate]
     tutor.tutor_courses.create(tutor_id: tutor.id, course_id: course_id, rate: rate)
-   end
+  end
+
+  def crop_profile_pic
+    profile_pic.recreate_versions! if crop_x.present?
+  end
 
 end
+

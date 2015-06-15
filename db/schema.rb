@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150605185616) do
+ActiveRecord::Schema.define(version: 20150615150146) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,19 @@ ActiveRecord::Schema.define(version: 20150605185616) do
 
   add_index "courses", ["school_id"], name: "index_courses_on_school_id", using: :btree
   add_index "courses", ["subject_id"], name: "index_courses_on_subject_id", using: :btree
+
+  create_table "friendly_id_slugs", force: :cascade do |t|
+    t.string   "slug",                      null: false
+    t.integer  "sluggable_id",              null: false
+    t.string   "sluggable_type", limit: 50
+    t.string   "scope"
+    t.datetime "created_at"
+  end
+
+  add_index "friendly_id_slugs", ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true, using: :btree
+  add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
 
   create_table "schools", force: :cascade do |t|
     t.string   "name"
@@ -55,19 +68,17 @@ ActiveRecord::Schema.define(version: 20150605185616) do
   create_table "tutors", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "rating"
-    t.integer  "status",                  default: 0
+    t.integer  "status",          default: 0
     t.date     "birthdate"
     t.string   "degree"
     t.string   "major"
     t.string   "extra_info"
     t.string   "graduation_year"
     t.string   "phone_number"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
-    t.string   "transcript_file_name"
-    t.string   "transcript_content_type"
-    t.integer  "transcript_file_size"
-    t.datetime "transcript_updated_at"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.string   "profile_pic"
+    t.string   "transcript"
   end
 
   add_index "tutors", ["user_id"], name: "index_tutors_on_user_id", using: :btree
@@ -85,7 +96,6 @@ ActiveRecord::Schema.define(version: 20150605185616) do
     t.inet     "last_sign_in_ip"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
-    t.string   "name"
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
@@ -99,8 +109,9 @@ ActiveRecord::Schema.define(version: 20150605185616) do
     t.integer  "invited_by_id"
     t.string   "invited_by_type"
     t.integer  "invitations_count",      default: 0
-    t.datetime "first_name"
+    t.string   "first_name"
     t.string   "last_name"
+    t.string   "slug"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
@@ -108,6 +119,7 @@ ActiveRecord::Schema.define(version: 20150605185616) do
   add_index "users", ["invitations_count"], name: "index_users_on_invitations_count", using: :btree
   add_index "users", ["invited_by_id"], name: "index_users_on_invited_by_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["slug"], name: "index_users_on_slug", unique: true, using: :btree
 
   add_foreign_key "courses", "schools"
   add_foreign_key "courses", "subjects"

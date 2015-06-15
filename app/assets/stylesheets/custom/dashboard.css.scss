@@ -1,3 +1,62 @@
 .dashboard-nav{
 	background-color: white !important;
 }
+
+.profile-pic-container {
+  height: 200px;
+  width: 200px;
+  border-radius: 2px;
+  border: 2px solid #3f3f3f;
+  position: relative;
+}
+
+.profile-pic {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+
+.profile-pic-link {
+  margin-top: 80%;
+  height: 30px;
+  width: 100%;
+  position: absolute;
+}
+
+.profile-pic-text {
+  font-size: 0.7em;
+  text-align: center;
+  background-color: #3f3f3f;
+  color: white;
+  padding: 0.7em;
+}
+
+a p.profile-pic-text {
+  display: none;
+}
+
+a:hover p.profile-pic-text {
+  display: block;
+}
+
+.profile-pic-modal-link {
+  text-align: center;
+  font-size: 1.3em;
+  padding: 1em 0;
+  border: 3px solid #008cba;
+  border-radius: 2px;
+  margin: 0;
+}
+
+.big-icon {
+  font-size: 3em;
+}
+
+.cropbox-container {
+  text-align: center;
+}
+
+.cropbox {
+  display: inline-block;
+  padding: 1em;
+}

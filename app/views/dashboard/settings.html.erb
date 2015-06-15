@@ -1,13 +1,17 @@
-<%= form_for :settings_data, url: "/tutors/#{@tutor.id}/settings" do |f| %>
-  <%= f.label :name %>
-  <%= f.text_field :name, value: @user.name %>
-  <%= f.label :email %>
-  <%= f.text_field :email, value: @user.email %>
-  <%= f.label :birthdate %>
-  <%= f.date_select :birthdate, value: @tutor.birthdate %>
-  <%= f.label :phone_number %>
-  <%= f.text_field :phone_number, value: @tutor.phone_number %>
+<%= form_for :data, url: "/#{@user.id}/settings", method: 'put' do |f| %>
+  <%= f.fields_for :user do |user| %>
+    <%= user.label :first_name %>
+    <%= user.text_field :first_name, value: @user.first_name %>
+    <%= user.label :last_name %>
+    <%= user.text_field :last_name, value: @user.last_name %>
+    <%= user.label :email %>
+    <%= user.text_field :email, value: @user.email %>
+  <% end %>
+  <%= f.fields_for :tutor do |tutor| %>
+    <%= tutor.label :birthdate %>
+    <%= tutor.date_select :birthdate, value: @tutor.birthdate %>
+    <%= tutor.label :phone_number %>
+    <%= tutor.text_field :phone_number, value: @tutor.phone_number %>
+  <% end %>  
   <%= f.submit 'Submit' %>
 <% end %>
-User: <%= @user.to_json %>
-Tutor: <%= @tutor.to_json %>

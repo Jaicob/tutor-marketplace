@@ -18,6 +18,7 @@
 #  transcript_content_type :string
 #  transcript_file_size    :integer
 #  transcript_updated_at   :datetime
+#  profile_pic             :string
 #
 
 FactoryGirl.define do

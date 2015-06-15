@@ -9,6 +9,7 @@
     <%= javascript_include_tag 'vendor/modernizr' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
+    <%= yield(:header) %>
   </head>
   <body>
     <header>
@@ -17,18 +18,13 @@
       <%= show_dashboard_nav and render 'layouts/dashboard_nav' %>
     </header>
     <main role="main">
-       <!--  The messages partial below is causing the double flash messages
-            It looks like this was created by Zurb Foundation but I think the
-            plain old alert messages we include below look better. Commenting 
-            this out rather than deleting it just in case we want to use the 
-            partial instead.git s
-      <%= render 'layouts/messages' %>-->  
       <p class="notice"><%= notice %></p>
       <p class="alert"><%= alert %></p>
       <%= yield %>
     </main>
     <footer>
       <%= render 'layouts/footer' %>
+      <%= render 'layouts/debug_console' %>
     </footer>
   </body>
 </html>

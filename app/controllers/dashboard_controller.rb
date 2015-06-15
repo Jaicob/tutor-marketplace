@@ -9,41 +9,57 @@ class DashboardController < ApplicationController
   end
 
   def courses
-    @tutor = Tutor.find(params[:id])
     @tutor_course = TutorCourse.new
-    @tutor_courses = @tutor.tutor_courses
   end
 
   def profile
   end
 
-  def apply_profile
-    if @tutor.update_attributes(tutor_params)
-      redirect_to profile_tutor_path(@tutor.id)
+  def update_profile
+    # The settings form updates two models, so the params for the User and Tutor models are nested inside the :data params hash and have to targeted below
+    if @tutor.update_attributes(tutor_params[:tutor])
+      redirect_to profile_user_path(@user)
     else
-      redirect_to profile_tutor_path(@tutor.id), notice: "Error saving changes."
+      redirect_to profile_user_path(@user), notice: "Error saving changes."
     end
   end
+
+  def change_profile_pic
+    @tutor.update_attributes(profile_pic_params)
+    redirect_to profile_user_path(@user)
+  end
+
+  def save_profile_pic_crop
+    @tutor.update_attributes(profile_pic_params) 
+    @tutor.crop_profile_pic
+    redirect_to profile_user_path(@user)
+  end  
 
   def settings
   end
 
-  def apply_settings
-    if @user.update_attributes(user_params) && @tutor.update_attributes(tutor_params)
-      redirect_to settings_tutor_path(@tutor.id)
+  def update_settings
+    # The settings form updates two models, so the params for the User and Tutor models are nested inside the :data params hash and have to targeted below
+    if @user.update(user_params[:user]) && @tutor.update(tutor_params[:tutor])
+      redirect_to settings_user_path(@user)
     else
-      redirect_to settings_tutor_path(@tutor.id), notice: "Error saving changes."
+      redirect_to settings_user_path(@user), notice: "Error saving changes."
     end
   end
 
   private
 
-  def user_params
-    params.require(:settings_data).permit(:name, :email)
-  end
+    
+    def user_params
+      params.require(:data).permit(user: [:first_name, :last_name, :email])
+    end
 
-  def tutor_params
-    params.require(:settings_data).permit(:birthdate, :phone_number, :degree, :major, :extra_info, :graduation_year)
-  end
+    def tutor_params
+      params.require(:data).permit(tutor: [:birthdate, :phone_number, :degree, :major, :extra_info, :graduation_year])    
+    end
+
+    def profile_pic_params
+      params.require(:profile_pic).permit(:profile_pic, :crop_x, :crop_y, :crop_w, :crop_h)
+    end
 
 end
