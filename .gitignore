@@ -83,6 +83,7 @@ pickle-email-*.html
 
 #ignore env files, sensitive info could go in here
 .env.*
+.env.example
 
 # Ignore application configuration
 /config/application.yml

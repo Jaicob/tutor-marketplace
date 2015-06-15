@@ -1,10 +1,10 @@
 branch-defaults:
   default:
-    environment: axon-web-dev
+    environment: axon-dev
   develop:
-    environment: axon-web-dev
+    environment: axon-dev
   development:
-    environment: axon-web-dev
+    environment: axon-dev
 global:
   application_name: axon-web
   default_ec2_keyname: dev-env
