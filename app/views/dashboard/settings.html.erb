@@ -7,11 +7,13 @@
     <%= user.label :email %>
     <%= user.text_field :email, value: @user.email %>
   <% end %>
-  <%= f.fields_for :tutor do |tutor| %>
-    <%= tutor.label :birthdate %>
-    <%= tutor.date_select :birthdate, value: @tutor.birthdate %>
-    <%= tutor.label :phone_number %>
-    <%= tutor.text_field :phone_number, value: @tutor.phone_number %>
+  <% if @tutor %>
+    <%= f.fields_for :tutor do |tutor| %>
+      <%= tutor.label :birthdate %>
+      <%= tutor.date_select :birthdate, value: @tutor.birthdate %>
+      <%= tutor.label :phone_number %>
+      <%= tutor.text_field :phone_number, value: @tutor.phone_number %>
+    <% end %>
   <% end %>
   <%= f.submit 'Submit' %>
 <% end %>

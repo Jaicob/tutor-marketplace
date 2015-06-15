@@ -117,8 +117,8 @@ Rails.application.routes.draw do
   resources :schools
   devise_for :users
 
-  resources :users, only: [], path: '' do 
-    member do       
+  resources :users, only: [], path: '' do
+    member do
       get  '/dashboard' => 'dashboard#home'
       get  '/schedule'  => 'dashboard#schedule'
       get  '/courses'   => 'dashboard#courses'

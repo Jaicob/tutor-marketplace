@@ -1,3 +1,8 @@
 <% if !Rails.env.production? %>
- <%= console %>
+  <style type="text/css">
+      #console{
+        position: relative !important;
+      }
+  </style>
+  <%= console %>
 <% end %>

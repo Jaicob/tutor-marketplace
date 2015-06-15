@@ -49,16 +49,30 @@ class User < ActiveRecord::Base
   devise :invitable, :database_authenticatable, :registerable, :confirmable,
     :recoverable, :rememberable, :trackable, :validatable
 
-  # This method is for when a Tutor profile has been created without a User (by a visitor or non-signed in user) and the Tutor needs to be assigned to the User after log-in or sign-up
+  # This method is for when a Tutor profile has been created without a User (by
+  # a visitor or non-signed in user) and the Tutor needs to be assigned to the
+  # User after log-in or sign-up
   def set_tutor_for_devise(user, params)
     unless params[:tutor_id] == nil
       user.tutor=Tutor.find(params[:tutor_id])
     end
   end
 
- def slug_candidates
-    # These are simply various combinations of first and last names to create usernames in case of multiple users with the same name, the next available unique combo is used to create the slug
-    [ "#{first_name}#{last_name}", "#{first_name[0]}#{last_name}", "#{first_name}#{last_name[0]}", "#{first_name[0..1]}#{last_name}", "#{first_name}#{last_name[0..1]}", "#{first_name[0..2]}#{last_name}", "#{first_name}#{last_name[0..2]}", "#{first_name[0..3]}#{last_name}", "#{first_name}#{last_name[0..3]}"]
+  def slug_candidates
+    # These are simply various combinations of first and last names to create
+    # usernames in case of multiple users with the same name, the next available
+    # unique combo is used to create the slug
+    [
+      "#{first_name}#{last_name}",
+      "#{first_name[0]}#{last_name}",
+      "#{first_name}#{last_name[0]}",
+      "#{first_name[0..1]}#{last_name}",
+      "#{first_name}#{last_name[0..1]}",
+      "#{first_name[0..2]}#{last_name}",
+      "#{first_name}#{last_name[0..2]}",
+      "#{first_name[0..3]}#{last_name}",
+      "#{first_name}#{last_name[0..3]}"
+    ]
   end
 
   def full_name
