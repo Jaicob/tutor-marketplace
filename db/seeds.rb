@@ -10,6 +10,13 @@ puts 'CREATED ADMIN USER: ' << user.email
 # Environment variables (ENV['...']) can be set in the file .env file.
 
 
+#####################################################################
+
+# You must run rake db:seeds twice, you will get an error the first time, but the second run works
+
+#####################################################################
+
+
 school_list = [
   [ "University of North Carolina", "Chapel Hill, NC" ],
   [ "University of Georgia", "Athens, GA" ],
