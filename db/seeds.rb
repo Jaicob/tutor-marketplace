@@ -5,8 +5,8 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-user = CreateAdminService.new.call
-puts 'CREATED ADMIN USER: ' << user.email
+# user = CreateAdminService.new.call
+# puts 'CREATED ADMIN USER: ' << user.email
 # Environment variables (ENV['...']) can be set in the file .env file.
 
 
@@ -15,7 +15,7 @@ school_list = [
   [ "University of Georgia", "Athens, GA" ],
   [ "Duke University", "Durham, NC" ],
   [ "Clemson University", "Clemson, SC" ]
-]
+] 
 
 school_list.each do |name, location|
   School.create( name: name, location: location )

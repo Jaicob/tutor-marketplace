@@ -1,0 +1,26 @@
+<h1>List Tutors</h1>
+
+<div class="row">
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>School</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @tutors.each do |tutor| %>
+      <tr>
+        <td><%= tutor.id %></td>
+        <td><%= tutor.user.full_name %></td>
+        <td><%= tutor.user.email %></td>
+        <td><%= tutor.schools %></td>
+        <td><%= tutor.status %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

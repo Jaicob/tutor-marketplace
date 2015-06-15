@@ -131,6 +131,11 @@ Rails.application.routes.draw do
     end
   end
 
+  scope :admin do 
+    get '/tutors' => 'admin#tutors'
+  end
+
+
   mount Upmin::Engine => '/admin'
   root to: "static_pages#home"
 
