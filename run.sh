@@ -17,7 +17,7 @@ echo "Stopping  unicorn_rails, if already running"
 pkill unicorn_rails
 
 echo "cleaning tmp files"
-rm -rf tmp/*
+rm -rf /web-app/tmp/*
 
 echo "Restart Reverse Proxy"
 service nginx reload && service nginx restart

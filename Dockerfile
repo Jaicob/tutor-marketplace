@@ -1,8 +1,3 @@
-#FROM seapy/rails-nginx-unicorn
-#MAINTAINER seapy(iamseapy@gmail.com)
-
-
-
 FROM jaicob/rails-nginx-unicorn
 MAINTAINER jaicob(jaicob@icloud.com)
 #RUN apt-get update -qq && apt-get install -y build-essential nodejs npm nodejs-legacy vim
@@ -32,20 +27,23 @@ ADD nginx-sites.conf /etc/nginx/sites-enabled/default
 # for capybara-webkit
 #RUN apt-get install -y libqt4-webkit libqt4-dev xvfb
 
+RUN adduser --disabled-password --home=/rails --gecos "" rails
 RUN mkdir /web-app
 
 #get gems
 WORKDIR /tmp
 COPY Gemfile Gemfile
+RUN chown rails:rails Gemfile
 COPY Gemfile.lock Gemfile.lock
-RUN gem install bundler
+RUN chown rails:rails Gemfile.lock
+RUN su rails -c /setup
+
 RUN bundle install
 RUN rbenv rehash
 
 #install app
 ADD . /web-app
 WORKDIR /web-app
-
 RUN RAILS_ENV=production bundle exec rake assets:precompile --trace
 
 # Add unicorn config here 
@@ -54,11 +52,9 @@ ADD ./config/unicorn.rb /etc/web-app/unicorn.rb
 # Run script
 ADD ./run.sh /etc/web-app/run.sh
 
-# Expost port 80
-EXPOSE 80
-
 # Set environment variables
 ENV RAILS_ENV development
 
-#
+EXPOSE 80
+USER rails
 CMD /bin/bash /etc/web-app/run.sh
