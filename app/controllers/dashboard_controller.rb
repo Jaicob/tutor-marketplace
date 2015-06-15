@@ -18,21 +18,21 @@ class DashboardController < ApplicationController
   def update_profile
     # The settings form updates two models, so the params for the User and Tutor models are nested inside the :data params hash and have to targeted below
     if @tutor.update_attributes(tutor_params[:tutor])
-      redirect_to profile_user_path(@user.slug)
+      redirect_to profile_user_path(@user)
     else
-      redirect_to profile_user_path(@user.slug), notice: "Error saving changes."
+      redirect_to profile_user_path(@user), notice: "Error saving changes."
     end
   end
 
   def change_profile_pic
     @tutor.update_attributes(profile_pic_params)
-    redirect_to profile_user_path(@user.slug)
+    redirect_to profile_user_path(@user)
   end
 
   def save_profile_pic_crop
     @tutor.update_attributes(profile_pic_params) 
     @tutor.crop_profile_pic
-    redirect_to profile_user_path(@user.slug)
+    redirect_to profile_user_path(@user)
   end  
 
   def settings
