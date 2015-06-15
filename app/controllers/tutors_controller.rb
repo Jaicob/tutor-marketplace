@@ -26,7 +26,7 @@ class TutorsController < ApplicationController
   end
 
   def show
-    @tutor = User.friendly.find(params[:id]).tutor
+    @tutor = User.find(params[:id]).tutor
   end
 
   
