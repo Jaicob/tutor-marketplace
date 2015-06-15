@@ -1,7 +1,7 @@
 app_dir = File.expand_path("../..", __FILE__)
-shared_dir = "#{app_dir}/shared"
+shared_dir = "/web-app/shared"
 working_directory app_dir
-puts "#{app_dir}"
+puts " APP DIR #{app_dir}"
 
 # Set unicorn options
 worker_processes 2
@@ -12,11 +12,11 @@ timeout 30
 listen "#{shared_dir}/sockets/unicorn.sock",  :backlog => 1024
 
 # Logging
-stderr_path "#{shared_dir}/log/unicorn.stderr.log"
-stdout_path "#{shared_dir}/log/unicorn.stdout.log"
+stderr_path "/web-app/shared/log/unicorn.stderr.log"
+stdout_path "/web-app/shared/log/unicorn.stdout.log"
 
 # Set master PID location
-pid "#{shared_dir}/pids/unicorn.pid"
+pid "#/web-app/shared/pids/unicorn.pid"
 
 
 
