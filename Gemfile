@@ -27,6 +27,7 @@ gem 'friendly_id', '~> 5.1.0'
 gem 'carrierwave'
 gem 'rmagick'
 gem 'foundation-icons-sass-rails'
+gem 'react-rails', '~> 1.0'
 group :development do
   gem 'better_errors'
   gem 'rails_layout'

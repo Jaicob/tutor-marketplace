@@ -4,15 +4,12 @@
     <div class="profile-pic-container">
       <%= image_tag(@tutor.profile_pic_url(:thumb), class: 'profile-pic') %>
       <a href="#" data-reveal-id="myModal" class="profile-pic-link">
-        <p class="profile-pic-text">Update Profile Picture</p>    
+        <p class="profile-pic-text">Update Profile Picture</p>
       </a>
     </div>
-
-  
     <!-- Name -->
     <h4><%= @tutor.user.full_name %></h4>
   </div>
-
   <div class="large-8 columns">
     <h2>General Info</h2>
     <p>Degree: <%= @tutor.degree %></p>
@@ -21,18 +18,14 @@
     <p>Graduation Year: <%= @tutor.graduation_year %></p>
   </div>
 </div>
-
 <!-- Update Profile Pic Modal -->
 <!-- The link to this modal is above under Profile Pic, but this needs to be outside of the row for formatting reasons -->
-  <div id="myModal" class="reveal-modal medium" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
-    <%= render 'update_profile_pic' %>
-  </div>
-
-
+<div id="myModal" class="reveal-modal medium" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+  <%= render 'update_profile_pic' %>
+</div>
 <div class="row">
   <div class="large-12 columns">
     <h2>Edit Form</h2>
-
     <%= form_for :data, url: "/#{@user.id}/profile", method: 'put' do |f| %>
       <%= f.fields_for :tutor do |tutor| %>
         <%= tutor.label :degree %>
@@ -48,5 +41,3 @@
     <% end %>
   </div>
 </div>
-
-

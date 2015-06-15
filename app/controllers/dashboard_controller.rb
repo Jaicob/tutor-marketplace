@@ -30,10 +30,10 @@ class DashboardController < ApplicationController
   end
 
   def save_profile_pic_crop
-    @tutor.update_attributes(profile_pic_params) 
+    @tutor.update_attributes(profile_pic_params)
     @tutor.crop_profile_pic
     redirect_to profile_user_path(@user)
-  end  
+  end
 
   def settings
   end
@@ -49,17 +49,16 @@ class DashboardController < ApplicationController
 
   private
 
-    
-    def user_params
-      params.require(:data).permit(user: [:first_name, :last_name, :email])
-    end
+  def user_params
+    params.require(:data).permit(user: [:first_name, :last_name, :email])
+  end
 
-    def tutor_params
-      params.require(:data).permit(tutor: [:birthdate, :phone_number, :degree, :major, :extra_info, :graduation_year])    
-    end
+  def tutor_params
+    params.require(:data).permit(tutor: [:birthdate, :phone_number, :degree, :major, :extra_info, :graduation_year])
+  end
 
-    def profile_pic_params
-      params.require(:profile_pic).permit(:profile_pic, :crop_x, :crop_y, :crop_w, :crop_h)
-    end
+  def profile_pic_params
+    params.require(:profile_pic).permit(:profile_pic, :crop_x, :crop_y, :crop_w, :crop_h)
+  end
 
 end
