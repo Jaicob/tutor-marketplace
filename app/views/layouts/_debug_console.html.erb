@@ -1,2 +1,4 @@
 <!-- Console for debugging -->
-<%= console %>
+<% if !Rails.env.production? %>
+ <%= console %>
+<% end %>

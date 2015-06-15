@@ -1,5 +1,5 @@
 <%= form_for :data, url: "/#{@user.id}/settings", method: 'put' do |f| %>
-    <%= f.fields_for :user do |user| %>
+  <%= f.fields_for :user do |user| %>
     <%= user.label :first_name %>
     <%= user.text_field :first_name, value: @user.first_name %>
     <%= user.label :last_name %>
