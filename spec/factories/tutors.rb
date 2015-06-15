@@ -24,10 +24,6 @@
 FactoryGirl.define do
   factory :tutor do
     extra_info "Student Research Assistant for Biology Department"
-    transcript_file_name    'unofficial_transcript'
-    transcript_content_type 'application/pdf'
-    transcript_file_size    '726932'
-    transcript_updated_at   DateTime.now
   
       factory :complete_tutor do
         user

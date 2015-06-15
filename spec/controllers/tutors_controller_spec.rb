@@ -1,5 +1,14 @@
 require 'rails_helper'
 
+
+####
+
+# All tests here are setup and passing except the post requests, both #create and #visitor_create
+# To finish this spec, those requests need to be tested with both valid and invalid attributes for creation  
+
+####
+
+
 describe TutorsController do
   let(:user) { create(:user) }
 
@@ -44,6 +53,15 @@ describe TutorsController do
   end
 
   describe 'GET #visitor_new' do
+     it "assigns a new Tutor to @tutor" do 
+      get :visitor_new
+      expect(assigns(:tutor)).to be_a_new(Tutor)
+    end
+
+    it "it renders the :new template" do
+      get :visitor_new
+      expect(response).to render_template :visitor_new
+    end
   end
 
   describe 'POST #visitor_create' do 
@@ -55,13 +73,28 @@ describe TutorsController do
   end
 
   describe 'GET #register_or_sign_in' do 
+    it "renders the register_or_sign_in template" do
+      tutor = create(:tutor) 
+      get :register_or_sign_in, {id: tutor.id}
+      expect(response).to render_template :register_or_sign_in
+    end 
   end
+
+  describe 'GET  #visitor_sign_in' do
+    it "renders the visitor_sign_in template" do 
+      tutor = create(:tutor)
+      get  :visitor_sign_in, {id: tutor.id}
+      expect(response).to render_template :visitor_sign_in
+    end
+  end
+
 
   describe 'GET #visitor_sign_up' do 
+    it "renders the visitor_sign_up template" do
+      tutor = create(:tutor)
+      get :visitor_sign_up, {id: tutor.id}
+      expect(response).to render_template :visitor_sign_up
+    end
   end
-
-  describe 'GET #visitor_sign_up' do 
-  end
-
 end
 
