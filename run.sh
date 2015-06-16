@@ -17,10 +17,11 @@ echo "Stopping  unicorn_rails, if already running"
 pkill unicorn_rails
 
 echo "cleaning tmp files"
-rm -rf /web-app/tmp/*
+rm -rf /home/rails/web-app/tmp/*
 
 echo "Restart Reverse Proxy"
-service nginx reload && service nginx restart
+sudo service nginx reload && sudo service nginx restart
 
 echo "Running unicorn"
-bundle exec unicorn_rails -c /etc/web-app/unicorn.rb -E $RAILS_ENV -d
+sudo service unicorn start
+#bundle exec unicorn_rails -c /etc/web-app/unicorn.rb -E $RAILS_ENV -d

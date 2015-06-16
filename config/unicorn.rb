@@ -1,4 +1,4 @@
-app_dir = "/web-app"
+app_dir = "/home/rails/web-app"
 shared_dir = "#{app_dir}/shared"
 working_directory app_dir
 puts " APP DIR #{app_dir}"

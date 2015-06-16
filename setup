@@ -1,4 +1,5 @@
 #!/bin/bash
 
+echo "Setting up"
 bundle install
 rake db:migrate
