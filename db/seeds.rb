@@ -5,8 +5,8 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-user = CreateAdminService.new.call
-puts 'CREATED ADMIN USER: ' << user.email
+# user = CreateAdminService.new.call
+# puts 'CREATED ADMIN USER: ' << user.email
 # Environment variables (ENV['...']) can be set in the file .env file.
 
 
@@ -27,7 +27,7 @@ subject_list.each do |subject|
   Subject.create( name: subject )
 end
 
-# 1 and 1 refer respectively to a school_id and a subject_id currently in the DB, 
+# 1 and 1 refer respectively to a school_id and a subject_id currently in the DB,
 # these are otherwise arbitrary values
 course_list = [
   [1, 1, "101", "Intro to Something"],
@@ -41,7 +41,7 @@ course_list.each do |school_id, subject_id, call_number, friendly_name|
 end
 
 # This creates a course of every subject and course above for each of the different schools
-# Until we implement a JS solution to dynamically load the options on the forms, 
+# Until we implement a JS solution to dynamically load the options on the forms,
 # a smaller data set is more manageable
 #
 # courses_with_subject_ids = []
@@ -56,12 +56,12 @@ end
 # courses_with_subject_and_school_ids = []
 # courses_with_subject_ids.each do |subject_id, call_number, friendly_name|
 #   x = 1
-#   while x <= 4 do 
+#   while x <= 4 do
 #     courses_with_subject_and_school_ids << [[x], ["#{subject_id}"],["#{call_number}"], ["#{friendly_name}"]]
 #     x += 1
 #   end
 # end
 
-# courses_with_subject_and_school_ids.each do |school_id, subject_id, call_number, friendly_name| 
+# courses_with_subject_and_school_ids.each do |school_id, subject_id, call_number, friendly_name|
 #   Course.create(school_id: school_id, subject_id: subject_id, call_number: call_number, friendly_name: friendly_name)
 # end
