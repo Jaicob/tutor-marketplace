@@ -80,7 +80,7 @@ SchoolField = React.createClass({
   },
   render: function(){
     return (
-      <div className="small-3 columns">
+      <div className="medium-3 columns">
         <select name="course[school_id]" onChange={this.update}>
           <option selected="true" disabled="true">School</option>
           {
@@ -121,7 +121,7 @@ SubjectField = React.createClass({
   },
   render: function(){
     return (
-      <div className="small-3 columns">
+      <div className="medium-3 columns">
         <select name="course[subject_id]" disabled={this.state.all_subjects.length < 1} onChange={this.update} >
           <option selected="true" disabled="true">Subject</option>
           {
@@ -162,7 +162,7 @@ CourseField = React.createClass({
   },
   render: function(){
     return (
-      <div className="small-3 columns">
+      <div className="medium-3 columns">
         <select name="course[course_id]" disabled={this.state.all_courses.length < 1} onChange={this.update}>
           <option selected="true" disabled="true">Course</option>
           {
@@ -184,7 +184,7 @@ RateField = React.createClass({
   },
   render: function(){
     return (
-      <div className="small-3 columns">
+      <div className="medium-3 columns">
         <input type="number"
                     name="tutor_course[rate]"
                     placeholder="$USD per hour"
@@ -228,7 +228,10 @@ SubmitButton = React.createClass({
     }
   },
   render: function(){
-    return <input type="submit" value="Add Course" onClick={this.handleClick} />
+    style = {
+      "margin-right" : "15px"
+    }
+    return <input type="submit" name="commit" value="Add course" className="button radius success small right" style={style} onClick={this.handleClick} />
   }
 })
 

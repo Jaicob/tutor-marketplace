@@ -1,17 +1,16 @@
 <div class="row">
   <%= form_for @tutor_course do |f| %>
+    <%= hidden_field_tag(:tutor_id, value = @tutor.id) %>
     <%= fields_for :course do |course| %>
       <%= react_component('CourseBox', {
               courseList: false,
-              submitButton: false,
+              submitButton: true,
               tutor_id: @tutor.id
             }, {
               :prerender => false
             }
           ) %>
     <% end %>
-    <%= f.submit 'Add course', class: 'button radius success tiny right' %>
-    <%= hidden_field_tag(:tutor_id, value = @tutor.id) %>
   </div>
 <% end %>
 </div>
