@@ -78,7 +78,7 @@
           console.error("GenericError");
           swal({
             title: "Error!",
-            text: "Please try refreshing the page.",
+            text: "Please refresh the page and try again. If this problem persists, please contact dev@axontutors.com",
             type: "error"
           })
         }
@@ -364,8 +364,8 @@
 
   CourseList = React.createClass({
     editCourse: function(course){
-      console.log('editCourse');
       courseBox = this.props.parent
+      courseId = course.id
 
       busy = function(){
         courseBox.setState({
@@ -389,8 +389,6 @@
         return
       }
 
-      courseId = course.id
-      console.log(courseId);
       swal({
         title: "Adjust your rate for " + course.subject_name + " " + course.call_number,
         type: "input",
@@ -440,6 +438,76 @@
     },
     removeCourse: function(course){
         // TODO: add logic removing a course
+        courseBox = this.props.parent
+        courseId = course.id
+
+        busy = function(){
+          courseBox.setState({
+            busy: true
+          })
+        }
+
+        unbusy = function(){
+          courseBox.setState({
+              busy: false
+          })
+        }
+
+        showFailureMessage = function(){
+          unbusy()
+          courseBox.error("GenericError")
+        }
+
+        if(courseBox.state.busy){ // PREVENTS SIMULTANEOUS MULTIPLE REQUESTS
+          courseBox.error("BusyWithAddRequest");
+          return
+        }
+
+        swal({
+          title: "Are you sure you want to delete " + course.subject_name + " " + course.call_number + "?",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#DD6B55",
+          confirmButtonText: "Yes, remove it!",
+          cancelButtonText: "Cancel",
+          closeOnConfirm: false,
+        }, function(isConfirm){
+          if (isConfirm) {
+            sendRemoveCourseRequest = function(data){
+              if(courseBox.state.busy) return
+              busy()
+              tutorCourseId = data[0].id
+              endpoint = API_LOCATION + '/tutor_courses/' + tutorCourseId
+              removeCourseRequest = $.ajax({
+                url: endpoint,
+                type: "DELETE",
+                success: function(data){
+                  courseBox.getCourses()
+                  swal({
+                    title: "Removed " + course.subject_name + " " + course.call_number + " from your course list.",
+                    timer: 2000,
+                    type: 'success'
+                  })
+                  unbusy()
+                },
+                error: showFailureMessage
+              })
+            }
+
+            endpoint = API_LOCATION + '/tutor_courses/find'
+            findTutorCourse = $.post(endpoint, {
+              tutor_id: courseBox.props.tutor_id,
+              course_id: courseId
+            })
+            findTutorCourse.success(sendRemoveCourseRequest)
+            findTutorCourse.fail(showFailureMessage)
+            swal.close()
+            return true
+          } else {
+            unbusy()
+            return false
+          };
+        })
     },
     render: function(){
       courseList = this

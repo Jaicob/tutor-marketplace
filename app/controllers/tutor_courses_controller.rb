@@ -41,10 +41,9 @@ class TutorCoursesController < ApplicationController
   end
 
   def destroy
-    @tutor_course = TutorCourse.find(params[:id])
-    tutor = @tutor_course.tutor
-    @tutor_course.destroy
-    redirect_to courses_user_path(current_user)
+    TutorCourse.find(params[:id]).destroy
+    render :nothing => true, :status => 200, :content_type => 'text/html'
+    # redirect_to courses_user_path(current_user)
   end
 
 
