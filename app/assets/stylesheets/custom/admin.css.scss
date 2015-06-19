@@ -1,0 +1,50 @@
+/* These classes change the color of the buttons according to status (the last class in each) */
+
+@import "foundation";
+
+/* STATUS BUTTON STYLES */
+/* The classes defined below are for the associated active_status and application_status attributes */
+
+.Active {
+  @include button (
+    $bg: $success-color,
+    $padding: $button-tny,
+    $full-width:true
+  )
+}
+
+.Inactive {
+  @include button(
+    $bg: $secondary-color,
+    $padding: $button-tny,
+    $full-width:true
+  )
+}
+
+.Applied { 
+  @include button(
+    $bg: $info-color,
+    $padding: $button-tny,
+    $full-width:true
+  )
+}
+
+// "Awaiting Approval"
+.Awaiting {
+  @include button(
+    $bg: $alert-color,
+    $padding: $button-tny,
+    $full-width:true
+  )
+}
+
+.Approved {
+  @include button(
+    $padding: $button-tny,
+    $full-width:true
+  )
+}
+
+.delete-tutor-link {
+  color: white;
+}

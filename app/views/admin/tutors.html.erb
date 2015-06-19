@@ -1,26 +1,88 @@
-<h1>List Tutors</h1>
+<header>
+  <div class="row">
+    <div class="large-12 columns">
+      <h1>Tutors</h1>
+    </div>
+  </div>
+</header>
 
-<div class="row">
-  <table>
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Email</th>
-        <th>School</th>
-        <th>Status</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @tutors.each do |tutor| %>
-      <tr>
-        <td><%= tutor.id %></td>
-        <td><%= tutor.user.full_name %></td>
-        <td><%= tutor.user.email %></td>
-        <td><%= tutor.schools %></td>
-        <td><%= tutor.status %></td>
-      </tr>
-      <% end %>
-    </tbody>
-  </table>
+<section>
+  <div class="row">
+    <div class="large-6 columns">
+      <h4>Active Status</h4>
+        <p class="button tiny success">Active</p><br>
+        <p class="button tiny secondary">Inactive</p>
+    </div>
+    <div class="large-6 columns">
+      <h4>Application Status</h4>
+        <p class="button tiny info">Applied</p><br>
+        <p class="button tiny alert">Awaiting Approval</p><br>
+        <p class="button tiny default">Approved</p><br>
+    </div>
+  </div>
+</section>
+
+<main>
+  <div class="row full-width">
+    <div class="large-12 columns">
+      <table>
+        <thead>
+          <tr>
+            <th width="150">Active Status</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>School</th>
+            <th width="150">Application Status</th>
+            <th width="150">Activate</th>
+            <th width="150">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @tutors.each do |tutor| %>
+          <tr>
+            <td><span class="<%= tutor.active_status %>"><%= tutor.active_status %></span></td>
+            </td>
+            <td><%= tutor.user.full_name %></td>
+            <td><%= tutor.user.email %></td>
+            <td><% tutor.schools.each do |school| %>
+                  <%= school %><br>
+                <% end %>
+            </td>
+            <td><span class="<%= tutor.application_status %>"><%= tutor.application_status %></span></td>
+            <td>
+              <% if tutor.active_status == 'Active' %>
+                <%= button_to('Deactivate', '/admin/update_tutor_active_status', method: 'put', params: {tutor_id: tutor.id, active_status: 'Inactive'}, class: 'button tiny alert expand') %>
+              <% else %>
+                <%= button_to('Activate', '/admin/update_tutor_active_status', method: 'put', params: {tutor_id: tutor.id, active_status: 'Active'}, class: 'button tiny success expand') %>
+              <% end %>
+            </td>
+            <td><span class='button tiny expand alert'><a href="#" data-reveal-id="confirmDestroyTutorModal" class='delete-tutor-link'>Delete</a></span></td>
+          </tr>
+
+
+
+<div id="confirmDestroyTutorModal" class="reveal-modal small" data-reveal aria-labelledby="secondModalTitle" aria-hidden="true" role="dialog">
+  <h4 id="secondModalTitle" class="text-center">Are you sure you want to permanently destroy this tutor account?</h4>
+  <h6>You can deactivate the tutor to temporarily disable the account.</h6>
+
+    <div class="row">
+      <div class="small-8 small-centered columns">
+        <div class="text-center">
+          <h2><%= tutor.user.full_name %></h2>
+
+          <%= button_to('Delete', '/admin/destroy_tutor', method: 'delete', params: {tutor_id: tutor.id}, class: 'button expand alert') %>
+        </div>
+      </div>
+    </div>
+
 </div>
+
+
+
+
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>

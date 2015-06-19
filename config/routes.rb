@@ -82,6 +82,7 @@
 #                            PUT    /:id/settings(.:format)                   dashboard#update_settings
 #    change_profile_pic_user PUT    /:id/change_profile_pic(.:format)         dashboard#change_profile_pic
 # save_profile_pic_crop_user PUT    /:id/save_profile_pic_crop(.:format)      dashboard#save_profile_pic_crop
+#                            GET    /admin/tutors(.:format)                   admin#tutors
 #                      upmin        /admin                                    Upmin::Engine
 #                       root GET    /                                         static_pages#home
 #
@@ -133,6 +134,8 @@ Rails.application.routes.draw do
 
   scope :admin do 
     get '/tutors' => 'admin#tutors'
+    put '/update_tutor_active_status' => 'admin#update_tutor_active_status'
+    delete '/destroy_tutor' => 'admin#destroy_tutor'
   end
 
 
