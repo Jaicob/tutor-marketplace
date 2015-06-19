@@ -74,6 +74,14 @@
             type: "error"
           });
         }
+        errors.RateTooHigh = function(){
+          console.error("RateTooHigh!");
+          swal({
+            title: "Woah there!",
+            text: "Your rate is too high.",
+            type: "error"
+          })
+        }
         errors.GenericError = function(){
           console.error("GenericError");
           swal({
@@ -90,7 +98,7 @@
             <SchoolField parent={this} />
             <SubjectField parent={this} school={this.state.selectedSchool} />
             <CourseField parent={this} school={this.state.selectedSchool} subject={this.state.selectedSubject} />
-            <RateField parent={this} />
+            <RateField parent={this} course={this.state.selectedCourse} />
             { this.option("submitButton") }
             { this.option("courseList") }
         </div>
@@ -227,15 +235,26 @@
       })
     },
     render: function(){
+      field = <input type="number"
+                     disabled={this.props.course == ""}
+                     name="tutor_course[rate]"
+                     placeholder="Rate"
+                     onChange={this.update} />
       return (
         <div className="medium-3 columns">
-          <input type="number"
-                      name="tutor_course[rate]"
-                      placeholder="$USD per hour"
-                      disabled={this.props.parent.selectedCourse == ""}
-                      onChange={this.update} />
+          <div className="row collapse">
+            <div className="small-2 large-2 columns">
+              <span className="prefix">$</span>
+            </div>
+            <div className="small-7 medium-4 large-5 columns">
+              {field}
+            </div>
+            <div className="small-3 medium-6 large-5 columns">
+              <span className="postfix" style={{"borderLeft":"0"}}>per hour</span>
+            </div>
+          </div>
         </div>
-              )
+      )
     }
   })
 
@@ -326,6 +345,8 @@
         info.courseBox.error("NoCourseSelected")
       } else if(!isPositiveInteger(info.currentCourseRate)){  // VALIDATES COURSE RATE
         info.courseBox.error("InvalidCourseRate")
+      } else if(info.currentCourseRate > 999){
+        info.courseBox.error("RateTooHigh")
       } else if(duplicates){ // VALIDATES IF COURSE IS IN TUTOR'S COURSE LIST
         info.courseBox.error("CourseAlreadyAdded")
       } else { // PASSES VALIDATION
@@ -464,7 +485,7 @@
         }
 
         swal({
-          title: "Are you sure you want to delete " + course.subject_name + " " + course.call_number + "?",
+          title: "Are you sure you want to remove " + course.subject_name + " " + course.call_number + " from your course list?",
           type: "warning",
           showCancelButton: true,
           confirmButtonColor: "#DD6B55",
