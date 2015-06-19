@@ -1,9 +1,8 @@
 <div class="row">
   <%= form_for @tutor_course do |f| %>
-    <%= hidden_field_tag(:tutor_id, value = @tutor.id) %>
     <%= fields_for :course do |course| %>
       <%= react_component('CourseBox', {
-              courseList: false,
+              courseList: true,
               submitButton: true,
               tutor_id: @tutor.id
             }, {

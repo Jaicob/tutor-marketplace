@@ -19,6 +19,7 @@
 //= require components
 //= require foundation
 //= require_tree .
+//= require sweet-alert
 $(function() {
   $(document).foundation();
 });

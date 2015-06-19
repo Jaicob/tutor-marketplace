@@ -28,6 +28,7 @@ gem 'carrierwave'
 gem 'rmagick'
 gem 'foundation-icons-sass-rails'
 gem 'react-rails', '~> 1.0'
+gem 'sweetalert-rails'
 group :development do
   gem 'better_errors'
   gem 'rails_layout'

@@ -8,17 +8,13 @@ class CoursesController < ApplicationController
       # get all tutor-course id pairings
       tutor_courses = TutorCourse.where(course_params)
 
-      # extract course ids for each tutor-course pairings
-      tutor_course_ids = tutor_courses.map { |tutor_course| tutor_course.id }
-
       # merges rate from the tutor_course object with the course object
-      courses = tutor_course_ids.map { |tutor_course_id|
-        tutor_course = TutorCourse.find(tutor_course_id)
+      courses = tutor_courses.map do |tutor_course|
         course = Course.find(tutor_course.course.id)
         course.attributes.merge({rate: tutor_course.rate,
                                  school_name: course.school_name,
                                  subject_name: course.subject_name})
-      }
+      end
 
       render json: courses
     else

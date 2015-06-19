@@ -112,6 +112,7 @@ Rails.application.routes.draw do
     end
   end
   resources :tutor_courses
+  post 'tutor_courses/find' => 'tutor_courses#find'
   resources :courses
   resources :subjects
   resources :schools

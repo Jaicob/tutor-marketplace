@@ -26,5 +26,3 @@ class TutorCourse < ActiveRecord::Base
 
 
 end
-
-
