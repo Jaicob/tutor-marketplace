@@ -26,8 +26,12 @@ ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
 
+  config.include FactoryGirl::Syntax::Methods
+  config.include Devise::TestHelpers, type: :controller
+  config.include Warden::Test::Helpers
+
   # Add LoginMacros to enable sign_in method
-  config.include LoginMacros
+  # config.include LoginMacros
 
   # To fix a compatability issue with Spring and Factory Girl
   # details here: https://github.com/thoughtbot/factory_girl_rails/issues/120
