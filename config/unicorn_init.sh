@@ -1,6 +1,6 @@
 # Feel free to change any of the following variables for your app:
-
 # ubuntu is the default user on Amazon's EC2 Ubuntu instances.
+echo "Starting Unicorn"
 USER=rails
 
 # Replace [PATH_TO_RAILS_ROOT_FOLDER] with your application's path. I prefer
@@ -25,8 +25,8 @@ DESC="Unicorn app - $RAILS_ENV"
 # working properly:
 RBENV_RUBY_VERSION=2.2.0
 RBENV_ROOT="/home/$USER/.rbenv"
-PATH="$RBENV_ROOT/bin:$PATH"
-SET_PATH="cd $APP_ROOT && rbenv rehash && rbenv local $RBENV_RUBY_VERSION"
+PATH="$RBENV_ROOT/bin:$RBENV_ROOT/shims:$PATH"
+SET_PATH="cd $APP_ROOT; rbenv rehash; rbenv local $RBENV_RUBY_VERSION"
 
 # Unicorn can be run using `bundle exec unicorn` or `bin/unicorn`.
 UNICORN="bundle exec unicorn"
@@ -154,3 +154,5 @@ case $action in
     exit 1
     ;;
 esac
+
+echo "made it to end of script"

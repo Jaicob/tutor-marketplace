@@ -15,7 +15,7 @@ MAINTAINER jaicob(jaicob@icloud.com)
 RUN chown -R www-data:www-data /var/lib/nginx
 
 # Add default nginx config
-ADD nginx-sites.conf /etc/nginx/sites-enabled/default
+ADD ./config/nginx-sites.conf /etc/nginx/sites-enabled/default
 #RUN service nginx reload && service nginx restart
 
 # for postgres
@@ -70,6 +70,6 @@ ADD ./run.sh /etc/web-app/run.sh
 
 # Set environment variables
 ENV RAILS_ENV development
-
+USER root
 EXPOSE 80
 CMD /bin/bash /etc/web-app/run.sh
