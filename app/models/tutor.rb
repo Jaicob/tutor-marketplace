@@ -25,7 +25,7 @@ class Tutor < ActiveRecord::Base
   belongs_to :user
   has_many :tutor_courses, dependent: :destroy
   has_many :courses, through: :tutor_courses, dependent: :destroy
-  enum status: [:applied, :awaiting_approval, :approved]
+  enum status: [:Applied, :Awaiting_Approval, :Approved]
 
   # Carrierwave setup for uploading files
   mount_uploader :profile_pic, ProfilePicUploader
@@ -47,4 +47,15 @@ class Tutor < ActiveRecord::Base
     profile_pic.recreate_versions! if crop_x.present?
   end
 
+  def schools
+    schools = []
+    self.courses.each do |course|
+      if !schools.include?(course.school_name)
+        schools << course.school_name
+      end
+    end
+    schools
+  end
+
 end
+

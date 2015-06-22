@@ -44,7 +44,7 @@ class DashboardController < ApplicationController
       if @user.tutor
         @tutor.update(tutor_params[:tutor])
       end
-      redirect_to settings_user_path(@user)
+      redirect_to settings_user_path(@user)  
     else
       redirect_to settings_user_path(@user), notice: "Error saving changes."
     end

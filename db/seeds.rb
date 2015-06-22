@@ -14,7 +14,7 @@ school_list = [
   [ "University of Georgia", "Athens, GA" ],
   [ "Duke University", "Durham, NC" ],
   [ "Clemson University", "Clemson, SC" ]
-]
+] 
 
 school_list.each do |name, location|
   School.create( name: name, location: location )
