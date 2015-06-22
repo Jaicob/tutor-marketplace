@@ -3,9 +3,12 @@ require 'rails_helper'
 describe DashboardController do
   let(:user) { create(:user) }
   let(:tutor) { create(:complete_tutor) }
+  let(:tutor_stub) { create(:tutor) }
 
+
+  # This before action is skipped on tests where the Tutor model (rather than just the User model) is affected because the two must be linked together on those, so 'login_with tutor.user'is called on the first line of those specs
   before :each do |example|
-    unless example.metadata[:skip_before]
+    unless example.metadata[:skip_first_before]
       login_with user
     end
   end
@@ -21,6 +24,14 @@ describe DashboardController do
       get :home, id: user
       expect(assigns(:user)).to eq user
     end
+
+    context 'when a user has a tutor account' do
+    
+      it "assigns @tutor to user's tutor" do
+        get :home, id: user
+        expect(assigns(:tutor)).to eq user.tutor
+      end
+    end
   end
 
   describe 'GET #schedule' do
@@ -33,6 +44,11 @@ describe DashboardController do
     it "assigns the current user to @user" do 
       get :schedule, id: user
       expect(assigns(:user)).to eq user
+    end
+  
+    it "assigns @tutor to user's tutor" do
+      get :schedule, id: user
+      expect(assigns(:tutor)).to eq user.tutor
     end
   end
 
@@ -47,6 +63,11 @@ describe DashboardController do
       get :courses, id: user
       expect(assigns(:user)).to eq user
     end
+
+    it "assigns @tutor to user's tutor" do
+      get :courses, id: user
+      expect(assigns(:tutor)).to eq user.tutor
+    end
   end
 
   describe 'GET #profile' do
@@ -60,11 +81,16 @@ describe DashboardController do
       get :profile, id: user
       expect(assigns(:user)).to eq user
     end 
+
+    it "assigns @tutor to user's tutor" do
+      get :profile, id: user
+      expect(assigns(:tutor)).to eq user.tutor
+    end
   end
 
   describe 'PUT #update_profile' do
 
-    it "updates a tutors's major", :skip_before do
+    it "updates a tutors's major", :skip_first_before do
       login_with tutor.user
       put :update_profile, id: tutor.user, data: {tutor: {major: 'Astrology'}}
       expect(response).to redirect_to profile_user_path(tutor.user)
@@ -72,7 +98,7 @@ describe DashboardController do
       expect(tutor.major).to eq('Astrology')
     end
 
-    it "updates a tutors's degree", :skip_before do
+    it "updates a tutors's degree", :skip_first_before do
       login_with tutor.user
       put :update_profile, id: tutor.user, data: {tutor: {degree: 'PhD XYZ'}}
       expect(response).to redirect_to profile_user_path(tutor.user)
@@ -80,7 +106,7 @@ describe DashboardController do
       expect(tutor.degree).to eq('PhD XYZ')
     end
 
-    it "updates a tutors's graduation_year", :skip_before do
+    it "updates a tutors's graduation_year", :skip_first_before do
       login_with tutor.user
       put :update_profile, id: tutor.user, data: {tutor: {graduation_year: '2020'}}
       expect(response).to redirect_to profile_user_path(tutor.user)
@@ -88,14 +114,13 @@ describe DashboardController do
       expect(tutor.graduation_year).to eq('2020')
     end
 
-    it "updates a tutors's extra_info", :skip_before do
+    it "updates a tutors's extra_info", :skip_first_before do
       login_with tutor.user
       put :update_profile, id: tutor.user, data: {tutor: {extra_info: 'Party on Wayne'}}
       expect(response).to redirect_to profile_user_path(tutor.user)
       tutor.reload
       expect(tutor.extra_info).to eq('Party on Wayne')
     end
-
   end
 
   describe 'PUT #change_profile_pic' do
@@ -117,6 +142,11 @@ describe DashboardController do
       get :settings, id: user
       expect(assigns(:user)).to eq user
     end 
+
+    it "assigns @tutor to user's tutor" do
+      get :settings, id: user
+      expect(assigns(:tutor)).to eq user.tutor
+    end
   end
 
   describe 'PUT #update_settings' do
@@ -142,43 +172,39 @@ describe DashboardController do
       expect(user.email).to eq('new-email@example.com')
     end
 
-    it "updates a tutor's first_name", :skip_before do
+    it "updates a tutor's first_name", :skip_first_before do
       login_with tutor.user
       put :update_settings, id: tutor.user, data: {
         user: {first_name: 'Ricky'},
-        tutor: {phone_number: tutor.phone_number} # No change here, but need some tutor data to make action work
       }
       expect(response).to redirect_to settings_user_path(tutor.user)
       tutor.reload
       expect(tutor.user.first_name).to eq('Ricky')
     end
 
-    it "updates a tutor's last_name", :skip_before do
+    it "updates a tutor's last_name", :skip_first_before do
       login_with tutor.user
       put :update_settings, id: tutor.user, data: {
-        user: {last_name: 'Ricardo'},
-        tutor: {phone_number: tutor.phone_number} # No change here, but need some tutor data to make action work
+        user: {last_name: 'Ricardo'}
       }
       expect(response).to redirect_to settings_user_path(tutor.user)
       tutor.reload
       expect(tutor.user.last_name).to eq('Ricardo')
     end
 
-    it "updates a tutor's email", :skip_before do
+    it "updates a tutor's email", :skip_first_before do
       login_with tutor.user
       put :update_settings, id: tutor.user, data: {
-        user: {email: 'new-email@example.com'},
-        tutor: {phone_number: tutor.phone_number} # No change here, but need some tutor data to make action work
+        user: {email: 'new-email@example.com'}
       }
       expect(response).to redirect_to settings_user_path(tutor.user)
       tutor.reload
       expect(tutor.user.email).to eq('new-email@example.com')
     end
 
-    it "updates a tutor's birthdate", :skip_before do
+    it "updates a tutor's birthdate", :skip_first_before do
       login_with tutor.user
       put :update_settings, id: tutor.user, data: {
-        user: {email: tutor.user.email },
         tutor: {birthdate: Date.today }
       }
       expect(response).to redirect_to settings_user_path(tutor.user)
@@ -186,18 +212,57 @@ describe DashboardController do
       expect(tutor.birthdate).to eq(Date.today)
     end
 
-    it "updates a tutor's phone_number", :skip_before do
+    it "updates a tutor's phone_number", :skip_first_before do
       login_with tutor.user
       put :update_settings, id: tutor.user, data: {
-        user: {email: tutor.user.email },
         tutor: {phone_number: '333-333-3333' }
       }
       expect(response).to redirect_to settings_user_path(tutor.user)
       tutor.reload
       expect(tutor.phone_number).to eq('333-333-3333')
     end 
+  end
+
+  describe 'GET #tutors_index' do
+
+    it "renders the :tutors template for admin users" do 
+      get :tutors_index, id: user
+      expect(response).to render_template :tutors_index
+    end
+
+    it "does not allow access to non-admin" do
+      skip 'need to settle on how to designate admins before this can be tested'
+    end
+    
+    it "assings all tutors to @tutors" do
+      tutor
+      get :tutors_index, id: user
+      expect(assigns(:tutors)).to eq([tutor])
+    end
+  end
+
+  describe 'PUT #update_tutor_active_status' do
+
+    it "allows an admin user to activate an inactive tutor" do 
+      skip 'still working to make this work...work'
+      tutor
+      put :update_tutor_active_status, id: user, tutor_id: "#{tutor.id}", active_status: 'Active'
+      expect(response).to redirect_to tutors_user_path(user)
+      expect(@tutors).to eq tutor
+    end
+
+    it "allows an admin user to deactivate an active tutor" do
+    end
+
+    it "does not allow a non-admin user to activate an inactive tutor" do 
+    end
+
+    it "does not allow a non-admin user to deactivate an active tutor" do
+    end
 
   end
 
-end
+  describe 'DELETE #destroy_tutor' do 
+  end
 
+end

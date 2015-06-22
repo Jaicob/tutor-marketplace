@@ -28,9 +28,10 @@ FactoryGirl.define do
       end
   
       factory :complete_tutor do
-        user
+        association :user, factory: :alternate_user # To avoid validation restrictions with independent user factory v. this user that is genrated as part of a tutor factory
         rating 1
-        status 1
+        active_status 0
+        application_status 0
         birthdate "2015-05-28"
         degree "B.A."
         major "Biology"

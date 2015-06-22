@@ -40,14 +40,15 @@ class DashboardController < ApplicationController
 
   def update_settings
     # The settings form updates two models, so the params for the User and Tutor models are nested inside the :data params hash and have to targeted below
-    if @user.update(user_params[:user])
-      if @user.tutor
-        @tutor.update(tutor_params[:tutor])
-      end
-      redirect_to settings_user_path(@user)  
-    else
-      redirect_to settings_user_path(@user), notice: "Error saving changes."
+    if user_params[:user]
+      @user.update(user_params[:user])
     end
+
+    if tutor_params[:tutor]
+      @tutor.update(tutor_params[:tutor])
+    end
+    
+    redirect_to settings_user_path(@user)
   end
 
   # Admin actions below
@@ -60,10 +61,10 @@ class DashboardController < ApplicationController
     @tutor = Tutor.find(params[:tutor_id])
     if @tutor.update_attributes(active_status: params[:active_status])
       flash[:notice] = 'Tutor active status was succesfully updated.'
-      redirect_to '/admin/tutors'
+      redirect_to tutors_user_path(@user)
     else
       flash[:error] = 'Tutor active status was not updated.'
-      redirect_to '/admin/tutors'
+      redirect_to tutors_user_path(@user)
     end
   end
 
@@ -71,10 +72,10 @@ class DashboardController < ApplicationController
     @tutor = @tutor = Tutor.find(params[:tutor_id])
     if @tutor.destroy
       flash[:notice] = "Tutor account was succesfully deleted."
-      redirect_to '/admin/tutors'
+      redirect_to tutors_user_path(@user)
     else
       flash[:error] = "Tutor account was not deleted."
-      redirect_to '/admin/tutors'
+      redirect_to tutors_user_path(@user)
     end
   end
 

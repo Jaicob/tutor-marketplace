@@ -3,6 +3,8 @@ require 'rails_helper'
 describe TutorsController do
   let(:user) { create(:user) }
   let(:course) { create(:course) }
+  let(:tutor_stub) { build_stubbed(:tutor) }
+  let(:tutor) { create(:complete_tutor) }
 
   describe 'GET #new' do
 
@@ -14,6 +16,19 @@ describe TutorsController do
     it "it renders the :new template" do
       get :new 
       expect(response).to render_template :new
+    end
+  end
+
+  describe 'GET #show' do 
+  
+    it "assigns the correct tutor to @tutor" do
+      get :show, id: tutor.user.id
+      expect(assigns(:tutor)).to eq tutor
+    end
+
+    it "renders the :show template" do 
+      get :show, id: tutor.user.id
+      expect(response).to render_template :show
     end
   end
 
@@ -79,7 +94,7 @@ describe TutorsController do
             tutor_course: {rate: 25}
           }
         }.to change(Tutor, :count).by(1)
-        expect(response).to redirect_to register_or_sign_in_tutor_path(@tutor.id)
+        expect(response).to redirect_to register_or_sign_in_tutor_path(Tutor.last.id)
       end
     
     end
@@ -101,28 +116,23 @@ describe TutorsController do
   
   end
 
-
   describe 'GET #register_or_sign_in' do 
     it "renders the register_or_sign_in template" do
-      tutor = create(:tutor) 
-      get :register_or_sign_in, {id: tutor.id}
+      get :register_or_sign_in, {id: tutor_stub.id}
       expect(response).to render_template :register_or_sign_in
     end 
   end
 
   describe 'GET  #visitor_sign_in' do
     it "renders the visitor_sign_in template" do 
-      tutor = create(:tutor)
-      get  :visitor_sign_in, {id: tutor.id}
+      get  :visitor_sign_in, {id: tutor_stub.id}
       expect(response).to render_template :visitor_sign_in
     end
   end
 
-
   describe 'GET #visitor_sign_up' do 
     it "renders the visitor_sign_up template" do
-      tutor = create(:tutor)
-      get :visitor_sign_up, {id: tutor.id}
+      get :visitor_sign_up, {id: tutor_stub.id}
       expect(response).to render_template :visitor_sign_up
     end
   end

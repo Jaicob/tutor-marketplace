@@ -46,5 +46,15 @@ FactoryGirl.define do
       role 'admin'
     end
 
+    factory :alternate_user do
+      confirmed_at Time.now
+      first_name "Randy"
+      last_name "Marsh"
+      email "iamlorde@example.com"
+      password "ohhhyeah"
+      slug "iamlordelalala"
+    end
+
+
   end
 end

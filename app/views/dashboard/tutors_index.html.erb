@@ -70,7 +70,7 @@
                   <div class="text-center">
                     <h2><%= tutor.user.full_name %></h2>
 
-                    <%= button_to('Activate', '/admin/update_tutor_active_status', method: 'put', params: {tutor_id: tutor.id, active_status: 'Active'}, class: 'button success expand') %>
+                    <%= button_to('Activate', update_tutor_active_status_user_path(current_user), method: 'put', params: {tutor_id: tutor.id, active_status: 'Active'}, class: 'button success expand') %>
 
                   </div>
                 </div>
@@ -88,7 +88,7 @@
                   <div class="text-center">
                     <h2><%= tutor.user.full_name %></h2>
 
-                    <%= button_to('Deactivate', '/admin/update_tutor_active_status', method: 'put', params: {tutor_id: tutor.id, active_status: 'Inactive'}, class: 'button alert expand') %>
+                    <%= button_to('Deactivate', update_tutor_active_status_user_path(current_user), method: 'put', params: {tutor_id: tutor.id, active_status: 'Inactive'}, class: 'button alert expand') %>
 
                   </div>
                 </div>

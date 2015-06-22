@@ -82,6 +82,8 @@ Rails.application.routes.draw do
   resources :tutor_courses, only: [:new, :create, :update, :destroy]
   devise_for :users
 
+  # Use resources / polymorphic resources
+
   resources :users, only: [], path: '' do 
     member do       
       get  '/dashboard' => 'dashboard#home'
