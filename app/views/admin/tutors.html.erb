@@ -40,7 +40,8 @@
         <tbody>
           <% @tutors.each do |tutor| %>
           <tr>
-            <td><span class="<%= tutor.active_status %>"><%= tutor.active_status %></span></td>
+            <td>
+              <span class="<%= tutor.active_status %>"><a href="#" data-reveal-id="confirmChangeTutorModal" class='delete-tutor-link'><%= tutor.active_status %></a></span></td>
             </td>
             <td><%= tutor.user.full_name %></td>
             <td><%= tutor.user.email %></td>
@@ -59,27 +60,41 @@
             <td><span class='button tiny expand alert'><a href="#" data-reveal-id="confirmDestroyTutorModal" class='delete-tutor-link'>Delete</a></span></td>
           </tr>
 
+            <!-- Modal to confirm Tutor activation/de-activation -->
+            
+            <div id="confirmChangeTutorModal" class="reveal-modal small" data-reveal aria-labelledby="secondModalTitle" aria-hidden="true" role="dialog">
+              <h4 id="secondModalTitle" class="text-center">Are you sure you want to activate this tutor?</h4>
+              <h6>You can deactivate the tutor to temporarily disable the account.</h6>
 
+                <div class="row">
+                  <div class="small-8 small-centered columns">
+                    <div class="text-center">
+                      <h2><%= tutor.user.full_name %></h2>
 
-<div id="confirmDestroyTutorModal" class="reveal-modal small" data-reveal aria-labelledby="secondModalTitle" aria-hidden="true" role="dialog">
-  <h4 id="secondModalTitle" class="text-center">Are you sure you want to permanently destroy this tutor account?</h4>
-  <h6>You can deactivate the tutor to temporarily disable the account.</h6>
+                      <%= button_to('Delete', '/admin/destroy_tutor', method: 'delete', params: {tutor_id: tutor.id}, class: 'button expand alert') %>
+                    </div>
+                  </div>
+                </div>
 
-    <div class="row">
-      <div class="small-8 small-centered columns">
-        <div class="text-center">
-          <h2><%= tutor.user.full_name %></h2>
+            </div>
 
-          <%= button_to('Delete', '/admin/destroy_tutor', method: 'delete', params: {tutor_id: tutor.id}, class: 'button expand alert') %>
-        </div>
-      </div>
-    </div>
+            <!-- Modal to confirm Tutor deletion -->
 
-</div>
+            <div id="confirmDestroyTutorModal" class="reveal-modal small" data-reveal aria-labelledby="secondModalTitle" aria-hidden="true" role="dialog">
+              <h4 id="secondModalTitle" class="text-center">Are you sure you want to permanently destroy this tutor account?</h4>
+              <h6>You can deactivate the tutor to temporarily disable the account.</h6>
 
+                <div class="row">
+                  <div class="small-8 small-centered columns">
+                    <div class="text-center">
+                      <h2><%= tutor.user.full_name %></h2>
 
+                      <%= button_to('Delete', '/admin/destroy_tutor', method: 'delete', params: {tutor_id: tutor.id}, class: 'button expand alert') %>
+                    </div>
+                  </div>
+                </div>
 
-
+            </div>
           <% end %>
         </tbody>
       </table>
