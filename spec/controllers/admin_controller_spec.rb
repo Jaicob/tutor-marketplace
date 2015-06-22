@@ -1,5 +1,7 @@
 require 'rails_helper'
 
+### Move these specs to dashboard_controller_spec.rb
+
 describe AdminController do 
 
   describe 'GET #tutors' do

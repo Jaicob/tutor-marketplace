@@ -2,23 +2,21 @@
 #
 # Table name: tutors
 #
-#  id                      :integer          not null, primary key
-#  user_id                 :integer
-#  rating                  :integer
-#  status                  :integer          default(0)
-#  birthdate               :date
-#  degree                  :string
-#  major                   :string
-#  extra_info              :string
-#  graduation_year         :string
-#  phone_number            :string
-#  created_at              :datetime         not null
-#  updated_at              :datetime         not null
-#  transcript_file_name    :string
-#  transcript_content_type :string
-#  transcript_file_size    :integer
-#  transcript_updated_at   :datetime
-#  profile_pic             :string
+#  id                 :integer          not null, primary key
+#  user_id            :integer
+#  rating             :integer
+#  application_status :integer          default(0)
+#  birthdate          :date
+#  degree             :string
+#  major              :string
+#  extra_info         :string
+#  graduation_year    :string
+#  phone_number       :string
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  profile_pic        :string
+#  transcript         :string
+#  active_status      :integer          default(0)
 #
 
 FactoryGirl.define do

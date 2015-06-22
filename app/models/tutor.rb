@@ -2,30 +2,29 @@
 #
 # Table name: tutors
 #
-#  id                      :integer          not null, primary key
-#  user_id                 :integer
-#  rating                  :integer
-#  status                  :integer          default(0)
-#  birthdate               :date
-#  degree                  :string
-#  major                   :string
-#  extra_info              :string
-#  graduation_year         :string
-#  phone_number            :string
-#  created_at              :datetime         not null
-#  updated_at              :datetime         not null
-#  transcript_file_name    :string
-#  transcript_content_type :string
-#  transcript_file_size    :integer
-#  transcript_updated_at   :datetime
-#  profile_pic             :string
+#  id                 :integer          not null, primary key
+#  user_id            :integer
+#  rating             :integer
+#  application_status :integer          default(0)
+#  birthdate          :date
+#  degree             :string
+#  major              :string
+#  extra_info         :string
+#  graduation_year    :string
+#  phone_number       :string
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  profile_pic        :string
+#  transcript         :string
+#  active_status      :integer          default(0)
 #
 
 class Tutor < ActiveRecord::Base
   belongs_to :user
   has_many :tutor_courses, dependent: :destroy
   has_many :courses, through: :tutor_courses, dependent: :destroy
-  enum status: [:Applied, :Awaiting_Approval, :Approved]
+  enum application_status: ['Applied', 'Awaiting Approval', 'Approved']
+  enum active_status: [:Inactive, :Active]
 
   # Carrierwave setup for uploading files
   mount_uploader :profile_pic, ProfilePicUploader
@@ -55,6 +54,15 @@ class Tutor < ActiveRecord::Base
       end
     end
     schools
+  end
+
+  def application_status
+    # This method overrides the built-in attribute method. It returns 'Awaiting Approval' only if all fields have been completed, otherwise it returns "Applied"
+    if self.birthdate && self.degree && self.major && self.extra_info && self.graduation_year && self.phone_number && self.profile_pic.url != 'panda.png' && self.transcript.url
+      'Awaiting Approval'
+    else
+      'Applied'
+    end
   end
 
 end

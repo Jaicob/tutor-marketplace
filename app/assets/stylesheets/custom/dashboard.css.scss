@@ -60,3 +60,65 @@ a:hover p.profile-pic-text {
   display: inline-block;
   padding: 1em;
 }
+
+
+
+
+/*=======================================================
+CSS FOR ADMIN SECTION
+========================================================*/
+
+/* STATUS BUTTON STYLES 
+  The classes defined below are for the associated active_status and application_status attributes 
+*/
+
+@import "foundation";
+
+
+.Active {
+  @include button (
+    $bg: $success-color,
+    $padding: $button-tny,
+    $full-width:true
+  )
+}
+
+.Inactive {
+  @include button(
+    $bg: $secondary-color,
+    $padding: $button-tny,
+    $full-width:true
+  )
+}
+
+.Applied { 
+  @include button(
+    $bg: $info-color,
+    $padding: $button-tny,
+    $full-width:true
+  )
+}
+
+// "Awaiting Approval"
+.Awaiting {
+  @include button(
+    $bg: $alert-color,
+    $padding: $button-tny,
+    $full-width:true
+  )
+}
+
+.Approved {
+  @include button(
+    $padding: $button-tny,
+    $full-width:true
+  )
+}
+
+.white-link-text {
+  color: #fff;
+}
+
+.black-link-text {
+  color: #000;
+}
