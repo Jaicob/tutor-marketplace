@@ -7,6 +7,8 @@
 #       create_tutor_course_tutor POST   /tutors/:id/create_tutor_course(.:format) tutors#create_tutor_course
 #              visitor_new_tutors GET    /tutors/visitor_new(.:format)             tutors#visitor_new
 #           visitor_create_tutors POST   /tutors/visitor_create(.:format)          tutors#visitor_create
+#                          tutors POST   /tutors(.:format)                         tutors#create
+#                       new_tutor GET    /tutors/new(.:format)                     tutors#new
 #                   tutor_courses POST   /tutor_courses(.:format)                  tutor_courses#create
 #                new_tutor_course GET    /tutor_courses/new(.:format)              tutor_courses#new
 #                    tutor_course PATCH  /tutor_courses/:id(.:format)              tutor_courses#update
@@ -63,7 +65,7 @@
 #
 
 Rails.application.routes.draw do
-  resources :tutors, only: [] do
+  resources :tutors, only: [:new, :create] do
     member do
       get 'register_or_sign_in'
       get 'visitor_sign_in'
