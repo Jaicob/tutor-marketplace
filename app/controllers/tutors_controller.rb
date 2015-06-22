@@ -1,7 +1,6 @@
 class TutorsController < ApplicationController
   before_action :set_tutor, only: [:edit, :update, :register_or_sign_in, :visitor_sign_in, :visitor_sign_up, :create_tutor_course]
 
-
   def index
     @tutors = Tutor.all
   end
