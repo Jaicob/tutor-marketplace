@@ -2,32 +2,21 @@ require 'rails_helper'
 
 describe AdminController do 
 
-  describe 'GET #tutors' do 
-    it "assings all tutors to @tutors" do
-       
-    end
+  describe 'GET #tutors' do
+    let(:tutor) { create(:tutor) } 
 
     it "renders the :tutors template" do 
       get :tutors
       expect(response).to render_template :tutors
     end
-  end
-
-
-    describe 'GET #home' do
-    it "assigns the current tutor to @tutor" do
-      tutor = create(:tutor)
-      get :home
-      expect(assigns(:tutor)).to eq tutor
-    end 
-
-    it "renders the :home template" do 
-      get :home
-      expect(response).to render_template :home
+    
+    it "assings all tutors to @tutors" do
+      tutor
+      get :tutors
+      expect(assigns(:tutors)).to eq([tutor])
     end
+    
   end
-
-
 
 end
 

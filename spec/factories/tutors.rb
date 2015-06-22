@@ -24,6 +24,10 @@
 FactoryGirl.define do
   factory :tutor do
     extra_info "Student Research Assistant for Biology Department"
+
+      factory :invalid_tutor do
+        extra_info nil
+      end
   
       factory :complete_tutor do
         user

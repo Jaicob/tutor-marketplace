@@ -39,7 +39,7 @@ class TutorsController < ApplicationController
       redirect_to register_or_sign_in_tutor_path(@tutor)
     else
       flash[:error] = "Tutor account was not created. Please fill in all fields and attach your unofficial transcript."
-      render :new
+      render :visitor_new
     end
   end
 
