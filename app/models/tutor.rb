@@ -56,5 +56,14 @@ class Tutor < ActiveRecord::Base
     schools
   end
 
+  def application_status
+    # This method overrides the built-in attribute method. It returns 'Awaiting Approval' only if all fields have been completed, otherwise it returns "Applied"
+    if self.birthdate && self.degree && self.major && self.extra_info && self.graduation_year && self.phone_number && self.profile_pic.url != 'panda.png' && self.transcript.url
+      'Awaiting Approval'
+    else
+      'Applied'
+    end
+  end
+
 end
 

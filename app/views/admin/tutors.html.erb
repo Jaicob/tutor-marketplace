@@ -29,11 +29,10 @@
         <thead>
           <tr>
             <th width="150">Active Status</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>School</th>
+            <th width="250">Name</th>
+            <th width="300">Email</th>
+            <th width="250">School</th>
             <th width="150">Application Status</th>
-            <th width="150">Activate</th>
             <th width="150">Delete</th>
           </tr>
         </thead>
@@ -41,7 +40,11 @@
           <% @tutors.each do |tutor| %>
           <tr>
             <td>
-              <span class="<%= tutor.active_status %>"><a href="#" data-reveal-id="confirmChangeTutorModal" class='delete-tutor-link'><%= tutor.active_status %></a></span></td>
+              <% if tutor.active_status == 'Active' %>
+                <span class="button tiny success expand"><a href="#" data-reveal-id="confirmTutorDeactivationModal-<%= tutor.id %>" class="white-link-text"><%= tutor.active_status %></a></span></td>
+              <% else %>
+                <span class="button tiny secondary expand"><a href="#" data-reveal-id="confirmTutorActivationModal-<%= tutor.id %>" class="black-link-text"><%= tutor.active_status %></a></span></td>
+              <% end %>
             </td>
             <td><%= tutor.user.full_name %></td>
             <td><%= tutor.user.email %></td>
@@ -49,53 +52,90 @@
                   <%= school %><br>
                 <% end %>
             </td>
-            <td><span class="<%= tutor.application_status %>"><%= tutor.application_status %></span></td>
-            <td>
-              <% if tutor.active_status == 'Active' %>
-                <%= button_to('Deactivate', '/admin/update_tutor_active_status', method: 'put', params: {tutor_id: tutor.id, active_status: 'Inactive'}, class: 'button tiny alert expand') %>
-              <% else %>
-                <%= button_to('Activate', '/admin/update_tutor_active_status', method: 'put', params: {tutor_id: tutor.id, active_status: 'Active'}, class: 'button tiny success expand') %>
-              <% end %>
+            <td><span class="<%= tutor.application_status %>">
+                  <a href="#" data-reveal-id="tutorDocumentsModal-<%= tutor.id %>" class="black-link-text"><%= tutor.application_status %></a>
+                </span>
             </td>
-            <td><span class='button tiny expand alert'><a href="#" data-reveal-id="confirmDestroyTutorModal" class='delete-tutor-link'>Delete</a></span></td>
+            <td><span class="button tiny secondary expand"><a href="#" data-reveal-id="confirmDestroyTutorModal-<%= tutor.id %>" class="black-link-text">Delete</a></span></td>
           </tr>
 
-            <!-- Modal to confirm Tutor activation/de-activation -->
+            <!-- Modal to confirm Tutor activation -->
             
-            <div id="confirmChangeTutorModal" class="reveal-modal small" data-reveal aria-labelledby="secondModalTitle" aria-hidden="true" role="dialog">
+            <div id="confirmTutorActivationModal-<%= tutor.id %>" class="reveal-modal small" data-reveal aria-labelledby="secondModalTitle" aria-hidden="true" role="dialog">
+
               <h4 id="secondModalTitle" class="text-center">Are you sure you want to activate this tutor?</h4>
-              <h6>You can deactivate the tutor to temporarily disable the account.</h6>
 
-                <div class="row">
-                  <div class="small-8 small-centered columns">
-                    <div class="text-center">
-                      <h2><%= tutor.user.full_name %></h2>
+              <div class="row">
+                <div class="small-8 small-centered columns">
+                  <div class="text-center">
+                    <h2><%= tutor.user.full_name %></h2>
 
-                      <%= button_to('Delete', '/admin/destroy_tutor', method: 'delete', params: {tutor_id: tutor.id}, class: 'button expand alert') %>
-                    </div>
+                    <%= button_to('Activate', '/admin/update_tutor_active_status', method: 'put', params: {tutor_id: tutor.id, active_status: 'Active'}, class: 'button success expand') %>
+
                   </div>
                 </div>
-
+              </div>
             </div>
+
+            <!-- Modal to confirm Tutor de-activation -->
+
+            <div id="confirmTutorDeactivationModal-<%= tutor.id %>" class="reveal-modal small" data-reveal aria-labelledby="secondModalTitle" aria-hidden="true" role="dialog">
+
+              <h4 id="secondModalTitle" class="text-center">Are you sure you want to de-activate this tutor?</h4>
+
+              <div class="row">
+                <div class="small-8 small-centered columns">
+                  <div class="text-center">
+                    <h2><%= tutor.user.full_name %></h2>
+
+                    <%= button_to('Deactivate', '/admin/update_tutor_active_status', method: 'put', params: {tutor_id: tutor.id, active_status: 'Inactive'}, class: 'button alert expand') %>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Modal to view/download Tutor documents -->
+
+            <div id="tutorDocumentsModal-<%= tutor.id %>" class="reveal-modal small" data-reveal aria-labelledby="secondModalTitle" aria-hidden="true" role="dialog">
+
+              <h4 id="secondModalTitle" class="text-center">Tutor Documents</h4>
+
+              <div class="row">
+                <div class="small-8 small-centered columns">
+                  <div class="text-center">
+                    <h2><%= tutor.user.full_name %></h2>
+
+                    <%= image_tag(tutor.profile_pic_url(:thumb)) %>
+
+                    <%= link_to "Download Transcript", tutor.transcript.url %>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
 
             <!-- Modal to confirm Tutor deletion -->
 
-            <div id="confirmDestroyTutorModal" class="reveal-modal small" data-reveal aria-labelledby="secondModalTitle" aria-hidden="true" role="dialog">
+            <div id="confirmDestroyTutorModal-<%= tutor.id %>" class="reveal-modal small" data-reveal aria-labelledby="secondModalTitle" aria-hidden="true" role="dialog">
               <h4 id="secondModalTitle" class="text-center">Are you sure you want to permanently destroy this tutor account?</h4>
               <h6>You can deactivate the tutor to temporarily disable the account.</h6>
 
-                <div class="row">
-                  <div class="small-8 small-centered columns">
-                    <div class="text-center">
-                      <h2><%= tutor.user.full_name %></h2>
+              <div class="row">
+                <div class="small-8 small-centered columns">
+                  <div class="text-center">
+                    <h2><%= tutor.user.full_name %></h2>
 
-                      <%= button_to('Delete', '/admin/destroy_tutor', method: 'delete', params: {tutor_id: tutor.id}, class: 'button expand alert') %>
-                    </div>
+                    <%= button_to('Delete', '/admin/destroy_tutor', method: 'delete', params: {tutor_id: tutor.id}, class: 'button expand alert') %>
+
                   </div>
                 </div>
-
+              </div>
             </div>
+
           <% end %>
+
         </tbody>
       </table>
     </div>
