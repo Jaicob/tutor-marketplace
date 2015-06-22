@@ -97,10 +97,8 @@
 #
 
 Rails.application.routes.draw do
-  resources :tutors do
+  resources :tutors, only: [:index, :new, :create, :show] do
     member do
-      get 'courses'
-      put 'courses'
       get 'register_or_sign_in'
       get 'visitor_sign_in'
       get 'visitor_sign_up'

@@ -48,4 +48,3 @@ class Tutor < ActiveRecord::Base
   end
 
 end
-

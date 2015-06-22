@@ -1,5 +1,9 @@
 class TutorsController < ApplicationController
-  before_action :set_tutor, only: [:show, :edit, :update, :register_or_sign_in, :visitor_sign_in, :visitor_sign_up, :create_tutor_course]
+  before_action :set_tutor, only: [:edit, :update, :register_or_sign_in, :visitor_sign_in, :visitor_sign_up, :create_tutor_course]
+
+  def index
+    @tutors = Tutor.all
+  end
 
   def new
     @tutor = Tutor.new
@@ -19,6 +23,11 @@ class TutorsController < ApplicationController
       render :new
     end
   end
+
+  def show
+    @tutor = User.find(params[:id]).tutor
+  end
+
   
   #======================================================================================
   # Custom Actions for handling Tutor Account creation by visitors or non-signed in users
@@ -53,10 +62,6 @@ class TutorsController < ApplicationController
   end
 
   private
-
-    def set_tutor
-      @tutor = Tutor.find(params[:id])
-    end
 
     def tutor_params
       params.require(:tutor).permit(:extra_info, :transcript)
