@@ -82,6 +82,7 @@
 #                            PUT    /:id/settings(.:format)                   dashboard#update_settings
 #    change_profile_pic_user PUT    /:id/change_profile_pic(.:format)         dashboard#change_profile_pic
 # save_profile_pic_crop_user PUT    /:id/save_profile_pic_crop(.:format)      dashboard#save_profile_pic_crop
+#                            GET    /admin/tutors(.:format)                   admin#tutors
 #                      upmin        /admin                                    Upmin::Engine
 #                       root GET    /                                         static_pages#home
 #
@@ -130,6 +131,11 @@ Rails.application.routes.draw do
       put  '/save_profile_pic_crop' => 'dashboard#save_profile_pic_crop'
     end
   end
+
+  scope :admin do 
+    get '/tutors' => 'admin#tutors'
+  end
+
 
   mount Upmin::Engine => '/admin'
   root to: "static_pages#home"

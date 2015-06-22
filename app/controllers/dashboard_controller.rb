@@ -40,8 +40,11 @@ class DashboardController < ApplicationController
 
   def update_settings
     # The settings form updates two models, so the params for the User and Tutor models are nested inside the :data params hash and have to targeted below
-    if @user.update(user_params[:user]) && @tutor.update(tutor_params[:tutor])
-      redirect_to settings_user_path(@user)
+    if @user.update_attributes(user_params[:user])
+      unless @tutor.nil? # Without this line, the action doesn't work for regular users that are not tutors
+        @tutor.update_attributes(tutor_params[:tutor])  
+      end
+      redirect_to settings_user_path(@user)    
     else
       redirect_to settings_user_path(@user), notice: "Error saving changes."
     end

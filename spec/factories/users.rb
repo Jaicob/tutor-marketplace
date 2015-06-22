@@ -40,6 +40,7 @@ FactoryGirl.define do
     last_name "Dole"
     email "test@example.com"
     password "please123"
+    slug "bobdole"
 
     trait :admin do
       role 'admin'
