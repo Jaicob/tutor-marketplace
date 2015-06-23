@@ -43,8 +43,6 @@ class CoursesController < ApplicationController
     end
   end
 
-
-
   private 
 
     def set_course

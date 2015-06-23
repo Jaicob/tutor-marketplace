@@ -16,5 +16,9 @@ FactoryGirl.define do
     factory :second_subject do 
       name "MATH"
     end
+
+    factory :invalid_subject do
+      name nil
+    end
   end
 end
