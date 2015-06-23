@@ -9,8 +9,12 @@
 #
 
 FactoryGirl.define do
+  
   factory :subject do
     name "CHEM"
-  end
 
+    factory :second_subject do 
+      name "MATH"
+    end
+  end
 end
