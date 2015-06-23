@@ -18,6 +18,11 @@ FactoryGirl.define do
       name      "University of Georgia"
       location  "Athens, GA"
     end
+
+    factory :invalid_school do
+      name nil
+      location nil
+    end
   end
 end
 

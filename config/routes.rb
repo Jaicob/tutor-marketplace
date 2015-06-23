@@ -83,6 +83,7 @@ Rails.application.routes.draw do
   devise_for :users
 
   resources :courses
+  resources :schools
 
   # Use resources / polymorphic resources
 
