@@ -2,37 +2,36 @@
 #
 # Table name: tutors
 #
-#  id                      :integer          not null, primary key
-#  user_id                 :integer
-#  rating                  :integer
-#  status                  :integer          default(0)
-#  birthdate               :date
-#  degree                  :string
-#  major                   :string
-#  extra_info              :string
-#  graduation_year         :string
-#  phone_number            :string
-#  created_at              :datetime         not null
-#  updated_at              :datetime         not null
-#  transcript_file_name    :string
-#  transcript_content_type :string
-#  transcript_file_size    :integer
-#  transcript_updated_at   :datetime
-#  profile_pic             :string
+#  id                 :integer          not null, primary key
+#  user_id            :integer
+#  rating             :integer
+#  application_status :integer          default(0)
+#  birthdate          :date
+#  degree             :string
+#  major              :string
+#  extra_info         :string
+#  graduation_year    :string
+#  phone_number       :string
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  profile_pic        :string
+#  transcript         :string
+#  active_status      :integer          default(0)
 #
 
 FactoryGirl.define do
   factory :tutor do
     extra_info "Student Research Assistant for Biology Department"
-    transcript_file_name    'unofficial_transcript'
-    transcript_content_type 'application/pdf'
-    transcript_file_size    '726932'
-    transcript_updated_at   DateTime.now
+
+      factory :invalid_tutor do
+        extra_info nil
+      end
   
       factory :complete_tutor do
-        user
+        association :user, factory: :alternate_user # To avoid validation restrictions with independent user factory v. this user that is genrated as part of a tutor factory
         rating 1
-        status 1
+        active_status 0
+        application_status 0
         birthdate "2015-05-28"
         degree "B.A."
         major "Biology"

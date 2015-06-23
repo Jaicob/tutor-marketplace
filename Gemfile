@@ -25,6 +25,7 @@ gem 'figaro'
 gem 'annotate'
 gem 'friendly_id', '~> 5.1.0'
 gem 'carrierwave'
+# If you get an error while running bundle install about the RMagick gem, run this this script in your terminal: "sudo apt-get install imagemagick libmagickcore-dev libmagickwand-dev"
 gem 'rmagick'
 gem 'foundation-icons-sass-rails'
 group :development do

@@ -28,7 +28,7 @@
 #  invited_by_id          :integer
 #  invited_by_type        :string
 #  invitations_count      :integer          default(0)
-#  first_name             :text
+#  first_name             :string
 #  last_name              :string
 #  slug                   :string
 #
@@ -40,10 +40,21 @@ FactoryGirl.define do
     last_name "Dole"
     email "test@example.com"
     password "please123"
+    slug "bobdole"
 
     trait :admin do
       role 'admin'
     end
+
+    factory :alternate_user do
+      confirmed_at Time.now
+      first_name "Randy"
+      last_name "Marsh"
+      email "iamlorde@example.com"
+      password "ohhhyeah"
+      slug "iamlordelalala"
+    end
+
 
   end
 end
