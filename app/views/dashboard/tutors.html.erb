@@ -69,8 +69,11 @@
                 <div class="small-8 small-centered columns">
                   <div class="text-center">
                     <h2><%= tutor.user.full_name %></h2>
-
-                    <%= button_to('Activate', update_tutor_active_status_user_path(current_user), method: 'put', params: {tutor_id: tutor.id, active_status: 'Active'}, class: 'button success expand') %>
+      
+                    <%= form_for tutor do |tutor| %>
+                      <%= tutor.hidden_field :active_status, value: 'Active' %>
+                      <%= tutor.submit 'Activate' %>
+                    <% end %>
 
                   </div>
                 </div>
@@ -88,7 +91,10 @@
                   <div class="text-center">
                     <h2><%= tutor.user.full_name %></h2>
 
-                    <%= button_to('Deactivate', update_tutor_active_status_user_path(current_user), method: 'put', params: {tutor_id: tutor.id, active_status: 'Inactive'}, class: 'button alert expand') %>
+                    <%= form_for tutor do |tutor| %>
+                      <%= tutor.hidden_field :active_status, value: 'Inactive' %>
+                      <%= tutor.submit 'Deactivate' %>
+                    <% end %>
 
                   </div>
                 </div>
@@ -127,7 +133,9 @@
                   <div class="text-center">
                     <h2><%= tutor.user.full_name %></h2>
 
-                    <%= button_to('Delete', '/admin/destroy_tutor', method: 'delete', params: {tutor_id: tutor.id}, class: 'button expand alert') %>
+                    <%= form_for tutor, method: 'delete' do |tutor| %>
+                      <%= tutor.submit 'Delete' %>
+                    <% end %>
 
                   </div>
                 </div>

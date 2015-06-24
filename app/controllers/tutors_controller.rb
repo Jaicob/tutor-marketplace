@@ -33,7 +33,11 @@ class TutorsController < ApplicationController
 
   def update
     if @tutor.update(tutor_params)
-      redirect_to tutor_path(@tutor.user)
+      if current_user.tutor == @tutor
+        redirect_to tutor_path(@tutor.user)
+      else
+        redirect_to dashboard_tutors_user_path(current_user)
+      end
     else
       render :edit, error: 'Your tutor profile was not updated.'
     end
@@ -41,7 +45,7 @@ class TutorsController < ApplicationController
 
   def destroy
     if @tutor.destroy
-      redirect_to dashboard_home_user_path
+      redirect_to dashboard_home_user_path(@user)
     else
       render :show, error: 'Your tutor account was not deleted.'
     end
