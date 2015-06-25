@@ -4,6 +4,10 @@ class TutorsController < ApplicationController
 
   def index
     @tutors = Tutor.all
+    respond_to do |format|
+      format.html
+      format.csv { send_data @tutors.to_csv, filename: "tutors-#{Date.today}.csv" }
+    end
   end
 
   def new
