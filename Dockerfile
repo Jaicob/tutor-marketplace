@@ -5,6 +5,7 @@ WORKDIR /home/rails/my-app
 
 # Place custom unicorn configs here
 ADD config/unicorn.rb /etc/my-app/config/unicorn.rb
+					
 # ADD unicorn_init.sh /etc/init.d/unicorn
 
 # Place custom nginx configs here
