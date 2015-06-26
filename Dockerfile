@@ -1,31 +1,27 @@
 FROM jaicob/rails-nginx-unicorn:onbuild
 MAINTAINER jaicob(jaicob@icloud.com)
 
-# Install app
-# RUN sudo rm -rf /home/rails/my-app/*
-# ADD . /home/rails/my-app
-# WORKDIR /home/rails/my-app
-# RUN chown -R rails /home/rails/my-app
-# USER rails
+WORKDIR /home/rails/my-app 
 
-# add gems
-# RUN \
-# 	bundle install && \
-# 	rbenv rehash && \
-# 	RAILS_ENV=production bundle exec rake assets:precompile --trace
+# Place custom unicorn configs here
+ADD config/unicorn.rb /etc/my-app/config/unicorn.rb
+# ADD unicorn_init.sh /etc/init.d/unicorn
 
-# Add unicorn config here 
-# ADD ./config/unicorn.rb /etc/my-app/unicorn.rb
-# ADD ./unicorn /etc/init.d/unicorn
+# Place custom nginx configs here
+# COPY nginx-app-site.conf /etc/nginx/sites-enabled/default
+# COPY nginx.conf /etc/nginx/nginx.conf
 
-#Add Run script
-# ADD ./run.sh /etc/my-app/run.sh
+# Add custom setup script here TODO change name to setup.sh
+#COPY app_entrypoint.sh /etc/my-app/app_entrypoint.sh
 
-# Set environment 
-ENV RAILS_ENV development
+# Run setup script. This sets up the tmp folder and symlinks it to shared
+# as well as sets up the database if necessary
+RUN /etc/my-app/app_entrypoint.sh
 
 # Expose port 80
 EXPOSE 80
 
-# Set default run command
-ENTRYPOINT /bin/bash /etc/my-app/app_entrypoint.sh
+# Set environment 
+ENV RAILS_ENV production
+
+CMD ["/usr/bin/supervisord","-c","/etc/supervisor/conf.d/supervisord.conf"]

@@ -1,19 +1,22 @@
-web:
-  build: .
-  volumes:
-    - .:/web-app
-  ports:
-    - "3000:3000"
-  links:
-    - db
-  env_file:
-    - '.env.web'
-db:
-  image: postgres:latest
-  ports:
-    - "5432:5432"
-  env_file:
-    - '.env.db'
+# web:
+#   build: .
+#   volumes:
+#     - .:/home/rails/my-app
+#   ports:
+#     - "3000:3000"
+#   links:
+#     - db
+#   env_file:
+#     - '.env.web'
+# db:
+#   image: postgres:latest
+#   ports:
+#     - "5432:5432"
+#   env_file:
+#     - '.env.db'
+
+  # command: /usr/src/app/bin/rails server -b 0.0.0.0
+
 
 
 #     bundle install  docker-compose run web bundle install
