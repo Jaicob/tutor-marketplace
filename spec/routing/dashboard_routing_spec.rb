@@ -1,13 +1,24 @@
 require 'rails_helper'
 
 describe "Dashboard routing" do 
+
+  let(:user) { create(:user) } 
+
+  it "routes User dashboard correctly" do
+
+    expect(get: "/#{user.id}/dashboard/home").to route_to(
+      controller: "dashboard", action: "home", id: user.id.to_s)
+    
+    expect(get: "/#{user.id}/dashboard/schedule").to route_to(
+      controller: "dashboard", action: "schedule", id: user.id.to_s)
+    
+    expect(get: "/#{user.id}/dashboard/courses").to route_to(
+      controller: "dashboard", action: "courses", id: user.id.to_s)
+
+    expect(get: "/#{user.id}/dashboard/profile").to route_to(
+      controller: "dashboard", action: "profile", id: user.id.to_s)
+
+    expect(get: "/#{user.id}/dashboard/settings").to route_to(
+      controller: "dashboard", action: "settings", id: user.id.to_s)
+  end
 end
-
-#             schedule_user GET    /users/:id/schedule(.:format)             dashboard#schedule
-#              courses_user GET    /users/:id/courses(.:format)              dashboard#courses
-#              profile_user GET    /users/:id/profile(.:format)              dashboard#profile
-#             settings_user GET    /users/:id/settings(.:format)             dashboard#settings
-#                           POST   /users/:id/profile(.:format)              dashboard#apply_profile
-#                           POST   /users/:id/settings(.:format)             dashboard#apply_settings
-#                     users GET    /users(.:format)                          users#index
-

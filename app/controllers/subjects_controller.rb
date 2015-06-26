@@ -1,32 +1,56 @@
 class SubjectsController < ApplicationController
+	before_action :set_subject, only: [:show, :edit, :update, :destroy]
 
-  def index
-    if params[:school_id]
-      # all courses at a school
-      courses = Course.where(school_id: params[:school_id])
+	def index
+		@subjects = Subject.all
+	end
 
-      # get all unique subject ids from school courses
-      subject_ids = courses.map{|course| course.subject_id }.uniq
+	def new
+		@subject = Subject.new
+	end
 
-      # look up and spit out those unique subject objects
-      subjects = subject_ids.map { |subject_id| Subject.find(subject_id) }
+	def create
+		@subject = Subject.create(subject_params)
 
-      render json: subjects.as_json
-    end
-  end
+		if @subject.save
+			redirect_to subjects_path
+		else
+			render :new, error: "subject was not created."
+		end
+	end
 
-  def all
-    render json: Subject.all
-  end
+	def show
+	end
 
-  def show
-    render json: Subject.find(subject_params)
-  end
+	def edit
+	end
 
-  private
+	def update
+		@subject.update(subject_params)
 
-  def subject_params
-    params.permit(:id)
-  end
+		if @subject.save
+			redirect_to subjects_path
+		else
+			render :edit, error: "subject was not updated."
+		end
+	end
+
+	def destroy
+		if @subject.destroy
+			redirect_to subjects_path
+		else
+			render :show
+		end
+	end
+
+	private
+
+	def set_subject
+		@subject = Subject.find(params[:id])
+	end
+
+	def subject_params
+		params.require(:subject).permit(:name)
+	end
 
 end

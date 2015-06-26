@@ -1,40 +1,56 @@
 class CoursesController < ApplicationController
+	before_action :set_course, only: [:show, :edit, :update, :destroy]
 
-  def index
-    courses = set_courses()
-    render json: courses
-  end
+	def index
+		@courses = Course.all
+	end
 
-  private
+	def new
+		@course = Course.new
+	end
 
-  def course_params
-    params.permit(:school_id, :subject_id, :friendly_name, :id)
-  end
+	def create
+		@course = Course.create(course_params)
 
-  def set_courses
-    if params[:tutor_id]
+		if @course.save
+			redirect_to @course
+		else
+			render :new, error: "Course was not created."
+		end
+	end
 
-      course_params[:tutor_id] = params[:tutor_id]
+	def show
+	end
 
-      Tutor.find(params[:tutor_id]).tutor_courses
+	def edit
+	end
 
-      # get all tutor-course id pairings
-      tutor_courses = TutorCourse.where(course_params)
+	def update
+		@course.update(course_params)
 
-      # merges rate from the tutor_course object with the course object
-      courses = tutor_courses.map do |tutor_course|
-        course = Course.find(tutor_course.course.id)
-        course.attributes.merge({rate: tutor_course.rate,
-                                 school_name: course.school_name,
-                                 subject_name: course.subject_name})
-      end
-    else
-      courses = Course.where(course_params)
-      courses = courses.map { |course|
-        course.attributes.merge({school_name: course.school_name,
-                                 subject_name: course.subject_name})
-      }
-    end
-  end
+		if @course.save
+			redirect_to @course
+		else
+			render :edit, error: "Course was not updated."
+		end
+	end
 
+	def destroy
+		if @course.destroy
+			redirect_to courses_path
+		else
+			render :show
+		end
+		ed
+
+		private
+
+		def set_course
+			@course = Course.find(params[:id])
+		end
+
+		def course_params
+			params.require(:course).permit(:subject_id, :call_number, :friendly_name, :school_id)
+		end
+	end
 end

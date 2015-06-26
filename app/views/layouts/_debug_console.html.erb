@@ -1,8 +1,10 @@
+<!-- Console for debugging -->
+<!-- Removed from layout but can be placed in any view for help debugging Rails back-end -->
 <% if !Rails.env.production? %>
   <style type="text/css">
-      #console{
-        position: relative !important;
-      }
+    #console{
+      position: relative !important;
+    }
   </style>
   <%= console %>
 <% end %>

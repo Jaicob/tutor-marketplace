@@ -10,6 +10,9 @@
 #
 
 class School < ActiveRecord::Base
+	validates :name, presence: true, uniqueness: true
+	validates :location, presence: true
 
-  validates :name, presence: true, uniqueness: true
+	# Need to add Active Record assocations to schools for their courses and tutors
+
 end

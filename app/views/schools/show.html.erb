@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="large-12 columns">
+    <h1>School Details</h1>
+  </div>
+</div>
+
+<div class="row">
+  <div class="large-12 columns">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Location</th>
+          <th>Courses</th>
+          <th>Tutors</th>
+          <th>Appointments</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><%= @school.id %>
+          <td><%= best_in_place @school, :name, :as => :input %></td>
+          <td><%= best_in_place @school, :location, :as => :input %></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td><a href="#" data-reveal-id="confirmDeleteSchool">Delete</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+  <!-- Modal for deleting course -->
+  <div id="confirmDeleteSchool" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+      <%= render 'confirm_delete' %>
+    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+  </div>
+  <!-- End of modal -->
+
+<div class="row">
+  <div class="small-12 columns">
+    <%= link_to 'All Schools', schools_path, class: 'button secondary' %>
+  </div>
+</div>

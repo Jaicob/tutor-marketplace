@@ -1,0 +1,21 @@
+<div class="row">
+  <h1>All Tutors</h1>
+</div>
+
+<div class="row">
+  <% @tutors.each do |tutor| %>
+    <div class="small-12 medium-4 large-3 columns">
+      <div class="tutor-card">
+        <div class="profile-pic-container-index-page">
+          <%= image_tag(tutor.profile_pic_url(:thumb), class: 'profile-pic') %>
+        </div>
+        <%= link_to("/tutors/#{tutor.user.friendly_id}") do %>
+          <h4><%= tutor.user.full_name %></h4>
+        <% end %>
+        <p><%= tutor.degree %>, <%= tutor.major %></p>
+        <p>Class of <%= tutor.graduation_year %></p>
+        <p><%= tutor.extra_info %></p>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -28,7 +28,7 @@
 #  invited_by_id          :integer
 #  invited_by_type        :string
 #  invitations_count      :integer          default(0)
-#  first_name             :text
+#  first_name             :string
 #  last_name              :string
 #  slug                   :string
 #

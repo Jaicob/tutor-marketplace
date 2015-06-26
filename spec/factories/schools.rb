@@ -11,14 +11,18 @@
 
 FactoryGirl.define do
   factory :school do
-    name "University of North Carolina"
-    location "Chapel Hill, NC"
+    name      "University of North Carolina"
+    location  "Chapel Hill, NC"
 
-    trait :second_school do
-      name "University of Georgia"
-      location "Athens, GA"
-    end 
-  
+    factory :second_school do
+      name      "University of Georgia"
+      location  "Athens, GA"
+    end
+
+    factory :invalid_school do
+      name nil
+      location nil
+    end
   end
 end
 
