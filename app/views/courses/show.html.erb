@@ -1,1 +1,42 @@
-<h1>This is the show page</h1>
+<h1>Course Details</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>School</th>
+      <th>Subject</th>
+      <th>Call Number</th>
+      <th>Friendly Name</th>
+      <th>Tutors</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><%= @course.school_name %></td>
+      <td><%= @course.subject_name %></td>
+      <td><%= @course.call_number %></td>
+      <td><%= @course.friendly_name %></td>
+      <td><%= @course.tutors.count %></td>
+      <td><a href="#" data-reveal-id="editCourse"><i class="fi-pencil"></i></a> 
+          <a href="#" data-reveal-id="confirmDeleteCourse"><i class="fi-trash"></i></a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+    <!-- Modal for editing course -->
+    <div id="editCourse" class="reveal-modal small" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+        <%= render 'edit' %>
+      <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+    </div>
+    <!-- End of modal -->
+
+     <!-- Modal for deleting course -->
+    <div id="confirmDeleteCourse" class="reveal-modal small" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+        <%= render 'confirm_delete' %>
+      <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+    </div>
+    <!-- End of modal -->
+

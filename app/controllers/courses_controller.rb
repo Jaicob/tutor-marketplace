@@ -13,7 +13,7 @@ class CoursesController < ApplicationController
     @course = Course.create(course_params)
 
     if @course.save
-      redirect_to courses_path
+      redirect_to @course
     else
       render :new, error: "Course was not created."
     end
@@ -29,7 +29,7 @@ class CoursesController < ApplicationController
     @course.update(course_params)
 
     if @course.save
-      redirect_to courses_path
+      redirect_to @course
     else
       render :edit, error: "Course was not updated."
     end
