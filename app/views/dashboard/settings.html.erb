@@ -1,19 +1,12 @@
-<%= form_for :data, url: "/#{@user.id}/settings", method: 'put' do |f| %>
-  <%= f.fields_for :user do |user| %>
-    <%= user.label :first_name %>
-    <%= user.text_field :first_name, value: @user.first_name %>
-    <%= user.label :last_name %>
-    <%= user.text_field :last_name, value: @user.last_name %>
-    <%= user.label :email %>
-    <%= user.text_field :email, value: @user.email %>
-  <% end %>
-  <% if current_user.tutor %>
-    <%= f.fields_for :tutor do |tutor| %>
-      <%= tutor.label :birthdate %>
-      <%= tutor.date_select :birthdate, value: @tutor.birthdate %>
-      <%= tutor.label :phone_number %>
-      <%= tutor.text_field :phone_number, value: @tutor.phone_number %>
-    <% end %>
-  <% end %>  
-  <%= f.submit 'Submit' %>
-<% end %>
+<h2>This page originally handled the following general settings:</h2>
+
+<h4>-For all Users (Currently handled by Devise)</h4>
+  <p>:first_name</p>
+  <p>:last_name</p>
+  <p>:email</p>
+  <p>:password?</p>
+
+<h4>-For only Tutors (Currently handled by Tutors controller, edit action)</h4>
+  <p>-all above +</p>
+  <p>:birthdate</p>
+  <p>:phone number</p>

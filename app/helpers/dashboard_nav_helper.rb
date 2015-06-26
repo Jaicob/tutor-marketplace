@@ -3,11 +3,11 @@ module DashboardNavHelper
   def show_dashboard_nav
     # user must be signed in to view dashbar pages
     return false unless user_signed_in?
-      dashboard_link          = dashboard_user_path(current_user)
-      schedule_link           = schedule_user_path(current_user)
-      courses_link            = courses_user_path(current_user)
-      profile_link            = profile_user_path(current_user)
-      settings_link           = settings_user_path(current_user)
+      dashboard_link          = dashboard_home_user_path(current_user)
+      schedule_link           = dashboard_schedule_user_path(current_user)
+      courses_link            = dashboard_courses_user_path(current_user)
+      profile_link            = dashboard_profile_user_path(current_user)
+      settings_link           = dashboard_settings_user_path(current_user)
       school_and_courses_link = dashboard_link
       reports_link            = dashboard_link
       become_a_tutor_link     = new_tutor_path
