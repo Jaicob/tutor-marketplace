@@ -44,7 +44,6 @@ class ProfilePicUploader < CarrierWave::Uploader::Base
   version :large do 
     process :resize_to_limit => [500, 500]
   end
-  
   def crop
     if model.crop_x.present?
       resize_to_limit(500, 500)
@@ -63,7 +62,7 @@ class ProfilePicUploader < CarrierWave::Uploader::Base
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
   def extension_white_list
-     %w(jpg jpeg png)
+    %w(jpg jpeg png)
   end
 
   # Override the filename of the uploaded files:

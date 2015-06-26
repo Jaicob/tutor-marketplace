@@ -34,7 +34,6 @@ describe TutorsController do
   end
 
   describe 'GET #show' do 
-  
     it "assigns the correct tutor to @tutor" do
       get :show, id: tutor.user
       expect(assigns(:tutor)).to eq tutor
@@ -49,7 +48,6 @@ describe TutorsController do
   describe 'POST #create' do
 
     context "with valid attributes" do 
-      
       it "creates a new tutor then redirects to tutor's dashboard" do
         login_with user
         course
@@ -133,7 +131,6 @@ describe TutorsController do
   end
 
   describe 'DELETE #destroy' do 
-    
     it 'assigns the correct tutor to @tutor' do 
       login_with tutor.user
       delete :destroy, id: tutor.user
@@ -158,7 +155,7 @@ describe TutorsController do
 
   describe 'GET #visitor_new' do
 
-     it "assigns a new Tutor to @tutor" do 
+    it "assigns a new Tutor to @tutor" do 
       get :visitor_new
       expect(assigns(:tutor)).to be_a_new(Tutor)
     end
@@ -184,7 +181,6 @@ describe TutorsController do
         }.to change(Tutor, :count).by(1)
         expect(response).to redirect_to register_or_sign_in_tutor_path(Tutor.last.id)
       end
-    
     end
 
     context "with invalid attributes" do 
@@ -201,7 +197,6 @@ describe TutorsController do
         expect(response).to render_template :visitor_new
       end
     end
-  
   end
 
   describe 'GET #register_or_sign_in' do 

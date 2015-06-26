@@ -9,12 +9,11 @@
 #
 
 FactoryGirl.define do
-  
   factory :subject do
     name "CHEM"
 
-    factory :second_subject do 
-      name "MATH"
+    factory :second_subject do
+      name MATH"
     end
 
     factory :invalid_subject do
