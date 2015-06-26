@@ -1,1 +1,18 @@
-new.html.erb
+<h1>New Course</h1>
+
+<%= form_for @course do |f| %>
+  <%= f.label :school_id %>
+  <%= f.collection_select :school_id, School.all, :id, :name, include_blank: true %>
+
+  <%= f.label :subject_id %>
+  <%= f.collection_select :subject_id, Subject.all, :id, :name, include_blank: true %>
+
+  <%= f.label :call_number %>
+  <%= f.number_field :call_number %>
+
+  <%= f.label :friendly_name %>
+  <%= f.text_field :friendly_name %>
+
+  <%= f.submit 'Create Course' %>
+
+<% end %>
