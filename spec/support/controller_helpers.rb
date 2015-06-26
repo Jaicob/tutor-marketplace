@@ -11,7 +11,7 @@ module ControllerHelpers
   end
 end
 
-# This module enables Devise login for testing
+# This module enables Devise login for CONTROLLER testing
 #
 # More details can be found here:
 #

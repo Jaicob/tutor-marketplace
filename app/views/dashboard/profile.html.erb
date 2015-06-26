@@ -19,10 +19,10 @@
 
   <div class="large-8 columns">
     <h2>General Info</h2>
-    <p>Degree: <%= @tutor.degree %></p>
-    <p>Major: <%= @tutor.major %></p>
-    <p>Extra Info: <%= @tutor.extra_info %></p>
-    <p>Graduation Year: <%= @tutor.graduation_year %></p>
+    <p>Degree: <%= best_in_place @tutor, :degree, :as => :input %></p>
+    <p>Major: <%= best_in_place @tutor, :major, :as => :input %></p>
+    <p>Extra Info: <%= best_in_place @tutor, :extra_info, :as => :textarea %></p>
+    <p>Graduation Year: <%= best_in_place @tutor, :graduation_year, :as => :input %></p>
   </div>
 </div>
 
@@ -31,24 +31,3 @@
   <div id="myModal" class="reveal-modal medium" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
     <%= render 'update_profile_pic' %>
   </div>
-
-
-<div class="row">
-  <div class="large-12 columns">
-    <h2>Edit Form</h2>
-
-    <%= form_for :data, url: "/#{@user.id}/profile", method: 'put' do |f| %>
-      <%= f.fields_for :tutor do |tutor| %>
-        <%= tutor.label :degree %>
-        <%= tutor.text_field :degree, value: @profile_degree %>
-        <%= tutor.label :major %>
-        <%= tutor.text_field :major, value: @profile_major %>
-        <%= tutor.label :extra_info %>
-        <%= tutor.text_field :extra_info, value: @profile_extra_info %>
-        <%= tutor.label :graduation_year %>
-        <%= tutor.text_field :graduation_year, value: @profile_graduation_year %>
-      <% end %>
-      <%= f.submit 'Submit', class: 'button' %>
-    <% end %>
-  </div>
-</div>

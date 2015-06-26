@@ -47,8 +47,9 @@ RSpec.describe Tutor, type: :model do
   # -Each example's description begins with a verb, not should
 
   describe Tutor do
-    let(:tutor) { FactoryGirl.build_stubbed(:tutor) }
-    let(:incomplete_tutor) { FactoryGirl.build_stubbed(:incomplete_tutor) }
+    let(:tutor) { build_stubbed(:tutor) }
+    let(:complete_tutor) { create(:complete_tutor)}
+    let(:incomplete_tutor) { build_stubbed(:incomplete_tutor) }
 
     it "is valid with extra info, an attached transcript, and first tutor_course" do 
       expect(tutor).to be_valid
@@ -59,23 +60,15 @@ RSpec.describe Tutor, type: :model do
     end
 
     it "is invalid without an attached transcript" do 
-      expect(build(:tutor, transcript_file_name: nil)).to_not be_valid
+      expect(build(:tutor, transcript: nil)).to_not be_valid
     end
 
-    it "has an incomplete status until all Tutor fields are complete" do
-      expect(tutor.status).to eq 'applied'
+    it "has an 'applied' status until all Tutor fields are complete" do
+      expect(tutor.application_status).to eq 'Applied'
     end
 
-    it "has a first tutor_course set on creation" do 
-      skip 'need to figure out how to do this without triggering infinite loop between factories'
+    it "has a complete status when all Tutor fields are complete" do
+      expect(complete_tutor.application_status).to eq 'Awaiting Approval'
     end
-
-    it "has a complete status when all Tutor fields are complete" do 
-    end
-
-    it "has first course set by set_first_tutor_course method" do 
-    end
-
   end
-
 end

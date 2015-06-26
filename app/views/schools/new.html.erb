@@ -1,1 +1,24 @@
-new.html.erb
+<div class="row">
+  <div class="large-12-columns">
+    <h1>New School</h1>
+  </div>
+</div>
+
+<div class="row">
+  <%= form_for @school do |f| %>
+    <div class="small-5 columns">
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+    </div>
+
+    <div class="small-5 columns">
+      <%= f.label :location %>
+      <%= f.text_field :location %>
+    </div>
+
+    <div class="small-2 columns">
+      <%= f.submit 'Add School', class: 'button success ' %>
+    </div>
+
+  <% end %>
+</div>

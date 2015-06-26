@@ -1,3 +1,6 @@
+
+# This allows Devise sign-up and sign-in for FEATURE TESTS #######
+
 module Features
   module SessionHelpers
     def sign_up_with(email, password, confirmation)
@@ -10,7 +13,7 @@ module Features
       click_button 'Sign up'
     end
 
-    def signin(email, password)
+    def sign_in(email, password)
       visit new_user_session_path
       fill_in 'Email', with: email
       fill_in 'Password', with: password

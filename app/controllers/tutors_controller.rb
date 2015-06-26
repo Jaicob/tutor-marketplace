@@ -1,8 +1,13 @@
 class TutorsController < ApplicationController
-  before_action :set_tutor, only: [:edit, :update, :create_tutor_course]
+  before_action :set_user, only: [:edit, :update, :destroy, :create_tutor_course]
+  before_action :set_tutor, only: [:show, :edit, :update, :destroy, :create_tutor_course]
 
   def index
     @tutors = Tutor.all
+    respond_to do |format|
+      format.html
+      format.csv { send_data @tutors.to_csv, filename: "tutors-#{Date.today}.csv" }
+    end
   end
 
   def new
@@ -17,7 +22,7 @@ class TutorsController < ApplicationController
     if @tutor.save
       # The method below only creates a tutor_course for the initial sign-up, all other CRUD operations relating to tutor_courses go through the TutorCoursesController
       @tutor.set_first_tutor_course(@tutor, params)
-      redirect_to dashboard_user_path(current_user)
+      redirect_to dashboard_home_user_path(current_user)
     else
       flash[:error] = "Tutor account was not created. Please fill in all fields and attach your unofficial transcript."
       render :new
@@ -25,10 +30,31 @@ class TutorsController < ApplicationController
   end
 
   def show
-    @tutor = User.find(params[:id]).tutor
   end
 
-  
+  def edit
+  end
+
+  def update
+    if @tutor.update(tutor_params)
+      if current_user.tutor == @tutor
+        redirect_to tutor_path(@tutor.user)
+      else
+        redirect_to dashboard_tutors_user_path(current_user)
+      end
+    else
+      render :edit, error: 'Your tutor profile was not updated.'
+    end
+  end
+
+  def destroy
+    if @tutor.destroy
+      redirect_to dashboard_home_user_path(@user)
+    else
+      render :show, error: 'Your tutor account was not deleted.'
+    end
+  end
+
   #======================================================================================
   # Custom Actions for handling Tutor Account creation by visitors or non-signed in users
   #======================================================================================
@@ -64,7 +90,7 @@ class TutorsController < ApplicationController
   private
 
     def tutor_params
-      params.require(:tutor).permit(:extra_info, :transcript)
+      params.require(:tutor).permit(:rating, :application_status, :birthdate, :degree, :major, :extra_info, :graduation_year, :phone_number, :profile_pic, :transcript, :active_status)
     end
 
 end

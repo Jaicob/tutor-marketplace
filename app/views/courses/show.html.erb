@@ -1,1 +1,47 @@
-<h1>This is the show page</h1>
+<div class="row">
+  <div class="large-12 columns">
+    <h1>Course Details</h1>
+  </div>
+</div>
+
+<div class="row">
+  <div class="large-12 columns">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>School</th>
+          <th>Subject</th>
+          <th>Call Number</th>
+          <th>Friendly Name</th>
+          <th>Tutors</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><%= @course.id %>
+          <td><%= best_in_place @course, :school_name, :as => :input %></td>
+          <td><%= best_in_place @course, :subject_name, :as => :input %></td>
+          <td><%= best_in_place @course, :call_number, :as => :input %></td>
+          <td><%= best_in_place @course, :friendly_name, :as => :input %></td>
+          <td><%= @course.tutors.count %></td>
+          <td><a href="#" data-reveal-id="confirmDeleteCourse">Delete</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+  <!-- Modal for deleting course -->
+  <div id="confirmDeleteCourse" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+      <%= render 'confirm_delete' %>
+    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+  </div>
+  <!-- End of modal -->
+
+<div class="row">
+  <div class="small-12 columns">
+    <%= link_to 'All Courses', courses_path, class: 'button secondary' %>
+  </div>
+</div>

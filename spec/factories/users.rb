@@ -55,6 +55,13 @@ FactoryGirl.define do
       slug "iamlordelalala"
     end
 
-
+    factory :second_alternate_user do 
+      confirmed_at Time.now
+      first_name "Ricky"
+      last_name "Bobby"
+      email "shakeandbake@example.com"
+      password "babyjesus"
+      slug "mountaindew"
+    end
   end
 end
