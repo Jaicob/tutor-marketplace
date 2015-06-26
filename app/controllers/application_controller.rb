@@ -13,15 +13,15 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    dashboard_user_path(resource)
+    dashboard_home_user_path(resource)
   end
 
   def after_sign_up_path_for(resource)
-    dashboard_user_path(resource)
+    dashboard_home_user_path(resource)
   end
 
   def after_inactive_sign_up_path_for(resource)
-    dashboard_user_path(resource)
+    dashboard_home_user_path(resource)
   end
 
   def set_user
@@ -29,7 +29,11 @@ class ApplicationController < ActionController::Base
   end
 
   def set_tutor
-    @tutor = User.find(params[:id]).tutor
+    if @user
+      @tutor = @user.tutor
+    else
+      @tutor = User.find(params[:id]).tutor # This sets @tutor for the show action when a user is not logged in which is necessary for visitors to see a tutor's profile
+    end
   end
 
 end

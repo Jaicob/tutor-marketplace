@@ -1,3 +1,8 @@
+# Note for later!
+# One approach to re-do this in a more Rails way and one which allows for testing is here:
+# http://railscasts.com/episodes/287-presenters-from-scratch
+
+
 module DashboardNavHelper
 
   def show_dashboard_nav
