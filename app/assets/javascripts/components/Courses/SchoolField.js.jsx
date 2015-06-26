@@ -1,11 +1,4 @@
 SchoolField = React.createClass({
-  update: function(event){
-    this.props.parent.setState({
-      selectedSchool: event.target.value,
-      selectedSubject: "",
-      selectedCourse: "",
-    })
-  },
   getInitialState: function () {
       return {
           all_schools: []
@@ -21,7 +14,7 @@ SchoolField = React.createClass({
   render: function(){
     return (
       <div className="medium-3 columns">
-        <select name="course[school_id]" defaultValue="Course" onChange={this.update}>
+        <select name="course[school_id]" defaultValue="Course" onChange={this.props.update}>
           <option disabled="true">School</option>
           {
             this.state.all_schools.map(function(school){

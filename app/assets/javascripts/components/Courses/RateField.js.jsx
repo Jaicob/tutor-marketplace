@@ -1,15 +1,10 @@
 RateField = React.createClass({
-  update: function(event){
-    this.props.parent.setState({
-      selectedRate: event.target.value
-    })
-  },
   render: function(){
     field = <input type="number"
                    disabled={this.props.course == ""}
                    name="tutor_course[rate]"
                    placeholder="Rate"
-                   onChange={this.update} />
+                   onChange={this.props.update} />
     return (
       <div className="medium-3 columns">
         <div className="row collapse">

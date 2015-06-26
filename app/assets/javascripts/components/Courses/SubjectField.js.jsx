@@ -1,10 +1,4 @@
 SubjectField = React.createClass({
-  update: function(event){
-      this.props.parent.setState({
-        selectedSubject: event.target.value,
-        selectedCourse: "",
-      })
-  },
   getInitialState: function(){
     return {
         all_subjects: []
@@ -26,7 +20,7 @@ SubjectField = React.createClass({
   render: function(){
     return (
       <div className="medium-3 columns">
-        <select name="course[subject_id]" defaultValue="Course" disabled={this.state.all_subjects.length < 1} onChange={this.update} >
+        <select name="course[subject_id]" defaultValue="Course" disabled={this.state.all_subjects.length < 1} onChange={this.props.update} >
           <option disabled="true">Subject</option>
           {
             subjects = this.state.all_subjects.map(function(subject){

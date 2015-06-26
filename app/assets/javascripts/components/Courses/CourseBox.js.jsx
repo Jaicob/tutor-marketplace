@@ -36,6 +36,8 @@
           courseList   : <CourseList parent={this} tutor_id={this.props.tutor_id || undefined} />,
           submitButton : <SubmitButton parent={this} />
         }[key]
+      } else{
+        return ""
       }
     },
     error: function(errortype){
@@ -90,13 +92,77 @@
         }
         errors[errortype]()
     },
+    update: function(){
+      updates = {}
+
+      updates.school = function(school, subject, course, rate){
+        school = school? school.target.value : this.state.selectedSchool
+
+        if (subject) {
+          // new subject selected -> select that subject in the view model
+          subject = subject.target.value
+        } else {
+          if(school != this.state.selectedSchool){
+            // new school selected -> unselect current subject
+            subject = ""
+          } else {
+            // same school and subject -> do nothing
+            subject = this.state.selectedSubject
+          }
+        }
+
+        if (course) {
+          // new course selected -> select that course in the view model
+          course = course.target.value
+        } else {
+          if(school != this.state.selectedSchool || subject != this.state.selectedSubject){
+            // new school or subject selected -> unselect current course
+            course = ""
+          } else {
+            // same school, subject, and course -> do nothing
+            course = this.state.selectedCourse
+          }
+        }
+
+        if(rate){
+          rate = rate.target.value
+        } else {
+          if (course == "") {
+            rate = ""
+          } else {
+            rate = this.state.selectedRate
+          }
+        }
+
+        this.setState({
+          "selectedSchool" : school,
+          "selectedSubject": subject,
+          "selectedCourse" : course,
+          "selectedRate"   : rate
+        })
+      }.bind(this)
+
+      updates.subject = function(subject, course, rate){
+        updates.school(null, subject, course || null, rate || null)
+      }
+
+      updates.course = function(course, rate){
+        updates.subject(null, course, rate || null)
+      }
+
+      updates.rate = function(rate){
+        updates.course(null, rate)
+      }
+
+      return updates
+    },
     render: function(){
       return(
         <div className="coursebox">
-            <SchoolField parent={this} />
-            <SubjectField parent={this} school={this.state.selectedSchool} />
-            <CourseField parent={this} school={this.state.selectedSchool} subject={this.state.selectedSubject} />
-            <RateField parent={this} course={this.state.selectedCourse} />
+            <SchoolField update={this.update().school}/>
+            <SubjectField update={this.update().subject} school={this.state.selectedSchool} />
+            <CourseField update={this.update().course} school={this.state.selectedSchool} subject={this.state.selectedSubject} />
+            <RateField update={this.update().rate} course={this.state.selectedCourse} />
             { this.option("submitButton") }
             { this.option("courseList") }
         </div>
