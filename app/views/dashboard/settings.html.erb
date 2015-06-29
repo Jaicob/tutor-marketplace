@@ -5,14 +5,15 @@
     
     <h6>Your birthdate and phone number will not appear on your profile.</h6>
     
-    <p>Phone Number: <%= best_in_place @tutor, :phone_number, :as => :input %></p>
-    <p>Birthday: <%= best_in_place @tutor, :birthdate, :as => :input %></p>
+    <p>Phone Number: <%= best_in_place @tutor, :phone_number, :as => :input, :nil => 'Enter Phone Number' %></p>
+    <p>Birthday: <%= best_in_place @tutor, :birthdate, :as => :input, :nil => 'Enter Birthday' %></p>
 
     <h6>You will only appear in search results for your classes if your status is set to active.</h6>
     
-    <p>Status: <%= best_in_place @tutor, :active_status, :as => :select, :collection => {"0" => "Inactive", "1" => "Active"} %></p>
+    <p>Status: <%= best_in_place @tutor, :active_status, :as => :select, :collection => {"Inactive" => "Inactive", "Active" => "Active"} %></p>
 
-    <p>Status: <%= best_in_place @tutor, :active_status, as: :checkbox, collection: {false: "Inactive", true: "Active"} %>
+
+
 
     <p>Your transcript is only accessible to Axon Tutors administrators</p>
     TRANSCRIPT

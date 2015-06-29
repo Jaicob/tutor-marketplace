@@ -19,7 +19,7 @@
 #  confirmed_at           :datetime
 #  confirmation_sent_at   :datetime
 #  unconfirmed_email      :string
-#  role                   :integer
+#  role                   :integer          default(0)
 #  invitation_token       :string
 #  invitation_created_at  :datetime
 #  invitation_sent_at     :datetime
@@ -62,7 +62,17 @@ class User < ActiveRecord::Base
 
  def slug_candidates
     # These are simply various combinations of first and last names to create usernames in case of multiple users with the same name, the next available unique combo is used to create the slug
-    [ "#{first_name}#{last_name}", "#{first_name[0]}#{last_name}", "#{first_name}#{last_name[0]}", "#{first_name[0..1]}#{last_name}", "#{first_name}#{last_name[0..1]}", "#{first_name[0..2]}#{last_name}", "#{first_name}#{last_name[0..2]}", "#{first_name[0..3]}#{last_name}", "#{first_name}#{last_name[0..3]}"]
+    [ 
+      "#{first_name}#{last_name}", 
+      "#{first_name[0]}#{last_name}", 
+      "#{first_name}#{last_name[0]}", 
+      "#{first_name[0..1]}#{last_name}", 
+      "#{first_name}#{last_name[0..1]}", 
+      "#{first_name[0..2]}#{last_name}", 
+      "#{first_name}#{last_name[0..2]}", 
+      "#{first_name[0..3]}#{last_name}", 
+      "#{first_name}#{last_name[0..3]}"
+    ]
   end
 
   def full_name

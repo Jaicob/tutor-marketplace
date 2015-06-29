@@ -19,10 +19,10 @@
 
   <div class="large-8 columns">
     <h2>General Info</h2>
-    <p>Degree: <%= best_in_place @tutor, :degree, :as => :input %></p>
-    <p>Major: <%= best_in_place @tutor, :major, :as => :input %></p>
+    <p>Degree: <%= best_in_place @tutor, :degree, :as => :input, :nil => 'Enter Degree' %></p>
+    <p>Major: <%= best_in_place @tutor, :major, :as => :input, :nil => 'Enter Major' %></p>
     <p>Extra Info: <%= best_in_place @tutor, :extra_info, :as => :textarea %></p>
-    <p>Graduation Year: <%= best_in_place @tutor, :graduation_year, :as => :input %></p>
+    <p>Graduation Year: <%= best_in_place @tutor, :graduation_year, :as => :input, :nil => 'Enter Graduation Year' %></p>
   </div>
 </div>
 

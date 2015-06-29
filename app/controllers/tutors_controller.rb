@@ -36,18 +36,22 @@ class TutorsController < ApplicationController
   end
 
   def update
-    if @tutor.update(tutor_params)
-      if current_user.tutor == @tutor
-        redirect_to tutor_path(@tutor.user)
+    @tutor = Tutor.find(params[:id]) || @tutor
+
+    respond_to do |format|
+      if @tutor.update_attributes(tutor_params)
+        format.html { redirect_to(@tutor.redirect_path, notice: 'Tutor was succesfully updated.')}
+        format.json { respond_with_bip(@tutor)}
       else
-        redirect_to dashboard_tutors_user_path(current_user)
+        format.html { render :edit, error: 'Tutor was not updated.'}
+        format.json { respond_with_bip(@tutor)}
       end
-    else
-      render :edit, error: 'Your tutor profile was not updated.'
     end
   end
 
   def destroy
+    @tutor = Tutor.find(params[:id]) || @tutor
+
     if @tutor.destroy
       redirect_to dashboard_home_user_path(@user)
     else
