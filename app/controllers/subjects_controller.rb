@@ -19,7 +19,7 @@ class SubjectsController < ApplicationController
     end
   end
 
-  def show 
+  def show
   end
 
   def edit
@@ -43,14 +43,14 @@ class SubjectsController < ApplicationController
     end
   end
 
-  private 
+  private
 
-    def set_subject
-      @subject = Subject.find(params[:id])
-    end
+  def set_subject
+    @subject = Subject.find(params[:id])
+  end
 
-    def subject_params
-      params.require(:subject).permit(:name)
-    end
+  def subject_params
+    params.require(:subject).permit(:name)
+  end
 
 end

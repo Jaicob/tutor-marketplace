@@ -16,8 +16,12 @@
 //= require jquery_ujs
 //= require jquery.Jcrop.min
 //= require turbolinks
+//= require react
+//= require react_ujs
+//= require components
 //= require foundation
 //= require_tree .
+//= require sweet-alert
 $(function() {
   $(document).foundation();
 });

@@ -1,35 +1,23 @@
 <h1>Edit Tutor Information</h1>
-
 <div class="row">
   <div class="small-10 large-6 small-centered large-centered columns">
     <%= form_for @tutor do |f| %>
-
-      <p>Your degree, major, graduation year and extra_info will appear on your profile.</p> 
-
+      <p>Your degree, major, graduation year and extra_info will appear on your profile.</p>
       <%= f.label :degree %>
       <%= f.text_field :degree %>
-
       <%= f.label :major %>
       <%= f.text_field :major %>
-
       <%= f.label :graduation_year %>
       <%= f.text_field :graduation_year %>
-
       <%= f.label :extra_info %>
       <%= f.text_field :extra_info %>
-
       <p>Your birthdate and phone number will not appear on your profile.</p>
-
       <%= f.label :birthdate %>
       <%= f.date_select :birthdate %>
-
       <%= f.label :phone_number %>
       <%= f.text_field :phone_number %>
-
       <p>You will only appear in search results for your classes if your status is set to active.</p>
-      
       <%= f.select(:active_status, [['Active'], ['Inactive']]) %>
-
       <p>Your transcript is only accessible to Axon Tutors administrators</p>
       TRANSCRIPT
       
@@ -37,7 +25,6 @@
       PROFILE PIC
 
       <%= f.submit 'Update' %>
-
     <% end %>
   </div>
 </div>

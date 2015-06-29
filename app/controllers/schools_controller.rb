@@ -19,7 +19,7 @@ class SchoolsController < ApplicationController
     end
   end
 
-  def show 
+  def show
   end
 
   def edit
@@ -43,14 +43,14 @@ class SchoolsController < ApplicationController
     end
   end
 
-  private 
+  private
 
-    def set_school
-      @school = School.find(params[:id])
-    end
+  def set_school
+    @school = School.find(params[:id])
+  end
 
-    def school_params
-      params.require(:school).permit(:name, :location)
-    end
+  def school_params
+    params.require(:school).permit(:name, :location)
+  end
 
 end

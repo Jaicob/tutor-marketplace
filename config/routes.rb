@@ -15,6 +15,7 @@
 #                           PATCH  /tutors/:id(.:format)                     tutors#update
 #                           PUT    /tutors/:id(.:format)                     tutors#update
 #                           DELETE /tutors/:id(.:format)                     tutors#destroy
+#        tutor_courses_find POST   /tutor_courses/find(.:format)             tutor_courses#find
 #          new_user_session GET    /users/sign_in(.:format)                  devise/sessions#new
 #              user_session POST   /users/sign_in(.:format)                  devise/sessions#create
 #      destroy_user_session DELETE /users/sign_out(.:format)                 devise/sessions#destroy
@@ -82,7 +83,7 @@
 
 Rails.application.routes.draw do
   resources :tutors do
-  # The custom routes below are necessary to allow new tutors to apply as visitors/non-signed-users while still linking their newly created Tutor to a User
+    # The custom routes below are necessary to allow new tutors to apply as visitors/non-signed-users while still linking their newly created Tutor to a User
     member do
       get 'register_or_sign_in'
       get 'visitor_sign_in'
@@ -94,6 +95,9 @@ Rails.application.routes.draw do
       post 'visitor_create'
     end
   end
+
+  post 'tutor_courses/find' => 'tutor_courses#find'
+
   devise_for :users
   resources :courses
   resources :schools
@@ -116,17 +120,16 @@ Rails.application.routes.draw do
   # -save_profile_pic_crop
 
   # The custom routes below are for the dashboard which handles no logic on its own - it sends information to the respective controllers required for any operation and simply acts as a template for displaying different resources in one convenient place
-  resources :users, only: [], path: '' do 
-    member do       
+  resources :users, only: [], path: '' do
+    member do
       get  '/dashboard/home'      => 'dashboard#home'
       get  '/dashboard/schedule'  => 'dashboard#schedule'
       get  '/dashboard/courses'   => 'dashboard#courses'
       get  '/dashboard/profile'   => 'dashboard#profile'
       get  '/dashboard/settings'  => 'dashboard#settings'
-      get  '/dashboard/tutors'    => 'dashboard#tutors' 
+      get  '/dashboard/tutors'    => 'dashboard#tutors'
     end
   end
-
 
   root to: "static_pages#home"
 

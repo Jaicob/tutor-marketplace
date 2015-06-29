@@ -1,29 +1,15 @@
 <div class="row">
   <%= form_for @tutor_course do |f| %>
-  <%= fields_for :course do |course| %>
-    <div class="small-3 columns">
-      <%= course.label "University" %>
-      <%= course.collection_select :school_id, School.all, :id, :name, include_blank: true %>
-    </div>
-    <div class="small-3 columns">
-      <%= course.label "Subject" %>
-      <%= course.collection_select :subject_id, Subject.all, :id, :name, include_blank: true  %>
-    </div>
-    <div class="small-3 columns">
-      <%= course.label "Course" %>
-      <%= course.select :course_id, Course.list_courses, include_blank: true  %>
-    </div>
-  <% end %>
-
-  <div class="small-3 columns">
-    <%= fields_for :tutor_course do |tutor_course| %>
-      <%= tutor_course.label :rate %>
-      <%= tutor_course.number_field :rate, placeholder: '$USD per hour' %>
+    <%= fields_for :course do |course| %>
+      <%= react_component('CourseBox', {
+              courseList: true,
+              submitButton: true,
+              tutor_id: @tutor.id
+            }, {
+              :prerender => false
+            }
+          ) %>
     <% end %>
   </div>
-
-  <%= hidden_field_tag(:tutor_id, value = @tutor.id) %>
-
-  <%= f.submit 'Add course', class: 'button radius success tiny right' %>
 <% end %>
 </div>

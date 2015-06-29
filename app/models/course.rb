@@ -38,7 +38,6 @@ class Course < ActiveRecord::Base
     school = School.find(self.school_id)
     school.name
   end
-  
 end
 
 

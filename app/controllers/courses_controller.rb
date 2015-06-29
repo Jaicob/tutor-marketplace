@@ -19,7 +19,7 @@ class CoursesController < ApplicationController
     end
   end
 
-  def show 
+  def show
   end
 
   def edit
@@ -41,9 +41,9 @@ class CoursesController < ApplicationController
     else
       render :show
     end
-  end
+    ed
 
-  private 
+    private
 
     def set_course
       @course = Course.find(params[:id])
@@ -52,5 +52,5 @@ class CoursesController < ApplicationController
     def course_params
       params.require(:course).permit(:subject_id, :call_number, :friendly_name, :school_id)
     end
-
+  end
 end
