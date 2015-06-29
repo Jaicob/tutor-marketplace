@@ -70,18 +70,7 @@ describe SchoolsController do
     end
   end
 
-  describe 'GET #edit' do 
-    
-    it 'renders the :edit template' do 
-      get :edit, id: school
-      expect(response).to render_template :edit
-    end
-
-    it 'sets the correct school to @school' do 
-      get :edit, id: school
-      expect(assigns(:school)).to eq school
-    end
-  end
+  # Removed Edit tests because it's now done in-line on Show page
 
   describe 'PUT #update' do 
 

@@ -10,8 +10,12 @@
 #
 
 class School < ActiveRecord::Base
+  has_many :courses
+
   validates :name, presence: true, uniqueness: true
   validates :location, presence: true
+
+  # add some sort of association so we can call tutors directly on school, perhaps through a has-many through assocation
 
   # Need to add Active Record assocations to schools for their courses and tutors
 

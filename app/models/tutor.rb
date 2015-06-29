@@ -23,6 +23,7 @@ class Tutor < ActiveRecord::Base
   belongs_to :user
   has_many :tutor_courses, dependent: :destroy
   has_many :courses, through: :tutor_courses, dependent: :destroy
+  
   enum application_status: ['Applied', 'Awaiting Approval', 'Approved']
   enum active_status: [:Inactive, :Active]
 
@@ -50,9 +51,7 @@ class Tutor < ActiveRecord::Base
   def schools
     schools = []
     self.courses.each do |course|
-      if !schools.include?(course.school_name)
-        schools << course.school_name
-      end
+      schools << course.school_name unless schools.include?(course.school_name)
     end
     schools
   end
