@@ -42,7 +42,7 @@ describe CoursesController do
         expect { 
           post :create, course: course_attributes
         }.to change(Course, :count).by(1)
-        expect(response).to redirect_to(courses_path)
+        expect(response).to redirect_to(course_path(Course.last.id))
       end
     end
 
@@ -70,35 +70,12 @@ describe CoursesController do
     end
   end
 
-  describe 'GET #edit' do 
-    
-    it 'renders the :edit template' do 
-      get :edit, id: course
-      expect(response).to render_template :edit
-    end
-
-    it 'sets the correct course to @course' do 
-      get :edit, id: course
-      expect(assigns(:course)).to eq course
-    end
-  end
-
   describe 'PUT #update' do 
-
-    it 'sets the correct course to @course' do 
-      put :update, id: course, course: {
-        call_number: course.call_number,
-        friendly_name: course.friendly_name,
-        school_id: course.school,
-        subject_id: course.subject
-      }
-      expect(assigns(:course)).to eq course
-    end
 
     context 'with valid attributes' do 
       
       it 'updates the course and redirects to the courses index' do
-        put :update, id: course, course: {
+        xhr :put, :update, id: course, course: {
           call_number: course.call_number,
           friendly_name: 'Test Name',
           school_id: course.school,
@@ -106,14 +83,13 @@ describe CoursesController do
         }
         course.reload
         expect(course.friendly_name).to eq 'Test Name'
-        expect(response).to redirect_to courses_path
       end
     end
 
     context 'with invalid attributes' do 
 
       it 'does not update the course and renders the :edit page' do 
-       put :update, id: course, course: {
+       xhr :put, :update, id: course, course: {
           call_number: course.call_number,
           friendly_name: nil,
           school_id: course.school,

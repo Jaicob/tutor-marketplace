@@ -5,8 +5,12 @@ feature 'Tutor sign up for registered users' do
   given(:school) { create(:school) }
   given(:course) { create(:course) }
 
+  before :each do 
+    sign_in(user.email, user.password)
+  end
+
+
   scenario 'user can create a tutor account' do 
-    sign_in(user)
     visit '/tutors/new'
     school
     course
@@ -21,8 +25,6 @@ feature 'Tutor sign up for registered users' do
   end
 
   scenario 'user cannot create a tutor account without uploading a transcript' do 
-    user
-    sign_in(user)
     visit '/tutors/new'
     school
     course
@@ -36,8 +38,6 @@ feature 'Tutor sign up for registered users' do
   end
 
   scenario 'user cannot create a tutor account without adding a class' do
-    user
-    sign_in(user)
     visit '/tutors/new'
     school
     course

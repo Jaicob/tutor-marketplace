@@ -29,9 +29,9 @@
           :cancel_button => 'Cancel',
           :cancel_button_class => "button danger tiny"
         }  %>
-        <p> Degree: <%= best_in_place @tutor, :degree, options %> </p>
-        <p> Major: <%= best_in_place @tutor, :major, options %> </p>
-        <p> Extra Info: <%= best_in_place @tutor, :extra_info, options %> </p>
+        <p> Degree: <%= best_in_place @tutor, :degree, options.merge({ :nil => 'Enter Degree' }) %> </p>
+        <p> Major: <%= best_in_place @tutor, :major, options.merge({  :nil => 'Enter Major' }) %> </p>
+        <p> Extra Info: <%= best_in_place @tutor, :extra_info, options.merge({ :nil => 'Enter Graduation Year' }) %> </p>
         <p> Graduation Year: <%= best_in_place @tutor, :graduation_year, options %> </p>
       </div>
     </div>

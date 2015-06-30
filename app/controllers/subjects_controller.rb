@@ -22,16 +22,13 @@ class SubjectsController < ApplicationController
   def show 
   end
 
-  def edit
-  end
-
   def update
-    @subject.update(subject_params)
-
-    if @subject.save
-      redirect_to subjects_path
-    else
-      render :edit, error: "subject was not updated."
+    respond_to do |format|
+      if @subject.update_attributes(subject_params)
+        format.json { respond_with_bip(@subject)}
+      else
+        format.json { respond_with_bip(@subject)}
+      end
     end
   end
 

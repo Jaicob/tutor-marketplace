@@ -17,6 +17,10 @@
         <tr>
           <th>ID</th>
           <th>Name</th>
+          <th>Schools</th>
+          <th>Courses</th>
+          <th>Tutors</th>
+          <th>Appointments</th>
         </tr>
       </thead>
       <tbody>
@@ -24,6 +28,10 @@
         <tr>
           <td><%= subject.id %></td>
           <td><%= subject.name %></td>
+          <td><%= subject.schools.count %></td>
+          <td><%= subject.courses.count %></td>
+          <td><%= subject.tutors.count %></td>
+          <td></td>
           <td><%= link_to 'View', subject_path(subject) %></td>
         </tr>
         <% end %>
