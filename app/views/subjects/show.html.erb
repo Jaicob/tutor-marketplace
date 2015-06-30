@@ -11,12 +11,19 @@
         <tr>
           <th>ID</th>
           <th>Name</th>
+          <th>Schools</th>
+          <th>Courses</th>
+          <th>Tutors</th>
+          <th>Appointments</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td><%= @subject.id %>
-          <td><%= best_in_place @subject, :name, :as => :input %></td>  
+          <td><%= best_in_place @subject, :name, :as => :input %></td> 
+          <td><%= @subject.schools.count %></td>
+          <td><%= @subject.courses.count %></td>
+          <td><%= @subject.tutors.count %></td> 
           <td><a href="#" data-reveal-id="confirmDeleteSubject">Delete</a></td>
         </tr>
       </tbody>

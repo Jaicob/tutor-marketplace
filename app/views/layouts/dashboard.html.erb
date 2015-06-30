@@ -1,11 +1,9 @@
+<!DOCTYPE html>
 <!-- This can be DRY-ed up quite a bit. I'm working on something else right now, so this is just a reminder to come back and refactor this following this: 
 
   3.5 Using Nested Layouts @ http://guides.rubyonrails.org/layouts_and_rendering.html#using-partials
   
 -->
-
-
-<!DOCTYPE html>
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,7 +19,7 @@
   <body>
     <header>
       <%= render 'layouts/navigation' %>
-      <% # this sets up the links (with the helper) and then renders them into the view %>
+      <!-- this sets up the links (with the helper) and then renders them into the view -->
       <%= show_dashboard_nav and render 'layouts/dashboard_nav' %>
     </header>
     <main role="main">

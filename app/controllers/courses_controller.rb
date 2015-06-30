@@ -22,16 +22,13 @@ class CoursesController < ApplicationController
   def show 
   end
 
-  def edit
-  end
-
   def update
-    @course.update(course_params)
-
-    if @course.save
-      redirect_to @course
-    else
-      render :edit, error: "Course was not updated."
+    respond_to do |format|
+      if @course.update_attributes(course_params)
+        format.json { respond_with_bip(@course)}
+      else
+        format.json { respond_with_bip(@course)}
+      end
     end
   end
 
