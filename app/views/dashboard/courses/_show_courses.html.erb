@@ -1,0 +1,54 @@
+<table>
+  <thead>
+    <tr>
+      <th width="400">School</th>
+      <th width="150">Subject</th>
+      <th width="150">Call Number</th>
+      <th width="400">Course Name</th>
+      <th>Rate</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tutor.tutor_courses.each do |tutor_course| %>
+    <tr>
+      <td><%= tutor_course.course.school_name %></td>
+      <td><%= tutor_course.course.subject_name %></td>
+      <td><%= tutor_course.course.call_number %></td>
+      <td><%= tutor_course.course.friendly_name %></td>
+      <td>$<%= tutor_course.rate %></td>
+      <td><a href="#" data-reveal-id="editTutorCourseRate"><i class="fi-pencil"></a></td>
+      <td><a href="#" data-reveal-id="confirmDeleteTutorCourse"><i class="fi-trash"></a></td>
+    </tr>
+
+    <!-- Modal for editing tutor course rate -->
+    <div id="editTutorCourseRate" class="reveal-modal small" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+      <h4 id="modalTitle">Adjust your rate for this course:</h4>
+      <h4 class="lead"><%= tutor_course.formatted_name %></h4>
+      <p>Current rate: <%= tutor_course.rate %></p>
+      <p>
+        <%= form_for :update_tutor_course_rate, url: "/tutor_courses/#{tutor_course.id}", method: 'put' do |f| %>
+          <%= f.label :new_rate %>
+          <%= f.number_field :new_rate %>
+
+          <%= hidden_field_tag(:tutor_course_id, value = tutor_course.id ) %>
+
+          <%= f.submit 'Update Rate' %>
+        <% end %>
+      </p>
+      <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+    </div>
+    <!-- End of modal -->
+
+    <!-- Modal for confirming deletion of tutor course -->
+    <div id="confirmDeleteTutorCourse" class="reveal-modal small" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+      <h4 id="modalTitle">Are you sure you want to delete this course:</h4>
+      <h4 class="lead"><%= tutor_course.formatted_name %></h4>
+      <%= button_to('Delete Course', "/tutor_courses/#{tutor_course.id}", method: "delete" ) %>
+      <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+    </div>
+    <!-- End of modal -->
+
+    <% end %>
+  </tbody>
+</table>

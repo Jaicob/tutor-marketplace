@@ -80,6 +80,7 @@ pickle-email-*.html
 
 #ignore vagrant files
 .vagrant/
+.vagrant
 
 #ignore env files, sensitive info could go in here
 .env.*
@@ -87,4 +88,11 @@ pickle-email-*.html
 
 # Ignore application configuration
 /config/application.yml
+.ruby-version
 
+
+# My personal notes & to-do list
+Z-notes.rb
+
+# Ignore file uploads
+/public/uploads/

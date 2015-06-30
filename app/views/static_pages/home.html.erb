@@ -1,1 +1,5 @@
 <h1>This is the home page</h1>
+
+<% if user_signed_in? == false || (user_signed_in? && current_user.tutor.nil?) %>
+  <%= link_to "Become a Tutor", @sign_up_path, class: 'button large radius' %>
+<% end %>

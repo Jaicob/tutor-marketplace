@@ -1,6 +1,7 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
+require 'csv'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -19,6 +20,16 @@ module WebApp
         request_specs: false
       g.fixture_replacement :factory_girl, dir: "spec/factories"
     end
+
+    # This tells Rails to include our Carrierwave uploaders for file attachments
+    config.autoload_paths += %W(#{config.root}/app/uploaders)
+
+    # Added to get rid of error messages in server log per advice here:
+    # http://stackoverflow.com/questions/29417328/how-to-disable-cannot-render-console-from-on-rails
+    config.web_console.whitelisted_ips = '10.0.2.2'
+
+    # Added because changes were not loading automaticaly, I had to restart the server a bunch, this is supposed to fix that
+    config.reload_classes_only_on_change = false
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
