@@ -30,6 +30,8 @@
       <table>
         <thead>
           <tr>
+            <th>User ID</th>
+            <th>Tutor ID</th>
             <th width="150">Active Status</th>
             <th width="250">Name</th>
             <th width="300">Email</th>
@@ -41,13 +43,9 @@
         <tbody>
           <% @tutors.each do |tutor| %>
           <tr>
-            <td>
-              <% if tutor.active_status == 'Active' %>
-                <span class="button tiny success expand"><a href="#" data-reveal-id="confirmTutorDeactivationModal-<%= tutor.id %>" class="white-link-text"><%= tutor.active_status %></a></span></td>
-              <% else %>
-                <span class="button tiny secondary expand"><a href="#" data-reveal-id="confirmTutorActivationModal-<%= tutor.id %>" class="black-link-text"><%= tutor.active_status %></a></span></td>
-              <% end %>
-            </td>
+            <td><%= tutor.user.id %></td>
+            <td><%= tutor.id %></td>
+            <td><%= best_in_place tutor, :active_status, :as => :select, :collection => {"Inactive" => "Inactive", "Active" => "Active"} %></td>
             <td><%= tutor.user.full_name %></td>
             <td><%= tutor.user.email %></td>
             <td><% tutor.schools.each do |school| %>
@@ -60,48 +58,6 @@
             </td>
             <td><span class="button tiny secondary expand"><a href="#" data-reveal-id="confirmDestroyTutorModal-<%= tutor.id %>" class="black-link-text">Delete</a></span></td>
           </tr>
-
-            <!-- Modal to confirm Tutor activation -->
-            
-            <div id="confirmTutorActivationModal-<%= tutor.id %>" class="reveal-modal small" data-reveal aria-labelledby="secondModalTitle" aria-hidden="true" role="dialog">
-
-              <h4 id="secondModalTitle" class="text-center">Are you sure you want to activate this tutor?</h4>
-
-              <div class="row">
-                <div class="small-8 small-centered columns">
-                  <div class="text-center">
-                    <h2><%= tutor.user.full_name %></h2>
-      
-                    <%= form_for tutor do |tutor| %>
-                      <%= tutor.hidden_field :active_status, value: 'Active' %>
-                      <%= tutor.submit 'Activate' %>
-                    <% end %>
-
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Modal to confirm Tutor de-activation -->
-
-            <div id="confirmTutorDeactivationModal-<%= tutor.id %>" class="reveal-modal small" data-reveal aria-labelledby="secondModalTitle" aria-hidden="true" role="dialog">
-
-              <h4 id="secondModalTitle" class="text-center">Are you sure you want to de-activate this tutor?</h4>
-
-              <div class="row">
-                <div class="small-8 small-centered columns">
-                  <div class="text-center">
-                    <h2><%= tutor.user.full_name %></h2>
-
-                    <%= form_for tutor do |tutor| %>
-                      <%= tutor.hidden_field :active_status, value: 'Inactive' %>
-                      <%= tutor.submit 'Deactivate' %>
-                    <% end %>
-
-                  </div>
-                </div>
-              </div>
-            </div>
 
             <!-- Modal to view/download Tutor documents -->
 

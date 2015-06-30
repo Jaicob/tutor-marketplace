@@ -70,42 +70,23 @@ describe SubjectsController do
     end
   end
 
-  describe 'GET #edit' do 
-    
-    it 'renders the :edit template' do 
-      get :edit, id: subject
-      expect(response).to render_template :edit
-    end
-
-    it 'sets the correct subject to @subject' do 
-      get :edit, id: subject
-      expect(assigns(:subject)).to eq subject
-    end
-  end
-
   describe 'PUT #update' do 
-
-    it 'sets the correct subject to @subject' do 
-      put :update, id: subject, subject: subject_attributes
-      expect(assigns(:subject)).to eq subject
-    end
 
     context 'with valid attributes' do 
       
       it 'updates the subject and redirects to the subjects index' do
-        put :update, id: subject, subject: {
+        xhr :put, :update, id: subject, subject: {
           name: 'Test Subject'
         }
         subject.reload
         expect(subject.name).to eq 'Test Subject'
-        expect(response).to redirect_to subjects_path
       end
     end
 
     context 'with invalid attributes' do 
 
       it 'does not update the subject and renders the :edit page' do 
-       put :update, id: subject, subject: {
+       xhr :put, :update, id: subject, subject: {
           name: nil
         }
         subject.reload

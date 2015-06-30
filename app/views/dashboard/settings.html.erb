@@ -2,42 +2,20 @@
 
 <div class="row">
   <div class="small-10 large-6 small-centered large-centered columns">
-    <%= form_for @tutor do |f| %>
+    
+    <h6>Your birthdate and phone number will not appear on your profile.</h6>
+    
+    <p>Phone Number: <%= best_in_place @tutor, :phone_number, :as => :input, :nil => 'Enter Phone Number' %></p>
+    <p>Birthday: <%= best_in_place @tutor, :birthdate, :as => :input, :nil => 'Enter Birthday' %></p>
 
-      <p>Your degree, major, graduation year and extra_info will appear on your profile.</p> 
+    <h6>You will only appear in search results for your classes if your status is set to active.</h6>
+    
+    <p>Your transcript is only accessible to Axon Tutors administrators</p>
+    TRANSCRIPT
+    
+    <p>Your profile picture will appear on your public profile</p>
+    PROFILE PIC
 
-      <%= f.label :degree %>
-      <%= f.text_field :degree %>
 
-      <%= f.label :major %>
-      <%= f.text_field :major %>
-
-      <%= f.label :graduation_year %>
-      <%= f.text_field :graduation_year %>
-
-      <%= f.label :extra_info %>
-      <%= f.text_field :extra_info %>
-
-      <p>Your birthdate and phone number will not appear on your profile.</p>
-
-      <%= f.label :birthdate %>
-      <%= f.date_select :birthdate %>
-
-      <%= f.label :phone_number %>
-      <%= f.text_field :phone_number %>
-
-      <p>You will only appear in search results for your classes if your status is set to active.</p>
-      
-      <%= f.select(:active_status, [['Active'], ['Inactive']]) %>
-
-      <p>Your transcript is only accessible to Axon Tutors administrators</p>
-      TRANSCRIPT
-      
-      <p>Your profile picture will appear on your public profile</p>
-      PROFILE PIC
-
-      <%= f.submit 'Update' %>
-
-    <% end %>
   </div>
 </div>

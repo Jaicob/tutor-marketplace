@@ -70,44 +70,27 @@ describe SchoolsController do
     end
   end
 
-  describe 'GET #edit' do 
-    
-    it 'renders the :edit template' do 
-      get :edit, id: school
-      expect(response).to render_template :edit
-    end
-
-    it 'sets the correct school to @school' do 
-      get :edit, id: school
-      expect(assigns(:school)).to eq school
-    end
-  end
+  # Removed Edit tests because it's now done in-line on Show page
 
   describe 'PUT #update' do 
 
-    it 'sets the correct school to @school' do 
-      put :update, id: school, school: school_attributes
-      expect(assigns(:school)).to eq school
-    end
-
     context 'with valid attributes' do 
       
-      it 'updates the school and redirects to the schools index' do
-        put :update, id: school, school: {
+      it 'updates the school and redirects to the schools index' do  
+        xhr :put, :update, id: school, school: {
           name: 'Test School Name',
           location: 'Test School Location'
         }
         school.reload
         expect(school.name).to eq 'Test School Name'
         expect(school.location).to eq 'Test School Location'
-        expect(response).to redirect_to schools_path
       end
     end
 
     context 'with invalid attributes' do 
 
       it 'does not update the school and renders the :edit page' do 
-       put :update, id: school, school: {
+       xhr :put, :update, id: school, school: {
           name: nil,
           location: 'Invalid School Location'
         }

@@ -13,6 +13,7 @@
 class TutorCourse < ActiveRecord::Base
   belongs_to :tutor
   belongs_to :course
+  
   validates :rate, presence: true
 
   def set_tutor_and_course_id(tutor_course, params)
