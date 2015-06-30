@@ -12,7 +12,6 @@ feature "Admin can manage tutors' Active Statuses" do
   scenario "Admin can view a tutor's active status", :js => true do
     skip 'Need to figure out this test'
     visit "/#{admin.id}/dashboard/tutors"
-    bip_select(Tutor, active_status, Active)
   end
 
 end
