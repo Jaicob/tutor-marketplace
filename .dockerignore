@@ -1,0 +1,4 @@
+shared/
+tmp/
+!tmp/cache
+supervisord.log

@@ -13,11 +13,11 @@ ADD config/unicorn.rb /etc/my-app/config/unicorn.rb
 # COPY nginx.conf /etc/nginx/nginx.conf
 
 # Add custom setup script here TODO change name to setup.sh
-#COPY app_entrypoint.sh /etc/my-app/app_entrypoint.sh
+#COPY setup.sh /etc/my-app/setup.sh
 
 # Run setup script. This sets up the tmp folder and symlinks it to shared
 # as well as sets up the database if necessary
-RUN /etc/my-app/app_entrypoint.sh
+RUN /etc/my-app/setup.sh
 
 # Expose port 80
 EXPOSE 80

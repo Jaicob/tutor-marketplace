@@ -18,8 +18,6 @@ gem 'foundation-rails'
 gem 'pg'
 gem 'pundit'
 gem 'simple_form'
-gem 'unicorn'
-gem 'unicorn-rails'
 gem 'upmin-admin'
 gem 'figaro'
 group :development do
@@ -40,5 +38,10 @@ group :test do
   gem 'selenium-webdriver'
   gem 'ci_reporter'
   gem 'ci_reporter_rspec'
-
 end
+group :production do
+  gem 'unicorn'
+  gem 'unicorn-rails'
+end
+
+

@@ -273,6 +273,7 @@ DEPENDENCIES
   better_errors
   byebug
   capybara
+  ci_reporter
   ci_reporter_rspec
   coffee-rails (~> 4.1.0)
   database_cleaner
@@ -302,3 +303,6 @@ DEPENDENCIES
   unicorn-rails
   upmin-admin
   web-console (~> 2.0)
+
+BUNDLED WITH
+   1.10.4
