@@ -110,23 +110,23 @@ describe TutorsController do
 
     it 'assigns the correct tutor to @tutor' do 
       login_with tutor.user
-      patch :update, id: tutor.user, tutor: attributes_for(:tutor)
+      xhr :patch, :update, id: tutor, tutor: attributes_for(:tutor)
       expect(assigns(:tutor)).to eq tutor
     end
 
     it 'updates attributes for @tutor' do 
       login_with tutor.user
-      patch :update, id: tutor.user, tutor: attributes_for(:tutor, major: 'Test Major')
+      xhr :patch, :update, id: tutor, tutor: attributes_for(:tutor, major: 'Test Major')
       tutor.reload
       expect(tutor.major).to eq 'Test Major'
     end
 
     it 'updates active status for @tutor' do 
       login_with tutor.user
-      patch :update, id: tutor.user, tutor: attributes_for(:tutor, active_status: 'Active')
+      xhr :patch, :update, id: tutor, tutor: attributes_for(:tutor, active_status: 'Active')
       tutor.reload
       expect(tutor.active_status).to eq 'Active'
-      patch :update, id: tutor.user, tutor: attributes_for(:tutor, active_status: 'Inactive')
+      xhr :patch, :update, id: tutor, tutor: attributes_for(:tutor, active_status: 'Inactive')
       tutor.reload
       expect(tutor.active_status).to eq 'Inactive'
     end

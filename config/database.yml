@@ -10,8 +10,14 @@ development: &default
 
 
 test: &test
-  <<: *default
+  adapter:  postgresql
+  host:     db
+  encoding: unicode
   database: web_test
+  pool:     5
+  username: postgres
+  password: 
+  template: template0
 
 # production:
 #   adapter: postgresql

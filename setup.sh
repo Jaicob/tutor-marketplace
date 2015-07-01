@@ -16,7 +16,10 @@ echo "Stopping  unicorn_rails, if already running"
 pkill unicorn_rails
 
 #TODO Only run if environment is production
-echo "Setting up tmp and shared directories"
+echo "Setting up tmp and shared directories & removing old pids"
+rm -rf ./tmp/pids && \
+rm -rf ./tmp/sessions && \
+rm -rf ./tmp/sockets && \
 mkdir ./shared && \
 mkdir ./tmp/pids && \
 mkdir ./tmp/sessions && \
