@@ -146,8 +146,6 @@ GEM
       ast (>= 1.1, < 3.0)
     pg (0.18.2)
     powerpack (0.1.1)
-    pundit (1.0.1)
-      activesupport (>= 3.0.0)
     rack (1.6.4)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -159,7 +157,7 @@ GEM
       activemodel (= 4.2.1)
       activerecord (= 4.2.1)
       activesupport (= 4.2.1)
-      bundler (>= 1.3.0, < 2.0)
+      bundler (= 1.10.4)
       railties (= 4.2.1)
       sprockets-rails
     rails-deprecated_sanitizer (1.0.3)
@@ -223,9 +221,6 @@ GEM
       multi_json (~> 1.0)
       rubyzip (~> 1.0)
       websocket (~> 1.0)
-    simple_form (3.1.0)
-      actionpack (~> 4.0)
-      activemodel (~> 4.0)
     spring (1.3.6)
     spring-commands-rspec (1.0.4)
       spring (>= 0.9.1)
@@ -289,7 +284,6 @@ DEPENDENCIES
   jquery-rails
   launchy
   pg
-  pundit
   rails (= 4.2.1)
   rails_layout
   rmagick
@@ -297,7 +291,6 @@ DEPENDENCIES
   rubocop
   sass-rails (~> 5.0)
   selenium-webdriver
-  simple_form
   spring
   spring-commands-rspec
   turbolinks
