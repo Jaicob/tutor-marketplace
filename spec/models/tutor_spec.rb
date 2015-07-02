@@ -59,10 +59,6 @@ RSpec.describe Tutor, type: :model do
       expect(build(:tutor, extra_info: nil)).to_not be_valid
     end
 
-    it "is invalid without an attached transcript" do 
-      expect(build(:tutor, transcript: nil)).to_not be_valid
-    end
-
     it "has an 'applied' status until all Tutor fields are complete" do
       expect(tutor.application_status).to eq 'Applied'
     end

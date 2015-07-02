@@ -16,8 +16,6 @@ gem 'devise'
 gem 'devise_invitable'
 gem 'foundation-rails'
 gem 'pg'
-# gem 'pundit'
-# gem 'simple_form'
 gem 'figaro'
 gem 'annotate'
 gem 'friendly_id', '~> 5.1.0'
@@ -38,10 +36,8 @@ group :development, :test do
   gem 'rubocop'
 end
 group :test do
-  gem 'capybara'
   gem 'database_cleaner'
   gem 'launchy'
-  gem 'selenium-webdriver'
   gem 'ci_reporter'
   gem 'ci_reporter_rspec'
 end
