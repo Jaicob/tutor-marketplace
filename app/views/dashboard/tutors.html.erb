@@ -45,7 +45,7 @@
           <tr>
             <td><%= tutor.user.id %></td>
             <td><%= tutor.id %></td>
-            <td><%= best_in_place tutor, :active_status, :as => :select, :collection => {"Inactive" => "Inactive", "Active" => "Active"} %></td>
+            <td><%= best_in_place tutor, :active_status, :as => :select, :collection => {"Inactive" => "Inactive", "Active" => "Active"}, :url => update_active_status_tutor_path(tutor) %></td>
             <td><%= tutor.user.full_name %></td>
             <td><%= tutor.user.email %></td>
             <td><% tutor.schools.each do |school| %>

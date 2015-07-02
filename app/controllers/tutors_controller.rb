@@ -36,14 +36,11 @@ class TutorsController < ApplicationController
   end
 
   def update
-    @tutor = Tutor.find(@tutor.verify_tutor(@tutor.id, params))
-
+    # This updates everything on a tutor object, except active_status which is only editable by Admin users and which is handled in the custom update_active_status action
     respond_to do |format|
       if @tutor.update_attributes(tutor_params)
-        # format.html { redirect_to(@tutor.redirect_path, notice: 'Tutor was succesfully updated.')}
         format.json { respond_with_bip(@tutor)}
       else
-        # format.html { render :edit, error: 'Tutor was not updated.'}
         format.json { respond_with_bip(@tutor)}
       end
     end
@@ -51,11 +48,33 @@ class TutorsController < ApplicationController
 
   def destroy
     # @tutor = Tutor.find(params[:id]) || @tutor
-
     if @tutor.destroy
       redirect_to dashboard_home_user_path(@user)
     else
       render :show, error: 'Your tutor account was not deleted.'
+    end
+  end
+
+  #======================================================================================
+  # Custom Action for activating/de-activation Tutors by Admin users
+  #======================================================================================
+
+  def update_active_status
+    # This action allows an Admin user to update the active status of a tutor
+    @tutor = Tutor.find(params[:id])
+
+    respond_to do |format|
+      if @tutor.update_attributes(tutor_params)
+        # The following conditional send the appropriate email depending on whether a tutor was activated or de-activated
+        if @tutor.active_status == 'Active'
+          TutorActivationMailer.activation_email(@tutor.user).deliver_now
+        else
+          TutorActivationMailer.deactivation_email(@tutor.user).deliver_now
+        end
+        format.json { respond_with_bip(@tutor)}
+      else
+        format.json { respond_with_bip(@tutor)}
+      end
     end
   end
 
@@ -96,5 +115,9 @@ class TutorsController < ApplicationController
     def tutor_params
       params.require(:tutor).permit(:rating, :application_status, :birthdate, :degree, :major, :extra_info, :graduation_year, :phone_number, :profile_pic, :transcript, :active_status)
     end
+
+    def tutor_activation_params
+    end
+
 
 end
