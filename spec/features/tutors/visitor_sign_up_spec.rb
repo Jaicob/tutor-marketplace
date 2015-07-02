@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 feature 'Tutor sign up for visitors' do 
-  given(:user) { create(:user) }
-  given(:user_stub) { build_stubbed(:user) }
-  given!(:school) { create(:school) }
-  given!(:course) { create(:course) }
+  let(:user) { create(:user) }
+  let(:user_stub) { build_stubbed(:user) }
+  let!(:school) { create(:school) }
+  let!(:course) { create(:course) }
 
   scenario 'visitor is prompted to register or login after creating a tutor acount' do
     visit '/tutors/visitor_new'
