@@ -1,4 +1,4 @@
-# == Schema Information
+ # == Schema Information
 #
 # Table name: users
 #
@@ -34,15 +34,30 @@
 #
 
 describe User do
+  let(:user) { create(:user) }
 
-  before(:each) { @user = User.new(email: 'user@example.com') }
+  it "is valid with a first name, last name, email address and password" do
+    user = User.new(
+      first_name: 'Joey',
+      last_name: 'Snakes',
+      email: 'joeysnakes@example.com',
+      password: 'password'
+      )
+    expect(user).to be_valid
+  end
 
-  subject { @user }
+  it "sets default role to user" do 
+    expect(user.role).to eq "user"
+  end
 
-  it { should respond_to(:email) }
+  it "allows role to be changed to admin" do 
+    user.role=1
+    expect(user.role).to eq "admin"
+  end
 
-  it "#email returns a string" do
-    expect(@user.email).to match 'user@example.com'
+  it "joins first and last name to create full name" do 
+    user = create(:user, first_name: 'Johnny', last_name: 'Appleseed')
+    expect(user.full_name).to eq 'Johnny Appleseed'
   end
 
 end
