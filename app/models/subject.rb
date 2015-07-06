@@ -11,7 +11,7 @@
 class Subject < ActiveRecord::Base
   has_many :courses, dependent: :destroy
   
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: true
 
   # Lists the schools which have courses in this subject
   def schools
