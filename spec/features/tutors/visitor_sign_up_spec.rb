@@ -2,9 +2,11 @@ require 'rails_helper'
 
 feature 'Tutor sign up for visitors' do 
   let(:user) { create(:user) }
-  let(:user_stub) { build_stubbed(:user) }
-  let!(:school) { create(:school) }
-  let!(:course) { create(:course) }
+  let(:course) { create(:course) }
+
+  before :each do 
+    course
+  end
 
   scenario 'visitor is prompted to register or login after creating a tutor acount' do
     visit '/tutors/visitor_new'
@@ -29,11 +31,11 @@ feature 'Tutor sign up for visitors' do
     click_button 'Next'
     expect(page).to have_content "Login or create a new account now"
     click_link 'Sign Up'
-    fill_in 'user_first_name', with: user_stub.first_name
-    fill_in 'user_last_name', with: user_stub.last_name
-    fill_in 'user_email', with: user_stub.email
-    fill_in 'user_password', with: user_stub.password
-    fill_in 'user_password_confirmation', with: user_stub.password
+    fill_in 'user_first_name', with: user.first_name
+    fill_in 'user_last_name', with: user.last_name
+    fill_in 'user_email', with: 'another-email@example.com'
+    fill_in 'user_password', with: user.password
+    fill_in 'user_password_confirmation', with: user.password
     click_button 'Sign up'
     expect(page).to have_content 'A message with a confirmation link has been sent to your email address. Please follow the link to activate your account.'
   end
