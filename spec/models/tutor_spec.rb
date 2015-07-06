@@ -99,42 +99,6 @@ RSpec.describe Tutor, type: :model do
     it "shows tutor's sign_up_date with .sign_up_date" do 
       expect(tutor.sign_up_date).to eq Date.today
     end
-
   end
 end
 
-
-
-
-  #     def set_first_tutor_course(tutor, params)
-  #   course_id = params[:course][:course_id]
-  #   rate = params[:tutor_course][:rate]
-  #   tutor.tutor_courses.create(tutor_id: tutor.id, course_id: course_id, rate: rate)
-  # end
-
-  # def crop_profile_pic
-  #   profile_pic.recreate_versions! if crop_x.present?
-  # end
-
-
-  # def sign_up_date
-  #   self.created_at.to_date
-  # end
-
-  # # This method changes the redirect_path for the tutors#update, based on the current user. If the current_user is the same as the tutor, then the redirect points to their profile. If the current user is an Admin activating/de-activating a tutor, then the redirect points back to the Admin tutors index.
-  # def redirect_path
-  #   if self.user.admin?
-  #     ':back'
-  #   else
-  #     'dashboard_profile_user_path(user)'
-  #   end
-  # end
-
-  # # This method makes sure that the correct tutor object is being handled whether a tutor is modifying their profile or whether an admin is updating a tutor's active_status or application_status
-  # def verify_tutor(tutor_id, params)
-  #   if params[:id] == tutor_id
-  #     tutor_id
-  #   else
-  #     params[:id]
-  #   end
-  # end

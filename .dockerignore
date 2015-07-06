@@ -1,0 +1,5 @@
+shared/
+tmp/*
+tmp/pids/*
+!tmp/cache
+supervisord.log

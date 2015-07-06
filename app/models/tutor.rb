@@ -89,25 +89,22 @@ class Tutor < ActiveRecord::Base
     self.created_at.to_date
   end
 
-  # This method changes the redirect_path for the tutors#update, based on the current user. If the current_user is the same as the tutor, then the redirect points to their profile. If the current user is an Admin activating/de-activating a tutor, then the redirect points back to the Admin tutors index.
-  def redirect_path
-    if self.user.admin?
-      ':back'
-    else
-      'dashboard_profile_user_path(user)'
-    end
-  end
+  # # This method changes the redirect_path for the tutors#update, based on the current user. If the current_user is the same as the tutor, then the redirect points to their profile. If the current user is an Admin activating/de-activating a tutor, then the redirect points back to the Admin tutors index.
+  # def redirect_path
+  #   if self.user.admin?
+  #     ':back'
+  #   else
+  #     'dashboard_profile_user_path(user)'
+  #   end
+  # end
 
-  # This method makes sure that the correct tutor object is being handled whether a tutor is modifying their profile or whether an admin is updating a tutor's active_status or application_status
-  def verify_tutor(tutor_id, params)
-    if params[:id] == tutor_id
-      tutor_id
-    else
-      params[:id]
-    end
-  end
-
-
-
+  # # This method makes sure that the correct tutor object is being handled whether a tutor is modifying their profile or whether an admin is updating a tutor's active_status or application_status
+  # def verify_tutor(tutor_id, params)
+  #   if params[:id] == tutor_id
+  #     tutor_id
+  #   else
+  #     params[:id]
+  #   end
+  # end
 
 end

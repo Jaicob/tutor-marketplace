@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 feature 'Tutor sign up for registered users' do 
-  given(:user) { create(:user) }
-  given(:school) { create(:school) }
-  given(:course) { create(:course) }
+  let(:user) { create(:user) }
+  let(:school) { create(:school) }
+  let(:course) { create(:course) }
 
   before :each do 
     sign_in(user.email, user.password)

@@ -1,0 +1,45 @@
+development: &default
+  adapter:  postgresql
+  host:     db
+  encoding: unicode
+  database: web_development
+  pool:     5
+  username: postgres
+  password: 
+  template: template0
+
+
+test: &test
+  adapter:  postgresql
+  host:     db
+  encoding: unicode
+  database: web_test
+  pool:     5
+  username: postgres
+  password: 
+  template: template0
+
+# production:
+#   adapter: postgresql
+#   encoding: unicode
+#   host: <%= ENV['RDS_HOSTNAME'] %>
+#   username: <%= ENV['RDS_USERNAME'] %>
+#   password: <%= ENV['RDS_PASSWORD'] %>
+#   port: <%= ENV['RDS_PORT'] %>
+#   database: <%= ENV['RDS_DB_NAME'] %>
+
+production:
+  adapter: postgresql
+  encoding: unicode
+  database: ebdb
+  username: axon
+  password: axon4lyfe
+  host: aaymfalvaqhwvf.cgkxqsmu9rpy.us-east-1.rds.amazonaws.com
+  port: 5432
+
+
+# -e RDS_HOSTNAME=aaymfalvaqhwvf.cgkxqsmu9rpy.us-east-1.rds.amazonaws.com  -e RDS_USERNAME=axon -e RDS_PASSWORD=axon4lyfe -e RDS_PORT=5432 -e RDS_DB_NAME=ebdb
+
+
+
+
