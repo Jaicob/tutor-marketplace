@@ -104,7 +104,6 @@ class TutorsController < ApplicationController
   end
 
   def register_or_sign_in
-    set_tutor_for_visitor
   end
 
   def visitor_sign_in
