@@ -42,6 +42,21 @@ New Docker Start Up
  ex
 Switching from Selenium-Webdriver to Capybara-Webkit for JS testing -capybara-webkit uses the QtWebKit port, which depends on the Qt windowing framework. Even though the whole point is to run WebKit without windows, the compilation process has dependencies on Qt. -Ubuntu users can 'sudo apt-get install libqt4-dev' to get Qt
 
+New Docker Start Up
+  source ~/.profile
+  docker-compose start
+
+  docker-compose run web tail -f log/development.log
+  -to see server logs
+
+  docker-compose run web /bin/bash
+  -to open a shell in docker container
+
+Switching from Selenium-Webdriver to Capybara-Webkit for JS testing
+  -capybara-webkit uses the QtWebKit port, which depends on the Qt windowing framework. Even though the whole point is to run WebKit without windows, the compilation process has dependencies on Qt.
+  -Ubuntu users can 'sudo apt-get install libqt4-dev' to get Qt
+
+
 Issues
 -------------
 

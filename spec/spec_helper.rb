@@ -19,6 +19,7 @@
 
 require_relative 'support/controller_helpers'
 require 'devise'
+require 'capybara/rspec'
 
 RSpec.configure do |config|
 
@@ -28,6 +29,9 @@ RSpec.configure do |config|
   config.after do
     Warden.test_reset!
   end
+
+  Capybara.javascript_driver = :webkit
+  # Overrides default driver (Selenium) and uses Capybara-webkit instead
 
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
