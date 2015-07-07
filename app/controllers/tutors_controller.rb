@@ -1,6 +1,7 @@
 class TutorsController < ApplicationController
   before_action :set_user, only: [:edit, :update, :destroy, :create_tutor_course]
   before_action :set_tutor, only: [:show, :edit, :update, :destroy, :create_tutor_course]
+  before_action :set_tutor_for_visitor_sign_up, only: [:register_or_sign_in, :visitor_sign_in, :visitor_sign_up]
 
   def index
     @tutors = Tutor.all
@@ -116,8 +117,8 @@ class TutorsController < ApplicationController
       params.require(:tutor).permit(:rating, :application_status, :birthdate, :degree, :major, :extra_info, :graduation_year, :phone_number, :profile_pic, :transcript, :active_status)
     end
 
-    def tutor_activation_params
+    def set_tutor_for_visitor_sign_up
+      @tutor = Tutor.find(params[:id])
     end
-
 
 end
