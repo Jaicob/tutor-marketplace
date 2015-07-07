@@ -44,8 +44,8 @@ class Tutor < ActiveRecord::Base
     tutor.tutor_courses.create(tutor_id: tutor.id, course_id: course_id, rate: rate)
   end
 
-  def crop_profile_pic
-    profile_pic.recreate_versions! if crop_x.present?
+  def crop_profile_pic(tutor_params)
+    profile_pic.recreate_versions! if tutor_params[:crop_x]
   end
 
   def schools

@@ -30,7 +30,7 @@
     <div class="row">
       <div class="small-8 small-centered columns">
         <div class="text-center">
-          <%= form_for :profile_pic, url: "/#{@user.id}/change_profile_pic", method: 'put' do |f| %>
+          <%= form_for @tutor do |f| %>
             <%= f.file_field :profile_pic %>
             <%= f.submit 'Update Profile Picture', class: 'button radius' %>
           <% end %>
@@ -62,7 +62,7 @@
     <div class="row">
       <div class="small-6 small-centered columns">
         <div class="text-center">
-          <%= form_for :profile_pic, url: "/#{@user.id}/save_profile_pic_crop", method: 'put' do |f| %>
+          <%= form_for @tutor do |f| %>
             <% %w[x y w h].each do |attribute| %>
               <%= f.hidden_field "crop_#{attribute}" %>
             <% end %>
