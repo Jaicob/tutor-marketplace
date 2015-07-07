@@ -33,6 +33,8 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'faker'
   gem 'rspec-rails'
+  gem 'capybara'
+  gem 'capybara-webkit'
   gem 'rubocop'
 end
 group :test do

@@ -24,7 +24,7 @@ class TutorsController < ApplicationController
       @tutor.set_first_tutor_course(@tutor, params)
       redirect_to dashboard_home_user_path(current_user)
     else
-      flash[:error] = "Tutor account was not created. Please fill in all fields and attach your unofficial transcript."
+      flash[:alert] = "Tutor account was not created. Please fill in all fields and attach your unofficial transcript."
       render :new
     end
   end
@@ -51,7 +51,8 @@ class TutorsController < ApplicationController
     if @tutor.destroy
       redirect_to dashboard_home_user_path(@user)
     else
-      render :show, error: 'Your tutor account was not deleted.'
+      flash[:alert] = "Your tutor account was not deleted."
+      render :show
     end
   end
 
@@ -102,6 +103,7 @@ class TutorsController < ApplicationController
   end
 
   def register_or_sign_in
+    set_tutor_for_visitor
   end
 
   def visitor_sign_in
@@ -116,8 +118,8 @@ class TutorsController < ApplicationController
       params.require(:tutor).permit(:rating, :application_status, :birthdate, :degree, :major, :extra_info, :graduation_year, :phone_number, :profile_pic, :transcript, :active_status)
     end
 
-    def tutor_activation_params
+    def set_tutor_for_visitor
+      @tutor = Tutor.find(params[:id])
     end
-
 
 end

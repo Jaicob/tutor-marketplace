@@ -9,7 +9,7 @@ feature "Admin can manage tutors' Active Statuses" do
     tutor
   end
 
-  scenario "Admin can view a tutor's active status", :js => true do
+  scenario "Admin can view a tutor's active status" do
   end
 
 end
