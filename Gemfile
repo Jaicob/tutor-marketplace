@@ -19,7 +19,7 @@ gem 'rmagick'
 gem 'foundation-icons-sass-rails'
 gem 'best_in_place', '~> 3.0.1'
 gem 'grape'
-gem "hashie-forbidden_attributes"
+gem 'hashie-forbidden_attributes'
 group :development do
   gem 'better_errors'
   gem 'rails_layout'

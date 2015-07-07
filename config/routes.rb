@@ -122,5 +122,7 @@ Rails.application.routes.draw do
   end
 
   root to: "static_pages#home"
+
+  mount API => '/'
   
 end
