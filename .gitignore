@@ -95,4 +95,5 @@ pickle-email-*.html
 Z-notes.rb
 
 # Ignore file uploads
-/public/uploads/
+/public/uploads/vendor/assets/bower_components
+vendor/assets/bower.json

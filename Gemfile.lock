@@ -1,6 +1,5 @@
 GEM
   remote: https://rubygems.org/
-  remote: https://rails-assets.org/
   specs:
     actionmailer (4.2.1)
       actionpack (= 4.2.1)
@@ -55,6 +54,7 @@ GEM
       rack (>= 0.9.0)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
+    bower-rails (0.9.2)
     builder (3.2.2)
     byebug (5.0.0)
       columnize (= 0.9.0)
@@ -152,13 +152,6 @@ GEM
       bundler (= 1.10.4)
       railties (= 4.2.1)
       sprockets-rails
-    rails-assets-fullcalendar (2.3.2)
-      rails-assets-jquery (>= 1.7.1)
-      rails-assets-moment (>= 2.5.0)
-    rails-assets-jquery (1.11.3)
-    rails-assets-jquery-cascading-dropdown (1.2.6)
-      rails-assets-jquery (~> 1.11.2)
-    rails-assets-moment (2.10.3)
     rails-deprecated_sanitizer (1.0.3)
       activesupport (>= 4.2.0.alpha)
     rails-dom-testing (1.0.6)
@@ -255,6 +248,7 @@ DEPENDENCIES
   annotate (~> 2.6)!
   best_in_place (~> 3.0)!
   better_errors (~> 2.1)!
+  bower-rails (~> 0.9.2)!
   byebug (~> 5.0)!
   carrierwave (~> 0.10)!
   ci_reporter (~> 2.0)!
@@ -274,8 +268,6 @@ DEPENDENCIES
   launchy (~> 2.4)!
   pg (~> 0.18)!
   rails (~> 4.2)!
-  rails-assets-fullcalendar!
-  rails-assets-jquery-cascading-dropdown!
   rails_layout (~> 1.0)!
   rmagick (~> 2.15)!
   rspec-rails (~> 3.3)!
@@ -288,3 +280,6 @@ DEPENDENCIES
   unicorn (~> 4.9)!
   unicorn-rails (~> 2.2)!
   web-console (~> 2.1)!
+
+BUNDLED WITH
+   1.10.5
