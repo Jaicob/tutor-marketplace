@@ -91,6 +91,7 @@ Rails.application.routes.draw do
       get 'visitor_sign_in'
       get 'visitor_sign_up'
       post 'create_tutor_course'
+      put 'change_profile_pic'
     end
     collection do
       get 'visitor_new'
@@ -123,4 +124,6 @@ Rails.application.routes.draw do
 
   root to: "static_pages#home"
 
+  mount API => '/'
+  
 end

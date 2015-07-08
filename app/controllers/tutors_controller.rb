@@ -1,6 +1,7 @@
 class TutorsController < ApplicationController
   before_action :set_user, only: [:edit, :update, :destroy, :create_tutor_course]
   before_action :set_tutor, only: [:show, :edit, :update, :destroy, :create_tutor_course]
+  before_action :set_tutor_for_visitor_sign_up, only: [:register_or_sign_in, :visitor_sign_in, :visitor_sign_up]
 
   def index
     @tutors = Tutor.all
@@ -24,7 +25,7 @@ class TutorsController < ApplicationController
       @tutor.set_first_tutor_course(@tutor, params)
       redirect_to dashboard_home_user_path(current_user)
     else
-      flash[:error] = "Tutor account was not created. Please fill in all fields and attach your unofficial transcript."
+      flash[:alert] = "Tutor account was not created. Please fill in all fields and attach your unofficial transcript."
       render :new
     end
   end
@@ -39,8 +40,13 @@ class TutorsController < ApplicationController
     # This updates everything on a tutor object, except active_status which is only editable by Admin users and which is handled in the custom update_active_status action
     respond_to do |format|
       if @tutor.update_attributes(tutor_params)
+        format.html { 
+          @tutor.crop_profile_pic(tutor_params)
+          redirect_to dashboard_profile_user_path(@user) 
+        }
         format.json { respond_with_bip(@tutor)}
       else
+        format.html
         format.json { respond_with_bip(@tutor)}
       end
     end
@@ -51,7 +57,8 @@ class TutorsController < ApplicationController
     if @tutor.destroy
       redirect_to dashboard_home_user_path(@user)
     else
-      render :show, error: 'Your tutor account was not deleted.'
+      flash[:alert] = "Your tutor account was not deleted."
+      render :show
     end
   end
 
@@ -113,11 +120,11 @@ class TutorsController < ApplicationController
   private
 
     def tutor_params
-      params.require(:tutor).permit(:rating, :application_status, :birthdate, :degree, :major, :extra_info, :graduation_year, :phone_number, :profile_pic, :transcript, :active_status)
+      params.require(:tutor).permit(:rating, :application_status, :birthdate, :degree, :major, :extra_info, :graduation_year, :phone_number, :profile_pic, :transcript, :active_status, :crop_x, :crop_y, :crop_w, :crop_h)
     end
 
-    def tutor_activation_params
+    def set_tutor_for_visitor_sign_up
+      @tutor = Tutor.find(params[:id])
     end
-
 
 end

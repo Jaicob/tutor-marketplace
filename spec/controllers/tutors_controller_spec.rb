@@ -218,7 +218,7 @@ describe TutorsController do
 
   describe 'GET #register_or_sign_in' do 
     it "renders the register_or_sign_in template" do
-      get :register_or_sign_in, {id: tutor_stub.id}
+      get :register_or_sign_in, {id: tutor.id}
       expect(response).to render_template :register_or_sign_in
     end 
   end
