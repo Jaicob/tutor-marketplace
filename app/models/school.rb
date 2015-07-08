@@ -54,7 +54,6 @@ class School < ActiveRecord::Base
   end
 
   def subjects_courses
-    self.
   end
 
 
