@@ -33,9 +33,14 @@ Documentation and Support
 -------------------------
 New Docker Start Up 
 
+- boot2docker up
 - source ~/.profile 
+
 - docker ps (to check for stopped containers)
 - docker-compose start (to start stopped containers)
+
+- docker-compose up
+
 - docker exec -it [CONTAINER NAME] /bin/bash (to open a shell)
 - docker exec -it [CONTAINER NAME] tail -f log/development.log (to see sever logs)
 

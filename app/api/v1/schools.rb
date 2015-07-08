@@ -14,6 +14,11 @@ module V1
         School.find(params[:id]).as_json
       end
 
+      desc "Returns a specific school and its subjects"
+      get ":id/subjects" do 
+        School.find(params[:id]).subjects
+      end
+
       desc "Updates a specific school's attributes"
       put ":id" do
         @school = School.find(params[:id])
@@ -23,6 +28,8 @@ module V1
           return "There was an error updating the tutor."
         end
       end
+
+
     end
   end
 end
