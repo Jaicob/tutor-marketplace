@@ -29,16 +29,14 @@ course_list = [
   [1, "9999", "Rocket Fucking Science"]
 ]
 
-course_list.each do |school_id, call_number, friendly_name|
-  Course.create(school_id: school_id, subject: Faker::Number.between(0, 4), call_number: call_number, friendly_name: friendly_name)
-end
+Us
 
 # Create 20 Devise Users
 20.times { User.create!(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, email: Faker::Internet.safe_email, password: 'password', password_confirmation: 'password') }
 
 # Create a Tutor profile for each User
 User.all.each do |user|
-  user.create_tutor(birthdate: Faker::Date.backward(8000), degree: 'B.A.', major: 'Marine Biology', extra_info: Faker::Lorem.sentence, graduation_year: '2018', phone_number: Faker::Number.number(10))
+  user.create_tutor(degree: 'B.A.', major: 'Marine Biology', extra_info: Faker::Lorem.sentence, graduation_year: '2018', phone_number: Faker::Number.number(10))
 end
 
 # Create 3 TutorClasses for each Tutor
