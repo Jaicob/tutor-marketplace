@@ -92,6 +92,7 @@ Rails.application.routes.draw do
       get 'visitor_sign_up'
       post 'create_tutor_course'
       put 'change_profile_pic'
+      patch 'destroy_by_admin' 
     end
     collection do
       get 'visitor_new'
@@ -107,7 +108,6 @@ Rails.application.routes.draw do
   # Still need to move:
   #===================
   # -update_transcript
-  # -change_profile_pic
   # -save_profile_pic_crop
 
   # The custom routes below are for the dashboard which handles no logic on its own - it sends information to the respective controllers required for any operation and simply acts as a template for displaying different resources in one convenient place
