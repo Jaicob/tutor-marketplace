@@ -24,6 +24,14 @@ module WebApp
     # This tells Rails to include our Carrierwave uploaders for file attachments
     config.autoload_paths += %W(#{config.root}/app/uploaders)
 
+    # Auto-load API and its subdirectories
+    config.paths.add 'app/api', glob: '**/*.rb'
+    config.autoload_paths += Dir["#{Rails.root}/app/api/*"]
+    
+    # From http://funonrails.com/2014/03/building-restful-api-using-grape-in-rails/
+    # config.paths.add "app/api", glob: "**/*.rb"
+    # config.autoload_paths += Dir["#{Rails.root}/app/api/*"]
+
     # Added to get rid of error messages in server log per advice here:
     # http://stackoverflow.com/questions/29417328/how-to-disable-cannot-render-console-from-on-rails
     # config.web_console.whitelisted_ips = '10.0.2.2'

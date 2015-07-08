@@ -31,6 +31,16 @@ Getting Started
 
 Documentation and Support
 -------------------------
+New Docker Start Up 
+
+- source ~/.profile 
+- docker ps (to check for stopped containers)
+- docker-compose start (to start stopped containers)
+- docker exec -it [CONTAINER NAME] /bin/bash (to open a shell)
+- docker exec -it [CONTAINER NAME] tail -f log/development.log (to see sever logs)
+
+ ex
+Switching from Selenium-Webdriver to Capybara-Webkit for JS testing -capybara-webkit uses the QtWebKit port, which depends on the Qt windowing framework. Even though the whole point is to run WebKit without windows, the compilation process has dependencies on Qt. -Ubuntu users can 'sudo apt-get install libqt4-dev' to get Qt
 
 New Docker Start Up
   source ~/.profile
