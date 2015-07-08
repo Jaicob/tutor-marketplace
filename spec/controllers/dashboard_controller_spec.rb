@@ -3,8 +3,6 @@ require 'rails_helper'
 describe DashboardController do
   let(:user) { create(:user) }
   let(:tutor) { create(:complete_tutor) }
-  let(:tutor_stub) { create(:tutor) }
-
 
   # This before action is skipped on tests where the Tutor model (rather than just the User model) is affected because the two must be linked together on those, so 'login_with tutor.user'is called on the first line of those specs
   before :each do |example|

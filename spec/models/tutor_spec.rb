@@ -46,7 +46,6 @@ RSpec.describe Tutor, type: :model do
   # -Each example is explicit (it has a description after it keyword)
   # -Each example's description begins with a verb, not should
 
-  describe Tutor do
     let(:tutor) { create(:tutor) }
     let(:complete_tutor) { create(:complete_tutor)}
     let(:incomplete_tutor) { build_stubbed(:incomplete_tutor) }
@@ -59,9 +58,10 @@ RSpec.describe Tutor, type: :model do
       expect(build(:tutor, extra_info: nil)).to_not be_valid
     end
 
-    it "is invalid without an attached transcript" do 
-      expect(build(:tutor, transcript: nil)).to_not be_valid
-    end
+    # This validation has been removed, may add back later
+    # it "is invalid without an attached transcript" do 
+    #   expect(build(:tutor, transcript: nil)).to_not be_valid
+    # end
 
     it "application status is 'Applied' by default" do
       expect(tutor.application_status).to eq 'Applied'
@@ -99,6 +99,6 @@ RSpec.describe Tutor, type: :model do
     it "shows tutor's sign_up_date with .sign_up_date" do 
       expect(tutor.sign_up_date).to eq Date.today
     end
-  end
+
 end
 
