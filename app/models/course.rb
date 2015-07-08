@@ -12,7 +12,6 @@
 #
 
 class Course < ActiveRecord::Base
-  belongs_to :subject
   belongs_to :school
   has_many :tutor_courses, dependent: :destroy
   has_many :tutors, through: :tutor_courses, dependent: :destroy
