@@ -31,21 +31,6 @@ module V1
         end
       end
 
-
-
-
-  # school.courses.find_all{|course| course.subject == 'Math'}
-
-
-
-
-
-
-
-
-
-
-
       desc "Updates a specific school's attributes"
       put ":id" do
         @school = School.find(params[:id])
@@ -55,8 +40,6 @@ module V1
           return "There was an error updating the tutor."
         end
       end
-
-
     end
   end
 end
