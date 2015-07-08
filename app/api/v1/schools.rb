@@ -6,12 +6,29 @@ module V1
     resource :schools do 
       desc "Returns list of all schools"
       get do
-        School.all.as_json
+        School.all
       end
 
       desc "Returns a specific school"
       get ":id" do 
-        School.find(params[:id]).as_json
+        School.find(params[:id])
+      end
+
+      desc "Returns a specific school and all of its courses"
+      get ":id/courses" do 
+        School.find(params[:id]).courses
+      end
+
+      desc "Returns a specific school and all of its subjects"
+      get ":id/subjects" do 
+        School.find(params[:id]).subjects
+      end
+
+      desc "Returns a specific school and its courses for a specific subject"
+      get ":id/courses/subject/:subject" do 
+        School.find(params[:id]).courses.find_all do |course| 
+          course.subject == params[:subject]
+        end
       end
 
       desc "Updates a specific school's attributes"

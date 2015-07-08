@@ -1,4 +1,4 @@
-FROM jaicob/rails-nginx-unicorn:onbuild
+FROM jaicob/rails-nginx-unicorn
 MAINTAINER jaicob(jaicob@icloud.com)
 
 WORKDIR /home/rails/my-app 

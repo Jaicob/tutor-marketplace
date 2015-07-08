@@ -40,8 +40,13 @@ class TutorsController < ApplicationController
     # This updates everything on a tutor object, except active_status which is only editable by Admin users and which is handled in the custom update_active_status action
     respond_to do |format|
       if @tutor.update_attributes(tutor_params)
+        format.html { 
+          @tutor.crop_profile_pic(tutor_params)
+          redirect_to dashboard_profile_user_path(@user) 
+        }
         format.json { respond_with_bip(@tutor)}
       else
+        format.html
         format.json { respond_with_bip(@tutor)}
       end
     end
@@ -115,7 +120,7 @@ class TutorsController < ApplicationController
   private
 
     def tutor_params
-      params.require(:tutor).permit(:rating, :application_status, :birthdate, :degree, :major, :extra_info, :graduation_year, :phone_number, :profile_pic, :transcript, :active_status)
+      params.require(:tutor).permit(:rating, :application_status, :birthdate, :degree, :major, :extra_info, :graduation_year, :phone_number, :profile_pic, :transcript, :active_status, :crop_x, :crop_y, :crop_w, :crop_h)
     end
 
     def set_tutor_for_visitor_sign_up
