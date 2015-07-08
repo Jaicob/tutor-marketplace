@@ -26,11 +26,11 @@ course_list = [
   [1, "101", "Intro to Something"],
   [1, "202", "Intermediate Something"],
   [1, "303", "Advanced Something"],
-  [1,  "9999", "Rocket Fucking Science"]
+  [1, "9999", "Rocket Fucking Science"]
 ]
 
 course_list.each do |school_id, call_number, friendly_name|
-  Course.create(school_id: school_id, , call_number: call_number, friendly_name: friendly_name)
+  Course.create(school_id: school_id, subject: Faker::Number.between(0, 4), call_number: call_number, friendly_name: friendly_name)
 end
 
 # Create 20 Devise Users
@@ -46,6 +46,7 @@ Tutor.all.each do |tutor|
   tutor.tutor_courses.create(course_id: 1, rate: 25)
   tutor.tutor_courses.create(course_id: 2, rate: 30)
   tutor.tutor_courses.create(course_id: 3, rate: 35)
+  tutor.tutor_courses.create(course_id: 4, rate: 35)
 end
 
 # Faker stuff

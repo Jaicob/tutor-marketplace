@@ -20,7 +20,7 @@ class Course < ActiveRecord::Base
   validates :friendly_name, presence: :true
   validates :school_id, presence: :true
 
-  enum subject: ['Biology', 'Chemistry', 'Math', 'Computer Science', 'Physics']
+  enum subject: [:biology, :chemistry, :math, :computer_science, :physics]
 
   def self.list_courses
     courses = []

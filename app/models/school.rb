@@ -21,40 +21,51 @@ class School < ActiveRecord::Base
   # Need to add Active Record assocations to schools for their courses and tutors
 
 
+  # def subjects
+  #   subjects = []
+  #   self.courses.each do |course|
+  #     subjects << course.subject.name unless subjects.include?(course.subject.name)
+  #   end
+  #   subjects
+  # end
+
   def subjects
     subjects = []
     self.courses.each do |course|
-      subjects << course.subject.name unless subjects.include?(course.subject.name)
+      subjects << course.subject unless subjects.include?(course.subject)
     end
     subjects
   end
 
-  def courses_friendly_names
-    friendly_names = []
-    self.courses.each do |course|
-      friendly_names << course.friendly_name unless friendly_names.include?(course.friendly_name)
-    end
-    friendly_names
-  end
+  # def courses_friendly_names
+  #   friendly_names = []
+  #   self.courses.each do |course|
+  #     friendly_names << course.friendly_name unless friendly_names.include?(course.friendly_name)
+  #   end
+  #   friendly_names
+  # end
 
-  def courses_call_numbers
-    call_numbers = []
-    self.courses.each do |course|
-      call_numbers << course.call_number unless call_numbers.include?(course.call_number)
-    end
-    call_numbers
-  end
+  # def courses_call_numbers
+  #   call_numbers = []
+  #   self.courses.each do |course|
+  #     call_numbers << course.call_number unless call_numbers.include?(course.call_number)
+  #   end
+  #   call_numbers
+  # end
 
-  def courses_names_and_call_numbers
-    list = []
-    self.courses.each do |course|
-      list << "#{course.call_number} #{course.friendly_name}" unless list.include?("#{course.call_number} #{course.friendly_name}")
-    end
-    list
-  end
+  # def courses_names_and_call_numbers
+  #   list = []
+  #   self.courses.each do |course|
+  #     list << "#{course.call_number} #{course.friendly_name}" unless list.include?("#{course.call_number} #{course.friendly_name}")
+  #   end
+  #   list
+  # end
 
-  def subjects_courses
-  end
+  # def subjects_courses
+  # end
+
+
+  # def 
 
 
   # - list of all schools
