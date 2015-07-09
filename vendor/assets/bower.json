@@ -1,0 +1,8 @@
+{
+  "name": "dsl-generated dependencies",
+  "dependencies": {
+    "jquery-ui": "latest",
+    "jquery-cascading-dropdown": "latest",
+    "fullcalendar": "latest"
+  }
+}
