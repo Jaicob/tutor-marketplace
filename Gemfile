@@ -1,58 +1,48 @@
-source "https://rubygems.org" do
-  ruby "2.2.0"
-
-  group :development, :test do
-    gem "byebug", "~> 5.0"
-    gem "web-console", "~> 2.1"
-    gem "spring", "~> 1.3"
-  end
-
-  group :development do
-    gem "better_errors", "~> 2.1"
-    gem "rails_layout", "~> 1.0"
-    gem "spring-commands-rspec", "~> 1.0"
-    gem "factory_girl_rails", "~> 4.5"
-    gem "faker", "~> 1.4"
-    gem "rspec-rails", "~> 3.3"
-    gem "rubocop", "~> 0.32"
-  end
-
-  group :test do
-    gem "factory_girl_rails", "~> 4.5"
-    gem "faker", "~> 1.4"
-    gem "rspec-rails", "~> 3.3"
-    gem "rubocop", "~> 0.32"
-    gem "database_cleaner", "~> 1.4"
-    gem "launchy", "~> 2.4"
-    gem "ci_reporter", "~> 2.0"
-    gem "ci_reporter_rspec", "~> 1.0"
-  end
-
-  group :production do
-    gem "unicorn", "~> 4.9"
-    gem "unicorn-rails", "~> 2.2"
-  end
-
-  gem "rails", "~> 4.2"
-  gem "uglifier", "~> 2.7"
-  gem "turbolinks", "~> 2.5"
-  gem "jbuilder", "~> 2.3"
-  gem "devise", "~> 3.5"
-  gem "devise_invitable", "~> 1.5"
-  gem "pg", "~> 0.18"
-  gem "figaro", "~> 1.1"
-  gem "annotate", "~> 2.6"
-  gem "friendly_id", "~> 5.1"
-  gem "carrierwave", "~> 0.10"
-  gem "rmagick", "~> 2.15"
-  gem 'grape'
-  gem 'hashie-forbidden_attributes'
-
-  gem "bower-rails", "~> 0.9.2"
-  gem "sass-rails", "~> 5.0"
-  gem "foundation-rails", "~> 5.5"
-  gem "foundation-icons-sass-rails", "~> 3.0"
-  gem "coffee-rails", "~> 4.1"
-  gem "jquery-rails", "~> 4.0"
-  gem "best_in_place", "~> 3.0"
+source 'https://rubygems.org'
+ruby '2.2.0'
+gem 'rails', '4.2.1'
+gem 'sass-rails', '~> 5.0'
+gem 'uglifier', '>= 1.3.0'
+gem 'coffee-rails', '~> 4.1.0'
+gem 'jquery-rails'
+gem 'turbolinks'
+gem 'jbuilder', '~> 2.0'
+gem 'devise'
+gem 'devise_invitable'
+gem 'foundation-rails'
+gem 'pg'
+gem 'figaro'
+gem 'annotate'
+gem 'friendly_id', '~> 5.1.0'
+gem 'carrierwave'
+gem 'rmagick'
+gem 'foundation-icons-sass-rails'
+gem 'best_in_place', '~> 3.0.1'
+gem 'grape'
+gem 'hashie-forbidden_attributes'
+group :development do
+  gem 'better_errors'
+  gem 'rails_layout'
+  gem 'spring-commands-rspec'
+end
+group :development, :test do
+  gem 'byebug'
+  gem 'web-console', '~> 2.0'
+  gem 'spring'
+  gem 'factory_girl_rails'
+  gem 'faker'
+  gem 'rspec-rails'
+  gem 'capybara'
+  gem 'capybara-webkit'
+  gem 'rubocop'
+end
+group :test do
+  gem 'database_cleaner'
+  gem 'launchy'
+  gem 'ci_reporter'
+  gem 'ci_reporter_rspec'
+end
+group :production do
+  gem 'unicorn'
+  gem 'unicorn-rails'
 end
