@@ -45,6 +45,8 @@ source "https://rubygems.org" do
   gem "friendly_id", "~> 5.1"
   gem "carrierwave", "~> 0.10"
   gem "rmagick", "~> 2.15"
+  gem 'grape'
+  gem 'hashie-forbidden_attributes'
 
   gem "bower-rails", "~> 0.9.2"
   gem "sass-rails", "~> 5.0"
