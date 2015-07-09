@@ -3,6 +3,9 @@ MAINTAINER jaicob(jaicob@icloud.com)
 
 WORKDIR /home/rails/my-app 
 
+# Install bower
+RUN sudo npm install -g bower
+
 # Place custom unicorn configs here
 ADD config/unicorn.rb /etc/my-app/config/unicorn.rb
 					

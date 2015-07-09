@@ -54,6 +54,8 @@ module WebApp
     # For Foundation 5
     config.assets.precompile += %w( vendor/modernizr )
 
+    # Delegates front-end dependency management to Bower
+    config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components')
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true

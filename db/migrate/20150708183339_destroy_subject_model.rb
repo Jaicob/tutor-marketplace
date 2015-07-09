@@ -1,5 +1,5 @@
 class DestroySubjectModel < ActiveRecord::Migration
   def change
-    drop_table :subjects, force: :cascade
+    # drop_table :subjects, force: :cascade
   end
 end

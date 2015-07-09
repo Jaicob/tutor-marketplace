@@ -1,29 +1,96 @@
+<script type="text/javascript">
+  api = "/api/v1"
+
+  school  =  $("#school")
+  subject =  $("#subject")
+  course  =  $("#course")
+
+  school_endpoint  = api + "/schools"
+  subject_endpoint = api + "/schools/" + school.value + "/subjects/"
+  course_endpoint  = api + "/schools/" + school.value + "/courses/subject/" + subject.value
+
+  $('#add_course_box').cascadingDropdown({
+      selectBoxes: [
+          {
+              selector: '#school',
+              source: function(request, response) {
+                  $.getJSON(school_endpoint, request, function(data) {
+                      response($.map(data, function(item, index) {
+                          return {
+                              label: item.name,
+                              value: item.id,
+                              selected: false
+                          };
+                      }));
+                  });
+              }
+          },
+          {
+              selector: '#subject',
+              requires: ['#school'],
+              requireAll: true,
+              source: function(request, response) {
+                  $.getJSON(subject_endpoint, request, function(data) {
+                      response($.map(data, function(item, index) {
+                          return {
+                              label: item,
+                              value: encodeURIComponent(item.split(" ").join("_")),
+                              selected: false,
+                          };
+                      }));
+                  });
+              }
+          },
+          {
+              selector: '#course',
+              requires: ['#school', '#subject'],
+              requireAll: true,
+              source: function(request, response) {
+                  $.getJSON(course_endpoint, request, function(data) {
+                      response($.map(data, function(item, index) {
+                          return {
+                              label: item.call_number + " (" + item.friendly_name + ")",
+                              value: item.id,
+                              selected: false
+                          };
+                      }));
+                  });
+              },
+              onChange: function(event, value, requiredValues){
+                  // do stuff
+              }
+          }
+      ]
+  });
+</script>
 <div class="row">
   <%= form_for @tutor_course do |f| %>
-  <%= fields_for :course do |course| %>
-    <div class="small-3 columns">
-      <%= course.label "University" %>
-      <%= course.collection_select :school_id, School.all, :id, :name, include_blank: true %>
+    <div id="add_course_box">
+      <div class="medium-3 columns">
+        <label for="school">School</label><select name="course[school_id]" id="school"></select>
+      </div>
+      <div class="medium-3 columns">
+        <label for="subject">Subject</label><select name="course[subject_id]" id="subject"></select>
+      </div>
+      <div class="medium-3 columns">
+        <label for="course">Course</label><select name="course[course_id]" id="course"></select>
+      </div>
+      <div class="medium-3 columns">
+        <label for="rate">Rate</label>
+        <div class="row collapse">
+          <div class="small-2 large-2 columns">
+            <span class="prefix">$</span>
+          </div>
+          <div class="small-7 medium-4 large-5 columns">
+            <input name="tutor_course[rate]" id="rate" type="number" placeholder="25" style="text-align: center">
+          </div>
+          <div class="small-3 medium-6 large-5 columns">
+            <span class="postfix" style="borderLeft: 0">per hour</span>
+          </div>
+        </div>
+      </div>
+      <%= f.submit 'Add course', class: 'button radius success tiny right', style: 'margin-left: 20px; margin-right: 20px' %>
     </div>
-    <div class="small-3 columns">
-      <%= course.label "Subject" %>
-      <%= course.collection_select :subject_id, Subject.all, :id, :name, include_blank: true  %>
-    </div>
-    <div class="small-3 columns">
-      <%= course.label "Course" %>
-      <%= course.select :course_id, Course.list_courses, include_blank: true  %>
-    </div>
+    <%= hidden_field_tag(:tutor_id, value = @tutor.id) %>
   <% end %>
-
-  <div class="small-3 columns">
-    <%= fields_for :tutor_course do |tutor_course| %>
-      <%= tutor_course.label :rate %>
-      <%= tutor_course.number_field :rate, placeholder: '$USD per hour' %>
-    <% end %>
-  </div>
-
-  <%= hidden_field_tag(:tutor_id, value = @tutor.id) %>
-
-  <%= f.submit 'Add course', class: 'button radius success tiny right' %>
-<% end %>
 </div>
