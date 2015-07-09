@@ -23,7 +23,7 @@ class Tutor < ActiveRecord::Base
   belongs_to :user
   has_many :tutor_courses, dependent: :destroy
   has_many :courses, through: :tutor_courses, dependent: :destroy
-  
+
   enum application_status: ['Applied', 'Awaiting Approval', 'Approved']
   enum active_status: ['Inactive', 'Active']
 
@@ -33,7 +33,7 @@ class Tutor < ActiveRecord::Base
 
   # Dimensions for cropping profile pics
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
-  
+
   # validates :transcript, presence: true
   validates :extra_info, presence: true
   # Cannot add validations for other attributes because Tutor sign-up form creates Tutor before they are asked for. We should create a method that checks if a tutor profile is complete before allowing them to access some functionalities (what is required for a tutor to start working and taking appointments?)
@@ -67,10 +67,8 @@ class Tutor < ActiveRecord::Base
 
   def self.to_csv
     attributes = %w{name email phone_number active_status rating application_status degree major graduation_year birthdate sign_up_date}
-
     CSV.generate(headers: true) do |csv|
       csv << attributes
-
       all.each do |user|
         csv << attributes.map{ |attr| user.send(attr) }
       end
@@ -88,23 +86,5 @@ class Tutor < ActiveRecord::Base
   def sign_up_date
     self.created_at.to_date
   end
-
-  # # This method changes the redirect_path for the tutors#update, based on the current user. If the current_user is the same as the tutor, then the redirect points to their profile. If the current user is an Admin activating/de-activating a tutor, then the redirect points back to the Admin tutors index.
-  # def redirect_path
-  #   if self.user.admin?
-  #     ':back'
-  #   else
-  #     'dashboard_profile_user_path(user)'
-  #   end
-  # end
-
-  # # This method makes sure that the correct tutor object is being handled whether a tutor is modifying their profile or whether an admin is updating a tutor's active_status or application_status
-  # def verify_tutor(tutor_id, params)
-  #   if params[:id] == tutor_id
-  #     tutor_id
-  #   else
-  #     params[:id]
-  #   end
-  # end
 
 end

@@ -1,0 +1,3 @@
+asset 'jquery-ui'
+asset 'jquery-cascading-dropdown'
+asset 'fullcalendar'

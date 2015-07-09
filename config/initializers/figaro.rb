@@ -1,0 +1,1 @@
+Figaro.require_keys("sendgrid_username", "sendgrid_password", "sendgrid_domain")
