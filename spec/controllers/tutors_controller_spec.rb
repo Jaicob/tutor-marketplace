@@ -171,11 +171,11 @@ describe TutorsController do
     it "succesfully destroys the correct tutor from the admin tutors page" do
       login_with admin
       tutor
-      expect(page).to have_content tutor.name
-      # xhr :patch, :destroy_by_admin, id: tutor.id 
+      expect{
+        xhr :patch, :destroy_by_admin, id: tutor.id
+        }.to change(Tutor, :count).by(-1)
     end
   end
-
 
   describe 'GET #visitor_new' do
 

@@ -23,29 +23,6 @@ require 'rails_helper'
 
 RSpec.describe Tutor, type: :model do
 
-# Notes from Everyday Rails 
-
-# A basic model spec should include tests for the following:
-  # -The model's create method, when passed valid attributes, should be valid.
-  # -Data that fail validations should not be valid.
-  # -Class and instance methods perform as expected.
-
-# Example model spec
-  # decribe Contact do 
-  #   it "is valid with a firstname, lastname and email"
-  #   it "is invalid without a firstname"
-  #   it "is invalid without a lastname"
-  #   it "is invalid without an email address"
-  #   it "is invalid with a duplicate email address"
-  #   it "returns a contact's full name as a string"
-  # end
-
-# Best Practices
-  # -A spec describes a set of expectations
-  # -Each example (a line beginning with it) only expects one thing
-  # -Each example is explicit (it has a description after it keyword)
-  # -Each example's description begins with a verb, not should
-
     let(:tutor) { create(:tutor) }
     let(:complete_tutor) { create(:complete_tutor)}
     let(:incomplete_tutor) { build_stubbed(:incomplete_tutor) }
@@ -81,11 +58,8 @@ RSpec.describe Tutor, type: :model do
     end
 
     it "can list its schools with .schools" do
-      course = create(:course)
-      second_course = create(:second_course)
-      tutor.tutor_courses.create(course: course, rate: 30)
-      tutor.tutor_courses.create(course: second_course, rate: 30)
-      expect(tutor.schools).to eq ['University of North Carolina', 'University of Georgia']
+      create_list(:tutor_course, 2, tutor: tutor)
+      expect(tutor.schools.length).to eq(2)
     end
 
     it "shows User's name with .name" do 

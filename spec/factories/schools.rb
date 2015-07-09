@@ -10,18 +10,32 @@
 #
 
 FactoryGirl.define do
-  factory :school do
-    name      "University of North Carolina"
-    location  "Chapel Hill, NC"
 
-    factory :second_school do
-      name      "University of Georgia"
-      location  "Athens, GA"
+  sequence(:name) { |n| "University #{n}"}
+
+  factory :school do
+    name
+    location  "Athens, GA"
+
+    trait :invalid do
+      name nil
     end
 
-    factory :invalid_school do
-      name nil
-      location nil
+    trait :UNC do 
+      name "University of North Carolina"
+      location "Chapel Hill, NC"
+    end
+
+    factory :school_with_courses do 
+      after(:create) do |school|
+        create_list(:course, 2, school: school)
+      end
+    end
+
+    factory :school_with_bio_courses do 
+      after(:create) do |school|
+        create_list(:course, 2, school: school, subject: 'biology')
+      end
     end
   end
 end

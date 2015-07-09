@@ -22,20 +22,27 @@ class Course < ActiveRecord::Base
 
   enum subject: [:biology, :chemistry, :math, :computer_science, :physics]
 
-  def self.list_courses
-    courses = []
-    Course.all.each do |course|
-      courses << ["#{course.call_number} | #{course.friendly_name}", course.id]
-    end
-    courses
-  end
+  # def self.list_courses
+  #   courses = []
+  #   Course.all.each do |course|
+  #     courses << ["#{course.call_number} | #{course.friendly_name}", course.id]
+  #   end
+  #   courses
+  # end
 
   def school_name
     school = School.find(self.school_id)
     school.name
   end
-  
+
+  # subjects are stored as enums and therefore always return strings, so this will give us the integer represenation of a subject
+  def subject_id
+    if    self.subject == "biology"           then 0
+    elsif self.subject == "chemistry"         then 1
+    elsif self.subject == "math"              then 2
+    elsif self.subject == "computer_science"  then 3
+    elsif self.subject == "physics"           then 4
+    else                                      nil
+    end
+  end
 end
-
-
-

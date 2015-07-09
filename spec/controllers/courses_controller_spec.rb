@@ -14,10 +14,9 @@ describe CoursesController do
      end
 
     it 'assigns all courses to @courses' do 
-      course
-      second_course = create(:second_course)
+      create_list(:course, 2)
       get :index
-      expect(assigns(:courses)).to eq([course, second_course])
+      expect(assigns(:courses).length).to eq(2)
     end
   end
 
