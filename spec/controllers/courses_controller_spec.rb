@@ -3,7 +3,7 @@ require 'rails_helper'
 describe CoursesController do 
   let(:course) { create(:course) }
   let(:invalid_course) { create(:invalid_course)}
-  let(:course_attributes) { attributes_for(:course, subject_id: create(:subject).id, school_id: create(:school).id ) }
+  let(:course_attributes) { attributes_for(:course, school_id: create(:school).id ) }
   let(:invalid_course_attributes) { attributes_for(:invalid_course) }
 
   describe 'GET #index' do 
@@ -14,10 +14,9 @@ describe CoursesController do
      end
 
     it 'assigns all courses to @courses' do 
-      course
-      second_course = create(:second_course)
+      create_list(:course, 2)
       get :index
-      expect(assigns(:courses)).to eq([course, second_course])
+      expect(assigns(:courses).length).to eq(2)
     end
   end
 
@@ -79,7 +78,7 @@ describe CoursesController do
           call_number: course.call_number,
           friendly_name: 'Test Name',
           school_id: course.school,
-          subject_id: course.subject
+          subject: course.subject
         }
         course.reload
         expect(course.friendly_name).to eq 'Test Name'
@@ -93,7 +92,7 @@ describe CoursesController do
           call_number: course.call_number,
           friendly_name: nil,
           school_id: course.school,
-          subject_id: course.subject
+          subject: course.subject
         }
         course.reload
         expect(course.friendly_name).not_to eq 'Test Name'
