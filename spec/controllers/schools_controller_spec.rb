@@ -4,7 +4,7 @@ describe SchoolsController do
   let(:school) { create(:school) }
   let(:invalid_school) { create(:invalid_school)}
   let(:school_attributes) { attributes_for(:school) }
-  let(:invalid_school_attributes) { attributes_for(:invalid_school) }
+  let(:invalid_school_attributes) { attributes_for(:school, :invalid) }
 
   describe 'GET #index' do 
     
@@ -14,10 +14,9 @@ describe SchoolsController do
      end
 
     it 'assigns all schools to @schools' do 
-      school
-      second_school = create(:second_school)
+      create_list(:school, 2)
       get :index
-      expect(assigns(:schools)).to eq([school, second_school])
+      expect(assigns(:schools).length).to eq(2)
     end
   end
 

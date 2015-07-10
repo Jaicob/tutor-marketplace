@@ -91,8 +91,9 @@
                   <div class="text-center">
                     <h2><%= tutor.user.full_name %></h2>
 
-                    <%= form_for tutor, method: 'delete' do |tutor| %>
-                      <%= tutor.submit 'Delete' %>
+                    <%= form_for tutor, url: "/tutors/#{tutor.id}/destroy_by_admin" do |f| %>
+                    
+                      <%= f.submit 'Delete' %>
                     <% end %>
 
                   </div>

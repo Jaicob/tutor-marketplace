@@ -3,7 +3,6 @@ require 'rails_helper'
 describe TutorsController do
   let(:user) { create(:user) }
   let(:course) { create(:course) }
-  let(:tutor_stub) { build_stubbed(:tutor) }
   let(:tutor) { create(:complete_tutor) }
   let(:admin) { create(:user, :admin) }
 
@@ -152,7 +151,7 @@ describe TutorsController do
     it "updates a tutor's active status" do 
       skip "need to figure out how to make this work - functionality is OK but test doesn't work because need to pass in extra id param and cant do it here"
       login_with admin
-      xhr :patch, :update, id: admin, tutor: attributes_for(:tutor, active_status: 'Active')
+      xhr :patch, :update_active_status, id: admin, tutor: attributes_for(:tutor, active_status: 'Active')
       tutor.reload
       expect(tutor.active_status).to eq 'Active'
       xhr :patch, :update, id: admin, tutor: attributes_for(:tutor, active_status: 'Inactive')
@@ -165,7 +164,17 @@ describe TutorsController do
 
     it "sends the activation email when status is changed to active" do
     end
+  end
 
+  describe 'PATCH #destroy_by_admin' do 
+  
+    it "succesfully destroys the correct tutor from the admin tutors page" do
+      login_with admin
+      tutor
+      expect{
+        xhr :patch, :destroy_by_admin, id: tutor.id
+        }.to change(Tutor, :count).by(-1)
+    end
   end
 
   describe 'GET #visitor_new' do
@@ -225,17 +234,16 @@ describe TutorsController do
 
   describe 'GET  #visitor_sign_in' do
     it "renders the visitor_sign_in template" do 
-      get  :visitor_sign_in, {id: tutor_stub.id}
+      get  :visitor_sign_in, {id: tutor.id}
       expect(response).to render_template :visitor_sign_in
     end
   end
 
   describe 'GET #visitor_sign_up' do 
     it "renders the visitor_sign_up template" do
-      get :visitor_sign_up, {id: tutor_stub.id}
+      get :visitor_sign_up, {id: tutor.id}
       expect(response).to render_template :visitor_sign_up
     end
   end
 
 end
-
