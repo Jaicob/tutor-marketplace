@@ -23,7 +23,6 @@ school_list.each do |name, location|
   School.create(name: name, location: location)
 end
 
-
 # Creates courses for each of the 4 schools
 
 course_list = [
