@@ -9,13 +9,6 @@ module V1
         def school
           School.find(params[:id])
         end
-
-        def safe_params(params)
-          {
-            'name' => params[:date],
-            'location'=> params[:location]
-          }
-        end
       end
 
       params do 
@@ -65,7 +58,7 @@ module V1
       desc "Updates a specific school's attributes"
       patch ":id" do
         @school = school
-        if @school.update_attributes(declared(params))
+        if @school.update_attributes(params)
           return @school.as_json
         else
           return "There was an error updating the school."
