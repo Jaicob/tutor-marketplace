@@ -15,6 +15,7 @@ describe "TutorCourse API" do
   end
 
   it "Updates a specific TutorCourse's attributes" do 
+    skip
   end
 
 end

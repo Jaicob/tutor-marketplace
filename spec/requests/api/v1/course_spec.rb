@@ -15,6 +15,7 @@ describe "Course API" do
   end
 
   it "Updates a specific course's attributes" do 
+    skip
   end
 
 end

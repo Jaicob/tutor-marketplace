@@ -18,20 +18,20 @@ describe "Schedule Block API" do
   end
 
   it "Creates a schedule_block for a tutor" do 
-    skip 'not sure how to test yet'
+    skip
   end
 
   # Update with PUT
   it "Updates a schedule_block for a tutor" do 
-    skip 'not sure how to test yet'
+    skip
   end
 
   # Update with PATCH
   it "Updates a schedule_block for a tutor" do 
-    skip 'not sure how to test yet'
+    skip
   end
 
   it "Deletes a schedule_block for a tutor" do
-    skip 'not sure how to test yet'
+    skip
   end
 end
