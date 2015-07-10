@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150708185419) do
+ActiveRecord::Schema.define(version: 20150710135927) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,20 @@ ActiveRecord::Schema.define(version: 20150708185419) do
   add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
   add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
   add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
+
+  create_table "schedule_blocks", force: :cascade do |t|
+    t.date     "date"
+    t.time     "start_time"
+    t.time     "end_time"
+    t.integer  "status",          default: 0
+    t.integer  "reservaton_min"
+    t.integer  "reservation_max"
+    t.integer  "tutor_id"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
+
+  add_index "schedule_blocks", ["tutor_id"], name: "index_schedule_blocks_on_tutor_id", using: :btree
 
   create_table "schools", force: :cascade do |t|
     t.string   "name"
@@ -116,6 +130,7 @@ ActiveRecord::Schema.define(version: 20150708185419) do
   add_index "users", ["slug"], name: "index_users_on_slug", unique: true, using: :btree
 
   add_foreign_key "courses", "schools"
+  add_foreign_key "schedule_blocks", "tutors"
   add_foreign_key "tutor_courses", "courses"
   add_foreign_key "tutor_courses", "tutors"
   add_foreign_key "tutors", "users"

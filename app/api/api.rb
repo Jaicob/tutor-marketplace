@@ -7,4 +7,5 @@ class API < Grape::API
   mount V1::TutorCourses
   mount V1::Tutors
   mount V1::Users
+  mount V1::ScheduleBlocks
 end
