@@ -29,8 +29,6 @@ course_list = [
   [1, "9999", "Rocket Fucking Science"]
 ]
 
-Us
-
 # Create 20 Devise Users
 20.times { User.create!(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, email: Faker::Internet.safe_email, password: 'password', password_confirmation: 'password') }
 
