@@ -13,6 +13,12 @@ module V1
             Tutor.find(params[:id]).schedule_blocks
           end
 
+          desc "Returns a specific schedule_block for a tutor"
+          get ":schedule_block_id" do 
+            Tutor.find(params[:id]).schedule_blocks.find(params[:schedule_block_id])
+          end
+
+
           desc "Creates a schedule_block for a tutor" 
           post do
             @schedule_block = ScheduleBlock.new(params)
