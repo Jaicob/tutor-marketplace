@@ -15,7 +15,7 @@ class Course < ActiveRecord::Base
   belongs_to :school
   has_many :tutor_courses, dependent: :destroy
   has_many :tutors, through: :tutor_courses, dependent: :destroy
-  
+
   validates :call_number, presence: :true
   validates :friendly_name, presence: :true
   validates :school_id, presence: :true
@@ -34,7 +34,7 @@ class Course < ActiveRecord::Base
     school = School.find(self.school_id)
     school.name
   end
-  
+
 end
 
 

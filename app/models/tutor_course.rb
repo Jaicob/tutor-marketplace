@@ -13,7 +13,7 @@
 class TutorCourse < ActiveRecord::Base
   belongs_to :tutor
   belongs_to :course
-  
+
   validates :rate, presence: true
 
   def set_tutor_and_course_id(tutor_course, params)
@@ -22,7 +22,7 @@ class TutorCourse < ActiveRecord::Base
   end
 
   def formatted_name
-    "#{self.course.subject_name} #{self.course.call_number}: #{self.course.friendly_name} at #{self.course.school_name}"
+    "#{self.course.subject} #{self.course.call_number}: #{self.course.friendly_name} at #{self.course.school_name}"
   end
 
 

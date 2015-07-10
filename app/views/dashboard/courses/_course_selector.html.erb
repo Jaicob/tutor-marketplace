@@ -1,0 +1,78 @@
+<script type="text/javascript">
+
+  String.prototype.toTitleCase = function(){
+    var smallWords = /^(a|an|and|as|at|but|by|en|for|if|in|nor|of|on|or|per|the|to|vs?\.?|via)$/i;
+
+    return this.replace(/[A-Za-z0-9\u00C0-\u00FF]+[^\s-]*/g, function(match, index, title){
+      if (index > 0 && index + match.length !== title.length &&
+        match.search(smallWords) > -1 && title.charAt(index - 2) !== ":" &&
+        (title.charAt(index + match.length) !== '-' || title.charAt(index - 1) === '-') &&
+        title.charAt(index - 1).search(/[^\s-]/) < 0) {
+        return match.toLowerCase();
+      }
+
+      if (match.substr(1).search(/[A-Z]|\../) > -1) {
+        return match;
+      }
+
+      return match.charAt(0).toUpperCase() + match.substr(1);
+    });
+  };
+
+$(document).ready(function(){
+  api = "/api/v1"
+
+  $("#subject").remoteChainedTo({
+    parents: "#school",
+    url: function(){ return api + "/schools/" + $("#school").val() + "/subjects/" },
+    data_formatter: function(data){
+      return data.map(function(subject){
+          return [subject, subject.split("_").join(" ").toTitleCase()];
+      });
+    }
+  });
+
+  $("#course").remoteChainedTo({
+    parents: "#school, #subject",
+    url: function(){ return api + "/schools/" + $("#school").val() + "/courses/subject/" + $("#subject").val() + "/" },
+    data_formatter: function(data){
+      return data.map(function(course){
+        return [course.id, course.call_number + " (" + course.friendly_name + ")"];
+      })
+    }
+  });
+})
+</script>
+<div id="add_course_box">
+  <div class="medium-3 columns">
+    <select name="course[school_id]" id="school">
+      <option disabled="true" selected="true">School</option>
+      <% School.all.each do |school| %>
+        <option value="<%= school.id %>"><%= school.name %></option>
+      <% end %>
+    </select>
+  </div>
+  <div class="medium-3 columns">
+    <select name="course[subject_id]" id="subject">
+      <option disabled="true" selected="true">Subject</option>
+    </select>
+  </div>
+  <div class="medium-3 columns">
+    <select name="course[course_id]" id="course">
+      <option disabled="true" selected="true">Course</option>
+    </select>
+  </div>
+  <div class="medium-3 columns">
+    <div class="row collapse">
+      <div class="small-2 large-2 columns">
+        <span class="prefix">$</span>
+      </div>
+      <div class="small-7 medium-4 large-5 columns">
+        <input name="tutor_course[rate]" id="rate" type="number" placeholder="25" style="text-align: center; border-right-width: 0px;">
+      </div>
+      <div class="small-3 medium-6 large-5 columns">
+        <span class="postfix">per hour</span>
+      </div>
+    </div>
+  </div>
+</div>
