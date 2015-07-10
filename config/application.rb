@@ -21,6 +21,9 @@ module WebApp
       g.fixture_replacement :factory_girl, dir: "spec/factories"
     end
 
+    # This tells Rails to look for the secret key in application.yml through Figaro rather than in the standard secrets.yml
+    config.secret_key_base = Figaro.env.secret_key_base
+
     # This tells Rails to include our Carrierwave uploaders for file attachments
     config.autoload_paths += %W(#{config.root}/app/uploaders)
 

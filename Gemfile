@@ -1,3 +1,4 @@
+
 source "https://rubygems.org" do
   ruby "2.2.0"
 
@@ -5,23 +6,19 @@ source "https://rubygems.org" do
     gem "byebug", "~> 5.0"
     gem "web-console", "~> 2.1"
     gem "spring", "~> 1.3"
+    gem "rubocop", "~> 0.32"
+    gem "rspec-rails", "~> 3.3"
+    gem "factory_girl_rails", "~> 4.5"
+    gem "faker", "~> 1.4"
   end
 
   group :development do
     gem "better_errors", "~> 2.1"
     gem "rails_layout", "~> 1.0"
     gem "spring-commands-rspec", "~> 1.0"
-    gem "factory_girl_rails", "~> 4.5"
-    gem "faker", "~> 1.4"
-    gem "rspec-rails", "~> 3.3"
-    gem "rubocop", "~> 0.32"
   end
 
   group :test do
-    gem "factory_girl_rails", "~> 4.5"
-    gem "faker", "~> 1.4"
-    gem "rspec-rails", "~> 3.3"
-    gem "rubocop", "~> 0.32"
     gem "database_cleaner", "~> 1.4"
     gem "launchy", "~> 2.4"
     gem "ci_reporter", "~> 2.0"
@@ -46,13 +43,12 @@ source "https://rubygems.org" do
   gem "carrierwave", "~> 0.10"
   gem "rmagick", "~> 2.15"
   gem 'grape'
-  gem 'hashie-forbidden_attributes'
+  gem "hashie-forbidden_attributes"
 
+  # Front End Stuff
   gem "bower-rails", "~> 0.9.2"
   gem "sass-rails", "~> 5.0"
   gem "foundation-rails", "~> 5.5"
   gem "foundation-icons-sass-rails", "~> 3.0"
-  gem "coffee-rails", "~> 4.1"
-  gem "jquery-rails", "~> 4.0"
   gem "best_in_place", "~> 3.0"
 end
