@@ -12,6 +12,7 @@ module V1
             def tutor
               Tutor.find(params[:tutor_id])
             end
+          end
 
           desc "Returns all schedule_blocks for a tutor"
           get do 
@@ -77,7 +78,6 @@ module V1
 end
 
       # Need to figure out how to work with declared(params)
-
       # params do
       #   requires :schedule_block, type: Hash do 
       #     optional :date, type: Date
