@@ -17,7 +17,7 @@ RSpec.describe Course, type: :model do
 
   it "returns it's school name for .school_name" do
     course = create(:course)
-    expect(course.school_name).to eq('University of Georgia')
+    expect(course.school_name).to start_with('University')
   end
 
   it "returns the subject enum integer for .subject_id" do

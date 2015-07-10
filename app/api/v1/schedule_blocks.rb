@@ -12,12 +12,11 @@ module V1
             def tutor
               Tutor.find(params[:tutor_id])
             end
+
+          
           end
 
-          params do
-            requires :schedule_block, type: Hash do 
-              requires :date, type: Date
-            end
+          params do 
           end
 
           desc "Returns all schedule_blocks for a tutor"

@@ -1,3 +1,5 @@
+# require 'grape-swagger'
+
 class API < Grape::API
   prefix 'api'
   format :json
@@ -7,4 +9,5 @@ class API < Grape::API
   mount V1::Tutors
   mount V1::Users
   mount V1::ScheduleBlocks
+  # add_swagger_documentation
 end

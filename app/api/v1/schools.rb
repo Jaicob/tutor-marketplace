@@ -9,12 +9,18 @@ module V1
         def school
           School.find(params[:id])
         end
+
+        def safe_params(params)
+          {
+            'name' => params[:date],
+            'location'=> params[:location]
+          }
+        end
       end
 
       params do 
-        requires :school, type: Hash do
-          optional :name, type: String
-        end
+        optional :name, type: String
+        optional :location, type: String
       end
 
       desc "Returns list of all schools"
@@ -47,13 +53,12 @@ module V1
       # Update with PUT
       desc "Updates a specific school's attributes"
       put ":id" do
-        { "declared_params" => declared(params) }
-        # @school = school
-        # if @school.update_attributes(declared(params))
-        #   return @school.as_json
-        # else
-        #   return "There was an error updating the tutor."
-        # end
+        @school = school
+        if @school.update(params)
+          return school.as_json
+        else
+          return "There was an error updating the school."
+        end
       end
 
       # Update with PATCH
@@ -63,12 +68,9 @@ module V1
         if @school.update_attributes(declared(params))
           return @school.as_json
         else
-          return "There was an error updating the tutor."
+          return "There was an error updating the school."
         end
       end
-
-
-
     end
   end
 end
