@@ -17,11 +17,10 @@
 class ScheduleBlock < ActiveRecord::Base
   belongs_to :tutor
 
-  validates :date, presence: :true
-  validates :start_time, presence: :true
+  validates :date, presence: :true 
+  validates :start_time, presence: :true 
   validates :end_time, presence: :true
   validates :tutor_id, presence: :true
 
   enum status: [:open, :blocked] 
 end
-

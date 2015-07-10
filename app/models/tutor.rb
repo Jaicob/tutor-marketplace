@@ -24,6 +24,7 @@ class Tutor < ActiveRecord::Base
   has_many :tutor_courses, dependent: :destroy
   has_many :courses, through: :tutor_courses, dependent: :destroy
   has_many :schedule_blocks
+  validates_associated :schedule_blocks
 
   enum application_status: ['Applied', 'Awaiting Approval', 'Approved']
   enum active_status: ['Inactive', 'Active']
