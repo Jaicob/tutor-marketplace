@@ -18,7 +18,6 @@
 //= require fullcalendar
 
 //= require best_in_place
-//= require jquery_ujs
 //= require jquery.Jcrop.min
 //= require turbolinks
 //= require foundation
