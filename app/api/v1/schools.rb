@@ -27,7 +27,7 @@ module V1
       desc "Returns a specific school and its courses for a specific subject"
       get ":id/subjects/:subject_id/courses" do 
         School.find(params[:id]).courses.find_all do |course| 
-          course.subject_id == params[:subject_id]
+          course.subject_id == params[:subject_id].to_i
         end
       end
 
