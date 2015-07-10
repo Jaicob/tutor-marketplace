@@ -1,7 +1,7 @@
 class TutorsController < ApplicationController
   before_action :set_user, only: [:edit, :update, :destroy, :create_tutor_course]
   before_action :set_tutor, only: [:show, :edit, :update, :destroy, :create_tutor_course]
-  before_action :set_tutor_for_visitor_sign_up, only: [:register_or_sign_in, :visitor_sign_in, :visitor_sign_up]
+  before_action :set_tutor_for_admin_or_visitor_sign_up, only: [:register_or_sign_in, :visitor_sign_in, :visitor_sign_up, :update_active_status, :destroy_by_admin]
 
   def index
     @tutors = Tutor.all
@@ -42,7 +42,7 @@ class TutorsController < ApplicationController
       if @tutor.update_attributes(tutor_params)
         format.html { 
           @tutor.crop_profile_pic(tutor_params)
-          redirect_to dashboard_profile_user_path(@user) 
+          redirect_to dashboard_profile_user_path(current_user) 
         }
         format.json { respond_with_bip(@tutor)}
       else
@@ -53,9 +53,8 @@ class TutorsController < ApplicationController
   end
 
   def destroy
-    # @tutor = Tutor.find(params[:id]) || @tutor
     if @tutor.destroy
-      redirect_to dashboard_home_user_path(@user)
+      redirect_to dashboard_home_user_path(current_user)
     else
       flash[:alert] = "Your tutor account was not deleted."
       render :show
@@ -63,12 +62,10 @@ class TutorsController < ApplicationController
   end
 
   #======================================================================================
-  # Custom Action for activating/de-activation Tutors by Admin users
+  # Custom Action for activating/de-activation and deleting Tutors by Admin users
   #======================================================================================
 
   def update_active_status
-    # This action allows an Admin user to update the active status of a tutor
-    @tutor = Tutor.find(params[:id])
 
     respond_to do |format|
       if @tutor.update_attributes(tutor_params)
@@ -84,6 +81,16 @@ class TutorsController < ApplicationController
       end
     end
   end
+
+  def destroy_by_admin
+    if @tutor.destroy
+      redirect_to dashboard_tutors_user_path(current_user)
+    else
+      flash[:alert] = "Your tutor account was not deleted."
+      render :show
+    end
+  end
+
 
   #======================================================================================
   # Custom Actions for handling Tutor Account creation by visitors or non-signed in users
@@ -123,7 +130,7 @@ class TutorsController < ApplicationController
       params.require(:tutor).permit(:rating, :application_status, :birthdate, :degree, :major, :extra_info, :graduation_year, :phone_number, :profile_pic, :transcript, :active_status, :crop_x, :crop_y, :crop_w, :crop_h)
     end
 
-    def set_tutor_for_visitor_sign_up
+    def set_tutor_for_admin_or_visitor_sign_up
       @tutor = Tutor.find(params[:id])
     end
 
