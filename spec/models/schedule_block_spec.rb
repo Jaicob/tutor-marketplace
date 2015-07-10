@@ -6,7 +6,7 @@
 #  date            :date
 #  start_time      :time
 #  end_time        :time
-#  status          :integer
+#  status          :integer          default(0)
 #  reservaton_min  :integer
 #  reservation_max :integer
 #  tutor_id        :integer

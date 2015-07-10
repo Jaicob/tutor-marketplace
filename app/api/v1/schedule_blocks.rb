@@ -3,18 +3,32 @@ module V1
 
     include V1::Defaults
 
-    resource :schedule_blocks do 
+    # This section makes calls to schedule blocks in the context of tutors
+    resource :tutors do 
+      segment "/:id" do
+        resource :schedule_blocks do 
 
-      desc "Returns all schedule_blocks"
-      get do 
-        ScheduleBlock.all
+          desc "Returns all schedule_blocks for a tutor"
+          get do 
+            Tutor.find(params[:id]).schedule_blocks
+          end
+
+          desc "Creates a schedule_block for a tutor" 
+          post do
+            @schedule_block = ScheduleBlock.new(params)
+            if @schedule_block.save
+              return @schedule_block
+            else
+              return "Schedule block could not be saved: #{@schedule_block.errors.full_messages}"
+            end
+          end
+
+
+
+
+        end
       end
-
-
-
-
     end
-
   end
 end
 
