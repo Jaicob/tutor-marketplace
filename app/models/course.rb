@@ -33,7 +33,6 @@ class Course < ActiveRecord::Base
     school.name
   end
 
-  # subjects are stored as enums and therefore always return strings, so this will give us the integer represenation of a subject
   def subject_id
     case self.subject
       when "biology"
@@ -48,5 +47,5 @@ class Course < ActiveRecord::Base
         4
     end
   end
-  
+
 end
