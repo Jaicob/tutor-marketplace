@@ -1,11 +1,10 @@
 class CreateScheduleBlocks < ActiveRecord::Migration
   def change
     create_table :schedule_blocks do |t|
-      t.date :date
-      t.time :start_time
-      t.time :end_time
-      t.integer :status
-      t.integer :reservaton_min
+      t.datetime :start_time
+      t.datetime :end_time
+      t.integer :status, default: 0
+      t.integer :reservation_min
       t.integer :reservation_max
       t.references :tutor, index: true, foreign_key: true
 
