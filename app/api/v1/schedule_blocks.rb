@@ -24,7 +24,7 @@ module V1
             tutor.schedule_blocks.find(params[:id])
           end
 
-          desc "Creates a schedule_block for a tutor" 
+          desc "Creates a single schedule_block for a tutor" 
           post do
             schedule_block = ScheduleBlock.new(params)
             if schedule_block.save
@@ -33,6 +33,12 @@ module V1
               return "Schedule block could not be saved: #{@schedule_block.errors.full_messages}"
             end
           end
+
+          desc "Creates a re-occuring schedule_block for a tutor"
+          post "/regular" do
+            schedule_block = ScheduleBlock.new
+          end
+
 
           # Updates with PATCH
           desc "Updates a schedule_block for a tutor"
