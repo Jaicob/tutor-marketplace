@@ -10,13 +10,13 @@ env:
     - CI_REPORTS=shippable/testresults COVERAGE_REPORTS=shippable/codecoverage RAILS_ENV=test
     - RDS_HOSTNAME=127.0.0.1 RDS_USERNAME=shippable RDS_PASSWORD="" RDS_DB_NAME=test RDS_PORT=5432
     - AWSAccessKeyId=AKIAI5LEGKJIVHEO3XCQ 
-    -secure: nBJFPT/iJuRx4IGcu2OECNwYUgihstWPHi4XT9jDz3f5ixIdnr6BdGXN+a8RXMESjM7S1BrQIjIAd/ikNV6HRXf7pGXUCnMWdt+YVeHLZjHjswYi8NCKI9zIvb1CP7znEZmHrsny3MdBmaacvSkMUDjPzL5ZB06r5Vj8oAuszDqY1GB2GYUM4N1moP91DfuJ0M+q5Pjos4z+XEzjE6qrtLBFuZRLoZIHrqvptjoS9e3Ie3zBk8DWfKP8rh4MSpf1f2JTQ72+jzPetddUg2uimOV4BmfnuOiqQ0KEA+f38bBEBqJ8FS5nb9pETX/oE5FF/rXgkCaC/KWCKKuRv+McVg==
+    - secure: nBJFPT/iJuRx4IGcu2OECNwYUgihstWPHi4XT9jDz3f5ixIdnr6BdGXN+a8RXMESjM7S1BrQIjIAd/ikNV6HRXf7pGXUCnMWdt+YVeHLZjHjswYi8NCKI9zIvb1CP7znEZmHrsny3MdBmaacvSkMUDjPzL5ZB06r5Vj8oAuszDqY1GB2GYUM4N1moP91DfuJ0M+q5Pjos4z+XEzjE6qrtLBFuZRLoZIHrqvptjoS9e3Ie3zBk8DWfKP8rh4MSpf1f2JTQ72+jzPetddUg2uimOV4BmfnuOiqQ0KEA+f38bBEBqJ8FS5nb9pETX/oE5FF/rXgkCaC/KWCKKuRv+McVg==
 before_install:
-    # setup rvm
-    - source ~/.rvm/scripts/rvm
-    - rvm install $SHIPPABLE_RUBY --verify-downloads 1
-    - source ~/.bashrc && ~/.rvm/scripts/rvm && rvm use $SHIPPABLE_RUBY
-    - SUDO=$(which sudo) && $SUDO pip install awsebcli
+  # setup rvm
+  - source ~/.rvm/scripts/rvm
+  - rvm install $SHIPPABLE_RUBY --verify-downloads 1
+  - source ~/.bashrc && ~/.rvm/scripts/rvm && rvm use $SHIPPABLE_RUBY
+  - SUDO=$(which sudo) && $SUDO pip install awsebcli
 install:
   - bundle install --gemfile="Gemfile"
   - ruby -v
