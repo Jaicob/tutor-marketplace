@@ -30,9 +30,9 @@ before_script:
   - "rm -rf $COVERAGE_REPORTS && mkdir -p $COVERAGE_REPORTS"
   - cp config/database.yml.shippable config/database.yml
   - psql -c 'create database web_test;' -U postgres
-  - bower install
   - rake db:create
   - rake db:migrate
+  - yes | rake bower:install
 script:
   - bundle exec rake spec --trace
 after_success:
