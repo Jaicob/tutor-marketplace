@@ -3,11 +3,10 @@
 # Table name: schedule_blocks
 #
 #  id              :integer          not null, primary key
-#  date            :date
-#  start_time      :time
-#  end_time        :time
+#  start_time      :datetime
+#  end_time        :datetime
 #  status          :integer          default(0)
-#  reservaton_min  :integer
+#  reservation_min :integer
 #  reservation_max :integer
 #  tutor_id        :integer
 #  created_at      :datetime         not null

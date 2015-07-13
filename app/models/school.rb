@@ -16,11 +16,12 @@ class School < ActiveRecord::Base
   validates :location, presence: true
 
   def subjects
-    subjects = []
-    self.courses.each do |course|
-      subjects << course.subject unless subjects.include?(course.subject)
-    end
-    subjects
+    subjects = self.courses.map do |course|  
+      {
+        subject: course.subject,
+        subject_number: course.subject_id
+      }
+    end.uniq { |x| x[:subject] }
   end
   
 end

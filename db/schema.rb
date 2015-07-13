@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150710151403) do
+ActiveRecord::Schema.define(version: 20150713195634) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,10 +19,11 @@ ActiveRecord::Schema.define(version: 20150710151403) do
   create_table "courses", force: :cascade do |t|
     t.integer  "call_number"
     t.string   "friendly_name"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.integer  "school_id"
     t.integer  "subject"
+    t.integer  "subject_number"
   end
 
   add_index "courses", ["school_id"], name: "index_courses_on_school_id", using: :btree
@@ -41,9 +42,8 @@ ActiveRecord::Schema.define(version: 20150710151403) do
   add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
 
   create_table "schedule_blocks", force: :cascade do |t|
-    t.date     "date"
-    t.time     "start_time"
-    t.time     "end_time"
+    t.datetime "start_time"
+    t.datetime "end_time"
     t.integer  "status",          default: 0
     t.integer  "reservation_min"
     t.integer  "reservation_max"

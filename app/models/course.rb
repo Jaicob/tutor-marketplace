@@ -2,13 +2,14 @@
 #
 # Table name: courses
 #
-#  id            :integer          not null, primary key
-#  call_number   :integer
-#  friendly_name :string
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  school_id     :integer
-#  subject       :integer
+#  id             :integer          not null, primary key
+#  call_number    :integer
+#  friendly_name  :string
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  school_id      :integer
+#  subject        :integer
+#  subject_number :integer
 #
 
 class Course < ActiveRecord::Base
@@ -22,6 +23,11 @@ class Course < ActiveRecord::Base
 
   enum subject: [:biology, :chemistry, :math, :computer_science, :physics]
 
+
+  def subject_number
+    @subject_name = self.subject_id
+  end
+
   def school_name
     school = School.find(self.school_id)
     school.name
@@ -29,12 +35,18 @@ class Course < ActiveRecord::Base
 
   # subjects are stored as enums and therefore always return strings, so this will give us the integer represenation of a subject
   def subject_id
-    if    self.subject == "biology"           then 0
-    elsif self.subject == "chemistry"         then 1
-    elsif self.subject == "math"              then 2
-    elsif self.subject == "computer_science"  then 3
-    elsif self.subject == "physics"           then 4
-    else                                      nil
+    case self.subject
+      when "biology"
+        0
+      when "chemistry"
+        1
+      when "math"
+        2
+      when "computer_science"
+        3
+      when "physics"
+        4
     end
   end
+  
 end
