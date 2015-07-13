@@ -21,7 +21,7 @@ class Course < ActiveRecord::Base
   validates :friendly_name, presence: :true
   validates :school_id, presence: :true
 
-  enum subject: [:biology, :chemistry, :math, :computer_science, :physics]
+  enum subject: ['Biology', 'Chemistry', 'Math', 'Computer Science', 'Physics']
 
 
   def subject_number
@@ -35,15 +35,15 @@ class Course < ActiveRecord::Base
 
   def subject_id
     case self.subject
-      when "biology"
+      when "Biology"
         0
-      when "chemistry"
+      when "Chemistry"
         1
-      when "math"
+      when "Math"
         2
-      when "computer_science"
+      when "Computer Science"
         3
-      when "physics"
+      when "Physics"
         4
     end
   end
