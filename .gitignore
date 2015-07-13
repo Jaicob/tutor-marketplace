@@ -97,3 +97,7 @@ Z-notes.rb
 # Ignore file uploads
 /public/uploads/
 
+# Bower Components
+/vendor/assets/bower.json
+/vendor/assets/bower_components/
+
