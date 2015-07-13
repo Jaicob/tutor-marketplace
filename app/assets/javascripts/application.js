@@ -16,6 +16,7 @@
 //= require jquery-ui/ui/draggable
 //= require moment
 //= require fullcalendar
+//= require chained/jquery.chained.remote.min
 
 //= require best_in_place
 //= require jquery.Jcrop.min
