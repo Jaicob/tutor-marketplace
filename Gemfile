@@ -46,6 +46,8 @@ source "https://rubygems.org" do
   gem 'grape'
   gem "hashie-forbidden_attributes"
   gem "grape-swagger"
+  gem 'grape-rails-routes'
+  gem 'simple_form'
 
   # Front End Stuff
   gem "bower-rails", "~> 0.9.2"
