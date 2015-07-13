@@ -10,31 +10,7 @@
 
     <fieldset>
       <h4>1) Select one class to tutor:</h4>
-      
-      <div class="row">
-        <%= fields_for :course do |course| %>
-          <div class="small-3 columns">
-            <%= course.label "University" %>
-            <%= course.collection_select :school_id, School.all, :id, :name, include_blank: true %>
-          </div>
-          <div class="small-3 columns">
-            <%= course.label "Subject" %>
-            <%= course.collection_select :subject_id, Subject.all, :id, :name, include_blank: true  %>
-          </div>
-          <div class="small-3 columns">
-            <%= course.label "Course" %>
-            <%= course.select :course_id, Course.list_courses, include_blank: true  %>
-          </div>
-        <% end %>
-
-        <div class="small-3 columns">
-          <%= fields_for :tutor_course do |tutor_course| %>
-            <%= tutor_course.label :rate %>
-            <%= tutor_course.number_field :rate %>
-          <% end %>
-        </div>
-      </div>
-
+      <%= render 'dashboard/courses/course_selector' %>
       <h6 class="subheader">You can add more classes and manage them all from your tutor dashboard after sign-up</h6>
     </fieldset>
 
@@ -52,7 +28,6 @@
 
     </fieldset>
 
-    
       <%= f.submit "Next", class: 'button expand success' %>
   <% end %>
 </div>

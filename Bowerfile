@@ -1,3 +1,4 @@
-asset 'jquery-ui'
-asset 'jquery-cascading-dropdown'
-asset 'fullcalendar'
+asset "jquery-ui"
+asset "chained", github: "anurag-banerjee/jquery_chained"
+asset "fullcalendar"
+# asset "jquery-cascading-dropdown", "1.2.6"

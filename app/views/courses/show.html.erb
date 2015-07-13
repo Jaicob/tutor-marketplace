@@ -22,7 +22,7 @@
         <tr>
           <td><%= @course.id %>
           <td><%= best_in_place @course, :school_name, :as => :input %></td>
-          <td><%= best_in_place @course, :subject_name, :as => :input %></td>
+          <td><%= best_in_place @course, :subject, :as => :input %></td>
           <td><%= best_in_place @course, :call_number, :as => :input %></td>
           <td><%= best_in_place @course, :friendly_name, :as => :input %></td>
           <td><%= @course.tutors.count %></td>

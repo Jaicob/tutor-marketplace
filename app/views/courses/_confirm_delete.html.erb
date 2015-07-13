@@ -19,7 +19,7 @@
       <tbody>
         <tr>
           <td><%= @course.school_name %></td>
-          <td><%= @course.subject_name %></td>
+          <td><%= @course.subject %></td>
           <td><%= @course.call_number %></td>
           <td><%= @course.friendly_name %></td>
           <td><%= @course.tutors.count %></td>
@@ -36,9 +36,9 @@
     <%= form_for @course, method: 'delete' do |f| %>
       <%= f.submit 'Delete', class: 'button expand alert' %>
     <% end %>
-    
+
     <%= link_to 'Back', course_path(@course), class: 'button expand success' %>
   </div>
 </div>
-  
+
 
