@@ -29,13 +29,13 @@
     $('#calendar').fullCalendar({
       slotEventOverlap: false,
       allDaySlot: false,
-      minTime: "8:00:00",
+      minTime: "6:00:00",
       maxTime: "22:00:00",
       defaultTimedEventDuration: "1:00:00",
       height: "auto",
       businessHours: {
           start: '10:00', // a start time (10am in this example)
-          end: '18:00', // an end time (6pm in this example)
+          end: '10:00', // an end time (6pm in this example)
 
           dow: [ 0, 1, 2, 3, 4, 5, 6 ]
           // days of week. an array of zero-based day of week integers (0=Sunday)
@@ -50,6 +50,7 @@
       droppable: true, // this allows things to be dropped onto the calendar
       drop: function() {
         // is the "remove after drop" checkbox checked?
+        //We are going to get rid of the box but will still probably need this drop function - Jaicob
         if ($('#drop-remove').is(':checked')) {
           // if so, remove the element from the "Draggable Events" list
           $(this).remove();
@@ -64,26 +65,32 @@
     text-align: center;
     font-size: 14px;
     font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+    margin-top: 20px;
   }
 
   #external-events {
     float: left;
-    width: 150px;
+    width: 100%;
+    height: 300px;
     padding: 0 10px;
     border: 1px solid #ccc;
     background: #eee;
-    text-align: left;
+    text-align: center;
   }
 
   #external-events h4 {
     font-size: 16px;
     margin-top: 0;
     padding-top: 1em;
+    text-align: center;
   }
 
   #external-events .fc-event {
     margin: 10px 0;
     cursor: pointer;
+    height: 50px;
+    max-width: 130px;
+    margin: 15px auto;
   }
 
   #external-events p {
@@ -100,22 +107,32 @@
   #calendar {
     width: 100%;
   }
+
+  #cal-spacer {
+    height: 29.306px;
+    margin-bottom: 1em;
+  }
 </style>
-<div id="scheduling-container">
-  <div id='wrap' class="columns medium-9">
-    <div id='calendar'></div>
-    <div style='clear:both'></div>
+
+<div class="row">
+  <div class="medium-12 columns">
+    <h1>Your Schedule</h1>
+    <h3 class="subheader">Drag from availability to create your schedule.</h3>
   </div>
-  <div class="columns medium-3">
-    <div id='external-events'>
-      <h4>Draggable Events</h4>
-      <div class='fc-event'>Available</div>
-      <div class='fc-event'>Busy</div>
-      <div class='fc-event'>Appointment</div>
-      <p>
-        <input type='checkbox' id='drop-remove' />
-        <label for='drop-remove'>remove after drop</label>
-      </p>
+</div>
+<div class="row">
+  <div id="scheduling-container">
+    <div id='wrap' class="columns medium-10">
+      <div id='calendar'></div>
+      <div style='clear:both'></div>
+    </div>
+    <div class="columns medium-2">
+      <div id="cal-spacer"></div>
+      <div id='external-events'>
+        <h4>Availability</h4>
+        <div class='fc-event'>Regular </div>
+        <div class='fc-event'>One-Off </div>
+      </div>
     </div>
   </div>
 </div>
