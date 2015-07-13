@@ -10,6 +10,7 @@ source "https://rubygems.org" do
     gem "rspec-rails", "~> 3.3"
     gem "factory_girl_rails", "~> 4.5"
     gem "faker", "~> 1.4"
+    gem 'capybara'
   end
 
   group :development do
@@ -44,6 +45,7 @@ source "https://rubygems.org" do
   gem "rmagick", "~> 2.15"
   gem 'grape'
   gem "hashie-forbidden_attributes"
+  gem "grape-swagger"
 
   # Front End Stuff
   gem "bower-rails", "~> 0.9.2"

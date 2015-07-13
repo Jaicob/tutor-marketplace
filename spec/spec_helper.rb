@@ -18,10 +18,14 @@
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
 require_relative 'support/controller_helpers'
+require_relative 'support/request_helpers'
 require 'devise'
 require 'capybara/rspec'
 
 RSpec.configure do |config|
+
+  # Adds JSON helper method for API request specs
+  config.include Requests::JsonHelpers, type: :request
 
   config.include ControllerHelpers, type: :controller
   Warden.test_mode!

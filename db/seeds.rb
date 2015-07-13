@@ -5,9 +5,12 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-# user = CreateAdminService.new.call
-# puts 'CREATED ADMIN USER: ' << user.email
-# Environment variables (ENV['...']) can be set in the file .env file.
+#   user = CreateAdminService.new.call
+#   puts 'CREATED ADMIN USER: ' << user.email
+#   Environment variables (ENV['...']) can be set in the file .env file.
+
+
+# Create 4 schools
 
 school_list = [
   [ "University of North Carolina", "Chapel Hill, NC" ],
@@ -17,25 +20,50 @@ school_list = [
 ] 
 
 school_list.each do |name, location|
-  School.create( name: name, location: location )
+  School.create(name: name, location: location)
 end
 
-# 1 and 1 refer respectively to a school_id and a subject_id currently in the DB, 
-# these are otherwise arbitrary values
+# Creates courses for each of the 4 schools
+
 course_list = [
-  [1, "101", "Intro to Something"],
-  [1, "202", "Intermediate Something"],
-  [1, "303", "Advanced Something"],
-  [1, "9999", "Rocket Fucking Science"]
+  [1, 0, "101", "Intro to Biology"],
+  [1, 1, "101", "Intro to Chemisty"],
+  [1, 2, "101", "Intro to Math"],
+  [1, 3, "101", "Intro to Computer Science"],
+  [1, 4, "101", "Intro to Physics"],
+  [2, 0, "101", "Intro to Biology"],
+  [2, 1, "101", "Intro to Chemisty"],
+  [2, 2, "101", "Intro to Math"],
+  [2, 3, "101", "Intro to Computer Science"],
+  [2, 4, "101", "Intro to Physics"],
+  [3, 0, "101", "Intro to Biology"],
+  [3, 1, "101", "Intro to Chemisty"],
+  [3, 2, "101", "Intro to Math"],
+  [3, 3, "101", "Intro to Computer Science"],
+  [3, 4, "101", "Intro to Physics"],
+  [4, 0, "101", "Intro to Biology"],
+  [4, 1, "101", "Intro to Chemisty"],
+  [4, 2, "101", "Intro to Math"],
+  [4, 3, "101", "Intro to Computer Science"],
+  [4, 4, "101", "Intro to Physics"]
 ]
 
+course_list.each do |school_id, subject, call_number, friendly_name|
+  Course.create(school_id: school_id, subject: subject, call_number: call_number, friendly_name: friendly_name)
+end
+
+
 # Create 20 Devise Users
+
 20.times { User.create!(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, email: Faker::Internet.safe_email, password: 'password', password_confirmation: 'password') }
 
+
 # Create a Tutor profile for each User
+
 User.all.each do |user|
   user.create_tutor(degree: 'B.A.', major: 'Marine Biology', extra_info: Faker::Lorem.sentence, graduation_year: '2018', phone_number: Faker::Number.number(10))
 end
+
 
 # Create 3 TutorClasses for each Tutor
 Tutor.all.each do |tutor|

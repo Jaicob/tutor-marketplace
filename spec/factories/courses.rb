@@ -12,23 +12,25 @@
 #
 
 FactoryGirl.define do
+
+  subjects = [:chemisty, :biology, :math, :physics, :computer_science]
+
+  sequence(:subject) { |n| "#{subjects[n]}" }
+
   factory :course do
     subject
-    school
     call_number 101
     friendly_name "Intro to Chemistry"
+    school
 
     factory :invalid_course do
       subject nil
-      school nil
-      call_number nil
-      friendly_name nil
     end
 
-    factory :second_course do 
+    factory :second_course do
+      subject 2 
       call_number 202
       friendly_name "Cellular Biology"
-      association :subject, factory: :second_subject
       association :school, factory: :second_school
     end
   end
