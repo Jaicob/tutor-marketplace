@@ -1,4 +1,14 @@
 <script>
+var addSlot = function(date, jsEvent, ui ){
+  alert("add",date, jsEvent, ui);
+}
+
+var updateSlotDuration = function( event, jsEvent, ui, view) {
+  alert("update",event, jsEvent, ui, view);
+  console.log("update",event, jsEvent, ui, view)
+}
+
+
   $(document).ready(function() {
 
 
@@ -48,14 +58,8 @@
       defaultView: 'agendaWeek',
       editable: true,
       droppable: true, // this allows things to be dropped onto the calendar
-      drop: function() {
-        // is the "remove after drop" checkbox checked?
-        //We are going to get rid of the box but will still probably need this drop function - Jaicob
-        if ($('#drop-remove').is(':checked')) {
-          // if so, remove the element from the "Draggable Events" list
-          $(this).remove();
-        }
-      }
+      drop: addSlot,
+      eventResizeStop: updateSlotDuration
     });
 
   });
