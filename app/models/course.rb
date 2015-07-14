@@ -34,18 +34,7 @@ class Course < ActiveRecord::Base
   end
 
   def subject_id
-    case self.subject
-      when "Biology"
-        0
-      when "Chemistry"
-        1
-      when "Math"
-        2
-      when "Computer Science"
-        3
-      when "Physics"
-        4
-    end
+    Course.subject[self.subject]
   end
 
 end
