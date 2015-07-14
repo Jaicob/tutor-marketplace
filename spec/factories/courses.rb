@@ -3,13 +3,12 @@
 # Table name: courses
 #
 #  id            :integer          not null, primary key
+#  school_id     :integer
+#  subject       :text
 #  call_number   :integer
 #  friendly_name :string
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
-#  school_id     :integer
-#  subject       :integer
-#
 
 FactoryGirl.define do
 

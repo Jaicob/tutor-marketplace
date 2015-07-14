@@ -1,27 +1,25 @@
 # == Schema Information
 #
-# Table name: schedule_blocks
+# Table name: slots
 #
 #  id              :integer          not null, primary key
+#  slot_manager_id :integer
+#  status          :integer          default(0)
 #  start_time      :datetime
 #  end_time        :datetime
-#  status          :integer          default(0)
 #  reservation_min :integer
 #  reservation_max :integer
-#  tutor_id        :integer
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #
 
 FactoryGirl.define do
-  factory :schedule_block do
-    date Date.today
-    start_time Time.now
-    end_time Time.now
-    status 0
-    reservation_min nil
-    reservation_max nil
-    tutor
+  factory :slot do
+    belongs_to ""
+status 1
+start_time "2015-07-14 15:59:52"
+end_time "2015-07-14 15:59:52"
+reservation_min 1
   end
 
 end

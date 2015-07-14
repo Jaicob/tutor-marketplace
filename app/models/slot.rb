@@ -1,20 +1,18 @@
 # == Schema Information
 #
-# Table name: schedule_blocks
+# Table name: slots
 #
 #  id              :integer          not null, primary key
+#  slot_manager_id :integer
+#  status          :integer          default(0)
 #  start_time      :datetime
 #  end_time        :datetime
-#  status          :integer          default(0)
 #  reservation_min :integer
 #  reservation_max :integer
-#  tutor_id        :integer
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #
 
-require 'rails_helper'
-
-RSpec.describe ScheduleBlock, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+class Slot < ActiveRecord::Base
+  belongs_to :slot_manager
 end
