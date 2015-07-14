@@ -1,11 +1,40 @@
 <script>
-var addSlot = function(date, jsEvent, ui ){
+var eventSource = {
+  url: '/myfeed.php',
+  type: 'POST',
+  data: {
+      custom_param1: 'something',
+      custom_param2: 'somethingelse'
+  },
+  error: function() {
+      alert('there was an error while fetching events!');
+  },
+  color: 'yellow',   // a non-ajax option
+  textColor: 'black' // a non-ajax option
+}
+
+var droppedEvent = function(date, jsEvent, ui ){
   alert("add",date, jsEvent, ui);
 }
 
 var updateSlotDuration = function( event, jsEvent, ui, view) {
   alert("update",event, jsEvent, ui, view);
   console.log("update",event, jsEvent, ui, view)
+}
+
+var addSlot = function(event){
+  request = $.post("/api/v1/tutors/" + tutor_id + "/schedule_blocks", {
+    "start_time" : event.start.format("HH:mm"),
+    "end_time" : event.start.add(1, "hours").format("HH:mm"),
+    "date" : event.start.format("YYYY-MM-DD"),
+    "tutor_id" : tutor_id,
+  })
+  request.success(function(data){
+    alert("Success!")
+  });
+  request.error(function(){
+    alert("Error!")
+  })
 }
 
 
@@ -37,6 +66,7 @@ var updateSlotDuration = function( event, jsEvent, ui, view) {
     -----------------------------------------------------------------*/
 
     $('#calendar').fullCalendar({
+      events: eventSource,
       slotEventOverlap: false,
       allDaySlot: false,
       minTime: "6:00:00",
@@ -58,8 +88,9 @@ var updateSlotDuration = function( event, jsEvent, ui, view) {
       defaultView: 'agendaWeek',
       editable: true,
       droppable: true, // this allows things to be dropped onto the calendar
-      drop: addSlot,
-      eventResizeStop: updateSlotDuration
+      drop: droppedEvent,
+      eventResizeStop: updateSlotDuration,
+      eventReceive: addSlot
     });
 
   });
