@@ -4,6 +4,7 @@ class CreateCourses < ActiveRecord::Migration
       
       t.belongs_to  :school, index: true, foreign_key: true
       t.integer     :subject
+      t.integer     :subject_number
       t.integer     :call_number
       t.string      :friendly_name
       
