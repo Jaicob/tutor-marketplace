@@ -13,12 +13,13 @@
 #  last_sign_in_at        :datetime
 #  current_sign_in_ip     :inet
 #  last_sign_in_ip        :inet
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
 #  confirmation_token     :string
 #  confirmed_at           :datetime
 #  confirmation_sent_at   :datetime
-#  unconfirmed_email      :string
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  first_name             :string
+#  last_name              :string
 #  role                   :integer          default(0)
 #  invitation_token       :string
 #  invitation_created_at  :datetime
@@ -28,8 +29,6 @@
 #  invited_by_id          :integer
 #  invited_by_type        :string
 #  invitations_count      :integer          default(0)
-#  first_name             :string
-#  last_name              :string
 #  slug                   :string
 #
 
