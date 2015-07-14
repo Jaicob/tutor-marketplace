@@ -23,8 +23,8 @@ class Tutor < ActiveRecord::Base
   belongs_to :user
   has_many :tutor_courses, dependent: :destroy
   has_many :courses, through: :tutor_courses, dependent: :destroy
-  has_many :schedule_blocks
-  validates_associated :schedule_blocks
+  has_many :slot_managers
+  has_many :slots, through: :slot_managers
 
   enum application_status: ['Applied', 'Awaiting Approval', 'Approved']
   enum active_status: ['Inactive', 'Active']
@@ -88,5 +88,6 @@ class Tutor < ActiveRecord::Base
   def sign_up_date
     self.created_at.to_date
   end
+
 
 end

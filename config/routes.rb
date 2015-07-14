@@ -6,6 +6,8 @@
 #      visitor_sign_in_tutor GET    /tutors/:id/visitor_sign_in(.:format)      tutors#visitor_sign_in
 #      visitor_sign_up_tutor GET    /tutors/:id/visitor_sign_up(.:format)      tutors#visitor_sign_up
 #  create_tutor_course_tutor POST   /tutors/:id/create_tutor_course(.:format)  tutors#create_tutor_course
+#   change_profile_pic_tutor PUT    /tutors/:id/change_profile_pic(.:format)   tutors#change_profile_pic
+#     destroy_by_admin_tutor PATCH  /tutors/:id/destroy_by_admin(.:format)     tutors#destroy_by_admin
 #         visitor_new_tutors GET    /tutors/visitor_new(.:format)              tutors#visitor_new
 #      visitor_create_tutors POST   /tutors/visitor_create(.:format)           tutors#visitor_create
 #                     tutors GET    /tutors(.:format)                          tutors#index
@@ -79,6 +81,7 @@
 #    dashboard_settings_user GET    /:id/dashboard/settings(.:format)          dashboard#settings
 #      dashboard_tutors_user GET    /:id/dashboard/tutors(.:format)            dashboard#tutors
 #                       root GET    /                                          static_pages#home
+#                        api        /                                          API
 #
 
 Rails.application.routes.draw do

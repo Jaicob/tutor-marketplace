@@ -1,4 +1,5 @@
 # app/controllers/api/v1/defaults.rb
+
 module V1
   module Defaults
     

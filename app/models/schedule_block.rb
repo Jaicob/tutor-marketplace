@@ -23,3 +23,4 @@ class ScheduleBlock < ActiveRecord::Base
 
   enum status: [:open, :blocked] 
 end
+
