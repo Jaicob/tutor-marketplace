@@ -175,6 +175,7 @@ GEM
     rack (1.6.4)
     rack-accept (0.4.5)
       rack (>= 0.4)
+    rack-cors (0.4.0)
     rack-mount (0.8.3)
       rack (>= 1.0.0)
     rack-test (0.6.3)
@@ -318,6 +319,7 @@ DEPENDENCIES
   jbuilder (~> 2.3)!
   launchy (~> 2.4)!
   pg (~> 0.18)!
+  rack-cors!
   rails (~> 4.2)!
   rails_layout (~> 1.0)!
   rmagick (~> 2.15)!
