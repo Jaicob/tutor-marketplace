@@ -15,6 +15,9 @@ class DashboardController < ApplicationController
   def profile
   end
 
+  def edit_profile
+  end
+
   def settings
   end
 

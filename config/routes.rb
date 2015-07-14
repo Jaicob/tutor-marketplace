@@ -117,12 +117,13 @@ Rails.application.routes.draw do
   # The custom routes below are for the dashboard which handles no logic on its own - it sends information to the respective controllers required for any operation and simply acts as a template for displaying different resources in one convenient place
   resources :users, only: [], path: '' do
     member do
-      get  '/dashboard/home'      => 'dashboard#home'
-      get  '/dashboard/schedule'  => 'dashboard#schedule'
-      get  '/dashboard/courses'   => 'dashboard#courses'
-      get  '/dashboard/profile'   => 'dashboard#profile'
-      get  '/dashboard/settings'  => 'dashboard#settings'
-      get  '/dashboard/tutors'    => 'dashboard#tutors'
+      get  '/dashboard/home'         => 'dashboard#home'
+      get  '/dashboard/schedule'     => 'dashboard#schedule'
+      get  '/dashboard/courses'      => 'dashboard#courses'
+      get  '/dashboard/profile'      => 'dashboard#profile'
+      get  '/dashboard/edit_profile' => 'dashboard#edit_profile'
+      get  '/dashboard/settings'     => 'dashboard#settings'
+      get  '/dashboard/tutors'       => 'dashboard#tutors'
     end
   end
 

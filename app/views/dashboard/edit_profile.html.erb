@@ -1,0 +1,70 @@
+<%= form_for @tutor do |f| %>
+  <div class="row">
+    <div class="medium-12 columns">
+      <p>
+        Share your profile link:
+        <%= link_to "www.axontutors.com/tutors/#{@tutor.user.friendly_id}", tutor_path(@tutor.user) %>
+        <br>
+          <input type="submit" name="commit" value="Save Changes" class="button radius success right">
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="medium-4 columns">
+      <!-- Profile Pic -->
+      <div class="profile-section profile-pic-container">
+        <!-- Name -->
+        <div class="profile-section-header">
+          <%= @tutor.full_name %>
+        </div>
+        <a href="#" data-reveal-id="myModal">
+          <%= image_tag(@tutor.profile_pic_url(:thumb), class: 'profile-pic') %>
+        </a>
+      </div>
+      <div class="profile-section">
+        <div class="profile-section-header">Rating</div>
+        <div class="profile-section-inner">
+          Good.
+          </div>
+      </div>
+      <div class="profile-section">
+        <div class="profile-section-header">Qualifications</div>
+        <div class="profile-section-inner">
+          <p> Degree: <%= f.text_field :degree %> </p>
+          <p> Major: <%= f.text_field :major %> </p>
+          <p> Extra Info: <%= f.text_field :extra_info %> </p>
+          <p> Graduation Year: <%= f.number_field :graduation_year %> </p>
+        </div>
+      </div>
+    </div>
+    <div class="medium-8 columns">
+      <div class="profile-section">
+        <div class="profile-section-header">Schedule</div>
+        <div class="profile-section-inner">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </div>
+      </div>
+      <div class="profile-section">
+        <div class="profile-section-header">Courses Tutored</div>
+        <div class="profile-section-inner">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+<!-- Update Profile Pic Modal -->
+<!-- The link to this modal is above under Profile Pic, but this needs to be outside of the row for formatting reasons -->
+<div id="myModal" class="reveal-modal medium" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+  <%= render 'update_profile_pic' %>
+</div>
