@@ -21,8 +21,9 @@ ActiveRecord::Schema.define(version: 20150714155952) do
     t.text     "subject"
     t.integer  "call_number"
     t.string   "friendly_name"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.integer  "subject_number"
   end
 
   add_index "courses", ["school_id"], name: "index_courses_on_school_id", using: :btree
