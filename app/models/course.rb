@@ -21,8 +21,6 @@ class Course < ActiveRecord::Base
   validates :friendly_name, presence: :true
   validates :school_id, presence: :true
 
-  enum subject: ['Biology', 'Chemistry', 'Math', 'Computer Science', 'Physics']
-
 
   def subject_number
     @subject_name = self.subject_id
@@ -33,7 +31,7 @@ class Course < ActiveRecord::Base
     school.name
   end
 
-  def subject_id
+  def self.subject_id
     Course.subject[self.subject]
   end
 
