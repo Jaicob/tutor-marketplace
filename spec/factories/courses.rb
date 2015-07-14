@@ -10,6 +10,7 @@
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 
+
 FactoryGirl.define do
 
   subjects = [:chemisty, :biology, :math, :physics, :computer_science]

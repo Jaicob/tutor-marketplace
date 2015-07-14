@@ -9,6 +9,7 @@
 #  friendly_name :string
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
+#
 
 class Course < ActiveRecord::Base
   belongs_to :school
@@ -19,12 +20,18 @@ class Course < ActiveRecord::Base
   validates :friendly_name, presence: :true
   validates :school_id, presence: :true
 
+  serialize :subject, Hash
+
+  def subject_number
+    @subject_name = self.subject_id
+  end
+
   def school_name
     school = School.find(self.school_id)
     school.name
   end
 
-  def subject_id
+  def self.subject_id
     Course.subject[self.subject]
   end
 
