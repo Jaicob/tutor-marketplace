@@ -11,11 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 20150710134307) do
-=======
 ActiveRecord::Schema.define(version: 20150714155952) do
->>>>>>> master
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,14 +41,6 @@ ActiveRecord::Schema.define(version: 20150714155952) do
   add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
   add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
 
-<<<<<<< HEAD
-  create_table "schedule_blocks", force: :cascade do |t|
-    t.datetime "start_time"
-    t.datetime "end_time"
-    t.integer  "status",          default: 0
-    t.integer  "reservation_min"
-    t.integer  "reservation_max"
-=======
   create_table "schools", force: :cascade do |t|
     t.string   "name"
     t.string   "location"
@@ -61,7 +49,6 @@ ActiveRecord::Schema.define(version: 20150714155952) do
   end
 
   create_table "slot_managers", force: :cascade do |t|
->>>>>>> master
     t.integer  "tutor_id"
     t.date     "start_date"
     t.date     "end_date"
