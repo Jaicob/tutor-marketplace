@@ -1,4 +1,4 @@
-Web App  [![Build Status](https://api.shippable.com/projects/556f5e52edd7f2c05207296b/badge?branchName=development)](https://app.shippable.com/projects/556f5e52edd7f2c05207296b/builds/latest)
+Web App  [![Build Status](https://api.shippable.com/projects/556f5e52edd7f2c05207296b/badge?branchName=master)](https://app.shippable.com/projects/556f5e52edd7f2c05207296b/builds/latest)
 ================
 
 This application was generated with the [rails_apps_composer](https://github.com/RailsApps/rails_apps_composer) gem
@@ -68,11 +68,6 @@ Issues
 Similar Projects
 ----------------
 
-Contributing
-------------
-
-Credits
--------
 
 License
 -------
