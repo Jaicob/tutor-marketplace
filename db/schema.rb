@@ -11,19 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150713195634) do
+ActiveRecord::Schema.define(version: 20150714155952) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "courses", force: :cascade do |t|
+    t.integer  "school_id"
+    t.integer  "subject"
+    t.integer  "subject_number"
     t.integer  "call_number"
     t.string   "friendly_name"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
-    t.integer  "school_id"
-    t.integer  "subject"
-    t.integer  "subject_number"
   end
 
   add_index "courses", ["school_id"], name: "index_courses_on_school_id", using: :btree
@@ -41,25 +41,37 @@ ActiveRecord::Schema.define(version: 20150713195634) do
   add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
   add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
 
-  create_table "schedule_blocks", force: :cascade do |t|
-    t.datetime "start_time"
-    t.datetime "end_time"
-    t.integer  "status",          default: 0
-    t.integer  "reservation_min"
-    t.integer  "reservation_max"
-    t.integer  "tutor_id"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
-  end
-
-  add_index "schedule_blocks", ["tutor_id"], name: "index_schedule_blocks_on_tutor_id", using: :btree
-
   create_table "schools", force: :cascade do |t|
     t.string   "name"
     t.string   "location"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "slot_managers", force: :cascade do |t|
+    t.integer  "tutor_id"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.boolean  "is_recurring", default: true
+    t.text     "exclusions"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
+
+  add_index "slot_managers", ["tutor_id"], name: "index_slot_managers_on_tutor_id", using: :btree
+
+  create_table "slots", force: :cascade do |t|
+    t.integer  "slot_manager_id"
+    t.integer  "status",          default: 0
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.integer  "reservation_min"
+    t.integer  "reservation_max"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
+
+  add_index "slots", ["slot_manager_id"], name: "index_slots_on_slot_manager_id", using: :btree
 
   create_table "tutor_courses", force: :cascade do |t|
     t.integer  "tutor_id"
@@ -74,19 +86,19 @@ ActiveRecord::Schema.define(version: 20150713195634) do
 
   create_table "tutors", force: :cascade do |t|
     t.integer  "user_id"
-    t.integer  "rating"
+    t.integer  "active_status",      default: 0
     t.integer  "application_status", default: 0
-    t.date     "birthdate"
+    t.integer  "rating"
     t.string   "degree"
     t.string   "major"
     t.string   "extra_info"
     t.string   "graduation_year"
     t.string   "phone_number"
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
+    t.date     "birthdate"
     t.string   "profile_pic"
     t.string   "transcript"
-    t.integer  "active_status",      default: 0
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
   end
 
   add_index "tutors", ["user_id"], name: "index_tutors_on_user_id", using: :btree
@@ -102,12 +114,13 @@ ActiveRecord::Schema.define(version: 20150713195634) do
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
     t.inet     "last_sign_in_ip"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
-    t.string   "unconfirmed_email"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.string   "first_name"
+    t.string   "last_name"
     t.integer  "role",                   default: 0
     t.string   "invitation_token"
     t.datetime "invitation_created_at"
@@ -117,8 +130,6 @@ ActiveRecord::Schema.define(version: 20150713195634) do
     t.integer  "invited_by_id"
     t.string   "invited_by_type"
     t.integer  "invitations_count",      default: 0
-    t.string   "first_name"
-    t.string   "last_name"
     t.string   "slug"
   end
 
@@ -130,7 +141,8 @@ ActiveRecord::Schema.define(version: 20150713195634) do
   add_index "users", ["slug"], name: "index_users_on_slug", unique: true, using: :btree
 
   add_foreign_key "courses", "schools"
-  add_foreign_key "schedule_blocks", "tutors"
+  add_foreign_key "slot_managers", "tutors"
+  add_foreign_key "slots", "slot_managers"
   add_foreign_key "tutor_courses", "courses"
   add_foreign_key "tutor_courses", "tutors"
   add_foreign_key "tutors", "users"
