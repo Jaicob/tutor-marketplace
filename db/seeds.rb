@@ -26,30 +26,30 @@ end
 # Creates courses for each of the 4 schools
 
 course_list = [
-  [1, {name: 'Biology', id: 1}, "101", "Intro to Biology"],
-  [1, {name: 'Chemistry', id: 2}, "101", "Intro to Chemisty"],
-  [1, 2, "101", "Intro to Math"],
-  [1, 3, "101", "Intro to Computer Science"],
-  [1, 4, "101", "Intro to Physics"],
-  [2, {name: 'Biology', id: 1}, "101", "Intro to Biology"],
-  [2, 1, "101", "Intro to Chemisty"],
-  [2, 2, "101", "Intro to Math"],
-  [2, 3, "101", "Intro to Computer Science"],
-  [2, 4, "101", "Intro to Physics"],
-  [3, {name: 'Biology', id: 1}, "101", "Intro to Biology"],
-  [3, 1, "101", "Intro to Chemisty"],
-  [3, 2, "101", "Intro to Math"],
-  [3, 3, "101", "Intro to Computer Science"],
-  [3, 4, "101", "Intro to Physics"],
-  [4, {name: 'Biology', id: 1}, "101", "Intro to Biology"],
-  [4, 1, "101", "Intro to Chemisty"],
-  [4, 2, "101", "Intro to Math"],
-  [4, 3, "101", "Intro to Computer Science"],
-  [4, 4, "101", "Intro to Physics"]
+  [1, {name: 'Biology', id: 1}, "101", "Intro to Biology (U1)"],
+  [1, {name: 'Chemistry', id: 2}, "101", "Intro to Chemistry (U1)"],
+  [1, {name: 'Math', id: 3}, "101", "Intro to Math (U1)"],
+  [1, {name: 'Computer Science', id: 4}, "101", "Intro to Computer Science (U1)"],
+  [1, {name: 'Physics', id: 5}, "101", "Intro to Physics (U1)"],
+  [2, {name: 'Biology', id: 1}, "101", "Intro to Biology (U2)"],
+  [2, {name: 'Chemistry', id: 2}, "101", "Intro to Chemistry (U2)"],
+  [2, {name: 'Math', id: 3}, "101", "Intro to Math (U2)"],
+  [2, {name: 'Computer Science', id: 4}, "101", "Intro to Computer Science (U2)"],
+  [2, {name: 'Physics', id: 5}, "101", "Intro to Physics (U2)"],
+  [3, {name: 'Biology', id: 1}, "101", "Intro to Biology (U3)"],
+  [3, {name: 'Chemistry', id: 2}, "101", "Intro to Chemistry (U3)"],
+  [3, {name: 'Math', id: 3}, "101", "Intro to Math (U3)"],
+  [3, {name: 'Computer Science', id: 4}, "101", "Intro to Computer Science (U3)"],
+  [3, {name: 'Physics', id: 5}, "101", "Intro to Physics (U3)"],
+  [4, {name: 'Biology', id: 1}, "101", "Intro to Biology (U4)"],
+  [4, {name: 'Chemistry', id: 2}, "101", "Intro to Chemistry (U4)"],
+  [4, {name: 'Math', id: 3}, "101", "Intro to Math (U4)"],
+  [4, {name: 'Computer Science', id: 4}, "101", "Intro to Computer Science (U4)"],
+  [4, {name: 'Physics', id: 5}, "101", "Intro to Physics (U4)"]
 ]
 
 course_list.each do |school_id, subject, call_number, friendly_name|
-  Course.create(school_id: school_id, subject: subject, call_number: call_number, friendly_name: friendly_name)
+  Course.create(school_id: school_id, subject: {name: subject[:name], id: subject[:id]}, call_number: call_number, friendly_name: friendly_name)
 end
 
 
