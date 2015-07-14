@@ -1,5 +1,6 @@
-require 'grape-swagger'
 # Go to swagger-ui client via docker container and enter http://dockerhost:3000/api/docs
+require 'grape-swagger'
+
 
 class API < Grape::API
 
