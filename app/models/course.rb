@@ -24,7 +24,7 @@ class Course < ActiveRecord::Base
     school.name
   end
 
-  def subject_number
+  def subject_id
     Course.subject[self.subject]
   end
 
