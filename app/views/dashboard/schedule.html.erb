@@ -1,14 +1,47 @@
 <script>
+
+// var formatDataAsEvent = function( eventData ) {
+//   console.log("EVENT!") 
+//   return {
+//     title:    "Availability",
+//     start:    "2015-7-17", //eventData.start_time,
+//     end:      "2015-7-18", //eventData.end_time,
+//     editable: true,
+//     allDay:   false,
+//     slot_id:  eventData.id  
+//   }
+// }
+
+
+// [
+//         {
+//             title  : 'event1',
+//             start  : '2015-07-016'
+//         },
+//         {
+//             title  : 'event2',
+//             start  : '2015-07-017',
+//             end    : '2015-07-017'
+//         },
+//         {
+//             title  : 'event3',
+//             start  : '2015-07-19T12:30:00',
+//             allDay : false // will make the time show
+//         }
+//        ],
+
+var formatDataAsEvent = function( eventData ) {
+  console.log("EVENT!") 
+  return {
+    title:    "Availability",
+    start:    "2015-7-17", //eventData.start_time,
+  }
+}
+
 var eventSource = {
-  url: '/myfeed.php',
-  type: 'POST',
-  data: {
-      custom_param1: 'something',
-      custom_param2: 'somethingelse'
-  },
-  error: function() {
-      alert('there was an error while fetching events!');
-  },
+  url: 'http://dockerhost:3000/api/v1/tutors/1/slots.json',
+  type: 'get',
+ 
   color: 'yellow',   // a non-ajax option
   textColor: 'black' // a non-ajax option
 }
@@ -36,6 +69,8 @@ var addSlot = function(event){
     alert("Error!")
   })
 }
+
+
 
 
   $(document).ready(function() {
@@ -66,7 +101,7 @@ var addSlot = function(event){
     -----------------------------------------------------------------*/
 
     $('#calendar').fullCalendar({
-      events: eventSource,
+      eventSources:[{url: '/api/v1/tutors/1/slots.json', eventDataTransform: formatDataAsEvent}],
       slotEventOverlap: false,
       allDaySlot: false,
       minTime: "6:00:00",
@@ -88,9 +123,8 @@ var addSlot = function(event){
       defaultView: 'agendaWeek',
       editable: true,
       droppable: true, // this allows things to be dropped onto the calendar
-      drop: droppedEvent,
-      eventResizeStop: updateSlotDuration,
-      eventReceive: addSlot
+      drop: addSlot,
+      eventResizeStop: updateSlotDuration
     });
 
   });
