@@ -27,14 +27,14 @@ $(document).ready(function(){
     url: function(){ return api + "/schools/" + $("#school").val() + "/subjects/" },
     data_formatter: function(data){
       return data.map(function(subject){
-          return [subject, subject.split("_").join(" ").toTitleCase()];
+          return [subject.number, subject.name];
       });
     }
   });
 
   $("#course").remoteChainedTo({
     parents: "#school, #subject",
-    url: function(){ return api + "/schools/" + $("#school").val() + "/courses/subject/" + $("#subject").val() + "/" },
+    url: function(){ return api + "/schools/" + $("#school").val() + "/subjects/" + $("#subject").val() + "/courses/" },
     data_formatter: function(data){
       return data.map(function(course){
         return [course.id, course.call_number + " (" + course.friendly_name + ")"];

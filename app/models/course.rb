@@ -9,7 +9,6 @@
 #  friendly_name :string
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
-#
 
 class Course < ActiveRecord::Base
   belongs_to :school
@@ -20,11 +19,13 @@ class Course < ActiveRecord::Base
   validates :friendly_name, presence: :true
   validates :school_id, presence: :true
 
-  enum subject: [:biology, :chemistry, :math, :computer_science, :physics]
-
   def school_name
     school = School.find(self.school_id)
     school.name
+  end
+
+  def subject_number
+    Course.subject[self.subject]
   end
 
 end
