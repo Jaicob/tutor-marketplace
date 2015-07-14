@@ -27,7 +27,7 @@ $(document).ready(function(){
     url: function(){ return api + "/schools/" + $("#school").val() + "/subjects/" },
     data_formatter: function(data){
       return data.map(function(subject){
-          return [subject.number, subject.name];
+          return [subject.id, subject.name];
       });
     }
   });
