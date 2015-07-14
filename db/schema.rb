@@ -42,8 +42,9 @@ ActiveRecord::Schema.define(version: 20150713195634) do
   add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
 
   create_table "schedule_blocks", force: :cascade do |t|
-    t.datetime "start_time"
-    t.datetime "end_time"
+    t.date     "date"
+    t.time     "start_time"
+    t.time     "end_time"
     t.integer  "status",          default: 0
     t.integer  "reservation_min"
     t.integer  "reservation_max"

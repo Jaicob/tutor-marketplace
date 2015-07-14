@@ -92,7 +92,7 @@ Rails.application.routes.draw do
       get 'visitor_sign_up'
       post 'create_tutor_course'
       put 'change_profile_pic'
-      patch 'destroy_by_admin' 
+      patch 'destroy_by_admin'
     end
     collection do
       get 'visitor_new'
@@ -100,6 +100,7 @@ Rails.application.routes.draw do
     end
   end
   devise_for :users
+  resources :users
   resources :courses
   resources :schools
   resources :subjects
@@ -111,19 +112,19 @@ Rails.application.routes.draw do
   # -save_profile_pic_crop
 
   # The custom routes below are for the dashboard which handles no logic on its own - it sends information to the respective controllers required for any operation and simply acts as a template for displaying different resources in one convenient place
-  resources :users, only: [], path: '' do 
-    member do       
+  resources :users, only: [], path: '' do
+    member do
       get  '/dashboard/home'      => 'dashboard#home'
       get  '/dashboard/schedule'  => 'dashboard#schedule'
       get  '/dashboard/courses'   => 'dashboard#courses'
       get  '/dashboard/profile'   => 'dashboard#profile'
       get  '/dashboard/settings'  => 'dashboard#settings'
-      get  '/dashboard/tutors'    => 'dashboard#tutors' 
+      get  '/dashboard/tutors'    => 'dashboard#tutors'
     end
   end
 
   root to: "static_pages#home"
 
   mount API => '/'
-  
+
 end
