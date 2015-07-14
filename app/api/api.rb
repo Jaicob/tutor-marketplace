@@ -11,6 +11,7 @@ class API < Grape::API
   mount V1::TutorCourses
   mount V1::Tutors
   mount V1::Users
-  mount V1::ScheduleBlocks
+  mount V1::Slots
+  mount V1::SlotManagers
   add_swagger_documentation  api_version: 'v1', mount_path: '/docs'
 end

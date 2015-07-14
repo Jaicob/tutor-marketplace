@@ -35,21 +35,3 @@ describe "School API" do
   end
 
 end
-
-
-    #   desc "Returns a specific school and its courses for a specific subject"
-    #   get ":id/courses/subject/:subject" do 
-    #     School.find(params[:id]).courses.find_all do |course| 
-    #       course.subject == params[:subject]
-    #     end
-    #   end
-
-    #   desc "Updates a specific school's attributes"
-    #   put ":id" do
-    #     @school = School.find(params[:id])
-    #     if @school.update_attributes(params)
-    #       return @school.as_json
-    #     else
-    #       return "There was an error updating the tutor."
-    #     end
-    #   end

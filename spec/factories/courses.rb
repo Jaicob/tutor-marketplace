@@ -27,7 +27,7 @@ FactoryGirl.define do
     end
 
     factory :second_course do
-      subject 2 
+      subject 2
       call_number 202
       friendly_name "Cellular Biology"
       association :school, factory: :second_school
