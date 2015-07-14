@@ -12,5 +12,7 @@ class API < Grape::API
   mount V1::Tutors
   mount V1::Users
   mount V1::ScheduleBlocks
-  add_swagger_documentation  api_version: 'v1', mount_path: '/docs'
+  add_swagger_documentation  api_version: 'v1', mount_path: '/docs', base_path: 'api/v1' , info: {title: "Axon API"}
+
+
 end
