@@ -48,6 +48,7 @@ source "https://rubygems.org" do
   gem "grape-swagger"
   gem 'grape-rails-routes'
   gem 'simple_form'
+  gem "rack-cors"
 
   # Front End Stuff
   gem "bower-rails", "~> 0.9.2"
