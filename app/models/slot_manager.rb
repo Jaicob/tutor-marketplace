@@ -14,5 +14,15 @@
 
 class SlotManager < ActiveRecord::Base
   belongs_to :tutor
-  has_many :slots
+  has_many :slots, dependent: :destroy
+  
+  validates :tutor_id, presence: true
+  validates :start_date, presence: true
+  validates :end_date, presence: true
+
+  def slots_with_manager_info
+  end
+
 end
+
+

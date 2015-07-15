@@ -15,4 +15,9 @@
 
 class Slot < ActiveRecord::Base
   belongs_to :slot_manager
+
+  validates :slot_manager_id, presence: true
+  validates :start_time, presence: true
+  validates :end_time, presence: true
+
 end
