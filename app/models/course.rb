@@ -22,7 +22,6 @@ class Course < ActiveRecord::Base
 
   serialize :subject, Hash
 
-
   def subject_number
     @subject_name = self.subject_id
   end

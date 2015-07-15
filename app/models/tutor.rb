@@ -90,38 +90,17 @@ class Tutor < ActiveRecord::Base
   end
 
   def slots_by_slot_manager
-    slots = []
+    ordered_slots = []
     self.slot_managers.each do |slot_manager|
-      slot_manager.slots.each do |slot|
-        slots << slot
-      end
+      ordered_slots << {
+        slot_manager: {
+          slot_manager => {
+          'slots' => slot_manager.slots
+        }
+        }
+      }
     end
+    ordered_slots
   end
-
-  # def slots_by_slot_manager
-  #   slot_managers = {}
-  #   self.slot_managers.each do |slot_manager|
-  #     slot_manager.slots.each do |slot|
-  #       slot_managers[slot_manager][slot][:status] = slot.status
-  #       # nested_hash[:start_time] = slot.start_time
-  #       # nested_hash[:end_time] = slot.end_time
-  #       # nested_hash[:reservation_min] = slot.end_time
-  #       # nested_hash[:reservation_min] = slot.end_time
-  #       # nested_hash[:slot_manager_id] = slot.slot_manager
-  #       # nested_hash[:tutor_id] = slot.slot_manager.tutor.id
-  #     end
-  #   end
-  # end
-
-#  slot_manager_id :integer
-#  status          :integer          default(0)
-#  start_time      :datetime
-#  end_time        :datetime
-#  reservation_min :integer
-#  reservation_max :integer
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#
-
 
 end

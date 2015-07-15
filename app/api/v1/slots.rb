@@ -3,7 +3,7 @@ module V1
 
     include V1::Defaults
 
-    # This section makes calls to schedule blocks in the context of tutors
+    # This section makes calls to slots in the context of tutors
     resource :tutors do 
       segment "/:tutor_id" do
         resource :slots do 
@@ -16,7 +16,7 @@ module V1
 
           desc "Returns all slots for a tutor"
           get do 
-            tutor.slots
+            tutor.slots_by_slot_manager
           end
 
           desc "Returns a specific slot for a tutor"

@@ -57,18 +57,18 @@ module V1
 
         end
 
-        resource :slots do 
+        # resource :slots do 
 
-          desc "Returns all slots for a tutor"
-          get do
-            tutor.slots_by_slot_manager
-          end
+        #   desc "Returns all slots for a tutor"
+        #   get do
+        #     tutor.slots_by_slot_manager
+        #   end
 
-          desc "Returns one of a tutor's slots"
-          get ":slot_id" do
-            Slot.find(params[:slot_id])
-          end
-        end
+        #   desc "Returns one of a tutor's slots"
+        #   get ":slot_id" do
+        #     Slot.find(params[:slot_id])
+        #   end
+        # end
 
 
 # When a tutor creates a slot, they have to choose whether it's repeating or whether it's a one-off.
