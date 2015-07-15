@@ -10,7 +10,6 @@
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 
-
 class Course < ActiveRecord::Base
   belongs_to :school
   has_many :tutor_courses, dependent: :destroy
