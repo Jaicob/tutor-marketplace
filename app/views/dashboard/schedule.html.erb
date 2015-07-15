@@ -1,47 +1,16 @@
 <script>
 
-// var formatDataAsEvent = function( eventData ) {
-//   console.log("EVENT!") 
-//   return {
-//     title:    "Availability",
-//     start:    "2015-7-17", //eventData.start_time,
-//     end:      "2015-7-18", //eventData.end_time,
-//     editable: true,
-//     allDay:   false,
-//     slot_id:  eventData.id  
-//   }
-// }
-
-
-// [
-//         {
-//             title  : 'event1',
-//             start  : '2015-07-016'
-//         },
-//         {
-//             title  : 'event2',
-//             start  : '2015-07-017',
-//             end    : '2015-07-017'
-//         },
-//         {
-//             title  : 'event3',
-//             start  : '2015-07-19T12:30:00',
-//             allDay : false // will make the time show
-//         }
-//        ],
-
 var formatDataAsEvent = function( eventData ) {
-  console.log("EVENT!") 
   return {
     title:    "Availability",
-    start:    "2015-7-17", //eventData.start_time,
+    start:    eventData.start_time,
+    end:      eventData.end_time
   }
 }
 
 var eventSource = {
-  url: 'http://dockerhost:3000/api/v1/tutors/1/slots.json',
-  type: 'get',
- 
+  url: '/api/v1/tutors/1/slots.json',
+  eventDataTransform: formatDataAsEvent,
   color: 'yellow',   // a non-ajax option
   textColor: 'black' // a non-ajax option
 }
@@ -70,64 +39,58 @@ var addSlot = function(event){
   })
 }
 
+$(document).ready(function() {
 
+  /* initialize the external events
+  -----------------------------------------------------------------*/
+  $('.fc-event').each(function() {
 
-
-  $(document).ready(function() {
-
-
-    /* initialize the external events
-    -----------------------------------------------------------------*/
-
-    $('.fc-event').each(function() {
-
-      // store data so the calendar knows to render an event upon drop
-      $(this).data('event', {
-        title: $.trim($(this).text()), // use the element's text as the event title
-        stick: true // maintain when user navigates (see docs on the renderEvent method)
-      });
-
-      // make the event draggable using jQuery UI
-      $(this).draggable({
-        zIndex: 999,
-        revert: true,      // will cause the event to go back to its
-        revertDuration: 0  //  original position after the drag
-      });
-
+    // store data so the calendar knows to render an event upon drop
+    $(this).data('event', {
+      title: $.trim($(this).text()), // use the element's text as the event title
+      stick: true // maintain when user navigates (see docs on the renderEvent method)
     });
 
-
-    /* initialize the calendar
-    -----------------------------------------------------------------*/
-
-    $('#calendar').fullCalendar({
-      eventSources:[{url: '/api/v1/tutors/1/slots.json', eventDataTransform: formatDataAsEvent}],
-      slotEventOverlap: false,
-      allDaySlot: false,
-      minTime: "6:00:00",
-      maxTime: "22:00:00",
-      defaultTimedEventDuration: "1:00:00",
-      height: "auto",
-      businessHours: {
-          start: '10:00', // a start time (10am in this example)
-          end: '10:00', // an end time (6pm in this example)
-
-          dow: [ 0, 1, 2, 3, 4, 5, 6 ]
-          // days of week. an array of zero-based day of week integers (0=Sunday)
-          // (Monday-Thursday in this example)
-      },
-      header: {
-        left: 'prev,next today',
-        right: 'month,agendaWeek,agendaDay'
-      },
-      defaultView: 'agendaWeek',
-      editable: true,
-      droppable: true, // this allows things to be dropped onto the calendar
-      drop: addSlot,
-      eventResizeStop: updateSlotDuration
+    // make the event draggable using jQuery UI
+    $(this).draggable({
+      zIndex: 999,
+      revert: true,      // will cause the event to go back to its
+      revertDuration: 0  //  original position after the drag
     });
 
   });
+
+
+  /* initialize the calendar
+  -----------------------------------------------------------------*/
+  $('#calendar').fullCalendar({
+    eventSources:[eventSource], //[{url: '/api/v1/tutors/1/slots.json', eventDataTransform: formatDataAsEvent}],
+    slotEventOverlap: false,
+    allDaySlot: false,
+    minTime: "6:00:00",
+    maxTime: "22:00:00",
+    defaultTimedEventDuration: "1:00:00",
+    height: "auto",
+    businessHours: {
+        start: '10:00', // a start time (10am in this example)
+        end: '10:00', // an end time (6pm in this example)
+
+        dow: [ 0, 1, 2, 3, 4, 5, 6 ]
+        // days of week. an array of zero-based day of week integers (0=Sunday)
+        // (Monday-Thursday in this example)
+    },
+    header: {
+      left: 'prev,next today',
+      right: 'month,agendaWeek,agendaDay'
+    },
+    defaultView: 'agendaWeek',
+    editable: true,
+    droppable: true, // this allows things to be dropped onto the calendar
+    drop: droppedEvent,
+    eventResizeStop: updateSlotDuration
+  });
+
+});
 </script>
 <style>
   #scheduling-container {
