@@ -14,19 +14,19 @@
 
 class SlotManager < ActiveRecord::Base
   belongs_to :tutor
-<<<<<<< HEAD
   has_many :slots, dependent: :destroy
   
   validates :tutor_id, presence: true
   validates :start_date, presence: true
   validates :end_date, presence: true
 
-  def slots_with_manager_info
+  # We might want to make it so that this only affects slots that have NOT been individiually edited
+  def update_all_slots(params)
+    @params = params
+    self.slots.each do |slot|
+      slot.update_attributes(@params)
+    end
   end
-
-=======
-  has_many :slots,  dependent: :destroy
->>>>>>> adjust-slot-duration
 end
 
 

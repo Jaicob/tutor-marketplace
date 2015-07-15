@@ -89,18 +89,5 @@ class Tutor < ActiveRecord::Base
     self.created_at.to_date
   end
 
-  def slots_by_slot_manager
-    ordered_slots = []
-    self.slot_managers.each do |slot_manager|
-      ordered_slots << {
-        slot_manager: {
-          slot_manager => {
-          'slots' => slot_manager.slots
-        }
-        }
-      }
-    end
-    ordered_slots
-  end
 
 end

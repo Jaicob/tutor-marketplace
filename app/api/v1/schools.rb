@@ -11,10 +11,10 @@ module V1
         end
       end
 
-      params do 
-        optional :name, type: String
-        optional :location, type: String
-      end
+      # params do 
+      #   optional :name, type: String
+      #   optional :location, type: String
+      # end
 
       desc "Returns list of all schools"
       get do

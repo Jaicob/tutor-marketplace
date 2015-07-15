@@ -3,8 +3,59 @@ module V1
 
     include V1::Defaults
 
-    # This section makes calls to slots in the context of tutors
-    resource :tutors do 
+      helpers do 
+        def slot
+          Slot.find(params[:id])
+        end
+      end
+
+      params do 
+        optional  :id,              type: Integer     
+        optional  :slot_manager_id, type: Integer
+        optional  :status,          type: Integer  
+        optional  :start_time,      type: String
+        optional  :end_time,        type: String
+        optional  :reservation_min, type: Integer
+        optional  :reservation_max, type: Integer
+      end
+
+    resource :slots do 
+      desc "Returns all slots"
+      get do 
+        Slot.all
+      end
+
+      desc "Returns a specific slot"
+      get ":id" do 
+        slot
+      end
+
+      desc "Updates a specific slot"
+      patch ":id" do
+        @slot = slot
+        if @slot.update_attributes(declared_params)
+          return @slot
+        else
+          return "Slot could not be saved: #{@slot.errors.full_messages}"
+        end
+      end
+
+    end 
+    # End of resource: slots
+
+
+      # Beggining of slots by tutor
+      params do 
+        optional  :id,              type: Integer     
+        optional  :slot_manager_id, type: Integer
+        optional  :status,          type: Integer  
+        optional  :start_time,      type: String
+        optional  :end_time,        type: String
+        optional  :reservation_min, type: Integer
+        optional  :reservation_max, type: Integer
+      end
+
+    resource :tutors do
       segment "/:tutor_id" do
         resource :slots do 
 
@@ -16,7 +67,7 @@ module V1
 
           desc "Returns all slots for a tutor"
           get do 
-            tutor.slots_by_slot_manager
+            tutor.slots
           end
 
           desc "Returns a specific slot for a tutor"
@@ -26,11 +77,11 @@ module V1
 
           desc "Creates a single slot for a tutor" 
           post do
-            slot = Slot.new(params)
-            if slot.save
-              return slot
+            @slot = Slot.create(declared_params)
+            if @slot.save
+              return @slot
             else
-              return "Schedule block could not be saved: #{@slot.errors.full_messages}"
+              return "Slot could not be saved: #{@slot.errors.full_messages}"
             end
           end
 
@@ -39,18 +90,15 @@ module V1
             slot = Slot.new
           end
 
-
           # Updates with PATCH
           desc "Updates a slot for a tutor"
           patch ":id" do
             @slot = tutor.slots.find(params[:id])
-            puts "DECLARED PARAMS = #{declared(params).to_s}"
-            @slot.update_attributes(params)
-
+            @slot.update_attributes(declared_params)
             if @slot.save
               return @slot
             else
-              return "Schedule block could not be updated: #{@slot.errors.full_messages}"
+              return "Slot could not be updated: #{@slot.errors.full_messages}"
             end
           end
 
@@ -58,13 +106,12 @@ module V1
           desc "Updates a slot for a tutor"
           put ":id" do
             @slot = tutor.slots.find(params[:id])
-            puts "DECLARED PARAMS = #{declared(params).to_s}"
-            @slot.update_attributes(params)
+            @slot.update_attributes(declared_params)
 
             if @slot.save
               return @slot
             else
-              return "Schedule block could not be updated: #{@slot.errors.full_messages}"
+              return "Slot could not be updated: #{@slot.errors.full_messages}"
             end
           end
 
@@ -72,25 +119,14 @@ module V1
           delete ":id" do 
             @slot = tutor.slots.find(params[:id])
             if @slot.destroy
-              return "Schedule block succesfully deleted."
+              return "Slot succesfully deleted."
             else
-              return "Schedule block was not deleted."
+              return "Slot was not deleted: #{@slot.errors.full_messages}"
             end
           end
+
         end
       end
     end
   end
 end
-
-      # Need to figure out how to work with declared(params)
-      # params do
-      #   requires :slot, type: Hash do 
-      #     optional :date, type: Date
-      #     optional :start_time, type: Time
-      #     optional :end_time, type: Time 
-      #     optional :status, type: Integer 
-      #     optional :reservation_min, type: Integer 
-      #     optional :reservation_max, type: Integer
-      #   end
-      # end
