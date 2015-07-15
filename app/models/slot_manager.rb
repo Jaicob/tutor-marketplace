@@ -20,6 +20,20 @@ class SlotManager < ActiveRecord::Base
   validates :start_date, presence: true
   validates :end_date, presence: true
 
+  def create_slots
+    @date = self.start_date
+    regular_slot_dates = [@date]
+    
+    while @date < end_date
+      regular_slot_dates << (@date + 7)
+      @date = (@date + 7)
+    end
+
+    regular_slot_dates.each do |slot_date|
+      self.slots.create(start_time: slot_date, end_time: slot_date)
+    end
+  end
+
   # We might want to make it so that this only affects slots that have NOT been individiually edited
   def update_all_slots(params)
     @params = params
