@@ -1,4 +1,4 @@
-describe "School API" do
+describe "School endpoints" do
   let(:school) { create(:school) }
   let(:school_with_courses) { create(:school_with_courses) }
   let(:school_with_bio_courses) { create(:school_with_bio_courses) }

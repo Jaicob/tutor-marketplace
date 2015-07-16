@@ -1,5 +1,14 @@
 <div class="row">
-  <p>Share your profile link: <%= link_to "www.axontutors.com/tutors/#{@tutor.user.friendly_id}", tutor_path(@tutor.user) %></p>
+  <div class="medium-12 columns">
+    <p>
+      Share your profile link: <%= link_to "www.axontutors.com/tutors/#{@tutor.user.friendly_id}", tutor_path(@tutor.user) %>
+      <br>
+      <a href="<%= dashboard_edit_profile_user_path %>"</a>
+      <button type="button" class="btn-labeled radius primary right" id="edit_profile_button">
+        Edit
+      </button>
+    </p>
+  </div>
 </div>
 <div class="row">
   <div class="medium-4 columns">
@@ -7,7 +16,7 @@
     <div class="profile-section profile-pic-container">
       <!-- Name -->
       <div class="profile-section-header">
-        <%= @tutor.user.full_name %>
+        <%= @tutor.full_name %>
       </div>
       <a href="#" data-reveal-id="myModal">
         <%= image_tag(@tutor.profile_pic_url(:thumb), class: 'profile-pic') %>
@@ -22,17 +31,10 @@
     <div class="profile-section">
       <div class="profile-section-header">Qualifications</div>
       <div class="profile-section-inner">
-        <% options = {
-          :as => :input,
-          :ok_button => "Save",
-          :ok_button_class => "button success tiny",
-          :cancel_button => 'Cancel',
-          :cancel_button_class => "button danger tiny"
-        }  %>
-        <p> Degree: <%= best_in_place @tutor, :degree, options.merge({ :nil => 'Enter Degree' }) %> </p>
-        <p> Major: <%= best_in_place @tutor, :major, options.merge({  :nil => 'Enter Major' }) %> </p>
-        <p> Extra Info: <%= best_in_place @tutor, :extra_info, options.merge({ :nil => 'Enter Graduation Year' }) %> </p>
-        <p> Graduation Year: <%= best_in_place @tutor, :graduation_year, options %> </p>
+        <p> Degree: <%= @tutor.degree || "None specified." %> </p>
+        <p> Major: <%= @tutor.major || "None specified." %> </p>
+        <p> Extra Info: <%= @tutor.extra_info || "None specified." %> </p>
+        <p> Graduation Year: <%= @tutor.graduation_year || "None specified." %> </p>
       </div>
     </div>
   </div>
@@ -41,23 +43,23 @@
       <div class="profile-section-header">Schedule</div>
       <div class="profile-section-inner">
         Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </div>
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </div>
     </div>
     <div class="profile-section">
       <div class="profile-section-header">Courses Tutored</div>
       <div class="profile-section-inner">
         Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </div>
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </div>
     </div>
   </div>
 </div>

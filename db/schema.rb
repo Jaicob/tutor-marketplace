@@ -47,20 +47,8 @@ ActiveRecord::Schema.define(version: 20150714155952) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "slot_managers", force: :cascade do |t|
-    t.integer  "tutor_id"
-    t.date     "start_date"
-    t.date     "end_date"
-    t.boolean  "is_recurring", default: true
-    t.text     "exclusions"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
-  end
-
-  add_index "slot_managers", ["tutor_id"], name: "index_slot_managers_on_tutor_id", using: :btree
-
   create_table "slots", force: :cascade do |t|
-    t.integer  "slot_manager_id"
+    t.integer  "tutor_id"
     t.integer  "status",          default: 0
     t.datetime "start_time"
     t.datetime "end_time"
@@ -70,7 +58,7 @@ ActiveRecord::Schema.define(version: 20150714155952) do
     t.datetime "updated_at",                  null: false
   end
 
-  add_index "slots", ["slot_manager_id"], name: "index_slots_on_slot_manager_id", using: :btree
+  add_index "slots", ["tutor_id"], name: "index_slots_on_tutor_id", using: :btree
 
   create_table "tutor_courses", force: :cascade do |t|
     t.integer  "tutor_id"
@@ -140,8 +128,7 @@ ActiveRecord::Schema.define(version: 20150714155952) do
   add_index "users", ["slug"], name: "index_users_on_slug", unique: true, using: :btree
 
   add_foreign_key "courses", "schools"
-  add_foreign_key "slot_managers", "tutors"
-  add_foreign_key "slots", "slot_managers"
+  add_foreign_key "slots", "tutors"
   add_foreign_key "tutor_courses", "courses"
   add_foreign_key "tutor_courses", "tutors"
   add_foreign_key "tutors", "users"
