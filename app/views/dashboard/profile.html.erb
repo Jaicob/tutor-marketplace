@@ -4,7 +4,7 @@
       Share your profile link: <%= link_to "www.axontutors.com/tutors/#{@tutor.user.friendly_id}", tutor_path(@tutor.user) %>
       <br>
       <a href="<%= dashboard_edit_profile_user_path %>"</a>
-      <button type="button" class="btn-labeled radius primary right">
+      <button type="button" class="btn-labeled radius primary right" id="edit_profile_button">
         Edit
       </button>
     </p>
