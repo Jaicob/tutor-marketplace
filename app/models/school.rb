@@ -21,7 +21,7 @@ class School < ActiveRecord::Base
         name:   course.subject,
         number: course.subject_id
       }
-    }.uniq { |x| x[:name] }
+    }.uniq { |course| course[:name] }
   end
 
 end
