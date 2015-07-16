@@ -3,8 +3,12 @@ class UsersController < ApplicationController
   before_action :set_tutor
 
   def update
-    @user.update(user_params)
-    redirect_to dashboard_settings_user_path(current_user)
+    if @user.update(user_params)
+      redirect_to dashboard_settings_user_path(current_user)
+    else
+      flash[:notice] = "There was an error updating your settings."
+      redirect to  dashboard_settings_user_path(current_user)
+    end
   end
 
   private
