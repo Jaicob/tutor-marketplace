@@ -3,26 +3,51 @@ module V1
 
     include V1::Defaults
 
+      helpers do 
+        def tutor
+          Tutor.find(params[:id])
+        end
+      end
+
+      params do 
+        optional  :id,                 type: Integer 
+        optional  :user_id,            type: Integer    
+        optional  :rating,             type: Integer  
+        optional  :application_status, type: String
+        optional  :active_status,      type: Integer
+        optional  :birthdate,          type: String
+        optional  :degree,             type: Integer
+        optional  :major,              type: Integer
+        optional  :extra_info,         type: Integer
+        optional  :graduation_year,    type: String
+        optional  :phone_number,       type: String
+        optional  :profile_pic,        type: String
+        optional  :transcript,         type: String
+      end
+
     resource :tutors do 
+
       desc "Returns list of all tutors"
       get do
-        Tutor.all.as_json
+        Tutor.all
       end
 
       desc "Returns a specific tutor"
       get ":id" do 
-        Tutor.find(params[:id]).as_json
+        tutor
       end
 
       desc "Updates a specific tutor's attributes"
       put ":id" do
-        @tutor = Tutor.find(params[:id])
+        @tutor = tutor
         if @tutor.update_attributes(params)
-          return @tutor.as_json
+          return @tutor
         else
-          return "There was an error updating the tutor."
+          return "There was an error updating the tutor: #{@tutor.errors.full_messages}"
         end
       end
+
+      
     end
   end
 end

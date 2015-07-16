@@ -1,4 +1,4 @@
-describe "TutorCourse API" do 
+describe "TutorCourse endpoints" do 
   let(:tutor_course) { create(:tutor_course) }
 
   it "Returns all TutorCourses" do
@@ -15,6 +15,7 @@ describe "TutorCourse API" do
   end
 
   it "Updates a specific TutorCourse's attributes" do 
+    skip
   end
 
 end

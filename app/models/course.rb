@@ -19,6 +19,12 @@ class Course < ActiveRecord::Base
   validates :friendly_name, presence: :true
   validates :school_id, presence: :true
 
+  serialize :subject, Hash
+
+  def subject_number
+    @subject_name = self.subject_id
+  end
+
   def school_name
     school = School.find(self.school_id)
     school.name
