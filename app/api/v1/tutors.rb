@@ -41,9 +41,9 @@ module V1
       put ":id" do
         @tutor = tutor
         if @tutor.update_attributes(params)
-          return @tutor.as_json
+          return @tutor
         else
-          return "There was an error updating the tutor."
+          return "There was an error updating the tutor: #{@tutor.errors.full_messages}"
         end
       end
 

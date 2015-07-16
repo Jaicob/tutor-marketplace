@@ -25,12 +25,12 @@ module V1
 
       desc "Returns a specific course"
       get ":id" do 
-        Course.find(params[:id])
+        course
       end
 
       desc "Updates a specific course's attributes"
       put ":id" do
-        @course = Course.find(params[:id])
+        @course = course
         if @course.update_attributes(declared_params)
           return @course
         else

@@ -30,7 +30,7 @@ class Course < ActiveRecord::Base
     school.name
   end
 
-  def self.subject_id
+  def subject_id
     Course.subject[self.subject]
   end
 
