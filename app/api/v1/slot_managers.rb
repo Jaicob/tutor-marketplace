@@ -110,6 +110,7 @@ end
           put ":id" do
             @slot_manager = slot_manager
             @slot_manager.update_attributes(declared_params)
+            @slot_manager.update_slots(declared_params)
 
             if @slot_manager.save
               return @slot_manager

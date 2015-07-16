@@ -1,4 +1,4 @@
-describe "Tutor API" do 
+describe "Tutor endpoints" do 
   let(:tutor) { create(:tutor) }
 
   it "Returns all tutors" do

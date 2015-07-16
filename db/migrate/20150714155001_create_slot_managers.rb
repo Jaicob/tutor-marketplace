@@ -7,6 +7,10 @@ class CreateSlotManagers < ActiveRecord::Migration
       t.date        :end_date
       t.boolean     :is_recurring, default: true
       t.text        :exclusions
+      t.datetime    :start_time
+      t.datetime    :end_time
+      t.integer     :reservation_min
+      t.integer     :reservation_max
 
       t.timestamps null: false
     end

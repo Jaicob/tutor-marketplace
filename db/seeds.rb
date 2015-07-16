@@ -77,10 +77,9 @@ end
 
 # Give the tutors some slot_managers
 Tutor.all.each do |tutor|
-  tutor.slot_managers.create(start_date: Date.new(2015,7,15) , end_date: Date.new(2015,12,15))
-  tutor.slot_managers.create(start_date: Date.new(2001,7,17) , end_date: Date.new(2015,12,17))
+  tutor.slot_managers.create(start_date: Date.new(2015,7,15) , end_date: Date.new(2015,12,15) , start_time: DateTime.new(2015,7,15,12) , end_time: DateTime.new(2015,7,15,16))
+  tutor.slot_managers.create(start_date: Date.new(2001,7,17) , end_date: Date.new(2015,12,17) , start_time: DateTime.new(2015,7,15,16) , end_time: DateTime.new(2015,7,15,20))
 end
-
 
 # Give the slot_managers some slots
 SlotManager.all.each do |manager|

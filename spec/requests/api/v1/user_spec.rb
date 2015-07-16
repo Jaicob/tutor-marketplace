@@ -1,4 +1,4 @@
-describe "User API" do
+describe "User endpoints" do
   let(:user) { create(:user) }
 
   it "Returns all users" do 
