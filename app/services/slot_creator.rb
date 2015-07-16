@@ -15,8 +15,15 @@ class SlotCreator
       date = date + 7
       @start_time = @start_time + 7
       @end_time = @end_time + 7
-    end 
+    end
   end
+
+  # slot_date_range = @start_date .. @end_date.range.step(7)
+  # slot_date_range.each do |slot_date|
+  #   start_time = slot_date + Time.parse(@start_time)
+  #   end_time = slot_date + Time.parse(@end_time)
+  #   @tutor.slots.create(start_time: start_time, end_time: end_time)
+  # end
 
 end
 

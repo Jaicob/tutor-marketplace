@@ -24,7 +24,7 @@ module V1
         optional  :start_date,      type: String
         optional  :end_date,        type: String
       end
-
+      
 
     resource :tutors do
       segment "/:tutor_id" do
@@ -42,7 +42,6 @@ module V1
 
           desc "Creates one or many slots for a tutor" # depends on the date range given
           post do
-            puts "DECLARED PARAMS = #{declared_params}"
             slot_creator = SlotCreator.new(declared_params) 
             slot_creator.create_slots
             # if @slot_creator.create_slots
@@ -67,7 +66,6 @@ module V1
   #     date = date + 7
   #   end 
   # end
-
 
           # Updates with PATCH
           desc "Updates a slot for a tutor"

@@ -21,6 +21,13 @@ FactoryGirl.define do
     end_time "2015-07-14 15:59:52"
     reservation_min 1
     reservation_max 4
-  end
 
+    factory :slot_creator_one_slot do 
+      tutor
+      start_date  "2015-08-01"
+      end_date    "2015-08-02"
+      start_time  "2015-07-01 12:00"
+      end_time    "2015-07-01 16:00"
+    end
+  end
 end
