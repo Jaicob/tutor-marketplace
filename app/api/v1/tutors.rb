@@ -4,25 +4,34 @@ module V1
     include V1::Defaults
 
     resource :tutors do 
+
+      helpers do 
+        def tutor
+          Tutor.find(params[:id])
+        end
+      end
+
       desc "Returns list of all tutors"
       get do
-        Tutor.all.as_json
+        Tutor.all
       end
 
       desc "Returns a specific tutor"
       get ":id" do 
-        Tutor.find(params[:id]).as_json
+        tutor
       end
 
       desc "Updates a specific tutor's attributes"
       put ":id" do
-        @tutor = Tutor.find(params[:id])
+        @tutor = tutor
         if @tutor.update_attributes(params)
           return @tutor.as_json
         else
           return "There was an error updating the tutor."
         end
       end
+
+      
     end
   end
 end

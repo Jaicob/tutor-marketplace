@@ -51,10 +51,14 @@ ActiveRecord::Schema.define(version: 20150714155952) do
     t.integer  "tutor_id"
     t.date     "start_date"
     t.date     "end_date"
-    t.boolean  "is_recurring", default: true
+    t.boolean  "is_recurring",    default: true
     t.text     "exclusions"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.integer  "reservation_min"
+    t.integer  "reservation_max"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
   end
 
   add_index "slot_managers", ["tutor_id"], name: "index_slot_managers_on_tutor_id", using: :btree

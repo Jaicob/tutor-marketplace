@@ -11,7 +11,6 @@
 
 
 # Create 4 schools
-
 school_list = [
   [ "University of North Carolina", "Chapel Hill, NC" ],
   [ "University of Georgia", "Athens, GA" ],
@@ -19,47 +18,49 @@ school_list = [
   [ "Clemson University", "Clemson, SC" ]
 ] 
 
+
+# Create a school for each name in the list
 school_list.each do |name, location|
   School.create(name: name, location: location)
 end
 
-# Creates courses for each of the 4 schools
 
+# Creates courses for each of the 4 schools
 course_list = [
-  [1, 0, "101", "Intro to Biology"],
-  [1, 1, "101", "Intro to Chemisty"],
-  [1, 2, "101", "Intro to Math"],
-  [1, 3, "101", "Intro to Computer Science"],
-  [1, 4, "101", "Intro to Physics"],
-  [2, 0, "101", "Intro to Biology"],
-  [2, 1, "101", "Intro to Chemisty"],
-  [2, 2, "101", "Intro to Math"],
-  [2, 3, "101", "Intro to Computer Science"],
-  [2, 4, "101", "Intro to Physics"],
-  [3, 0, "101", "Intro to Biology"],
-  [3, 1, "101", "Intro to Chemisty"],
-  [3, 2, "101", "Intro to Math"],
-  [3, 3, "101", "Intro to Computer Science"],
-  [3, 4, "101", "Intro to Physics"],
-  [4, 0, "101", "Intro to Biology"],
-  [4, 1, "101", "Intro to Chemisty"],
-  [4, 2, "101", "Intro to Math"],
-  [4, 3, "101", "Intro to Computer Science"],
-  [4, 4, "101", "Intro to Physics"]
+  [1, {name: 'Biology', id: 1}, "101", "Intro to Biology (U1)"],
+  [1, {name: 'Chemistry', id: 2}, "101", "Intro to Chemistry (U1)"],
+  [1, {name: 'Math', id: 3}, "101", "Intro to Math (U1)"],
+  [1, {name: 'Computer Science', id: 4}, "101", "Intro to Computer Science (U1)"],
+  [1, {name: 'Physics', id: 5}, "101", "Intro to Physics (U1)"],
+  [2, {name: 'Biology', id: 1}, "101", "Intro to Biology (U2)"],
+  [2, {name: 'Chemistry', id: 2}, "101", "Intro to Chemistry (U2)"],
+  [2, {name: 'Math', id: 3}, "101", "Intro to Math (U2)"],
+  [2, {name: 'Computer Science', id: 4}, "101", "Intro to Computer Science (U2)"],
+  [2, {name: 'Physics', id: 5}, "101", "Intro to Physics (U2)"],
+  [3, {name: 'Biology', id: 1}, "101", "Intro to Biology (U3)"],
+  [3, {name: 'Chemistry', id: 2}, "101", "Intro to Chemistry (U3)"],
+  [3, {name: 'Math', id: 3}, "101", "Intro to Math (U3)"],
+  [3, {name: 'Computer Science', id: 4}, "101", "Intro to Computer Science (U3)"],
+  [3, {name: 'Physics', id: 5}, "101", "Intro to Physics (U3)"],
+  [4, {name: 'Biology', id: 1}, "101", "Intro to Biology (U4)"],
+  [4, {name: 'Chemistry', id: 2}, "101", "Intro to Chemistry (U4)"],
+  [4, {name: 'Math', id: 3}, "101", "Intro to Math (U4)"],
+  [4, {name: 'Computer Science', id: 4}, "101", "Intro to Computer Science (U4)"],
+  [4, {name: 'Physics', id: 5}, "101", "Intro to Physics (U4)"]
 ]
 
+
+# Create a course for each school
 course_list.each do |school_id, subject, call_number, friendly_name|
-  Course.create(school_id: school_id, subject: subject, call_number: call_number, friendly_name: friendly_name)
+  Course.create(school_id: school_id, subject: {name: subject[:name], id: subject[:id]}, call_number: call_number, friendly_name: friendly_name)
 end
 
 
 # Create 20 Devise Users
-
 20.times { User.create!(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, email: Faker::Internet.safe_email, password: 'password', password_confirmation: 'password') }
 
 
 # Create a Tutor profile for each User
-
 User.all.each do |user|
   user.create_tutor(degree: 'B.A.', major: 'Marine Biology', extra_info: Faker::Lorem.sentence, graduation_year: '2018', phone_number: Faker::Number.number(10))
 end
@@ -72,6 +73,20 @@ Tutor.all.each do |tutor|
   tutor.tutor_courses.create(course_id: 3, rate: 35)
   tutor.tutor_courses.create(course_id: 4, rate: 35)
 end
+
+
+# Give the tutors some slot_managers
+Tutor.all.each do |tutor|
+  tutor.slot_managers.create(start_date: Date.new(2015,7,15) , end_date: Date.new(2015,12,15) , start_time: DateTime.new(2015,7,15,12) , end_time: DateTime.new(2015,7,15,16))
+  tutor.slot_managers.create(start_date: Date.new(2001,7,17) , end_date: Date.new(2015,12,17) , start_time: DateTime.new(2015,7,15,16) , end_time: DateTime.new(2015,7,15,20))
+end
+
+# Give the slot_managers some slots
+SlotManager.all.each do |manager|
+  manager.slots.create(start_time: DateTime.now, end_time: DateTime.now + 2.hour)
+end
+
+
 
 # Faker stuff
 # Faker::Name.first_name
