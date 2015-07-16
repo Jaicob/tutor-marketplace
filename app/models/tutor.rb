@@ -23,8 +23,7 @@ class Tutor < ActiveRecord::Base
   belongs_to :user
   has_many :tutor_courses, dependent: :destroy
   has_many :courses, through: :tutor_courses, dependent: :destroy
-  has_many :slot_managers
-  has_many :slots, through: :slot_managers
+  has_many :slots, dependent: :destroy
 
   enum application_status: ['Applied', 'Awaiting Approval', 'Approved']
   enum active_status: ['Inactive', 'Active']

@@ -9,6 +9,7 @@
 #  friendly_name :string
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
+
 class Course < ActiveRecord::Base
   belongs_to :school
   has_many :tutor_courses, dependent: :destroy
@@ -20,9 +21,17 @@ class Course < ActiveRecord::Base
 
   serialize :subject, Hash
 
-
   def subject_number
     @subject_name = self.subject_id
+  end
+
+  def school_name
+    school = School.find(self.school_id)
+    school.name
+  end
+
+  def subject_id
+    Course.subject[self.subject]
   end
 
 end
