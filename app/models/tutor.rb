@@ -76,7 +76,7 @@ class Tutor < ActiveRecord::Base
     end
   end
 
-  def name
+  def full_name
     self.user.full_name
   end
 

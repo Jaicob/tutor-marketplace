@@ -38,18 +38,9 @@ class TutorsController < ApplicationController
 
   def update
     # This updates everything on a tutor object, except active_status which is only editable by Admin users and which is handled in the custom update_active_status action
-    respond_to do |format|
-      if @tutor.update_attributes(tutor_params)
-        format.html { 
-          @tutor.crop_profile_pic(tutor_params)
-          redirect_to dashboard_profile_user_path(current_user) 
-        }
-        format.json { respond_with_bip(@tutor)}
-      else
-        format.html
-        format.json { respond_with_bip(@tutor)}
-      end
-    end
+    @tutor.update(tutor_params)
+    @tutor.crop_profile_pic(tutor_params)
+    redirect_to dashboard_profile_user_path(current_user)
   end
 
   def destroy
