@@ -84,7 +84,7 @@ end
 
 # Give the slot_managers some slots
 SlotManager.all.each do |manager|
-  manager.slots.create(start_time: DateTime.now, end_time: DateTime.now + 2.hour)
+  manager.slots.create(start_time: DateTime.now - 4.hours, end_time: DateTime.now - 2.hour)
 end
 
 

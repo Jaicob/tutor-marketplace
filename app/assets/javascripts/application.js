@@ -19,6 +19,7 @@
 //= require chained/jquery.chained.remote.min
 
 //= require best_in_place
+//= require scheduling
 //= require jquery.Jcrop.min
 //= require turbolinks
 //= require foundation
