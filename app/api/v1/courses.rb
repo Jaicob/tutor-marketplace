@@ -4,7 +4,7 @@ module V1
     include V1::Defaults
 
     params do 
-      requires :id, type: Integer 
+      optional :id, type: Integer 
       optional :school_id, type: Integer
       optional :subject, type: String 
       optional :call_number, type: Integer 
@@ -28,7 +28,7 @@ module V1
         if @course.update_attributes(declared_params)
           return @course
         else
-          return "There was an error updating the tutor."
+          return "There was an error updating the tutor: #{@course.errors.full_messages}"
         end
       end
     end

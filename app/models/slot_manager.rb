@@ -29,6 +29,7 @@ class SlotManager < ActiveRecord::Base
 
   def dates_for_regular_slots
     date = self.start_date
+    puts "START DATE = #{self.start_date}"
     slot_dates = [date]
     while date < end_date
       slot_dates << (date + 7) && date = (date + 7)

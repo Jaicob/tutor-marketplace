@@ -31,3 +31,5 @@ end
 # So the only things to be set are:
 #     start_date = Day that is selected on Full Calendar that will be sent back as start_date
 #
+
+# -remove references to slot_manager

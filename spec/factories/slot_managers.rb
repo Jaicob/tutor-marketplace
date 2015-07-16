@@ -17,12 +17,13 @@
 #
 
 FactoryGirl.define do
-  factory :slot_manager do   
-    start_date    "2015-07-15"
+  factory :slot_manager do
+    tutor   
+    start_date    "2015-07-01"
     end_date      "2015-12-20"
     is_recurring  true
     exclusions    nil
-    start_time    DateTime.now
-    end_time      DateTime.now + 1
+    start_time    "2015-07-01 12:00"
+    end_time      "2015-07-01 14:00"
   end
 end
