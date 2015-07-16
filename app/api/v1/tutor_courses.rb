@@ -3,6 +3,25 @@ module V1
 
     include V1::Defaults
 
+
+      helpers do 
+        def tutor_course
+          TutorCourse.find(params[:id])
+        end
+      end
+
+      params do 
+        optional :id, type: Integer 
+        optional :tutor_id, type: Integer
+        optional :course_id, type: Integer 
+        optional :rate, type: String
+      end
+
+
+    #
+    # => DO WE NEED TUTOR_COURSES ON THEIR OWN EVER? OR CAN THEY ALWAYS BE IN THE CONTEXT OF TUTORS AS BELOW THS RESOURCE BLOCK
+    #
+
     resource :tutor_courses do 
       desc "Returns list of all tutor_courses"
       get do
@@ -11,19 +30,20 @@ module V1
 
       desc "Returns a specific tutor_course"
       get ":id" do 
-        TutorCourse.find(params[:id])
+        tutor_course
       end
 
       desc "Updates a specific tutor_course's attributes"
       put ":id" do
-        @tutor_course = TutorCourse.find(params[:id])
+        @tutor_course = tutor_course
         if @tutor_course.update_attributes(params)
           return @tutor_course
         else
           return "There was an error updating the tutor."
         end
       end
-    end   # End of resource :tutor_courses
+    end
+
 
     resource :tutors do 
       segment "/:tutor_id" do

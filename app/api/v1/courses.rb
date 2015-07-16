@@ -3,13 +3,19 @@ module V1
 
     include V1::Defaults
 
-    params do 
-      optional :id, type: Integer 
-      optional :school_id, type: Integer
-      optional :subject, type: String 
-      optional :call_number, type: Integer 
-      optional :friendly_name, type: String
-    end
+     helpers do 
+        def course
+          Course.find(params[:id])
+        end
+      end
+
+      params do 
+        optional :id, type: Integer 
+        optional :school_id, type: Integer
+        optional :subject, type: String 
+        optional :call_number, type: Integer 
+        optional :friendly_name, type: String
+      end
 
     resource :courses do 
       desc "Returns list of all courses"

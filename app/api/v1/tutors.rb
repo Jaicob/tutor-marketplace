@@ -3,13 +3,29 @@ module V1
 
     include V1::Defaults
 
-    resource :tutors do 
-
       helpers do 
         def tutor
           Tutor.find(params[:id])
         end
       end
+
+      params do 
+        optional  :id,                 type: Integer 
+        optional  :user_id,            type: Integer    
+        optional  :rating,             type: Integer  
+        optional  :application_status, type: String
+        optional  :active_status,      type: Integer
+        optional  :birthdate,          type: String
+        optional  :degree,             type: Integer
+        optional  :major,              type: Integer
+        optional  :extra_info,         type: Integer
+        optional  :graduation_year,    type: String
+        optional  :phone_number,       type: String
+        optional  :profile_pic,        type: String
+        optional  :transcript,         type: String
+      end
+
+    resource :tutors do 
 
       desc "Returns list of all tutors"
       get do
