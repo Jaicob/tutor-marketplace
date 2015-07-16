@@ -3,7 +3,7 @@
 # Table name: slots
 #
 #  id              :integer          not null, primary key
-#  slot_manager_id :integer
+#  tutor_id        :integer
 #  status          :integer          default(0)
 #  start_time      :datetime
 #  end_time        :datetime

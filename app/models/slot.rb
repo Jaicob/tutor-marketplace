@@ -3,7 +3,7 @@
 # Table name: slots
 #
 #  id              :integer          not null, primary key
-#  slot_manager_id :integer
+#  tutor_id        :integer
 #  status          :integer          default(0)
 #  start_time      :datetime
 #  end_time        :datetime
@@ -14,9 +14,8 @@
 #
 
 class Slot < ActiveRecord::Base
-  belongs_to :slot_manager
+  belongs_to :tutor
 
-  validates :slot_manager_id, presence: true
   validates :start_time, presence: true
   validates :end_time, presence: true
 
