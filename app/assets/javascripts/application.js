@@ -23,8 +23,6 @@
 //= require turbolinks
 //= require foundation
 //= require_tree ./dashboard
-//= require users.js
-//= require users.js.coffee
 
 $(function() {
   $(document).foundation();

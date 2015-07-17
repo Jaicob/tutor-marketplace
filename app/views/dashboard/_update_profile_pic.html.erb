@@ -61,7 +61,8 @@
 <script type="text/javascript">
   jQuery('#cropbox').Jcrop({
     onChange: showCoords,
-    onSelect: showCoords
+    onSelect: showCoords,
+    aspectRatio: 1/1
   });
 
   // Simple event handler, called from onChange and onSelect
@@ -78,7 +79,7 @@
         <div class="text-center">
           <%= form_for @tutor do |f| %>
             <% %w[x y w h].each do |attribute| %>
-              <%= f.text_field "crop_#{attribute}" %>
+              <%= f.hidden_field "crop_#{attribute}" %>
             <% end %>
             <div class="actions">
               <%= f.submit "Crop", class: 'button radius expand' %>
