@@ -11,12 +11,12 @@
 // about supported directives.
 //
 
-//= require jquery/dist/jquery.min
-//= require jquery-ui/jquery-ui.min
-//= require jquery-ui/ui/draggable
+//= require jquery
+//= require jquery-ui
+//= require jquery-ujs
 //= require moment
 //= require fullcalendar
-//= require chained/jquery.chained.remote.min
+//= require chained
 //= require Jcrop/js/Jcrop.min
 
 //= require best_in_place

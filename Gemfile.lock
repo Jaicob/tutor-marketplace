@@ -303,7 +303,6 @@ DEPENDENCIES
   carrierwave (~> 0.10)!
   ci_reporter (~> 2.0)!
   ci_reporter_rspec (~> 1.0)!
-  coffee-rails!
   database_cleaner (~> 1.4)!
   devise (~> 3.5)!
   devise_invitable (~> 1.5)!
