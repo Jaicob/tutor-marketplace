@@ -17,7 +17,7 @@ FactoryGirl.define do
   sequence(:subject) { |n| "#{subjects[n]}" }
 
   factory :course do
-    subject
+    subject 'CHEM'
     call_number 101
     friendly_name "Intro to Chemistry"
     school
@@ -27,7 +27,7 @@ FactoryGirl.define do
     end
 
     factory :second_course do
-      subject 2 
+      subject 2
       call_number 202
       friendly_name "Cellular Biology"
       association :school, factory: :second_school

@@ -5,7 +5,7 @@
 
 module DashboardNavHelper
 
-  def show_dashboard_nav
+  def generate_dashboard_nav_links
     # user must be signed in to view dashbar pages
     return false unless user_signed_in?
       dashboard_link          = dashboard_home_user_path(current_user)

@@ -1,4 +1,4 @@
-describe "Course API" do 
+describe "Course endpoints" do 
   let(:course) { create(:course) }
 
   it "Returns all courses" do
@@ -15,6 +15,7 @@ describe "Course API" do
   end
 
   it "Updates a specific course's attributes" do 
+    skip
   end
 
 end

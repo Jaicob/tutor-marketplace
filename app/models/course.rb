@@ -21,17 +21,9 @@ class Course < ActiveRecord::Base
 
   serialize :subject, Hash
 
-  def subject_number
-    @subject_name = self.subject_id
-  end
-
   def school_name
     school = School.find(self.school_id)
     school.name
-  end
-
-  def self.subject_id
-    Course.subject[self.subject]
   end
 
 end

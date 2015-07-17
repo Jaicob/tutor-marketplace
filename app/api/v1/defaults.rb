@@ -22,6 +22,13 @@ module V1
           error_response(message: "Internal server error: #{e}", status: 500)
         end
       end
+
+      helpers do 
+        def declared_params
+          declared(params, include_missing: false)
+        end
+      end
+
     end
   end
 end

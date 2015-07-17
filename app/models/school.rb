@@ -18,8 +18,8 @@ class School < ActiveRecord::Base
   def subjects
     self.courses.map { |course|
       {
-        name:   course.subject,
-        id:     course.subject_id
+        name: course.subject[:name],
+        id:   course.subject[:id]
       }
     }.uniq { |course| course[:name] }
   end
