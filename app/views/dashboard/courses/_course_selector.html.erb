@@ -22,20 +22,6 @@
 $(document).ready(function(){
   api = "/api/v1"
 
-  var validate = function(){
-    $("#rate").bind("change", function(){
-      this.value = this.value.replace(/[^0-9.]/g, '');
-    }.bind(this))
-
-    if($("#add_course_button")){
-      if ($("#course").val() != "" && $("#rate").val() != "") {
-        $("#add_course_button").attr("disabled", "false");
-      } else {
-        $("#add_course_button").attr("disabled", "true");
-      };
-    }
-  };
-
   $("#subject").remoteChainedTo({
     parents: "#school",
     url: function(){ return api + "/schools/" + $("#school").val() + "/subjects/" },
@@ -43,11 +29,6 @@ $(document).ready(function(){
       return data.map(function(subject){
           return [subject.id, subject.name];
       });
-    },
-    callback: function(){
-      console.log("subject callback");
-      $("#subject").attr("disabled", "false");
-      validate();
     }
   });
 
@@ -58,15 +39,8 @@ $(document).ready(function(){
       return data.map(function(course){
         return [course.id, course.call_number + " (" + course.friendly_name + ")"];
       });
-    },
-    callback: function(){
-      console.log("course callback");
-      $("#course").attr("disabled", "false");
-      validate();
     }
   });
-
-  $("#add_course_button").bind("change", validate);
 
 })
 </script>

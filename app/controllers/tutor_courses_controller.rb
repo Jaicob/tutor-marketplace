@@ -6,9 +6,9 @@ class TutorCoursesController < ApplicationController
 
   def create
     @tutor_course = TutorCourse.create(tutor_course_params)
+    @tutor_course.set_tutor_and_course_id(@tutor_course, params)
 
     if @tutor_course.save
-      # @tutor_course.set_tutor_and_course_id(@tutor_course, params)
       redirect_to dashboard_courses_user_path(current_user)
     else
       flash[:notice] = "Tutor course was not created. Please try again."
