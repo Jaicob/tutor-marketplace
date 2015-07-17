@@ -58,13 +58,27 @@
         </div>
       </div>
     </div>
+<script type="text/javascript">
+  jQuery('#cropbox').Jcrop({
+    onChange: showCoords,
+    onSelect: showCoords
+  });
 
+  // Simple event handler, called from onChange and onSelect
+  // event handlers, as per the Jcrop invocation above
+  function showCoords(c){
+    jQuery('#tutor_crop_x').val(c.x);
+    jQuery('#tutor_crop_y').val(c.y);
+    jQuery('#tutor_crop_w').val(c.w);
+    jQuery('#tutor_crop_h').val(c.h);
+  };
+</script>
     <div class="row">
       <div class="small-6 small-centered columns">
         <div class="text-center">
           <%= form_for @tutor do |f| %>
             <% %w[x y w h].each do |attribute| %>
-              <%= f.hidden_field "crop_#{attribute}" %>
+              <%= f.text_field "crop_#{attribute}" %>
             <% end %>
             <div class="actions">
               <%= f.submit "Crop", class: 'button radius expand' %>

@@ -1,3 +1,4 @@
 asset "jquery-ui"
 asset "chained", github: "anurag-banerjee/jquery_chained"
 asset "fullcalendar"
+asset "Jcrop"
