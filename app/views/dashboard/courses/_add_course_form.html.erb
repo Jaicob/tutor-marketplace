@@ -1,7 +1,7 @@
 <div class="row">
   <%= form_for @tutor_course do |f| %>
     <%= render 'dashboard/courses/course_selector' %>
-    <%= f.submit 'Add course', class: 'button radius success tiny right', style: 'margin-left: 20px; margin-right: 20px' %>
+    <%= f.submit 'Add course', class: 'button radius success tiny right', style: 'margin-left: 20px; margin-right: 20px', id: 'add_course_button' %>
     <%= hidden_field_tag(:tutor_id, value = @tutor.id) %>
   <% end %>
 </div>
