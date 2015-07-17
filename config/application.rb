@@ -55,7 +55,7 @@ module WebApp
     # config.i18n.default_locale = :de
 
     # For Foundation 5
-    config.assets.precompile += %w( vendor/modernizr )
+    config.assets.precompile += %w( vendor/modernizr)
 
     # Delegates front-end dependency management to Bower
     config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components')
