@@ -15,6 +15,7 @@ class School < ActiveRecord::Base
   validates :name, presence: true, uniqueness: true
   validates :location, presence: true
 
+  # This method is necessary for populating the drop-down menu of subjects in the course selector forms
   def subjects
     self.courses.map { |course|
       {

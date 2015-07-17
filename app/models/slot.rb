@@ -16,7 +16,7 @@
 class Slot < ActiveRecord::Base
   belongs_to :tutor
 
-  # validates :tutor_id, presence: true
+  validates :tutor_id, presence: true
   validates :start_time, presence: true
   validates :end_time, presence: true
 

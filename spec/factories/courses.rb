@@ -12,14 +12,12 @@
 
 FactoryGirl.define do
 
-  subjects = [:chemisty, :biology, :math, :physics, :computer_science]
-
-  sequence(:subject) { |n| "#{subjects[n]}" }
+  subject_hash = {name: 'Chemistry', id: 1}
 
   factory :course do
-    subject 'CHEM'
-    call_number 101
-    friendly_name "Intro to Chemistry"
+    subject         subject_hash
+    call_number     101
+    friendly_name   "Intro to Chemistry"
     school
 
     factory :invalid_course do

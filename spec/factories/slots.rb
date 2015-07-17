@@ -16,7 +16,7 @@
 FactoryGirl.define do
   factory :slot do
     tutor
-    status 1
+    status 0
     start_time "2015-07-14 15:59:52"
     end_time "2015-07-14 15:59:52"
     reservation_min 1
