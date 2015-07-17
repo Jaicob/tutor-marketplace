@@ -34,7 +34,7 @@ feature "A tutor can edit their settings" do
     expect(page.body).to have_selector "#tutor_active_status"
     expect(page.body).to have_selector "input[name=\"commit\"]"
     within 'form.edit_tutor' do
-      fill_in("#tutor_birthdate")  , with: '2000-01-30'
+      fill_in '#tutor_birthdate'   , with: '2000-01-30'
       fill_in '#tutor_phone_number', with: '1234567890'
       find("#tutor_active_status option[value='Inactive']").click
       find('input[name="commit"]').click

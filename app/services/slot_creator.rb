@@ -4,8 +4,8 @@ class SlotCreator
     @tutor = Tutor.find(params[:tutor_id])
     @start_date = params[:start_date].to_date
     @end_date = params[:end_date].to_date
-    @start_time = params[:start_time].to_date
-    @end_time = params[:end_time].to_date
+    @start_time = params[:start_time].to_datetime
+    @end_time = params[:end_time].to_datetime
   end 
 
   def create_slots

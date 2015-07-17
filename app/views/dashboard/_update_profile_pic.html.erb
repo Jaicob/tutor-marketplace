@@ -58,7 +58,22 @@
         </div>
       </div>
     </div>
+<script type="text/javascript">
+  jQuery('#cropbox').Jcrop({
+    onChange: showCoords,
+    onSelect: showCoords,
+    aspectRatio: 1/1
+  });
 
+  // Simple event handler, called from onChange and onSelect
+  // event handlers, as per the Jcrop invocation above
+  function showCoords(c){
+    jQuery('#tutor_crop_x').val(c.x);
+    jQuery('#tutor_crop_y').val(c.y);
+    jQuery('#tutor_crop_w').val(c.w);
+    jQuery('#tutor_crop_h').val(c.h);
+  };
+</script>
     <div class="row">
       <div class="small-6 small-centered columns">
         <div class="text-center">
