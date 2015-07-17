@@ -11,7 +11,7 @@ class TutorCoursesController < ApplicationController
     if @tutor_course.save
       redirect_to dashboard_courses_user_path(current_user)
     else
-      flash[:error] = "Tutor Course was not created: #{@tutor_course.errors.full_messages}"
+      flash[:notice] = "Tutor course was not created. Please try again."
       redirect_to :back
     end
   end

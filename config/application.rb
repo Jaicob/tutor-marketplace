@@ -26,6 +26,7 @@ module WebApp
 
     # This tells Rails to include our Carrierwave uploaders for file attachments
     config.autoload_paths += %W(#{config.root}/app/uploaders)
+    config.autoload_paths += %W(#{config.root}/app/services)
 
     # Auto-load API and its subdirectories
     config.paths.add 'app/api', glob: '**/*.rb'
@@ -55,7 +56,7 @@ module WebApp
     # config.i18n.default_locale = :de
 
     # For Foundation 5
-    config.assets.precompile += %w( vendor/modernizr )
+    config.assets.precompile += %w( vendor/modernizr)
 
     # Delegates front-end dependency management to Bower
     config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components')

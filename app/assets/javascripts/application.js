@@ -17,12 +17,12 @@
 //= require moment
 //= require fullcalendar
 //= require chained
+//= require Jcrop/js/Jcrop.min
 
 //= require best_in_place
-//= require jquery.Jcrop.min
 //= require turbolinks
 //= require foundation
-//= require_tree .
+//= require_tree ./dashboard
 
 $(function() {
   $(document).foundation();
