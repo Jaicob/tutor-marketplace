@@ -38,28 +38,29 @@ $(document).ready(function(){
     data_formatter: function(data){
       return data.map(function(course){
         return [course.id, course.call_number + " (" + course.friendly_name + ")"];
-      })
+      });
     }
   });
+
 })
 </script>
 <div id="add_course_box">
   <div class="medium-3 columns">
-    <select name="course[school_id]" id="school">
-      <option disabled="true" selected="true">School</option>
+    <select name="course[school_id]" id="school" required="true">
+      <option disabled="true" selected="true" value="">School</option>
       <% School.all.each do |school| %>
         <option value="<%= school.id %>"><%= school.name %></option>
       <% end %>
     </select>
   </div>
   <div class="medium-3 columns">
-    <select name="course[subject_id]" id="subject">
-      <option disabled="true" selected="true">Subject</option>
+    <select name="course[subject_id]" id="subject" required="true">
+      <option disabled="true" selected="true" value="">Subject</option>
     </select>
   </div>
   <div class="medium-3 columns">
-    <select name="course[course_id]" id="course">
-      <option disabled="true" selected="true">Course</option>
+    <select name="course[course_id]" id="course" required="true">
+      <option disabled="true" selected="true" value="">Course</option>
     </select>
   </div>
   <div class="medium-3 columns">
@@ -68,7 +69,7 @@ $(document).ready(function(){
         <span class="prefix">$</span>
       </div>
       <div class="small-7 medium-4 large-5 columns">
-        <input name="tutor_course[rate]" id="rate" type="number" placeholder="25" style="text-align: center; border-right-width: 0px;">
+        <input name="tutor_course[rate]" id="rate" type="number" required="true" min="1" step="1" pattern="\d*" placeholder="25" style="text-align: center; border-right-width: 0px;">
       </div>
       <div class="small-3 medium-6 large-5 columns">
         <span class="postfix">per hour</span>

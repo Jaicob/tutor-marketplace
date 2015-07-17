@@ -6,6 +6,12 @@ feature "A tutor can edit their profile" do
 
   before :each do
     sign_in(tutor.user.email, tutor.user.password)
+  end
+
+  scenario "a tutor can access the edit profile page" do
+    visit "/#{tutor.user.slug}/dashboard/profile"
+    click_button "Edit"
+    sign_in(tutor.user.email, tutor.user.password)
     visit "/#{tutor.user.slug}/dashboard/profile"
   end
 
