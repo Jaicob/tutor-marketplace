@@ -16,7 +16,7 @@
 //= require jquery-ujs
 //= require moment
 //= require fullcalendar
-//= require chained
+//= require chained/jquery.chained.remote.min
 //= require Jcrop/js/Jcrop.min
 
 //= require best_in_place
