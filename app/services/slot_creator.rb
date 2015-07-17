@@ -10,12 +10,14 @@ class SlotCreator
 
   def create_slots
     date = @start_date
+    slots = []
     while date < @end_date
-      @tutor.slots.create(start_time: @start_time, end_time: @end_time)
+      slots << @tutor.slots.create(start_time: @start_time, end_time: @end_time)
       date = date + 7
       @start_time = @start_time + 7
       @end_time = @end_time + 7
     end
+    slots #AKA Time_Caves
   end
 
   # slot_date_range = @start_date .. @end_date.range.step(7)
