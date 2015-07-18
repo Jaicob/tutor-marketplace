@@ -11,7 +11,7 @@ var formatDataAsEvent = function( eventData ) {
 }
 
 var eventSource = {
-  url: '/api/v1/tutors/1/slots.json',
+  url: '/api/v1/tutors/64/slots.json',
   eventDataTransform: formatDataAsEvent,
   color: 'yellow',   // a non-ajax option
   textColor: 'black' // a non-ajax option
@@ -22,21 +22,21 @@ var droppedEvent = function(date, jsEvent, ui ){
 }
 
 var beginSlotUpdate = function( event, jsEvent, ui, view) { 
-  origninalStartTime = event.start.toDate();
-  originalEndTime = event.end.toDate();
-  console.log("DATE",event.end.toDate());
+  origninalStartTime = event.start.format('YYYY-MM-DD HH:mm:ss');
+  originalEndTime = event.end.format('YYYY-MM-DD HH:mm:ss');
+  console.log("DATE",event.end.format('YYYY-MM-DD HH:mm:ss'));
 }
 
 var updateSlotDuration = function( event, jsEvent, ui, view) {
-  console.log("NEW DATE",event.end.toDate());
+  console.log("NEW DATE",event.end.format('YYYY-MM-DD HH:mm:ss'));
   var jqxhr = $.ajax({
   type: "POST",
-  url: '/api/v1/tutors/1/slots/all', 
+  url: '/api/v1/tutors/64/slots/all', 
   data: {
     start_time: origninalStartTime,
     end_time: originalEndTime,
-    new_start_time: event.start.toDate(),
-    new_end_time: event.end.toDate()
+    new_start_time: event.start.format('YYYY-MM-DD HH:mm:ss'),
+    new_end_time: event.end.format('YYYY-MM-DD HH:mm:ss')
   },
   dataType: "json",
   success: function(data){

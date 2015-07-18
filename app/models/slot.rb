@@ -14,8 +14,7 @@
 #
 
 class Slot < ActiveRecord::Base
-   before_validation :update_week_times
-
+  after_initialize :update_week_times
   belongs_to :tutor
 
   # validates :tutor_id, presence: true
