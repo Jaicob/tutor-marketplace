@@ -39,11 +39,11 @@ class Tutor < ActiveRecord::Base
   validates :extra_info, presence: true
   # Cannot add validations for other attributes because Tutor sign-up form creates Tutor before they are asked for. We should create a method that checks if a tutor profile is complete before allowing them to access some functionalities (what is required for a tutor to start working and taking appointments?)
 
-  def set_first_tutor_course(tutor, params)
-    course_id = params[:course][:course_id]
-    rate = params[:tutor_course][:rate]
-    tutor.tutor_courses.create(tutor_id: tutor.id, course_id: course_id, rate: rate)
-  end
+  # def set_first_tutor_course(tutor, params)
+  #   course_id = params[:course][:course_id]
+  #   rate = params[:tutor_course][:rate]
+  #   tutor.tutor_courses.create(tutor_id: tutor.id, course_id: course_id, rate: rate)
+  # end
 
   def crop_profile_pic(tutor_params)
     profile_pic.recreate_versions! if tutor_params[:crop_x]

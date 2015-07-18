@@ -18,13 +18,13 @@
       <h4>2) Tell us one thing you want your students to know about you:</h4>
 
         <%= f.label :extra_info, "Qualifications, noteworthy experiences, goals, fun facts etc. (Students will see this on your tutor profile)" %>
-        <%= f.text_field :extra_info %>
+        <%= f.text_field :extra_info, :required => true %>
     </fieldset>
 
     <fieldset>
       <h4>3) Upload your unofficial transcript</h4>
 
-        <%= f.file_field :transcript %>
+        <%= f.file_field :transcript, :required => true %>
 
     </fieldset>
 

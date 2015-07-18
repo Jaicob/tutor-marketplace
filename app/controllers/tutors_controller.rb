@@ -22,7 +22,8 @@ class TutorsController < ApplicationController
 
     if @tutor.save
       # The method below only creates a tutor_course for the initial sign-up, all other CRUD operations relating to tutor_courses go through the TutorCoursesController
-      @tutor.set_first_tutor_course(@tutor, params)
+      @tutor.tutor_courses.create(tutor_params)
+      # @tutor.set_first_tutor_course(@tutor, params)
       redirect_to dashboard_home_user_path(current_user)
     else
       flash[:alert] = "Tutor account was not created. Please fill in all fields and attach your unofficial transcript."
@@ -118,7 +119,7 @@ class TutorsController < ApplicationController
   private
 
     def tutor_params
-      params.require(:tutor).permit(:rating, :application_status, :birthdate, :degree, :major, :extra_info, :graduation_year, :phone_number, :profile_pic, :transcript, :active_status, :crop_x, :crop_y, :crop_w, :crop_h)
+      params.require(:tutor).permit(:rating, :application_status, :birthdate, :degree, :major, :extra_info, :graduation_year, :phone_number, :profile_pic, :transcript, :active_status, :crop_x, :crop_y, :crop_w, :crop_h, course: [:course_id], tutor_course: [:rate])
     end
 
     def set_tutor_for_admin_or_visitor_sign_up

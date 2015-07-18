@@ -95,7 +95,7 @@ Rails.application.routes.draw do
       get 'visitor_sign_up'
       post 'create_tutor_course'
       put 'change_profile_pic'
-      patch 'destroy_by_admin'
+      delete 'destroy_by_admin'
     end
     collection do
       get 'visitor_new'

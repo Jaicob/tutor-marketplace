@@ -21,7 +21,9 @@ class Slot < ActiveRecord::Base
   validates :start_time, presence: true
   validates :end_time, presence: true
 
-  # Used to calculate the week_times TODO figure what callback to place this, its being called manually right now
+  enum status: ['Open', 'Blocked']
+
+ # Used to calculate the week_times TODO figure what callback to place this, its being called manually right now
   def update_week_times
     update_attribute(:start_week_time, start_time.strftime('%a %T'))
     update_attribute(:end_week_time, end_time.strftime('%a %T'))

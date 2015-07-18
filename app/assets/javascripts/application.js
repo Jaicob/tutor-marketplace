@@ -11,20 +11,18 @@
 // about supported directives.
 //
 
-//= require jquery/dist/jquery.min
-//= require jquery-ui/jquery-ui.min
-//= require jquery-ui/ui/draggable
+//= require jquery
+//= require jquery-ui
+//= require jquery-ujs
 //= require moment
 //= require fullcalendar
 //= require chained/jquery.chained.remote.min
+//= require Jcrop/js/Jcrop.min
 
 //= require best_in_place
-//= require jquery.Jcrop.min
 //= require turbolinks
 //= require foundation
 //= require_tree ./dashboard
-//= require users.js
-//= require users.js.coffee
 
 $(function() {
   $(document).foundation();
