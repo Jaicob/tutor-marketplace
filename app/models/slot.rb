@@ -14,47 +14,17 @@
 #
 
 class Slot < ActiveRecord::Base
-  after_initialize :update_week_times
+  after_initialize :update_week_times # Set the week_times intially
   belongs_to :tutor
 
   # validates :tutor_id, presence: true
   validates :start_time, presence: true
   validates :end_time, presence: true
 
-  # def calc_weekday 
-  # 	self.start_time.strftime('%a')
-  # end
-
-  # def calc_start_time
-  # 	self.start_time.strftime('%T')
-  # end
-
-  # def calc_end_time
-  # 	self.end_time.strftime('%T')
-  # end
-
+  # Used to calculate the week_times TODO figure what callback to place this, its being called manually right now
   def update_week_times
     update_attribute(:start_week_time, start_time.strftime('%a %T'))
     update_attribute(:end_week_time, end_time.strftime('%a %T'))
   end
 
-  # def start_week_time
-  # 	# update_attribute(:start_week_time, start_time.strftime('%a %T'))
-  #   start_time.strftime('%a %T')
-  # end
-
-  # def end_week_time 
-  #   # update_attribute(:end_week_time, end_time.strftime('%a %T'))
-  #   end_time.strftime('%a %T')
-  # end
-
-  # scope :weekday, calc_weekday()
-  # scope :s_time, calc_start_time()
-  # scope :e_time, calc_end_time()
-
 end
-
-
-
-
-# tutor.slots.create(start_time: "2015-07-16 12:00", end_time: "2015-07-16 14:00")

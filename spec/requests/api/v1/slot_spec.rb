@@ -1,7 +1,8 @@
 describe "Slot endpoints" do 
   let(:slot)  { create(:slot) }
-  let(:slots) { create_list(:slot, 4) }
+  
   let(:tutor) { create(:tutor) }
+  let(:slots) { 4.times { Slot.new(tutor_id: tutor.id, start_time: "2015-08-14 12:00:00", end_time: "2015-08-14 13:00:00") } }
 
   it "Returns all of a tutor's slot" do
     slot
