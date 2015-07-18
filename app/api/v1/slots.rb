@@ -23,6 +23,8 @@ module V1
         optional  :tutor_id,        type: Integer
         optional  :start_date,      type: String
         optional  :end_date,        type: String
+        optional  :new_start_time,      type: String
+        optional  :new_end_time,        type: String
       end
       
 
@@ -53,7 +55,7 @@ module V1
 
           # Update all slots for a range
           desc "Updates all slots for a tutor" 
-          post do
+          post "all" do
             slot_manager = SlotManager.new(declared_params) 
             @slots = slot_manager.update_slots 
             if @slots 

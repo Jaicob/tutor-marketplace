@@ -1,3 +1,5 @@
+var origninalStartTime;
+var originalEndTime;
 
 var formatDataAsEvent = function( eventData ) {
   return {
@@ -19,17 +21,27 @@ var droppedEvent = function(date, jsEvent, ui ){
   alert("add",date, jsEvent, ui);
 }
 
+var beginSlotUpdate = function( event, jsEvent, ui, view) { 
+  origninalStartTime = event.start.toDate();
+  originalEndTime = event.end.toDate();
+  console.log("DATE",event.end.toDate());
+}
+
 var updateSlotDuration = function( event, jsEvent, ui, view) {
+  console.log("NEW DATE",event.end.toDate());
   var jqxhr = $.ajax({
-  type: "PATCH",
-  url: '/api/v1/tutors/1/slots/' + event.slot_id + '.json', //PATCH /api/v1/tutors/{tutor_id}/slots/{id}.{format}
+  type: "POST",
+  url: '/api/v1/tutors/1/slots/all', 
   data: {
-    start_time: event.start._i,
-    end_time: event.end._i
+    start_time: origninalStartTime,
+    end_time: originalEndTime,
+    new_start_time: event.start.toDate(),
+    new_end_time: event.end.toDate()
   },
   dataType: "json",
   success: function(data){
     alert('success');
+    $('#calendar').fullCalendar( 'refetchEvents' )
   },
   error: function(data, status, blah){
     alert('failure',data,status,blah);
@@ -40,7 +52,7 @@ var updateSlotDuration = function( event, jsEvent, ui, view) {
 }
 
 var addSlot = function(event){
-  request = $.post("/api/v1/tutors/" + tutor_id + "/schedule_blocks", {
+  request = $.post("/api/v1/tutors/" + tutor_id + "/slots", {
     "start_time" : event.start.format("HH:mm"),
     "end_time" : event.start.add(1, "hours").format("HH:mm"),
     "date" : event.start.format("YYYY-MM-DD"),
@@ -102,7 +114,8 @@ $(document).ready(function() {
       editable: true,
       droppable: true, // this allows things to be dropped onto the calendar
       drop: droppedEvent,
-      eventResizeStop: updateSlotDuration
+      eventResizeStart: beginSlotUpdate,
+      eventResize: updateSlotDuration
     });
 
   });

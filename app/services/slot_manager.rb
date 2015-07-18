@@ -1,12 +1,14 @@
 class SlotManager
-
+  # DateTime.now.strftime("%a %T") formatted date
   # sm = SlotManager.new(tutor: 1, start_time: )
   def initialize(params)
-    @tutor = params[:tutor_id] 
+    @tutor = Tutor.find(params[:tutor_id]) 
     # @start_date = params[:start_date] # May not need this and end_date 
     # @end_date = params[:end_date]
-    @start_time = params[:start_time]
-    @end_time = params[:end_time]
+    @start_time = params[:start_time].to_datetime
+    @end_time = params[:end_time].to_datetime
+    @new_start_time = params[:new_start_time].to_datetime
+    @new_end_time = params[:new_end_time].to_datetime
   end
 
   # Lazy load the slots for the range
@@ -17,7 +19,7 @@ class SlotManager
   # Load slots and update all that match the range
   def update_slots
     get_slots_for_range
-    @slots.update_all(start_time: @start_time, end_time: @end_time)
+    @slots.update_all(start_time: @new_start_time, end_time: @new_end_time)
   end
 
   # Destroy all sots that match the range

@@ -26,7 +26,7 @@ describe "Slot endpoints" do
 
   it "Update all slots for tutor in a range" do 
     slots
-    post "/api/v1/tutors/#{slots[0].tutor.id}/slots", attributes_for(:many_slots)
+    post "/api/v1/tutors/#{slots[0].tutor.id}/slots/all", attributes_for(:many_slots)
     expect(response).to be_success
     expect(json.first["end_time"]).to eq("2015-08-14T12:00:00.000Z") 
     expect(json.last["end_time"]).to eq("2015-09-11T12:00:00.000Z")
