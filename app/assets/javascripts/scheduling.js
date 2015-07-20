@@ -17,18 +17,12 @@ var eventSource = {
   textColor: 'black' // a non-ajax option
 }
 
-var droppedEvent = function(date, jsEvent, ui ){
-  alert("add",date, jsEvent, ui);
-}
-
 var beginSlotUpdate = function( event, jsEvent, ui, view) { 
   origninalStartTime = event.start.format('YYYY-MM-DD HH:mm:ss');
   originalEndTime = event.end.format('YYYY-MM-DD HH:mm:ss');
-  console.log("DATE",event.end.format('YYYY-MM-DD HH:mm:ss'));
 }
 
 var updateSlotDuration = function( event, jsEvent, ui, view) {
-  console.log("NEW DATE",event.end.format('YYYY-MM-DD HH:mm:ss'));
   var jqxhr = $.ajax({
   type: "POST",
   url: '/api/v1/tutors/64/slots/all', 
@@ -51,27 +45,29 @@ var updateSlotDuration = function( event, jsEvent, ui, view) {
   console.log("update",event, jsEvent, ui, view)
 }
 
-var addSlot = function(event){
-  request = $.post("/api/v1/tutors/" + tutor_id + "/slots", {
-    "start_time" : event.start.format("HH:mm"),
-    "end_time" : event.start.add(1, "hours").format("HH:mm"),
-    "date" : event.start.format("YYYY-MM-DD"),
-    "tutor_id" : tutor_id,
+var addSlot = function(event, jsEvent, ui ){
+  request = $.post("/api/v1/tutors/64/slots", {
+    start_time : event.start.format('YYYY-MM-DD HH:mm:ss'),
+    end_time : event.end.format('YYYY-MM-DD HH:mm:ss'),
+    start_date: event.start.format('YYYY-MM-DD HH:mm:ss'),
+    end_date: event.start.format('YYYY-MM-DD HH:mm:ss')
   })
   request.success(function(data){
     alert("Success!")
+    console.log(data);
   });
-  request.error(function(){
+  request.error(function(data){
     alert("Error!")
+    console.log(data);
   })
 }
 
 $(document).ready(function() {
 
-    /* initialize the external events
-    -----------------------------------------------------------------*/
+    /*
+     * Initialize the external events
+     */
     $('.fc-event').each(function() {
-
       // store data so the calendar knows to render an event upon drop
       $(this).data('event', {
         title: $.trim($(this).text()), // use the element's text as the event title
@@ -84,27 +80,24 @@ $(document).ready(function() {
         revert: true,      // will cause the event to go back to its
         revertDuration: 0  //  original position after the drag
       });
-
     });
 
-
-    /* initialize the calendar
-    -----------------------------------------------------------------*/
+    /* 
+     * Initialize the calendar
+     */
     $('#calendar').fullCalendar({
-      eventSources:[eventSource], //[{url: '/api/v1/tutors/1/slots.json', eventDataTransform: formatDataAsEvent}],
+      eventSources:[eventSource],
       slotEventOverlap: false,
       allDaySlot: false,
-      minTime: "6:00:00",
-      maxTime: "22:00:00",
+      forceEventDuration: true,
+      minTime: "0:00:00",
+      maxTime: "24:00:00",
       defaultTimedEventDuration: "1:00:00",
       height: "auto",
       businessHours: {
           start: '10:00', // a start time (10am in this example)
           end: '10:00', // an end time (6pm in this example)
-
-          dow: [ 0, 1, 2, 3, 4, 5, 6 ]
-          // days of week. an array of zero-based day of week integers (0=Sunday)
-          // (Monday-Thursday in this example)
+          dow: [ 0, 1, 2, 3, 4, 5, 6 ]  // days of week. an array of zero-based day of week integers (0=Sunday)
       },
       header: {
         left: 'prev,next today',
@@ -112,8 +105,8 @@ $(document).ready(function() {
       },
       defaultView: 'agendaWeek',
       editable: true,
-      droppable: true, // this allows things to be dropped onto the calendar
-      drop: droppedEvent,
+      droppable: true, 
+      eventReceive : addSlot,
       eventResizeStart: beginSlotUpdate,
       eventResize: updateSlotDuration
     });
