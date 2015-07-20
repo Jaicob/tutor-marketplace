@@ -26,7 +26,7 @@ FactoryGirl.define do
       location "Chapel Hill, NC"
     end
 
-    factory :school_with_courses do 
+    factory :school_with_two_courses do 
       after(:create) do |school|
         create_list(:course, 2, school: school)
       end
