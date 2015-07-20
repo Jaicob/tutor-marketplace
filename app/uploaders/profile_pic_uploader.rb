@@ -38,16 +38,16 @@ class ProfilePicUploader < CarrierWave::Uploader::Base
   # Create different versions of your uploaded files:
   version :thumb do
     process :crop
-    process :resize_to_limit => [200, 200]
+    process :resize_to_limit => [375, 375]
   end
 
   version :large do 
-    process :resize_to_limit => [500, 500]
+    process :resize_to_limit => [800, 800]
   end
   
   def crop
     if model.crop_x.present?
-      resize_to_limit(500, 500)
+      resize_to_limit(800, 800)
       manipulate! do |img|
         x = model.crop_x.to_i
         y = model.crop_y.to_i

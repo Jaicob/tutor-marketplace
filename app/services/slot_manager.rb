@@ -14,6 +14,10 @@ class SlotManager
 
   end
 
+  def update_slot(params)
+    
+  end
+
   def destroy_slots
   end
 

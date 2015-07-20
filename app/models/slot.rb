@@ -20,7 +20,6 @@ class Slot < ActiveRecord::Base
   validates :start_time, presence: true
   validates :end_time, presence: true
 
+  enum status: ['Open', 'Blocked']
+
 end
-
-
-# tutor.slots.create(start_time: "2015-07-16 12:00", end_time: "2015-07-16 14:00")
