@@ -1,12 +1,20 @@
 <%= javascript_include_tag "scheduling.js" %>
 
+
 <div class="row">
   <div class="medium-12 columns">
     <h1>Your Schedule</h1>
     <h3 class="subheader">Drag from availability to create your schedule.</h3>
   </div>
 </div>
-<div class="row">
+
+<!-- '/api/v1/tutors/64/slots.json' -->
+<!-- '/api/v1/tutors/64/slots/all' -->
+<!-- "/api/v1/tutors/64/slots" -->
+<!-- Can use gon gem to pass rails data to javascript pretty effeciently, we should consider using it - Jaicob -->
+<%= content_tag "div", id: "axoncalendar", data: { tutor: @user.tutor.id } do %>
+
+  <div class="row">
   <div id="scheduling-container">
     <div id='wrap' class="columns medium-10">
       <div id='calendar'></div>
@@ -22,3 +30,5 @@
     </div>
   </div>
 </div>
+<% end %>
+

@@ -23,6 +23,8 @@ module V1
         optional  :tutor_id,        type: Integer
         optional  :start_date,      type: String
         optional  :end_date,        type: String
+        optional  :new_start_time,      type: String
+        optional  :new_end_time,        type: String
       end
       
 
@@ -43,29 +45,37 @@ module V1
           desc "Creates one or many slots for a tutor" # depends on the date range given
           post do
             slot_creator = SlotCreator.new(declared_params) 
-            slot_creator.create_slots
-            # if @slot_creator.create_slots
-            #   return @slot
-            # else
-            #   return "Slot could not be saved: #{@slot.errors.full_messages}"
-            # end
+            @slots = slot_creator.create_slots
+            if @slots 
+              return @slots
+            else
+              return "Slot could not be saved: #{@slot.errors.full_messages}"
+            end
           end
 
-  # def initialize(params)
-  #   @tutor = params[:tutor_id] 
-  #   @start_date = params[:start_date].to_date
-  #   @end_date = params[:end_date].to_date
-  #   @start_time = params[:start_time].to_date
-  #   @end_time = params[:end_time].to_date
-  # end 
+          # Update all slots for a range
+          desc "Updates all slots for a tutor" 
+          post "all" do
+            slot_manager = SlotManager.new(declared_params) 
+            @slots = slot_manager.update_slots 
+            if @slots 
+              return @slots
+            else
+              return "Slot could not be updated: #{@slot.errors.full_messages}"
+            end
+          end
 
-  # def create_slots
-  #   date = @start_date
-  #   while date < @end_date
-  #     Slot.create(start_time: @start_time, end_time: @end_time)
-  #     date = date + 7
-  #   end 
-  # end
+          # Destroy all slots for a range
+          desc "Destroys all slots for a tutor" 
+          delete do
+            slot_manager = SlotManager.new(declared_params) 
+            @slots = slot_manager.destroy_slots 
+            if @slots 
+              return @slots
+            else
+              return "Slot could not be destroyed: #{@slot.errors.full_messages}"
+            end
+          end
 
           # Updates with PATCH
           desc "Updates a slot for a tutor"
