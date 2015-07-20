@@ -1,45 +1,38 @@
 class TutorCoursesController < ApplicationController
-
-  def new
-    @tutor_course = TutorCourse.new
-  end
+  before_action :set_tutor_course, only: [:update, :destroy]
 
   def create
     @tutor_course = TutorCourse.create(tutor_course_params)
-    @tutor_course.set_tutor_and_course_id(@tutor_course, params)
-
     if @tutor_course.save
       redirect_to dashboard_courses_user_path(current_user)
     else
-      flash[:notice] = "Tutor course was not created. Please try again."
+      flash[:notice] = "Tutor course was not created: #{@tutor_course.errors.full_messages}"
       redirect_to :back
     end
   end
 
   def update
-    @tutor_course = TutorCourse.find(params[:tutor_course_id])
-
-    if @tutor_course.update_attributes(rate: params[:update_tutor_course_rate][:new_rate])
+    if @tutor_course.update_attributes(tutor_course_params)
       redirect_to dashboard_courses_user_path(current_user)
     else
-      flash[:error] = "Course was not edited."
+      flash[:notice] = "Tutor course was not edited: #{@tutor_course.errors.full_messages}"
     end
 
   end
 
   def destroy
-    @tutor_course = TutorCourse.find(params[:id])
-    tutor = @tutor_course.tutor
     @tutor_course.destroy
     redirect_to dashboard_courses_user_path(current_user)
   end
 
-
   private
 
     def tutor_course_params
-      params.require(:tutor_course).permit(:course_id, :rate, :new_rate, :tutor_course_id)
+      params.require(:tutor_course).permit(:tutor_id, :course_id, :rate,)
     end
 
+    def set_tutor_course
+      @tutor_course = TutorCourse.find(params[:id])
+    end
 
 end
