@@ -3,7 +3,7 @@ class SlotCreator
   def initialize(params)
     @tutor = Tutor.find(params[:tutor_id])
     @start_date = params[:start_date].to_date
-    @end_date = params[:end_date].to_date + 1.months #This is temporary
+    @end_date = params[:end_date].to_date + 1.months #This is temporary until we do the regular duration task
     @start_time = params[:start_time].to_datetime
     @end_time = params[:end_time].to_datetime
   end 
