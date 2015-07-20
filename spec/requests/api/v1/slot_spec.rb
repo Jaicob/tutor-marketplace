@@ -5,7 +5,6 @@ describe "Slot endpoints" do
   let(:slots) { 4.times { Slot.new(tutor_id: tutor.id, start_time: "2015-08-14 12:00:00", end_time: "2015-08-14 13:00:00") } }
 
   it "Returns all of a tutor's slot" do
-    slot
     create(:slot, tutor_id: slot.tutor.id) # to make sure the same tutor owns both
     get "/api/v1/tutors/#{slot.tutor.id}/slots"
     expect(response).to be_success

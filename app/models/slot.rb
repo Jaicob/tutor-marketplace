@@ -11,10 +11,12 @@
 #  reservation_max :integer
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  start_dow_time  :string
+#  end_dow_time    :string
 #
 
 class Slot < ActiveRecord::Base
-  after_initialize :update_week_times # Set the week_times intially
+  after_initialize :start_dow_time, :end_dow_time
   belongs_to :tutor
 
   validates :tutor_id, presence: true
@@ -23,10 +25,14 @@ class Slot < ActiveRecord::Base
 
   enum status: ['Open', 'Blocked']
 
- # Used to calculate the week_times TODO figure what callback to place this, its being called manually right now
-  def update_week_times
-    update_attribute(:start_week_time, start_time.strftime('%a %T'))
-    update_attribute(:end_week_time, end_time.strftime('%a %T'))
-  end
+  # def start_dow_time
+  #   self.start_dow_time = self.start_time.strftime('%a %T')
+  #   self.save
+  # end
+
+  # def end_dow_time
+  #   self.end_dow_time = self.end_time.strftime('%a %T')
+  #   self.save
+  # end
 
 end

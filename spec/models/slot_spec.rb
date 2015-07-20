@@ -11,6 +11,8 @@
 #  reservation_max :integer
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  start_dow_time  :string
+#  end_dow_time    :string
 #
 
 require 'rails_helper'
