@@ -17,7 +17,7 @@ class Slot < ActiveRecord::Base
   after_initialize :update_week_times # Set the week_times intially
   belongs_to :tutor
 
-  # validates :tutor_id, presence: true
+  validates :tutor_id, presence: true
   validates :start_time, presence: true
   validates :end_time, presence: true
 
