@@ -85,36 +85,30 @@
 #
 
 Rails.application.routes.draw do
+  
   resources :tutors do
-  # All of the custom routes below (except update_active_status) are necessary to allow new tutors to apply as visitors/non-signed-users while still linking their newly created Tutor to a User
-  # The update_active_status is a custom route to allow Admins to activate or deactivate tutors
     member do
-      put 'update_active_status'
+      # Custom routes below are necessary to allow visitors without user accounts to create tutor profiles before creating a user account yet still automatically link them
       get 'register_or_sign_in'
       get 'visitor_sign_in'
       get 'visitor_sign_up'
-      post 'create_tutor_course'
-      put 'change_profile_pic'
+      # Custom routes  for Admin to update tutors
+      put 'update_active_status'
       delete 'destroy_by_admin'
     end
     collection do
+      # Custom routes below are necessary to allow visitors without user accounts to create tutor profiles before creating a user account yet still automatically link them
       get 'visitor_new'
       post 'visitor_create'
     end
   end
+
   devise_for :users
-  resources :users
   resources :courses
   resources :schools
   resources :subjects
   resources :tutor_courses
 
-  # Still need to move:
-  #===================
-  # -update_transcript
-  # -save_profile_pic_crop
-
-  # The custom routes below are for the dashboard which handles no logic on its own - it sends information to the respective controllers required for any operation and simply acts as a template for displaying different resources in one convenient place
   resources :users, only: [], path: '' do
     member do
       get  '/dashboard/home'         => 'dashboard#home'
