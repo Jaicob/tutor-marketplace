@@ -30,18 +30,8 @@ RSpec.describe TutorCourse, type: :model do
     expect(build(:tutor_course, rate: nil)).not_to be_valid
   end
 
-  it "sets the first tutor course on tutor creation with .set_tutor_and_course_id" do 
-    
+  it "returns a nicely formatted name with .formatted_name" do 
+    expect(build(:tutor_course).formatted_name).to eq("Chemistry 101: Intro to Chemistry at University 4")
   end
 
 end
-
-
-  # def set_tutor_and_course_id(tutor_course, params)
-  #   tutor_course.course_id = params[:course][:course_id]
-  #   tutor_course.tutor_id = params[:tutor_id]
-  # end
-
-  # def formatted_name
-  #   "#{self.course.subject} #{self.course.call_number}: #{self.course.friendly_name} at #{self.course.school_name}"
-  # end

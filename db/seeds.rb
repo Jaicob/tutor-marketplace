@@ -53,9 +53,17 @@ end
 
 # Create a Tutor profile for each User
 User.all.each do |user|
-  user.create_tutor(degree: 'B.A.', major: 'Marine Biology', extra_info: Faker::Lorem.sentence, graduation_year: '2018', phone_number: Faker::Number.number(10))
+  user.create_tutor(
+    rating: 5,
+    birthdate: '1990-01-01',
+    degree: 'B.A.', 
+    major: 'Marine Biology', 
+    extra_info: Faker::Lorem.sentence, 
+    graduation_year: '2018', 
+    phone_number: Faker::Number.number(10), 
+    transcript: File.new(File.join(Rails.root, 'app/assets/images/file-icon.png'))
+    )
 end
-
 
 # Create 3 TutorClasses for each Tutor
 Tutor.all.each do |tutor|
