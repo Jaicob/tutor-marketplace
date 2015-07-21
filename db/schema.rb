@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150718004023) do
+ActiveRecord::Schema.define(version: 20150714155952) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,8 +56,6 @@ ActiveRecord::Schema.define(version: 20150718004023) do
     t.integer  "reservation_max"
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
-    t.string   "start_week_time"
-    t.string   "end_week_time"
   end
 
   add_index "slots", ["tutor_id"], name: "index_slots_on_tutor_id", using: :btree
