@@ -42,7 +42,6 @@ class SlotManager
   def update_slots
     get_slots_for_range
     @slots.each do |slot|
-      puts "updating time"
       slot.start_time = slot.start_time + @start_adjustment.seconds
       slot.end_time = slot.end_time + @end_adjustment.seconds
       slot.save

@@ -1,8 +1,33 @@
 $(document).ready(function() {
 
+  // Setup up qTip2 api for
+  var tooltip = $('div').qtip({
+    id: 'fullcalendar',
+    prerender: true,
+    content: {
+      text: ' ',
+      title: {
+        button: true
+      }
+    },
+    position: {
+      my: 'center left',
+      at: 'center right',
+      target: 'mouse',
+      effect: false,
+    },
+    effect: false,
+    solo:true,
+    show: false,
+    hide: false,
+    style: {
+      classes: 'qtip-light',
+      height: '250px',
+      width: '150px'
+    },
+  }).qtip('api');
 
   var tutor_id = $('#axoncalendar').data('tutor');
-
   var origninalStartTime;
   var originalEndTime;
 
@@ -25,6 +50,7 @@ $(document).ready(function() {
   var beginSlotUpdate = function( event, jsEvent, ui, view) { 
     origninalStartTime = event.start.format('YYYY-MM-DD HH:mm:ss');
     originalEndTime = event.end.format('YYYY-MM-DD HH:mm:ss');
+    tooltip.hide()
   }
 
   var updateSlotDuration = function( event, jsEvent, ui, view) {
@@ -40,14 +66,13 @@ $(document).ready(function() {
     dataType: "json",
     success: function(data){
       alert('success');
-      $('#calendar').fullCalendar( 'refetchEvents' )
+      // $('#calendar').fullCalendar( 'refetchEvents' )
+       $('#calendar').fullCalendar('updateEvent', event);
     },
     error: function(data, status, blah){
       alert('failure',data,status,blah);
-      console.log('failure',data,status,blah); 
     }
     });
-    console.log("update",event, jsEvent, ui, view)
   }
 
   var addSlot = function(event, jsEvent, ui ){
@@ -67,6 +92,32 @@ $(document).ready(function() {
     })
   }
 
+  var removeSlots = function () {
+    alert("removing slots");
+  }
+
+  var openEventEdit = function( event, jsEvent, view  ) { 
+    //Constructs the popover for the event being clicked
+    console.log(event);
+    var content = '<h3>'+ event.title+'</h3>' + 
+        '<p><b>Start:</b> ' + event.start.format('dddd hh:mm') + '</p> <br>' + 
+        '<p><b>End:</b> '   + event.end.format('dddd hh:mm')  + '</p>  <hr>' +
+        '<button class="button alert" onclick="removeSlots()"> Delete </button>';
+
+      tooltip.set({
+        'content.text': content,
+        'position.target': $(this),
+        'show.effect':false,
+        'hide.target': $(this),
+        'hide.event': false
+      })
+      .reposition(event).show(event);
+  }
+
+  var eventRender = function (event, element, view) {
+    // Do stuff to event objects as they render. May not need to keep this.
+  }
+
   /*
    * Initialize the external events
    */
@@ -74,7 +125,7 @@ $(document).ready(function() {
     // store data so the calendar knows to render an event upon drop
     $(this).data('event', {
       title: $.trim($(this).text()), // use the element's text as the event title
-      stick: true // maintain when user navigates (see docs on the renderEvent method)
+      stick: false // maintain when user navigates (see docs on the renderEvent method)
     });
 
     // make the event draggable using jQuery UI
@@ -111,7 +162,13 @@ $(document).ready(function() {
     droppable: true, 
     eventReceive : addSlot,
     eventResizeStart: beginSlotUpdate,
-    eventResize: updateSlotDuration
+    eventResize: updateSlotDuration,
+    eventClick: openEventEdit,
+    eventRender: eventRender, //    eventClick: openEventEdit,
+    eventAfterAllRender: function(view) {$(document).foundation('dropdown', 'reflow');},
+    dayClick: function() { tooltip.hide() },
+    eventDragStart: function() { tooltip.hide() },
+    viewDisplay: function() { tooltip.hide() },
   });
 
-  });
+});
