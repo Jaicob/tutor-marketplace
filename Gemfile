@@ -32,7 +32,6 @@ source "https://rubygems.org" do
 
   gem "rails", "~> 4.2"
   gem "uglifier", "~> 2.7"
-  gem "turbolinks", "~> 2.5"
   gem "jbuilder", "~> 2.3"
   gem "devise", "~> 3.5"
   gem "devise_invitable", "~> 1.5"
