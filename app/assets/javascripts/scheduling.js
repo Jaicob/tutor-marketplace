@@ -53,7 +53,9 @@ $(document).ready(function() {
     tooltip.hide()
   }
 
-  var updateSlotDuration = function( event, jsEvent, ui, view) {
+  var updateSlotDuration = function( event, delta, revertFunc, jsEvent, ui, view ) {
+    var secs = delta.asSeconds();
+    console.log("DELTA", secs);
     var jqxhr = $.ajax({
     type: "POST",
     url: '/api/v1/tutors/' + tutor_id + '/slots/all', 
@@ -66,11 +68,11 @@ $(document).ready(function() {
     dataType: "json",
     success: function(data){
       alert('success');
-      // $('#calendar').fullCalendar( 'refetchEvents' )
-       $('#calendar').fullCalendar('updateEvent', event);
+      $('#calendar').fullCalendar('updateEvent', event);
     },
-    error: function(data, status, blah){
-      alert('failure',data,status,blah);
+    error: function(data, status){
+      alert('failure',data,status);
+      revertFunc();
     }
     });
   }
@@ -84,11 +86,9 @@ $(document).ready(function() {
     })
     request.success(function(data){
       alert("Success!")
-      console.log(data);
     });
     request.error(function(data){
       alert("Error!")
-      console.log(data);
     })
   }
 
@@ -163,11 +163,11 @@ $(document).ready(function() {
     eventReceive : addSlot,
     eventResizeStart: beginSlotUpdate,
     eventResize: updateSlotDuration,
+    eventDragStart: beginSlotUpdate,
+    eventDrop: updateSlotDuration,
     eventClick: openEventEdit,
-    eventRender: eventRender, //    eventClick: openEventEdit,
-    eventAfterAllRender: function(view) {$(document).foundation('dropdown', 'reflow');},
+    eventRender: eventRender, 
     dayClick: function() { tooltip.hide() },
-    eventDragStart: function() { tooltip.hide() },
     viewDisplay: function() { tooltip.hide() },
   });
 
