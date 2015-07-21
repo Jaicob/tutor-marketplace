@@ -18,6 +18,8 @@ module V1
         optional  :status,          type: Integer  
         optional  :start_time,      type: String
         optional  :end_time,        type: String
+        optional  :original_start_time,      type: String
+        optional  :original_end_time,        type: String
         optional  :reservation_min, type: Integer
         optional  :reservation_max, type: Integer
         optional  :tutor_id,        type: Integer

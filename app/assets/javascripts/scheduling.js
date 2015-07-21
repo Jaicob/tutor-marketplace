@@ -60,8 +60,8 @@ $(document).ready(function() {
     type: "POST",
     url: '/api/v1/tutors/' + tutor_id + '/slots/all', 
     data: {
-      start_time: origninalStartTime,
-      end_time: originalEndTime,
+      original_start_time: origninalStartTime,
+      original_end_time: originalEndTime,
       new_start_time: event.start.format('YYYY-MM-DD HH:mm:ss'),
       new_end_time: event.end.format('YYYY-MM-DD HH:mm:ss')
     },
@@ -72,6 +72,7 @@ $(document).ready(function() {
     },
     error: function(data, status){
       alert('failure',data,status);
+      console.log(data, status);
       revertFunc();
     }
     });
