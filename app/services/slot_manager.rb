@@ -1,42 +1,58 @@
 class SlotManager
 
-  # sm = SlotManager.new(tutor_id: 5, start_dow_time: "Sat 17:00:00", end_dow_time: "Sat 19:00:00")
+  # sm = SlotManager.new(tutor_id: 1, original_start_time: '2015-08-01 12:00:00', original_end_time: '2015-08-01 16:00:00', new_start_time: '2015-08-02 11:00:00', new_end_time: '2015-08-02 12:00:00')
 
-  attr_accessor :tutor, :start_dow_time, :end_dow_time, :slots
+  attr_accessor :tutor, :original_start_time, :original_end_time, :new_start_time, :new_end_time, :slots
 
-  def initialize(params) # params = (tutor_id: 1, start_dow_time: "Sat 10:00", end_dow_time: "Sat 12:00")
+  def initialize(params)
+    # Required
     @tutor = Tutor.find(params[:tutor_id]) 
-    @start_dow_time = params[:start_dow_time]
-    @end_dow_time = params[:end_dow_time]
+    
+    @original_start_time = params[:original_start_time].to_datetime # the original start_time
+    @original_end_time = params[:original_end_time].to_datetime # the original end_time
+    
+    @new_start_time = params[:new_start_time].to_datetime
+    @new_end_time = params[:new_end_time].to_datetime 
 
+    # Calculated
+    @start_adjustment = @new_start_time.to_time - @original_start_time.to_time #result is in seconds
+    @end_adjustment = @new_end_time.to_time - @original_end_time.to_time #result is in seconds 
+    
+    @original_start_DOW_time = @original_start_time.strftime('%a %T') # Used for finding slots by weekday and time
+    @original_end_DOW_time = @original_end_time.strftime('%a %T') # Used for finding slots by weekday and time
+  end
+
+  # Lazy load the slots for the range
+  def get_slots_for_range
+    # @slots = @tutor.slots.where(start_week_time: @start_week_time).where(end_week_time: @end_week_time)
     @slots = []
-
     @tutor.slots.each do |slot|
-
-      @slot_start_dow_time = slot.start_time.strftime('%a %T')
-      @slot_end_dow_time = slot.end_time.strftime('%a %T')
-
-      if @start_dow_time == @slot_start_dow_time && @end_dow_time == @slot_end_dow_time
+     
+      @slot_start_DOW_time = slot.start_time.strftime('%a %T')
+      @slot_end_DOW_time = slot.end_time.strftime('%a %T')
+      
+      if @slot_start_DOW_time == @original_start_DOW_time && @slot_end_DOW_time == @original_end_DOW_time
         @slots << slot
       end
     end
+    @slots
   end
 
-  def update_slots(params) # params = (new_start_time: "", new_end_time: "Fri 16:00:00")
-    slots.each do |slot|
-
-      slot.update_attributes(params)
-      # slot.start_time = slot.start_time + @start_adjustment.seconds
-      # slot.end_time = slot.end_time + @end_adjustment.seconds
-      # slot.update_week_times
-      # slot.save
+  # Load slots and update all that match the range
+  def update_slots
+    get_slots_for_range
+    @slots.each do |slot|
+      puts "updating time"
+      slot.start_time = slot.start_time + @start_adjustment.seconds
+      slot.end_time = slot.end_time + @end_adjustment.seconds
       slot.save
     end
-    slots
+    @slots
   end
 
   # Destroy all sots that match the range
   def destroy_slots
+    get_slots_for_range
     @slots.destroy_all
   end
 
