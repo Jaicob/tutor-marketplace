@@ -1,5 +1,7 @@
 class SlotManager
 
+   # sm = SlotManager.new(tutor_id: 333, start_time: "2015-08-21 01:30:00", end_time: "2015-08-21 02:30:00", new_start_time: "2015-08-21 01:30:00", new_end_time: "2015-08-21 04:30:00" ) 
+
   def initialize(params)
     # Required
     @tutor = Tutor.find(params[:tutor_id]) 
@@ -24,7 +26,6 @@ class SlotManager
   def update_slots
     get_slots_for_range
     @slots.each do |slot|
-      puts "updating time"
       slot.start_time = slot.start_time + @start_adjustment.seconds
       slot.end_time = slot.end_time + @end_adjustment.seconds
       slot.update_week_times
