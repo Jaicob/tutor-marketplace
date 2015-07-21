@@ -1,8 +1,29 @@
 $(document).ready(function() {
 
+  // Setup up qTip2 api for
+  var tooltip = $('div').qtip({
+    id: 'fullcalendar',
+    prerender: true,
+    content: {
+      text: ' ',
+      title: {
+        button: true
+      }
+    },
+    position: {
+      my: 'center left',
+      at: 'center right',
+      target: 'mouse',
+      effect: false,
+    },
+    effect: false,
+    solo:true,
+    show: false,
+    hide: false,
+    style: 'qtip-light'
+  }).qtip('api');
 
   var tutor_id = $('#axoncalendar').data('tutor');
-
   var origninalStartTime;
   var originalEndTime;
 
@@ -25,6 +46,7 @@ $(document).ready(function() {
   var beginSlotUpdate = function( event, jsEvent, ui, view) { 
     origninalStartTime = event.start.format('YYYY-MM-DD HH:mm:ss');
     originalEndTime = event.end.format('YYYY-MM-DD HH:mm:ss');
+    tooltip.hide()
   }
 
   var updateSlotDuration = function( event, jsEvent, ui, view) {
@@ -65,6 +87,38 @@ $(document).ready(function() {
       alert("Error!")
       console.log(data);
     })
+  }
+
+
+  var openEventEdit = function( data, event, view ) { 
+    // $(event.elementid).qtip();
+    // console.log("THIS",this);
+    var content = '<h3>'+data.title+'</h3>' + 
+        '<p><b>Start:</b> '+data.start.toDate()+'<br />' + 
+        (data.end && '<p><b>End:</b> '+data.end.toDate()+'</p>' || '');
+
+      tooltip.set({
+        'content.text': content,
+        'position.target': $(this),
+        'show.effect':false,
+        'hide.target': $(this),
+        'hide.event': 'unfocus'
+      })
+      .reposition(event).show(event);
+  }
+
+  var eventRender = function (event, element, view) {
+    // console.log("ELEMENT",this);
+    //     $(element).qtip({
+    //         content: "event.description",
+    //         show: {
+    //           target: false,
+    //           event: false,
+    //           solo: true
+    //         },
+    //         hide: true
+    //     });
+    //     event.elementid = element.id;
   }
 
   /*
@@ -111,7 +165,13 @@ $(document).ready(function() {
     droppable: true, 
     eventReceive : addSlot,
     eventResizeStart: beginSlotUpdate,
-    eventResize: updateSlotDuration
+    eventResize: updateSlotDuration,
+    eventClick: openEventEdit,
+    eventRender: eventRender, //    eventClick: openEventEdit,
+    eventAfterAllRender: function(view) {$(document).foundation('dropdown', 'reflow');},
+    dayClick: function() { $().qtip.hide() },
+    eventDragStart: function() { $(this).qtip.hide() },
+    viewDisplay: function() { $(this).qtip.hide() },
   });
 
-  });
+});
