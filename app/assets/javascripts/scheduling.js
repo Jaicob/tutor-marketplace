@@ -20,7 +20,11 @@ $(document).ready(function() {
     solo:true,
     show: false,
     hide: false,
-    style: 'qtip-light'
+    style: {
+      classes: 'qtip-light',
+      height: '250px',
+      width: '150px'
+    },
   }).qtip('api');
 
   var tutor_id = $('#axoncalendar').data('tutor');
@@ -62,14 +66,13 @@ $(document).ready(function() {
     dataType: "json",
     success: function(data){
       alert('success');
-      $('#calendar').fullCalendar( 'refetchEvents' )
+      // $('#calendar').fullCalendar( 'refetchEvents' )
+       $('#calendar').fullCalendar('updateEvent', event);
     },
     error: function(data, status, blah){
       alert('failure',data,status,blah);
-      console.log('failure',data,status,blah); 
     }
     });
-    console.log("update",event, jsEvent, ui, view)
   }
 
   var addSlot = function(event, jsEvent, ui ){
@@ -89,36 +92,30 @@ $(document).ready(function() {
     })
   }
 
+  var removeSlots = function () {
+    alert("removing slots");
+  }
 
-  var openEventEdit = function( data, event, view ) { 
-    // $(event.elementid).qtip();
-    // console.log("THIS",this);
-    var content = '<h3>'+data.title+'</h3>' + 
-        '<p><b>Start:</b> '+data.start.toDate()+'<br />' + 
-        (data.end && '<p><b>End:</b> '+data.end.toDate()+'</p>' || '');
+  var openEventEdit = function( event, jsEvent, view  ) { 
+    //Constructs the popover for the event being clicked
+    console.log(event);
+    var content = '<h3>'+ event.title+'</h3>' + 
+        '<p><b>Start:</b> ' + event.start.format('dddd hh:mm') + '</p> <br>' + 
+        '<p><b>End:</b> '   + event.end.format('dddd hh:mm')  + '</p>  <hr>' +
+        '<button class="button alert" onclick="removeSlots()"> Delete </button>';
 
       tooltip.set({
         'content.text': content,
         'position.target': $(this),
         'show.effect':false,
         'hide.target': $(this),
-        'hide.event': 'unfocus'
+        'hide.event': false
       })
       .reposition(event).show(event);
   }
 
   var eventRender = function (event, element, view) {
-    // console.log("ELEMENT",this);
-    //     $(element).qtip({
-    //         content: "event.description",
-    //         show: {
-    //           target: false,
-    //           event: false,
-    //           solo: true
-    //         },
-    //         hide: true
-    //     });
-    //     event.elementid = element.id;
+    // Do stuff to event objects as they render. May not need to keep this.
   }
 
   /*
@@ -128,7 +125,7 @@ $(document).ready(function() {
     // store data so the calendar knows to render an event upon drop
     $(this).data('event', {
       title: $.trim($(this).text()), // use the element's text as the event title
-      stick: true // maintain when user navigates (see docs on the renderEvent method)
+      stick: false // maintain when user navigates (see docs on the renderEvent method)
     });
 
     // make the event draggable using jQuery UI
@@ -169,9 +166,9 @@ $(document).ready(function() {
     eventClick: openEventEdit,
     eventRender: eventRender, //    eventClick: openEventEdit,
     eventAfterAllRender: function(view) {$(document).foundation('dropdown', 'reflow');},
-    dayClick: function() { $().qtip.hide() },
-    eventDragStart: function() { $(this).qtip.hide() },
-    viewDisplay: function() { $(this).qtip.hide() },
+    dayClick: function() { tooltip.hide() },
+    eventDragStart: function() { tooltip.hide() },
+    viewDisplay: function() { tooltip.hide() },
   });
 
 });
