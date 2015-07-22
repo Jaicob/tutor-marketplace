@@ -22,6 +22,7 @@
 
 //= require best_in_place
 //= require foundation
+//= require ./base.js
 //= require_tree ./dashboard
 
 $(function() {
