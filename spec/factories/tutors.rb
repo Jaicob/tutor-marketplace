@@ -29,7 +29,7 @@ FactoryGirl.define do
       end
   
       factory :complete_tutor do
-        association :user, factory: :alternate_user # To avoid validation restrictions with independent user factory v. this user that is genrated as part of a tutor factory
+        user
         rating 1
         active_status 0
         application_status 0
@@ -42,7 +42,7 @@ FactoryGirl.define do
       end
 
       factory :second_complete_tutor do 
-        association :user, factory: :second_alternate_user
+        user
         rating 1
         active_status 0
         birthdate '1995-05-10'
