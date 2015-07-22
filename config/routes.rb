@@ -6,6 +6,7 @@
 #       visitor_sign_up_tutor GET    /tutors/:id/visitor_sign_up(.:format)      tutors#visitor_sign_up
 #  update_active_status_tutor PUT    /tutors/:id/update_active_status(.:format) tutors#update_active_status
 #      destroy_by_admin_tutor DELETE /tutors/:id/destroy_by_admin(.:format)     tutors#destroy_by_admin
+#       update_settings_tutor PUT    /tutors/:id/update_settings(.:format)      tutors#update_settings
 #          visitor_new_tutors GET    /tutors/visitor_new(.:format)              tutors#visitor_new
 #       visitor_create_tutors POST   /tutors/visitor_create(.:format)           tutors#visitor_create
 #                      tutors GET    /tutors(.:format)                          tutors#index
@@ -79,6 +80,8 @@
 # dashboard_edit_profile_user GET    /:id/dashboard/edit_profile(.:format)      dashboard#edit_profile
 #     dashboard_settings_user GET    /:id/dashboard/settings(.:format)          dashboard#settings
 #       dashboard_tutors_user GET    /:id/dashboard/tutors(.:format)            dashboard#tutors
+#                        user PATCH  /:id(.:format)                             users#update
+#                             PUT    /:id(.:format)                             users#update
 #                        root GET    /                                          static_pages#home
 #                         api        /                                          API
 #
@@ -94,6 +97,8 @@ Rails.application.routes.draw do
       # Custom routes  for Admin to update tutors
       put 'update_active_status'
       delete 'destroy_by_admin'
+      # Custom route for redirect back to Dashboard settings page after update
+      patch 'update_settings'
     end
     collection do
       # Custom routes below are necessary to allow visitors without user accounts to create tutor profiles before creating a user account yet still automatically link the two
@@ -108,7 +113,7 @@ Rails.application.routes.draw do
   resources :subjects
   resources :tutor_courses
 
-  resources :users, only: [], path: '' do
+  resources :users, only: [:update], path: '' do
     member do
       get  '/dashboard/home'         => 'dashboard#home'
       get  '/dashboard/schedule'     => 'dashboard#schedule'
