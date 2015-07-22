@@ -9,8 +9,9 @@ feature 'Tutor sign up for registered users' do
     course
   end
 
-  scenario 'user can create a tutor account' do 
+  scenario 'user can create a tutor account', js: true do 
     visit '/tutors/new'
+    puts page.body
     select('University 1', from: 'course[school_id]')
     select "CHEM", from: 'course[subject_id]'
     select '101 | Intro to Chemistry', from: 'course[course_id]'
@@ -21,15 +22,15 @@ feature 'Tutor sign up for registered users' do
     expect(page.body).to have_content "Dashboard"
   end
 
-  scenario 'user cannot create a tutor account without uploading a transcript' do 
-    visit '/tutors/new'
-    select 'University of North Carolina', from: 'course_school_id'
-    select "CHEM", from: 'course_subject_id'
-    select '101 | Intro to Chemistry', from: 'course_course_id'
-    fill_in 'Rate', with: '35'
-    fill_in 'tutor_extra_info', with: 'I love chemistry so freaking much...'
-    click_button 'Next'
-    expect(page).to have_selector ".alert", text: "Tutor account was not created. Please fill in all fields and attach your unofficial transcript"
-  end
+  # scenario 'user cannot create a tutor account without uploading a transcript' do 
+  #   visit '/tutors/new'
+  #   select 'University of North Carolina', from: 'course_school_id'
+  #   select "CHEM", from: 'course_subject_id'
+  #   select '101 | Intro to Chemistry', from: 'course_course_id'
+  #   fill_in 'Rate', with: '35'
+  #   fill_in 'tutor_extra_info', with: 'I love chemistry so freaking much...'
+  #   click_button 'Next'
+  #   expect(page).to have_selector ".alert", text: "Tutor account was not created. Please fill in all fields and attach your unofficial transcript"
+  # end
 
 end
