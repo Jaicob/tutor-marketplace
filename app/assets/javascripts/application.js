@@ -20,16 +20,10 @@
 //= require Jcrop/js/Jcrop.min
 //= require qTip2/jquery.qtip.min.js
 
-//= require best_in_place
 //= require foundation
 //= require ./base.js
 //= require_tree ./dashboard
 
 $(function() {
   $(document).foundation();
-});
-
-$(document).ready(function() {
-  /* Activating Best In Place */
-  jQuery(".best_in_place").best_in_place();
 });
