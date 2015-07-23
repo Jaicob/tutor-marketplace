@@ -55,23 +55,23 @@ $(document).ready(function() {
 
   var updateSlotDuration = function( event, jsEvent, ui, view) {
     var jqxhr = $.ajax({
-    type: "POST",
-    url: API.endpoints.tutor_slots.update({tutor_id: tutor_id}),
-    data: {
-      start_time: origninalStartTime,
-      end_time: originalEndTime,
-      new_start_time: event.start.format('YYYY-MM-DD HH:mm:ss'),
-      new_end_time: event.end.format('YYYY-MM-DD HH:mm:ss')
-    },
-    dataType: "json",
-    success: function(data){
-      alert('success');
-      // $('#calendar').fullCalendar( 'refetchEvents' )
-       $('#calendar').fullCalendar('updateEvent', event);
-    },
-    error: function(data, status, blah){
-      alert('failure',data,status,blah);
-    }
+      type: "PUT",
+      url: API.endpoints.tutor_slots.update({tutor_id: tutor_id}),
+      data: {
+        original_start_time: origninalStartTime,
+        original_end_time: originalEndTime,
+        new_start_time: event.start.format('YYYY-MM-DD HH:mm:ss'),
+        new_end_time: event.end.format('YYYY-MM-DD HH:mm:ss')
+      },
+      dataType: "json",
+      success: function(data){
+        alert('success');
+        // $('#calendar').fullCalendar( 'refetchEvents' )
+         $('#calendar').fullCalendar('updateEvent', event);
+      },
+      error: function(data, status, blah){
+        alert('failure',data,status,blah);
+      }
     });
   }
 
@@ -122,10 +122,28 @@ $(document).ready(function() {
   /*
    * Initialize the external events
    */
-  $('.fc-event').each(function() {
+  $('.regular-availability').each(function() {
     // store data so the calendar knows to render an event upon drop
     $(this).data('event', {
       title: $.trim($(this).text()), // use the element's text as the event title
+      overlap: false,
+      stick: false, // maintain when user navigates (see docs on the renderEvent method)
+      weeksToRepeat: $("#weeksToRepeat").val()
+    });
+
+    // make the event draggable using jQuery UI
+    $(this).draggable({
+      zIndex: 999,
+      revert: true,      // will cause the event to go back to its
+      revertDuration: 0  //  original position after the drag
+    });
+  });
+
+  $('.one-off-availability').each(function() {
+    // store data so the calendar knows to render an event upon drop
+    $(this).data('event', {
+      title: $.trim($(this).text()), // use the element's text as the event title
+      overlap: false,
       stick: false // maintain when user navigates (see docs on the renderEvent method)
     });
 
