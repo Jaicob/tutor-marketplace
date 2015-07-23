@@ -17,16 +17,16 @@ module V1
         optional  :id,                  type: Integer     
         optional  :status,              type: Integer  
         optional  :start_time,          type: String
-        optional  :end_time,            type: String
+        optional  :duration,            type: Integer
         optional  :reservation_min,     type: Integer
         optional  :reservation_max,     type: Integer
         optional  :tutor_id,            type: Integer
         optional  :start_date,          type: String
         optional  :end_date,            type: String
         optional  :original_start_time, type: String
-        optional  :original_end_time,   type: String
+        optional  :original_duration,   type: Integer
         optional  :new_start_time,      type: String
-        optional  :new_end_time,        type: String
+        optional  :new_duration,        type: Integer
         optional  :weeks_to_repeat,     type: Integer
       end
       

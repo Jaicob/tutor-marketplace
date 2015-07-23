@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20150714155952) do
   create_table "courses", force: :cascade do |t|
     t.integer  "school_id"
     t.text     "subject"
-    t.integer  "call_number"
+    t.string   "call_number"
     t.string   "friendly_name"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
@@ -51,7 +51,7 @@ ActiveRecord::Schema.define(version: 20150714155952) do
     t.integer  "tutor_id"
     t.integer  "status",          default: 0
     t.datetime "start_time"
-    t.datetime "end_time"
+    t.integer  "duration"
     t.integer  "reservation_min"
     t.integer  "reservation_max"
     t.datetime "created_at",                  null: false

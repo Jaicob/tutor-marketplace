@@ -12,12 +12,11 @@ class TutorCoursesController < ApplicationController
   end
 
   def update
-    if @tutor_course.update_attributes(tutor_course_params)
+    if @tutor_course.update(tutor_course_params)
       redirect_to dashboard_courses_user_path(current_user)
     else
       flash[:notice] = "Tutor course was not edited: #{@tutor_course.errors.full_messages}"
     end
-
   end
 
   def destroy
