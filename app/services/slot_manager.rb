@@ -51,7 +51,7 @@ class SlotManager
     @slots.each do |slot|
       slot.start_time = slot.start_time + @start_adjustment.seconds
       slot.end_time = slot.end_time + @end_adjustment.seconds
-      return "Error" unless slot.save
+      slot.save
     end
     @slots
   end
