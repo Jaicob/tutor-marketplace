@@ -4,17 +4,6 @@ Web App  [![Build Status](https://api.shippable.com/projects/556f5e52edd7f2c0520
 This application was generated with the [rails_apps_composer](https://github.com/RailsApps/rails_apps_composer) gem
 provided by the [RailsApps Project](http://railsapps.github.io/).
 
-Rails Composer is open source and supported by subscribers. Please join RailsApps to support development of Rails Composer.
-
-Problems? Issues?
------------
-
-Need help? Ask on Stack Overflow with the tag 'railsapps.'
-
-Your application contains diagnostics in the README file. Please provide a copy of the README file when reporting any issues.
-
-If the application doesn't work as expected, please [report an issue](https://github.com/RailsApps/rails_apps_composer/issues)
-and include the diagnostics.
 
 Ruby on Rails
 -------------
@@ -28,46 +17,28 @@ Learn more about [Installing Rails](http://railsapps.github.io/installing-rails.
 
 Getting Started
 ---------------
+- Clone the repo
+- Install Boot2Docker if on Windows or OS X
+- Install Docker-Compose and Docker
+- Request a copy of the application.yml and place in config/application.yml
+- Run `docker-compose up`
+- Get your boot2docker ip using `boot2docker ip 2`
+- Inside the container run `rake db:create db:migrate`
+- Inside the container run `rake bower:install` 
+- You can visit the running application at that ip on port 3000
+- I would recommend adding dockerhost as known host on your machine for ease of access
+- open a shell using `docker exec -it webapp_web_1 /bin/bash`
+- Restart the server by using `docker-compose stop` then   `docker-compose up` or  `docker-compose start`
+-  `docker-compose start` will run it as a daemon where as  `docker-compose up` is in the foreground
+-  All file changes should be made locally and any rake or bundle commands should be run inside the container
 
 Documentation and Support
 -------------------------
-New Docker Start Up 
-
-- boot2docker up
-- source ~/.profile 
-
-- docker ps (to check for stopped containers)
-- docker-compose start (to start stopped containers)
-
-- docker-compose up
-
-- docker exec -it [CONTAINER NAME] /bin/bash (to open a shell)
-- docker exec -it [CONTAINER NAME] tail -f log/development.log (to see sever logs)
-
- ex
-Switching from Selenium-Webdriver to Capybara-Webkit for JS testing -capybara-webkit uses the QtWebKit port, which depends on the Qt windowing framework. Even though the whole point is to run WebKit without windows, the compilation process has dependencies on Qt. -Ubuntu users can 'sudo apt-get install libqt4-dev' to get Qt
-
-New Docker Start Up
-  source ~/.profile
-  docker-compose start
-
-  docker-compose run web tail -f log/development.log
-  -to see server logs
-
-  docker-compose run web /bin/bash
-  -to open a shell in docker container
-
-Switching from Selenium-Webdriver to Capybara-Webkit for JS testing
-  -capybara-webkit uses the QtWebKit port, which depends on the Qt windowing framework. Even though the whole point is to run WebKit without windows, the compilation process has dependencies on Qt.
-  -Ubuntu users can 'sudo apt-get install libqt4-dev' to get Qt
-
 
 Issues
 -------------
+- If there are issues with the docker containers let jaicob@axontutors.com know and he will be in touch to make your troubles disappear (hopefully)
 
 Similar Projects
 ----------------
-
-
-License
--------
+There can only be one.

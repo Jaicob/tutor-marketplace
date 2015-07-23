@@ -1,6 +1,6 @@
 describe "School endpoints" do
   let(:school) { create(:school) }
-  let(:school_with_courses) { create(:school_with_courses) }
+  let(:school_with_chem_courses) { create(:school_with_chem_courses) }
   let(:school_with_bio_courses) { create(:school_with_bio_courses) }
 
   it "Returns a list of all schools" do 
@@ -17,15 +17,15 @@ describe "School endpoints" do
   end
 
   it "Returns all of a school's courses" do 
-    get "/api/v1/schools/#{school_with_courses.id}/courses"
+    get "/api/v1/schools/#{school_with_chem_courses.id}/courses"
     expect(response).to be_success
     expect(json.length).to eq(2)
   end
 
   it "Returns all of a school's subjects" do 
-    get "/api/v1/schools/#{school_with_courses.id}/subjects"
+    get "/api/v1/schools/#{school_with_chem_courses.id}/subjects"
     expect(response).to be_success
-    expect(json.length).to eq(2) 
+    expect(json.length).to eq(1) 
   end
 
   it "Returns a school's courses for a specific subject" do

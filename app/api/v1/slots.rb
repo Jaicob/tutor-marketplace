@@ -14,18 +14,20 @@ module V1
       end
 
       params do 
-        optional  :id,              type: Integer     
-        optional  :status,          type: Integer  
-        optional  :start_time,      type: String
-        optional  :end_time,        type: String
-        optional  :reservation_min, type: Integer
-        optional  :reservation_max, type: Integer
-        optional  :tutor_id,        type: Integer
-        optional  :start_date,      type: String
-        optional  :end_date,        type: String
-        optional  :new_start_time,  type: String
-        optional  :new_end_time,    type: String
-        optional  :weeks_to_repeat, type: Integer
+        optional  :id,                  type: Integer     
+        optional  :status,              type: Integer  
+        optional  :start_time,          type: String
+        optional  :end_time,            type: String
+        optional  :reservation_min,     type: Integer
+        optional  :reservation_max,     type: Integer
+        optional  :tutor_id,            type: Integer
+        optional  :start_date,          type: String
+        optional  :end_date,            type: String
+        optional  :original_start_time, type: String
+        optional  :original_end_time,   type: String
+        optional  :new_start_time,      type: String
+        optional  :new_end_time,        type: String
+        optional  :weeks_to_repeat,     type: Integer
       end
       
 
@@ -56,7 +58,7 @@ module V1
 
           # Update all slots for a range
           desc "Updates all slots for a tutor" 
-          post "all" do
+          put do
             slot_manager = SlotManager.new(declared_params) 
             @slots = slot_manager.update_slots 
             if @slots 

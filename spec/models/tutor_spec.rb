@@ -63,7 +63,7 @@ RSpec.describe Tutor, type: :model do
     end
 
     it "shows User's name with .name" do 
-      expect(complete_tutor.name).to eq complete_tutor.user.full_name
+      expect(complete_tutor.full_name).to eq complete_tutor.user.full_name
     end
 
     it "shows User's email with .email" do 
