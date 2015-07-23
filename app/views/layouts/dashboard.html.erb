@@ -1,34 +1,4 @@
-<!DOCTYPE html>
-<!-- This can be DRY-ed up quite a bit. I'm working on something else right now, so this is just a reminder to come back and refactor this following this:
-
-  3.5 Using Nested Layouts @ http://guides.rubyonrails.org/layouts_and_rendering.html#using-partials
-
--->
-<html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= content_for?(:title) ? yield(:title) : "Web App" %></title>
-    <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Web App" %>">
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
-    <%# Modernizr is required for Zurb Foundation %>
-    <%= javascript_include_tag 'vendor/modernizr' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-    <%= csrf_meta_tags %>
-    <%= yield(:header) %>
-  </head>
-  <body>
-    <header>
-      <%= render 'layouts/navigation' %>
-      <!-- this sets up the links (with the helper) and then renders them into the view -->
-      <%= generate_dashboard_nav_links and render 'layouts/dashboard_nav' %>
-    </header>
-    <main role="main">
-      <p class="notice"><%= notice %></p>
-      <p class="alert"><%= alert %></p>
-      <%= yield %>
-    </main>
-    <footer>
-      <%= render 'layouts/footer' %>
-    </footer>
-  </body>
-</html>
+<% content_for (:dashboard_nav) do %>
+  <%= generate_dashboard_nav_links and render 'layouts/dashboard_nav' %>
+<% end %>
+<%= render template: "layouts/application" %>

@@ -33,13 +33,17 @@
 #
 
 FactoryGirl.define do
+
+  sequence(:email) { |n| "test#{n}@example.com" }
+  sequence(:slug) { |n| "userslug#{n}"}
+
   factory :user do
     confirmed_at Time.now
     first_name "Bob"
     last_name "Dole"
-    email "test@example.com"
+    email
     password "please123"
-    slug "bobdole"
+    slug
 
     trait :admin do
       role 'admin'
