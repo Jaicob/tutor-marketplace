@@ -8,11 +8,12 @@ class SlotCreator
      #    start_time:       '2015-08-01 17:00', 
      #    end_time:         '2015-08-01 20:00', 
      #    weeks_to_repeat:  1
-     #  )
+     # 
+     
     @tutor = Tutor.find(params[:tutor_id])
     @start_time = params[:start_time].to_datetime
     @end_time = params[:end_time].to_datetime
-    @weeks_to_repeat = params[:weeks_to_repeat].to_i
+    @weeks_to_repeat = (params[:weeks_to_repeat] || 1).to_i
 
     @start_date = @start_time.to_date
     @end_date = @start_date + (@weeks_to_repeat * 7)
