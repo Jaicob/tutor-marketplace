@@ -74,7 +74,6 @@ $(document).ready(function() {
       alert('failure',data,status);
       console.log(data, status);
       revertFunc();
-    }
     });
   }
 
@@ -138,10 +137,28 @@ $(document).ready(function() {
   /*
    * Initialize the external events
    */
-  $('.fc-event').each(function() {
+  $('.regular-availability').each(function() {
     // store data so the calendar knows to render an event upon drop
     $(this).data('event', {
       title: $.trim($(this).text()), // use the element's text as the event title
+      overlap: false,
+      stick: false, // maintain when user navigates (see docs on the renderEvent method)
+      weeksToRepeat: $("#weeksToRepeat").val()
+    });
+
+    // make the event draggable using jQuery UI
+    $(this).draggable({
+      zIndex: 999,
+      revert: true,      // will cause the event to go back to its
+      revertDuration: 0  //  original position after the drag
+    });
+  });
+
+  $('.one-off-availability').each(function() {
+    // store data so the calendar knows to render an event upon drop
+    $(this).data('event', {
+      title: $.trim($(this).text()), // use the element's text as the event title
+      overlap: false,
       stick: false // maintain when user navigates (see docs on the renderEvent method)
     });
 

@@ -32,7 +32,7 @@ var API = {
         return API_LOCATION + "/tutors/" + data["tutor_id"] + "/slots.json"
       },
       update: function(data){
-        return API_LOCATION + "/tutors/" + data["tutor_id"] + "/slots/all"
+        return API_LOCATION + "/tutors/" + data["tutor_id"] + "/slots"
       },
       create: function(data){
         return API_LOCATION + "/tutors/" + data["tutor_id"] + "/slots"
