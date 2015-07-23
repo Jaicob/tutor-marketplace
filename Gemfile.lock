@@ -65,6 +65,9 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    capybara-webkit (1.6.0)
+      capybara (>= 2.3.0, < 2.5.0)
+      json
     carrierwave (0.10.0)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
@@ -287,6 +290,7 @@ DEPENDENCIES
   bower-rails (~> 0.9.2)!
   byebug (~> 5.0)!
   capybara!
+  capybara-webkit!
   carrierwave (~> 0.10)!
   ci_reporter (~> 2.0)!
   ci_reporter_rspec (~> 1.0)!

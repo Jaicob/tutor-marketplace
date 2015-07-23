@@ -1,6 +1,6 @@
 class Dashboard::HomeController < DashboardController
 
-  def show
+  def index
   end
 
 end

@@ -19,10 +19,14 @@
 
 require_relative 'support/controller_helpers'
 require_relative 'support/request_helpers'
+require_relative 'support/session_helpers'
+require_relative 'support/serialize_matcher.rb'
 require 'devise'
 require 'capybara/rspec'
 
 RSpec.configure do |config|
+
+  config.include Features::SessionHelpers, type: :feature
 
   # Adds JSON helper method for API request specs
   config.include Requests::JsonHelpers, type: :request
@@ -104,4 +108,48 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 =end
+
+  # Capybara::Webkit.configure do |config|
+  # # Enable debug mode. Prints a log of everything the driver is doing.
+  # config.debug = true
+
+  # # By default, requests to outside domains (anything besides localhost) will
+  # # result in a warning. Several methods allow you to change this behavior.
+
+  # # Silently return an empty 200 response for any requests to unknown URLs.
+  # config.block_unknown_urls
+
+  # # Allow pages to make requests to any URL without issuing a warning.
+  # config.allow_unknown_urls
+
+  # # Allow a specifc domain without issuing a warning.
+  # config.allow_url("example.com")
+
+  # # Allow a specifc URL and path without issuing a warning.
+  # config.allow_url("example.com/some/path")
+
+  # # Wildcards are allowed in URL expressions.
+  # config.allow_url("*.example.com")
+
+  # # Silently return an empty 200 response for any requests to the given URL.
+  # config.block_url("example.com")
+
+  # # Timeout if requests take longer than 5 seconds
+  # config.timeout = 5
+
+  # # Don't raise errors when SSL certificates can't be validated
+  # config.ignore_ssl_errors
+
+  # # Don't load images
+  # config.skip_image_loading
+
+  # # Use a proxy
+  # config.use_proxy(
+  #   host: "example.com",
+  #   port: 1234,
+  #   user: "proxy",
+  #   pass: "secret"
+  # )
+  # end
+
 end

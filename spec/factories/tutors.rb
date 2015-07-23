@@ -29,7 +29,7 @@ FactoryGirl.define do
       end
   
       factory :complete_tutor do
-        association :user, factory: :alternate_user # To avoid validation restrictions with independent user factory v. this user that is genrated as part of a tutor factory
+        user
         rating 1
         active_status 0
         application_status 0
@@ -37,12 +37,12 @@ FactoryGirl.define do
         degree "B.A."
         major "Biology"
         graduation_year "2019"
-        phone_number "706-213-9987"
+        phone_number "555-555-5555"
         profile_pic Rack::Test::UploadedFile.new(File.open(File.join(Rails.root, '/spec/factories/files/profile_pic.jpg')))
       end
 
       factory :second_complete_tutor do 
-        association :user, factory: :second_alternate_user
+        user
         rating 1
         active_status 0
         birthdate '1995-05-10'

@@ -9,21 +9,17 @@
       <%= f.text_field :last_name %>
       <%= f.label :email %>
       <%= f.email_field :email %>
-      <%= f.label :slug, "Username" %>
-      <%= f.text_field :slug %>
-      <%= f.submit 'Update' %>
+      <%= f.submit 'Update Account Settings' %>
     <% end %>
 
     <% if @tutor %>
-      <%= form_for @tutor do |f| %>
+      <%= form_for @tutor, url: update_settings_tutor_path do |f| %>
         <h3>Tutor Settings</h3>
         <%= f.label :birthdate %>
         <%= f.date_field :birthdate %>
         <%= f.label :phone_number %>
         <%= f.telephone_field :phone_number %>
-        <p>You will only appear in search results for your classes if your status is set to active.</p>
-        <%= f.select(:active_status, [['Active'], ['Inactive']]) %>
-        <%= f.submit 'Update' %>
+        <%= f.submit 'Update Tutor Settings' %>
       <% end %>
     <% end %>
   </div>

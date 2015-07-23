@@ -34,7 +34,6 @@ RSpec.describe Course, type: :model do
 
   it "is invalid without a school_id" do
     expect(build(:course, school_id: nil)).not_to be_valid
-
   end
 
   it "is invalid without a subject" do 

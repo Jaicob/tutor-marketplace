@@ -37,6 +37,13 @@ FactoryGirl.define do
         create_list(:course, 2, school: school, subject: {name: 'Biology', id: 0})
       end
     end
+
+    factory :school_with_two_subjects do 
+      after(:create) do |school|
+        create(:course, school: school, subject: {name: 'Biology', id: 0})
+        create(:course, school: school, subject: {name: 'Chemistry', id: 1})
+      end
+    end
   end
 end
 
