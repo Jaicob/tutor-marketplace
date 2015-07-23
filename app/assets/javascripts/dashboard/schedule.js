@@ -36,18 +36,18 @@ $(document).ready(function() {
       title:    "Availability",
       start:    eventData.start_time,
       end:      eventData.end_time,
-      slot_id:  eventData.id 
+      slot_id:  eventData.id
     }
   }
 
   var eventSource = {
-    url: '/api/v1/tutors/' + tutor_id + '/slots.json',
+    url: API.endpoints.tutor_slots.get({ tutor_id: tutor_id }),
     eventDataTransform: formatDataAsEvent,
     color: 'yellow',   // a non-ajax option
     textColor: 'black' // a non-ajax option
   }
 
-  var beginSlotUpdate = function( event, jsEvent, ui, view) { 
+  var beginSlotUpdate = function( event, jsEvent, ui, view) {
     origninalStartTime = event.start.format('YYYY-MM-DD HH:mm:ss');
     originalEndTime = event.end.format('YYYY-MM-DD HH:mm:ss');
     tooltip.hide()
@@ -56,7 +56,7 @@ $(document).ready(function() {
   var updateSlotDuration = function( event, jsEvent, ui, view) {
     var jqxhr = $.ajax({
     type: "POST",
-    url: '/api/v1/tutors/' + tutor_id + '/slots/all', 
+    url: API.endpoints.tutor_slots.update({tutor_id: tutor_id}),
     data: {
       start_time: origninalStartTime,
       end_time: originalEndTime,
@@ -76,7 +76,8 @@ $(document).ready(function() {
   }
 
   var addSlot = function(event, jsEvent, ui ){
-    request = $.post('/api/v1/tutors/' + tutor_id + '/slots', {
+    endpoint = API.endpoints.tutor_slots.create({ tutor_id: tutor_id })
+    request = $.post(endpoint, {
       start_time : event.start.format('YYYY-MM-DD HH:mm:ss'),
       end_time : event.end.format('YYYY-MM-DD HH:mm:ss'),
       start_date: event.start.format('YYYY-MM-DD HH:mm:ss'),
@@ -96,11 +97,11 @@ $(document).ready(function() {
     alert("removing slots");
   }
 
-  var openEventEdit = function( event, jsEvent, view  ) { 
+  var openEventEdit = function( event, jsEvent, view  ) {
     //Constructs the popover for the event being clicked
     console.log(event);
-    var content = '<h3>'+ event.title+'</h3>' + 
-        '<p><b>Start:</b> ' + event.start.format('dddd hh:mm') + '</p> <br>' + 
+    var content = '<h3>'+ event.title+'</h3>' +
+        '<p><b>Start:</b> ' + event.start.format('dddd hh:mm') + '</p> <br>' +
         '<p><b>End:</b> '   + event.end.format('dddd hh:mm')  + '</p>  <hr>' +
         '<button class="button alert" onclick="removeSlots()"> Delete </button>';
 
@@ -136,7 +137,7 @@ $(document).ready(function() {
     });
   });
 
-  /* 
+  /*
    * Initialize the calendar
    */
   $('#calendar').fullCalendar({
@@ -159,7 +160,7 @@ $(document).ready(function() {
     },
     defaultView: 'agendaWeek',
     editable: true,
-    droppable: true, 
+    droppable: true,
     eventReceive : addSlot,
     eventResizeStart: beginSlotUpdate,
     eventResize: updateSlotDuration,

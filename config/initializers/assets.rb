@@ -10,5 +10,7 @@ Rails.application.config.assets.version = '1.0'
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 # Rails.application.config.assets.precompile += %w( search.js )
 
-Rails.application.config.assets.precompile += %w( jquery.Jcrop.min.css )
-Rails.application.config.assets.precompile += %w( jquery.Jcrop.min.js scheduling.js)
+Rails.application.config.assets.precompile += %w(
+	dashboard/courses.js
+	dashboard/schedule.js
+)
