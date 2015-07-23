@@ -1,9 +1,9 @@
 $(document).ready(function() {
 
   // Setup up qTip2 api for
-  var tooltip = $('div').qtip({
+  var tooltip = $('#calendar').qtip({
     id: 'fullcalendar',
-    prerender: true,
+    prerender: false,
     content: {
       text: ' ',
       title: {
@@ -93,30 +93,45 @@ $(document).ready(function() {
     })
   }
 
-  var removeSlots = function () {
-    alert("removing slots");
+  var removeSlots = function (event) {
+    swal("removing slot at ", event.data.start.toDate());
+    console.log("Called remove slots");
+    console.log("REM EVENT",event);
+  }
+
+  var AfterAllRender = function( view ) { 
+    //$('div').on( 'click', '#btn-rm-slots',  removeSlots);
+    console.log("Moving contetn");
   }
 
   var openEventEdit = function( event, jsEvent, view  ) { 
-    //Constructs the popover for the event being clicked
-    console.log(event);
-    var content = '<h3>'+ event.title+'</h3>' + 
-        '<p><b>Start:</b> ' + event.start.format('dddd hh:mm') + '</p> <br>' + 
-        '<p><b>End:</b> '   + event.end.format('dddd hh:mm')  + '</p>  <hr>' +
-        '<button class="button alert" onclick="removeSlots()"> Delete </button>';
+   $('div').off('click', '#btn-rm-slots');
+   $('div').on('click', '#btn-rm-slots',  event,removeSlots);
 
-      tooltip.set({
-        'content.text': content,
-        'position.target': $(this),
-        'show.effect':false,
-        'hide.target': $(this),
-        'hide.event': false
-      })
-      .reposition(event).show(event);
+    console.log("EVENT", this);
+    // var content = '<h3>'    + event.title + '</h3>' + 
+    //     '<p><b>Start:</b> ' + event.start.format('dddd hh:mm') + '</p> <br>' + 
+    //     '<p><b>End:</b> '   + event.end.format('dddd hh:mm')  + '</p>  <hr>' +
+    //     '<button id="btn-rm-slots" class="button alert" onclick="removeSlots()"> Delete </button>';
+    // var content = $("#slotpopover");
+    // content.detach().appendTo($("#calendar"));
+    // var content = $("#slotpopover");
+    // console.log(content);
+    // content.detach().appendTo(this.children().eq(2));
+
+        tooltip.set({
+          'content.text': $('#calendar').next('div').clone(true),//$(this).next('div'),
+          'position.target': $(this),
+          'show.effect':false,
+          'hide.target': $(this),
+          'hide.event': false
+        }).reposition(event).show(event);
   }
 
   var eventRender = function (event, element, view) {
     // Do stuff to event objects as they render. May not need to keep this.
+    // var content = $(".slotpopover");
+    // element.append(content);
   }
 
   /*
@@ -170,6 +185,8 @@ $(document).ready(function() {
     eventRender: eventRender, 
     dayClick: function() { tooltip.hide() },
     viewDisplay: function() { tooltip.hide() },
+    eventAfterAllRender: AfterAllRender
   });
+
 
 });

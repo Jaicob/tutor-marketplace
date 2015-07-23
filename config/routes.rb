@@ -107,6 +107,7 @@ Rails.application.routes.draw do
   resources :schools
   resources :subjects
   resources :tutor_courses
+  resources :slots
 
   resources :users, only: [], path: '' do
     member do

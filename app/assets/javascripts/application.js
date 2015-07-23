@@ -19,6 +19,7 @@
 //= require chained/jquery.chained.remote.min
 //= require Jcrop/js/Jcrop.min
 //= require qTip2/jquery.qtip.min.js
+//= require sweetalert
 
 //= require best_in_place
 //= require foundation

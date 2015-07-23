@@ -1,4 +1,6 @@
 <%= javascript_include_tag "scheduling.js" %>
+<%= include_gon %>
+<!-- <a id="slotpopover" data-url="/slots"></a> -->
 
 
 <div class="row">
@@ -18,6 +20,11 @@
   <div id="scheduling-container">
     <div id='wrap' class="columns medium-10">
       <div id='calendar'></div>
+
+      <div id="slotpopover" hidden="true">
+        <%= render 'edit_slot' %>
+      </div>
+
       <div style='clear:both'></div>
     </div>
     <div class="columns medium-2">
@@ -30,5 +37,7 @@
     </div>
   </div>
 </div>
+
+
 <% end %>
 
