@@ -5,6 +5,13 @@ class SlotManager
   attr_accessor :tutor, :original_start_time, :original_end_time, :new_start_time, :new_end_time, :slots
 
   def initialize(params)
+    # ex. params = (
+    #   tutor_id: 1, 
+    #   original_start_time: '2015-08-01 12:00:00', 
+    #   original_end_time: '2015-08-01 16:00:00', 
+    #   new_start_time: '2015-08-02 11:00:00', 
+    #   new_end_time: '2015-08-02 12:00:00')
+
     # Required
     @tutor = Tutor.find(params[:tutor_id]) 
     
