@@ -1,6 +1,9 @@
 class Dashboard::ProfileController < DashboardController
 
-  def show
+  def index
+  end
+
+  def edit
   end
 
 end

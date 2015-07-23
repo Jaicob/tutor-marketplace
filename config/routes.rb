@@ -114,15 +114,15 @@ Rails.application.routes.draw do
   resources :tutor_courses
 
 
-  resources :users, only: [], path: '' do
+  resources :users, only: [:update], path: '' do
     scope module: :dashboard do 
       member do
-          get  '/dashboard/home'         => 'home#show'
-          get  '/dashboard/schedule'     => 'schedule#show'
-          get  '/dashboard/courses'      => 'courses#show'
-          get  '/dashboard/profile'      => 'profile#show'
+          get  '/dashboard/home'         => 'home#index'
+          get  '/dashboard/schedule'     => 'schedule#index'
+          get  '/dashboard/courses'      => 'courses#index'
+          get  '/dashboard/profile'      => 'profile#index'
           get  '/dashboard/edit_profile' => 'profile#edit'
-          get  '/dashboard/settings'     => 'settings#show'
+          get  '/dashboard/settings'     => 'settings#index'
           get  '/dashboard/tutors'       => 'tutors#index'
       end
     end

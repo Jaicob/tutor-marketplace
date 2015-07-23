@@ -1,6 +1,6 @@
 require "rails_helper"
 
-feature "A tutor can edit their profile" do
+feature "Tutor Profile" do
   let(:user)  { create(:user) }
   let(:tutor) { create(:complete_tutor) }
 

@@ -47,7 +47,6 @@ module V1
           put ":tutor_course_id" do 
             @tutor_course = tutor_course
             @tutor_course.update_attributes(declared_params)
-            puts "DECLARED PARAMS = #{declared_params}"
             if @tutor_course.save
               @tutor_course
             else

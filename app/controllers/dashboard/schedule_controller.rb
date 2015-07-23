@@ -1,6 +1,6 @@
 class Dashboard::ScheduleController < DashboardController
 
-  def show
+  def index
   end
 
 end
