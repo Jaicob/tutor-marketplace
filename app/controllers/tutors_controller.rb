@@ -1,6 +1,6 @@
 class TutorsController < ApplicationController
   before_action :set_user, only: [:edit, :update, :destroy, :create_tutor_course]
-  before_action :set_tutor, only: [:show, :edit, :update, :destroy, :create_tutor_course]
+  before_action :set_tutor, only: [:show, :edit, :update, :update_settings, :destroy, :create_tutor_course]
   before_action :set_tutor_for_admin_or_visitor_sign_up, only: [:register_or_sign_in, :visitor_sign_in, :visitor_sign_up, :update_active_status, :destroy_by_admin]
 
   def index
@@ -40,7 +40,23 @@ class TutorsController < ApplicationController
     # This updates everything on a tutor object, except active_status which is only editable by Admin users and which is handled in the custom update_active_status action
     @tutor.update(tutor_params)
     @tutor.crop_profile_pic(tutor_params)
-    redirect_to dashboard_profile_user_path(current_user)
+    if @tutor.save
+      redirect_to dashboard_profile_user_path(current_user)
+    else
+      flash[:notice] = "Tutor was not updated: #{@tutor.errors.full_messages}"
+      redirect_to :back
+    end
+  end
+
+  # This is identical to the above Update action except that it redirects to the Dashboard Settings page rather than to a Tutor's profile. This action is used for updating a Tutor's birthdate and phone_number on the Dashboard Settings page.
+  def update_settings
+    @tutor.update(tutor_params)
+    if @tutor.save
+      redirect_to dashboard_settings_user_path(current_user)
+    else
+      flash[:notice] = "Tutor was not updated: #{@tutor.errors.full_messages}"
+      redirect_to :back
+    end
   end
 
   def destroy

@@ -1,6 +1,7 @@
 class Dashboard::CoursesController < DashboardController
 
-  def show
+  def index
+    @tutor_course = TutorCourse.new
   end
 
 end

@@ -1,4 +1,3 @@
-
 # This allows Devise sign-up and sign-in for FEATURE TESTS #######
 
 module Features

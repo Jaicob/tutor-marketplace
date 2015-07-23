@@ -10,6 +10,7 @@ source "https://rubygems.org" do
     gem "factory_girl_rails", "~> 4.5"
     gem "faker", "~> 1.4"
     gem 'capybara'
+    gem 'capybara-webkit'
   end
 
   group :development do
