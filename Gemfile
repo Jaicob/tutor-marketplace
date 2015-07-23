@@ -10,6 +10,7 @@ source "https://rubygems.org" do
     gem "factory_girl_rails", "~> 4.5"
     gem "faker", "~> 1.4"
     gem 'capybara'
+    gem 'capybara-webkit'
   end
 
   group :development do
@@ -54,5 +55,4 @@ source "https://rubygems.org" do
   gem "sass-rails", "~> 5.0"
   gem "foundation-rails", "~> 5.5"
   gem "foundation-icons-sass-rails", "~> 3.0"
-  gem "best_in_place", "~> 3.0"
 end

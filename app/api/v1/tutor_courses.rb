@@ -11,10 +11,11 @@ module V1
       end
 
       params do 
-        optional :id, type: Integer 
-        optional :tutor_id, type: Integer
-        optional :course_id, type: Integer 
-        optional :rate, type: String
+        optional :id,         type: Integer 
+        optional :tutor_id,   type: Integer
+        optional :course_id,  type: Integer 
+        optional :rate,       type: Integer
+        optional :rate,       type: String
       end
 
     resource :tutors do 
@@ -22,8 +23,13 @@ module V1
         resource :tutor_courses do
 
           helpers do 
+
             def tutor
               tutor = Tutor.find(params[:tutor_id])
+            end
+
+            def tutor_course
+              TutorCourse.find(params[:tutor_course_id])
             end
           end
 
@@ -34,7 +40,18 @@ module V1
 
           desc "Returns one of a tutor's tutor_courses"
           get ":tutor_course_id" do
-            TutorCourse.find(params[:tutor_course_id])
+            tutor_course
+          end
+
+          desc "Updates a tutor_course"
+          put ":tutor_course_id" do 
+            @tutor_course = tutor_course
+            @tutor_course.update_attributes(declared_params)
+            if @tutor_course.save
+              @tutor_course
+            else
+              "Tutor Course was not updated: #{@tutor_course.errors.full_messages}"
+            end
           end
 
         end

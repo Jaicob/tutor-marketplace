@@ -36,18 +36,18 @@ $(document).ready(function() {
       title:    "Availability",
       start:    eventData.start_time,
       end:      eventData.end_time,
-      slot_id:  eventData.id 
+      slot_id:  eventData.id
     }
   }
 
   var eventSource = {
-    url: '/api/v1/tutors/' + tutor_id + '/slots.json',
+    url: API.endpoints.tutor_slots.get({ tutor_id: tutor_id }),
     eventDataTransform: formatDataAsEvent,
     color: 'yellow',   // a non-ajax option
     textColor: 'black' // a non-ajax option
   }
 
-  var beginSlotUpdate = function( event, jsEvent, ui, view) { 
+  var beginSlotUpdate = function( event, jsEvent, ui, view) {
     origninalStartTime = event.start.format('YYYY-MM-DD HH:mm:ss');
     originalEndTime = event.end.format('YYYY-MM-DD HH:mm:ss');
     tooltip.hide()
@@ -58,7 +58,7 @@ $(document).ready(function() {
     console.log("DELTA", secs);
     var jqxhr = $.ajax({
     type: "POST",
-    url: '/api/v1/tutors/' + tutor_id + '/slots/all', 
+    url: API.endpoints.tutor_slots.update({tutor_id: tutor_id}),
     data: {
       original_start_time: origninalStartTime,
       original_end_time: originalEndTime,
@@ -79,7 +79,8 @@ $(document).ready(function() {
   }
 
   var addSlot = function(event, jsEvent, ui ){
-    request = $.post('/api/v1/tutors/' + tutor_id + '/slots', {
+    endpoint = API.endpoints.tutor_slots.create({ tutor_id: tutor_id })
+    request = $.post(endpoint, {
       start_time : event.start.format('YYYY-MM-DD HH:mm:ss'),
       end_time : event.end.format('YYYY-MM-DD HH:mm:ss'),
       start_date: event.start.format('YYYY-MM-DD HH:mm:ss'),
@@ -126,7 +127,7 @@ $(document).ready(function() {
           'hide.target': $(this),
           'hide.event': false
         }).reposition(event).show(event);
-  }
+  } 
 
   var eventRender = function (event, element, view) {
     // Do stuff to event objects as they render. May not need to keep this.
@@ -152,7 +153,7 @@ $(document).ready(function() {
     });
   });
 
-  /* 
+  /*
    * Initialize the calendar
    */
   $('#calendar').fullCalendar({
@@ -175,7 +176,7 @@ $(document).ready(function() {
     },
     defaultView: 'agendaWeek',
     editable: true,
-    droppable: true, 
+    droppable: true,
     eventReceive : addSlot,
     eventResizeStart: beginSlotUpdate,
     eventResize: updateSlotDuration,

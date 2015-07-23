@@ -21,14 +21,14 @@ FactoryGirl.define do
     school
 
     factory :invalid_course do
-      subject nil
+      subject   nil
     end
 
     factory :second_course do
-      subject 2
-      call_number 202
-      friendly_name "Cellular Biology"
-      association :school, factory: :second_school
+      subject         subject_hash
+      call_number     202
+      friendly_name   "Cellular Biology"
+      association     :school, factory: :second_school
     end
   end
 end

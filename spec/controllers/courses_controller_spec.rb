@@ -3,8 +3,9 @@ require 'rails_helper'
 describe CoursesController do 
   let(:course) { create(:course) }
   let(:invalid_course) { create(:invalid_course)}
-  let(:course_attributes) { attributes_for(:course, school_id: create(:school).id ) }
+  let(:course_attributes) { attributes_for(:course, school_id: school.id) }
   let(:invalid_course_attributes) { attributes_for(:invalid_course) }
+  let(:school) { create(:school) }
 
   describe 'GET #index' do 
     

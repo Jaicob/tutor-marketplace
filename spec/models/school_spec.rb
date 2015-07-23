@@ -31,7 +31,7 @@ RSpec.describe School, type: :model do
   end
 
   it "returns a list of its unique subjects with .subjects" do
-    school = create(:school_with_two_courses)
-    expect(school.courses.count).to eq(2)
+    school = create(:school_with_two_subjects)
+    expect(school.subjects.count).to eq(2)
   end
 end

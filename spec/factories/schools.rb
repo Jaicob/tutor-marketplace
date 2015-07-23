@@ -26,7 +26,7 @@ FactoryGirl.define do
       location "Chapel Hill, NC"
     end
 
-    factory :school_with_two_courses do 
+    factory :school_with_chem_courses do 
       after(:create) do |school|
         create_list(:course, 2, school: school)
       end
@@ -34,7 +34,14 @@ FactoryGirl.define do
 
     factory :school_with_bio_courses do 
       after(:create) do |school|
-        create_list(:course, 2, school: school, subject: 'biology')
+        create_list(:course, 2, school: school, subject: {name: 'Biology', id: 0})
+      end
+    end
+
+    factory :school_with_two_subjects do 
+      after(:create) do |school|
+        create(:course, school: school, subject: {name: 'Biology', id: 0})
+        create(:course, school: school, subject: {name: 'Chemistry', id: 1})
       end
     end
   end
