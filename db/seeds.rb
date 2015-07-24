@@ -76,6 +76,6 @@ end
 
 # Create Slots for each Tutor
 Tutor.all.each do |tutor|
-  slot_creator = SlotCreator.new(tutor_id: tutor.id, start_time: '2015-08-01 12:00', end_time: '2015-08-01 16:00', weeks_to_repeat: 18)
+  slot_creator = SlotCreator.new(tutor_id: tutor.id, start_time: '2015-08-01 12:00', duration: 2, weeks_to_repeat: 18)
   slot_creator.create_slots
 end
