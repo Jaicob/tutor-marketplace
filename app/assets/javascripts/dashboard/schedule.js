@@ -50,7 +50,7 @@ $(document).ready(function() {
   var beginSlotUpdate = function( event, jsEvent, ui, view) {
     origninalStartTime = event.start.format('YYYY-MM-DD HH:mm:ss');
     originalEndTime = event.end.format('YYYY-MM-DD HH:mm:ss');
-    tooltip.hide()
+    tooltip.hide();
   }
 
   var updateSlotDuration = function( event, delta, revertFunc, jsEvent, ui, view ) {
@@ -74,6 +74,7 @@ $(document).ready(function() {
       alert('failure',data,status);
       console.log(data, status);
       revertFunc();
+      }
     });
   }
 
