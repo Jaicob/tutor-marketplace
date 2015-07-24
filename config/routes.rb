@@ -126,10 +126,11 @@ Rails.application.routes.draw do
           get  '/dashboard/tutors'       => 'tutors#index'
       end
     end
+
+
   end
 
-  # scope module: :admin do 
-  namespace :admin do
+  namespace :admin do 
     resources :courses
     resources :schools
     resources :tutors
