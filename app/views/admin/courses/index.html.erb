@@ -1,0 +1,41 @@
+<div class="row">
+  <div class="large-12 columns">
+    <h1>Courses</h1>
+  </div>
+</div>
+
+<div class="row">
+  <div class="large-12 columns">
+    <%= link_to 'Add New Course', new_course_path, class: 'button secondary' %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="large-12 columns">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th width='300'>School</th>
+          <th width='150'>Subject</th>
+          <th width='150'>Call Number</th>
+          <th width='300'>Friendly Name</th>
+          <th>Tutors</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @courses.each do |course| %>
+        <tr>
+          <td><%= course.id %></td>
+          <td><%= course.school_name %></td>
+          <td><%= course.subject[:name] %></td>
+          <td><%= course.call_number %></td>
+          <td><%= course.friendly_name %></td>
+          <td><%= course.tutors.count %></td>
+          <td><%= link_to 'View', admin_course_path(course) %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

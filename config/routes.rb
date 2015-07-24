@@ -128,6 +128,13 @@ Rails.application.routes.draw do
     end
   end
 
+  # scope module: :admin do 
+  namespace :admin do
+    resources :courses
+    resources :schools
+    resources :tutors
+  end
+
   root to: "static_pages#home"
 
   mount API => '/'

@@ -20,8 +20,8 @@
       <tbody>
         <tr>
           <td><%= @school.id %>
-          <td><%= best_in_place @school, :name, :as => :input %></td>
-          <td><%= best_in_place @school, :location, :as => :input %></td>
+          <td><%= @school.name %></td>
+          <td><%= @school.location %></td>
           <td></td>
           <td></td>
           <td></td>
@@ -35,7 +35,7 @@
   <div class="large-12 columns">
     <h4>Are you sure you want to delete this school?</h4>
 
-    <%= form_for @school, method: 'delete' do |f| %>
+    <%= form_for @school, url: "/admin/schools/#{@school.id}", method: 'delete' do |f| %>
       <%= f.submit 'Delete School', class: 'button expand alert' %>
     <% end %>
     
