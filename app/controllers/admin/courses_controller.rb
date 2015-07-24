@@ -30,7 +30,7 @@ class Admin::CoursesController < AdminController
     if @course.update(course_params)
       redirect_to admin_course_path(@course)
     else
-      flash[:notice] = "Course was not updated: #{@course.errors.full_messages}"
+      flash[:error] = "Course was not updated: #{@course.errors.full_messages}"
       render :edit
     end
   end
