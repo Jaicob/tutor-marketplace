@@ -41,30 +41,6 @@
 #         new_user_invitation GET    /users/invitation/new(.:format)            devise/invitations#new
 #                             PATCH  /users/invitation(.:format)                devise/invitations#update
 #                             PUT    /users/invitation(.:format)                devise/invitations#update
-#                     courses GET    /courses(.:format)                         courses#index
-#                             POST   /courses(.:format)                         courses#create
-#                  new_course GET    /courses/new(.:format)                     courses#new
-#                 edit_course GET    /courses/:id/edit(.:format)                courses#edit
-#                      course GET    /courses/:id(.:format)                     courses#show
-#                             PATCH  /courses/:id(.:format)                     courses#update
-#                             PUT    /courses/:id(.:format)                     courses#update
-#                             DELETE /courses/:id(.:format)                     courses#destroy
-#                     schools GET    /schools(.:format)                         schools#index
-#                             POST   /schools(.:format)                         schools#create
-#                  new_school GET    /schools/new(.:format)                     schools#new
-#                 edit_school GET    /schools/:id/edit(.:format)                schools#edit
-#                      school GET    /schools/:id(.:format)                     schools#show
-#                             PATCH  /schools/:id(.:format)                     schools#update
-#                             PUT    /schools/:id(.:format)                     schools#update
-#                             DELETE /schools/:id(.:format)                     schools#destroy
-#                    subjects GET    /subjects(.:format)                        subjects#index
-#                             POST   /subjects(.:format)                        subjects#create
-#                 new_subject GET    /subjects/new(.:format)                    subjects#new
-#                edit_subject GET    /subjects/:id/edit(.:format)               subjects#edit
-#                     subject GET    /subjects/:id(.:format)                    subjects#show
-#                             PATCH  /subjects/:id(.:format)                    subjects#update
-#                             PUT    /subjects/:id(.:format)                    subjects#update
-#                             DELETE /subjects/:id(.:format)                    subjects#destroy
 #               tutor_courses GET    /tutor_courses(.:format)                   tutor_courses#index
 #                             POST   /tutor_courses(.:format)                   tutor_courses#create
 #            new_tutor_course GET    /tutor_courses/new(.:format)               tutor_courses#new
@@ -73,15 +49,39 @@
 #                             PATCH  /tutor_courses/:id(.:format)               tutor_courses#update
 #                             PUT    /tutor_courses/:id(.:format)               tutor_courses#update
 #                             DELETE /tutor_courses/:id(.:format)               tutor_courses#destroy
-#         dashboard_home_user GET    /:id/dashboard/home(.:format)              dashboard/home#index
-#     dashboard_schedule_user GET    /:id/dashboard/schedule(.:format)          dashboard/schedule#index
-#      dashboard_courses_user GET    /:id/dashboard/courses(.:format)           dashboard/courses#index
-#      dashboard_profile_user GET    /:id/dashboard/profile(.:format)           dashboard/profile#index
-# dashboard_edit_profile_user GET    /:id/dashboard/edit_profile(.:format)      dashboard/profile#edit
-#     dashboard_settings_user GET    /:id/dashboard/settings(.:format)          dashboard/settings#index
-#       dashboard_tutors_user GET    /:id/dashboard/tutors(.:format)            dashboard/tutors#index
+#         home_dashboard_user GET    /:id/dashboard/home(.:format)              dashboard/home#index
+#     schedule_dashboard_user GET    /:id/dashboard/schedule(.:format)          dashboard/schedule#index
+#      courses_dashboard_user GET    /:id/dashboard/courses(.:format)           dashboard/courses#index
+#      profile_dashboard_user GET    /:id/dashboard/profile(.:format)           dashboard/profile#index
+# edit_profile_dashboard_user GET    /:id/dashboard/edit_profile(.:format)      dashboard/profile#edit
+#     settings_dashboard_user GET    /:id/dashboard/settings(.:format)          dashboard/settings#index
+#       tutors_dashboard_user GET    /:id/dashboard/tutors(.:format)            dashboard/tutors#index
 #                        user PATCH  /:id(.:format)                             users#update
 #                             PUT    /:id(.:format)                             users#update
+#               admin_courses GET    /admin/courses(.:format)                   admin/courses#index
+#                             POST   /admin/courses(.:format)                   admin/courses#create
+#            new_admin_course GET    /admin/courses/new(.:format)               admin/courses#new
+#           edit_admin_course GET    /admin/courses/:id/edit(.:format)          admin/courses#edit
+#                admin_course GET    /admin/courses/:id(.:format)               admin/courses#show
+#                             PATCH  /admin/courses/:id(.:format)               admin/courses#update
+#                             PUT    /admin/courses/:id(.:format)               admin/courses#update
+#                             DELETE /admin/courses/:id(.:format)               admin/courses#destroy
+#               admin_schools GET    /admin/schools(.:format)                   admin/schools#index
+#                             POST   /admin/schools(.:format)                   admin/schools#create
+#            new_admin_school GET    /admin/schools/new(.:format)               admin/schools#new
+#           edit_admin_school GET    /admin/schools/:id/edit(.:format)          admin/schools#edit
+#                admin_school GET    /admin/schools/:id(.:format)               admin/schools#show
+#                             PATCH  /admin/schools/:id(.:format)               admin/schools#update
+#                             PUT    /admin/schools/:id(.:format)               admin/schools#update
+#                             DELETE /admin/schools/:id(.:format)               admin/schools#destroy
+#                admin_tutors GET    /admin/tutors(.:format)                    admin/tutors#index
+#                             POST   /admin/tutors(.:format)                    admin/tutors#create
+#             new_admin_tutor GET    /admin/tutors/new(.:format)                admin/tutors#new
+#            edit_admin_tutor GET    /admin/tutors/:id/edit(.:format)           admin/tutors#edit
+#                 admin_tutor GET    /admin/tutors/:id(.:format)                admin/tutors#show
+#                             PATCH  /admin/tutors/:id(.:format)                admin/tutors#update
+#                             PUT    /admin/tutors/:id(.:format)                admin/tutors#update
+#                             DELETE /admin/tutors/:id(.:format)                admin/tutors#destroy
 #                        root GET    /                                          static_pages#home
 #                         api        /                                          API
 #
@@ -94,9 +94,6 @@ Rails.application.routes.draw do
       get 'register_or_sign_in'
       get 'visitor_sign_in'
       get 'visitor_sign_up'
-      # Custom routes  for Admin to update tutors
-      put 'update_active_status'
-      delete 'destroy_by_admin'
       # Custom route for redirect back to Dashboard settings page after update
       patch 'update_settings'
     end
@@ -108,11 +105,7 @@ Rails.application.routes.draw do
   end
 
   devise_for :users
-  resources :courses
-  resources :schools
-  resources :subjects
   resources :tutor_courses
-
 
   resources :users, only: [:update], path: '' do
     member do
@@ -125,43 +118,14 @@ Rails.application.routes.draw do
         get  '/settings'     => 'settings#index'
         get  '/tutors'       => 'tutors#index'
       end
-      namespace :admin do
-        resources :courses
-        resources :schools
-        resources :tutors 
-      end
     end
   end
 
-  # resources :users, only: [:update], path: '' do
-  #   scope module: :dashboard do 
-  #     member do
-  #         get  '/dashboard/home'         => 'home#index'
-  #         get  '/dashboard/schedule'     => 'schedule#index'
-  #         get  '/dashboard/courses'      => 'courses#index'
-  #         get  '/dashboard/profile'      => 'profile#index'
-  #         get  '/dashboard/edit_profile' => 'profile#edit'
-  #         get  '/dashboard/settings'     => 'settings#index'
-  #         get  '/dashboard/tutors'       => 'tutors#index'
-  #     end
-  #   end
-  #   scope module: :admin do 
-  #     member do
-  #       resources :courses
-  #       resources :schools
-  #       resources :tutors
-  #     end
-  #   end
-  # end
-
-
-
-
-  # namespace :admin do 
-  #   resources :courses
-  #   resources :schools
-  #   resources :tutors
-  # end
+  namespace :admin do
+    resources :courses
+    resources :schools
+    resources :tutors
+  end
 
   root to: "static_pages#home"
 
