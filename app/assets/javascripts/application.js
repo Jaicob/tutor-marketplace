@@ -23,7 +23,7 @@
 
 //= require foundation
 //= require ./base.js
-//= require_tree ./dashboard
+//= require ./dashboard/courses.js
 
 $(function() {
   $(document).foundation();
