@@ -6,7 +6,7 @@
 #  tutor_id        :integer
 #  status          :integer          default(0)
 #  start_time      :datetime
-#  end_time        :datetime
+#  duration        :integer
 #  reservation_min :integer
 #  reservation_max :integer
 #  created_at      :datetime         not null
@@ -29,8 +29,8 @@ RSpec.describe Slot, type: :model do
     expect(build(:slot, start_time: nil)).not_to be_valid
   end
 
-  it "is invalid without an end_time" do
-    expect(build(:slot, end_time: nil)).not_to be_valid
+  it "is invalid without a duration" do
+    expect(build(:slot, duration: nil)).not_to be_valid
   end
 
   it "is given a default status of 'Open'" do 

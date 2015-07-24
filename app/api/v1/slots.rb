@@ -14,20 +14,22 @@ module V1
       end
 
       params do 
-        optional  :id,                  type: Integer     
+        optional  :id,                  type: Integer 
+        optional  :tutor_id,            type: Integer
+
+        # params for SlotCreators
         optional  :status,              type: Integer  
         optional  :start_time,          type: String
-        optional  :end_time,            type: String
+        optional  :duration,            type: Integer
+        optional  :weeks_to_repeat,     type: Integer
         optional  :reservation_min,     type: Integer
         optional  :reservation_max,     type: Integer
-        optional  :tutor_id,            type: Integer
-        optional  :start_date,          type: String
-        optional  :end_date,            type: String
+
+        # Params for SlotManagers
         optional  :original_start_time, type: String
-        optional  :original_end_time,   type: String
+        optional  :original_duration,   type: Integer
         optional  :new_start_time,      type: String
-        optional  :new_end_time,        type: String
-        optional  :weeks_to_repeat,     type: Integer
+        optional  :new_duration,        type: Integer
       end
       
 

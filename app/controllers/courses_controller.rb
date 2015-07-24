@@ -15,7 +15,8 @@ class CoursesController < ApplicationController
     if @course.save
       redirect_to @course
     else
-      render :new, error: "Course was not created."
+      flash[:error] = "Course was not updated: #{@course.errors.full_messages}"
+      render :new
     end
   end
 
@@ -23,12 +24,11 @@ class CoursesController < ApplicationController
   end
 
   def update
-    respond_to do |format|
-      if @course.update_attributes(course_params)
-        format.json { respond_with_bip(@course)}
-      else
-        format.json { respond_with_bip(@course)}
-      end
+    if @course.update(course_params)
+      redirect_to @course
+    else
+      flash[:error] = "Course was not updated: #{@course.errors.full_messages}"
+      render :edit
     end
   end
 
