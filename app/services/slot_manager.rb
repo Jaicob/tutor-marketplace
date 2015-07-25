@@ -70,7 +70,12 @@ class SlotManager
   # Destroy all sots that match the range
   def destroy_slots
     get_slots_for_range
-    @slots.destroy_all
+    @slot_ids = []
+    @slots.each do |slot|
+      @slot_ids << slot.id
+      slot.destroy 
+    end
+    @slot_ids
   end
 
 end

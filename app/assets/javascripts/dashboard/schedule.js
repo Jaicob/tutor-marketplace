@@ -105,9 +105,8 @@ $(document).ready(function() {
   var addSlot = function(event, jsEvent, ui ){
     var duration = moment.duration(event.end.diff(event.start));
     var seconds = duration.asSeconds();
-    console.log("DURATION", seconds);
+    var endpoint = API.endpoints.tutor_slots.create({ tutor_id: tutor_id });
 
-    var endpoint = API.endpoints.tutor_slots.create({ tutor_id: tutor_id })
     request = $.post(endpoint, {
       start_time : event.start.format('YYYY-MM-DD HH:mm:ss'),
       duration: seconds,
@@ -122,9 +121,40 @@ $(document).ready(function() {
   }
 
   var removeSlots = function (event) {
+    tooltip.hide();
+    var duration = moment.duration(event.data.end.diff(event.data.start)).asSeconds();
     swal("removing slot at ", event.data.start.toDate());
     console.log("Called remove slots");
-    console.log("REM EVENT",event);
+    console.log("REM EVENT",event.data);
+    var jqxhr = $.ajax({
+      type: "DELETE",
+      url: API.endpoints.tutor_slots.update({tutor_id: tutor_id}),
+      data: {
+        original_start_time: event.data.start.format('YYYY-MM-DD HH:mm:ss'),
+        original_duration: duration,
+        new_start_time: event.data.start.format('YYYY-MM-DD HH:mm:ss'),
+        new_duration: 1
+
+      },
+      dataType: "json",
+      success: function(data){
+        alert('success');
+        $('#calendar').fullCalendar('removeEvents', function(event){
+          console.log("GHGHGHHG", (data.indexOf(event.slot_id) > -1), "DATA",data, "EVENT",event.slot_id);
+          if ( data.indexOf(event.slot_id) > -1 ) {
+            return true;
+          } else {
+            return false;
+          }
+        });
+      },
+      error: function(data, status){
+        //If failure should refetch events
+        alert('failure',data,status);
+        console.log(data, status);
+      }
+    });
+
   }
 
   var AfterAllRender = function( view ) { 
@@ -133,10 +163,10 @@ $(document).ready(function() {
 
   var openEventEdit = function( event, jsEvent, view  ) { 
     $('div').off('click', '#btn-rm-slots');
-    $('div').on('click', '#btn-rm-slots',  event,removeSlots);
+    $('div').on('click', '#btn-rm-slots',  event, removeSlots);
     console.log("EVENT", this);
     tooltip.set({
-      'content.text': $('#calendar').next('div').clone(true),//$(this).next('div'),
+      'content.text': $('#calendar').next('div').clone(true),
       'position.target': $(this),
       'show.effect':false,
       'hide.target': $(this),
@@ -162,8 +192,8 @@ $(document).ready(function() {
       weeksToRepeat: $("#weeksToRepeat").val()
     });
 
-    // make the event draggable using jQuery UI
-    $(this).draggable({
+  // make the event draggable using jQuery UI
+  $(this).draggable({
       zIndex: 999,
       revert: true,      // will cause the event to go back to its
       revertDuration: 0  //  original position after the drag
@@ -178,8 +208,8 @@ $(document).ready(function() {
       stick: false // maintain when user navigates (see docs on the renderEvent method)
     });
 
-    // make the event draggable using jQuery UI
-    $(this).draggable({
+  // make the event draggable using jQuery UI
+  $(this).draggable({
       zIndex: 999,
       revert: true,      // will cause the event to go back to its
       revertDuration: 0  //  original position after the drag
@@ -221,6 +251,5 @@ $(document).ready(function() {
     viewDisplay: function() { tooltip.hide() },
     eventAfterAllRender: AfterAllRender
   });
-
 
 });
