@@ -36,7 +36,8 @@ $(document).ready(function() {
       title:    "Availability",
       start:    eventData.start_time,
       end:      end_time,
-      slot_id:  eventData.id
+      slot_id:  eventData.id,
+      status:   eventData.status
     }
   }
 
@@ -103,22 +104,40 @@ $(document).ready(function() {
     request = $.post(endpoint, {
       start_time : event.start.format('YYYY-MM-DD HH:mm:ss'),
       duration: seconds,
-      weeks_to_repeat: 2,
+      weeks_to_repeat: event.weeksToRepeat,
     })
     request.success(function(data){
-      alert("Success!");
-      event.slot_id = data[0].slot_id;
-      $('#calendar').fullCalendar( 'updateEvent', event );
+      console.log("DATA",data);
+      event.slot_id = data[0].id;
+      event.status = data[0].status;
+      $('#calendar').fullCalendar('updateEvent', event);
     });
     request.error(function(data){
       alert("Error!");
     })
   }
 
-  var askToRemoveSlots = function (event) {
+  var routeEvent = function (event) {
     tooltip.hide();
-    $('div').off('click', '#btn-rm-slots');
+    $('div').off('click', '.cal-menu-item');
 
+    var action = event.currentTarget.id;
+    switch (action) {
+      case 'btn-show-slot':
+        showDetails(event);
+        break;
+      case 'btn-rm-slots':
+        askToRemoveSlots(event);
+        break;
+      case 'btn-block-slot':
+        blockSlot(event);
+        break;
+      default:
+        swal('Invalid Selection','error')
+    }
+  }
+
+  var askToRemoveSlots = function (event) {
     swal({title: "Are you sure?",   
           text: "This availability will be permanently deleted",   
           type: "warning",   
@@ -149,7 +168,6 @@ $(document).ready(function() {
         $('#calendar').fullCalendar('removeEvents', function(event){  
           var isStartMatch = (event.start.format('DD HH:mm:ss') === callingEvent.data.start.format('DD HH:mm:ss'));
           var isEndMatch = (event.end.format('DD HH:mm:ss') === callingEvent.data.end.format('DD HH:mm:ss'));
-          console.log("startDiff", isStartMatch, "endDiff",isEndMatch);
           return ( isStartMatch && isEndMatch ) ?  true :  false;
         });
       },
@@ -162,21 +180,51 @@ $(document).ready(function() {
   }
 
   var showDetails = function(event) {
-    swal("Details", "It's pretty, isn't it?")
     swal({ 
-          title: "<small>Details</small>!",   
-          text: "Start: " + event.data.start.format('DD HH:mm:ss') + "<br> End: " + event.data.end.format('DD HH:mm:ss'),   
+          title: "Details",   
+          text: "Start: " + event.data.start.format('dddd HH:mm:ss') + "<br> End: " + event.data.end.format('dddd HH:mm:ss'),   
           html: true 
         });
   }
 
-  var blockSlot = function() {
+  var blockSlot = function(event) {  
+    $.ajax({
+      type: "PUT",
+      url: API.endpoints.tutor_slots.update({tutor_id: tutor_id}) + '/' + event.data.slot_id,
+      data: {
+        status: 1 //Blocked TODO: make an enumeration in js for this?
+      },
+      dataType: "json",
+      success: function(data){
+        console.log("Success");
+        event.data.status = data.status;
+        event.backgroundColor = 'lightgrey';
+        $('#calendar').fullCalendar('updateEvent', event.data);
+      },
+      error: function(data, status){
+        console.log("failure,", data, status);
+        alert('failure',data,status);
+      }
+    });
+  }
 
+  var eventRender = function( event, element, view ) { 
+    console.log("RENDERING:",event.status);
+    switch (event.status) {
+      case "Open":
+         console.log('non-blocked');
+         break;
+      case "Blocked":
+        console.log('blocked');
+        element.css('background-color', 'lightgrey');
+        break;
+    }
   }
 
   var openEventEdit = function( event, jsEvent, view  ) { 
-    $('div').off('click', '#btn-rm-slots');
-    $('div').on('click', '#btn-rm-slots',  event, askToRemoveSlots);
+    $('div').off('click', '.cal-menu-item');
+    $('div').on('click', '.cal-menu-item',  event, routeEvent);
+
     tooltip.set({
       'content.text': $('#calendar').next('div').clone(true),
       'position.target': $(this),
@@ -195,7 +243,7 @@ $(document).ready(function() {
       title: $.trim($(this).text()), // use the element's text as the event title
       overlap: false,
       stick: false, // maintain when user navigates (see docs on the renderEvent method)
-      weeksToRepeat: $("#weeksToRepeat").val()
+      weeksToRepeat: 2//$("#weeksToRepeat").val() TODO add ui from aj
     });
 
   // make the event draggable using jQuery UI
@@ -211,7 +259,8 @@ $(document).ready(function() {
     $(this).data('event', {
       title: $.trim($(this).text()), // use the element's text as the event title
       overlap: false,
-      stick: false // maintain when user navigates (see docs on the renderEvent method)
+      stick: false,
+      weeksToRepeat: 1 // maintain when user navigates (see docs on the renderEvent method)
     });
 
   // make the event draggable using jQuery UI
@@ -252,6 +301,7 @@ $(document).ready(function() {
     eventDragStart: beginSlotUpdate,
     eventDrop: updateSlotDurationDrop,
     eventClick: openEventEdit,
+    eventRender: eventRender,
     dayClick: function() { tooltip.hide() },
     viewDisplay: function() { tooltip.hide() },
   });
