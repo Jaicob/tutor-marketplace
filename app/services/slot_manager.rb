@@ -31,17 +31,9 @@ class SlotManager
   def get_slots_for_range
     @slots = []
     @tutor.slots.each do |slot|
-
-      puts "GOT SLOT"
-     
       @slot_start_DOW_time = slot.start_time.strftime('%a %T')
       @slot_duration = slot.duration
-
-      puts "Current: #{@slot_start_DOW_time}"
-      puts "Original: #{@original_start_DOW_time}"
-      puts "Current: #{@slot_duration}"
-      puts "Original: #{@original_duration}"
-      
+        
       if @slot_start_DOW_time == @original_start_DOW_time && @slot_duration == @original_duration
         @slots << slot
         puts "ADDED SLOT"
@@ -52,17 +44,11 @@ class SlotManager
 
   # Load slots and update all that match the range
   def update_slots
-    puts "Updating AHHHHHHHHHHHHHHHHH"
     get_slots_for_range
     @slots.each do |slot|
-      # slot.update(
-      #   start_time: (slot.start_time + @start_adjustment.seconds),
-      #   duration: @new_duration
-      #   )
       slot.start_time = slot.start_time + @start_adjustment.seconds
       slot.duration = @new_duration
       slot.save
-      puts "Saved Slot AHHHHHHHHHHHHHHHHH"
     end
     @slots
   end
