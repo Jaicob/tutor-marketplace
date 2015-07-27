@@ -31,12 +31,12 @@ class SlotManager
   def get_slots_for_range
     @slots = []
     @tutor.slots.each do |slot|
-     
       @slot_start_DOW_time = slot.start_time.strftime('%a %T')
       @slot_duration = slot.duration
-      
+        
       if @slot_start_DOW_time == @original_start_DOW_time && @slot_duration == @original_duration
         @slots << slot
+        puts "ADDED SLOT"
       end
     end
     @slots
@@ -46,10 +46,8 @@ class SlotManager
   def update_slots
     get_slots_for_range
     @slots.each do |slot|
-      slot.update(
-        start_time: (slot.start_time + @start_adjustment.seconds),
-        duration: @new_duration
-        )
+      slot.start_time = slot.start_time + @start_adjustment.seconds
+      slot.duration = @new_duration
       slot.save
     end
     @slots
@@ -58,7 +56,12 @@ class SlotManager
   # Destroy all sots that match the range
   def destroy_slots
     get_slots_for_range
-    @slots.destroy_all
+    @slot_ids = []
+    @slots.each do |slot|
+      @slot_ids << slot.id
+      slot.destroy 
+    end
+    @slot_ids
   end
 
 end

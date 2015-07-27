@@ -19,10 +19,11 @@
 //= require chained/jquery.chained.remote.min
 //= require Jcrop/js/Jcrop.min
 //= require qTip2/jquery.qtip.min.js
+//= require sweetalert
 
 //= require foundation
 //= require ./base.js
-//= require_tree ./dashboard
+//= require ./dashboard/courses.js
 
 $(function() {
   $(document).foundation();
