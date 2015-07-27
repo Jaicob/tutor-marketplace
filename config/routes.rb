@@ -112,6 +112,7 @@ Rails.application.routes.draw do
   resources :schools
   resources :subjects
   resources :tutor_courses
+  resources :slots
 
 
   resources :users, only: [:update], path: '' do
