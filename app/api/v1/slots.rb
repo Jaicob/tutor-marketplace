@@ -74,9 +74,9 @@ module V1
           desc "Destroys all slots for a tutor" 
           delete do
             slot_manager = SlotManager.new(declared_params) 
-            @slots = slot_manager.destroy_slots 
-            if @slots 
-              return @slots
+            @slot_ids = slot_manager.destroy_slots 
+            if @slot_ids 
+              return @slot_ids
             else
               return "Slot could not be destroyed: #{@slot.errors.full_messages}"
             end

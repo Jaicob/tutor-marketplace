@@ -106,6 +106,7 @@ Rails.application.routes.draw do
 
   devise_for :users
   resources :tutor_courses
+  resources :slots
 
   resources :users, only: [:update], path: '' do
     member do

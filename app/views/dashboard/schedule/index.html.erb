@@ -1,6 +1,5 @@
 <%= javascript_include_tag "dashboard/schedule" %>
 
-
 <div class="row">
   <div class="medium-12 columns">
     <h1>Your Schedule</h1>
@@ -8,15 +7,17 @@
   </div>
 </div>
 
-<!-- '/api/v1/tutors/64/slots.json' -->
-<!-- '/api/v1/tutors/64/slots/all' -->
-<!-- "/api/v1/tutors/64/slots" -->
-<!-- Can use gon gem to pass rails data to javascript pretty effeciently, we should consider using it - Jaicob -->
 <%= content_tag "div", id: "axoncalendar", data: { tutor: @user.tutor.id } do %>
   <div class="row">
+
     <div id="scheduling-container">
       <div id='wrap' class="columns medium-10">
         <div id='calendar'></div>
+        <!-- dont move this, needs to be here for popovers to work -->
+        <div id="slotpopover" hidden="true">
+          <%= render 'edit_slot' %>
+        </div>
+
         <div style='clear:both'></div>
       </div>
       <div class="columns medium-2">
@@ -24,7 +25,7 @@
         <div id='external-events'>
           <h4>Availability</h4>
           <div class='fc-event regular-availability'>Regular </div>
-          <div class='fc-event'>One-Off </div>
+          <div class='fc-event one-off-availability'>One-Off </div>
         </div>
       </div>
     </div>
