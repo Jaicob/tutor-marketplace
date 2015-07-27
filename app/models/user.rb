@@ -37,6 +37,7 @@ class User < ActiveRecord::Base
   # ROLES: Need to revisit and decide on what roles we need/want. It's easy to change the role names in the enum below, but let's wait and see how we want to do this when the time comes. There's likely a need for limited-admin functionality for campus managers, etc.
   #
   has_one :tutor, dependent: :destroy
+  has_many :appointments
 
   enum role: [:user, :admin]
   after_initialize :set_default_role, :if => :new_record?
