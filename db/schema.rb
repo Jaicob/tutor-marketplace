@@ -11,10 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150714155952) do
+ActiveRecord::Schema.define(version: 20150727185718) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "appointments", force: :cascade do |t|
+    t.integer  "student_id"
+    t.integer  "slot_id"
+    t.datetime "start_time"
+    t.integer  "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "appointments", ["slot_id"], name: "index_appointments_on_slot_id", using: :btree
+  add_index "appointments", ["student_id"], name: "index_appointments_on_student_id", using: :btree
 
   create_table "courses", force: :cascade do |t|
     t.integer  "school_id"
@@ -56,9 +68,19 @@ ActiveRecord::Schema.define(version: 20150714155952) do
     t.integer  "reservation_max"
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
+    t.string   "start_week_time"
+    t.string   "end_week_time"
   end
 
   add_index "slots", ["tutor_id"], name: "index_slots_on_tutor_id", using: :btree
+
+  create_table "students", force: :cascade do |t|
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "students", ["user_id"], name: "index_students_on_user_id", using: :btree
 
   create_table "tutor_courses", force: :cascade do |t|
     t.integer  "tutor_id"
@@ -127,8 +149,11 @@ ActiveRecord::Schema.define(version: 20150714155952) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["slug"], name: "index_users_on_slug", unique: true, using: :btree
 
+  add_foreign_key "appointments", "slots"
+  add_foreign_key "appointments", "students"
   add_foreign_key "courses", "schools"
   add_foreign_key "slots", "tutors"
+  add_foreign_key "students", "users"
   add_foreign_key "tutor_courses", "courses"
   add_foreign_key "tutor_courses", "tutors"
   add_foreign_key "tutors", "users"

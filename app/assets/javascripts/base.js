@@ -28,13 +28,13 @@ var API = {
       return API_LOCATION + "/schools/" + data["school_id"] + "/subjects/" + data["subject_id"] + "/courses/"
     },
     tutor_slots: {
-      get: function(data){
-        return API_LOCATION + "/tutors/" + data["tutor_id"] + "/slots.json"
+      get: function(data){ // { tutor_id }
+        return API_LOCATION + "/tutors/" + data["tutor_id"] + "/slots"
       },
-      update: function(data){
-        return API_LOCATION + "/tutors/" + data["tutor_id"] + "/slots/all"
+      update: function(data){ // { tutor_id }
+        return API_LOCATION + "/tutors/" + data["tutor_id"] + "/slots"
       },
-      create: function(data){
+      create: function(data){ // { tutor_id }
         return API_LOCATION + "/tutors/" + data["tutor_id"] + "/slots"
       }
     }

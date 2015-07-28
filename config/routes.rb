@@ -6,7 +6,7 @@
 #       visitor_sign_up_tutor GET    /tutors/:id/visitor_sign_up(.:format)      tutors#visitor_sign_up
 #  update_active_status_tutor PUT    /tutors/:id/update_active_status(.:format) tutors#update_active_status
 #      destroy_by_admin_tutor DELETE /tutors/:id/destroy_by_admin(.:format)     tutors#destroy_by_admin
-#       update_settings_tutor PUT    /tutors/:id/update_settings(.:format)      tutors#update_settings
+#       update_settings_tutor PATCH  /tutors/:id/update_settings(.:format)      tutors#update_settings
 #          visitor_new_tutors GET    /tutors/visitor_new(.:format)              tutors#visitor_new
 #       visitor_create_tutors POST   /tutors/visitor_create(.:format)           tutors#visitor_create
 #                      tutors GET    /tutors(.:format)                          tutors#index
@@ -73,13 +73,21 @@
 #                             PATCH  /tutor_courses/:id(.:format)               tutor_courses#update
 #                             PUT    /tutor_courses/:id(.:format)               tutor_courses#update
 #                             DELETE /tutor_courses/:id(.:format)               tutor_courses#destroy
-#         dashboard_home_user GET    /:id/dashboard/home(.:format)              dashboard#home
-#     dashboard_schedule_user GET    /:id/dashboard/schedule(.:format)          dashboard#schedule
-#      dashboard_courses_user GET    /:id/dashboard/courses(.:format)           dashboard#courses
-#      dashboard_profile_user GET    /:id/dashboard/profile(.:format)           dashboard#profile
-# dashboard_edit_profile_user GET    /:id/dashboard/edit_profile(.:format)      dashboard#edit_profile
-#     dashboard_settings_user GET    /:id/dashboard/settings(.:format)          dashboard#settings
-#       dashboard_tutors_user GET    /:id/dashboard/tutors(.:format)            dashboard#tutors
+#                       slots GET    /slots(.:format)                           slots#index
+#                             POST   /slots(.:format)                           slots#create
+#                    new_slot GET    /slots/new(.:format)                       slots#new
+#                   edit_slot GET    /slots/:id/edit(.:format)                  slots#edit
+#                        slot GET    /slots/:id(.:format)                       slots#show
+#                             PATCH  /slots/:id(.:format)                       slots#update
+#                             PUT    /slots/:id(.:format)                       slots#update
+#                             DELETE /slots/:id(.:format)                       slots#destroy
+#         dashboard_home_user GET    /:id/dashboard/home(.:format)              dashboard/home#index
+#     dashboard_schedule_user GET    /:id/dashboard/schedule(.:format)          dashboard/schedule#index
+#      dashboard_courses_user GET    /:id/dashboard/courses(.:format)           dashboard/courses#index
+#      dashboard_profile_user GET    /:id/dashboard/profile(.:format)           dashboard/profile#index
+# dashboard_edit_profile_user GET    /:id/dashboard/edit_profile(.:format)      dashboard/profile#edit
+#     dashboard_settings_user GET    /:id/dashboard/settings(.:format)          dashboard/settings#index
+#       dashboard_tutors_user GET    /:id/dashboard/tutors(.:format)            dashboard/tutors#index
 #                        user PATCH  /:id(.:format)                             users#update
 #                             PUT    /:id(.:format)                             users#update
 #                        root GET    /                                          static_pages#home
@@ -112,6 +120,7 @@ Rails.application.routes.draw do
   resources :schools
   resources :subjects
   resources :tutor_courses
+  resources :slots
 
 
   resources :users, only: [:update], path: '' do

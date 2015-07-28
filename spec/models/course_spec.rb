@@ -5,11 +5,11 @@
 #  id            :integer          not null, primary key
 #  school_id     :integer
 #  subject       :text
-#  call_number   :integer
+#  call_number   :string
 #  friendly_name :string
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
-
+#
 
     # subject         {name: 'Biology', id: 1}
     # call_number     101

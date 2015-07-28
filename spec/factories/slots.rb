@@ -6,7 +6,7 @@
 #  tutor_id        :integer
 #  status          :integer          default(0)
 #  start_time      :datetime
-#  end_time        :datetime
+#  duration        :integer
 #  reservation_min :integer
 #  reservation_max :integer
 #  created_at      :datetime         not null
@@ -19,11 +19,11 @@ FactoryGirl.define do
 
   factory :slot do
     tutor
-    status 0
-    start_time "2015-08-14 12:00:00"
-    end_time "2015-08-14 13:00:00"
-    reservation_min 1
-    reservation_max 4
+    status              0
+    start_time          "2015-09-01 10:00:00"
+    duration            21600 # 6 hours
+    # reservation_min     1
+    # reservation_max     4
 
     # factory :one_slot do 
     #   start_date  "2015-08-14"

@@ -1,9 +1,15 @@
 $(document).ready(function() {
 
+  $(".fi-widget").unbind().on("click", function(){
+    $("#repeating-options").slideToggle(200);
+    $(".regular-availability").toggleClass("expanded");
+  })
+
   // Setup up qTip2 api for
-  var tooltip = $('div').qtip({
+
+  var tooltip = $('#calendar').qtip({
     id: 'fullcalendar',
-    prerender: true,
+    prerender: false,
     content: {
       text: ' ',
       title: {
@@ -17,123 +23,366 @@ $(document).ready(function() {
       effect: false,
     },
     effect: false,
-    solo:true,
+    solo: true,
     show: false,
     hide: false,
     style: {
-      classes: 'qtip-light',
-      height: '250px',
-      width: '150px'
+      classes: 'qtip-dark',
     },
   }).qtip('api');
 
+  // Setup sweetalert
+  swal.setDefaults({
+    animation: false
+  });
+
   var tutor_id = $('#axoncalendar').data('tutor');
-  var origninalStartTime;
-  var originalEndTime;
+  var originalStartTime;
+  var originalDuration;
 
-  var formatDataAsEvent = function( eventData ) {
+  var formatDataAsEvent = function(eventData) {
+    end_time = moment(eventData.start_time);
+    end_time = end_time + moment.duration(eventData.duration, 'seconds');
     return {
-      title:    "Availability",
-      start:    eventData.start_time,
-      end:      eventData.end_time,
-      slot_id:  eventData.id
+      title: "Availability",
+      start: eventData.start_time,
+      end: end_time,
+      slot_id: eventData.id,
+      status: eventData.status
     }
   }
-
   var eventSource = {
-    url: API.endpoints.tutor_slots.get({ tutor_id: tutor_id }),
+    url: API.endpoints.tutor_slots.get({
+      tutor_id: tutor_id
+    }),
     eventDataTransform: formatDataAsEvent,
-    color: 'yellow',   // a non-ajax option
-    textColor: 'black' // a non-ajax option
   }
 
-  var beginSlotUpdate = function( event, jsEvent, ui, view) {
-    origninalStartTime = event.start.format('YYYY-MM-DD HH:mm:ss');
-    originalEndTime = event.end.format('YYYY-MM-DD HH:mm:ss');
-    tooltip.hide()
+  var beginSlotUpdate = function(event, jsEvent, ui, view) {
+    originalStartTime = event.start.format('YYYY-MM-DD HH:mm:ss');
+    originalDuration = moment.duration(event.end.diff(event.start)).asSeconds();
+    tooltip.hide();
   }
 
-  var updateSlotDuration = function( event, jsEvent, ui, view) {
-    var jqxhr = $.ajax({
-    type: "POST",
-    url: API.endpoints.tutor_slots.update({tutor_id: tutor_id}),
-    data: {
-      start_time: origninalStartTime,
-      end_time: originalEndTime,
-      new_start_time: event.start.format('YYYY-MM-DD HH:mm:ss'),
-      new_end_time: event.end.format('YYYY-MM-DD HH:mm:ss')
-    },
-    dataType: "json",
-    success: function(data){
-      alert('success');
-      // $('#calendar').fullCalendar( 'refetchEvents' )
-       $('#calendar').fullCalendar('updateEvent', event);
-    },
-    error: function(data, status, blah){
-      alert('failure',data,status,blah);
-    }
+  var updateSlotDurationDrop = function(event, delta, revertFunc, jsEvent, ui, view) {
+    swal({
+        title: "Update all future availability?",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
+        closeOnConfirm: false,
+        closeOnCancel: false,
+      },
+      function(isConfirm) {
+        if (isConfirm) {
+          $.ajax({
+            type: "PUT",
+            url: API.endpoints.tutor_slots.update({
+              tutor_id: tutor_id
+            }),
+            data: {
+              original_start_time: originalStartTime,
+              original_duration: originalDuration,
+              new_start_time: event.start.format('YYYY-MM-DD HH:mm:ss'),
+              new_duration: originalDuration
+            },
+            dataType: "json",
+            success: function(data) {
+              $('#calendar').fullCalendar('updateEvent', event);
+            },
+            error: function(data, status) {
+              alert('failure', data, status);
+              revertFunc();
+            }
+          });
+        } else {
+          $.ajax({
+            type: "PUT",
+            url: API.endpoints.tutor_slots.update({
+              tutor_id: tutor_id
+            }) + '/' + event.slot_id,
+            data: {
+              start_time: event.start.format('YYYY-MM-DD HH:mm:ss'),
+              duration: originalDuration
+            },
+            dataType: "json",
+            success: function(data) {
+              $('#calendar').fullCalendar('updateEvent', event);
+            },
+            error: function(data, status) {
+              console.log("failure,", data, status);
+              alert('failure', data, status);
+              revertFunc();
+            }
+          });
+        }
+        swal.close();
+      });
+  }
+
+  var updateSlotDurationResize = function(event, delta, revertFunc, jsEvent, ui, view) {
+    var newDuration = originalDuration + delta.asSeconds();
+
+    swal({
+        title: "Update all future availability?",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      },
+      function(isConfirm) {
+        if (isConfirm) {
+          $.ajax({
+            type: "PUT",
+            url: API.endpoints.tutor_slots.update({
+              tutor_id: tutor_id
+            }),
+            data: {
+              original_start_time: originalStartTime,
+              original_duration: originalDuration,
+              new_start_time: event.start.format('YYYY-MM-DD HH:mm:ss'),
+              new_duration: newDuration
+            },
+            dataType: "json",
+            success: function(data) {
+              $('#calendar').fullCalendar('updateEvent', event);
+            },
+            error: function(data, status) {
+              alert('failure', data, status);
+              revertFunc();
+            }
+          });
+        } else {
+          $.ajax({
+            type: "PUT",
+            url: API.endpoints.tutor_slots.update({
+              tutor_id: tutor_id
+            }) + '/' + event.slot_id,
+            data: {
+              start_time: event.start.format('YYYY-MM-DD HH:mm:ss'),
+              duration: newDuration
+            },
+            dataType: "json",
+            success: function(data) {
+              $('#calendar').fullCalendar('updateEvent', event);
+            },
+            error: function(data, status) {
+              console.log("failure,", data, status);
+              alert('failure', data, status);
+              revertFunc();
+            }
+          });
+        }
+        swal.close();
+      });
+  }
+
+  var addSlot = function(event, jsEvent, ui) {
+    var duration = moment.duration(event.end.diff(event.start));
+    var seconds = duration.asSeconds();
+    var endpoint = API.endpoints.tutor_slots.create({
+      tutor_id: tutor_id
     });
-  }
 
-  var addSlot = function(event, jsEvent, ui ){
-    endpoint = API.endpoints.tutor_slots.create({ tutor_id: tutor_id })
+    console.log(event.weeksToRepeat());
+
     request = $.post(endpoint, {
-      start_time : event.start.format('YYYY-MM-DD HH:mm:ss'),
-      end_time : event.end.format('YYYY-MM-DD HH:mm:ss'),
-      start_date: event.start.format('YYYY-MM-DD HH:mm:ss'),
-      end_date: event.start.format('YYYY-MM-DD HH:mm:ss')
+      start_time: event.start.format('YYYY-MM-DD HH:mm:ss'),
+      duration: seconds,
+      weeks_to_repeat: event.weeksToRepeat(),
     })
-    request.success(function(data){
-      alert("Success!")
-      console.log(data);
+    request.success(function(data) {
+      console.log("DATA", data);
+      event.slot_id = data[0].id;
+      event.status = data[0].status;
+      $('#calendar').fullCalendar('updateEvent', event);
     });
     request.error(function(data){
-      alert("Error!")
       console.log(data);
+      alert("Error!");
     })
   }
 
-  var removeSlots = function () {
-    alert("removing slots");
+  var routeEvent = function(event) {
+    tooltip.hide();
+    $('div').off('click', '.cal-menu-item');
+    var action = event.currentTarget.id;
+    switch (action) {
+      case 'btn-show-slot':
+        showDetails(event);
+        break;
+      case 'btn-rm-slots':
+        askToRemoveSlots(event);
+        break;
+      case 'btn-block-slot':
+        blockSlot(event);
+        break;
+      default:
+        swal('Invalid Selection', 'error')
+    }
   }
 
-  var openEventEdit = function( event, jsEvent, view  ) {
-    //Constructs the popover for the event being clicked
-    console.log(event);
-    var content = '<h3>'+ event.title+'</h3>' +
-        '<p><b>Start:</b> ' + event.start.format('dddd hh:mm') + '</p> <br>' +
-        '<p><b>End:</b> '   + event.end.format('dddd hh:mm')  + '</p>  <hr>' +
-        '<button class="button alert" onclick="removeSlots()"> Delete </button>';
+  var askToRemoveSlots = function(event) {
+    swal({
+        title: "Are you sure?",
+        text: "This availability will be permanently deleted",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Yes, remove it!",
+        cancelButtonText: "Cancel",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      },
+      function(isConfirm) {
+        isConfirm ? removeSlots(event) : swal.close();
+      });
+  }
+
+  var removeSlots = function(callingEvent) {
+    var duration = moment.duration(callingEvent.data.end.diff(callingEvent.data.start)).asSeconds();
+    $.ajax({
+      type: "DELETE",
+      url: API.endpoints.tutor_slots.update({
+        tutor_id: tutor_id
+      }),
+      data: {
+        original_start_time: callingEvent.data.start.format('YYYY-MM-DD HH:mm:ss'),
+        original_duration: duration,
+        new_start_time: callingEvent.data.start.format('YYYY-MM-DD HH:mm:ss'),
+        new_duration: 1
+      },
+      dataType: "json",
+      success: function(data) {
+        $('#calendar').fullCalendar('removeEvents', function(event) {
+          var isStartMatch = (event.start.format('DD HH:mm:ss') === callingEvent.data.start.format('DD HH:mm:ss'));
+          var isEndMatch = (event.end.format('DD HH:mm:ss') === callingEvent.data.end.format('DD HH:mm:ss'));
+          return (isStartMatch && isEndMatch) ? true : false;
+        });
+      },
+      error: function(data, status) {
+        swal('failure');
+        console.log(data, status);
+      }
+    });
+    swal.close();
+  }
+
+  var showDetails = function(event) {
+    swal({
+      title: "Details",
+      text: "Start: " + event.data.start.format('dddd HH:mm:ss') + "<br> End: " + event.data.end.format('dddd HH:mm:ss'),
+      html: true
+    });
+  }
+
+  var blockSlot = function(event) {
+    var toggledStatus = event.data.status === 'Open' ? 1 : 0;
+    
+    $.ajax({
+      type: "PUT",
+      url: API.endpoints.tutor_slots.update({
+        tutor_id: tutor_id
+      }) + '/' + event.data.slot_id,
+      data: {
+        status: toggledStatus //Blocked TODO: make an enumeration in js for this?
+      },
+      dataType: "json",
+      success: function(data) {
+        event.data.status = data.status;
+        $('#calendar').fullCalendar('updateEvent', event.data);
+      },
+      error: function(data, status) {
+        console.log("failure,", data, status);
+        alert('failure', data, status);
+      }
+    });
+  }
+
+  var eventRender = function(event, element, view) {
+    switch (event.status) {
+      case "Open":
+        console.log('non-blocked');
+        element.css('background-color', '#3a87ad');
+        break;
+      case "Blocked":
+        console.log('blocked');
+        element.css('background-color', 'lightgrey');
+        break;
+    }
+  }
+
+  var setBlockUi = function(event) {
+      if (event.status === 'Blocked') {
+        $('#block-icon').addClass('fi-unlock').removeClass('fi-lock');
+        $('#block-icon').next().text('Unblock');
+      } else {
+        $('#block-icon').addClass('fi-lock').removeClass('fi-unlock');
+        $('#block-icon').next().text('Block');
+      }
+  }
+
+  var openEventEdit = function(event, jsEvent, view) {
+      $('div').off('click', '.cal-menu-item');
+      $('div').on('click', '.cal-menu-item', event, routeEvent);
+      setBlockUi(event);
 
       tooltip.set({
-        'content.text': content,
+        'content.text': $('#calendar').next('div').clone(true),
         'position.target': $(this),
-        'show.effect':false,
+        'show.effect': false,
         'hide.target': $(this),
         'hide.event': false
-      })
-      .reposition(event).show(event);
-  }
-
-  var eventRender = function (event, element, view) {
-    // Do stuff to event objects as they render. May not need to keep this.
-  }
+      }).reposition(event).show(event);
+    }
 
   /*
    * Initialize the external events
    */
-  $('.fc-event').each(function() {
+  $('.regular-availability').each(function() {
     // store data so the calendar knows to render an event upon drop
+
     $(this).data('event', {
       title: $.trim($(this).text()), // use the element's text as the event title
-      stick: false // maintain when user navigates (see docs on the renderEvent method)
+      overlap: false,
+      stick: false, // maintain when user navigates (see docs on the renderEvent method)
+      weeksToRepeat: function(){
+        if ($.isNumeric($("#weeksToRepeat").val())){
+          weeks = $("#weeksToRepeat").val()
+        } else {
+          weeks = 2
+        }
+        return weeks
+      }
     });
 
     // make the event draggable using jQuery UI
     $(this).draggable({
       zIndex: 999,
-      revert: true,      // will cause the event to go back to its
-      revertDuration: 0  //  original position after the drag
+      revert: true, // will cause the event to go back to its
+      revertDuration: 0 //  original position after the drag
+    });
+  });
+
+  $('.one-off-availability').each(function() {
+    // store data so the calendar knows to render an event upon drop
+    $(this).data('event', {
+      title: $.trim($(this).text()), // use the element's text as the event title
+      overlap: false,
+      stick: false,
+      weeksToRepeat: function(){
+        return 1
+      } // maintain when user navigates (see docs on the renderEvent method)
+    });
+
+    // make the event draggable using jQuery UI
+    $(this).draggable({
+      zIndex: 999,
+      revert: true, // will cause the event to go back to its
+      revertDuration: 0 //  original position after the drag
     });
   });
 
@@ -141,8 +390,9 @@ $(document).ready(function() {
    * Initialize the calendar
    */
   $('#calendar').fullCalendar({
-    eventSources:[eventSource],
+    eventSources: [eventSource],
     slotEventOverlap: false,
+    eventOverlap: function(stillEvent, movingEvent) { return stillEvent.allDay && movingEvent.allDay },
     allDaySlot: false,
     forceEventDuration: true,
     minTime: "0:00:00",
@@ -150,9 +400,9 @@ $(document).ready(function() {
     defaultTimedEventDuration: "1:00:00",
     height: "auto",
     businessHours: {
-        start: '10:00', // a start time (10am in this example)
-        end: '10:00', // an end time (6pm in this example)
-        dow: [ 0, 1, 2, 3, 4, 5, 6 ]  // days of week. an array of zero-based day of week integers (0=Sunday)
+      start: '10:00', // a start time (10am in this example)
+      end: '10:00', // an end time (6pm in this example)
+      dow: [0, 1, 2, 3, 4, 5, 6] // days of week. an array of zero-based day of week integers (0=Sunday)
     },
     header: {
       left: 'prev,next today',
@@ -161,15 +411,19 @@ $(document).ready(function() {
     defaultView: 'agendaWeek',
     editable: true,
     droppable: true,
-    eventReceive : addSlot,
+    eventReceive: addSlot,
     eventResizeStart: beginSlotUpdate,
-    eventResize: updateSlotDuration,
+    eventResize: updateSlotDurationResize,
+    eventDragStart: beginSlotUpdate,
+    eventDrop: updateSlotDurationDrop,
     eventClick: openEventEdit,
-    eventRender: eventRender, //    eventClick: openEventEdit,
-    eventAfterAllRender: function(view) {$(document).foundation('dropdown', 'reflow');},
-    dayClick: function() { tooltip.hide() },
-    eventDragStart: function() { tooltip.hide() },
-    viewDisplay: function() { tooltip.hide() },
+    eventRender: eventRender,
+    dayClick: function() {
+      tooltip.hide()
+    },
+    viewDisplay: function() {
+      tooltip.hide()
+    },
   });
 
 });

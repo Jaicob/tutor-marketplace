@@ -15,7 +15,8 @@ class SchoolsController < ApplicationController
     if @school.save
       redirect_to schools_path
     else
-      render :new, error: "School was not created."
+      flash[:error] = "School was not created: #{@school.errors.full_messages}"
+      render :new
     end
   end
 
@@ -23,15 +24,11 @@ class SchoolsController < ApplicationController
   end
 
   def update
-    respond_to do |format|
-      if @school.update_attributes(school_params)
-        # format.html { redirect_to(@school, notice: 'School was succesfully updated.')}
-        # I don't think the html response is necessary since we are relying on online in-line editing, I deleted the edit action and template to simplify things. Just wanted to make a note to go over this with the team and discuss if this is OK to simplify like this.
-        format.json { respond_with_bip(@school)}
-      else
-        # format.html { render :edit}
-        format.json { respond_with_bip(@school)}
-      end
+    if @school.update(school_params)
+      redirect_to @school
+    else
+      flash[:error] = "School was not updated: #{@school.errors.full_messages}"
+      render :edit
     end
   end
 
@@ -39,6 +36,7 @@ class SchoolsController < ApplicationController
     if @school.destroy
       redirect_to schools_path
     else
+      flash[:error] = "School was not destroyed: #{@school.errors.full_messages}"
       render :show
     end
   end

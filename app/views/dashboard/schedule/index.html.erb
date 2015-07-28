@@ -1,6 +1,5 @@
 <%= javascript_include_tag "dashboard/schedule" %>
 
-
 <div class="row">
   <div class="medium-12 columns">
     <h1>Your Schedule</h1>
@@ -8,23 +7,37 @@
   </div>
 </div>
 
-<!-- '/api/v1/tutors/64/slots.json' -->
-<!-- '/api/v1/tutors/64/slots/all' -->
-<!-- "/api/v1/tutors/64/slots" -->
-<!-- Can use gon gem to pass rails data to javascript pretty effeciently, we should consider using it - Jaicob -->
 <%= content_tag "div", id: "axoncalendar", data: { tutor: @user.tutor.id } do %>
   <div class="row">
+
     <div id="scheduling-container">
-      <div id='wrap' class="columns medium-10">
+      <div id='wrap' class="columns medium-9">
         <div id='calendar'></div>
+        <!-- dont move this, needs to be here for popovers to work -->
+        <div id="slotpopover" hidden="true">
+          <%= render 'edit_slot' %>
+        </div>
+
         <div style='clear:both'></div>
       </div>
-      <div class="columns medium-2">
-        <div id="cal-spacer"></div>
-        <div id='external-events'>
+      <div class="columns medium-3">
+        <div id='availability-slots-section'>
           <h4>Availability</h4>
-          <div class='fc-event'>Regular </div>
-          <div class='fc-event'>One-Off </div>
+          <div class='fc-event regular-availability'>
+            Regular<i class="fi-widget"></i>
+          </div>
+            <div class="row collapse" id="repeating-options" style="display: none">
+              <div class="small-5 columns">
+                <span class="prefix">repeat for</span>
+              </div>
+              <div class="small-3 columns">
+                <input type="number" step="1" min="2" max="99" id="weeksToRepeat" required="true" placeholder="18" pattern="\d*" style="text-align: center; border-right-width: 0px;">
+              </div>
+              <div class="small-4 columns">
+                <span class="postfix">weeks</span>
+              </div>
+            </div>
+          <div class='fc-event one-off-availability'>One-Off</div>
         </div>
       </div>
     </div>
