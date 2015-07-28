@@ -15,33 +15,38 @@ require 'rails_helper'
 
 RSpec.describe Appointment, type: :model do
   let(:appointment) { build(:appointment) }
+  let(:slot) { create(:slot) }
 
   it 'is valid with a student_id, slot_id and start_time' do
     expect(appointment).to be_valid
   end
 
-  it 'is invalid without a student_id' do
-    expect(build(:appointment, student_id: nil)).to_not be_valid 
-  end
+  it 'is invalid with a start_time less than an hour before another appointment' do 
+    expect(create(:appointment, slot_id: slot.id, start_time: '2015-09-01 12:00')).to be_valid
 
-  it 'is invalid without a start_time' do
-    expect(build(:appointment, start_time: nil)).to_not be_valid 
+    expect(build(:appointment, slot_id: slot.id, start_time: '2015-09-01 11:00')).to be_valid
+    expect(build(:appointment, slot_id: slot.id, start_time: '2015-09-01 11:01')).not_to be_valid
+    expect(build(:appointment, slot_id: slot.id, start_time: '2015-09-01 11:30')).not_to be_valid
   end
 
   it 'is invalid with a start_time less than an hour after another appointment' do 
-    expect(create(:appointment, start_time: '2015-09-01 12:00')).to be_valid
+    expect(create(:appointment, slot_id: slot.id, start_time: '2015-09-01 12:00')).to be_valid
 
-    # appt_a = build(:appointment, start_time: '2015-09-01 12:01')
-    # expect(appt_a).not_to be_valid
+    expect(build(:appointment, slot_id: slot.id, start_time: '2015-09-01 12:01')).not_to be_valid
+    expect(build(:appointment, slot_id: slot.id, start_time: '2015-09-01 12:30')).not_to be_valid
+    expect(build(:appointment, slot_id: slot.id, start_time: '2015-09-01 12:59:59')).not_to be_valid
+    expect(build(:appointment, slot_id: slot.id, start_time: '2015-09-01 13:00')).to be_valid
+    expect(build(:appointment, slot_id: slot.id, start_time: '2015-09-01 13:01')).to be_valid
+  end
 
-    # appt_b = build(:appointment, start_time: '2015-09-01 12:30')
-    # expect(appt_b).not_to be_valid
+  it "is invalid if an appointment doesn't fit inside a slot's time range" do 
+    expect(create(:appointment, slot_id: slot.id, start_time: '2015-09-01 12:00')).to be_valid
 
-    # appt_c = build(:appointment, start_time: '2015-09-01 12:59:59')
-    # expect(appt_c).not_to be_valid
+    expect(build(:appointment, slot_id: slot.id, start_time: '2015-09-01 10:00')).to be_valid
+    expect(build(:appointment, slot_id: slot.id, start_time: '2015-09-01 15:00')).to be_valid
 
-    # appt_c = build(:appointment, start_time: '2015-09-01 13:00:00')
-    # expect(appt_c).not_to be_valid
+    expect(build(:appointment, slot_id: slot.id, start_time: '2015-09-01 9:00')).not_to be_valid
+    expect(build(:appointment, slot_id: slot.id, start_time: '2015-09-01 16:00')).not_to be_valid
   end
 
 end
