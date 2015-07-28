@@ -1,5 +1,4 @@
 $(document).ready(function() {
-
   // Setup up qTip2 api for
   var tooltip = $('#calendar').qtip({
     id: 'fullcalendar',
@@ -45,7 +44,6 @@ $(document).ready(function() {
       status: eventData.status
     }
   }
-
   var eventSource = {
     url: API.endpoints.tutor_slots.get({
       tutor_id: tutor_id
@@ -201,7 +199,6 @@ $(document).ready(function() {
   var routeEvent = function(event) {
     tooltip.hide();
     $('div').off('click', '.cal-menu-item');
-
     var action = event.currentTarget.id;
     switch (action) {
       case 'btn-show-slot':
@@ -279,13 +276,11 @@ $(document).ready(function() {
         tutor_id: tutor_id
       }) + '/' + event.data.slot_id,
       data: {
-        status: 1 //Blocked TODO: make an enumeration in js for this?
+        status: toggledStatus //Blocked TODO: make an enumeration in js for this?
       },
       dataType: "json",
       success: function(data) {
-        console.log("Success");
         event.data.status = data.status;
-        event.backgroundColor = 'lightgrey';
         $('#calendar').fullCalendar('updateEvent', event.data);
       },
       error: function(data, status) {
@@ -296,10 +291,10 @@ $(document).ready(function() {
   }
 
   var eventRender = function(event, element, view) {
-    console.log("RENDERING:", event.status);
     switch (event.status) {
       case "Open":
         console.log('non-blocked');
+        element.css('background-color', '#3a87ad');
         break;
       case "Blocked":
         console.log('blocked');
@@ -308,18 +303,29 @@ $(document).ready(function() {
     }
   }
 
-  var openEventEdit = function(event, jsEvent, view) {
-    $('div').off('click', '.cal-menu-item');
-    $('div').on('click', '.cal-menu-item', event, routeEvent);
-
-    tooltip.set({
-      'content.text': $('#calendar').next('div').clone(true),
-      'position.target': $(this),
-      'show.effect': false,
-      'hide.target': $(this),
-      'hide.event': false
-    }).reposition(event).show(event);
+  var setBlockUi = function(event) {
+      if (event.status === 'Blocked') {
+        $('#block-icon').addClass('fi-unlock').removeClass('fi-lock');
+        $('#block-icon').next().text('Unblock');
+      } else {
+        $('#block-icon').addClass('fi-lock').removeClass('fi-unlock');
+        $('#block-icon').next().text('Block');
+      }
   }
+
+  var openEventEdit = function(event, jsEvent, view) {
+      $('div').off('click', '.cal-menu-item');
+      $('div').on('click', '.cal-menu-item', event, routeEvent);
+      setBlockUi(event);
+
+      tooltip.set({
+        'content.text': $('#calendar').next('div').clone(true),
+        'position.target': $(this),
+        'show.effect': false,
+        'hide.target': $(this),
+        'hide.event': false
+      }).reposition(event).show(event);
+    }
 
   /*
    * Initialize the external events
