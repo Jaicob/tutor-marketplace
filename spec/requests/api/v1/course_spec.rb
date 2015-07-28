@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 describe "Course endpoints" do 
   let(:course) { create(:course) }
   let(:school) { create(:school) }
