@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 describe "Slot endpoints" do 
   
   let(:slot)  { create(:slot) }

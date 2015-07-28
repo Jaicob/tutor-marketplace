@@ -36,7 +36,6 @@ class SlotManager
         
       if @slot_start_DOW_time == @original_start_DOW_time && @slot_duration == @original_duration
         @slots << slot
-        puts "ADDED SLOT"
       end
     end
     @slots
