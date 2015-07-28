@@ -1,5 +1,12 @@
 $(document).ready(function() {
+
+  $(".fi-widget").unbind().on("click", function(){
+    $("#repeating-options").slideToggle(200);
+    $(".regular-availability").toggleClass("expanded");
+  })
+
   // Setup up qTip2 api for
+
   var tooltip = $('#calendar').qtip({
     id: 'fullcalendar',
     prerender: false,
@@ -183,14 +190,16 @@ $(document).ready(function() {
     request = $.post(endpoint, {
       start_time: event.start.format('YYYY-MM-DD HH:mm:ss'),
       duration: seconds,
-      weeks_to_repeat: event.weeksToRepeat,
+      weeks_to_repeat: event.weeksToRepeat(),
     })
+
     request.success(function(data) {
       console.log("DATA", data);
       event.slot_id = data[0].id;
       event.status = data[0].status;
       $('#calendar').fullCalendar('updateEvent', event);
     });
+
     request.error(function(data) {
       alert("Error!");
     })
@@ -271,7 +280,7 @@ $(document).ready(function() {
 
   var blockSlot = function(event) {
     var toggledStatus = event.data.status === 'Open' ? 1 : 0;
-    
+
     $.ajax({
       type: "PUT",
       url: API.endpoints.tutor_slots.update({
@@ -334,11 +343,19 @@ $(document).ready(function() {
    */
   $('.regular-availability').each(function() {
     // store data so the calendar knows to render an event upon drop
+
     $(this).data('event', {
       title: $.trim($(this).text()), // use the element's text as the event title
       overlap: false,
       stick: false, // maintain when user navigates (see docs on the renderEvent method)
-      weeksToRepeat: 2 //$("#weeksToRepeat").val() TODO add ui from aj
+      weeksToRepeat: function(){
+        if ($.isNumeric($("#weeksToRepeat").val())){
+          weeks = $("#weeksToRepeat").val()
+        } else {
+          weeks = 2
+        }
+        return weeks
+      }
     });
 
     // make the event draggable using jQuery UI
@@ -355,7 +372,9 @@ $(document).ready(function() {
       title: $.trim($(this).text()), // use the element's text as the event title
       overlap: false,
       stick: false,
-      weeksToRepeat: 1 // maintain when user navigates (see docs on the renderEvent method)
+      weeksToRepeat: function(){
+        return 1
+      } // maintain when user navigates (see docs on the renderEvent method)
     });
 
     // make the event draggable using jQuery UI
@@ -372,6 +391,7 @@ $(document).ready(function() {
   $('#calendar').fullCalendar({
     eventSources: [eventSource],
     slotEventOverlap: false,
+    eventOverlap: function(stillEvent, movingEvent) { return stillEvent.allDay && movingEvent.allDay },
     allDaySlot: false,
     forceEventDuration: true,
     minTime: "0:00:00",

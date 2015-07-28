@@ -68,6 +68,8 @@ ActiveRecord::Schema.define(version: 20150727185718) do
     t.integer  "reservation_max"
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
+    t.string   "start_week_time"
+    t.string   "end_week_time"
   end
 
   add_index "slots", ["tutor_id"], name: "index_slots_on_tutor_id", using: :btree
