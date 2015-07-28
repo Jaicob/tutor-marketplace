@@ -76,6 +76,28 @@ end
 
 # Create Slots for each Tutor
 Tutor.all.each do |tutor|
-  slot_creator = SlotCreator.new(tutor_id: tutor.id, start_time: '2015-08-01 12:00', duration: 2, weeks_to_repeat: 18)
+  slot_creator = SlotCreator.new(tutor_id: tutor.id, start_time: '2015-08-01 12:00', duration: 7200, weeks_to_repeat: 18)
   slot_creator.create_slots
+end
+
+
+# Create Students
+20.times { User.create!(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, email: Faker::Internet.safe_email, password: 'password', password_confirmation: 'password') }
+
+new_users = []
+
+User.all.each do |user|
+  new_users << user if user.tutor == nil
+end
+
+new_users.each do |new_user|
+  new_user.create_student
+end
+
+
+# Create an appointment for each student
+n = 1
+Student.all.each do |student|
+  student.appointments.create(slot_id: n, start_time: '2015-08-01 12:00')
+  n += 18
 end

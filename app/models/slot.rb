@@ -15,6 +15,7 @@
 
 class Slot < ActiveRecord::Base
   belongs_to :tutor
+  has_many :appointments, dependent: :destroy
 
   validates :tutor_id, presence: true
   validates :start_time, presence: true

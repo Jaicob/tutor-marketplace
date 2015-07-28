@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 describe "User endpoints" do
   let(:user) { create(:user) }
 

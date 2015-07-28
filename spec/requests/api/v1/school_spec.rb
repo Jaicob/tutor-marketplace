@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 describe "School endpoints" do
   let(:school) { create(:school) }
   let(:school_with_chem_courses) { create(:school_with_chem_courses) }
