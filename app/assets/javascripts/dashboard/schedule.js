@@ -187,21 +187,20 @@ $(document).ready(function() {
       tutor_id: tutor_id
     });
 
-    console.log(event.weeksToRepeat());
-
     request = $.post(endpoint, {
       start_time: event.start.format('YYYY-MM-DD HH:mm:ss'),
       duration: seconds,
       weeks_to_repeat: event.weeksToRepeat(),
     })
+
     request.success(function(data) {
       console.log("DATA", data);
       event.slot_id = data[0].id;
       event.status = data[0].status;
       $('#calendar').fullCalendar('updateEvent', event);
     });
-    request.error(function(data){
-      console.log(data);
+
+    request.error(function(data) {
       alert("Error!");
     })
   }
@@ -281,7 +280,7 @@ $(document).ready(function() {
 
   var blockSlot = function(event) {
     var toggledStatus = event.data.status === 'Open' ? 1 : 0;
-    
+
     $.ajax({
       type: "PUT",
       url: API.endpoints.tutor_slots.update({

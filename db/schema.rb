@@ -63,7 +63,7 @@ ActiveRecord::Schema.define(version: 20150727185718) do
     t.integer  "tutor_id"
     t.integer  "status",          default: 0
     t.datetime "start_time"
-    t.datetime "end_time"
+    t.integer  "duration"
     t.integer  "reservation_min"
     t.integer  "reservation_max"
     t.datetime "created_at",                  null: false
