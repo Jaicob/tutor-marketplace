@@ -270,6 +270,8 @@ $(document).ready(function() {
   }
 
   var blockSlot = function(event) {
+    var toggledStatus = event.data.status === 'Open' ? 1 : 0;
+    
     $.ajax({
       type: "PUT",
       url: API.endpoints.tutor_slots.update({
