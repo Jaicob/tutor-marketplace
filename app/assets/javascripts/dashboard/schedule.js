@@ -23,9 +23,16 @@ $(document).ready(function() {
       classes: 'qtip-dark',
     },
   }).qtip('api');
+
+  // Setup sweetalert
+  swal.setDefaults({
+    animation: false
+  });
+
   var tutor_id = $('#axoncalendar').data('tutor');
   var originalStartTime;
   var originalDuration;
+
   var formatDataAsEvent = function(eventData) {
     end_time = moment(eventData.start_time);
     end_time = end_time + moment.duration(eventData.duration, 'seconds');
@@ -51,50 +58,119 @@ $(document).ready(function() {
   }
 
   var updateSlotDurationDrop = function(event, delta, revertFunc, jsEvent, ui, view) {
-    $.ajax({
-      type: "PUT",
-      url: API.endpoints.tutor_slots.update({
-        tutor_id: tutor_id
-      }),
-      data: {
-        original_start_time: originalStartTime,
-        original_duration: originalDuration,
-        new_start_time: event.start.format('YYYY-MM-DD HH:mm:ss'),
-        new_duration: originalDuration
+    swal({
+        title: "Update all future availability?",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
+        closeOnConfirm: false,
+        closeOnCancel: false,
       },
-      dataType: "json",
-      success: function(data) {
-        $('#calendar').fullCalendar('updateEvent', event);
-      },
-      error: function(data, status) {
-        alert('failure', data, status);
-        revertFunc();
-      }
-    });
+      function(isConfirm) {
+        if (isConfirm) {
+          $.ajax({
+            type: "PUT",
+            url: API.endpoints.tutor_slots.update({
+              tutor_id: tutor_id
+            }),
+            data: {
+              original_start_time: originalStartTime,
+              original_duration: originalDuration,
+              new_start_time: event.start.format('YYYY-MM-DD HH:mm:ss'),
+              new_duration: originalDuration
+            },
+            dataType: "json",
+            success: function(data) {
+              $('#calendar').fullCalendar('updateEvent', event);
+            },
+            error: function(data, status) {
+              alert('failure', data, status);
+              revertFunc();
+            }
+          });
+        } else {
+          $.ajax({
+            type: "PUT",
+            url: API.endpoints.tutor_slots.update({
+              tutor_id: tutor_id
+            }) + '/' + event.slot_id,
+            data: {
+              start_time: event.start.format('YYYY-MM-DD HH:mm:ss'),
+              duration: originalDuration
+            },
+            dataType: "json",
+            success: function(data) {
+              $('#calendar').fullCalendar('updateEvent', event);
+            },
+            error: function(data, status) {
+              console.log("failure,", data, status);
+              alert('failure', data, status);
+              revertFunc();
+            }
+          });
+        }
+        swal.close();
+      });
   }
 
   var updateSlotDurationResize = function(event, delta, revertFunc, jsEvent, ui, view) {
     var newDuration = originalDuration + delta.asSeconds();
-    $.ajax({
-      type: "PUT",
-      url: API.endpoints.tutor_slots.update({
-        tutor_id: tutor_id
-      }),
-      data: {
-        original_start_time: originalStartTime,
-        original_duration: originalDuration,
-        new_start_time: event.start.format('YYYY-MM-DD HH:mm:ss'),
-        new_duration: newDuration
+
+    swal({
+        title: "Update all future availability?",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
+        closeOnConfirm: false,
+        closeOnCancel: false
       },
-      dataType: "json",
-      success: function(data) {
-        $('#calendar').fullCalendar('updateEvent', event);
-      },
-      error: function(data, status) {
-        alert('failure', data, status);
-        revertFunc();
-      }
-    });
+      function(isConfirm) {
+        if (isConfirm) {
+          $.ajax({
+            type: "PUT",
+            url: API.endpoints.tutor_slots.update({
+              tutor_id: tutor_id
+            }),
+            data: {
+              original_start_time: originalStartTime,
+              original_duration: originalDuration,
+              new_start_time: event.start.format('YYYY-MM-DD HH:mm:ss'),
+              new_duration: newDuration
+            },
+            dataType: "json",
+            success: function(data) {
+              $('#calendar').fullCalendar('updateEvent', event);
+            },
+            error: function(data, status) {
+              alert('failure', data, status);
+              revertFunc();
+            }
+          });
+        } else {
+          $.ajax({
+            type: "PUT",
+            url: API.endpoints.tutor_slots.update({
+              tutor_id: tutor_id
+            }) + '/' + event.slot_id,
+            data: {
+              start_time: event.start.format('YYYY-MM-DD HH:mm:ss'),
+              duration: newDuration
+            },
+            dataType: "json",
+            success: function(data) {
+              $('#calendar').fullCalendar('updateEvent', event);
+            },
+            error: function(data, status) {
+              console.log("failure,", data, status);
+              alert('failure', data, status);
+              revertFunc();
+            }
+          });
+        }
+        swal.close();
+      });
   }
 
   var addSlot = function(event, jsEvent, ui) {
@@ -103,6 +179,7 @@ $(document).ready(function() {
     var endpoint = API.endpoints.tutor_slots.create({
       tutor_id: tutor_id
     });
+
     request = $.post(endpoint, {
       start_time: event.start.format('YYYY-MM-DD HH:mm:ss'),
       duration: seconds,
@@ -140,18 +217,19 @@ $(document).ready(function() {
 
   var askToRemoveSlots = function(event) {
     swal({
-      title: "Are you sure?",
-      text: "This availability will be permanently deleted",
-      type: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#DD6B55",
-      confirmButtonText: "Yes, remove it!",
-      cancelButtonText: "Cancel",
-      closeOnConfirm: false,
-      closeOnCancel: false
-    }, function(isConfirm) {
-      isConfirm ? removeSlots(event) : swal("Cancelled");
-    });
+        title: "Are you sure?",
+        text: "This availability will be permanently deleted",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Yes, remove it!",
+        cancelButtonText: "Cancel",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      },
+      function(isConfirm) {
+        isConfirm ? removeSlots(event) : swal.close();
+      });
   }
 
   var removeSlots = function(callingEvent) {
@@ -192,12 +270,6 @@ $(document).ready(function() {
   }
 
   var blockSlot = function(event) {
-    var one = $(event.data.currentTarget).status;
-    var two = $(event.currentTarget).status;
-    var three = $(event.data); //winner
-    var four = $(event.data).status;
-    console.log("Attempts","1", one, "2", two, "3", three, "four", four);
-    var toggledStatus = event.data.status === 'Open' ? 1 : 0;
     $.ajax({
       type: "PUT",
       url: API.endpoints.tutor_slots.update({
@@ -208,7 +280,6 @@ $(document).ready(function() {
       },
       dataType: "json",
       success: function(data) {
-        console.log("Success",data.status);
         event.data.status = data.status;
         $('#calendar').fullCalendar('updateEvent', event.data);
       },
@@ -267,6 +338,7 @@ $(document).ready(function() {
       stick: false, // maintain when user navigates (see docs on the renderEvent method)
       weeksToRepeat: 2 //$("#weeksToRepeat").val() TODO add ui from aj
     });
+
     // make the event draggable using jQuery UI
     $(this).draggable({
       zIndex: 999,
@@ -283,6 +355,7 @@ $(document).ready(function() {
       stick: false,
       weeksToRepeat: 1 // maintain when user navigates (see docs on the renderEvent method)
     });
+
     // make the event draggable using jQuery UI
     $(this).draggable({
       zIndex: 999,
@@ -329,4 +402,5 @@ $(document).ready(function() {
       tooltip.hide()
     },
   });
+
 });
