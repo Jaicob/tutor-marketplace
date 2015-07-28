@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "AppointmentByTutor endpoints" do 
+describe "AppointmentsByTutor endpoints" do 
   let(:tutor) { create(:tutor) }
 
   before :each do
