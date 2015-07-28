@@ -25,6 +25,11 @@ $(document).ready(function() {
     },
   }).qtip('api');
 
+  // Setup sweetalert
+  swal.setDefaults({
+    animation: false
+  });
+
   var tutor_id = $('#axoncalendar').data('tutor');
   var originalStartTime;
   var originalDuration;
@@ -56,15 +61,13 @@ $(document).ready(function() {
 
   var updateSlotDurationDrop = function(event, delta, revertFunc, jsEvent, ui, view) {
     swal({
-        title: "Are you sure?",
-        text: "Would you like to update all future availability too?",
-        type: "warning",
+        title: "Update all future availability?",
         showCancelButton: true,
         confirmButtonColor: "#DD6B55",
         confirmButtonText: "Yes",
         cancelButtonText: "No",
         closeOnConfirm: false,
-        closeOnCancel: false
+        closeOnCancel: false,
       },
       function(isConfirm) {
         if (isConfirm) {
@@ -117,9 +120,7 @@ $(document).ready(function() {
     var newDuration = originalDuration + delta.asSeconds();
 
     swal({
-        title: "Are you sure?",
-        text: "Would you like to update all future availability too?",
-        type: "warning",
+        title: "Update all future availability?",
         showCancelButton: true,
         confirmButtonColor: "#DD6B55",
         confirmButtonText: "Yes",
@@ -172,26 +173,6 @@ $(document).ready(function() {
         }
         swal.close();
       });
-    // $.ajax({
-    //   type: "PUT",
-    //   url: API.endpoints.tutor_slots.update({
-    //     tutor_id: tutor_id
-    //   }),
-    //   data: {
-    //     original_start_time: originalStartTime,
-    //     original_duration: originalDuration,
-    //     new_start_time: event.start.format('YYYY-MM-DD HH:mm:ss'),
-    //     new_duration: newDuration
-    //   },
-    //   dataType: "json",
-    //   success: function(data) {
-    //     $('#calendar').fullCalendar('updateEvent', event);
-    //   },
-    //   error: function(data, status) {
-    //     alert('failure', data, status);
-    //     revertFunc();
-    //   }
-    // });
   }
 
   var addSlot = function(event, jsEvent, ui) {
@@ -250,7 +231,7 @@ $(document).ready(function() {
         closeOnCancel: false
       },
       function(isConfirm) {
-        isConfirm ? removeSlots(event) : swal("Cancelled");
+        isConfirm ? removeSlots(event) : swal.close();
       });
   }
 
