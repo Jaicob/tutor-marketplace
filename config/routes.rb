@@ -73,6 +73,14 @@
 #                             PATCH  /tutor_courses/:id(.:format)               tutor_courses#update
 #                             PUT    /tutor_courses/:id(.:format)               tutor_courses#update
 #                             DELETE /tutor_courses/:id(.:format)               tutor_courses#destroy
+#                       slots GET    /slots(.:format)                           slots#index
+#                             POST   /slots(.:format)                           slots#create
+#                    new_slot GET    /slots/new(.:format)                       slots#new
+#                   edit_slot GET    /slots/:id/edit(.:format)                  slots#edit
+#                        slot GET    /slots/:id(.:format)                       slots#show
+#                             PATCH  /slots/:id(.:format)                       slots#update
+#                             PUT    /slots/:id(.:format)                       slots#update
+#                             DELETE /slots/:id(.:format)                       slots#destroy
 #         dashboard_home_user GET    /:id/dashboard/home(.:format)              dashboard/home#index
 #     dashboard_schedule_user GET    /:id/dashboard/schedule(.:format)          dashboard/schedule#index
 #      dashboard_courses_user GET    /:id/dashboard/courses(.:format)           dashboard/courses#index

@@ -19,11 +19,11 @@ FactoryGirl.define do
 
   factory :slot do
     tutor
-    status 0
-    start_time "2015-08-14 12:00:00"
-    duration 2
-    reservation_min 1
-    reservation_max 4
+    status              0
+    start_time          "2015-09-01 10:00:00"
+    duration            21600 # 6 hours
+    # reservation_min     1
+    # reservation_max     4
 
     # factory :one_slot do 
     #   start_date  "2015-08-14"
