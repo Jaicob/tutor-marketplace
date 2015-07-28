@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 20150727185718) do
   create_table "courses", force: :cascade do |t|
     t.integer  "school_id"
     t.text     "subject"
-    t.string   "call_number"
+    t.integer  "call_number"
     t.string   "friendly_name"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
