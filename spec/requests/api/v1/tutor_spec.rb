@@ -20,4 +20,28 @@ describe "Tutor endpoints" do
     skip
   end
 
+  it "Returns all tutors at a school" do
+    skip
+  end
+
+  it "Returns all tutors at a school for a course" do
+    skip
+  end
+
+  it "Returns all tutors at a school for a course on a dow" do
+    skip
+  end
+
+  it "Returns all tutors for a course" do
+    skip
+  end
+
+  it "Returns all tutors for a dow" do 
+    skip
+  end
+
+  it "Returns all tutors for a course and dow" do 
+    skip
+  end
+
 end

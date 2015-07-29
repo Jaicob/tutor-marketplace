@@ -47,6 +47,19 @@ module V1
         end
       end
 
+      desc "Searches for tutors based on params"
+      get "search" do
+        tutorSearch = TutorSearch.new()
+        @results = tutorSearch.search declared_params 
+        if @results
+          @results
+        else
+          return "Problem fetching tutors: #{@results.errors.full_messages}"
+        end        
+      end
+
+
+
       
     end
   end
