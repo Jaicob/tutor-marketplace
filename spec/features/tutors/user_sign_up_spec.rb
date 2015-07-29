@@ -9,6 +9,12 @@ feature 'Tutor sign up for registered users' do
     course
   end
 
+  around(:each, js: true) do |example|
+    Headless.ly do
+      example.run
+    end
+  end
+
   scenario 'user can create a tutor account', js: true do 
     visit '/tutors/new'
     puts page.body

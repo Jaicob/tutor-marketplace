@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150727185718) do
+ActiveRecord::Schema.define(version: 20150729152259) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 20150727185718) do
   create_table "courses", force: :cascade do |t|
     t.integer  "school_id"
     t.text     "subject"
-    t.integer  "call_number"
+    t.string   "call_number"
     t.string   "friendly_name"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
@@ -68,8 +68,6 @@ ActiveRecord::Schema.define(version: 20150727185718) do
     t.integer  "reservation_max"
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
-    t.string   "start_week_time"
-    t.string   "end_week_time"
   end
 
   add_index "slots", ["tutor_id"], name: "index_slots_on_tutor_id", using: :btree
@@ -140,6 +138,7 @@ ActiveRecord::Schema.define(version: 20150727185718) do
     t.string   "invited_by_type"
     t.integer  "invitations_count",      default: 0
     t.string   "slug"
+    t.integer  "school_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
@@ -147,6 +146,7 @@ ActiveRecord::Schema.define(version: 20150727185718) do
   add_index "users", ["invitations_count"], name: "index_users_on_invitations_count", using: :btree
   add_index "users", ["invited_by_id"], name: "index_users_on_invited_by_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["school_id"], name: "index_users_on_school_id", using: :btree
   add_index "users", ["slug"], name: "index_users_on_slug", unique: true, using: :btree
 
   add_foreign_key "appointments", "slots"
@@ -157,4 +157,5 @@ ActiveRecord::Schema.define(version: 20150727185718) do
   add_foreign_key "tutor_courses", "courses"
   add_foreign_key "tutor_courses", "tutors"
   add_foreign_key "tutors", "users"
+  add_foreign_key "users", "schools"
 end

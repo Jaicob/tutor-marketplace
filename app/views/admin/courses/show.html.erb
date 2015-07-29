@@ -15,17 +15,19 @@
           <th>Call Number</th>
           <th>Friendly Name</th>
           <th>Tutors</th>
+          <th>Edit</th>
           <th>Delete</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td><%= @course.id %>
-          <td><%= best_in_place @course, :school_name, :as => :input %></td>
-          <td><%= best_in_place @course, :subject, :as => :input %></td>
-          <td><%= best_in_place @course, :call_number, :as => :input %></td>
-          <td><%= best_in_place @course, :friendly_name, :as => :input %></td>
+          <td><%= @course.school_name %></td>
+          <td><%= @course.subject[:name] %></td>
+          <td><%= @course.call_number %></td>
+          <td><%= @course.friendly_name %></td>
           <td><%= @course.tutors.count %></td>
+          <td><%= link_to 'Edit', edit_admin_course_path(@course) %>
           <td><a href="#" data-reveal-id="confirmDeleteCourse">Delete</a></td>
         </tr>
       </tbody>
@@ -42,6 +44,6 @@
 
 <div class="row">
   <div class="small-12 columns">
-    <%= link_to 'All Courses', courses_path, class: 'button secondary' %>
+    <%= link_to 'All Courses', admin_courses_path, class: 'button secondary' %>
   </div>
 </div>

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe CoursesController do 
+describe Admin::CoursesController do 
   let(:course) { create(:course) }
   let(:invalid_course) { create(:invalid_course)}
   let(:course_attributes) { attributes_for(:course, school_id: school.id) }
@@ -38,11 +38,11 @@ describe CoursesController do
 
     context 'with valid attributes' do 
       
-      it 'creates a new course and redirects to the courses index' do
+      it 'creates a new course and redirects to the course' do
         expect { 
           post :create, course: course_attributes
         }.to change(Course, :count).by(1)
-        expect(response).to redirect_to(course_path(Course.last.id))
+        expect(response).to redirect_to(admin_course_path(Course.last.id))
       end
     end
 
@@ -74,7 +74,7 @@ describe CoursesController do
 
     context 'with valid attributes' do 
       
-      it 'updates the course and redirects to the courses index' do
+      it 'updates the course and redirects to the course' do
         xhr :put, :update, id: course, course: {
           call_number: course.call_number,
           friendly_name: 'Test Name',
@@ -83,6 +83,7 @@ describe CoursesController do
         }
         course.reload
         expect(course.friendly_name).to eq 'Test Name'
+        expect(response).to redirect_to admin_course_path(course)
       end
     end
 
@@ -97,6 +98,7 @@ describe CoursesController do
         }
         course.reload
         expect(course.friendly_name).not_to eq 'Test Name'
+        expect(response).to render_template :edit
       end
     end
   end
@@ -108,7 +110,7 @@ describe CoursesController do
       expect {
         delete :destroy, id: course
       }.to change(Course, :count).by(-1)
-      expect(response).to redirect_to courses_path
+      expect(response).to redirect_to admin_courses_path
     end
   end
 end

@@ -23,7 +23,7 @@ class TutorsController < ApplicationController
     if @tutor.save
       # The method below only creates a tutor_course for the initial sign-up, all other CRUD operations relating to tutor_courses go through the TutorCoursesController
       @tutor.set_first_tutor_course(@tutor, params)
-      redirect_to dashboard_home_user_path(current_user)
+      redirect_to home_dashboard_user_path(current_user)
     else
       flash[:alert] = "Tutor account was not created. Please fill in all fields and attach your unofficial transcript."
       render :new
@@ -37,11 +37,10 @@ class TutorsController < ApplicationController
   end
 
   def update
-    # This updates everything on a tutor object, except active_status which is only editable by Admin users and which is handled in the custom update_active_status action
     @tutor.update(tutor_params)
     @tutor.crop_profile_pic(tutor_params)
     if @tutor.save
-      redirect_to dashboard_profile_user_path(current_user)
+      redirect_to profile_dashboard_user_path(current_user)
     else
       flash[:notice] = "Tutor was not updated: #{@tutor.errors.full_messages}"
       redirect_to :back
@@ -61,43 +60,12 @@ class TutorsController < ApplicationController
 
   def destroy
     if @tutor.destroy
-      redirect_to dashboard_home_user_path(current_user)
+      redirect_to home_dashboard_user_path(current_user)
     else
       flash[:alert] = "Your tutor account was not deleted."
       render :show
     end
   end
-
-  #======================================================================================
-  # Custom Action for activating/de-activation and deleting Tutors by Admin users
-  #======================================================================================
-
-  def update_active_status
-
-    respond_to do |format|
-      if @tutor.update_attributes(tutor_params)
-        # The following conditional send the appropriate email depending on whether a tutor was activated or de-activated
-        if @tutor.active_status == 'Active'
-          TutorActivationMailer.activation_email(@tutor.user).deliver_now
-        else
-          TutorActivationMailer.deactivation_email(@tutor.user).deliver_now
-        end
-        format.json { respond_with_bip(@tutor)}
-      else
-        format.json { respond_with_bip(@tutor)}
-      end
-    end
-  end
-
-  def destroy_by_admin
-    if @tutor.destroy
-      redirect_to dashboard_tutors_user_path(current_user)
-    else
-      flash[:alert] = "Your tutor account was not deleted."
-      render :show
-    end
-  end
-
 
   #======================================================================================
   # Custom Actions for handling Tutor Account creation by visitors or non-signed in users

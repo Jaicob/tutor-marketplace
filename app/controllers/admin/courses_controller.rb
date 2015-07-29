@@ -1,4 +1,4 @@
-class CoursesController < ApplicationController
+class Admin::CoursesController < AdminController
   before_action :set_course, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -13,9 +13,9 @@ class CoursesController < ApplicationController
     @course = Course.create(course_params)
 
     if @course.save
-      redirect_to @course
+      redirect_to admin_course_path(@course)
     else
-      flash[:error] = "Course was not updated: #{@course.errors.full_messages}"
+      flash[:error] = "Course was not created: #{@course.errors.full_messages}"
       render :new
     end
   end
@@ -23,9 +23,12 @@ class CoursesController < ApplicationController
   def show 
   end
 
+  def edit
+  end
+
   def update
     if @course.update(course_params)
-      redirect_to @course
+      redirect_to admin_course_path(@course)
     else
       flash[:error] = "Course was not updated: #{@course.errors.full_messages}"
       render :edit
@@ -34,7 +37,7 @@ class CoursesController < ApplicationController
 
   def destroy
     if @course.destroy
-      redirect_to courses_path
+      redirect_to admin_courses_path
     else
       render :show
     end

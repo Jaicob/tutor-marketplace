@@ -22,6 +22,11 @@ class Course < ActiveRecord::Base
   validates :subject, presence: true
 
   serialize :subject, Hash
+  # [name: 'Biology',           id: 1]
+  # [name: 'Chemistry',         id: 2]
+  # [name: 'Math',              id: 3]
+  # [name: 'Computer Science',  id: 4]
+  # [name: 'Physics',           id: 5]
 
   def school_name
     school = School.find(self.school_id)

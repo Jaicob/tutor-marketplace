@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe SchoolsController do 
+describe Admin::SchoolsController do 
   let(:school) { create(:school) }
   let(:invalid_school) { create(:invalid_school)}
   let(:school_attributes) { attributes_for(:school) }
@@ -37,11 +37,11 @@ describe SchoolsController do
 
     context 'with valid attributes' do 
       
-      it 'creates a new school and redirects to the schools index' do
+      it 'creates a new school and redirects to the school' do
         expect { 
           post :create, school: school_attributes
         }.to change(School, :count).by(1)
-        expect(response).to redirect_to(schools_path)
+        expect(response).to redirect_to admin_school_path(School.last.id)
       end
     end
 
@@ -95,6 +95,7 @@ describe SchoolsController do
         }
         school.reload
         expect(school.name).not_to eq 'Invalid School Location'
+        expect(response).to render_template :edit
       end
     end
   end
@@ -106,7 +107,7 @@ describe SchoolsController do
       expect {
         delete :destroy, id: school
       }.to change(School, :count).by(-1)
-      expect(response).to redirect_to schools_path
+      expect(response).to redirect_to admin_schools_path
     end
   end
 end

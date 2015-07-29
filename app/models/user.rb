@@ -30,6 +30,7 @@
 #  invited_by_type        :string
 #  invitations_count      :integer          default(0)
 #  slug                   :string
+#  school_id              :integer
 #
 
 class User < ActiveRecord::Base
@@ -38,6 +39,7 @@ class User < ActiveRecord::Base
   #
   has_one :tutor, dependent: :destroy
   has_one :student, dependent: :destroy
+  belongs_to :school
 
   enum role: [:user, :admin]
   after_initialize :set_default_role, :if => :new_record?

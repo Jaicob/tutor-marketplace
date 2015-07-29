@@ -1,0 +1,56 @@
+<header>
+  <div class="row">
+    <div class="large-12 columns">
+      <h1>Tutors</h1>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="row">
+    <div class="large-6 columns">
+      <h4>Active Status</h4>
+        <p class="button tiny success">Active</p><br>
+        <p class="button tiny secondary">Inactive</p>
+    </div>
+    <div class="large-6 columns">
+      <h4>Application Status</h4>
+        <p class="button tiny info">Applied</p><br>
+        <p class="button tiny alert">Awaiting Approval</p><br>
+        <p class="button tiny default">Approved</p><br>
+    </div>
+  </div>
+</section>
+
+<%= link_to 'Download CSV', tutors_path(format: :csv) %>
+
+<main>
+  <div class="row full-width">
+    <div class="large-12 columns">
+      <table>
+        <thead>
+          <tr>
+            <th width="150">Active Status</th>
+            <th width="250">Name</th>
+            <th width="300">Email</th>
+            <th width="250">School</th>
+            <th width="150">Application Status</th>
+            <th width="150">View</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @tutors.each do |tutor| %>
+          <tr>
+            <td><%= tutor.active_status %></td>
+            <td><%= tutor.user.full_name %></td>
+            <td><%= tutor.user.email %></td>
+            <td><% tutor.school %></td>
+            <td><%= tutor.application_status %></td>
+            <td><%= link_to "Details", admin_tutor_path(tutor) %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
