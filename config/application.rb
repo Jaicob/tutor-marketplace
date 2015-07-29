@@ -31,7 +31,7 @@ module WebApp
     # Auto-load API and its subdirectories
     config.paths.add 'app/api', glob: '**/*.rb'
     config.autoload_paths += Dir["#{Rails.root}/app/api/*"]
-    
+
     # From http://funonrails.com/2014/03/building-restful-api-using-grape-in-rails/
     # config.paths.add "app/api", glob: "**/*.rb"
     # config.autoload_paths += Dir["#{Rails.root}/app/api/*"]
@@ -58,10 +58,21 @@ module WebApp
     # For Foundation 5
     config.assets.precompile += %w( vendor/modernizr)
 
+    # React
+    config.react.variant      = :production
+    config.react.addons       = true
+
     # Delegates front-end dependency management to Bower
     config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components')
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+
+    # React
+    # config.react.jsx_transform_options = {
+    #   blacklist: ['spec.functionName', 'validation.react'], # default options
+    #   optional: ["transformerName"],  # pass extra babel options
+    #   whitelist: ["useStrict"] # even more options
+    # }
   end
 end

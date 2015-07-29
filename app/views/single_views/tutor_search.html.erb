@@ -1,0 +1,33 @@
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#schoolId").on("change", function() {
+			var schoolId = $("#schoolId").val();
+			var subjectId = $("#subjectId").val();
+			console.log(schoolId, subjectId);
+			React.render(
+			  React.createElement(TutorCardContainer, {school: schoolId, subject: subjectId}),
+			  document.getElementById('tutorcardcontainer')
+			);
+		});
+
+		$("#subjectId").on("change", function() {
+			var schoolId = $("#schoolId").val();
+			var subjectId = $("#subjectId").val();
+			console.log(schoolId, subjectId);
+			React.render(
+			  React.createElement(TutorCardContainer, {school: schoolId, subject: subjectId}),
+			  document.getElementById('tutorcardcontainer')
+			);
+		});
+	});
+</script>
+
+<label for="school">School ID</label>
+<input id="schoolId" name="school" type="number" value="1">
+
+<br>
+
+<label for="subject">Subject ID</label>
+<input id="subjectId" name="subject" type="number" value="1">
+
+<div id="tutorcardcontainer"></div>
