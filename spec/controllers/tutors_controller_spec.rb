@@ -4,7 +4,6 @@ describe TutorsController do
   let(:user) { create(:user) }
   let(:course) { create(:course) }
   let(:tutor) { create(:complete_tutor) }
-  let(:admin) { create(:user, :admin) }
 
   describe 'GET #index' do 
     it 'renders the :index template' do 
@@ -60,7 +59,7 @@ describe TutorsController do
             tutor_course: {rate: 25}
           }
         }.to change(Tutor, :count).by(1)
-        expect(response).to redirect_to dashboard_home_user_path(user)
+        expect(response).to redirect_to home_dashboard_user_path(user)
       end
     end
 
@@ -137,7 +136,7 @@ describe TutorsController do
       expect{
         delete :destroy, id: tutor.user
       }.to change(Tutor, :count).by(-1)
-      expect(response).to redirect_to(dashboard_home_user_path(user))
+      expect(response).to redirect_to(home_dashboard_user_path(user))
     end
   end
 
@@ -146,36 +145,6 @@ describe TutorsController do
   # Custom Non-RESTful actions below
   #==================================================
 
-  describe 'PATCH #update_active_status' do 
-  
-    it "updates a tutor's active status" do 
-      skip "need to figure out how to make this work - functionality is OK but test doesn't work because need to pass in extra id param and cant do it here"
-      login_with admin
-      xhr :patch, :update_active_status, id: admin, tutor: attributes_for(:tutor, active_status: 'Active')
-      tutor.reload
-      expect(tutor.active_status).to eq 'Active'
-      xhr :patch, :update, id: admin, tutor: attributes_for(:tutor, active_status: 'Inactive')
-      tutor.reload
-      expect(tutor.active_status).to eq 'Inactive'
-    end
-
-    it "sends the activation email when status is changed to active" do
-    end
-
-    it "sends the activation email when status is changed to active" do
-    end
-  end
-
-  describe 'PATCH #destroy_by_admin' do 
-  
-    it "succesfully destroys the correct tutor from the admin tutors page" do
-      login_with admin
-      tutor
-      expect{
-        xhr :patch, :destroy_by_admin, id: tutor.id
-        }.to change(Tutor, :count).by(-1)
-    end
-  end
 
   describe 'GET #visitor_new' do
 

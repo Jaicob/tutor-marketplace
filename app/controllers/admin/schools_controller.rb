@@ -1,4 +1,4 @@
-class SchoolsController < ApplicationController
+class Admin::SchoolsController < AdminController
   before_action :set_school, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -13,9 +13,9 @@ class SchoolsController < ApplicationController
     @school = School.create(school_params)
 
     if @school.save
-      redirect_to schools_path
+      redirect_to admin_school_path(@school)
     else
-      flash[:error] = "School was not created: #{@school.errors.full_messages}"
+      flash[:error] = "School was not created: #{@school.errors.full_messages}" 
       render :new
     end
   end
@@ -23,9 +23,12 @@ class SchoolsController < ApplicationController
   def show 
   end
 
+  def edit
+  end
+
   def update
     if @school.update(school_params)
-      redirect_to @school
+      redirect_to admin_school_path(@school)
     else
       flash[:error] = "School was not updated: #{@school.errors.full_messages}"
       render :edit
@@ -34,9 +37,8 @@ class SchoolsController < ApplicationController
 
   def destroy
     if @school.destroy
-      redirect_to schools_path
+      redirect_to admin_schools_path
     else
-      flash[:error] = "School was not destroyed: #{@school.errors.full_messages}"
       render :show
     end
   end
