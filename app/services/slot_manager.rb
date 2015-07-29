@@ -42,6 +42,7 @@ class SlotManager
   end
 
   # Load slots and update all that match the range
+  # might want to try find_each here to speed things up
   def update_slots
     get_slots_for_range
     @slots.each do |slot|
