@@ -1,4 +1,5 @@
 class Admin::TutorsController < AdminController
+  before_action :set_tutor, only: [:show, :update, :destroy]
 
   def index
     @tutors = Tutor.all
@@ -33,6 +34,10 @@ end
 
   private
 
-  def tutor_params
-    params.require(:tutor).permit(:rating, :application_status, :birthdate, :degree, :major, :extra_info, :graduation_year, :phone_number, :profile_pic, :transcript, :active_status, :crop_x, :crop_y, :crop_w, :crop_h, course: [:course_id], tutor_course: [:rate])
-  end
+    def set_tutor
+      @tutor = Tutor.find(params[:id])
+    end
+
+    def tutor_params
+      params.require(:tutor).permit(:rating, :application_status, :birthdate, :degree, :major, :extra_info, :graduation_year, :phone_number, :profile_pic, :transcript, :active_status, :crop_x, :crop_y, :crop_w, :crop_h, course: [:course_id], tutor_course: [:rate])
+    end

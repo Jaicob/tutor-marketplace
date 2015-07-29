@@ -18,29 +18,29 @@ describe Admin::TutorsController do
     end
   end
 
-  describe 'PATCH #update_active_status' do 
-  
-    it "updates a tutor's active status" do
-      skip
+  describe 'GET #show' do 
+
+    it 'renders the :show template' do 
+      get :show, id: tutor.id
+      expect(response).to render_template :show
     end
 
-    it "sends the activation email when status is changed to active" do
-      skip
-    end
-
-    it "sends the activation email when status is changed to active" do
-      skip
+    it 'assings the correct tutor to @tutor' do 
+      get :show, id: tutor.id
+      expect(assigns(:tutor)).to eq(tutor)
     end
   end
 
-  describe 'PATCH #destroy_by_admin' do 
+  describe 'GET #update' do
+  end
+
+
+  describe 'DELETE #destroy' do 
   
     it "succesfully destroys the correct tutor from the admin tutors page" do
-      login_with admin
-      tutor
-      expect{
-        xhr :patch, :destroy_by_admin, id: tutor.id
-        }.to change(Tutor, :count).by(-1)
+      skip
     end
   end
 end
+
+

@@ -124,7 +124,6 @@ Rails.application.routes.draw do
         get  '/profile'      => 'profile#index'
         get  '/edit_profile' => 'profile#edit'
         get  '/settings'     => 'settings#index'
-        get  '/tutors'       => 'tutors#index'
       end
     end
   end

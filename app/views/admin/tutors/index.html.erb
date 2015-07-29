@@ -35,7 +35,7 @@
             <th width="300">Email</th>
             <th width="250">School</th>
             <th width="150">Application Status</th>
-            <th width="150">Delete</th>
+            <th width="150">View</th>
           </tr>
         </thead>
         <tbody>
@@ -52,7 +52,7 @@
                   <a href="#" data-reveal-id="tutorDocumentsModal-<%= tutor.id %>" class="black-link-text"><%= tutor.application_status %></a>
                 </span>
             </td>
-            <td><span class="button tiny secondary expand"><a href="#" data-reveal-id="confirmDestroyTutorModal-<%= tutor.id %>" class="black-link-text">Delete</a></span></td>
+            <td><%= link_to "Profile", admin_tutor_path(tutor) %></td>
           </tr>
 
             <!-- Modal to view/download Tutor documents -->
@@ -87,7 +87,7 @@
                   <div class="text-center">
                     <h2><%= tutor.user.full_name %></h2>
 
-                    <%= form_for tutor, url: "/tutors/#{tutor.id}/destroy_by_admin", method: 'delete' do |f| %>
+                    <%= form_for tutor, url: "/admin/tutors/#{tutor.id}", method: 'delete' do |f| %>
                     
                       <%= f.submit 'Delete' %>
                     <% end %>
