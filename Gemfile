@@ -20,10 +20,11 @@ source "https://rubygems.org" do
   end
 
   group :test do
-    gem "database_cleaner", "~> 1.4"
-    gem "launchy", "~> 2.4"
     gem "ci_reporter", "~> 2.0"
     gem "ci_reporter_rspec", "~> 1.0"
+    gem "database_cleaner", "~> 1.4"
+    gem 'headless'
+    gem "launchy", "~> 2.4"
   end
 
   group :production do
