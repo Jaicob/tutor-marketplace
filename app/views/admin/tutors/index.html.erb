@@ -44,61 +44,11 @@
             <td><%= tutor.active_status %></td>
             <td><%= tutor.user.full_name %></td>
             <td><%= tutor.user.email %></td>
-            <td><% tutor.schools.each do |school| %>
-                  <%= school %><br>
-                <% end %>
-            </td>
-            <td><span class="<%= tutor.application_status %>">
-                  <a href="#" data-reveal-id="tutorDocumentsModal-<%= tutor.id %>" class="black-link-text"><%= tutor.application_status %></a>
-                </span>
-            </td>
-            <td><%= link_to "Profile", admin_tutor_path(tutor) %></td>
+            <td><% tutor.school %></td>
+            <td><%= tutor.application_status %></td>
+            <td><%= link_to "Details", admin_tutor_path(tutor) %></td>
           </tr>
-
-            <!-- Modal to view/download Tutor documents -->
-
-            <div id="tutorDocumentsModal-<%= tutor.id %>" class="reveal-modal small" data-reveal aria-labelledby="secondModalTitle" aria-hidden="true" role="dialog">
-
-              <h4 id="secondModalTitle" class="text-center">Tutor Documents</h4>
-
-              <div class="row">
-                <div class="small-8 small-centered columns">
-                  <div class="text-center">
-                    <h2><%= tutor.user.full_name %></h2>
-
-                    <%= image_tag(tutor.profile_pic_url(:thumb)) %>
-
-                    <%= link_to "Download Transcript", tutor.transcript.url %>
-
-                  </div>
-                </div>
-              </div>
-            </div>
-
-
-            <!-- Modal to confirm Tutor deletion -->
-
-            <div id="confirmDestroyTutorModal-<%= tutor.id %>" class="reveal-modal small" data-reveal aria-labelledby="secondModalTitle" aria-hidden="true" role="dialog">
-              <h4 id="secondModalTitle" class="text-center">Are you sure you want to permanently destroy this tutor account?</h4>
-              <h6>You can deactivate the tutor to temporarily disable the account.</h6>
-
-              <div class="row">
-                <div class="small-8 small-centered columns">
-                  <div class="text-center">
-                    <h2><%= tutor.user.full_name %></h2>
-
-                    <%= form_for tutor, url: "/admin/tutors/#{tutor.id}", method: 'delete' do |f| %>
-                    
-                      <%= f.submit 'Delete' %>
-                    <% end %>
-
-                  </div>
-                </div>
-              </div>
-            </div>
-
           <% end %>
-
         </tbody>
       </table>
     </div>

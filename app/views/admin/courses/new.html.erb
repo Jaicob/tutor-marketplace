@@ -5,14 +5,14 @@
 </div>
 
 <div class="row">
-  <%= form_for @course do |f| %>
+  <%= form_for :course, url: admin_courses_path do |f| %>
     <div class="small-3 columns">
       <%= f.label :school_id %>
       <%= f.collection_select :school_id, School.all, :id, :name, include_blank: true %>
     </div>
 
     <div class="small-3 columns">
-
+      <p>Need to add Subject, not sure how though right now</p>
     </div>
 
     <div class="small-3 columns">

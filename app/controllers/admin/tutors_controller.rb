@@ -1,5 +1,5 @@
 class Admin::TutorsController < AdminController
-  before_action :set_tutor, only: [:show, :update, :destroy]
+  before_action :set_tutor_admin_controller, only: [:show, :update, :destroy]
 
   def index
     @tutors = Tutor.all
@@ -34,7 +34,8 @@ end
 
   private
 
-    def set_tutor
+    # This needs to have a different name than the set_tutor method in the application_controller
+    def set_tutor_admin_controller
       @tutor = Tutor.find(params[:id])
     end
 

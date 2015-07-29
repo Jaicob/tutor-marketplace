@@ -11,6 +11,7 @@
 
 class School < ActiveRecord::Base
   has_many :courses
+  has_many :users
 
   validates :name, presence: true, uniqueness: true
   validates :location, presence: true

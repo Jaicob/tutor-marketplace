@@ -38,6 +38,7 @@ class User < ActiveRecord::Base
   #
   has_one :tutor, dependent: :destroy
   has_one :student, dependent: :destroy
+  belongs_to :school
 
   enum role: [:user, :admin]
   after_initialize :set_default_role, :if => :new_record?
