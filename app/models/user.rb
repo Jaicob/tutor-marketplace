@@ -30,6 +30,7 @@
 #  invited_by_type        :string
 #  invitations_count      :integer          default(0)
 #  slug                   :string
+#  school_id              :integer
 #
 
 class User < ActiveRecord::Base
