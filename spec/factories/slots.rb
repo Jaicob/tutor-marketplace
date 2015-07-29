@@ -18,7 +18,7 @@ FactoryGirl.define do
   # Always create slots with SlotCreator, rather than a slot factory
 
   factory :slot do
-    tutor
+    association :tutor, :factory => :complete_tutor
     status              0
     start_time          "2015-09-01 10:00:00"
     duration            21600 # 6 hours

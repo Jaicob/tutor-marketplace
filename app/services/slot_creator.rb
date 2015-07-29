@@ -6,7 +6,7 @@ class SlotCreator
      # ex. params = (
      #    tutor_id:         1, 
      #    start_time:       '2015-08-01 17:00', 
-     #    duration:         2, 
+     #    duration:         3600, 
      #    weeks_to_repeat:  1
      # )
      
