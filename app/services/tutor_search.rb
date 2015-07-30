@@ -27,6 +27,7 @@ class TutorSearch
     @search_config |= ( 1 << SCHOOL ) if(params.has_key?(:school_id))
     @search_config |= ( 1 << COURSE ) if(params.has_key?(:course_id))
     @search_config |= ( 1 << DOW )    if(params.has_key?(:dow))
+    stringify_dow
   end
 
   #
@@ -41,11 +42,11 @@ class TutorSearch
     when Search_By::COURSE
       results = tutors_for_course @params[:course_id]
     when Search_By::DOW
-      results = tutors_for_dow @params[:dow]
+      results = tutors_for_dow @string_dow
     when Search_By::SCHOOL_COURSE
       results = tutors_for_school_course @params[:school_id], @params[:course_id]
     when Search_By::SCHOOL_COURSE_DOW
-      results = tutors_for_school_course_dow @params[:school_id], @params[:course_id], @params[:dow]
+      results = tutors_for_school_course_dow @params[:school_id], @params[:course_id], @string_dow
     end
     return results
   end
@@ -55,25 +56,24 @@ class TutorSearch
   #
   # Calculate the string format of the dow, which is initially an integer
   #
-  def dow
-    string_dow = ""
+  def stringify_dow
+    @string_dow = ""
     case @params[:dow]
-    when 0
-      string_dow = "Sun"
-    when 1
-      string_dow = "Mon"
-    when 2
-      string_dow = "Tue"
-    when 3
-      string_dow = "Wed"
-    when 4
-      string_dow = "Thu"
-    when 5
-      string_dow = "Fri"
-    when 6
-      string_dow = "Sat"
+    when '0'
+      @string_dow = "Sun"
+    when '1'
+      @string_dow = "Mon"
+    when '2'
+      @string_dow = "Tue"
+    when '3'
+      @string_dow = "Wed"
+    when '4'
+      @string_dow = "Thu"
+    when '5'
+      @string_dow = "Fri"
+    when '6'
+      @string_dow = "Sat"
     end
-    string_dow
   end
 
   def tutors_for_school (school_id)

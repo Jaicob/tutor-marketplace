@@ -17,31 +17,9 @@ describe "Tutor endpoints" do
   end
 
   it "Updates a specific tutor's attributes" do 
-    skip
-  end
-
-  it "Returns all tutors at a school" do
-    skip
-  end
-
-  it "Returns all tutors at a school for a course" do
-    skip
-  end
-
-  it "Returns all tutors at a school for a course on a dow" do
-    skip
-  end
-
-  it "Returns all tutors for a course" do
-    skip
-  end
-
-  it "Returns all tutors for a dow" do 
-    skip
-  end
-
-  it "Returns all tutors for a course and dow" do 
-    skip
+    get "/api/v1/tutors/#{tutor.id}"
+    expect(response).to be_success
+    expect(json['id']).to eq(tutor.id)
   end
 
 end
