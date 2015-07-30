@@ -1,8 +1,9 @@
   # Use this to test it out in rails console
-  #s = TutorSearch.new(school_id: 1, course_id: 1, dow: "Sat")
+  #s = TutorSearch.new(has_availability: 1, school_id: 1, course_id: 1, dow: "Sat")
 
 class TutorSearch
   attr_accessor :search_config
+  attr_accessor :requires_availability
 
   # Search Config options
   SCHOOL = 0
@@ -27,6 +28,7 @@ class TutorSearch
     @search_config |= ( 1 << SCHOOL ) if(params.has_key?(:school_id))
     @search_config |= ( 1 << COURSE ) if(params.has_key?(:course_id))
     @search_config |= ( 1 << DOW )    if(params.has_key?(:dow))
+    @requires_availability = true  if(params.has_key?(:has_availability))
     stringify_dow
   end
 
@@ -78,12 +80,20 @@ class TutorSearch
 
   def tutors_for_school (school_id)
     school = School.find school_id
-    school.tutors
+    if @requires_availability
+      school.tutors.includes(:slots).where.not(slots: { id: nil }) 
+    else
+      school.tutors 
+    end     
   end
 
   def tutors_for_course (course_id)
     course = Course.find course_id
-    course.tutors
+    if @requires_availability
+      course.tutors.includes(:slots).where.not(slots: { id: nil }) 
+    else
+      course.tutors 
+    end    
   end
 
   #
@@ -97,7 +107,11 @@ class TutorSearch
       tutor = slot.tutor
       next if tutors.include? tutor
       current_dow = slot.start_time.strftime('%a')
-      tutors.add tutor if current_dow == desired_dow
+      if @requires_availability
+        tutors.add tutor if (current_dow == desired_dow && tutor.slots.any?)
+      else
+        tutors.add tutor if (current_dow == desired_dow)
+      end
     end
 
     tutors.to_a()
