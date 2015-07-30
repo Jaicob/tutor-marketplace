@@ -11,6 +11,7 @@ class API < Grape::API
   mount V1::Tutors
   mount V1::Users
   mount V1::Slots
+  mount V1::Searches
   mount V1::AppointmentsByTutor
   mount V1::AppointmentsByStudent
   add_swagger_documentation  api_version: 'v1', mount_path: '/docs' , info: {title: "Axon API"}

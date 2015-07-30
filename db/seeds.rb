@@ -48,11 +48,12 @@ end
 
 
 # Create 20 Devise Users
-20.times { User.create!(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, email: Faker::Internet.safe_email, password: 'password', password_confirmation: 'password') }
+20.times { User.create!(school_id: 1, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, email: Faker::Internet.safe_email, password: 'password', password_confirmation: 'password') }
 
 
-# Create a Tutor profile for each User
+# Create a Tutor profile for each User and add school to that user
 User.all.each do |user|
+
   user.create_tutor(
     rating: 5,
     birthdate: '1990-01-01',
@@ -82,7 +83,7 @@ end
 
 
 # Create Students
-20.times { User.create!(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, email: Faker::Internet.safe_email, password: 'password', password_confirmation: 'password') }
+20.times { User.create!(school_id: 1, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, email: Faker::Internet.safe_email, password: 'password', password_confirmation: 'password') }
 
 new_users = []
 
