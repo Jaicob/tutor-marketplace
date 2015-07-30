@@ -1,0 +1,40 @@
+<h4>Placeholder file for Admin viewing of a tutor's information</h4>
+
+<p>Tutor: <%= @tutor.full_name %></p>
+
+<p>Active Status: <%= @tutor.active_status %></p>
+
+<% if @tutor.active_status == 'Inactive' %>
+  <%= form_for :tutor, url: admin_tutor_path(@tutor), method: 'patch' do |f| %>
+      <%= f.hidden_field :active_status, value: 'Active' %>
+      <%= f.submit 'Activate', class: 'button default' %>
+  <% end %>
+<% else %>
+  <%= form_for :tutor, url: admin_tutor_path(@tutor), method: 'patch' do |f| %>
+      <%= f.hidden_field :active_status, value: 'Inactive' %>
+      <%= f.submit 'Deactivate', class: 'button default' %>
+  <% end %>
+<% end %>
+
+
+<h4>Application Status</h4>
+
+<p>Application Status: <%= @tutor.application_status %></p>
+
+<% if @tutor.application_status == 'Application Complete' %>
+  <%= form_for :tutor, url: admin_tutor_path(@tutor), method: 'patch' do |f| %>
+      <%= f.hidden_field :application_status, value: 'Approved' %>
+      <%= f.submit 'Approve Tutor', class: 'button default' %>
+  <% end %>
+<% end %>
+
+
+<h4>Delete Tutor</h4>
+
+<%= form_for :tutor, url: admin_tutor_path(@tutor), method: 'delete' do |f| %>
+    <%= f.submit 'Delete Tutor', class: 'button default alert' %>
+<% end %>
+
+
+<h4>Tutor Documents/Info/Profile</h4>
+<p>Stuff should go here</p>

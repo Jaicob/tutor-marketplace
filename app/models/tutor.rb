@@ -26,7 +26,9 @@ class Tutor < ActiveRecord::Base
   has_many :slots, dependent: :destroy
   has_many :appointments, through: :slots, dependent: :destroy
 
-  enum application_status: ['Applied', 'Awaiting Approval', 'Approved']
+  delegate :school, to: :user
+
+  enum application_status: ['Application Incomplete', 'Application Complete', 'Approved']
   enum active_status: ['Inactive', 'Active']
 
   # Carrierwave setup for uploading files

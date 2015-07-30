@@ -5,7 +5,7 @@
 </div>
 
 <div class="row">
-  <%= form_for @school do |f| %>
+  <%= form_for @school, url: '/admin/schools' do |f| %>
     <div class="small-5 columns">
       <%= f.label :name %>
       <%= f.text_field :name %>
