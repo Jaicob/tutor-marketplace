@@ -17,7 +17,9 @@ describe "Tutor endpoints" do
   end
 
   it "Updates a specific tutor's attributes" do 
-    skip
+    get "/api/v1/tutors/#{tutor.id}"
+    expect(response).to be_success
+    expect(json['id']).to eq(tutor.id)
   end
 
 end

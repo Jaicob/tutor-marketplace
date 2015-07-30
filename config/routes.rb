@@ -94,7 +94,7 @@
 
 
 Rails.application.routes.draw do
-  
+
   resources :tutors do
     member do
       # Custom routes below are necessary to allow visitors without user accounts to create tutor profiles before creating a user account yet still automatically link the two
@@ -115,26 +115,29 @@ Rails.application.routes.draw do
   resources :tutor_courses
   resources :slots
 
+  get '/search' => 'single_views#tutor_search'
+
   resources :users, only: [:update], path: '' do
-    member do
-      namespace :dashboard do
-        get  '/home'         => 'home#index'
-        get  '/schedule'     => 'schedule#index'
-        get  '/courses'      => 'courses#index'
-        get  '/profile'      => 'profile#index'
-        get  '/edit_profile' => 'profile#edit'
-        get  '/settings'     => 'settings#index'
+    scope module: :dashboard do
+      member do
+          get  '/dashboard/home'         => 'home#index'
+          get  '/dashboard/schedule'     => 'schedule#index'
+          get  '/dashboard/courses'      => 'courses#index'
+          get  '/dashboard/profile'      => 'profile#index'
+          get  '/dashboard/edit_profile' => 'profile#edit'
+          get  '/dashboard/settings'     => 'settings#index'
+          get  '/dashboard/tutors'       => 'tutors#index'
       end
     end
   end
+
+  root to: "single_views#home"
 
   namespace :admin do
     resources :courses
     resources :schools
     resources :tutors
   end
-
-  root to: "static_pages#home"
 
   mount API => '/'
 
