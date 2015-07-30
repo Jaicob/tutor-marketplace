@@ -1,3 +1,6 @@
+  # Use this to test it out in rails console
+  #s = TutorSearch.new(school_id: 1, course_id: 1, dow: "Sat")
+
 class TutorSearch
   attr_accessor :search_config
 
@@ -15,57 +18,105 @@ class TutorSearch
     SCHOOL_COURSE_DOW = 7
   end
 
-  # Use this to test it out in rails console
-  #s = TutorSearch.new(school: "UGA", course: "1212", dow: "Mon")
+  #
+  # This looks at the existence of parameters and sets the associated bit if so
+  #
   def initialize(params)
+    @params = params
     @search_config = 0
-    @search_config |= ( 1 << SCHOOL ) if(params.has_key?(:school))
-    @search_config |= ( 1 << COURSE ) if(params.has_key?(:course))
+    @search_config |= ( 1 << SCHOOL ) if(params.has_key?(:school_id))
+    @search_config |= ( 1 << COURSE ) if(params.has_key?(:course_id))
     @search_config |= ( 1 << DOW )    if(params.has_key?(:dow))
   end
 
+  #
+  # Determines which search method to use based on which
+  # bits where set in the initializer
+  #
   def search
     results = []
-
     case @search_config
     when Search_By::SCHOOL
-      results = tutors_for_school
+      results = tutors_for_school @params[:school_id]
     when Search_By::COURSE
-      results = tutors_for_course
+      results = tutors_for_course @params[:course_id]
     when Search_By::DOW
-      results = tutors_for_dow
+      results = tutors_for_dow @params[:dow]
     when Search_By::SCHOOL_COURSE
-      results = tutors_for_school_course
+      results = tutors_for_school_course @params[:school_id], @params[:course_id]
     when Search_By::SCHOOL_COURSE_DOW
-      results = tutors_for_school_course_dow
-    else
-      # Handle invalid search params here
+      results = tutors_for_school_course_dow @params[:school_id], @params[:course_id], @params[:dow]
     end
-
     return results
   end
 
   private
 
-    def tutors_for_school
-      Tutor.joins(:schools).where(schools: { name: "University of Georgia" })
+  #
+  # Calculate the string format of the dow, which is initially an integer
+  #
+  def dow
+    string_dow = ""
+    case @params[:dow]
+    when 0
+      string_dow = "Sun"
+    when 1
+      string_dow = "Mon"
+    when 2
+      string_dow = "Tue"
+    when 3
+      string_dow = "Wed"
+    when 4
+      string_dow = "Thu"
+    when 5
+      string_dow = "Fri"
+    when 6
+      string_dow = "Sat"
+    end
+    string_dow
+  end
+
+  def tutors_for_school (school_id)
+    school = School.find school_id
+    school.tutors
+  end
+
+  def tutors_for_course (course_id)
+    course = Course.find course_id
+    course.tutors
+  end
+
+  #
+  # Goes through each slot checking each tutors availability once and adds to them
+  # to a set to maintain uniquness
+  #
+  def tutors_for_dow (desired_dow)
+    tutors = Set.new []
+
+    Slot.find_each do |slot|
+      tutor = slot.tutor
+      next if tutors.include? tutor
+      current_dow = slot.start_time.strftime('%a')
+      tutors.add tutor if current_dow == desired_dow
     end
 
-    def tutors_for_course
-      Tutor.joins(:tutor_courses).where(tutor_courses: { course_id: params[:course].id })
-    end
+    tutors.to_a()
+  end
 
-    def tutors_for_dow
+  def tutors_for_school_course (school_id, course_id)
+    school = School.find school_id
+    course = school.courses.find course_id
+    course.tutors
+  end
 
-    end
-
-    def tutors_for_school_course
-
-    end
-
-    def tutors_for_school_course_dow
-
-    end
+  #
+  # Returns the intersection of the tutors_for_school_course and tutors_for_dow results
+  # could probably stand to be optimized in the future
+  #
+  def tutors_for_school_course_dow (school_id, course_id, dow)
+    school_course_tutors = tutors_for_school_course(school_id, course_id)
+    dow_tutors = tutors_for_dow(dow)
+    school_course_tutors & dow_tutors
+  end
 
 end
-

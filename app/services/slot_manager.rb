@@ -28,6 +28,7 @@ class SlotManager
   end
 
   # Lazy load the slots for the range
+  # should probably use find_each here too
   def get_slots_for_range
     @slots = []
     @tutor.slots.each do |slot|
