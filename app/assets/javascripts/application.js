@@ -25,6 +25,10 @@
 //= require ./base.js
 //= require ./dashboard/courses.js
 
+//= require react
+//= require react_ujs
+//= require components
+
 $(function() {
   $(document).foundation();
 });
