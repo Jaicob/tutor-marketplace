@@ -1,14 +1,12 @@
 var TutorCardContainer = React.createClass({
 	componentWillReceiveProps: function (nextProps) {
-		var endpoint = API.endpoints.courses({
+		var endpoint = API.endpoints.tutors({
 			school_id: nextProps["school"],
-			subject_id: nextProps["subject"]
-		})
+			course_id: nextProps["course"]
+		});
 		$.get(endpoint).success(function(data){
-			this.setState({
-				tutors: data
-			})
-		}.bind(this))
+			this.setState({ tutors: data })
+		}.bind(this));
 	},
 	getInitialState: function () {
 	    return {
@@ -16,12 +14,14 @@ var TutorCardContainer = React.createClass({
 	    };
 	},
 	render: function(){
-		return <div>
-			{
-				this.state.tutors.map(function(tutor){
-					return <TutorCard tutor={tutor} />
-				})
-			}
-		</div>
+		return(
+			<div>
+				{
+					this.state.tutors.map(function(tutor){
+						return <TutorCard tutor={tutor} />
+					})
+				}
+			</div>
+		);
 	}
-})
+});

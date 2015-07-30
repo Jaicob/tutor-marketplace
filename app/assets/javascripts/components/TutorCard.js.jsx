@@ -1,5 +1,10 @@
 var TutorCard = React.createClass({
 	render: function(){
-		return <div>{this.props.tutor}</div>
+		var tutor = this.props.tutor;
+		return (
+			<div>
+				{tutor}
+			</div>
+		);
 	}
-})
+});
