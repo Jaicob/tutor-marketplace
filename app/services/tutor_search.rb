@@ -3,7 +3,6 @@
 
 class TutorSearch
   attr_accessor :search_config
-  attr_accessor :requires_availability
 
   # Search Config options
   SCHOOL = 0
