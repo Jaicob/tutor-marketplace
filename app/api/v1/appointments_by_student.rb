@@ -41,7 +41,8 @@ module V1
           post do 
             @appt = student.appointments.create(declared_params)
             if @appt.save
-              AppointmentMailer.appointment_confirmation(@appt).deliver_now
+              AppointmentMailer.appointment_confirmation_for_tutor(@appt).deliver_now
+              AppointmentMailer.appointment_confirmation_for_student(@appt).deliver_now
               return @appt
             else
               return "Appointment was not created: #{@appt.errors.full_messages}"
