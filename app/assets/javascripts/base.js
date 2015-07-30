@@ -39,7 +39,7 @@ var API = {
       }
     },
     tutors: function(data){ // { school_id[, course_id][, dow] }
-      return API_LOCATION + "/tutors/search?" + $.param(data)
+      return API_LOCATION + "/search/tutors?" + $.param(data)
     }
   }
 }
