@@ -50,6 +50,7 @@ source "https://rubygems.org" do
   gem 'simple_form'
   gem "rack-cors"
   gem 'gon'
+  gem 'sidekiq'
 
   # Front End Stuff
   gem "bower-rails", "~> 0.9.2"

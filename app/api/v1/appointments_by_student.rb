@@ -43,6 +43,7 @@ module V1
             if @appt.save
               AppointmentMailer.appointment_confirmation_for_tutor(@appt).deliver_now
               AppointmentMailer.appointment_confirmation_for_student(@appt).deliver_now
+              HardWorker.perform_async('bob', 5)
               return @appt
             else
               return "Appointment was not created: #{@appt.errors.full_messages}"
