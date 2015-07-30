@@ -13,5 +13,5 @@ Rails.application.config.assets.version = '1.0'
 Rails.application.config.assets.precompile += %w(
 	dashboard/courses.js
 	dashboard/schedule.js
-	static_pages/search.js
+	single_views/search.js
 )
