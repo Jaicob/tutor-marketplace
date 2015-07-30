@@ -33,5 +33,6 @@ main{
   	<% if !user_signed_in? || (user_signed_in? && current_user.tutor.nil?) %>
   	  <%= link_to "Become a Tutor", @sign_up_path, class: 'button large radius' %>
   	<% end %>
+	<%= link_to "Find Your Tutor", @search_path, class: 'button large radius' %>
   </div>
 </div>

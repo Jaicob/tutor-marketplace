@@ -37,6 +37,9 @@ var API = {
       create: function(data){ // { tutor_id }
         return API_LOCATION + "/tutors/" + data["tutor_id"] + "/slots"
       }
+    },
+    tutors: function(data){ // { school_id[, course_id][, dow] }
+      return API_LOCATION + "/search/tutors?" + $.param(data)
     }
   }
 }
