@@ -26,7 +26,7 @@ class Tutor < ActiveRecord::Base
   has_many :slots, dependent: :destroy
   has_many :appointments, through: :slots, dependent: :destroy
 
-  delegate :school, to: :user
+  delegate :school, :full_name, :email, to: :user
 
   enum application_status: ['Application Incomplete', 'Application Complete', 'Approved']
   enum active_status: ['Inactive', 'Active']
@@ -78,14 +78,6 @@ class Tutor < ActiveRecord::Base
         csv << attributes.map{ |attr| user.send(attr) }
       end
     end
-  end
-
-  def full_name
-    self.user.full_name
-  end
-
-  def email
-    self.user.email
   end
 
   def sign_up_date

@@ -22,6 +22,7 @@ describe "AppointmentsByStudent endpoints" do
   end
 
   it 'creates an appointment for a student' do
+    expect(emails.count).to eq 0
     params = {
       student_id: student.id,
       slot_id: slot.id,
@@ -31,13 +32,19 @@ describe "AppointmentsByStudent endpoints" do
       post "/api/v1/students/#{student.id}/appointments/", params
     }.to change(Appointment, :count).by(1)
     expect(response).to be_success
+    expect(emails.count).to eq 2
+    expect(email_addresses).to include([slot.tutor.email], [student.email])
   end
 
   it 'updates an appointment for a student' do 
+    expect(emails.count).to eq 0
     expect(@appt_a.status).to eq(nil)
     params = {status: 99}
     put "/api/v1/students/#{student.id}/appointments/#{@appt_a.id}", params
     expect(@appt_a.reload.status).to eq(99)
+    expect(response).to be_success
+    expect(emails.count).to eq 2
+    expect(email_addresses).to include([@appt_a.tutor.email],[@appt_a.student.email])
   end
 
   it 'destroys an appointment for a student' do 
