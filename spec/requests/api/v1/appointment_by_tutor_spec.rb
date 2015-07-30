@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe "AppointmentsByTutor endpoints" do 
-  let(:tutor) { create(:tutor) }
+  let(:tutor) { create(:complete_tutor) }
 
   before :each do
     slot = create(:slot, tutor_id: tutor.id, start_time: '2016-01-01 12:00')
@@ -22,11 +22,15 @@ describe "AppointmentsByTutor endpoints" do
     expect(json['slot_id']).to eq(@appt_a.slot_id)
   end
 
-  it "updates an appointment for a tutor" do 
+  it "updates an appointment for a tutor" do
+    expect(emails.count).to eq 0 
     expect(@appt_a.status).to eq(nil)
     params = {status: 99}
     put "/api/v1/tutors/#{tutor.id}/appointments/#{@appt_a.id}", params
     expect(@appt_a.reload.status).to eq(99)
+    expect(response).to be_success
+    expect(emails.count).to eq 2
+    expect(email_addresses).to include([@appt_a.tutor.email],[@appt_a.student.email])
   end
 
-end  
+end

@@ -32,7 +32,6 @@ class AppointmentMailer < ApplicationMailer
     @appt = appointment
     @url = 'link to schedule or appointment confirmation page'
     mail(to: @tutor.email, subject: "Your Axon tutoring appointment has changed")
-    puts "Tutor email = #{@tutor.email}"
   end
 
   def appointment_update_for_student(appointment)
@@ -41,7 +40,6 @@ class AppointmentMailer < ApplicationMailer
     @appt = appointment
     @url = 'link to schedule or appointment confirmation page'
     mail(to: @student.email, subject: "Your Axon tutoring appointment has changed")
-    puts "Student email = #{@student.email}"
   end
 
   # ==============================

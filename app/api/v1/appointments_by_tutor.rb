@@ -40,7 +40,9 @@ module V1
           desc "Updates an appointment for a tutor"
           put ":id" do
             @appt = appt
-            if @appt.update(declared_params) 
+            if @appt.update(declared_params)
+              AppointmentMailer.appointment_update_for_tutor(@appt).deliver_now
+              AppointmentMailer.appointment_update_for_student(@appt).deliver_now 
               return @appt
             else
               return "Appointment was not updated: #{@appt.errors.full_messages}"
