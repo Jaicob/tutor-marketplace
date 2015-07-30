@@ -23,9 +23,6 @@ module V1
         optional  :phone_number,       type: String
         optional  :profile_pic,        type: String
         optional  :transcript,         type: String
-        optional  :dow,                type: String
-        optional  :course_id,          type: String
-        optional  :school_id,          type: String
       end
 
     resource :tutors do 
