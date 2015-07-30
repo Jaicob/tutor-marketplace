@@ -6,7 +6,7 @@
 module DashboardNavHelper
 
   def get_user_type
-    current_user.tutor then :tutor else :student
+    if current_user.tutor then :tutor else :student end
   end
 
   def generate_dashboard_nav_links
