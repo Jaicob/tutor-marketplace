@@ -51,6 +51,8 @@ source "https://rubygems.org" do
   gem "rack-cors"
   gem 'gon'
   gem 'sidekiq'
+  gem 'sinatra', require: false
+  gem 'slim'
 
   # Front End Stuff
   gem "bower-rails", "~> 0.9.2"
