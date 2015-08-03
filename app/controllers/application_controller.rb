@@ -13,15 +13,15 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    home_dashboard_user_path(resource)
+    dashboard_home_user_path(resource)
   end
 
   def after_sign_up_path_for(resource)
-    home_dashboard_user_path(resource)
+    dashboard_home_user_path(resource)
   end
 
   def after_inactive_sign_up_path_for(resource)
-    home_dashboard_user_path(resource)
+    dashboard_home_user_path(resource)
   end
 
   def set_user

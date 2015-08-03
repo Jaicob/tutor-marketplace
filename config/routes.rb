@@ -55,15 +55,17 @@
 #                             PATCH  /slots/:id(.:format)                      slots#update
 #                             PUT    /slots/:id(.:format)                      slots#update
 #                             DELETE /slots/:id(.:format)                      slots#destroy
-#         home_dashboard_user GET    /:id/dashboard/home(.:format)             dashboard/home#index
-#     schedule_dashboard_user GET    /:id/dashboard/schedule(.:format)         dashboard/schedule#index
-#      courses_dashboard_user GET    /:id/dashboard/courses(.:format)          dashboard/courses#index
-#      profile_dashboard_user GET    /:id/dashboard/profile(.:format)          dashboard/profile#index
-# edit_profile_dashboard_user GET    /:id/dashboard/edit_profile(.:format)     dashboard/profile#edit
-#     settings_dashboard_user GET    /:id/dashboard/settings(.:format)         dashboard/settings#index
-#       tutors_dashboard_user GET    /:id/dashboard/tutors(.:format)           dashboard/tutors#index
+#                      search GET    /search(.:format)                         single_views#tutor_search
+#         dashboard_home_user GET    /:id/dashboard/home(.:format)             dashboard/home#index
+#     dashboard_schedule_user GET    /:id/dashboard/schedule(.:format)         dashboard/schedule#index
+#      dashboard_courses_user GET    /:id/dashboard/courses(.:format)          dashboard/courses#index
+#      dashboard_profile_user GET    /:id/dashboard/profile(.:format)          dashboard/profile#index
+# dashboard_edit_profile_user GET    /:id/dashboard/edit_profile(.:format)     dashboard/profile#edit
+#     dashboard_settings_user GET    /:id/dashboard/settings(.:format)         dashboard/settings#index
+#       dashboard_tutors_user GET    /:id/dashboard/tutors(.:format)           dashboard/tutors#index
 #                        user PATCH  /:id(.:format)                            users#update
 #                             PUT    /:id(.:format)                            users#update
+#                        root GET    /                                         single_views#home
 #               admin_courses GET    /admin/courses(.:format)                  admin/courses#index
 #                             POST   /admin/courses(.:format)                  admin/courses#create
 #            new_admin_course GET    /admin/courses/new(.:format)              admin/courses#new
@@ -88,7 +90,6 @@
 #                             PATCH  /admin/tutors/:id(.:format)               admin/tutors#update
 #                             PUT    /admin/tutors/:id(.:format)               admin/tutors#update
 #                             DELETE /admin/tutors/:id(.:format)               admin/tutors#destroy
-#                        root GET    /                                         static_pages#home
 #                         api        /                                         API
 #
 
