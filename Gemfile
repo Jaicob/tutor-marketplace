@@ -53,6 +53,7 @@ source "https://rubygems.org" do
   gem 'sidekiq'
   gem 'sinatra', require: false
   gem 'slim'
+  gem 'devise-async'
 
   # Front End Stuff
   gem "bower-rails", "~> 0.9.2"
