@@ -58,6 +58,9 @@ module WebApp
     # For Foundation 5
     config.assets.precompile += %w( vendor/modernizr)
 
+    # For email stylesheets
+    config.assets.precompile += %w( emails )
+
     # React
     config.react.variant      = :production
     config.react.addons       = true
