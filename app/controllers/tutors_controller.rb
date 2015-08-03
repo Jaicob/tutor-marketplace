@@ -23,7 +23,7 @@ class TutorsController < ApplicationController
     if @tutor.save
       # The method below only creates a tutor_course for the initial sign-up, all other CRUD operations relating to tutor_courses go through the TutorCoursesController
       @tutor.set_first_tutor_course(@tutor, params)
-      redirect_to home_dashboard_user_path(current_user)
+      redirect_to dashboard_home_user_path(current_user)
     else
       flash[:alert] = "Tutor account was not created. Please fill in all fields and attach your unofficial transcript."
       render :new
@@ -40,7 +40,7 @@ class TutorsController < ApplicationController
     @tutor.update(tutor_params)
     @tutor.crop_profile_pic(tutor_params)
     if @tutor.save
-      redirect_to profile_dashboard_user_path(current_user)
+      redirect_to dashboard_profile_user_path(current_user)
     else
       flash[:notice] = "Tutor was not updated: #{@tutor.errors.full_messages}"
       redirect_to :back
@@ -60,7 +60,7 @@ class TutorsController < ApplicationController
 
   def destroy
     if @tutor.destroy
-      redirect_to home_dashboard_user_path(current_user)
+      redirect_to dashboard_home_user_path(current_user)
     else
       flash[:alert] = "Your tutor account was not deleted."
       render :show

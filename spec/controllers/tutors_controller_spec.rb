@@ -59,7 +59,7 @@ describe TutorsController do
             tutor_course: {rate: 25}
           }
         }.to change(Tutor, :count).by(1)
-        expect(response).to redirect_to home_dashboard_user_path(user)
+        expect(response).to redirect_to dashboard_home_user_path(user)
       end
     end
 
@@ -136,7 +136,7 @@ describe TutorsController do
       expect{
         delete :destroy, id: tutor.user
       }.to change(Tutor, :count).by(-1)
-      expect(response).to redirect_to(home_dashboard_user_path(user))
+      expect(response).to redirect_to(dashboard_home_user_path(user))
     end
   end
 
