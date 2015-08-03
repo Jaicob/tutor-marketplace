@@ -23,6 +23,7 @@ describe "AppointmentsByStudent endpoints" do
 
   it 'creates an appointment for a student' do
     expect(emails.count).to eq 0
+    expect(Sidekiq::Extensions::DelayedMailer.jobs.count).to eq 0
     params = {
       student_id: student.id,
       slot_id: slot.id,
@@ -34,6 +35,7 @@ describe "AppointmentsByStudent endpoints" do
     expect(response).to be_success
     expect(emails.count).to eq 2
     expect(email_addresses).to include([slot.tutor.email], [student.email])
+    expect(Sidekiq::Extensions::DelayedMailer.jobs.count).to eq 2
   end
 
   it 'updates an appointment for a student' do 

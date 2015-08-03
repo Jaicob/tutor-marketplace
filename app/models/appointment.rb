@@ -22,6 +22,8 @@ class Appointment < ActiveRecord::Base
   validate :one_hour_appointment_buffer
   validate :inside_slot_availability
 
+  attr_accessor :appt_reminder_email_date
+
   def one_hour_appointment_buffer
     Slot.find(slot_id).appointments.each do |appt|
       start_time_diff = (appt.start_time - start_time).abs
@@ -40,6 +42,15 @@ class Appointment < ActiveRecord::Base
     end
   end
 
+  def appt_reminder_email_date
+    days_booked_in_advance = (self.start_time.to_date - self.created_at.to_date).to_f
+    puts "DBIA = #{days_booked_in_advance}"
+    if days_booked_in_advance <= 1
+      return nil
+    else
+      self.start_time.to_date - 1
+    end
+  end
 end
 
 
