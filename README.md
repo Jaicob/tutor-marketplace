@@ -41,6 +41,8 @@ Redis Server for Background Jobs
   -- 'make install'
   -- 'redis-server'
 - If that doesn't work, make sure you have Redis installed. You can follow the instructions at http://redis.io/topics/quickstart
+- To start Sidekiq
+  -- 'bundle exec sidekiq'
 - Also, to monitor background processes, visit dockerhost:3000/sidekiq
 
 Documentation and Support

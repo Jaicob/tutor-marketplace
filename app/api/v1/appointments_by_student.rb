@@ -43,10 +43,10 @@ module V1
             if @appt.save
               AppointmentMailer.delay.appointment_confirmation_for_tutor(@appt.id)
               AppointmentMailer.delay.appointment_confirmation_for_student(@appt.id)
-              # if @appt.appt_reminder_email_date != nil
-                ApptReminderWorker.delay_until(@appt.appt_reminder_email_date).appointment_reminder_for_tutor(@appt.id)
-                ApptReminderWorker.delay_until(@appt.appt_reminder_email_date).appointment_reminder_for_student(@appt.id)
-              # end
+              if @appt.appt_reminder_email_date != nil
+                ApptReminderWorker.perform_at(@appt.appt_reminder_email_date, @appt.id)
+                ApptReminderWorker.perform_at(@appt.appt_reminder_email_date, @appt.id)
+              end
               return @appt
             else
               return "Appointment was not created: #{@appt.errors.full_messages}"
@@ -60,8 +60,8 @@ module V1
               AppointmentMailer.delay.appointment_update_for_tutor(@appt)
               AppointmentMailer.delay.appointment_update_for_student(@appt)
               if @appt.appt_reminder_email_date != nil
-                ApptReminderWorker.delay_until(@appt.appt_reminder_email_date).appointment_reminder_for_tutor(@appt.id)
-                ApptReminderWorker.delay_until(@appt.appt_reminder_email_date).appointment_reminder_for_student(@appt.id)
+                ApptReminderWorker.perform_at(@appt.appt_reminder_email_date, @appt.id)
+                ApptReminderWorker.perform_at(@appt.appt_reminder_email_date, @appt.id)
               end
               return @appt
             else

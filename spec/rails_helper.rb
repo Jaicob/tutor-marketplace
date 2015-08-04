@@ -37,10 +37,6 @@ RSpec.configure do |config|
     FactoryGirl.reload
   end
 
-  # loads the Macros for testing emails
-  config.include MailerMacros
-  config.before(:each) { reset_email }
-
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   # config.fixture_path = "#{::Rails.root}/spec/fixtures"
 

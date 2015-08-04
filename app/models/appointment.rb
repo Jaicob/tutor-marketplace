@@ -32,7 +32,6 @@ class Appointment < ActiveRecord::Base
       end
     end
   end
-  # Above: the '!= 0' is necessary because the newly created slot is included in this loop and that math equals 0, but this doesn't let things slip through the cracks because the uniqueness validation on start_time ensures only one appointment in a given slot can have a specific start_time
 
   def inside_slot_availability
     slot = Slot.find(slot_id)
@@ -43,15 +42,9 @@ class Appointment < ActiveRecord::Base
   end
 
   def appt_reminder_email_date
-    days_booked_in_advance = (self.start_time.to_date - self.created_at.to_date).to_f
-    puts "DBIA = #{days_booked_in_advance}"
-    if days_booked_in_advance <= 1
-      return nil
-    else
-      self.start_time.to_date - 1
+    if self.start_time.to_date > (self.created_at.to_date + 1)
+      (self.start_time.to_time - 43200).to_i 
     end
   end
+
 end
-
-
-# @appt = Appointment.create(student_id: 1, slot_id: 1, start_time: '2015-08-01 13:00')
