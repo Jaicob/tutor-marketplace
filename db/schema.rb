@@ -57,7 +57,10 @@ ActiveRecord::Schema.define(version: 20150729152259) do
     t.string   "location"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "slug"
   end
+
+  add_index "schools", ["slug"], name: "index_schools_on_slug", unique: true, using: :btree
 
   create_table "slots", force: :cascade do |t|
     t.integer  "tutor_id"
