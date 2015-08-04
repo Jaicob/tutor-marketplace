@@ -32,6 +32,17 @@ Getting Started
 -  `docker-compose start` will run it as a daemon where as  `docker-compose up` is in the foreground
 -  All file changes should be made locally and any rake or bundle commands should be run inside the container
 
+Redis Server for Background Jobs
+--------------------------------
+- Sidekiq and Redis handle our background processes, currently just sending emails
+- Even Devise sends email in the background (as well as all appointment emails) and Redis must be running for Devise emails to work
+- To start the Redis server (from the root)
+  -- 'cd redis-stable'
+  -- 'make install'
+  -- 'redis-server'
+- If that doesn't work, make sure you have Redis installed. You can follow the instructions at http://redis.io/topics/quickstart
+- Also, to monitor background processes, visit dockerhost:3000/sidekiq
+
 Documentation and Support
 -------------------------
 

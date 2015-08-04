@@ -41,12 +41,12 @@ module V1
           post do 
             @appt = student.appointments.create(declared_params)
             if @appt.save
-              AppointmentMailer.appointment_confirmation_for_tutor(@appt.id).deliver_now
-              AppointmentMailer.appointment_confirmation_for_student(@appt.id).deliver_now
-              unless @appt.appt_reminder_email_date == nil
-                AppointmentMailer.delay_until(@appt.appt_reminder_email_date).appointment_reminder_for_tutor(@appt.id)
-                AppointmentMailer.delay_until(@appt.appt_reminder_email_date).appointment_reminder_for_student(@appt.id)
-              end
+              AppointmentMailer.delay.appointment_confirmation_for_tutor(@appt.id)
+              AppointmentMailer.delay.appointment_confirmation_for_student(@appt.id)
+              # if @appt.appt_reminder_email_date != nil
+                ApptReminderWorker.delay_until(@appt.appt_reminder_email_date).appointment_reminder_for_tutor(@appt.id)
+                ApptReminderWorker.delay_until(@appt.appt_reminder_email_date).appointment_reminder_for_student(@appt.id)
+              # end
               return @appt
             else
               return "Appointment was not created: #{@appt.errors.full_messages}"
@@ -57,8 +57,12 @@ module V1
           put ":id" do 
             @appt = appt
             if @appt.update(declared_params)
-              AppointmentMailer.appointment_update_for_tutor(@appt).deliver_now
-              AppointmentMailer.appointment_update_for_student(@appt).deliver_now
+              AppointmentMailer.delay.appointment_update_for_tutor(@appt)
+              AppointmentMailer.delay.appointment_update_for_student(@appt)
+              if @appt.appt_reminder_email_date != nil
+                ApptReminderWorker.delay_until(@appt.appt_reminder_email_date).appointment_reminder_for_tutor(@appt.id)
+                ApptReminderWorker.delay_until(@appt.appt_reminder_email_date).appointment_reminder_for_student(@appt.id)
+              end
               return @appt
             else
               return "Appointment was not updated: #{@appt.errors.full_messages}"
