@@ -1,1 +1,14 @@
-appointment_cancellation_for_student.text.erb
+Hi <%= @student.full_name %>
+
+Your appointment with the following details has been canceled.
+
+Your Tutor: <%= @tutor.full_name %>
+Subject: <%# @appt.subject %>
+Date/Time: <%= @appt.strftime("%b %e, %l:%M %p") %>
+
+<%# @tutor.blurb %>
+If you have any questions or concerns, please contact info@axontutors.com.
+
+Thanks,
+
+Axon Team
