@@ -52,9 +52,10 @@ source 'https://rubygems.org' do
   gem 'gon'
   gem 'premailer-rails'
   gem 'nokogiri'
-  gem 'sidekiq'
+  gem 'sidekiq' # for info on redis, which must be running for sidekiq: http://redis.io/topics/quickstart
   gem 'sinatra', require: false
   gem 'slim'
+  gem 'devise-async'
 
   # Front End Stuff
   gem 'bower-rails', '~> 0.9.2'

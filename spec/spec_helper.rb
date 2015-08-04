@@ -24,6 +24,7 @@ require_relative 'support/serialize_matcher.rb'
 require 'devise'
 require 'capybara/rspec'
 require 'sidekiq/testing'
+Sidekiq::Testing.fake!
 
 RSpec.configure do |config|
 
@@ -37,6 +38,7 @@ RSpec.configure do |config|
 
   config.after do
     Warden.test_reset!
+    Sidekiq::Worker.clear_all
   end
 
   Capybara.javascript_driver = :webkit
