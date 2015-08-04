@@ -52,6 +52,9 @@ source 'https://rubygems.org' do
   gem 'gon'
   gem 'premailer-rails'
   gem 'nokogiri'
+  gem 'sidekiq'
+  gem 'sinatra', require: false
+  gem 'slim'
 
   # Front End Stuff
   gem 'bower-rails', '~> 0.9.2'

@@ -23,6 +23,7 @@ require_relative 'support/session_helpers'
 require_relative 'support/serialize_matcher.rb'
 require 'devise'
 require 'capybara/rspec'
+require 'sidekiq/testing'
 
 RSpec.configure do |config|
 
