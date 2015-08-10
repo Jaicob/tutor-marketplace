@@ -56,6 +56,11 @@ source 'https://rubygems.org' do
   gem 'fog'
   gem 'fog-aws'
 
+  # Payments through Stripe
+  gem 'stripe'
+  # Service Object Managements
+  gem 'interactor', "~> 3.0"
+
   # Front End Stuff
   gem 'bower-rails', '~> 0.9.2'
   gem 'react-rails', '~> 1.0'
