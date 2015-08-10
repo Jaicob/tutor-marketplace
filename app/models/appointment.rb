@@ -24,14 +24,6 @@ class Appointment < ActiveRecord::Base
 
   attr_accessor :appt_reminder_email_date
 
-  filterrific(
-    default_filter_params: { sorted_by: 'created_at_desc' },
-    available_filters: [
-      :with_tutor_id,
-      :with_student_id
-    ]
-  )
-
   def one_hour_appointment_buffer
     Slot.find(slot_id).appointments.each do |appt|
       start_time_diff = (appt.start_time - start_time).abs

@@ -54,6 +54,7 @@ source "https://rubygems.org" do
   gem 'sinatra', require: false
   gem 'slim'
   gem 'devise-async'
+  gem 'ransack'
 
   # Front End Stuff
   gem "bower-rails", "~> 0.9.2"
