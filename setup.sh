@@ -28,13 +28,13 @@ ln -s /home/rails/my-app/tmp/cache /home/rails/my-app/shared/cache && \
 ln -s /home/rails/my-app/tmp/pids /home/rails/my-app/shared/pids && \
 ln -s /home/rails/my-app/tmp/sessions /home/rails/my-app/shared/sessions && \
 ln -s /home/rails/my-app/tmp/sockets /home/rails/my-app/shared/sockets && \
-ln -s /home/rails/my-app/log /home/rails/my-app/shared/log 
+ln -s /home/rails/my-app/log /home/rails/my-app/shared/log
 
 
 echo "Preparing the gems"
 bundle install
-bundle binstubs unicorn 
-rbenv rehash 
+bundle binstubs unicorn
+rbenv rehash
 rake bower:install
 RAILS_ENV=production bundle exec rake assets:precompile --trace
 
