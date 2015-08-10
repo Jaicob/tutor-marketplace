@@ -44,27 +44,34 @@ button.button.dropdown.school-select-dropdown {
         Super Admin - All Schools
       <% end %>
     </h3>
-    <div class="school-select">    
-      <button href="#" data-dropdown="drop1" aria-controls="drop1" aria-expanded="false" class="button dropdown school-select-dropdown">Select School</button>
-      <ul id="drop1" data-dropdown-content class="f-dropdown" aria-hidden="true">
-        <% if current_user.role == 'super_admin' %>
+    <% if current_user.role == 'super_admin' %>
+      <div class="school-select">    
+        <button href="#" data-dropdown="drop1" aria-controls="drop1" aria-expanded="false" class="button dropdown school-select-dropdown">Select School</button>
+        <ul id="drop1" data-dropdown-content class="f-dropdown" aria-hidden="true">
           <li><%= link_to 'All Schools', admin_home_path %></a></li>
-        <% end %>
-        <% School.all.each do |school| %>
-          <li><%= link_to "#{school.name}", school_home_path(school) %></li>
-        <% end %>
-      </ul>
-    </div>
+          <% School.all.each do |school| %>
+            <li><%= link_to "#{school.name}", school_home_path(school) %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
   </div>
+  
 
   <nav class="breadcrumbs dashboard-nav">
-    <%= link_to 'Tutors', admin_tutors_path %>
-    <%= link_to 'Students', admin_students_path %>
-    <%= link_to 'Appointments', admin_appointments_path %>
-    <%= link_to 'Slots', admin_slots_path %>
-    <%= link_to 'Courses', admin_courses_path %>
     <% if @school == nil %>
+      <%= link_to 'Tutors', admin_tutors_path %>
+      <%= link_to 'Students', admin_students_path %>
+      <%= link_to 'Appointments', admin_appointments_path %>
+      <%= link_to 'Slots', admin_slots_path %>
+      <%= link_to 'Courses', admin_courses_path %>
       <%= link_to 'Schools', admin_schools_path %>
+    <% else %>
+      <%= link_to 'Tutors', school_tutors_path(@school) %>
+      <%= link_to 'Students', school_students_path(@school) %>
+      <%= link_to 'Appointments', school_appointments_path(@school) %>
+      <%= link_to 'Slots', school_slots_path(@school) %>
+      <%= link_to 'Courses', school_courses_path(@school) %>
     <% end %>
   </nav>
 

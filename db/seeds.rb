@@ -119,11 +119,11 @@ Student.all.each do |student|
   n += 18
 end
 
-# Create appointments at each school 
-School.all.each do |school|
-  school.students.each do |student|
-    student.appointments.create(slot_id:, start_time: '2015-08-01')
-  end
-end
+# # Create appointments at each school 
+# School.all.each do |school|
+#   school.students.each do |student|
+#     student.appointments.create(slot_id: n, start_time: '2015-08-01')
+#   end
+# end
 
-[[1, "University of North Carolina"], [19, "University of North Carolina"], [37, "University of North Carolina"], [55, "University of North Carolina"], [73, "University of North Carolina"], [91, "University of North Carolina"], [109, "University of Georgia"], [127, "University of Georgia"], [145, "University of Georgia"], [163, "University of Georgia"], [181, "University of Georgia"], [199, "Duke University"], [217, "Duke University"], [235, "Duke University"], [253, "Duke University"], [271, "Duke University"], [289, "Clemson University"], [307, "Clemson University"], [325, "Clemson University"], [343, "Clemson University"], [361, "Clemson University"]]
+# [[1, "University of North Carolina"], [19, "University of North Carolina"], [37, "University of North Carolina"], [55, "University of North Carolina"], [73, "University of North Carolina"], [91, "University of North Carolina"], [109, "University of Georgia"], [127, "University of Georgia"], [145, "University of Georgia"], [163, "University of Georgia"], [181, "University of Georgia"], [199, "Duke University"], [217, "Duke University"], [235, "Duke University"], [253, "Duke University"], [271, "Duke University"], [289, "Clemson University"], [307, "Clemson University"], [325, "Clemson University"], [343, "Clemson University"], [361, "Clemson University"]]
