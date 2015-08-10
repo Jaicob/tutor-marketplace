@@ -37,15 +37,21 @@ button.button.dropdown.school-select-dropdown {
   <!-- This is just a placeholder, hence the ugly in-line CSS -->
   <div class="header-block admin-row">
     <p class="admin-title">ADMIN PANEL</p>
-    <h3 class="school-name">SUPER-ADMIN / ALL SCHOOLS</h3>
+    <h3 class="school-name">
+      <% if @school %>
+        <%= @school.name %>
+      <% else %>
+        Super Admin - All Schools
+      <% end %>
+    </h3>
     <div class="school-select">    
       <button href="#" data-dropdown="drop1" aria-controls="drop1" aria-expanded="false" class="button dropdown school-select-dropdown">Select School</button>
       <ul id="drop1" data-dropdown-content class="f-dropdown" aria-hidden="true">
-        <li><a href="#">University of Georgia</a></li>
-        <li><a href="#">University of North Carolina</a></li>
-        <li><a href="#">Clemson University</a></li>
         <% if current_user.role == 'super_admin' %>
-          <li><a href="#">All Schools</a></li>
+          <li><%= link_to 'All Schools', admin_home_path %></a></li>
+        <% end %>
+        <% School.all.each do |school| %>
+          <li><%= link_to "#{school.name}", school_home_path(school) %></li>
         <% end %>
       </ul>
     </div>
@@ -57,7 +63,7 @@ button.button.dropdown.school-select-dropdown {
     <%= link_to 'Appointments', admin_appointments_path %>
     <%= link_to 'Slots', admin_slots_path %>
     <%= link_to 'Courses', admin_courses_path %>
-    <%  if current_page %>
+    <% if @school == nil %>
       <%= link_to 'Schools', admin_schools_path %>
     <% end %>
   </nav>
