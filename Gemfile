@@ -55,6 +55,7 @@ source 'https://rubygems.org' do
   gem 'ransack'
   gem 'fog'
   gem 'fog-aws'
+  gem 'brakeman'
 
   # Payments through Stripe
   gem 'stripe'

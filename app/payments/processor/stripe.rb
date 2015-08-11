@@ -23,7 +23,7 @@ module Payment
           },
           first_name: tutor.first_name,
           last_name: tutor.last_name,
-          dob: tutor.dob
+          dob: tutor.birthdate,
           ssn_last_4: tutor.ssn_last_4,
         },
         debit_negative_balances: true,
