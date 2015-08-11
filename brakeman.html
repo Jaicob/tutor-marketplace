@@ -168,10 +168,10 @@ p {
     <td>4.2.3</td>
     <td>3.0.5
     <td>
-      2015-08-11 16:59:44 -0400<br><br>
-      1.989205 seconds
+      2015-08-11 17:17:07 -0400<br><br>
+      1.615289 seconds
     </td>
-    <td>BasicAuth, ContentTag, CreateWith, CrossSiteScripting, DefaultRoutes, Deserialize, DetailedExceptions, DigestDoS, EscapeFunction, Evaluation, Execute, FileAccess, FileDisclosure, FilterSkipping, ForgerySetting, HeaderDoS, I18nXSS, JRubyXML, JSONEncoding, JSONParsing, LinkTo, LinkToHref, MailTo, MassAssignment, ModelAttrAccessible, ModelAttributes, ModelSerialize, NestedAttributes, NumberToCurrency, QuoteTableName, Redirect, RegexDoS, Render, RenderDoS, RenderInline, ResponseSplitting, SQL, SQLCVEs, SSLVerify, SafeBufferManipulation, SanitizeMethods, SelectTag, SelectVulnerability, Send, SendFile, SessionSettings, SimpleFormat, SingleQuotes, SkipBeforeFilter, StripTags, SymbolDoSCVE, TranslateBug, UnsafeReflection, ValidationRegex, WithoutProtection, XMLDoS, YAMLParsing</td>
+    <td>BasicAuth, ContentTag, CreateWith, CrossSiteScripting, DefaultRoutes, Deserialize, DetailedExceptions, DigestDoS, EscapeFunction, Evaluation, Execute, FileAccess, FileDisclosure, FilterSkipping, ForgerySetting, HeaderDoS, I18nXSS, JRubyXML, JSONEncoding, JSONParsing, LinkTo, LinkToHref, MailTo, MassAssignment, ModelAttrAccessible, ModelAttributes, ModelSerialize, NestedAttributes, NumberToCurrency, QuoteTableName, Redirect, RegexDoS, Render, RenderDoS, RenderInline, ResponseSplitting, SQL, SQLCVEs, SSLVerify, SafeBufferManipulation, SanitizeMethods, SelectTag, SelectVulnerability, Send, SendFile, SessionSettings, SimpleFormat, SingleQuotes, SkipBeforeFilter, StripTags, SymbolDoS, SymbolDoSCVE, TranslateBug, UnsafeReflection, UnscopedFind, ValidationRegex, WithoutProtection, XMLDoS, YAMLParsing</td>
   </tr>
 </table>
 <br>
@@ -199,7 +199,7 @@ p {
   </tr>
   <tr>
     <td>Security Warnings</td>
-    <td>0 <span class='high-confidence'>(0)</span></td>
+    <td>3 <span class='high-confidence'>(0)</span></td>
   </tr>
   
   <tr>
@@ -209,4 +209,228 @@ p {
   
 </table>
 <br>
+<table>
+  <tr>
+    <th>Warning Type</th>
+    <th>Total</th>
+  </tr>
+  
+  <tr>
+    <td>Unscoped Find</td>
+    <td>3</td>
+  </tr>
+  
+</table>
+<br>
+<h2>Security Warnings</h2>  
+<table>
+  <tr>
+    <th>Confidence</th>
+    <th>Class</th>
+    <th>Method</th>
+    <th>Warning Type</th>
+    <th>Message</th>
+  </tr>
+  
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>Admin::CoursesController</td>
+    <td>set_course</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/unscoped_find/">Unscoped Find</a></td>
+    <td><div class='warning_message' onClick="toggle('context1');toggle('message1');toggle('full_message1')" >Unscoped call to Course#find near line 49: Course.find(<span class="user_input">params[:id]</span>)<table id='context1' class='context' style='display:none'><caption>c:/Sites/web-app/app/controllers/admin/courses_controller.rb</caption>        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>44</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>  end</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>46</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  private </pre>
+            </td>
+          </tr>
+          <tr class='context near_error'>
+            <td class='context_line'>
+              <pre class='context'>48</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    def set_course</pre>
+            </td>
+          </tr>
+          <tr class='context alt error'>
+            <td class='context_line'>
+              <pre class='context'>49</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      @course = Course.find(params[:id])</pre>
+            </td>
+          </tr>
+          <tr class='context near_error'>
+            <td class='context_line'>
+              <pre class='context'>50</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    end</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>52</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    def course_params</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>53</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      params.require(:course).permit(:call_number, :friendly_name, :school_id, subject: [:name, :id])</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>54</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    end</pre>
+            </td>
+          </tr>
+</table></div></td>
+  </tr>
+  
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>TutorCoursesController</td>
+    <td>set_tutor_course</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/unscoped_find/">Unscoped Find</a></td>
+    <td><div class='warning_message' onClick="toggle('context2');toggle('message2');toggle('full_message2')" >Unscoped call to TutorCourse#find near line 34: TutorCourse.find(<span class="user_input">params[:id]</span>)<table id='context2' class='context' style='display:none'><caption>c:/Sites/web-app/app/controllers/tutor_courses_controller.rb</caption>        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>29</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>    def tutor_course_params</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>30</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      params.require(:tutor_course).permit(:tutor_id, :course_id, :rate,)</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>31</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    end</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>33</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    def set_tutor_course</pre>
+            </td>
+          </tr>
+          <tr class='context error'>
+            <td class='context_line'>
+              <pre class='context'>34</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      @tutor_course = TutorCourse.find(params[:id])</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>35</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    end</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>37</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>end</pre>
+            </td>
+          </tr>
+</table></div></td>
+  </tr>
+  
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>TutorsController</td>
+    <td>set_tutor_for_admin_or_visitor_sign_up</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/unscoped_find/">Unscoped Find</a></td>
+    <td><div class='warning_message' onClick="toggle('context3');toggle('message3');toggle('full_message3')" >Unscoped call to Tutor#find near line 109: Tutor.find(<span class="user_input">params[:id]</span>)<table id='context3' class='context' style='display:none'><caption>c:/Sites/web-app/app/controllers/tutors_controller.rb</caption>        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>104</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>    def tutor_params</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>105</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      params.require(:tutor).permit(:rating, :application_status, :birthdate, :degree, :major, :extra_info, :graduation_year, :phone_number, :profile_pic, :transcript, :active_status, :crop_x, :crop_y, :crop_w, :crop_h, course: [:course_id], tutor_course: [:rate])</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>106</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    end</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>108</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    def set_tutor_for_admin_or_visitor_sign_up</pre>
+            </td>
+          </tr>
+          <tr class='context error'>
+            <td class='context_line'>
+              <pre class='context'>109</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      @tutor = Tutor.find(params[:id])</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>110</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    end</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>112</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>end</pre>
+            </td>
+          </tr>
+</table></div></td>
+  </tr>
+  
+</table>
 </body></html>
