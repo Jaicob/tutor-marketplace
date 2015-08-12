@@ -74,10 +74,10 @@ end
 
 # Create 3 TutorCourses for each Tutor
 Tutor.all.each do |tutor|
-  tutor.tutor_courses.create(course_id: tutor.school.courses.first, rate: 15)
-  tutor.tutor_courses.create(course_id: tutor.school.courses.second, rate: 20)
-  tutor.tutor_courses.create(course_id: tutor.school.courses.third, rate: 25)
-  tutor.tutor_courses.create(course_id: tutor.school.courses.fourth, rate: 30)
+  tutor.tutor_courses.create(course_id: tutor.school.courses.first.id, rate: 15)
+  tutor.tutor_courses.create(course_id: tutor.school.courses.second.id, rate: 20)
+  tutor.tutor_courses.create(course_id: tutor.school.courses.third.id, rate: 25)
+  tutor.tutor_courses.create(course_id: tutor.school.courses.fourth.id, rate: 30)
 end
 
 # Create Slots for each Tutor
@@ -114,16 +114,14 @@ end
 
 # Create an appointment for each student and tutor at each school
 School.all.each do |school|
-  n = 0
   ordinal = 0
   @students = school.students
   @tutors = school.tutors
   5.times {
-    n += 1
-    @x = Appointment.create(
+    Appointment.create(
       student_id: @students[ordinal].id, 
       slot_id: @tutors[ordinal].slots.first.id, 
-      course_id: n, 
+      course_id: @tutors[ordinal].courses.first.id, 
       start_time: "2015-08-01 12:00:00"
     )
     ordinal += 1

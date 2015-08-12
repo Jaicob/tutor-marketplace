@@ -37,9 +37,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_school
-    if params[:school_id]
-      @school = School.find(params[:school_id])
-    end
+    @school = School.find(params[:school_id])
   end
 
 end

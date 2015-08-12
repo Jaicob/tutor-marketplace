@@ -1,2 +1,2 @@
-class CampusManager::StudentsController < ApplicationController
+class CampusManager::StudentsController < CampusManagerController
 end

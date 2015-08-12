@@ -1,0 +1,80 @@
+/*
+========================================
+Appointments Main Menu
+========================================
+*/
+
+.dropdown.button {
+  margin: 0;
+}
+
+.header-block {
+  display: block;
+}
+
+.admin-row {
+  background-color: #00BFB3;
+}
+
+.admin-title {
+  padding: 0.7em;
+  text-align: center;
+  font-size: 1.5em;
+  color: #fff;
+  font-weight: 800;
+  margin-bottom: 0;
+}
+
+.school-name {
+  text-align: center;
+  color: #fff;
+  padding-bottom: 1em;
+  margin-bottom: 0;
+}
+
+.school-select {
+  display: inline-block;
+  float: right;
+}
+
+button.button.dropdown.school-select-dropdown {
+  margin-top: -6em;
+  margin-right: 1em;
+  background-color: #00bfb3;
+  border: 1px solid white;
+}
+
+a.button.small.full-width.admin-new-appt-button {
+  margin-bottom: 0;
+  border: 1px solid #d3d3d3;
+  background-color: #eeeeee;
+  color: #4d4d4d;
+  margin-top: 1em;
+}
+
+a.button.info.tiny.full-width.reset-search-button {
+  background-color: #eeeeee;
+  border: 1px solid #d3d3d3;
+}
+
+/*
+========================================
+Appointments Edit Menu
+========================================
+*/
+
+select#appointment_start_time_1i {
+    width: 18%;
+}
+select#appointment_start_time_2i {
+    width: 27%;
+}
+select#appointment_start_time_3i {
+    width: 13%;
+}
+select#appointment_start_time_4i {
+    width: 13%;
+}
+select#appointment_start_time_5i {
+    width: 13%;
+}

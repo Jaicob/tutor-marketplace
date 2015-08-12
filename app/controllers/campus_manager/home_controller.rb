@@ -1,4 +1,4 @@
-class CampusManager::HomeController < ApplicationController
+class CampusManager::HomeController < CampusManagerController
 
   def index
   end

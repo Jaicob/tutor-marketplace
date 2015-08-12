@@ -1,2 +1,2 @@
-class CampusManager::SlotsController < ApplicationController
+class CampusManager::SlotsController < CampusManagerController
 end

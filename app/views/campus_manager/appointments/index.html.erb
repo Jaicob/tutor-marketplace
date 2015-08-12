@@ -1,9 +1,14 @@
 <div class="row">
-  <h3>Appointments</h3>
+  <div class="large-4 columns">
+    <h3>Appointments</h3>
+  </div>
+  <div class="large-4 columns">
+    <%= link_to 'Create New Appointment', new_campus_manager_school_appointment_path, class: 'button small full-width admin-new-appt-button' %>
+  </div>
 </div>
 
 <div class="row">
-  <%= search_form_for @q, url: search_admin_appointments_path, html: { method: :post } do |f| %>
+  <%= search_form_for @q, url: search_campus_manager_school_appointments_path, html: { method: :post } do |f| %>
     <fieldset class="search-field-panel">
       <legend class="search-field-legend">Search for Appointments</legend>
 
@@ -20,7 +25,7 @@
 
         <div class="large-3 columns">
           <%= f.label :course_school_id_eq, "School" %>
-          <%= f.collection_select(:course_school_id_eq, School.all, :id, :name, include_blank: true) %>
+          <%= f.select(:course_school_id_eq, options_for_select([["#{@school.name}", @school.id]])) %>
         </div>
 
         <div class="large-3 columns">
@@ -60,7 +65,7 @@
         <div class="large-4 large-offset-8 columns">
           <div class="row">
             <div class="large-6 columns">
-              <%= link_to 'Reset', '/admin/appointments', class: 'button info tiny full-width' %>
+              <%= link_to 'Reset', "/campus_manager/#{@school.slug}/appointments", class: 'button info tiny full-width reset-search-button' %>
             </div>
             <div class="large-6 columns">
               <%= f.submit class: 'button success tiny full-width' %>
@@ -89,14 +94,14 @@
   <% @appointments.each do |appt| %>
     <tbody>
       <tr>
-        <td><%= link_to(appt.id, "/admin/#{appt.school.id}/appointments/#{appt.id}") %></td>
+        <td><%= link_to(appt.id, "/campus_manager/#{appt.school.slug}/appointments/#{appt.id}") %></td>
         <td><%= appt.slot.tutor.full_name %></td>
         <td><%= appt.student.full_name %></td>
         <td><%= appt.course.formatted_name %></td>
         <td><%= appt.date %>
         <td><%= appt.time %></td>
         <td><%= appt.status %></td>
-        <td><%= appt.slot.tutor.school.name %></td>
+        <td><%= appt.school.name %></td>
       </tr>
     </tbody>
   <% end %>

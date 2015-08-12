@@ -26,6 +26,7 @@ class Appointment < ActiveRecord::Base
   validates :start_time, presence: true, uniqueness: { scope: :slot_id }
   validate :one_hour_appointment_buffer
   validate :inside_slot_availability
+  validate :tutor_and_student_at_same_school
 
   attr_accessor :appt_reminder_email_date
 
@@ -44,7 +45,17 @@ class Appointment < ActiveRecord::Base
     slot = Slot.find(slot_id)
     slot_last_available_appt = slot.start_time + slot.duration - 3600
     if start_time < slot.start_time || start_time > slot_last_available_appt
-      errors.add(:start_studetime, "is not inside slot's availability")
+      errors.add(:start_time, "is not inside slot's availability")
+    end
+  end
+
+  def tutor_and_student_at_same_school
+    tutor_id = Slot.find(slot_id).tutor.id
+    tutor = Tutor.find(tutor_id)
+    student = Student.find(student_id)
+    course = Course.find(course_id)
+    if !(tutor.school == course.school && student.school == course.school)
+      errors.add(:course_id, "is not the same for tutor, student and course")
     end
   end
 
