@@ -1,0 +1,28 @@
+// Place all the styles related to the admin/appointments controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+select#q_start_time_gteq_1i, select#q_start_time_lteq_1i {
+  width: 27%;
+}
+
+select#q_start_time_gteq_2i, select#q_start_time_lteq_2i {
+  width: 48%;
+}
+
+select#q_start_time_gteq_3i, select#q_start_time_lteq_3i {
+  width: 20%;
+}
+
+a.button.info.tiny.full-width {
+  width: 100%;
+}
+
+legend.search-field-legend {
+    background: none;
+}
+
+fieldset.search-field-panel {
+    padding-bottom: 0;
+}

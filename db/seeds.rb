@@ -1,7 +1,7 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 
-# Create 4 Schools
+# Info for 4 schools
 school_list = [
   [ "University of North Carolina", "Chapel Hill, NC" ],
   [ "University of Georgia", "Athens, GA" ],
@@ -9,12 +9,10 @@ school_list = [
   [ "Clemson University", "Clemson, SC" ]
 ] 
 
-
-# Create a School for each name in the list
+# Create Schools out of the school_list
 school_list.each do |name, location|
   School.create(name: name, location: location)
 end
-
 
 # Creates Courses for each of the 4 Schools
 course_list = [
@@ -40,20 +38,28 @@ course_list = [
   [4, {name: 'Physics', id: 5}, "101", "Intro to Physics (U4)"]
 ]
 
-
 # Create a Course for each School
 course_list.each do |school_id, subject, call_number, friendly_name|
-  Course.create(school_id: school_id, subject: {name: subject[:name], id: subject[:id]}, call_number: call_number, friendly_name: friendly_name)
+  Course.create!(school_id: school_id, subject: {name: subject[:name], id: subject[:id]}, call_number: call_number, friendly_name: friendly_name)
 end
 
+# Create 20 Users to become Tutors, 5 for each school
+n = 0
+4.times{
+  n += 1
+  5.times{
+    User.create!(
+      school_id: n, 
+      first_name: Faker::Name.first_name, 
+      last_name: Faker::Name.last_name, 
+      email: Faker::Internet.safe_email, 
+      password: 'password', 
+      password_confirmation: 'password') 
+  }
+}
 
-# Create 20 Devise Users
-20.times { User.create!(school_id: 1, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, email: Faker::Internet.safe_email, password: 'password', password_confirmation: 'password') }
-
-
-# Create a Tutor profile for each User and add school to that user
+# Create a Tutor profile for each User
 User.all.each do |user|
-
   user.create_tutor(
     rating: 5,
     birthdate: '1990-01-01',
@@ -66,14 +72,13 @@ User.all.each do |user|
     )
 end
 
-# Create 3 TutorClasses for each Tutor
+# Create 3 TutorCourses for each Tutor
 Tutor.all.each do |tutor|
-  tutor.tutor_courses.create(course_id: 1, rate: 25)
-  tutor.tutor_courses.create(course_id: 2, rate: 30)
-  tutor.tutor_courses.create(course_id: 3, rate: 35)
-  tutor.tutor_courses.create(course_id: 4, rate: 35)
+  tutor.tutor_courses.create(course_id: tutor.school.courses.first, rate: 15)
+  tutor.tutor_courses.create(course_id: tutor.school.courses.second, rate: 20)
+  tutor.tutor_courses.create(course_id: tutor.school.courses.third, rate: 25)
+  tutor.tutor_courses.create(course_id: tutor.school.courses.fourth, rate: 30)
 end
-
 
 # Create Slots for each Tutor
 Tutor.all.each do |tutor|
@@ -81,9 +86,20 @@ Tutor.all.each do |tutor|
   slot_creator.create_slots
 end
 
-
-# Create Students
-20.times { User.create!(school_id: 1, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, email: Faker::Internet.safe_email, password: 'password', password_confirmation: 'password') }
+# Create 20 Users to become Students, 5 for each school 
+n = 0
+4.times{
+  n += 1
+  5.times{
+    User.create!(
+      school_id: n, 
+      first_name: Faker::Name.first_name, 
+      last_name: Faker::Name.last_name, 
+      email: Faker::Internet.safe_email, 
+      password: 'password', 
+      password_confirmation: 'password') 
+  }
+}
 
 new_users = []
 
@@ -96,9 +112,20 @@ new_users.each do |new_user|
 end
 
 
-# Create an appointment for each student
-n = 1
-Student.all.each do |student|
-  student.appointments.create(slot_id: n, start_time: '2015-08-01 12:00')
-  n += 18
+# Create an appointment for each student and tutor at each school
+School.all.each do |school|
+  n = 0
+  ordinal = 0
+  @students = school.students
+  @tutors = school.tutors
+  5.times {
+    n += 1
+    @x = Appointment.create(
+      student_id: @students[ordinal].id, 
+      slot_id: @tutors[ordinal].slots.first.id, 
+      course_id: n, 
+      start_time: "2015-08-01 12:00:00"
+    )
+    ordinal += 1
+  }
 end

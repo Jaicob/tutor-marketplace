@@ -50,6 +50,11 @@ source "https://rubygems.org" do
   gem 'simple_form'
   gem "rack-cors"
   gem 'gon'
+  gem 'sidekiq' # for info on redis, which must be running for sidekiq: http://redis.io/topics/quickstart
+  gem 'sinatra', require: false
+  gem 'slim'
+  gem 'devise-async'
+  gem 'ransack'
 
   # Front End Stuff
   gem "bower-rails", "~> 0.9.2"

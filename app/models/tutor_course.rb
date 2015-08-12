@@ -21,8 +21,4 @@ class TutorCourse < ActiveRecord::Base
   def formatted_name
     "#{self.course.subject[:name]} #{self.course.call_number}: #{self.course.friendly_name} at #{self.course.school_name}"
   end
-
-
 end
-
-

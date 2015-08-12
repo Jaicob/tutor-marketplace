@@ -41,18 +41,12 @@ class User < ActiveRecord::Base
   has_one :student, dependent: :destroy
   belongs_to :school
 
-  enum role: [:user, :admin]
-  after_initialize :set_default_role, :if => :new_record?
+  enum role: [:user, :campus_manager, :super_admin]
+  
   extend FriendlyId
   friendly_id :slug_candidates, use: :slugged
 
-  def set_default_role
-    self.role ||= :user
-  end
-
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :invitable, :database_authenticatable, :registerable, :confirmable,
+  devise :async, :invitable, :database_authenticatable, :registerable, :confirmable,
     :recoverable, :rememberable, :trackable, :validatable
 
   # This method is for when a Tutor profile has been created without a User (by a visitor or non-signed in user) and the Tutor needs to be assigned to the User after log-in or sign-up
