@@ -1,0 +1,2 @@
+module CampusManager::AppointmentsHelper
+end

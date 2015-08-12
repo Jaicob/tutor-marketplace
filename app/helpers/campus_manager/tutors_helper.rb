@@ -1,0 +1,2 @@
+module CampusManager::TutorsHelper
+end

@@ -1,0 +1,2 @@
+module CampusManagerHelper
+end

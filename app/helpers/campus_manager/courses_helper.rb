@@ -1,0 +1,2 @@
+module CampusManager::CoursesHelper
+end

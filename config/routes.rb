@@ -200,17 +200,33 @@ Rails.application.routes.draw do
     end
   end
 
-  # The following routes are for campus managers with access to only one school
-  scope '/campus-admin' do
-    scope module: :admin do 
-      resources :schools, only: [], path: '' do 
-        resources :courses
-        resources :tutors
-        resources :students
-        resources :appointments
-        resources :slots
-        get 'home'   => 'home#index'
+  # # The following routes are for campus managers with access to only one school
+  # scope '/campus-admin' do
+  #   scope module: :admin do 
+  #     resources :schools, only: [], path: '' do 
+  #       resources :courses
+  #       resources :tutors
+  #       resources :students
+  #       resources :appointments
+  #       resources :slots
+  #       get 'home'   => 'home#index'
+  #     end
+  #   end
+  # end
+
+  # The following routes are for super_admin with access to all records across all schools
+  namespace :campus_manager do
+    resources :schools, only: [], path: '' do
+      resources :courses
+      resources :tutors
+      resources :students
+      resources :appointments do
+        collection do
+          match 'search' => 'appointments#search', via: [:get, :post], as: :search
+        end
       end
+      resources :slots
+      get 'home'   => 'home#index'
     end
   end
 
