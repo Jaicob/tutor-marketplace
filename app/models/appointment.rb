@@ -16,7 +16,9 @@ class Appointment < ActiveRecord::Base
   belongs_to :student
   belongs_to :slot
   belongs_to :course
+  
   delegate :tutor, to: :slot
+  delegate :school, to: :course
 
   validates :student_id, presence: true
   validates :slot_id, presence: true

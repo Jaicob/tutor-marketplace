@@ -46,7 +46,7 @@ button.button.dropdown.school-select-dropdown {
     </h3>
     <% if current_user.role == 'super_admin' %>
       <div class="school-select">    
-        <button href="#" data-dropdown="drop1" aria-controls="drop1" aria-expanded="false" class="button dropdown school-select-dropdown">Select School</button>
+        <button href="#" data-dropdown="drop1" aria-controls="drop1" aria-expanded="false" class="button dropdown school-select-dropdown">Change School</button>
         <ul id="drop1" data-dropdown-content class="f-dropdown" aria-hidden="true">
           <li><%= link_to 'All Schools', admin_home_path %></a></li>
           <% School.all.each do |school| %>

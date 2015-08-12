@@ -1,0 +1,37 @@
+<div class="row">
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Tutor</th>
+        <th>Student</th>
+        <th>Course</th>
+        <th width="120">Date</th>
+        <th width="120">Time</th>
+        <th>Status</th>
+        <th>School</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><%= link_to(@appt.id, "/campus-admin/#{@appt.school.id}/appointments/#{@appt.id}") %></td>
+        <td><%= @appt.slot.tutor.full_name %></td>
+        <td><%= @appt.student.full_name %></td>
+        <td><%= @appt.course.formatted_name %></td>
+        <td><%= @appt.date %>
+        <td><%= @appt.time %></td>
+        <td><%= @appt.status %></td>
+        <td><%= @appt.slot.tutor.school.name %></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="row">
+  <%= form_for @appt, url:  do |f| %>
+    <%= f.label :status %>
+    <%= f.select(:status_eq, options_for_select([['Scheduled', 0],['Cancelled', 1],['Completed', 2]]), include_blank: true) %>
+
+    <%= f.submit %>
+  <% end %>
+</div>

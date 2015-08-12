@@ -15,7 +15,7 @@ class School < ActiveRecord::Base
   has_many :users
   has_many :tutors, through: :users
   has_many :students, through: :users
-  has_many :appointments, through: :students, dependent: :destroy
+  has_many :appointments, through: :courses, dependent: :destroy
   has_many :slots, through: :tutors, dependent: :destroy
 
   validates :name, presence: true, uniqueness: true
