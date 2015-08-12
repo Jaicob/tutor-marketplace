@@ -4,19 +4,20 @@
 #
 #  id                 :integer          not null, primary key
 #  user_id            :integer
-#  rating             :integer
+#  active_status      :integer          default(0)
 #  application_status :integer          default(0)
-#  birthdate          :date
+#  rating             :integer
 #  degree             :string
 #  major              :string
 #  extra_info         :string
 #  graduation_year    :string
 #  phone_number       :string
-#  created_at         :datetime         not null
-#  updated_at         :datetime         not null
+#  birthdate          :date
 #  profile_pic        :string
 #  transcript         :string
-#  active_status      :integer          default(0)
+#  appt_notes         :string
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
 #
 
 FactoryGirl.define do

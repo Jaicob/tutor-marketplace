@@ -219,7 +219,11 @@ Rails.application.routes.draw do
     resources :courses
     resources :tutors
     resources :students
-    resources :appointments
+    resources :appointments do
+      collection do
+        match 'search' => 'appointments#search', via: [:get, :post], as: :search
+      end
+    end
     resources :slots
     resources :schools
     get 'home'   => 'home#index'

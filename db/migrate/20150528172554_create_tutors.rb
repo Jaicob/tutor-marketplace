@@ -14,6 +14,7 @@ class CreateTutors < ActiveRecord::Migration
       t.date        :birthdate
       t.string      :profile_pic
       t.string      :transcript
+      t.string      :appt_notes
 
       t.timestamps null: false
     end

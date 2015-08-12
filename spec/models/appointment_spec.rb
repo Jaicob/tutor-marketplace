@@ -5,8 +5,9 @@
 #  id         :integer          not null, primary key
 #  student_id :integer
 #  slot_id    :integer
+#  course_id  :integer
 #  start_time :datetime
-#  status     :integer
+#  status     :integer          default(0)
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #

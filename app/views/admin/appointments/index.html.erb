@@ -1,50 +1,104 @@
-<%# app/views/students/index.html.erb %>
-<h1>Students</h1>
+<div class="row">
+  <h3>Appointments</h3>
+</div>
 
-<%#
-  Filterrific adds the `form_for_filterrific` view helper:
-  * adds dom id 'filterrific_filter'
-  * applies javascript behaviors:
-      * AJAX form submission on change
-      * AJAX spinner while AJAX request is being processed
-  * sets form_for options like :url, :method and input name prefix
-%>
-<%= form_for_filterrific @filterrific do |f| %>
-  <div>
-    Search
-    <%# give the search field the 'filterrific-periodically-observed' class for live updates %>
-    <%= f.text_field(
-      :search_query,
-      class: 'filterrific-periodically-observed'
-    ) %>
-  </div>
-  <div>
-    Country
-    <%= f.select(
-      :with_country_id,
-      @filterrific.select_options[:with_country_id],
-      { include_blank: '- Any -' }
-    ) %>
-  </div>
-  <div>
-    Registered after
-    <%= f.text_field(:with_created_at_gte, class: 'js-datepicker') %>
-  </div>
-  <div>
-    Sorted by
-    <%= f.select(:sorted_by, @filterrific.select_options[:sorted_by]) %>
-  </div>
-  <div>
-    <%= link_to(
-      'Reset filters',
-      reset_filterrific_url,
-    ) %>
-  </div>
-  <%# add an automated spinner to your form when the list is refreshed %>
-  <%= render_filterrific_spinner %>
-<% end %>
+<div class="row">
+  <%= search_form_for @q, url: search_admin_appointments_path, html: { method: :post } do |f| %>
+    <fieldset class="search-field-panel">
+      <legend class="search-field-legend">Search for Appointments</legend>
 
-<%= render(
-  partial: 'students/list',
-  locals: { students: @students }
-) %>
+      <div class="row">
+        <div class="large-3 columns">
+          <%= f.label :slot_tutor_user_first_name_matches, "Tutor Name" %>
+          <%= f.search_field :slot_tutor_user_first_name_matches %>
+        </div>
+
+        <div class="large-3 columns">
+          <%= f.label :student_user_first_name_or_student_user_last_name_matches, "Student Name" %>
+          <%= f.search_field :student_user_first_name_or_student_user_last_name_matches %>
+        </div>
+
+        <div class="large-3 columns">
+          <%= f.label :student_user_school_id_eq, "School" %>
+          <%= f.collection_select(:student_user_school_id_eq, School.all, :id, :name, include_blank: true) %>
+        </div>
+
+        <div class="large-3 columns">
+          <%= f.label :status_eq, "Status" %>
+          <%= f.select(:status_eq, options_for_select([['Scheduled', 0],['Cancelled', 1],['Completed', 2]]), include_blank: true) %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="large-2 columns">
+          <%= f.label :course_subject_cont, "Subject" %>
+          <%= f.search_field :course_subject_cont %>
+        </div>
+        
+        <div class="large-1 columns">
+          <%= f.label :course_call_number_matches, "Call #" %>
+          <%= f.search_field :course_call_number_matches %>
+        </div>
+        
+        <div class="large-3 columns">
+          <%= f.label :course_friendly_name_cont, "Friendly Name" %>
+          <%= f.search_field :course_friendly_name_cont %>
+        </div>
+
+        <div class="large-3 columns">
+          <%= f.label :start_time_gteq, "From" %>
+          <%= f.date_select :start_time_gteq, include_blank: true %>
+        </div>
+
+        <div class="large-3 columns">
+          <%= f.label :start_time_lteq, "to" %>
+          <%= f.date_select :start_time_lteq, include_blank: true %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="large-4 large-offset-8 columns">
+          <div class="row">
+            <div class="large-6 columns">
+              <%= link_to 'Reset', '/admin/appointments', class: 'button info tiny full-width' %>
+            </div>
+            <div class="large-6 columns">
+              <%= f.submit class: 'button success tiny full-width' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  <% end %>
+</div>
+
+<div class="row">
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Tutor</th>
+        <th>Student</th>
+        <th>Course</th>
+        <th width="120">Date</th>
+        <th width="120">Time</th>
+        <th>Status</th>
+        <th>School</th>
+      </tr>
+    </thead>
+  <% @appointments.each do |appt| %>
+    <tbody>
+      <tr>
+        <td><%= link_to(appt.id, "/campus_admin/#{@appointment.school_id}/appointments/#{:id}") %></td>
+        <td><%= appt.slot.tutor.full_name %></td>
+        <td><%= appt.student.full_name %></td>
+        <td><%= appt.course.formatted_name %></td>
+        <td><%= appt.date %>
+        <td><%= appt.time %></td>
+        <td><%= appt.status %></td>
+        <td><%= appt.slot.tutor.school.name %></td>
+      </tr>
+    </tbody>
+  <% end %>
+  </table>
+</div>

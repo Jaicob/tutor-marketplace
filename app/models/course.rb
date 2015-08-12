@@ -15,6 +15,7 @@ class Course < ActiveRecord::Base
   belongs_to :school
   has_many :tutor_courses, dependent: :destroy
   has_many :tutors, through: :tutor_courses, dependent: :destroy
+  has_many :appointments, dependent: :destroy
 
   validates :call_number, presence: :true
   validates :friendly_name, presence: :true
@@ -31,6 +32,10 @@ class Course < ActiveRecord::Base
   def school_name
     school = School.find(self.school_id)
     school.name
+  end
+
+  def formatted_name
+    "#{self.subject[:name]} #{self.call_number}: #{self.friendly_name}"
   end
 
 end

@@ -40,7 +40,7 @@ course_list = [
 
 # Create a Course for each School
 course_list.each do |school_id, subject, call_number, friendly_name|
-  Course.create(school_id: school_id, subject: {name: subject[:name], id: subject[:id]}, call_number: call_number, friendly_name: friendly_name)
+  Course.create!(school_id: school_id, subject: {name: subject[:name], id: subject[:id]}, call_number: call_number, friendly_name: friendly_name)
 end
 
 # Create 20 Users to become Tutors, 5 for each school
@@ -60,7 +60,6 @@ n = 0
 
 # Create a Tutor profile for each User
 User.all.each do |user|
-
   user.create_tutor(
     rating: 5,
     birthdate: '1990-01-01',
@@ -73,7 +72,7 @@ User.all.each do |user|
     )
 end
 
-# Create 3 TutorClasses for each Tutor
+# Create 3 TutorCourses for each Tutor
 Tutor.all.each do |tutor|
   tutor.tutor_courses.create(course_id: tutor.school.courses.first, rate: 15)
   tutor.tutor_courses.create(course_id: tutor.school.courses.second, rate: 20)
@@ -93,7 +92,7 @@ n = 0
   n += 1
   5.times{
     User.create!(
-      school_id: 1, 
+      school_id: n, 
       first_name: Faker::Name.first_name, 
       last_name: Faker::Name.last_name, 
       email: Faker::Internet.safe_email, 
@@ -112,18 +111,21 @@ new_users.each do |new_user|
   new_user.create_student
 end
 
-# Create an appointment for each student
-n = 1
-Student.all.each do |student|
-  student.appointments.create(slot_id: n, start_time: '2015-08-01 12:00')
-  n += 18
+
+# Create an appointment for each student and tutor at each school
+School.all.each do |school|
+  n = 0
+  ordinal = 0
+  @students = school.students
+  @tutors = school.tutors
+  5.times {
+    n += 1
+    @x = Appointment.create(
+      student_id: @students[ordinal].id, 
+      slot_id: @tutors[ordinal].slots.first.id, 
+      course_id: n, 
+      start_time: "2015-08-01 12:00:00"
+    )
+    ordinal += 1
+  }
 end
-
-# # Create appointments at each school 
-# School.all.each do |school|
-#   school.students.each do |student|
-#     student.appointments.create(slot_id: n, start_time: '2015-08-01')
-#   end
-# end
-
-# [[1, "University of North Carolina"], [19, "University of North Carolina"], [37, "University of North Carolina"], [55, "University of North Carolina"], [73, "University of North Carolina"], [91, "University of North Carolina"], [109, "University of Georgia"], [127, "University of Georgia"], [145, "University of Georgia"], [163, "University of Georgia"], [181, "University of Georgia"], [199, "Duke University"], [217, "Duke University"], [235, "Duke University"], [253, "Duke University"], [271, "Duke University"], [289, "Clemson University"], [307, "Clemson University"], [325, "Clemson University"], [343, "Clemson University"], [361, "Clemson University"]]
