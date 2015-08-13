@@ -15,7 +15,6 @@ class CampusManager::AppointmentsController < CampusManagerController
   end
 
   def show
-    @appt = Appointment.find(params[:id])
   end
 
   def update
