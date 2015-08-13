@@ -89,7 +89,7 @@
   <% @appointments.each do |appt| %>
     <tbody>
       <tr>
-        <td><%= link_to(appt.id, "/admin/#{appt.school.id}/appointments/#{appt.id}") %></td>
+        <td><%= link_to(appt.id, "/admin/appointments/#{appt.id}") %></td>
         <td><%= appt.slot.tutor.full_name %></td>
         <td><%= appt.student.full_name %></td>
         <td><%= appt.course.formatted_name %></td>

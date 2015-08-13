@@ -30,7 +30,7 @@
 <div class="row">
   <%= form_for @appt, url: admin_appointment_path(@appt) do |f| %>
     <%= f.label :status %>
-    <%= f.select(:status_eq, options_for_select([['Scheduled', 0],['Cancelled', 1],['Completed', 2]]), include_blank: true) %>
+    <%= f.select(:status, options_for_select(['Scheduled', 'Cancelled', 'Completed'], ["#{@appt.status.to_s}"])) %>
 
     <%= f.submit %>
   <% end %>

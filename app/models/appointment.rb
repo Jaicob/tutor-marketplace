@@ -77,4 +77,8 @@ class Appointment < ActiveRecord::Base
     self.start_time.strftime('%l:%M %p')
   end
 
+  def school
+    Course.find(self.course_id).school
+  end
+
 end

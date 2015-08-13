@@ -1,8 +1,14 @@
 class Admin::TutorsController < AdminController
   before_action :set_tutor_admin_controller, only: [:show, :update, :destroy]
 
+  def search
+    index
+    render :index
+  end
+
   def index
-    @tutors = Tutor.all
+    @q = current_user.admin_scope(:tutors).ransack(params[:q])
+    @tutors = @q.result.includes(:user, :tutor_courses, :courses, :slots, :appointments)
   end
 
   def show

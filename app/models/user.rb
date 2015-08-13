@@ -75,4 +75,14 @@ class User < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
 
+  def admin_scope(model_collection)
+    if self.role == 'campus_manager'
+      collection = model_collection.to_s
+      self.school.send(collection)
+    else
+      model = model_collection.to_s.humanize.chop.constantize
+      model.all
+    end
+  end
+
 end

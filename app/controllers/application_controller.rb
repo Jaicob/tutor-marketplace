@@ -36,9 +36,9 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def set_school
-    if params[:school_id]
-      @school = School.find(params[:school_id])
+  def set_school_for_campus_manager
+    if current_user.role == 'campus_manager'
+      @school = current_user.school
     end
   end
 

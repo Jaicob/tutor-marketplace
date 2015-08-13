@@ -162,7 +162,11 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :courses
-    resources :tutors
+    resources :tutors do
+      collection do
+        match 'search' => 'appointments#search', via: [:get, :post], as: :search
+      end
+    end
     resources :students
     resources :appointments do
       collection do
