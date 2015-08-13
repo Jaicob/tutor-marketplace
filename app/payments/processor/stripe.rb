@@ -34,5 +34,15 @@ module Payment
       )
     end
 
+    def create_charge(charge)
+      Stripe::Charge.create(
+        amount: charge.amount,
+        currency: 'usd',
+        source: charge.token || charge.customer_id,
+        destination: charge.tutor.acct_number,
+        application_fee: charge.transaction_fee
+      )
+    end
+
   end
 end
