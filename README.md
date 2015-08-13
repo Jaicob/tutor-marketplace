@@ -35,12 +35,7 @@ Getting Started
 Redis Server for Background Jobs
 --------------------------------
 - Sidekiq and Redis handle our background processes, currently just sending emails
-- Even Devise sends email in the background (as well as all appointment emails) and Redis must be running for Devise emails to work
-- To start the Redis server (from the root)
-  -- 'cd redis-stable'
-  -- 'make install'
-  -- 'redis-server'
-- If that doesn't work, make sure you have Redis installed. You can follow the instructions at http://redis.io/topics/quickstart
+- Even Devise sends email in the background (as well as all appointment emails) and Redis and Sidekiq must be running for Devise emails to work
 - To start Sidekiq
   -- 'bundle exec sidekiq'
 - Also, to monitor background processes, visit dockerhost:3000/sidekiq
