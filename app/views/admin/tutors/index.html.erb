@@ -1,11 +1,44 @@
 <header>
   <div class="row">
     <div class="large-12 columns">
-      <h1>Tutors</h1>
+      <h3>Tutors</h3>
     </div>
   </div>
 </header>
 
+<div class="row">
+  <%= search_form_for @q, url: search_admin_tutors_path, html: { method: :post } do |f| %>
+    <fieldset class="search-field-panel">
+      <legend class="search-field-legend">Search for Tutors</legend>
+      <div class="row">
+        <div class="large-3 columns">
+          <%= f.label :user_first_name_or_user_last_name_matches, 'Tutor Name' %>
+          <%= f.search_field :user_first_name_or_user_last_name_matches %>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="large-6 large-offset-6 columns">
+          <div class="row">
+            <div class="large-4 columns">
+              <%= link_to 'Download CSV', tutors_path(format: :csv), class: 'button secondary tiny full-width' %>
+            </div>
+            <div class="large-4 columns">
+              <%= link_to 'Reset', '/admin/appointments', class: 'button info tiny full-width' %>
+            </div>
+            <div class="large-4 columns">
+              <%= f.submit class: 'button success tiny full-width' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  <% end %>
+</div>
+
+
+
+<!-- SAVED FOR REFERENCE OF COLORS FOR LATER IMPLEMENTATION IN TABLE (NO NEED FOR LEGEND THOUGH) -->
 <!-- <section>
   <div class="row">
     <div class="large-6 columns">
@@ -21,8 +54,6 @@
     </div>
   </div>
 </section> -->
-
-<%= link_to 'Download CSV', tutors_path(format: :csv) %>
 
 <main>
   <div class="row">
@@ -45,7 +76,7 @@
             <td><%= tutor.active_status %></td>
             <td><%= tutor.user.full_name %></td>
             <td><%= tutor.user.email %></td>
-            <td><% tutor.school %></td>
+            <td><%= tutor.school %></td>
             <td><%= tutor.application_status %></td>
           </tr>
           <% end %>
