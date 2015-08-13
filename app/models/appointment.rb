@@ -59,6 +59,7 @@ class Appointment < ActiveRecord::Base
     end
   end
 
+  # This sets the delivery time for reminder emails as 12 hours before the appointment, except in the case where the appointment is tomorrow and no reminder is needed
   def appt_reminder_email_date
     if self.start_time.to_date > (self.created_at.to_date + 1)
       (self.start_time.to_time - 43200).to_i 
