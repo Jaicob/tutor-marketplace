@@ -1,2 +1,0 @@
-module CampusManager::StudentsHelper
-end
