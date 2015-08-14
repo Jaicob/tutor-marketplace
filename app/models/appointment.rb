@@ -25,7 +25,7 @@ class Appointment < ActiveRecord::Base
   belongs_to :student
   belongs_to :slot
   belongs_to :course
-  
+
   delegate :tutor, to: :slot
   delegate :school, to: :course
 
@@ -45,7 +45,7 @@ class Appointment < ActiveRecord::Base
   def one_hour_appointment_buffer
     Slot.find(slot_id).appointments.each do |appt|
       start_time_diff = (appt.start_time - start_time).abs
-      if start_time_diff < ( 3600 ) && start_time_diff != 0 
+      if start_time_diff < ( 3600 ) && start_time_diff != 0
         errors.add(:start_time, "can't be within an hour of another appointment")
       end
     end
@@ -74,7 +74,7 @@ class Appointment < ActiveRecord::Base
   # This sets the delivery time for reminder emails as 12 hours before the appointment, except in the case where the appointment is tomorrow and no reminder is needed
   def appt_reminder_email_date
     if self.start_time.to_date > (self.created_at.to_date + 1)
-      (self.start_time.to_time - 43200).to_i 
+      (self.start_time.to_time - 43200).to_i
     end
   end
 

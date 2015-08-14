@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150729152259) do
+ActiveRecord::Schema.define(version: 20150814163129) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,18 @@ ActiveRecord::Schema.define(version: 20150729152259) do
   add_index "appointments", ["course_id"], name: "index_appointments_on_course_id", using: :btree
   add_index "appointments", ["slot_id"], name: "index_appointments_on_slot_id", using: :btree
   add_index "appointments", ["student_id"], name: "index_appointments_on_student_id", using: :btree
+
+  create_table "charges", force: :cascade do |t|
+    t.integer  "amount"
+    t.integer  "transaction_fee"
+    t.string   "customer_id"
+    t.integer  "tutor_id"
+    t.string   "token"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "charges", ["tutor_id"], name: "index_charges_on_tutor_id", using: :btree
 
   create_table "courses", force: :cascade do |t|
     t.integer  "school_id"
@@ -166,6 +178,7 @@ ActiveRecord::Schema.define(version: 20150729152259) do
   add_foreign_key "appointments", "courses"
   add_foreign_key "appointments", "slots"
   add_foreign_key "appointments", "students"
+  add_foreign_key "charges", "tutors"
   add_foreign_key "courses", "schools"
   add_foreign_key "courses", "subjects"
   add_foreign_key "slots", "tutors"

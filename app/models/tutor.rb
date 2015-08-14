@@ -26,6 +26,7 @@ class Tutor < ActiveRecord::Base
   has_many :courses, through: :tutor_courses, dependent: :destroy
   has_many :slots, dependent: :destroy
   has_many :appointments, through: :slots, dependent: :destroy
+  has_many :charges, dependent: :destroy
 
   delegate :school, :first_name, :last_name, :full_name, :email, :password, to: :user
 
