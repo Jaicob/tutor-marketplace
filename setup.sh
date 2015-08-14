@@ -42,8 +42,6 @@ RAILS_ENV=production bundle exec rake assets:precompile --trace
 echo "Setting up database"
 rake db:create db:migrate
 
-
-
 # echo "Running unicorn"
 
 #bundle exec unicorn -c /etc/my-app/unicorn.rb -E $RAILS_ENV --debug

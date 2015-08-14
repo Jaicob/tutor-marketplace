@@ -2,23 +2,31 @@
 # a container based off the Dockerfile in the working dir and links it to a postgres instance.
 # Modify as necessary to suit your needs
   # image: jaicob/web-app
+# Followed tips in this tutorial to add Redis and Sidekiq: http://allenan.com/docker-rails-dev-environment-for-osx/
+
+db:
+  image: postgres:latest
+  ports:
+    - "5432:5432"
+
+redis:
+  image: redis
+  ports: 
+    - "6379:6379"
 
 web:
   build: .
-  command: bundle exec rails s -b 0.0.0.0 -p 3000
+  command: ./start_app.sh
   volumes:
     - .:/home/rails/my-app
   ports:
     - "3000:3000"
   links:
     - db
+    - redis
   environment:
     - RACK_ENV=development
     - RAILS_ENV=development
-db:
-  image: postgres:latest
-  ports:
-    - "5432:5432"
 
 
 
@@ -29,3 +37,32 @@ db:
 # rspec spec/path/to/spec.rb     |  docker-compose run web rspec spec/path/to/spec.rb
 # RAILS_ENV=test rake db:create  |  docker-compose run -e RAILS_ENV=test web rake db:create
 # tail -f log/development.log    |  docker-compose run web tail -f log/development.log
+
+# LINKS
+
+# webapp_db_1
+# []
+
+# webapp_web_1
+# [
+# /webapp_redis_1:/webapp_web_1/webapp_redis_1 
+# /webapp_db_1:/webapp_web_1/db 
+# /webapp_db_1:/webapp_web_1/db_1 
+# /webapp_redis_1:/webapp_web_1/redis 
+# /webapp_redis_1:/webapp_web_1/redis_1 
+# /webapp_db_1:/webapp_web_1/webapp_db_1
+# ]
+
+# webapp_sidekiq_1
+# [
+# /webapp_db_1:/webapp_sidekiq_1/db_1 
+# /webapp_db_1:/webapp_sidekiq_1/webapp_db_1 
+# /webapp_db_1:/webapp_sidekiq_1/db
+#
+# /webapp_redis_1:/webapp_sidekiq_1/redis 
+# /webapp_redis_1:/webapp_sidekiq_1/redis_1 
+# /webapp_redis_1:/webapp_sidekiq_1/webapp_redis_1 
+# ]
+
+# webapp_redis_1
+# []

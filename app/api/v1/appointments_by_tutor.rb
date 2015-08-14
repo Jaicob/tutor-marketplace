@@ -37,12 +37,12 @@ module V1
             appt
           end
 
-          desc "Updates an appointment for a tutor"
+          desc "Updates an appointment status to CANCELLED for a tutor"
           put ":id" do
             @appt = appt
             if @appt.update(declared_params)
-              AppointmentMailer.appointment_update_for_tutor(@appt).deliver_now
-              AppointmentMailer.appointment_update_for_student(@appt).deliver_now 
+              AppointmentMailer.delay.appointment_cancellation_for_tutor(@appt.id)
+              AppointmentMailer.delay.appointment_cancellation_for_student(@appt.id)
               return @appt
             else
               return "Appointment was not updated: #{@appt.errors.full_messages}"
