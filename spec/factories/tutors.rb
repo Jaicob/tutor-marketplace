@@ -36,7 +36,7 @@ FactoryGirl.define do
       factory :invalid_tutor do
         extra_info nil
       end
-  
+
       factory :tutor_with_complete_application do
         after :create do |t|
           t.update_column(:transcript, "/assets/images/file-icon.png")
@@ -44,14 +44,14 @@ FactoryGirl.define do
         end
       end
 
-      factory :second_complete_tutor do 
+      factory :second_complete_tutor do
         degree 'PhD'
         major 'Chemistry'
         graduation_year '2017'
         phone_number '999-999-9999'
       end
 
-      trait :at_UNC do 
+      trait :at_UNC do
         association :user, factory: [:user, :UNC]
       end
   end
