@@ -10,15 +10,7 @@
 #  status     :integer          default(0)
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#
-
- # student_id :integer
- # slot_id    :integer
- # course_id  :integer
- # start_time :datetime
- # status     :integer          default(0)
- # created_at :datetime         not null
- # updated_at :datetime         not null
+#  charge_id  :integer
 #
 
 class Appointment < ActiveRecord::Base
@@ -93,11 +85,11 @@ class Appointment < ActiveRecord::Base
   # sends appropriate email based on changes made to an appt in Admin section
   def send_update_or_cancel_appt_email(appt_id, appt_params)
     if appt_params[:status] == 'Scheduled'
-      AppointmentMailer.delay.appointment_update_for_tutor(appt_id)               
+      AppointmentMailer.delay.appointment_update_for_tutor(appt_id)
       AppointmentMailer.delay.appointment_update_for_student(appt_id)
     end
     if appt_params[:status] == 'Cancelled'
-      AppointmentMailer.delay.appointment_cancellation_for_tutor(appt_id)               
+      AppointmentMailer.delay.appointment_cancellation_for_tutor(appt_id)
       AppointmentMailer.delay.appointment_cancellation_for_student(appt_id)
     end
   end
