@@ -37,7 +37,7 @@ class Appointment < ActiveRecord::Base
     slot = Slot.find(slot_id)
     slot_last_available_appt = slot.start_time + slot.duration - 3600
     if start_time < slot.start_time || start_time > slot_last_available_appt
-      errors.add(:start_studetime, "is not inside slot's availability")
+      errors.add(:start_time, "is not inside slot's availability")
     end
   end
 

@@ -89,8 +89,8 @@ module V1
           put ":id/cancel" do 
             @appt = appt
             if @appt.update(declared_params)
-              AppointmentMailer.delay.appointment_cancelled_for_tutor(@appt.id)               
-              AppointmentMailer.delay.appointment_cancelled_for_student(@appt.id)
+              AppointmentMailer.delay.appointment_cancellation_for_tutor(@appt.id)               
+              AppointmentMailer.delay.appointment_cancellation_for_student(@appt.id)
               return @appt
             else
               return "Appointment was not cancelled: #{@appt.errors.full_messages}"
