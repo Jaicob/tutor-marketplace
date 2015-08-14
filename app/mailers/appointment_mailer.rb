@@ -82,7 +82,7 @@ class AppointmentMailer < ApplicationMailer
     @appt = Appointment.find(appointment_id)
     @tutor = @appt.tutor
     @student = @appt.student 
-    mail(to: @student.email, subject: "Your appointment cancellation confirmation")
+    mail(to: @tutor.email, subject: "Your appointment cancellation confirmation")
   end
 
   def appointment_cancellation_for_student(appointment_id)
