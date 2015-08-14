@@ -68,7 +68,7 @@ var TutorCardContainer = React.createClass({
 	},
 	render: function(){
 		return(
-			<div>
+			<div className="tutor-card-container">
 				{ this.getResultScreen() }
 			</div>
 		);
