@@ -1,10 +1,13 @@
 Hi <%= @student.full_name %>
 
-This is to inform you that there has been a change to your appointment.
+Your tutoring appointment is coming up soon.
 
 Your Tutor: <%= @tutor.full_name %>
 Subject: <%# @appt.subject %>
 Date/Time: <%= @appt.strftime("%b %e, %l:%M %p") %>
+
+<%# @tutor.blurb %>
+Please bring any notes, homework, or slides related to what you’d like to be tutored on. I usually tutor at the MLC, but I can meet anywhere on-campus. You can contact me at 404-123-2234.
 
 If you have any questions or concerns, or would like to cancel or reschedule, please contact info@axontutors.com.
 

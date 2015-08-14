@@ -16,7 +16,7 @@
                           <tr>
                             <td class="wrapper last center text-center">
                               <h4 align="center" class="title text-center">
-                              Appointment Updated
+                                Appointment Reminder
                               </h4>
                             </td>
                           </tr>
@@ -27,7 +27,7 @@
                               <table class="twelve columns">
                                 <tr class="ticket">
                                   <td class="panel text-pad four sub-columns name middle center" valign="middle">
-                                    <%= @student.full_name %>
+                                    <%= @tutor.full_name %>
                                   </td>
                                   <td class="panel text-pad four sub-columns subject middle center" valign="middle">
                                     <!-- TODO: MAKE THIS DYNAMIC -->
@@ -45,12 +45,13 @@
                             <tr>
                               <td class="wrapper last text-pad">
                                 <p class="lead message-content">
-                                  Hi <%= @tutor.full_name %>,<br><br>
-                                  This is to inform you that there has been a change to your appointment.<br><br>
+                                  Hi <%= @student.full_name %>,<br><br>
+                                  Your tutoring appointment is coming up soon.<br><br>
+                                  <!-- TODO: TUTOR BLURB -->
+                                  <%# @tutor.blurb %>
+                                  Please bring any notes, homework, or slides related to what you’d like to be tutored on. I usually tutor at the MLC, but I can meet anywhere on-campus. You can contact me at 404-123-2234.<br><br>
                                   If you have any questions or concerns, or would like to cancel or reschedule, please contact info@axontutors.com.<br><br>
-
                                   Thanks,<br><br>
-
                                   Axon Team
                                 </p>
                               </td>

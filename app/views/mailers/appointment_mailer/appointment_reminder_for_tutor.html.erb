@@ -16,7 +16,7 @@
                           <tr>
                             <td class="wrapper last center text-center">
                               <h4 align="center" class="title text-center">
-                              Appointment Updated
+                                Appointment Reminder
                               </h4>
                             </td>
                           </tr>
@@ -30,7 +30,7 @@
                                     <%= @student.full_name %>
                                   </td>
                                   <td class="panel text-pad four sub-columns subject middle center" valign="middle">
-                                    <!-- TODO: MAKE THIS DYNAMIC -->
+                                  <!-- TODO: MAKE THIS DYNAMIC -->
                                     <%= "Computer Science" %>
                                   </td>
                                   <td class="panel text-pad four sub-columns date middle center" valign="middle">
@@ -43,14 +43,32 @@
                           </tr>
                           <table class="row">
                             <tr>
+                              <td class="wrapper last">
+                                <table class="twelve columns">
+                                  <tr class="ticket">
+                                    <td class="panel text-pad six sub-columns phone-number middle center" valign="middle">
+                                      <!-- TODO: MAKE THIS DYNAMIC -->
+                                      <%= "no phone number provided" %>
+                                    </td>
+                                    <td class="panel text-pad six sub-columns email middle center" valign="middle">
+                                      <!-- TODO: MAKE THIS BETTER -->
+                                      <%= @student.user.email || "no email address given" %>
+                                    </td>
+                                    <td class="expander"></td>
+                                  </tr>
+                                </table>
+                              </td>
+                              <td class="expander"></td>
+                            </tr>
+                          </table>
+                          <table class="row">
+                            <tr>
                               <td class="wrapper last text-pad">
                                 <p class="lead message-content">
-                                  Hi <%= @tutor.full_name %>,<br><br>
-                                  This is to inform you that there has been a change to your appointment.<br><br>
+                                  Hi <%= @tutor.full_name %>, <br><br>
+                                  Your tutoring appointment is coming up soon.<br><br>
                                   If you have any questions or concerns, or would like to cancel or reschedule, please contact info@axontutors.com.<br><br>
-
                                   Thanks,<br><br>
-
                                   Axon Team
                                 </p>
                               </td>
@@ -78,28 +96,28 @@
                 </td>
               </tr>
               <tr>
-                <tr>
-                  <td class="wrapper last">
-                    <table class="twelve columns">
-                      <tr>
-                        <td align="center">
-                          <center>
-                          <p style="text-align:center;">
-                            <a href="#">Unsubscribe</a>
-                          </p>
-                          </center>
-                        </td>
-                        <td class="expander"></td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-              </table>
-              <!-- container end below -->
-            </td>
-          </tr>
-        </table>
-        </center>
-      </td>
-    </tr>
-  </table>
+              <tr>
+                <td class="wrapper last">
+                  <table class="twelve columns">
+                    <tr>
+                      <td align="center">
+                        <center>
+                        <p style="text-align:center;">
+                          <a href="#">Unsubscribe</a>
+                        </p>
+                        </center>
+                      </td>
+                      <td class="expander"></td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+            <!-- container end below -->
+          </td>
+        </tr>
+      </table>
+      </center>
+    </td>
+  </tr>
+</table>

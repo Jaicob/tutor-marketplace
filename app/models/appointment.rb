@@ -22,6 +22,8 @@ class Appointment < ActiveRecord::Base
   validate :one_hour_appointment_buffer
   validate :inside_slot_availability
 
+  attr_accessor :appt_reminder_email_date
+
   def one_hour_appointment_buffer
     Slot.find(slot_id).appointments.each do |appt|
       start_time_diff = (appt.start_time - start_time).abs
@@ -30,7 +32,6 @@ class Appointment < ActiveRecord::Base
       end
     end
   end
-  # Above: the '!= 0' is necessary because the newly created slot is included in this loop and that math equals 0, but this doesn't let things slip through the cracks because the uniqueness validation on start_time ensures only one appointment in a given slot can have a specific start_time
 
   def inside_slot_availability
     slot = Slot.find(slot_id)
@@ -40,7 +41,11 @@ class Appointment < ActiveRecord::Base
     end
   end
 
+  # This sets the delivery time for reminder emails as 12 hours before the appointment, except in the case where the appointment is tomorrow and no reminder is needed
+  def appt_reminder_email_date
+    if self.start_time.to_date > (self.created_at.to_date + 1)
+      (self.start_time.to_time - 43200).to_i 
+    end
+  end
+
 end
-
-
-# @appt = Appointment.create(student_id: 1, slot_id: 1, start_time: '2015-08-01 13:00')

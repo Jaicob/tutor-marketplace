@@ -91,8 +91,8 @@
 #                             PUT    /admin/tutors/:id(.:format)               admin/tutors#update
 #                             DELETE /admin/tutors/:id(.:format)               admin/tutors#destroy
 #                         api        /                                         API
+#                 sidekiq_web        /sidekiq                                  Sidekiq::Web
 #
-
 
 Rails.application.routes.draw do
 
@@ -141,5 +141,8 @@ Rails.application.routes.draw do
   end
 
   mount API => '/'
+
+  require 'sidekiq/web'
+mount Sidekiq::Web => '/sidekiq'
 
 end

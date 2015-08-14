@@ -21,6 +21,9 @@ module WebApp
       g.fixture_replacement :factory_girl, dir: "spec/factories"
     end
 
+    # Set Active Job adpater to Sidekiq
+    config.active_job.queue_adapter = :sidekiq
+
     # This tells Rails to look for the secret key in application.yml through Figaro rather than in the standard secrets.yml
     config.secret_key_base = Figaro.env.secret_key_base
 

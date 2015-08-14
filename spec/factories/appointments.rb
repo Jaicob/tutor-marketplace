@@ -16,6 +16,7 @@ FactoryGirl.define do
     student
     slot 
     start_time '2015-09-01 12:00'
+    status 0
     
   end
 
