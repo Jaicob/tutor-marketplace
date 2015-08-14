@@ -8,6 +8,7 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  slug       :string
+#  transaction_percentage :float
 #
 
 class School < ActiveRecord::Base
