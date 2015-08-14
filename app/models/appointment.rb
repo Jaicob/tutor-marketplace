@@ -22,6 +22,8 @@ class Appointment < ActiveRecord::Base
   validate :one_hour_appointment_buffer
   validate :inside_slot_availability
 
+  enum status: ['Scheduled', 'Cancelled', 'Completed']
+
   attr_accessor :appt_reminder_email_date
 
   def one_hour_appointment_buffer
