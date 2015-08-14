@@ -29,7 +29,7 @@ class Tutor < ActiveRecord::Base
 
   delegate :school, :full_name, :email, to: :user
 
-  enum application_status: ['Application Incomplete', 'Application Complete', 'Approved']
+  enum application_status: ['Incomplete', 'Complete', 'Approved']
   enum active_status: ['Inactive', 'Active']
 
   # Carrierwave setup for uploading files
@@ -54,23 +54,6 @@ class Tutor < ActiveRecord::Base
     profile_pic.recreate_versions! if tutor_params[:crop_x]
   end
 
-  def schools
-    schools = []
-    self.courses.each do |course|
-      schools << course.school_name unless schools.include?(course.school_name)
-    end
-    schools
-  end
-
-  def application_status
-    # This method sets the 'application_status' attribute. It returns 'Awaiting Approval' only if all fields have been completed, otherwise it returns "Applied"
-    if self.birthdate && self.degree && self.major && self.extra_info && self.graduation_year && self.phone_number && self.profile_pic.url != 'panda.png' && self.transcript.url
-      'Awaiting Approval'
-    else
-      'Applied'
-    end
-  end
-
   def self.to_csv
     attributes = %w{name email phone_number active_status rating application_status degree major graduation_year birthdate sign_up_date}
     CSV.generate(headers: true) do |csv|
@@ -85,5 +68,12 @@ class Tutor < ActiveRecord::Base
     self.created_at.to_date
   end
 
+  def formatted_courses
+    courses = []
+    self.courses.each do |course|
+      courses << [course.formatted_name]
+    end
+    courses.join("<br>").html_safe()
+  end
 
 end

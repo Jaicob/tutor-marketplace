@@ -12,8 +12,28 @@
       <legend class="search-field-legend">Search for Tutors</legend>
       <div class="row">
         <div class="large-3 columns">
-          <%= f.label :user_first_name_or_user_last_name_matches, 'Tutor Name' %>
+          <%= f.label :user_first_name_or_user_last_name_matches, 'Name' %>
           <%= f.search_field :user_first_name_or_user_last_name_matches %>
+
+          <%= f.label :user_email_matches, 'Email' %>
+          <%= f.search_field :user_email_matches %>
+
+          <%= f.label :user_school_id_eq, "School" %>
+            <% if current_user.role == 'campus_manager' %>
+              <%= f.select(:user_school_id_eq, options_for_select(["#{@school.name}"])) %>
+            <% else %>
+              <%= f.collection_select(:user_school_id_eq, School.all, :id, :name, include_blank: true) %>
+          <% end %>
+
+          <%= f.label :id_eq, 'ID' %>
+          <%= f.search_field :id_eq %>
+
+          <%= f.label :active_status_eq, 'Active Status' %>
+          <%= f.select(:active_status_eq, options_for_select([['Active', 1],['Inactive', 0]]), include_blank: true) %>
+
+          <%= f.label :application_status_eq, 'Application Status' %>
+          <%= f.select(:application_status_eq, options_for_select([['Incomplete', 0],['Complete', 1],['Approved', 2]]), include_blank: true) %>
+
         </div>
 
       </div>
@@ -24,7 +44,7 @@
               <%= link_to 'Download CSV', tutors_path(format: :csv), class: 'button secondary tiny full-width' %>
             </div>
             <div class="large-4 columns">
-              <%= link_to 'Reset', '/admin/appointments', class: 'button info tiny full-width' %>
+              <%= link_to 'Reset', '/admin/tutors', class: 'button info tiny full-width' %>
             </div>
             <div class="large-4 columns">
               <%= f.submit class: 'button success tiny full-width' %>
@@ -62,11 +82,12 @@
         <thead>
           <tr>
             <th>ID</th>
-            <th width="150">Active Status</th>
-            <th width="250">Name</th>
-            <th width="300">Email</th>
-            <th width="250">School</th>
-            <th width="150">Application Status</th>
+            <th>Active Status</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>School</th>
+            <th>Courses</th>
+            <th>Application Status</th>
           </tr>
         </thead>
         <tbody>
@@ -76,7 +97,8 @@
             <td><%= tutor.active_status %></td>
             <td><%= tutor.user.full_name %></td>
             <td><%= tutor.user.email %></td>
-            <td><%= tutor.school %></td>
+            <td><%= tutor.school.name %></td>
+            <td><%= tutor.formatted_courses %></td>
             <td><%= tutor.application_status %></td>
           </tr>
           <% end %>
