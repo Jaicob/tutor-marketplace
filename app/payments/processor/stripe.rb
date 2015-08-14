@@ -34,7 +34,7 @@ module Payment
       )
     end
 
-    def create_charge(charge)
+    def send_charge(charge)
       Stripe::Charge.create(
         amount: charge.amount,
         currency: 'usd',
