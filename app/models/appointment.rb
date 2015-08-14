@@ -17,7 +17,7 @@ class Appointment < ActiveRecord::Base
   belongs_to :student
   belongs_to :slot
   belongs_to :course
-
+  belongs_to :charge
   delegate :tutor, to: :slot
   delegate :school, to: :course
 
