@@ -8,24 +8,24 @@ class SlotManager
 
   def initialize(params)
     # ex. params = (
-    #   tutor_id: 1, 
-    #   original_start_time: '2015-08-01 12:00:00', 
-    #   original_duration: '3600', 
-    #   new_start_time: '2015-08-02 11:00:00', 
+    #   tutor_id: 1,
+    #   original_start_time: '2015-08-01 12:00:00',
+    #   original_duration: '3600',
+    #   new_start_time: '2015-08-02 11:00:00',
     #   new_duration: '7200'
     # )
 
     # Required
-    @tutor = Tutor.find(params[:tutor_id]) 
-    
+    @tutor = Tutor.find(params[:tutor_id])
+
     @original_start_time = params[:original_start_time].to_datetime
     @original_duration = params[:original_duration]
-    
+
     @new_start_time = params[:new_start_time].to_datetime
     @new_duration = params[:new_duration]
 
     # Calculated
-    @start_adjustment = @new_start_time.to_time - @original_start_time.to_time # result is in seconds    
+    @start_adjustment = @new_start_time.to_time - @original_start_time.to_time # result is in seconds
     @original_start_DOW_time = @original_start_time.strftime('%a %T') # Used for finding slots by weekday and time
   end
 
@@ -36,7 +36,7 @@ class SlotManager
     @tutor.slots.each do |slot|
       @slot_start_DOW_time = slot.start_time.strftime('%a %T')
       @slot_duration = slot.duration
-        
+
       if @slot_start_DOW_time == @original_start_DOW_time && @slot_duration == @original_duration.to_i
         @slots << slot
       end
@@ -62,7 +62,7 @@ class SlotManager
     @slot_ids = []
     @slots.each do |slot|
       @slot_ids << slot.id
-      slot.destroy 
+      slot.destroy
     end
     @slot_ids
   end

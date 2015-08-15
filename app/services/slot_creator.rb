@@ -8,12 +8,12 @@ class SlotCreator
 
   def initialize(params)
      # ex. params = (
-     #    tutor_id:         1, 
-     #    start_time:       '2015-08-01 17:00', 
-     #    duration:         3600, 
+     #    tutor_id:         1,
+     #    start_time:       '2015-08-01 17:00',
+     #    duration:         3600,
      #    weeks_to_repeat:  1
      # )
-     
+
     @tutor = Tutor.find(params[:tutor_id])
     @start_time = params[:start_time].to_datetime
     @duration = params[:duration]
@@ -21,7 +21,7 @@ class SlotCreator
 
     @start_date = @start_time.to_date
     @end_date = @start_date + (@weeks_to_repeat * 7)
-  end 
+  end
 
   # Creates one or more slots with the start_time and duration based on how many weeks_to_repeat
   def create_slots
