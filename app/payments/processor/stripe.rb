@@ -29,7 +29,7 @@ module Payment
         debit_negative_balances: true,
         tos_acceptance: {
           date: Time.zone.now,
-          ip: tutor.ip
+          ip: tutor.sign_in_ip
         }
       )
     end
