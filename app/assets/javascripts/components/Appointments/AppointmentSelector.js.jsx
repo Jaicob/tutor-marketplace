@@ -26,8 +26,9 @@ var AppointmentSelector = React.createClass({
   renderMainView: function () {
     switch(this.state.currentStep){
       case 1: return <SlotSelector tutor={this.props.tutor}
-                      handleSlots={this.handleSlots}
-                      />
+                                   selectedSlots={this.state.selectedSlots}
+                                   handleSlots={this.handleSlots}
+                                   />
       default: break
     };
   },
