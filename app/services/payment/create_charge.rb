@@ -20,6 +20,7 @@ class CreateCharge
     charge = context.tutor.charges.create(token: context.token, customer_id: context.customer_id,
                                           amount: amount, transaction_fee: transaction_fee)
     context.appointments.each{|appt| appt.update_attributes(charge_id: charge.id)}
+    context.charge = charge
   end
 
 end
