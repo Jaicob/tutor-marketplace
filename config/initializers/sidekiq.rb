@@ -1,11 +1,11 @@
-redis_domain = ENV['WEBAPP_REDIS_1_PORT_6379_TCP_ADDR']
-redis_port = ENV['WEBAPP_REDIS_1_PORT_6379_TCP_PORT']
+redis_domain = ENV['VAGRANT_REDIS_1_PORT_6379_TCP_ADDR']
+redis_port = ENV['VAGRANT_REDIS_1_PORT_6379_TCP_PORT']
 
 if redis_domain && redis_port
   redis_url = "redis://#{redis_domain}:#{redis_port}"
 
   Sidekiq.configure_server do |config|
-    config.redis = { 
+    config.redis = {
       namespace: "sidekiq",
       url: redis_url
     }

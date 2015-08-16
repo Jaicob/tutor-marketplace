@@ -1,6 +1,6 @@
 require 'stripe'
 
-module Payment
+module Processor
   class Stripe
 
     def initialize(api_key)
