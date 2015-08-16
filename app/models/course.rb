@@ -22,16 +22,30 @@ class Course < ActiveRecord::Base
   validates :school_id, presence: :true
   validates :subject, presence: true
 
+  before_create :set_empty_hash_for_subject
+
   serialize :subject, Hash
-  # [name: 'Biology',           id: 1]
-  # [name: 'Chemistry',         id: 2]
-  # [name: 'Math',              id: 3]
-  # [name: 'Computer Science',  id: 4]
-  # [name: 'Physics',           id: 5]
 
   def school_name
     school = School.find(self.school_id)
     school.name
+  end
+
+  def set_empty_hash_for_subject
+    self.subject = {name: 'placeholder_name', id: 00}
+  end
+
+  def set_subject(name)
+    self.subject[:name] = name
+    case
+      when name == 'Biology'          then id = 1
+      when name == 'Chemistry'        then id = 2
+      when name == 'Math'             then id = 3
+      when name == 'Computer Science' then id = 4
+      when name == 'Physics'          then id = 5
+    end
+    self.subject[:id] = id
+    self.save
   end
 
   def formatted_name
@@ -39,3 +53,4 @@ class Course < ActiveRecord::Base
   end
 
 end
+

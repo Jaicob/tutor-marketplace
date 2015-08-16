@@ -76,4 +76,7 @@ class Tutor < ActiveRecord::Base
     courses.join("<br>").html_safe()
   end
 
+  def availability_booked_percent
+  end
+
 end

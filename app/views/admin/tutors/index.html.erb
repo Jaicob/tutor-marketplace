@@ -7,36 +7,74 @@
 </header>
 
 <div class="row">
+  <div class="large-12 columns">
   <%= search_form_for @q, url: search_admin_tutors_path, html: { method: :post } do |f| %>
     <fieldset class="search-field-panel">
       <legend class="search-field-legend">Search for Tutors</legend>
       <div class="row">
-        <div class="large-3 columns">
+        <div class="large-4 columns">   
+          <%= f.label :id_eq, 'ID' %>
+          <%= f.search_field :id_eq %>
+        </div>
+
+        <div class="large-4 columns">   
           <%= f.label :user_first_name_or_user_last_name_matches, 'Name' %>
           <%= f.search_field :user_first_name_or_user_last_name_matches %>
-
+        </div>
+        
+        <div class="large-4 columns">   
           <%= f.label :user_email_matches, 'Email' %>
           <%= f.search_field :user_email_matches %>
+        </div>
+      </div>
 
+      <div class="row">
+        <div class="large-4 columns"> 
           <%= f.label :user_school_id_eq, "School" %>
             <% if current_user.role == 'campus_manager' %>
               <%= f.select(:user_school_id_eq, options_for_select(["#{@school.name}"])) %>
             <% else %>
               <%= f.collection_select(:user_school_id_eq, School.all, :id, :name, include_blank: true) %>
           <% end %>
-
-          <%= f.label :id_eq, 'ID' %>
-          <%= f.search_field :id_eq %>
-
+        </div>
+        <div class="large-4 columns">   
           <%= f.label :active_status_eq, 'Active Status' %>
           <%= f.select(:active_status_eq, options_for_select([['Active', 1],['Inactive', 0]]), include_blank: true) %>
-
+        </div>
+        <div class="large-4 columns">   
           <%= f.label :application_status_eq, 'Application Status' %>
           <%= f.select(:application_status_eq, options_for_select([['Incomplete', 0],['Complete', 1],['Approved', 2]]), include_blank: true) %>
+        </div>
+      </div>
 
+      <div class="row">
+        <div class="large-3 columns">
+          <%= f.label :courses_subject_cont, 'Subject' %>
+          <%= f.select(:courses_subject_cont, options_for_select([['Biology'],['Chemistry'],['Math'],['Computer Science'],['Physics']]),include_blank: true) %>
+        </div>
+
+        <div class="large-3 columns">
+          <%= f.label :courses_call_number_eq, 'Call Number' %>
+          <%= f.search_field :courses_call_number_eq %>
+        </div>
+
+        <div class="large-3 columns">
+          <%= f.label :created_at_gteq, 'Applied after:' %>
+          <%= f.date_select :created_at_gteq %>
+        </div>
+
+        <div class="large-3 columns">
+          <%= f.label :created_at_lteq, 'Applied before:' %>
+          <%= f.date_select :created_at_lteq %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="large-3 columns">
         </div>
 
       </div>
+
       <div class="row">
         <div class="large-6 large-offset-6 columns">
           <div class="row">
@@ -53,6 +91,7 @@
         </div>
       </div>
     </fieldset>
+  </div>
   <% end %>
 </div>
 
@@ -75,35 +114,47 @@
   </div>
 </section> -->
 
-<main>
-  <div class="row">
-    <div class="large-12 columns">
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Active Status</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>School</th>
-            <th>Courses</th>
-            <th>Application Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @tutors.each do |tutor| %>
-          <tr>
-            <td><%= link_to "#{tutor.id}", admin_tutor_path(tutor) %></td>
-            <td><%= tutor.active_status %></td>
-            <td><%= tutor.user.full_name %></td>
-            <td><%= tutor.user.email %></td>
-            <td><%= tutor.school.name %></td>
-            <td><%= tutor.formatted_courses %></td>
-            <td><%= tutor.application_status %></td>
-          </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
+<div class="row">
+  <div class="large-12 columns">
+    <table>
+      <thead>
+        <tr>
+          <th class="id">ID</th>
+          <th class="active-status">Active Status</th>
+          <th class="name">Name</th>
+          <th class="email">Email</th>
+          <th class="school">School</th>
+          <th class="courses">Courses</th>
+          <th class="appointments">Appts</th>
+          <th class="availability">Availabilty Booked</th>
+          <th class="application-status">Application Status</th>
+          <th class="applied-on">Applied On</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @tutors.each do |tutor| %>
+        <tr>
+          <td><%= link_to "#{tutor.id}", admin_tutor_path(tutor) %></td>
+          <td><%= tutor.active_status %></td>
+          <td><%= tutor.user.full_name %></td>
+          <td><%= tutor.user.email %></td>
+          <td><%= tutor.school.name %></td>
+          <td><%= tutor.formatted_courses %></td>
+          <td><%= tutor.appointments.count %></td>
+          <td><%= tutor.availability_booked_percent %>
+          <td><%= tutor.application_status %></td>
+          <td><%= tutor.created_at.strftime('%-m-%d-%y') %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
-</main>
+</div>
+
+
+
+Things for website: 
+which tutors applied before a certain date or after a certain date. 
+Need to know if there are any long stretches of low contact. 
+Want to know how many sessions a tutor has had. 
+anpther cool feature would be to know the number of sessions versus how many hours a tutor listed as available- see what percentage of a tutor's availability gets used for tutoring and how that varies from subject to subject.

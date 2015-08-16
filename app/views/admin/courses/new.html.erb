@@ -1,37 +1,76 @@
 <div class="row">
   <div class="small-12 columns">
-    <h1>New Course</h1>
+    <h3>New Course</h3>
   </div>
 </div>
 
 <div class="row">
-  <%= form_for :course, url: admin_courses_path do |f| %>
-    <div class="small-3 columns">
-      <%= f.label :school_id %>
-      <%= f.collection_select :school_id, School.all, :id, :name, include_blank: true %>
-    </div>
+  <div class="large-12 columns">
+    <fieldset class="search-field-panel">
+      <legend class="search-field-legend">Add a Single Course</legend>  
+      <div class="row">
+        <%= form_for :course, url: admin_courses_path do |f| %>
+        <div class="small-3 columns">
+          <%= f.label :school_id %>
+          <%= f.collection_select :school_id, School.all, :id, :name, include_blank: true %>
+        </div>
 
-    <div class="small-3 columns">
-      <p>Need to add Subject, not sure how though right now</p>
-    </div>
+        <div class="small-3 columns">
+          <%= f.fields_for :subject do |ff| %>
+            <%= ff.label :name %>
+            <%= ff.select(:name, options_for_select([['Biology'],['Chemistry'],['Math'],['Computer Science'],['Physics']]), include_blank: true) %>
+          <% end %>
+        </div>
 
-    <div class="small-3 columns">
-      <%= f.label :call_number %>
-      <%= f.number_field :call_number %>
-    </div>
+        <div class="small-3 columns">
+          <%= f.label :call_number %>
+          <%= f.number_field :call_number %>
+        </div>
 
-    <div class="small-3 columns">
-      <%= f.label :friendly_name %>
-      <%= f.text_field :friendly_name %>
-    </div>
+        <div class="small-3 columns">
+          <%= f.label :friendly_name %>
+          <%= f.text_field :friendly_name %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="small-3 columns small-offset-9">
+          <%= f.submit 'Create Course', class: 'button medium expand' %>
+          <% end %>
+        </div>
+      </div>
+    </fieldset>
+  </div>
 </div>
 
 <div class="row">
-  <div class="small-3 columns small-offset-9">
-    <%= f.submit 'Create Course', class: 'button medium expand' %>
-</div>
+  <div class="large-12 columns">
+    <fieldset class="search-field-panel">
+      <legend class="search-field-legend">Enter a Course List</legend>
+      <div class="row">
+        <%= form_for :course_list_setup, url: '/admin/courses/new_course_list', method: :post do |f| %>
+          <div class="large-3 columns">
+            <%= f.label :school_id, 'School' %>
+            <%= f.collection_select :school_id, School.all, :id, :name, include_blank: true %>
+          </div>
 
-  <% end %>
+          <div class="large-3 columns">
+            <%= f.label :subject %>
+            <%= f.select(:name, options_for_select([['Biology'],['Chemistry'],['Math'],['Computer Science'],['Physics']]), include_blank: true) %>
+          </div>
+
+          <div class="large-3 columns">
+            <%= f.label :form_length, '# of Courses to Add' %>
+            <%= f.number_field :form_length %>
+          </div>
+
+          <div class="large-3 columns">
+            <%= f.submit 'Start List', class: 'button expand success' %>
+          </div>
+        <% end %>
+      </div>
+    </fieldset>
+  </div>
+</div>
 
 <div class="row">
   <div class="small-12 columns">

@@ -1,6 +1,6 @@
 <div class="row">
   <div class="large-12 columns">
-    <h1>Courses</h1>
+    <h3>Courses</h3>
   </div>
 </div>
 
@@ -12,27 +12,71 @@
 
 <div class="row">
   <div class="large-12 columns">
+  <%= search_form_for @q, url: search_admin_courses_path, html: { method: :post } do |f| %>
+    <fieldset class="search-field-panel">
+      <legend class="search-field-legend">Search for Courses</legend>
+      <div class="row">
+        <div class="large-4 columns">
+          <%= f.label :school_id_eq, 'School' %>
+          <% if current_user.role == 'campus_manager' %>
+            <%= f.select(:school_id_eq, options_for_select(["#{@school.name}"])) %>
+          <% else %>
+            <%= f.collection_select(:school_id_eq, School.all, :id, :name, include_blank: true) %>
+          <% end %>
+        </div>
+        <div class="large-4 columns">  
+          <%= f.label :subject_cont, 'Subject' %>
+          <%= f.select(:subject_cont, options_for_select([['Biology'],['Chemistry'],['Math'],['Computer Science'],['Physics']]),include_blank: true) %>
+        </div>
+        <div class="large-4 columns">  
+          <%= f.label :call_number_eq, 'Call Number' %>
+          <%= f.search_field :call_number_eq %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="large-6 large-offset-6 columns">
+          <div class="row">
+            <div class="large-4 columns">
+               Put link to download CSV
+            </div>
+            <div class="large-4 columns">
+              <%= link_to 'Reset', '/admin/courses', class: 'button info tiny full-width' %>
+            </div>
+            <div class="large-4 columns">
+              <%= f.submit class: 'button success tiny full-width' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+    <% end %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="large-12 columns">
     <table>
       <thead>
         <tr>
           <th>ID</th>
-          <th width='300'>School</th>
-          <th width='150'>Subject</th>
-          <th width='150'>Call Number</th>
-          <th width='300'>Friendly Name</th>
+          <th>School</th>
+          <th>Subject</th>
+          <th>Call Number</th>
+          <th>Friendly Name</th>
           <th>Tutors</th>
+          <th>Appointments</th>
         </tr>
       </thead>
       <tbody>
         <% @courses.each do |course| %>
         <tr>
-          <td><%= course.id %></td>
+          <td><%= link_to course.id, admin_course_path(course) %></td>
           <td><%= course.school_name %></td>
           <td><%= course.subject[:name] %></td>
           <td><%= course.call_number %></td>
           <td><%= course.friendly_name %></td>
           <td><%= course.tutors.count %></td>
-          <td><%= link_to 'View', admin_course_path(course) %></td>
+          <td><%= course.appointments.count %></td>
         </tr>
         <% end %>
       </tbody>
