@@ -32,8 +32,6 @@ class Appointment < ActiveRecord::Base
 
   attr_accessor :appt_reminder_email_date
 
-  enum status: ['Scheduled', 'Cancelled', 'Completed']
-
   def one_hour_appointment_buffer
     Slot.find(slot_id).appointments.each do |appt|
       start_time_diff = (appt.start_time - start_time).abs
