@@ -46,6 +46,8 @@ Rails.application.routes.draw do
       collection do
         match 'search' => 'courses#search', via: [:get, :post], as: :search
         post 'new_course_list' => 'courses#new_course_list'
+        post 'review_new_course_list' => 'courses#review_new_course_list'
+        post 'create_new_course_list' => 'courses#create_new_course_list'
       end
     end
     resources :tutors do

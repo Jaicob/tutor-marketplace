@@ -11,8 +11,12 @@
       <div class="row">
         <%= form_for :course, url: admin_courses_path do |f| %>
         <div class="small-3 columns">
-          <%= f.label :school_id %>
-          <%= f.collection_select :school_id, School.all, :id, :name, include_blank: true %>
+          <%= f.label :school_id, 'School' %>
+          <% if current_user.role == 'campus_manager' %>
+            <%= f.select(:school_id, options_for_select(["#{@school.name}"])) %>
+          <% else %>
+            <%= f.collection_select(:school_id, School.all, :id, :name, include_blank: true) %>
+          <% end %>
         </div>
 
         <div class="small-3 columns">
@@ -50,7 +54,11 @@
         <%= form_for :course_list_setup, url: '/admin/courses/new_course_list', method: :post do |f| %>
           <div class="large-3 columns">
             <%= f.label :school_id, 'School' %>
-            <%= f.collection_select :school_id, School.all, :id, :name, include_blank: true %>
+            <% if current_user.role == 'campus_manager' %>
+              <%= f.select(:school_id, options_for_select(["#{@school.name}"])) %>
+            <% else %>
+              <%= f.collection_select(:school_id, School.all, :id, :name, include_blank: true) %>
+            <% end %>
           </div>
 
           <div class="large-3 columns">

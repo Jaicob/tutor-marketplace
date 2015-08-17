@@ -50,7 +50,7 @@
       <div class="row">
         <div class="large-3 columns">
           <%= f.label :courses_subject_cont, 'Subject' %>
-          <%= f.select(:courses_subject_cont, options_for_select([['Biology'],['Chemistry'],['Math'],['Computer Science'],['Physics']]),include_blank: true) %>
+          <%= f.select(:courses_subject_cont, options_for_select([['Biology'],['Chemistry'],['Math'],['Computer Science'],['Physics']]), include_blank: true) %>
         </div>
 
         <div class="large-3 columns">
@@ -60,12 +60,12 @@
 
         <div class="large-3 columns">
           <%= f.label :created_at_gteq, 'Applied after:' %>
-          <%= f.date_select :created_at_gteq %>
+          <%= f.date_select :created_at_gteq, {:include_blank => true, :default => nil} %>
         </div>
 
         <div class="large-3 columns">
           <%= f.label :created_at_lteq, 'Applied before:' %>
-          <%= f.date_select :created_at_lteq %>
+          <%= f.date_select :created_at_lteq, {:include_blank => true, :default => nil} %>
         </div>
       </div>
 

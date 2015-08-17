@@ -15,9 +15,6 @@ class Admin::CoursesController < AdminController
     @course = Course.new
   end
 
-  def new_course_list
-  end
-
   def create
     @course = Course.create(course_params)
     @course.set_subject(course_params[:subject][:name])
@@ -51,6 +48,31 @@ class Admin::CoursesController < AdminController
       redirect_to admin_courses_path
     else
       render :show
+    end
+  end
+
+  #======================================================================================
+  #       Custom Actions for Adding Course Lists (creating mutliple courses at once)
+  #======================================================================================
+
+  def new_course_list
+    @school = School.find(params[:course_list_setup][:school_id])
+    @subject = params[:course_list_setup][:name]
+    @form_length = params[:course_list_setup][:form_length]
+  end
+
+  def review_new_course_list
+    @course_list = params[:course_list]
+    @school_name = params[:school]
+    @subject = params[:subject]
+  end
+
+  def create_new_course_list
+    if Course.create_course_list(params)
+      redirect_to admin_courses_path
+    else
+      flash[:error] = "Course list was not created"
+      redirect_to :back
     end
   end
 
