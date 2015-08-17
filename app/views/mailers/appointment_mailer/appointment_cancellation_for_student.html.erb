@@ -1,1 +1,104 @@
-appointment_cancellation_for_student.html.erb
+<table class="body">
+  <tr>
+    <td class="center" align="center" valign="top">
+      <table class="container">
+        <tr>
+          <td>
+            <table class="row">
+              <tr>
+                <td class="wrapper last">
+                  <table class="twelve columns">
+                    <tr>
+                      <td class="panel text-pad body-container">
+                        <!-- <img width="580" height="100" src="http://placehold.it/580x100?text=Axon Logo"> -->
+                        <img width="580" height="100" src="https://www.dropbox.com/s/ay7xb7yhh73n350/Axon%20Letterhead.png?dl=1">
+                        <table class="row">
+                          <tr>
+                            <td class="wrapper last center text-center">
+                              <h4 align="center" class="title text-center">
+                              Appointment Cancellation
+                              </h4>
+                            </td>
+                          </tr>
+                        </table>
+                        <table class="row">
+                          <tr>
+                            <td class="wrapper last nopad">
+                              <table class="twelve columns">
+                                <tr class="ticket">
+                                  <td class="panel text-pad four sub-columns name middle center" valign="middle">
+                                    <%= @tutor.full_name %>
+                                  </td>
+                                  <td class="panel text-pad four sub-columns subject middle center" valign="middle">
+                                    <!-- TODO: MAKE THIS DYNAMIC -->
+                                    <%= "Computer Science" %>
+                                  </td>
+                                  <td class="panel text-pad four sub-columns date middle center" valign="middle">
+                                    <%= @appt.start_time.strftime("%b %e, %l:%M %p") %>
+                                  </td>
+                                  <td class="expander"></td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                          <table class="row">
+                            <tr>
+                              <td class="wrapper last text-pad">
+                                <p class="lead message-content">
+                                  Hi <%= @student.full_name %>,<br><br>
+                                  Your appointment has been canceled.<br><br>
+
+                                  If you have any questions or concerns, or would like to cancel or reschedule, please contact info@axontutors.com.<br><br>
+                                  Thanks,<br><br>
+                                  Axon Team
+                                </p>
+                              </td>
+                            </tr>
+                          </table>
+                        </table>
+                      </td>
+                      <td class="expander"></td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+            <table class="row">
+              <tr>
+                <td class="wrapper last offset-by-three top-buffer-only">
+                  <table class="six columns">
+                    <tr>
+                      <td class="panel footer center middle">
+                        <center>Made with <span style="color: red">♥</span> from Athens, GA</center>
+                      </td>
+                      <td class="expander"></td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <tr>
+                  <td class="wrapper last">
+                    <table class="twelve columns">
+                      <tr>
+                        <td align="center">
+                          <center>
+                          <p style="text-align:center;">
+                            <a href="#">Unsubscribe</a>
+                          </p>
+                          </center>
+                        </td>
+                        <td class="expander"></td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+              <!-- container end below -->
+            </td>
+          </tr>
+        </table>
+        </center>
+      </td>
+    </tr>
+  </table>

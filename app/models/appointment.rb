@@ -28,6 +28,8 @@ class Appointment < ActiveRecord::Base
   validate :inside_slot_availability
   validate :tutor_and_student_at_same_school
 
+  enum status: ['Scheduled', 'Cancelled', 'Completed']
+
   attr_accessor :appt_reminder_email_date
 
   enum status: ['Scheduled', 'Cancelled', 'Completed']
