@@ -22,8 +22,8 @@
       <tbody>
         <tr>
           <td><%= @course.id %>
-          <td><%= @course.school_name %></td>
-          <td><%= @course.subject[:name] %></td>
+          <td><%= @course.school.name %></td>
+          <td><%= @course.subject %></td>
           <td><%= @course.call_number %></td>
           <td><%= @course.friendly_name %></td>
           <td><%= @course.tutors.count %></td>

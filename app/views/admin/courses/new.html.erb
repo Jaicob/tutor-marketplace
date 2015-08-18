@@ -20,15 +20,13 @@
         </div>
 
         <div class="small-3 columns">
-          <%= f.fields_for :subject do |ff| %>
-            <%= ff.label :name %>
-            <%= ff.select(:name, options_for_select([['Biology'],['Chemistry'],['Math'],['Computer Science'],['Physics']]), include_blank: true) %>
-          <% end %>
+          <%= f.label :subject_id, 'Subject' %>
+          <%= f.collection_select(:subject_id, Subject.all, :id, :name, include_blank: true) %>
         </div>
 
         <div class="small-3 columns">
           <%= f.label :call_number %>
-          <%= f.number_field :call_number %>
+          <%= f.text_field :call_number %>
         </div>
 
         <div class="small-3 columns">
@@ -62,8 +60,8 @@
           </div>
 
           <div class="large-3 columns">
-            <%= f.label :subject %>
-            <%= f.select(:name, options_for_select([['Biology'],['Chemistry'],['Math'],['Computer Science'],['Physics']]), include_blank: true) %>
+            <%= f.label :subject_id, 'Subject' %>
+            <%= f.collection_select(:subject_id, Subject.all, :id, :name, include_blank: true) %>
           </div>
 
           <div class="large-3 columns">
