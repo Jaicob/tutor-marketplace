@@ -69,6 +69,7 @@ class Admin::CoursesController < AdminController
 
   def create_new_course_list
     if Course.create_course_list(params)
+      flash[:notice] = "Course list was succesfully created"
       redirect_to admin_courses_path
     else
       flash[:error] = "Course list was not created"

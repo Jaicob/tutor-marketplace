@@ -10,7 +10,7 @@
       <%= form_for :course_list, url: '/admin/courses/review_new_course_list', method: :post do |f| %>
         <% n = 1 %>
         <% @form_length.to_i.times do %>
-          <div class="row">
+          <div class="row course-<%= n %>-row">
             <%= f.fields_for ":course_#{n}" do |ff| %>
               <div class="large-3 columns">
                 <%= ff.label :call_number %>

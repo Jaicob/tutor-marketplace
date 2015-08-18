@@ -16,31 +16,32 @@ end
 
 # Creates Courses for each of the 4 Schools
 course_list = [
-  [1, {name: 'Biology', id: 1}, "101", "Intro to Biology (U1)"],
-  [1, {name: 'Chemistry', id: 2}, "101", "Intro to Chemistry (U1)"],
-  [1, {name: 'Math', id: 3}, "101", "Intro to Math (U1)"],
-  [1, {name: 'Computer Science', id: 4}, "101", "Intro to Computer Science (U1)"],
-  [1, {name: 'Physics', id: 5}, "101", "Intro to Physics (U1)"],
-  [2, {name: 'Biology', id: 1}, "101", "Intro to Biology (U2)"],
-  [2, {name: 'Chemistry', id: 2}, "101", "Intro to Chemistry (U2)"],
-  [2, {name: 'Math', id: 3}, "101", "Intro to Math (U2)"],
-  [2, {name: 'Computer Science', id: 4}, "101", "Intro to Computer Science (U2)"],
-  [2, {name: 'Physics', id: 5}, "101", "Intro to Physics (U2)"],
-  [3, {name: 'Biology', id: 1}, "101", "Intro to Biology (U3)"],
-  [3, {name: 'Chemistry', id: 2}, "101", "Intro to Chemistry (U3)"],
-  [3, {name: 'Math', id: 3}, "101", "Intro to Math (U3)"],
-  [3, {name: 'Computer Science', id: 4}, "101", "Intro to Computer Science (U3)"],
-  [3, {name: 'Physics', id: 5}, "101", "Intro to Physics (U3)"],
-  [4, {name: 'Biology', id: 1}, "101", "Intro to Biology (U4)"],
-  [4, {name: 'Chemistry', id: 2}, "101", "Intro to Chemistry (U4)"],
-  [4, {name: 'Math', id: 3}, "101", "Intro to Math (U4)"],
-  [4, {name: 'Computer Science', id: 4}, "101", "Intro to Computer Science (U4)"],
-  [4, {name: 'Physics', id: 5}, "101", "Intro to Physics (U4)"]
+  [1, 'Biology', "101", "Intro to Biology (U1)"],
+  [1, 'Chemistry', "101", "Intro to Chemistry (U1)"],
+  [1, 'Math', "101", "Intro to Math (U1)"],
+  [1, 'Computer Science', "101", "Intro to Computer Science (U1)"],
+  [1, 'Physics', "101", "Intro to Physics (U1)"],
+  [2, 'Biology', "101", "Intro to Biology (U2)"],
+  [2, 'Chemistry', "101", "Intro to Chemistry (U2)"],
+  [2, 'Math', "101", "Intro to Math (U2)"],
+  [2, 'Computer Science', "101", "Intro to Computer Science (U2)"],
+  [2, 'Physics', "101", "Intro to Physics (U2)"],
+  [3, 'Biology', "101", "Intro to Biology (U3)"],
+  [3, 'Chemistry', "101", "Intro to Chemistry (U3)"],
+  [3, 'Math', "101", "Intro to Math (U3)"],
+  [3, 'Computer Science', "101", "Intro to Computer Science (U3)"],
+  [3, 'Physics', "101", "Intro to Physics (U3)"],
+  [4, 'Biology', "101", "Intro to Biology (U4)"],
+  [4, 'Chemistry', "101", "Intro to Chemistry (U4)"],
+  [4, 'Math', "101", "Intro to Math (U4)"],
+  [4, 'Computer Science', "101", "Intro to Computer Science (U4)"],
+  [4, 'Physics', "101", "Intro to Physics (U4)"]
 ]
 
 # Create a Course for each School
 course_list.each do |school_id, subject, call_number, friendly_name|
-  Course.create!(school_id: school_id, subject: {name: subject[:name], id: subject[:id]}, call_number: call_number, friendly_name: friendly_name)
+  x = Course.create!(school_id: school_id, call_number: call_number, friendly_name: friendly_name)
+  x.set_subject(subject)
 end
 
 # Create 20 Users to become Tutors, 5 for each school

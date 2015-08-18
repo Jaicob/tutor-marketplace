@@ -13,7 +13,7 @@
         <div class="small-3 columns">
           <%= f.label :school_id, 'School' %>
           <% if current_user.role == 'campus_manager' %>
-            <%= f.select(:school_id, options_for_select(["#{@school.name}"])) %>
+            <%= f.select(:school_id, options_for_select([["#{@school.name}", @school.id]])) %>
           <% else %>
             <%= f.collection_select(:school_id, School.all, :id, :name, include_blank: true) %>
           <% end %>
@@ -55,7 +55,7 @@
           <div class="large-3 columns">
             <%= f.label :school_id, 'School' %>
             <% if current_user.role == 'campus_manager' %>
-              <%= f.select(:school_id, options_for_select(["#{@school.name}"])) %>
+              <%= f.select(:school_id, options_for_select([["#{@school.name}", @school.id]])) %>
             <% else %>
               <%= f.collection_select(:school_id, School.all, :id, :name, include_blank: true) %>
             <% end %>

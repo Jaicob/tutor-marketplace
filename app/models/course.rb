@@ -20,7 +20,6 @@ class Course < ActiveRecord::Base
   validates :call_number, presence: :true
   validates :friendly_name, presence: :true
   validates :school_id, presence: :true
-  validates :subject, presence: true
 
   before_create :set_empty_hash_for_subject
 
