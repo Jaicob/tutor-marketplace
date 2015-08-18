@@ -41,17 +41,11 @@ class User < ActiveRecord::Base
   has_one :student, dependent: :destroy
   belongs_to :school
 
-  enum role: [:user, :admin]
-  after_initialize :set_default_role, :if => :new_record?
+  enum role: [:user, :campus_manager, :super_admin]
+  
   extend FriendlyId
   friendly_id :slug_candidates, use: :slugged
 
-  def set_default_role
-    self.role ||= :user
-  end
-
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :async, :invitable, :database_authenticatable, :registerable, :confirmable,
     :recoverable, :rememberable, :trackable, :validatable
 
@@ -79,6 +73,16 @@ class User < ActiveRecord::Base
 
   def full_name
     "#{first_name} #{last_name}"
+  end
+
+  def admin_scope(model_collection)
+    if self.role == 'campus_manager'
+      collection = model_collection.to_s
+      self.school.send(collection)
+    else
+      model = model_collection.to_s.humanize.chop.constantize
+      model.all
+    end
   end
 
 end

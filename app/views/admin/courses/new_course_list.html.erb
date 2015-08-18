@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="large-6 large-offset-3 columns">
+    <h5>Add course list for:</h5>
+    <h3><%= @subject %> at <%= @school.name %></h3>
+  </div>
+</div>
+
+<div class="row">
+  <div class="large-6 large-offset-3 columns">
+      <%= form_for :course_list, url: '/admin/courses/review_new_course_list', method: :post do |f| %>
+        <% n = 1 %>
+        <% @form_length.to_i.times do %>
+          <div class="row course-<%= n %>-row">
+            <%= f.fields_for ":course_#{n}" do |ff| %>
+              <div class="large-3 columns">
+                <%= ff.label :call_number %>
+                <%= ff.number_field :call_number %>
+              </div>
+
+              <div class="large-9 columns">
+                <%= ff.label :friendly_name %>
+                <%= ff.text_field :friendly_name %>
+              </div>
+
+              <% n += 1 %>
+            </div>
+          <% end %>
+        <% end %>
+        <%= hidden_field_tag(:school, value = @school.name) %>
+        <%= hidden_field_tag(:subject, value = @subject) %>
+        <div class="row">
+          <div class="large-12 columns">
+            <%= f.submit 'Review Course List', class: 'button expand success' %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

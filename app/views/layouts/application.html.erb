@@ -14,6 +14,7 @@
   <body>
     <header>
       <%= render 'layouts/navigation' %>
+      <%= yield(:admin_panel) if content_for? (:admin_panel) %>
       <%= yield(:dashboard_nav) if content_for? (:dashboard_nav) %> 
     </header>
     <main role="main">     

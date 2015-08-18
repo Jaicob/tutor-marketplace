@@ -45,9 +45,15 @@ FactoryGirl.define do
     email
     password "please123"
     slug
+    school
 
-    trait :admin do
-      role 'admin'
+    trait :campus_manager do 
+      role 1
+      association :school, factory: :school, name: "Campus Manager's University"
+    end
+    
+    trait :super_admin do
+      role 2
     end
 
     factory :alternate_user do

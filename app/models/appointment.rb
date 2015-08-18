@@ -5,8 +5,9 @@
 #  id         :integer          not null, primary key
 #  student_id :integer
 #  slot_id    :integer
+#  course_id  :integer
 #  start_time :datetime
-#  status     :integer
+#  status     :integer          default(0)
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
@@ -14,13 +15,18 @@
 class Appointment < ActiveRecord::Base
   belongs_to :student
   belongs_to :slot
+  belongs_to :course
+  
   delegate :tutor, to: :slot
+  delegate :school, to: :course
 
   validates :student_id, presence: true
   validates :slot_id, presence: true
+  validates :course_id, presence: true
   validates :start_time, presence: true, uniqueness: { scope: :slot_id }
   validate :one_hour_appointment_buffer
   validate :inside_slot_availability
+  validate :tutor_and_student_at_same_school
 
   enum status: ['Scheduled', 'Cancelled', 'Completed']
 
@@ -43,11 +49,37 @@ class Appointment < ActiveRecord::Base
     end
   end
 
+  def tutor_and_student_at_same_school
+    tutor_id = Slot.find(slot_id).tutor.id
+    tutor = Tutor.find(tutor_id)
+    student = Student.find(student_id)
+    course = Course.find(course_id)
+    if !(tutor.school == course.school && student.school == course.school)
+      errors.add(:course_id, "is not the same for tutor, student and course")
+    end
+  end
+
   # This sets the delivery time for reminder emails as 12 hours before the appointment, except in the case where the appointment is tomorrow and no reminder is needed
   def appt_reminder_email_date
     if self.start_time.to_date > (self.created_at.to_date + 1)
       (self.start_time.to_time - 43200).to_i 
     end
+  end
+
+  def formatted_start_time
+    self.start_time.strftime('%-m-%d-%y %l:%M %p')
+  end
+
+  def date
+    self.start_time.strftime('%-m-%d-%y')
+  end
+
+  def time
+    self.start_time.strftime('%l:%M %p')
+  end
+
+  def school
+    Course.find(self.course_id).school
   end
 
 end

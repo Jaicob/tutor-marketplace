@@ -19,12 +19,14 @@ ActiveRecord::Schema.define(version: 20150729152259) do
   create_table "appointments", force: :cascade do |t|
     t.integer  "student_id"
     t.integer  "slot_id"
+    t.integer  "course_id"
     t.datetime "start_time"
-    t.integer  "status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "status",     default: 0
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
+  add_index "appointments", ["course_id"], name: "index_appointments_on_course_id", using: :btree
   add_index "appointments", ["slot_id"], name: "index_appointments_on_slot_id", using: :btree
   add_index "appointments", ["student_id"], name: "index_appointments_on_student_id", using: :btree
 
@@ -57,7 +59,10 @@ ActiveRecord::Schema.define(version: 20150729152259) do
     t.string   "location"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "slug"
   end
+
+  add_index "schools", ["slug"], name: "index_schools_on_slug", unique: true, using: :btree
 
   create_table "slots", force: :cascade do |t|
     t.integer  "tutor_id"
@@ -104,6 +109,7 @@ ActiveRecord::Schema.define(version: 20150729152259) do
     t.date     "birthdate"
     t.string   "profile_pic"
     t.string   "transcript"
+    t.string   "appt_notes"
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
   end
@@ -149,6 +155,7 @@ ActiveRecord::Schema.define(version: 20150729152259) do
   add_index "users", ["school_id"], name: "index_users_on_school_id", using: :btree
   add_index "users", ["slug"], name: "index_users_on_slug", unique: true, using: :btree
 
+  add_foreign_key "appointments", "courses"
   add_foreign_key "appointments", "slots"
   add_foreign_key "appointments", "students"
   add_foreign_key "courses", "schools"

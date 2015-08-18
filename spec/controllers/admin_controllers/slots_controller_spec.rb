@@ -1,0 +1,1 @@
+slots_controller_spec.rb
