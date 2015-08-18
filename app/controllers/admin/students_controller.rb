@@ -7,7 +7,7 @@ class Admin::StudentsController < AdminController
   end
 
   def index
-    @q = Student.ransack(params[:q])
+    @q = current_user.admin_scope(:students).ransack(params[:q])
     @students = @q.result.includes(:user, :appointments)
   end
 
