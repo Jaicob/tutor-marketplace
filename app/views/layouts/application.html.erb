@@ -15,6 +15,7 @@
     <header>
       <%= render 'layouts/navigation' %>
       <%= yield(:admin_panel) if content_for? (:admin_panel) %>
+      <%= yield(:incomplete_profile_progress_bar) if content_for? (:incomplete_profile_progress_bar) %>
       <%= yield(:dashboard_nav) if content_for? (:dashboard_nav) %> 
     </header>
     <main role="main">     

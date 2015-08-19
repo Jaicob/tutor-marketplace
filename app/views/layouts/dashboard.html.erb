@@ -1,3 +1,9 @@
+<% if current_user.tutor && current_user.tutor.incomplete_profile? %>
+  <% content_for (:incomplete_profile_progress_bar) do %>
+    <%= check_profile_progress and render 'layouts/incomplete_profile_progress_bar' %>
+  <% end %>
+<% end %>
+
 <% content_for (:dashboard_nav) do %>
   <%= generate_dashboard_nav_links and render 'layouts/dashboard_nav' %>
 <% end %>
