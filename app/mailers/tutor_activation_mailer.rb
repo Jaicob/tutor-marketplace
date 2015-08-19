@@ -1,16 +1,30 @@
-class TutorActivationMailer < ApplicationMailer
+class TutorManagementMailer < ApplicationMailer
   default from: 'info@axontutors.com'
+  default template_path: "mailers/#{self.name.underscore}"
 
-  def activation_email(user)
-    @user = user
-    @url = 'link to schedule...or like...whatever'
-    mail(to: @user.email, subject: "Congratulations! Your Axon Tutors account has been activated")
+  def welcome_email(user_id)
+    @user = User.find(user_id)
+    mail(to: @user.email, subject: "Thanks for signing up to become an Axon Tutor!")
   end
 
-  def deactivation_email(user)
-    @user = user
-    @url = 'http://giphy.com/gifs/SSFB10QdOq1Gw/html5'
-    mail(to: @user.email, subject: "IMPORTANT: Please sit down before reading this message from Axon Tutors")
+  def application_completed_email(user_id)
+    @user = User.find(user_id)
+    mail(to: @user.email, subject: "Way to go! You've completed your application to become an Axon Tutor")
+  end
+
+  def rejection_email(user_id)
+    @user = User.find(user_id)
+    mail(to: @user.email, subject: "Regarding your recent application to become an Axon Tutor")
+  end
+
+  def activation_email(user_id)
+    @user = User.find(user_id)
+    mail(to: @user.email, subject: "Congratulations! Your Axon Tutors account has been activated!")
+  end
+
+  def deactivation_email(user_id)
+    @user = User.find(user_id)
+    mail(to: @user.email, subject: "Your Axon Tutors account has been de-activated")
   end
 
 end
