@@ -93,8 +93,16 @@ class Tutor < ActiveRecord::Base
     end
   end
 
+  def awaiting_approval?
+    if self.incomplete_profile? == false && self.active_status == 'Inactive'
+      true
+    else
+      false
+    end
+  end
+
   def zero_availability_set?
-    if self.incomplete_profile? == false && self.slots.count == 0
+    if self.incomplete_profile? == false && self.awaiting_approval? == false && self.slots.count == 0
       true
     else
       false
@@ -103,9 +111,9 @@ class Tutor < ActiveRecord::Base
 
   def profile_check(attribute)
     if attribute == :profile_pic
-      self.profile_pic.url == 'panda.png' ? 'Blank' : 'Check'
+      self.profile_pic.url == 'panda.png' ? false : true
     else
-      self.public_send(attribute) == nil ? 'Blank' : 'Check'
+      self.public_send(attribute) == nil ? false : true
     end
   end
 

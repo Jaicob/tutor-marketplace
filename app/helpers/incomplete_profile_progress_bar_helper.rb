@@ -2,7 +2,7 @@ module IncompleteProfileProgressBarHelper
 
   def check_profile_progress
     tutor = current_user.tutor
-    @first_name = current_user.first_name
+    @user = current_user
     
     @degree =           tutor.profile_check(:degree)
     @major =            tutor.profile_check(:major)
@@ -12,5 +12,8 @@ module IncompleteProfileProgressBarHelper
     @birthdate =        tutor.profile_check(:birthdate) 
     @profile_pic =      tutor.profile_check(:profile_pic)
     @appt_notes =       tutor.profile_check(:appt_notes)
+
+    @check = '<i class="fi-check progress-icon check"></i>' 
+    @blank = '<i class="fi-plus progress-icon blank"></i>'
   end
 end
