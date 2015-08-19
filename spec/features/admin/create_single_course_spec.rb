@@ -20,10 +20,7 @@ feature "Admin can create a single course" do
       fill_in('Call number', with: 101)
       fill_in('Friendly name', with: 'Intro to Testing')
     end
-    puts page.body
     click_button("Create Course")
-    puts "AFTER"
-    puts page.body
     expect(page).to have_content 'Course Details'
   end
 end

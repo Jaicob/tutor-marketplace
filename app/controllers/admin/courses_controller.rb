@@ -55,14 +55,14 @@ class Admin::CoursesController < AdminController
 
   def new_course_list
     @school = School.find(params[:course_list_setup][:school_id].to_i)
-    @subject = params[:course_list_setup][:subject_id]
+    @subject = Subject.find(params[:course_list_setup][:subject_id].to_i)
     @form_length = params[:course_list_setup][:form_length]
   end
 
   def review_new_course_list
     @course_list = params[:course_list]
-    @school_name = params[:school]
-    @subject = params[:subject]
+    @school = School.find(params[:school_id].to_i)
+    @subject = Subject.find(params[:subject_id].to_i)
   end
 
   def create_new_course_list

@@ -49,8 +49,8 @@
 
       <div class="row">
         <div class="large-3 columns">
-          <%= f.label :courses_subject_cont, 'Subject' %>
-          <%= f.select(:courses_subject_cont, options_for_select([['Biology'],['Chemistry'],['Math'],['Computer Science'],['Physics']]), include_blank: true) %>
+          <%= f.label :courses_subject_id_eq, "Subject" %>
+          <%= f.collection_select(:courses_subject_id_eq, Subject.all, :id, :name, include_blank: true) %>
         </div>
 
         <div class="large-3 columns">

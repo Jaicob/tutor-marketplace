@@ -28,8 +28,8 @@ class Course < ActiveRecord::Base
   end
 
   def self.set_variables_for_create_course_list(params)
-    @school_id = School.find_by(name: params[:school_name]).id
-    @subject = params[:subject]
+    @school_id = params[:school_id]
+    @subject_id = params[:subject_id]
     @course_list = params[:create_course_list]
     @n = 1
   end
@@ -39,11 +39,10 @@ class Course < ActiveRecord::Base
     @course_list.length.to_i.times do
       course = Course.create(
         school_id: @school_id,
-        subject: {name: 'placeholder_name', id: 0},
-        call_number: @course_list["course_#{@n}"]['call_number'].to_i,
+        subject_id: @subject_id,
+        call_number: @course_list["course_#{@n}"]['call_number'],
         friendly_name: @course_list["course_#{@n}"]['friendly_name']
         ) 
-      course.set_subject(@subject)
       @n += 1
     end
   end
