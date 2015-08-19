@@ -85,7 +85,6 @@ class Tutor < ActiveRecord::Base
   end
 
   def incomplete_profile?
-    # This method sets the 'application_status' attribute. It returns 'Awaiting Approval' only if all fields have been completed, otherwise it returns "Applied"
     if self.birthdate && self.degree && self.major && self.extra_info && self.graduation_year && self.phone_number && self.profile_pic.url != 'panda.png' && self.transcript.url
       false
     else
