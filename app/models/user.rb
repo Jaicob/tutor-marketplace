@@ -34,9 +34,10 @@
 #
 
 class User < ActiveRecord::Base
-  has_one :tutor, dependent: :destroy
+  belongs_to :tutor
   has_one :student, dependent: :destroy
   belongs_to :school
+
 
   enum role: [:user, :campus_manager, :super_admin]
   

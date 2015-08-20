@@ -21,13 +21,15 @@
 #
 
 class Tutor < ActiveRecord::Base
-  belongs_to :user
+  has_one :user, dependent: :destroy
   has_many :tutor_courses, dependent: :destroy
   has_many :courses, through: :tutor_courses, dependent: :destroy
   has_many :slots, dependent: :destroy
   has_many :appointments, through: :slots, dependent: :destroy
 
-  delegate :school, :full_name, :email, to: :user
+  accepts_nested_attributes_for :user
+
+  # delegate :school, :full_name, :email, to: :user
 
   enum application_status: ['Incomplete', 'Complete', 'Approved']
   enum active_status: ['Inactive', 'Active']

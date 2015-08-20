@@ -18,17 +18,13 @@ class TutorsController < ApplicationController
   end
 
   def create
-    @user = User.create(tutor_params[:user])
-    puts @user.errors.full_messages
+    @user = User.create(tutor_params[:user_attributes])
     @tutor = @user.create_tutor(tutor_params)
-
-    puts "Tutor Params = #{tutor_params}"
-
 
     if @tutor.save
       # The method below only creates a tutor_course for the initial sign-up, all other CRUD operations relating to tutor_courses go through the TutorCoursesController
       @tutor.set_first_tutor_course(@tutor, params)
-      redirect_to dashboard_home_user_path(current_user)
+      redirect_to root_path
     else
       flash[:alert] = "Tutor account was not created. Please fill in all fields and attach your unofficial transcript."
       render :new
@@ -75,7 +71,7 @@ class TutorsController < ApplicationController
   private
 
     def tutor_params
-      params.require(:tutor).permit(:rating, :application_status, :birthdate, :degree, :major, :extra_info, :graduation_year, :phone_number, :profile_pic, :transcript, :active_status, :crop_x, :crop_y, :crop_w, :crop_h, course: [:course_id], tutor_course: [:rate], user: [:first_name, :last_name, :email, :password, :password_confirmation])
+      params.require(:tutor).permit(:rating, :application_status, :birthdate, :degree, :major, :extra_info, :graduation_year, :phone_number, :profile_pic, :transcript, :active_status, :crop_x, :crop_y, :crop_w, :crop_h, course: [:course_id], tutor_course: [:rate], user_attributes: [:first_name, :last_name, :email, :password, :password_confirmation])
     end
 
     def set_tutor_for_admin_or_visitor_sign_up
@@ -83,21 +79,3 @@ class TutorsController < ApplicationController
     end
 
 end
-
-
-# Parameters: 
-
-#   "tutor"=>{
-#     "user"=>{
-#       "first_name"=>"JT", 
-#       "last_name"=>"Jobe", 
-#       "email"=>"jtjobe@gmail.com", 
-#       "password"=>"[FILTERED]", 
-#       "password_confirmation"=>"[FILTERED]"}, 
-#     "extra_info"=>"hey"}, 
-#     "course"=>{
-#       "schoold_id"=>"1", 
-#       "subject_id"=>"1", 
-#       "course_id"=>"1"}, 
-#     "tutor_course"=>{
-#       "rate"=>"23"
