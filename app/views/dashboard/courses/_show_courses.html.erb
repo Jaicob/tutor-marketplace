@@ -13,7 +13,7 @@
     <% @tutor.tutor_courses.each do |tutor_course| %>
     <tr>
       <td><%= tutor_course.course.school.name %></td>
-      <td><%= tutor_course.course.subject %></td>
+      <td><%= tutor_course.course.subject.name %></td>
       <td><%= tutor_course.course.call_number %></td>
       <td><%= tutor_course.course.friendly_name %></td>
       <td>$<%= tutor_course.rate %></td>

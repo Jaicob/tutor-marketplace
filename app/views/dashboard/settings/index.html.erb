@@ -1,25 +1,37 @@
 <div class="row">
   <div class="small-10 large-6 small-centered large-centered columns">
-    <p>Aside from your name and username, this information will not appear on your public profile.</p>
+    <p>Only your name will appear on your public profile. Students who book appointments with you will recieve your email address and personal note. All of your other information is secure and private.</p>
     <%= form_for @user do |f| %>
       <h3>Account Settings</h3>
+
       <%= f.label :first_name %>
       <%= f.text_field :first_name %>
+
       <%= f.label :last_name %>
       <%= f.text_field :last_name %>
+
       <%= f.label :email %>
       <%= f.email_field :email %>
+
       <%= f.submit 'Update Account Settings' %>
     <% end %>
 
     <% if @tutor %>
       <%= form_for @tutor, url: update_settings_tutor_path do |f| %>
-        <h3>Tutor Settings</h3>
+        <h3 id="settings-form">Private Settings</h3>
+
         <%= f.label :birthdate %>
         <%= f.date_field :birthdate %>
+
         <%= f.label :phone_number %>
         <%= f.telephone_field :phone_number %>
-        <%= f.submit 'Update Tutor Settings' %>
+
+        <h3 id="appt-notes">Appointment Settings</h3>
+
+        <%= f.label :appt_notes, 'Personal Note to Students' %>
+        <%= f.text_area :appt_notes %>
+
+        <%= f.submit 'Update Pre-Appointment Note' %>
       <% end %>
     <% end %>
   </div>

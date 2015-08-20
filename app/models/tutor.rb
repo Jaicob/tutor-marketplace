@@ -77,13 +77,74 @@ class Tutor < ActiveRecord::Base
   end
 
   def availability_booked_percent
+    # this method should calculate how many hours of a tutor's availability are actually booked
+    # possibly useful for identifying 'super-tutors'
+    # should probably only calculate percentages for past availability/appointments, since most bookins
+    # are only completed 2 days in advance. also, don't want a tutor with more future set availability (a
+    # good thing) to have a lower percentage than someone with less future availability
+  end
+
+  def incomplete_profile?
+    # This method sets the 'application_status' attribute. It returns 'Awaiting Approval' only if all fields have been completed, otherwise it returns "Applied"
+    if self.birthdate && self.degree && self.major && self.extra_info && self.graduation_year && self.phone_number && self.profile_pic.url != 'panda.png' && self.transcript.url
+      false
+    else
+      true
+    end
+  end
+
+  def awaiting_approval?
+    if self.incomplete_profile? == false && self.active_status == 'Inactive'
+      true
+    else
+      false
+    end
+  end
+
+  def zero_availability_set?
+    if self.incomplete_profile? == false && self.awaiting_approval? == false && self.slots.count == 0
+      true
+    else
+      false
+    end
+  end
+
+  def profile_check(attribute)
+    if attribute == :profile_pic
+      self.profile_pic.url == 'panda.png' ? false : true
+    else
+      self.public_send(attribute) == nil ? false : true
+    end
   end
 
   def send_active_status_change_email(tutor_params)
     if tutor_params[:active_status] == 'Active'
+      TutorManagementMailer.delay.activation_email(self.id)
     end
     if tutor_params[:active_status] == 'Inactive'
+      TutorManagementMailer.delay.deactivation_email(self.id)
     end
   end
+
+  #
+  #   QUESTIONS ABOUT FILES FOR TUTORS - DISCUSS DURING CODE REVIEW!!
+  #
+  # things to complete after initial sign-up:
+  # -degree
+  # -major
+  # -extra-info (review/confirm)
+  # -graduation year 
+  # -phone_number
+  # -birthdate
+  # -profile_pic
+  # -appt_notes
+  # -DO WE MAKE THEM PROVIDE W2? (no place on model yet...)
+  # -DO WE CHANGE TRANSCRIPT TO SOMETHING THEY ADD IN DASHBOARD AFTER CREATING TUTOR ACCOUNT?
+  # -- ^* lower threshold to create account and get in...
+  # - items to add to Tutor model?
+  # --resume
+  # --w_two
+  # --void_check (not necessary with new payment system?)
+  # --direct_depost_form (not necessary with new payment system?)
 
 end
