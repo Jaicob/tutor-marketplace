@@ -39,7 +39,6 @@ class Tutor < ActiveRecord::Base
   # Dimensions for cropping profile pics
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
 
-  validates :transcript, presence: true
   validates :extra_info, presence: true
 
   # Neccessary to create a tutor's first tutor_course during sign-up process

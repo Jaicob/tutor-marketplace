@@ -1,56 +1,58 @@
 <div class="row">
   <div class="medium-8 small-12 medium-centered columns">
     <fieldset>
-      <%= form_for :tutor_sign_up do |f| %>
+      <%= form_for @tutor, url: '/tutors', method: :post do |f| %>
 
       <div class="row">
-        <%= javascript_include_tag "dashboard/courses" %>
+        <%= f.fields_for :user do |uu| %>
+          <%= uu.text_field :first_name, placeholder: 'First Name' %>
+          <%= uu.text_field :last_name, placeholder: 'Last Name' %>
+          <%= uu.email_field :email, placeholder: 'Email' %>
+          <%= uu.password_field :password, placeholder: 'Password' %>
+          <%= uu.password_field :password_confirmation, placeholder: 'Confirm Password' %>
+        <% end %>
 
-<% @options = (local_variables().include? :options) ? options : {} %>
+        <%= f.fields_for :school_and_tutor_course do |ff| %>
 
-<div id="add_course_box">
-  <div class="row">
-    <div class="medium-12 columns">
-      <%= f.collection_select(:school_id, School.all, :id, :name, {prompt: 'School'}, {name: 'course[schoold_id]', id: 'school', required: true} ) %>   
-    </div>
-  </div>
+          <%= javascript_include_tag "dashboard/courses" %>
+          <% @options = (local_variables().include? :options) ? options : {} %>
 
-  <div class="row">
-    <div class="medium-5 columns">
-      <select name="course[subject_id]" id="subject" required="true">
-        <option disabled="true" selected="true" value="">Subject</option>
-      </select>
-    </div>
+          <div id="add_course_box">
+            <div class="row">
+              <div class="medium-12 columns">
+                <%= ff.collection_select(:school_id, School.all, :id, :name, {prompt: 'School'}, {name: 'course[schoold_id]', id: 'school', required: true} ) %>   
+              </div>
+            </div>
 
-    <div class="medium-5 columns">
-      <select name="course[course_id]" id="course" required="true">
-        <option disabled="true" selected="true" value="">Course</option>
-      </select>
-    </div>
+            <div class="row">
+              <div class="medium-4 columns">
+                <select name="course[subject_id]" id="subject" required="true">
+                  <option disabled="true" selected="true" value="">Subject</option>
+                </select>
+              </div>
 
-    <div class="medium-2 columns">
-      <div class="row collapse">
-        <div class="small-2 large-2 columns">
-          <span class="prefix">$</span>
-        </div>
-        <div class="small-7 medium-4 large-5 columns">
-          <input name="tutor_course[rate]" id="rate" type="number" required="true" min="1" step="1" pattern="\d*" placeholder="25" style="text-align: center; border-right-width: 0px;">
-        </div>
-        <div class="small-3 medium-6 large-5 columns">
-          <span class="postfix">per hour</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-      </div>
+              <div class="medium-4 columns">
+                <select name="course[course_id]" id="course" required="true">
+                  <option disabled="true" selected="true" value="">Course</option>
+                </select>
+              </div>
 
-      <div class="row">
-        <div class="medium-12 columns">
-          <p>Select your school and one class to tutor:</p>
-          <%= render 'sign_up_school_and_course_selector' %>
-          <p>You can add more classes and manage them all from your tutor dashboard after sign-up<p>
-        </div>
+              <div class="medium-4 columns">
+                <div class="row collapse">
+                  <div class="small-2 large-2 columns">
+                    <span class="prefix">$</span>
+                  </div>
+                  <div class="small-7 medium-4 large-5 columns">
+                    <input name="tutor_course[rate]" id="rate" type="number" required="true" min="1" step="1" pattern="\d*" placeholder="25" style="text-align: center; border-right-width: 0px;">
+                  </div>
+                  <div class="small-3 medium-6 large-5 columns">
+                    <span class="postfix">per hour</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
       </div>
 
       <div class="row">

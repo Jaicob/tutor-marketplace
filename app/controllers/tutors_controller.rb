@@ -18,7 +18,12 @@ class TutorsController < ApplicationController
   end
 
   def create
-    @tutor = current_user.create_tutor(tutor_params)
+    @user = User.create(tutor_params[:user])
+    puts @user.errors.full_messages
+    @tutor = @user.create_tutor(tutor_params)
+
+    puts "Tutor Params = #{tutor_params}"
+
 
     if @tutor.save
       # The method below only creates a tutor_course for the initial sign-up, all other CRUD operations relating to tutor_courses go through the TutorCoursesController
@@ -67,42 +72,10 @@ class TutorsController < ApplicationController
     end
   end
 
-  #======================================================================================
-  # Custom Actions for handling Tutor Account creation by visitors or non-signed in users
-  #======================================================================================
-
-  def visitor_new
-    @tutor = Tutor.new
-    @tutor.tutor_courses.build
-    @tutor.courses.build
-  end
-
-  def visitor_create
-    @tutor = Tutor.create(tutor_params)
-
-    if @tutor.save
-      # The method below only creates a tutor_course for the initial sign-up, all other CRUD operations relating to tutor_courses go through the TutorCoursesController
-      @tutor.set_first_tutor_course(@tutor, params)
-      redirect_to register_or_sign_in_tutor_path(@tutor)
-    else
-      flash[:error] = "Tutor account was not created. Please fill in all fields and attach your unofficial transcript."
-      render :visitor_new
-    end
-  end
-
-  def register_or_sign_in
-  end
-
-  def visitor_sign_in
-  end
-
-  def visitor_sign_up
-  end
-
   private
 
     def tutor_params
-      params.require(:tutor).permit(:rating, :application_status, :birthdate, :degree, :major, :extra_info, :graduation_year, :phone_number, :profile_pic, :transcript, :active_status, :crop_x, :crop_y, :crop_w, :crop_h, course: [:course_id], tutor_course: [:rate])
+      params.require(:tutor).permit(:rating, :application_status, :birthdate, :degree, :major, :extra_info, :graduation_year, :phone_number, :profile_pic, :transcript, :active_status, :crop_x, :crop_y, :crop_w, :crop_h, course: [:course_id], tutor_course: [:rate], user: [:first_name, :last_name, :email, :password, :password_confirmation])
     end
 
     def set_tutor_for_admin_or_visitor_sign_up
@@ -110,3 +83,21 @@ class TutorsController < ApplicationController
     end
 
 end
+
+
+# Parameters: 
+
+#   "tutor"=>{
+#     "user"=>{
+#       "first_name"=>"JT", 
+#       "last_name"=>"Jobe", 
+#       "email"=>"jtjobe@gmail.com", 
+#       "password"=>"[FILTERED]", 
+#       "password_confirmation"=>"[FILTERED]"}, 
+#     "extra_info"=>"hey"}, 
+#     "course"=>{
+#       "schoold_id"=>"1", 
+#       "subject_id"=>"1", 
+#       "course_id"=>"1"}, 
+#     "tutor_course"=>{
+#       "rate"=>"23"
