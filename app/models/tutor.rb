@@ -79,4 +79,11 @@ class Tutor < ActiveRecord::Base
   def availability_booked_percent
   end
 
+  def send_active_status_change_email(tutor_params)
+    if tutor_params[:active_status] == 'Active'
+    end
+    if tutor_params[:active_status] == 'Inactive'
+    end
+  end
+
 end

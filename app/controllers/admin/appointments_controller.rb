@@ -17,6 +17,8 @@ class Admin::AppointmentsController < AdminController
   def update
     @appt.update(appt_params)
     if @appt.save
+      AppointmentMailer.delay.appointment_rescheduled_for_tutor(@appt.id)               
+      AppointmentMailer.delay.appointment_rescheduled_for_student(@appt.id)
       flash[:notice] = "Appointment was succesfully updated."
       redirect_to :back
     else
