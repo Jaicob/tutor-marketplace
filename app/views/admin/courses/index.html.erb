@@ -22,8 +22,8 @@
           <% end %>
         </div>
         <div class="large-4 columns">  
-          <%= f.label :subject_cont, 'Subject' %>
-          <%= f.select(:subject_cont, options_for_select([['Biology'],['Chemistry'],['Math'],['Computer Science'],['Physics']]),include_blank: true) %>
+          <%= f.label :subject_id_eq, 'Subject' %>
+          <%= f.collection_select(:subject_id_eq, Subject.all, :id, :name, include_blank: true) %>
         </div>
         <div class="large-4 columns">  
           <%= f.label :call_number_eq, 'Call Number' %>
@@ -68,8 +68,8 @@
         <% @courses.each do |course| %>
         <tr>
           <td><%= link_to course.id, admin_course_path(course) %></td>
-          <td><%= course.school_name %></td>
-          <td><%= course.subject[:name] %></td>
+          <td><%= course.school.name %></td>
+          <td><%= course.subject.name %></td>
           <td><%= course.call_number %></td>
           <td><%= course.friendly_name %></td>
           <td><%= course.tutors.count %></td>

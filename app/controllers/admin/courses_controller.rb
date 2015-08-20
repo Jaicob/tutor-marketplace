@@ -17,14 +17,12 @@ class Admin::CoursesController < AdminController
 
   def create
     @course = Course.create(course_params)
-    @course.set_subject(course_params[:subject][:name])
-
     if @course.save
+      flash[:notice] = "Course was succesfully created"
       redirect_to admin_course_path(@course)
     else
-      flash[:error] = "Course was not created: #{@course.errors.full_messages}"
+      flash[:alert] = "Course was not created: #{@course.errors.full_messages}"
       render :new
-      flash[:error] = "Course was not created: #{@course.errors.full_messages}"
     end
   end
 
@@ -57,14 +55,14 @@ class Admin::CoursesController < AdminController
 
   def new_course_list
     @school = School.find(params[:course_list_setup][:school_id].to_i)
-    @subject = params[:course_list_setup][:name]
+    @subject = Subject.find(params[:course_list_setup][:subject_id].to_i)
     @form_length = params[:course_list_setup][:form_length]
   end
 
   def review_new_course_list
     @course_list = params[:course_list]
-    @school_name = params[:school]
-    @subject = params[:subject]
+    @school = School.find(params[:school_id].to_i)
+    @subject = Subject.find(params[:subject_id].to_i)
   end
 
   def create_new_course_list
@@ -84,7 +82,7 @@ class Admin::CoursesController < AdminController
     end
 
     def course_params
-      params.require(:course).permit(:call_number, :friendly_name, :school_id, subject: [:name])
+      params.require(:course).permit(:call_number, :friendly_name, :school_id, :subject_id)
     end
 
 end

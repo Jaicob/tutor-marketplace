@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 20150729152259) do
 
   create_table "courses", force: :cascade do |t|
     t.integer  "school_id"
-    t.text     "subject"
+    t.integer  "subject_id"
     t.string   "call_number"
     t.string   "friendly_name"
     t.datetime "created_at",    null: false
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 20150729152259) do
   end
 
   add_index "courses", ["school_id"], name: "index_courses_on_school_id", using: :btree
+  add_index "courses", ["subject_id"], name: "index_courses_on_subject_id", using: :btree
 
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string   "slug",                      null: false
@@ -84,6 +85,12 @@ ActiveRecord::Schema.define(version: 20150729152259) do
   end
 
   add_index "students", ["user_id"], name: "index_students_on_user_id", using: :btree
+
+  create_table "subjects", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "tutor_courses", force: :cascade do |t|
     t.integer  "tutor_id"
@@ -159,6 +166,7 @@ ActiveRecord::Schema.define(version: 20150729152259) do
   add_foreign_key "appointments", "slots"
   add_foreign_key "appointments", "students"
   add_foreign_key "courses", "schools"
+  add_foreign_key "courses", "subjects"
   add_foreign_key "slots", "tutors"
   add_foreign_key "students", "users"
   add_foreign_key "tutor_courses", "courses"
