@@ -3,7 +3,7 @@ class AppointmentMailer < ApplicationMailer
   default template_path: "mailers/#{self.name.underscore}"
 
   # ==============================
-  #      Confirmation Emails
+  #   Appointment Confirmation Emails
   # ==============================
 
   def appointment_confirmation_for_tutor(appointment_id)
@@ -18,24 +18,6 @@ class AppointmentMailer < ApplicationMailer
     @tutor = @appt.tutor
     @student = @appt.student 
     mail(to: @student.email, subject: "Your Axon tutoring appointment confirmation")
-  end
-
-  # ==============================
-  #   Update Appointment Emails
-  # ==============================
-
-  def appointment_update_for_tutor(appointment_id)
-    @appt = Appointment.find(appointment_id)
-    @tutor = @appt.tutor
-    @student = @appt.student 
-    mail(to: @tutor.email, subject: "Your Axon tutoring appointment has changed")
-  end
-
-  def appointment_update_for_student(appointment_id)
-    @appt = Appointment.find(appointment_id)
-    @tutor = @appt.tutor
-    @student = @appt.student 
-    mail(to: @student.email, subject: "Your Axon tutoring appointment has changed")
   end
 
   # ==============================
@@ -56,22 +38,22 @@ class AppointmentMailer < ApplicationMailer
     mail(to: @student.email, subject: "Your upcoming Axon appointment")
   end
 
-  # ================================
-  #  Appointment Rescheduled Emails
-  # ================================
+  # ==============================
+  #   Appointment Updated Emails
+  # ==============================
 
-  def appointment_rescheduled_for_tutor(appointment_id)
+  def appointment_update_for_tutor(appointment_id)
     @appt = Appointment.find(appointment_id)
     @tutor = @appt.tutor
     @student = @appt.student 
-    mail(to: @tutor.email, subject: "ATTN: Your upcoming Axon appointment has been rescheduled")
+    mail(to: @tutor.email, subject: "Your Axon tutoring appointment has changed")
   end
 
-  def appointment_rescheduled_for_student(appointment_id)
+  def appointment_update_for_student(appointment_id)
     @appt = Appointment.find(appointment_id)
     @tutor = @appt.tutor
     @student = @appt.student 
-    mail(to: @student.email, subject: "ATTN: Your upcoming Axon appointment has been rescheduled")
+    mail(to: @student.email, subject: "Your Axon tutoring appointment has changed")
   end
 
   # ================================
