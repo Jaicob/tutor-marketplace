@@ -1,1 +1,30 @@
-<%= render partial: 'sign_up_form', locals: {form_url: '/tutors'} %>
+<div class="row">
+  <div class="medium-8 small-12 medium-centered columns">
+    <fieldset>
+      <%= form_for :tutor_sign_up do |f| %>
+
+      <div class="row">
+        <div class="medium-12 columns">
+          <p>Select your school and one class to tutor:</p>
+          <%= render 'dashboard/courses/course_selector' %>
+          <p>You can add more classes and manage them all from your tutor dashboard after sign-up<p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="medium-12 columns">
+          <p>Tell us one thing you want your students to know about you:</p>
+          <%= f.label :extra_info, "Qualifications, noteworthy experiences, goals, fun facts etc. (Students will see this on your tutor profile)" %>
+          <%= f.text_field :extra_info, :required => true %>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="medium-12 columns">
+          <%= f.submit "Next", class: 'button expand success' %>
+          <% end %>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+</div>

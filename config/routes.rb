@@ -132,23 +132,8 @@ Rails.application.routes.draw do
 
   root to: "single_views#home"
 
-  resources :tutors do
-    member do
-      # Custom routes below are necessary to allow visitors without user accounts to create tutor profiles before creating a user account yet still automatically link the two
-      get 'register_or_sign_in'
-      get 'visitor_sign_in'
-      get 'visitor_sign_up'
-      # Custom route for redirect back to Dashboard settings page after update
-      patch 'update_settings'
-    end
-    collection do
-      # Custom routes below are necessary to allow visitors without user accounts to create tutor profiles before creating a user account yet still automatically link the two
-      get 'visitor_new'
-      post 'visitor_create'
-    end
-  end
-
   devise_for :users
+  resources :tutors
   resources :tutor_courses
   resources :slots
 
