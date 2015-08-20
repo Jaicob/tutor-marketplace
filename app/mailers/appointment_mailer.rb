@@ -10,7 +10,7 @@ class AppointmentMailer < ApplicationMailer
     @appt = Appointment.find(appointment_id)
     @tutor = @appt.tutor
     @student = @appt.student 
-    mail(to: @tutor.email, subject: "You have a new appointment!")
+    mail(to: @tutor.email, subject: "You have a new appointment with Axon")
   end
 
   def appointment_confirmation_for_student(appointment_id)
@@ -28,14 +28,14 @@ class AppointmentMailer < ApplicationMailer
     @appt = Appointment.find(appointment_id)
     @tutor = @appt.tutor
     @student = @appt.student 
-    mail(to: @tutor.email, subject: "Your upcoming Axon appointment")
+    mail(to: @tutor.email, subject: "Your upcoming Axon tutoring appointment")
   end
 
   def appointment_reminder_for_student(appointment_id)
     @appt = Appointment.find(appointment_id)
     @tutor = @appt.tutor
     @student = @appt.student 
-    mail(to: @student.email, subject: "Your upcoming Axon appointment")
+    mail(to: @student.email, subject: "Your upcoming Axon tutoring appointment")
   end
 
   # ==============================
@@ -64,13 +64,13 @@ class AppointmentMailer < ApplicationMailer
     @appt = Appointment.find(appointment_id)
     @tutor = @appt.tutor
     @student = @appt.student 
-    mail(to: @tutor.email, subject: "Your appointment cancellation confirmation")
+    mail(to: @tutor.email, subject: "One of your Axon appointments has been cancelled")
   end
 
   def appointment_cancellation_for_student(appointment_id)
     @appt = Appointment.find(appointment_id)
     @tutor = @appt.tutor
     @student = @appt.student    
-    mail(to: @student.email, subject: "Your appointment has been cancelled by your tutor")
+    mail(to: @student.email, subject: "Your appointment has been cancelled")
   end
 end

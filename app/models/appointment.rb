@@ -82,14 +82,14 @@ class Appointment < ActiveRecord::Base
   end
 
   # sends appropriate email based on changes made to an appt in Admin section
-  def send_update_or_canel_appt_email(appt_params)
-    if appt_parmas[:status] == 'Scheduled'
-      AppointmentMailer.delay.appointment_update_for_tutor(@appt.id)               
-      AppointmentMailer.delay.appointment_update_for_student(@appt.id)
+  def send_update_or_canel_appt_email(appt_id, appt_params)
+    if appt_params[:status] == 'Scheduled'
+      AppointmentMailer.delay.appointment_update_for_tutor(appt_id)               
+      AppointmentMailer.delay.appointment_update_for_student(appt_id)
     end
     if appt_params[:status] == 'Cancelled'
-      AppointmentMailer.delay.appointment_cancellation_for_tutor(@appt.id)               
-      AppointmentMailer.delay.appointment_cancellation_for_student(@appt.id)
+      AppointmentMailer.delay.appointment_cancellation_for_tutor(appt_id)               
+      AppointmentMailer.delay.appointment_cancellation_for_student(appt_id)
     end
   end
 
