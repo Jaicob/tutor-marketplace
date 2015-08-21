@@ -5,35 +5,26 @@
       <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :role => 'form'}) do |f| %>
 
       <div class="row">
-        <div class="medium-12 columns">
-          
+        <div class="medium-12 columns">         
           <h5>Tutor Profile</h5>
-            
           <div class="row">
             <div class="medium-12 columns">
-
               <p>Name</p>
-              
               <div class="row">
-
                 <div class="medium-6 small-12 columns">
                   <%= f.text_field :first_name, placeholder: 'First Name' %>
                 </div>
                 <div class="medium-6 small-12 columns">
                   <%= f.text_field :last_name, placeholder: 'Last Name' %>
                 </div>
-
               </div>
             </div>
           </div>
-
-
 
           <div id="add_course_box">
             <%= javascript_include_tag "dashboard/courses" %>
             <% @options = (local_variables().include? :options) ? options : {} %>
 
-            
             <div class="row">
               <div class="medium-12 columns">
                 <p>School</p>
@@ -83,15 +74,6 @@
             <p class="fine-print">You can add more courses later in your tutor dashboard<p>
 
           </div> <!-- End of add-course-box -->
-
-
-
-
-
-
-
-
-
 
           <div class="row">
             <div class="medium-12 columns">
