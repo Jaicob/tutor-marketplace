@@ -38,8 +38,6 @@ class User < ActiveRecord::Base
   has_one :student, dependent: :destroy
   belongs_to :school
 
-  accepts_nested_attributes_for :tutor, :student
-
   enum role: [:user, :campus_manager, :super_admin]
   
   extend FriendlyId
@@ -50,8 +48,14 @@ class User < ActiveRecord::Base
 
   def create_tutor_account(user, params)
     puts "PARAMS = #{params}"
-    if params[:tutor_attributes] != nil
-      user.create_tutor!(params[:tutor_attributes])
+    puts "Tutor attributes = #{params[:user][:tutor]}"
+    if params[:user][:tutor] != nil
+      puts "WE MADE IT!"
+      user.create_tutor!(
+        extra_info: params[:user][:tutor][:extra_info],
+        phone_number: params[:user][:tutor][:extra_info]
+        )
+      puts "WE MADE IT AGAIN"
       puts "User.tutor = #{user.tutor}"
       puts "User.tutor.tutor_courses = #{user.tutor.tutor_courses}"
       puts "Course ID = #{params[:course][:course_id]}"

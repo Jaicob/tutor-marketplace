@@ -132,7 +132,7 @@ Rails.application.routes.draw do
 
   root to: "single_views#home"
 
-  devise_for :users
+  devise_for :users, controllers: { registrations: "tutor_registration" }
   resources :tutors
   resources :tutor_courses
   resources :slots
