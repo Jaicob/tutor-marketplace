@@ -30,6 +30,10 @@ module V1
         optional  :original_duration,   type: Integer
         optional  :new_start_time,      type: String
         optional  :new_duration,        type: Integer
+
+        # Params for finding slots in date range
+        optional :start_date,           type: String
+        optional :end_date,             type: String
       end
       
 

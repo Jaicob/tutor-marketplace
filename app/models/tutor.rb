@@ -80,7 +80,7 @@ class Tutor < ActiveRecord::Base
   end
 
   def get_slots_in_date_range(start_date, end_date)
-    self.slots.select{|slot| slot.start_time.to_date > start_date.to_date && slot.start_time.to_date < end_date.to_date }
+    self.slots.select{|slot| slot.start_time.to_date >= start_date.to_date && slot.start_time.to_date <= end_date.to_date }
   end
 
 end
