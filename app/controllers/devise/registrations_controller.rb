@@ -15,7 +15,8 @@ class Devise::RegistrationsController < DeviseController
     build_resource(sign_up_params)
 
     resource.save
-    resource.set_tutor_for_devise(resource, params)
+    resource.create_tutor_account(resource, params)
+    
     yield resource if block_given?
     if resource.persisted?
       if resource.active_for_authentication?

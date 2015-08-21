@@ -48,6 +48,7 @@ class TutorsController < ApplicationController
     end
   end
 
+  # THIS SHOULD NOT BE A SEPARATE ACTION - THE UPDATE ACTION SHOULD BE USED WITH A METHOD CALL THAT SHOULD CHECK WHAT WAS UPDATED AND REDIRECT TO THE APPROPRIATE PAGE BASED ON THAT
   # This is identical to the above Update action except that it redirects to the Dashboard Settings page rather than to a Tutor's profile. This action is used for updating a Tutor's birthdate and phone_number on the Dashboard Settings page.
   def update_settings
     @tutor.update(tutor_params)

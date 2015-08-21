@@ -32,9 +32,6 @@ class DeviseCreateUsers < ActiveRecord::Migration
 
 
       t.timestamps null: false
-
-      # Added to allow creation of user and tutor at same time using accepts_nested_attributes_for (tutor must be the parent to do this)
-      t.belongs_to  :tutor, index: true, foreign_key: true
     end
 
     add_index :users, :email,                unique: true

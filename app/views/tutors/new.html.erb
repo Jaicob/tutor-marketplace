@@ -2,7 +2,7 @@
   <div class="medium-6 small-12 medium-centered columns">
     <fieldset>
       <h3>Sign up to become an Axon tutor</h3>
-      <%= form_for @tutor, url: '/tutors', method: :post do |f| %>
+      <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :role => 'form'}) do |f| %>
 
       <div class="row">
         <div class="medium-12 columns">
@@ -16,29 +16,28 @@
               
               <div class="row">
 
-                <%= f.fields_for :user_attributes do |uu| %>
-                  <div class="medium-6 small-12 columns">
-                    <%= uu.text_field :first_name, placeholder: 'First Name' %>
-                  </div>
-                  <div class="medium-6 small-12 columns">
-                    <%= uu.text_field :last_name, placeholder: 'Last Name' %>
-                  </div>
-                <% end %>
+                <div class="medium-6 small-12 columns">
+                  <%= f.text_field :first_name, placeholder: 'First Name' %>
+                </div>
+                <div class="medium-6 small-12 columns">
+                  <%= f.text_field :last_name, placeholder: 'Last Name' %>
+                </div>
 
               </div>
             </div>
           </div>
 
-          <div id="add_course_box">
 
-            <%= f.fields_for :school_and_tutor_course do |ff| %>
+
+          <div id="add_course_box">
             <%= javascript_include_tag "dashboard/courses" %>
             <% @options = (local_variables().include? :options) ? options : {} %>
 
+            
             <div class="row">
               <div class="medium-12 columns">
                 <p>School</p>
-                <%= ff.collection_select(:school_id, School.all, :id, :name, {prompt: 'School'}, {name: 'course[schoold_id]', id: 'school', required: true} ) %>   
+                <%= f.collection_select(:school_id, School.all, :id, :name, {prompt: 'School'}, {name: 'course[school_id]', id: 'school', required: true} ) %>   
               </div>
             </div>
 
@@ -46,23 +45,21 @@
 
             <div class="row">
               <div class="medium-12 columns">
+                <%= f.fields_for :tutor_attributes do |t| %>
 
                 <p>Your First Course</p>
 
                 <div class="row">
-
                   <div class="medium-4 columns">
                     <select name="course[subject_id]" id="subject" required="true">
                       <option disabled="true" selected="true" value="">Subject</option>
                     </select>
                   </div>
-            
                   <div class="medium-4 columns">
                     <select name="course[course_id]" id="course" required="true">
                       <option disabled="true" selected="true" value="">Course</option>
                     </select>
                   </div>
-
                   <div class="medium-4 columns">
                     <div class="row collapse">
                       <div class="small-2 large-2 columns">
@@ -76,21 +73,32 @@
                       </div>
                     </div>
                   </div>
-
                 </div>
+
+                <% end %>
 
               </div>
             </div>
 
             <p class="fine-print">You can add more courses later in your tutor dashboard<p>
-            <% end %>
 
           </div> <!-- End of add-course-box -->
+
+
+
+
+
+
+
+
+
 
           <div class="row">
             <div class="medium-12 columns">
               <p>Qualifications, experiences, goals, fun facts etc.</p>
-              <%= f.text_field :extra_info, :required => true %>
+              <%= f.fields_for :tutor_attributes do |tt| %>
+                <%= tt.text_field :extra_info, :required => true %>
+              <% end %>
             </div>
           </div>
 
@@ -99,10 +107,10 @@
           <div class="row">
             <div class="medium-12 columns">
               <h5>Account Information</h5>
-              <%= f.fields_for :user_attributes do |uu| %>
-                <%= uu.email_field :email, placeholder: 'Email' %>
-                <%= uu.password_field :password, placeholder: 'Password' %>
-                <%= uu.text_field :phone_number, placeholder: 'Phone Number' %>
+              <%= f.email_field :email, placeholder: 'Email' %>
+              <%= f.password_field :password, placeholder: 'Password' %>
+              <%= f.fields_for :tutor_attributes do |x| %>
+                <%= x.text_field :phone_number, placeholder: 'Phone Number' %>
               <% end %>
             </div>
           </div>
@@ -110,12 +118,13 @@
           <div class="row">
             <div class="medium-12 columns">
               <%= f.submit "Next", class: 'button expand success' %>
-              <% end %>
             </div>
           </div>
 
         </div>
       </div>
+
+      <% end %>
     </fieldset>
   </div>
 </div>

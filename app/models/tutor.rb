@@ -21,15 +21,13 @@
 #
 
 class Tutor < ActiveRecord::Base
-  has_one :user, dependent: :destroy
+  belongs_to :user
   has_many :tutor_courses, dependent: :destroy
   has_many :courses, through: :tutor_courses, dependent: :destroy
   has_many :slots, dependent: :destroy
   has_many :appointments, through: :slots, dependent: :destroy
 
-  accepts_nested_attributes_for :user
-
-  # delegate :school, :full_name, :email, to: :user
+  delegate :school, :full_name, :email, to: :user
 
   enum application_status: ['Incomplete', 'Complete', 'Approved']
   enum active_status: ['Inactive', 'Active']
@@ -42,6 +40,7 @@ class Tutor < ActiveRecord::Base
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
 
   validates :extra_info, presence: true
+  validates :phone_number, presence: true
 
   # Neccessary to create a tutor's first tutor_course during sign-up process
   # All subsequent tutor_courses will be added normally through the tutor_courses_controller

@@ -104,6 +104,7 @@ ActiveRecord::Schema.define(version: 20150729152259) do
   add_index "tutor_courses", ["tutor_id"], name: "index_tutor_courses_on_tutor_id", using: :btree
 
   create_table "tutors", force: :cascade do |t|
+    t.integer  "user_id"
     t.integer  "active_status",      default: 0
     t.integer  "application_status", default: 0
     t.integer  "rating"
@@ -119,6 +120,8 @@ ActiveRecord::Schema.define(version: 20150729152259) do
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
   end
+
+  add_index "tutors", ["user_id"], name: "index_tutors_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -136,7 +139,6 @@ ActiveRecord::Schema.define(version: 20150729152259) do
     t.datetime "confirmation_sent_at"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
-    t.integer  "tutor_id"
     t.string   "first_name"
     t.string   "last_name"
     t.integer  "role",                   default: 0
@@ -159,7 +161,6 @@ ActiveRecord::Schema.define(version: 20150729152259) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["school_id"], name: "index_users_on_school_id", using: :btree
   add_index "users", ["slug"], name: "index_users_on_slug", unique: true, using: :btree
-  add_index "users", ["tutor_id"], name: "index_users_on_tutor_id", using: :btree
 
   add_foreign_key "appointments", "courses"
   add_foreign_key "appointments", "slots"
@@ -170,6 +171,6 @@ ActiveRecord::Schema.define(version: 20150729152259) do
   add_foreign_key "students", "users"
   add_foreign_key "tutor_courses", "courses"
   add_foreign_key "tutor_courses", "tutors"
+  add_foreign_key "tutors", "users"
   add_foreign_key "users", "schools"
-  add_foreign_key "users", "tutors"
 end
