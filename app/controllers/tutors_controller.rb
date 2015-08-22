@@ -3,33 +3,7 @@ class TutorsController < ApplicationController
   before_action :set_tutor, only: [:show, :edit, :update, :update_settings, :destroy, :create_tutor_course]
   before_action :set_tutor_for_admin_or_visitor_sign_up, only: [:register_or_sign_in, :visitor_sign_in, :visitor_sign_up, :update_active_status, :destroy_by_admin]
 
-  def index
-    @tutors = Tutor.all
-    respond_to do |format|
-      format.html
-      format.csv { send_data @tutors.to_csv, filename: "tutors-#{Date.today}.csv" }
-    end
-  end
-
-  def new
-    @tutor = Tutor.new
-    @tutor.tutor_courses.build
-    @tutor.courses.build
-  end
-
-  def create
-    @user = User.create(tutor_params[:user_attributes])
-    @tutor = @user.create_tutor(tutor_params)
-
-    if @tutor.save
-      # The method below only creates a tutor_course for the initial sign-up, all other CRUD operations relating to tutor_courses go through the TutorCoursesController
-      @tutor.set_first_tutor_course(@tutor, params)
-      redirect_to root_path
-    else
-      flash[:alert] = "Tutor account was not created. Please fill in all fields and attach your unofficial transcript."
-      render :new
-    end
-  end
+  # TUTOR CREATION IS HANDLED THROUGH THE DEVISE CONTROLLERS - FORM CREATES USER AND TUTOR AT ONCE
 
   def show
   end
