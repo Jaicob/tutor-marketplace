@@ -38,6 +38,9 @@ class User < ActiveRecord::Base
   has_one :student, dependent: :destroy
   belongs_to :school
 
+  validates :first_name, presence: true 
+  validates :last_name, presence: true
+
   enum role: [:user, :campus_manager, :super_admin]
   
   extend FriendlyId

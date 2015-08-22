@@ -31,7 +31,9 @@ class Devise::RegistrationsController < DeviseController
     else
       clean_up_passwords resource
       set_minimum_password_length
-      respond_with resource
+      redirect_to :back
+      flash.notice = 'Your account was not created. All fields are required. Please try again.'
+      flash.alert = "#{resource.errors.full_messages}"
     end
   end
 
