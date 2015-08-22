@@ -15,6 +15,7 @@ class Devise::RegistrationsController < DeviseController
     build_resource(sign_up_params)
 
     resource.save
+    resource.set_school(resource, params)
     resource.create_tutor_account(resource, params)
     
     yield resource if block_given?

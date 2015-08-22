@@ -59,6 +59,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def set_school(user, params)
+    user.update(school_id: params[:course][:school_id])
+  end
+
   def slug_candidates
     [ 
       "#{first_name}#{last_name}", 
