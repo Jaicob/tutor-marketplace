@@ -71,4 +71,12 @@ class Tutor < ActiveRecord::Base
   def availability_booked_percent
   end
 
+  def update_action_redirect_path(tutor_params)
+    if tutor_params[:birthdate] || tutor_params[:phone_number]
+      "/#{self.user.id}/dashboard/settings"
+    else
+      "/#{self.user.id}/dashboard/profile"
+    end
+  end
+
 end

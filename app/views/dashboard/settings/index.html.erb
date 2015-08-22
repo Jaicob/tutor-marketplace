@@ -13,7 +13,7 @@
     <% end %>
 
     <% if @tutor %>
-      <%= form_for @tutor, url: update_settings_tutor_path do |f| %>
+      <%= form_for @tutor do |f| %>
         <h3>Tutor Settings</h3>
         <%= f.label :birthdate %>
         <%= f.date_field :birthdate %>
