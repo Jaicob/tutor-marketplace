@@ -3,8 +3,8 @@ require 'stripe'
 module Processor
   class Stripe
 
-    def initialize(api_key)
-      Stripe.api_key = api_key
+    def initialize()
+      # Stripe.api_key = api_key
     end
 
     def create_managed_account(tutor)
