@@ -144,7 +144,7 @@ test_user = User.create(
   email: 'nic@axontutors.com', 
   password: 'password', 
   password_confirmation: 'password',
-  role: 2
+  role: 3
   )
 test_user.skip_confirmation!
 test_user.save
