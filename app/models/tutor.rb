@@ -43,6 +43,7 @@ class Tutor < ActiveRecord::Base
   validates :phone_number, presence: true
 
   after_create :change_user_role_to_tutor
+  after_save :update_application_status unless :active?
 
   def crop_profile_pic(tutor_params)
     profile_pic.recreate_versions! if tutor_params[:crop_x]
@@ -76,6 +77,10 @@ class Tutor < ActiveRecord::Base
     # should probably only calculate percentages for past availability/appointments, since most bookins
     # are only completed 2 days in advance. also, don't want a tutor with more future set availability (a
     # good thing) to have a lower percentage than someone with less future availability
+  end
+
+  def active?
+    self.active_status == 'Active' ? true : false
   end
 
   def incomplete_profile?
@@ -135,6 +140,14 @@ class Tutor < ActiveRecord::Base
     if self.user.role == 'student'
       self.user.role = 'tutor'
       self.user.save
+    end
+  end
+
+  def update_application_status
+    if self.awaiting_approval?
+      self.application_status = 'Complete'
+      self.save
+      TutorManagementMailer.delay.application_completed_email(self.user.id)
     end
   end
 
