@@ -8,9 +8,6 @@ class TutorsController < ApplicationController
   def show
   end
 
-  def edit
-  end
-
   def update
     @tutor.update(tutor_params)
     @tutor.crop_profile_pic(tutor_params)
