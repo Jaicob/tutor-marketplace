@@ -47,6 +47,10 @@ FactoryGirl.define do
     slug
     school
 
+    trait :student do
+      role 0
+    end
+
     trait :campus_manager do 
       role 1
       association :school, factory: :school, name: "Campus Manager's University"
