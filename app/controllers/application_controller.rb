@@ -43,11 +43,13 @@ class ApplicationController < ActionController::Base
   end
 
   def authorized_for_admin_area?
-    if !current_user # redirects to root for non-signed in users/visitors
+    # redirects to root for non-signed in users/visitors
+    if !current_user 
       redirect_to root_path
       return
     end
-    if current_user.role == 'student' # redirects to root for signed-in users
+    # redirects to root for signed-in users
+    if current_user.role == 'student' || current_user.role == 'tutor'
       redirect_to dashboard_home_user_path(current_user)
     end
   end
