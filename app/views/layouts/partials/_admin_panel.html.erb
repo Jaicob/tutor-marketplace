@@ -8,12 +8,13 @@
   </div>
   
   <nav class="breadcrumbs dashboard-nav">
+    <%= link_to 'Home', admin_home_path %>
     <%= link_to 'Tutors', admin_tutors_path %>
     <%= link_to 'Students', admin_students_path %>
     <%= link_to 'Appointments', admin_appointments_path %>
     <%= link_to 'Slots', admin_slots_path %>
     <%= link_to 'Courses', admin_courses_path %>
-    <% if current_user.role == 'super-admin' %>
+    <% if current_user.role == 'super_admin' %>
       <%= link_to 'Schools', admin_schools_path %>
     <% end %>
   </nav>

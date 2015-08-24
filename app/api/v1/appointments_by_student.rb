@@ -77,8 +77,9 @@ module V1
           put ":id/reschedule" do 
             @appt = appt
             if @appt.update(declared_params)
-              AppointmentMailer.delay.appointment_rescheduled_for_tutor(@appt.id)               
-              AppointmentMailer.delay.appointment_rescheduled_for_student(@appt.id)
+              AppointmentMailer.delay.appointment_update_for_tutor(@appt.id) 
+              appointment_update_for_tutor(appointment_id)              
+              AppointmentMailer.delay.appointment_update_for_student(@appt.id)
               return @appt
             else
               return "Appointment was not rescheduled: #{@appt.errors.full_messages}"

@@ -4,7 +4,7 @@
 #
 #  id            :integer          not null, primary key
 #  school_id     :integer
-#  subject       :text
+#  subject_id    :integer
 #  call_number   :string
 #  friendly_name :string
 #  created_at    :datetime         not null

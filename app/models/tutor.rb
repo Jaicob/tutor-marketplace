@@ -39,18 +39,10 @@ class Tutor < ActiveRecord::Base
   # Dimensions for cropping profile pics
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
 
-  validates :transcript, presence: true
   validates :extra_info, presence: true
+  validates :phone_number, presence: true
 
   after_create :change_user_role_to_tutor
-
-  # Neccessary to create a tutor's first tutor_course during sign-up process
-  # All subsequent tutor_courses will be added normally through the tutor_courses_controller
-  def set_first_tutor_course(tutor, params)
-    course_id = params[:course][:course_id]
-    rate = params[:tutor_course][:rate]
-    tutor.tutor_courses.create(tutor_id: tutor.id, course_id: course_id, rate: rate)
-  end
 
   def crop_profile_pic(tutor_params)
     profile_pic.recreate_versions! if tutor_params[:crop_x]
@@ -79,6 +71,64 @@ class Tutor < ActiveRecord::Base
   end
 
   def availability_booked_percent
+    # this method should calculate how many hours of a tutor's availability are actually booked
+    # possibly useful for identifying 'super-tutors'
+    # should probably only calculate percentages for past availability/appointments, since most bookins
+    # are only completed 2 days in advance. also, don't want a tutor with more future set availability (a
+    # good thing) to have a lower percentage than someone with less future availability
+  end
+
+  def incomplete_profile?
+    if self.birthdate && self.degree && self.major && self.extra_info && self.graduation_year && self.phone_number && self.profile_pic.url != 'panda.png' && self.transcript.url
+      false
+    else
+      true
+    end
+  end
+
+  def awaiting_approval?
+    if self.incomplete_profile? == false && self.active_status == 'Inactive'
+      true
+    else
+      false
+    end
+  end
+
+  def zero_availability_set?
+    if self.incomplete_profile? == false && self.awaiting_approval? == false && self.slots.count == 0
+      true
+    else
+      false
+    end
+  end
+
+  def profile_check(attribute)
+    if attribute == :profile_pic
+      self.profile_pic.url == 'panda.png' ? false : true
+    else
+      self.public_send(attribute) == nil ? false : true
+    end
+  end
+
+  def send_active_status_change_email(tutor_params)
+    if tutor_params[:active_status] == 'Active'
+      TutorManagementMailer.delay.activation_email(self.id)
+    end
+    if tutor_params[:active_status] == 'Inactive'
+      TutorManagementMailer.delay.deactivation_email(self.id)
+    end
+  end
+
+  def get_slots_in_date_range(start_date, end_date)
+    self.slots.select{|slot| slot.start_time.to_date >= start_date.to_date && slot.start_time.to_date <= end_date.to_date }
+  end
+
+  def update_action_redirect_path(tutor_params)
+    if tutor_params[:birthdate] || tutor_params[:phone_number]
+      "/#{self.user.id}/dashboard/settings"
+    else
+      "/#{self.user.id}/dashboard/profile"
+    end
   end
 
   def change_user_role_to_tutor

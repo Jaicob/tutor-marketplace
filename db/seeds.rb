@@ -14,34 +14,39 @@ school_list.each do |name, location|
   School.create(name: name, location: location)
 end
 
+subject_list = %w(Biology Chemistry Math Computer\ Science Physics)
+
+subject_list.each do |name|
+  Subject.create(name: name)
+end
+
 # Creates Courses for each of the 4 Schools
 course_list = [
-  [1, 'Biology', "101", "Intro to Biology (U1)"],
-  [1, 'Chemistry', "101", "Intro to Chemistry (U1)"],
-  [1, 'Math', "101", "Intro to Math (U1)"],
-  [1, 'Computer Science', "101", "Intro to Computer Science (U1)"],
-  [1, 'Physics', "101", "Intro to Physics (U1)"],
-  [2, 'Biology', "101", "Intro to Biology (U2)"],
-  [2, 'Chemistry', "101", "Intro to Chemistry (U2)"],
-  [2, 'Math', "101", "Intro to Math (U2)"],
-  [2, 'Computer Science', "101", "Intro to Computer Science (U2)"],
-  [2, 'Physics', "101", "Intro to Physics (U2)"],
-  [3, 'Biology', "101", "Intro to Biology (U3)"],
-  [3, 'Chemistry', "101", "Intro to Chemistry (U3)"],
-  [3, 'Math', "101", "Intro to Math (U3)"],
-  [3, 'Computer Science', "101", "Intro to Computer Science (U3)"],
-  [3, 'Physics', "101", "Intro to Physics (U3)"],
-  [4, 'Biology', "101", "Intro to Biology (U4)"],
-  [4, 'Chemistry', "101", "Intro to Chemistry (U4)"],
-  [4, 'Math', "101", "Intro to Math (U4)"],
-  [4, 'Computer Science', "101", "Intro to Computer Science (U4)"],
-  [4, 'Physics', "101", "Intro to Physics (U4)"]
+  [1, 1, "101", "Intro to Biology (U1)"],
+  [1, 2, "101", "Intro to Chemistry (U1)"],
+  [1, 3, "101", "Intro to Math (U1)"],
+  [1, 4, "101", "Intro to Computer Science (U1)"],
+  [1, 5, "101", "Intro to Physics (U1)"],
+  [2, 1, "101", "Intro to Biology (U2)"],
+  [2, 2, "101", "Intro to Chemistry (U2)"],
+  [2, 3, "101", "Intro to Math (U2)"],
+  [2, 4, "101", "Intro to Computer Science (U2)"],
+  [2, 5, "101", "Intro to Physics (U2)"],
+  [3, 1, "101", "Intro to Biology (U3)"],
+  [3, 2, "101", "Intro to Chemistry (U3)"],
+  [3, 3, "101", "Intro to Math (U3)"],
+  [3, 4, "101", "Intro to Computer Science (U3)"],
+  [3, 5, "101", "Intro to Physics (U3)"],
+  [4, 1, "101", "Intro to Biology (U4)"],
+  [4, 2, "101", "Intro to Chemistry (U4)"],
+  [4, 3, "101", "Intro to Math (U4)"],
+  [4, 4, "101", "Intro to Computer Science (U4)"],
+  [4, 5, "101", "Intro to Physics (U4)"]
 ]
 
 # Create a Course for each School
-course_list.each do |school_id, subject, call_number, friendly_name|
-  x = Course.create!(school_id: school_id, call_number: call_number, friendly_name: friendly_name)
-  x.set_subject(subject)
+course_list.each do |school_id, subject_id, call_number, friendly_name|
+  x = Course.create!(school_id: school_id, subject_id: subject_id, call_number: call_number, friendly_name: friendly_name)
 end
 
 # Create 20 Users to become Tutors, 5 for each school
@@ -128,3 +133,18 @@ School.all.each do |school|
     ordinal += 1
   }
 end
+
+# Created an already confirmed login for development
+# => nic@axontutors.com
+# => password
+test_user = User.create(
+  school_id: 1, 
+  first_name: 'Nicolas', 
+  last_name: 'Cage', 
+  email: 'nic@axontutors.com', 
+  password: 'password', 
+  password_confirmation: 'password',
+  role: 2
+  )
+test_user.skip_confirmation!
+test_user.save

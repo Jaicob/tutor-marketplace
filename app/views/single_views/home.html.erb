@@ -31,8 +31,8 @@ main{
   <div class="row" id="main-homepage-spotlight">
   	<h1 class="main-header">Join the tutoring revolution!</h1>
   	<% if !user_signed_in? || (user_signed_in? && current_user.tutor.nil?) %>
-  	  <%= link_to "Become a Tutor", @sign_up_path, class: 'button large radius' %>
+  	  <%= link_to "Become a Tutor", new_tutor_path, class: 'button large radius' %>
   	<% end %>
-	<%= link_to "Find Your Tutor", @search_path, class: 'button large radius' %>
+	<%= link_to "Find Your Tutor", search_path, class: 'button large radius' %>
   </div>
 </div>

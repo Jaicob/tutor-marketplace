@@ -32,6 +32,7 @@ class Appointment < ActiveRecord::Base
 
   attr_accessor :appt_reminder_email_date
 
+  # custom validation
   def one_hour_appointment_buffer
     Slot.find(slot_id).appointments.each do |appt|
       start_time_diff = (appt.start_time - start_time).abs
@@ -41,6 +42,7 @@ class Appointment < ActiveRecord::Base
     end
   end
 
+  # custom validation
   def inside_slot_availability
     slot = Slot.find(slot_id)
     slot_last_available_appt = slot.start_time + slot.duration - 3600
@@ -49,6 +51,7 @@ class Appointment < ActiveRecord::Base
     end
   end
 
+  # custom validation
   def tutor_and_student_at_same_school
     tutor_id = Slot.find(slot_id).tutor.id
     tutor = Tutor.find(tutor_id)
@@ -78,8 +81,16 @@ class Appointment < ActiveRecord::Base
     self.start_time.strftime('%l:%M %p')
   end
 
-  def school
-    Course.find(self.course_id).school
+  # sends appropriate email based on changes made to an appt in Admin section
+  def send_update_or_cancel_appt_email(appt_id, appt_params)
+    if appt_params[:status] == 'Scheduled'
+      AppointmentMailer.delay.appointment_update_for_tutor(appt_id)               
+      AppointmentMailer.delay.appointment_update_for_student(appt_id)
+    end
+    if appt_params[:status] == 'Cancelled'
+      AppointmentMailer.delay.appointment_cancellation_for_tutor(appt_id)               
+      AppointmentMailer.delay.appointment_cancellation_for_student(appt_id)
+    end
   end
 
 end
