@@ -1,25 +1,70 @@
-<h4>Placeholder file for Admin viewing of a tutor's information</h4>
+<div class="row">
+  <div class="large-12 columns">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Active Status</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>School</th>
+          <th>Application Status</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><%= @tutor.id %></td>
+          <td><%= @tutor.active_status %></td>
+          <td><%= @tutor.user.full_name %></td>
+          <td><%= @tutor.user.email %></td>
+          <td><%= @tutor.school.name %></td>
+          <td><%= @tutor.application_status %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 
-<p>Tutor: <%= @tutor.full_name %></p>
+<div class="row">
+  <div class="large-12 columns">
+    <fieldset>
+      <legend>Actions</legend>
+      
+      <div class="row">
+        <div class="large-3 columns">
+          <%= link_to 'Email Tutor', url: "mailto:#{@tutor.email}", class: 'button expand succcess' %>
+        </div>
 
-<p>Active Status: <%= @tutor.active_status %></p>
+        <div class="large-3 columns">
+          <% if @tutor.active_status == 'Inactive' %>
+            <%= form_for :tutor, url: admin_tutor_path(@tutor), method: 'patch' do |f| %>
+                <%= f.hidden_field :active_status, value: 'Active' %>
+                <%= f.submit 'Activate', class: 'button expand default' %>
+            <% end %>
+          <% else %>
+            <%= form_for :tutor, url: admin_tutor_path(@tutor), method: 'patch' do |f| %>
+                <%= f.hidden_field :active_status, value: 'Inactive' %>
+                <%= f.submit 'Deactivate', class: 'button expand default' %>
+            <% end %>
+          <% end %>
+        </div>
 
-<% if @tutor.active_status == 'Inactive' %>
-  <%= form_for :tutor, url: admin_tutor_path(@tutor), method: 'patch' do |f| %>
-      <%= f.hidden_field :active_status, value: 'Active' %>
-      <%= f.submit 'Activate', class: 'button default' %>
-  <% end %>
-<% else %>
-  <%= form_for :tutor, url: admin_tutor_path(@tutor), method: 'patch' do |f| %>
-      <%= f.hidden_field :active_status, value: 'Inactive' %>
-      <%= f.submit 'Deactivate', class: 'button default' %>
-  <% end %>
-<% end %>
+        <div class="large-3 columns">
+          <%= form_for :tutor, url: admin_tutor_path(@tutor), method: 'delete' do |f| %>
+              <%= f.submit 'Delete Tutor', class: 'button expand alert' %>
+          <% end %>
+        </div>
+
+      </div>
+
+    </fieldset>
+  </div>
+</div>
 
 
-<h4>Application Status</h4>
+<h4>Application</h4>
 
-<p>Application Status: <%= @tutor.application_status %></p>
 
 <% if @tutor.application_status == 'Application Complete' %>
   <%= form_for :tutor, url: admin_tutor_path(@tutor), method: 'patch' do |f| %>
@@ -29,11 +74,7 @@
 <% end %>
 
 
-<h4>Delete Tutor</h4>
 
-<%= form_for :tutor, url: admin_tutor_path(@tutor), method: 'delete' do |f| %>
-    <%= f.submit 'Delete Tutor', class: 'button default alert' %>
-<% end %>
 
 
 <h4>Tutor Documents/Info/Profile</h4>

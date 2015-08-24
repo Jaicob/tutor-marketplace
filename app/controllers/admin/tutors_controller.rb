@@ -1,8 +1,14 @@
 class Admin::TutorsController < AdminController
   before_action :set_tutor_admin_controller, only: [:show, :update, :destroy]
 
+  def search
+    index
+    render :index
+  end
+
   def index
-    @tutors = Tutor.all
+    @q = current_user.admin_scope(:tutors).ransack(params[:q])
+    @tutors = @q.result.includes(:user, :courses, :appointments, :slots)
   end
 
   def show
@@ -13,6 +19,7 @@ class Admin::TutorsController < AdminController
 
   def update
     if @tutor.update(tutor_params)
+      @tutor.send_active_status_change_email(tutor_params)
       redirect_to admin_tutor_path(@tutor)
     else
       flash[:error] = "Tutor was not updated: #{@tutor.errors.full_messages}"

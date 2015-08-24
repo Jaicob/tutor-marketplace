@@ -4,7 +4,7 @@
 #
 #  id            :integer          not null, primary key
 #  school_id     :integer
-#  subject       :text
+#  subject_id    :integer
 #  call_number   :string
 #  friendly_name :string
 #  created_at    :datetime         not null
@@ -39,11 +39,6 @@ RSpec.describe Course, type: :model do
   it "is invalid without a subject" do 
     expect(build(:course, subject: nil)).not_to be_valid
   end
-
-  it "returns it's school name for .school_name" do
-    expect(build(:course).school_name).to start_with('University')
-  end
-
 end
 
 

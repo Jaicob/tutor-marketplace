@@ -23,6 +23,20 @@ module V1
       end
 
     resource :schools do 
+
+      desc "Returns courses for a school"
+      get ":id/courses" do 
+        school.courses
+      end
+
+      desc "Returns courses for a school and subject"
+      get ":id/subjects/:subject_id/courses" do 
+        school = School.find(params[:id])
+        school.courses.find_all do |course| 
+          course.subject_id == params[:subject_id].to_i
+        end
+      end
+
       segment "/:school_id" do
         resource :courses do 
 
@@ -45,6 +59,7 @@ module V1
               return "There was an error updating the tutor: #{@course.errors.full_messages}"
             end
           end
+
         end
       end
     end

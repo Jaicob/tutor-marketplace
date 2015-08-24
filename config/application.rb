@@ -21,6 +21,9 @@ module WebApp
       g.fixture_replacement :factory_girl, dir: "spec/factories"
     end
 
+    # Set Active Job adpater to Sidekiq
+    config.active_job.queue_adapter = :sidekiq
+
     # This tells Rails to look for the secret key in application.yml through Figaro rather than in the standard secrets.yml
     config.secret_key_base = Figaro.env.secret_key_base
 
@@ -39,6 +42,7 @@ module WebApp
     # Added to get rid of error messages in server log per advice here:
     # http://stackoverflow.com/questions/29417328/how-to-disable-cannot-render-console-from-on-rails
     # config.web_console.whitelisted_ips = '10.0.2.2'
+    # config.web_console.whitelisted_ips = '192.168.59.3'
 
     # Added because changes were not loading automaticaly, I had to restart the server a bunch, this is supposed to fix that
     config.reload_classes_only_on_change = false

@@ -18,8 +18,8 @@
       </thead>
       <tbody>
         <tr>
-          <td><%= @course.school_name %></td>
-          <td><%= @course.subject[:name] %></td>
+          <td><%= @course.school.name %></td>
+          <td><%= @course.subject %></td>
           <td><%= @course.call_number %></td>
           <td><%= @course.friendly_name %></td>
           <td><%= @course.tutors.count %></td>
@@ -33,7 +33,7 @@
   <div class="large-12 columns">
     <h4>Are you sure you want to delete this course?</h4>
 
-    <%= form_for @course, method: 'delete' do |f| %>
+    <%= form_for @course, url: admin_course_path(@course), method: 'delete' do |f| %>
       <%= f.submit 'Delete', class: 'button expand alert' %>
     <% end %>
 

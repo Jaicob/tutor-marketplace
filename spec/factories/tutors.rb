@@ -4,19 +4,20 @@
 #
 #  id                 :integer          not null, primary key
 #  user_id            :integer
-#  rating             :integer
+#  active_status      :integer          default(0)
 #  application_status :integer          default(0)
-#  birthdate          :date
+#  rating             :integer
 #  degree             :string
 #  major              :string
 #  extra_info         :string
 #  graduation_year    :string
 #  phone_number       :string
-#  created_at         :datetime         not null
-#  updated_at         :datetime         not null
+#  birthdate          :date
 #  profile_pic        :string
 #  transcript         :string
-#  active_status      :integer          default(0)
+#  appt_notes         :string
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
 #
 
 FactoryGirl.define do
@@ -24,11 +25,11 @@ FactoryGirl.define do
     extra_info "Student Research Assistant for Biology Department"
     transcript Rack::Test::UploadedFile.new(File.open(File.join(Rails.root, '/spec/factories/files/transcript.doc')))
 
-      factory :invalid_tutor do
+      trait :invalid_tutor do
         extra_info nil
       end
   
-      factory :complete_tutor do
+      trait :complete_tutor do
         user
         rating 1
         active_status 0

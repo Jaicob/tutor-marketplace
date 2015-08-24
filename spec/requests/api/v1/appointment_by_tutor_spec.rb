@@ -22,15 +22,13 @@ describe "AppointmentsByTutor endpoints" do
     expect(json['slot_id']).to eq(@appt_a.slot_id)
   end
 
-  it "updates an appointment for a tutor" do
-    expect(emails.count).to eq 0 
-    expect(@appt_a.status).to eq(nil)
-    params = {status: 99}
+  it "updates an appointment for a tutor" do 
+  # this is only used for updating the appt status to "Cancelled"
+    expect(Sidekiq::Extensions::DelayedMailer.jobs.count).to eq 0
+    expect(@appt_a.status).to eq(0)
+    params = {status: 1} # "Cancelled"
     put "/api/v1/tutors/#{tutor.id}/appointments/#{@appt_a.id}", params
-    expect(@appt_a.reload.status).to eq(99)
-    expect(response).to be_success
-    expect(emails.count).to eq 2
-    expect(email_addresses).to include([@appt_a.tutor.email],[@appt_a.student.email])
+    expect(@appt_a.reload.status).to eq(1)
+    expect(Sidekiq::Extensions::DelayedMailer.jobs.count).to eq 2
   end
-
 end

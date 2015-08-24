@@ -14,4 +14,5 @@ Rails.application.config.assets.precompile += %w(
 	dashboard/courses.js
 	dashboard/schedule.js
 	single_views/search.js
+  custom/admin_panel.css.scss
 )

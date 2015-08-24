@@ -33,21 +33,21 @@ size = get_size()
 %>
 
 <div id="add_course_box">
-  <% if enabled? :school %>
-    <div class="medium-<%= size %> columns">
-      <select name="course[school_id]" id="school" required="true">
-        <option disabled="true" selected="true" value="">School</option>
-        <% School.all.each do |school| %>
-          <option value="<%= school.id %>"><%= school.name %></option>
-        <% end %>
-      </select>
-    </div>
-  <% end %>
+
+  <!-- Necessary for chained dropdowns, but cannot be changed (a tutor is limited to one school) so we don't want it to show up at all. This div is simply hidden, but maybe this can be done better... -->
+  <div style="display: none;">
+    <select name="course[school_id]" id="school" required="true">
+      <option selected="true" value="<%= @tutor.school.id %>">School</option>
+    </select>
+  </div>
 
   <% if enabled? :subject %>
     <div class="medium-<%= size %> columns">
       <select name="course[subject_id]" id="subject" required="true">
         <option disabled="true" selected="true" value="">Subject</option>
+        <% @tutor.school.subjects.each do |subject| %>
+          <option value="<%= subject[:id] %>"><%= subject[:name] %></option>
+        <% end %>
       </select>
     </div>
   <% end %>

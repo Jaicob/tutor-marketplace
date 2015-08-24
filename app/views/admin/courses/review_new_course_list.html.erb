@@ -1,0 +1,49 @@
+<div class="row">
+  <div class="large-8 large-offset-2 columns">
+    <h5>Review course list for:</h5>
+    <h3><%= @subject.name %> at <%= @school.name %></h3>
+  </div>
+</div>
+
+<div class="row">
+  <div class="large-8 large-offset-2 columns">
+    <table>
+      <thead>
+        <tr>
+          <th>School</th>
+          <th>Subject</th>
+          <th>Call Number</th>
+          <th>Friendly Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @course_list.each do |k,v| %>
+        <tr>
+          <td><%= @school.name %></td>
+          <td><%= @subject.name %></td>
+          <td><%= v['call_number'] %></td>
+          <td><%= v['friendly_name'] %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="row">
+  <div class="large-8 large-offset-2 columns">
+    <%= form_for :create_course_list, url: '/admin/courses/create_new_course_list', method: :post do |f|%>
+      <% n = 1 %>
+      <% @course_list.each do |k,v| %>
+          <%= f.fields_for "course_#{n}" do |ff| %>
+            <%= ff.hidden_field :call_number, value: v['call_number'] %>
+            <%= ff.hidden_field :friendly_name, value: v['friendly_name'] %>
+            <% n += 1 %>
+          <% end %>
+      <% end %>
+      <%= hidden_field_tag(:school_id, @school.id) %>
+      <%= hidden_field_tag(:subject_id, @subject.id) %>
+      <%= f.submit 'Create Courses', class: 'button expand success' %>
+    <% end %>
+  </div>
+</div>
