@@ -3,7 +3,7 @@ class TutorsController < ApplicationController
   before_action :set_tutor, only: [:show, :edit, :update, :update_settings, :destroy, :create_tutor_course]
   before_action :set_tutor_for_admin_or_visitor_sign_up, only: [:register_or_sign_in, :visitor_sign_in, :visitor_sign_up, :update_active_status, :destroy_by_admin]
 
-  # TUTOR CREATION IS HANDLED THROUGH THE DEVISE CONTROLLERS - FORM CREATES USER AND TUTOR AT ONCE
+  # TUTOR CREATION IS HANDLED THROUGH THE DEVISE REGISTRATION CONTROLLER - ONE FORM CREATES USER AND TUTOR
 
   def show
   end
@@ -12,19 +12,7 @@ class TutorsController < ApplicationController
     @tutor.update(tutor_params)
     @tutor.crop_profile_pic(tutor_params)
     if @tutor.save
-      redirect_to dashboard_profile_user_path(current_user)
-    else
-      flash[:notice] = "Tutor was not updated: #{@tutor.errors.full_messages}"
-      redirect_to :back
-    end
-  end
-
-  # THIS SHOULD NOT BE A SEPARATE ACTION - THE UPDATE ACTION SHOULD BE USED WITH A METHOD CALL THAT SHOULD CHECK WHAT WAS UPDATED AND REDIRECT TO THE APPROPRIATE PAGE BASED ON THAT
-  # This is identical to the above Update action except that it redirects to the Dashboard Settings page rather than to a Tutor's profile. This action is used for updating a Tutor's birthdate and phone_number on the Dashboard Settings page.
-  def update_settings
-    @tutor.update(tutor_params)
-    if @tutor.save
-      redirect_to dashboard_settings_user_path(current_user)
+      redirect_to @tutor.update_action_redirect_path(tutor_params) # redirects to either settings or profile page
     else
       flash[:notice] = "Tutor was not updated: #{@tutor.errors.full_messages}"
       redirect_to :back
@@ -44,10 +32,6 @@ class TutorsController < ApplicationController
 
     def tutor_params
       params.require(:tutor).permit(:rating, :application_status, :birthdate, :degree, :major, :extra_info, :graduation_year, :phone_number, :profile_pic, :transcript, :active_status, :crop_x, :crop_y, :crop_w, :crop_h, course: [:course_id], tutor_course: [:rate], user_attributes: [:first_name, :last_name, :email, :phone_number, :password, :password_confirmation])
-    end
-
-    def set_tutor_for_admin_or_visitor_sign_up
-      @tutor = Tutor.find(params[:id])
     end
 
 end

@@ -17,8 +17,8 @@
     <% end %>
 
     <% if @tutor %>
-      <%= form_for @tutor, url: update_settings_tutor_path do |f| %>
-        <h3 id="settings-form">Private Settings</h3>
+      <%= form_for @tutor do |f| %>
+        <h3>Tutor Settings</h3>
 
         <%= f.label :birthdate %>
         <%= f.date_field :birthdate %>

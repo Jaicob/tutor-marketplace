@@ -121,4 +121,12 @@ class Tutor < ActiveRecord::Base
     self.slots.select{|slot| slot.start_time.to_date >= start_date.to_date && slot.start_time.to_date <= end_date.to_date }
   end
 
+  def update_action_redirect_path(tutor_params)
+    if tutor_params[:birthdate] || tutor_params[:phone_number]
+      "/#{self.user.id}/dashboard/settings"
+    else
+      "/#{self.user.id}/dashboard/profile"
+    end
+  end
+
 end
