@@ -43,7 +43,7 @@ class Tutor < ActiveRecord::Base
   validates :phone_number, presence: true
 
   after_create :change_user_role_to_tutor
-  after_save :update_application_status unless :active?
+  before_save :update_application_status
 
   def crop_profile_pic(tutor_params)
     profile_pic.recreate_versions! if tutor_params[:crop_x]
@@ -110,6 +110,8 @@ class Tutor < ActiveRecord::Base
   def profile_check(attribute)
     if attribute == :profile_pic
       self.profile_pic.url == 'panda.png' ? false : true
+    elsif attribute == :transcript
+      self.transcript.url == nil ? false : true
     else
       self.public_send(attribute) == nil ? false : true
     end
@@ -130,9 +132,9 @@ class Tutor < ActiveRecord::Base
 
   def update_action_redirect_path(tutor_params)
     if tutor_params[:birthdate] || tutor_params[:phone_number]
-      "/#{self.user.id}/dashboard/settings"
+      "/#{self.user.slug}/dashboard/settings"
     else
-      "/#{self.user.id}/dashboard/profile"
+      "/#{self.user.slug}/dashboard/profile"
     end
   end
 
@@ -144,10 +146,11 @@ class Tutor < ActiveRecord::Base
   end
 
   def update_application_status
-    if self.awaiting_approval?
+    unless self.incomplete_profile?
       self.application_status = 'Complete'
       self.save
       TutorManagementMailer.delay.application_completed_email(self.user.id)
+      puts "WE MADE IT INSIDE!"
     end
   end
 

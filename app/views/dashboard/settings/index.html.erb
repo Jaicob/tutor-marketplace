@@ -26,12 +26,23 @@
         <%= f.label :phone_number %>
         <%= f.telephone_field :phone_number %>
 
+        <%= f.label :transcript %>
+        <%= f.file_field :transcript %>
+
+        <% if @tutor.transcript.url %>
+          <p>Current Transcript: <%= File.basename(@tutor.transcript.path) %></p>
+        <% end %>
+
+        <%= f.submit 'Update Tutor Settings' %>
+      <% end %>
+
+      <%= form_for @tutor do |f| %>
         <h3 id="appt-notes">Appointment Settings</h3>
 
         <%= f.label :appt_notes, 'Personal Note to Students' %>
         <%= f.text_area :appt_notes %>
 
-        <%= f.submit 'Update Pre-Appointment Note' %>
+        <%= f.submit 'Update Appointment Settings' %>
       <% end %>
     <% end %>
   </div>
