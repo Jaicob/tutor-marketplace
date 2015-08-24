@@ -26,10 +26,6 @@
         <%= f.label :phone_number %>
         <%= f.telephone_field :phone_number %>
 
-        <%= f.submit 'Update Private Settings' %>
-      <% end %>
-
-      <%= form_for @tutor, url: update_settings_tutor_path do |f| %>
         <h3 id="appt-notes">Appointment Settings</h3>
 
         <%= f.label :appt_notes, 'Personal Note to Students' %>

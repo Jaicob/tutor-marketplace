@@ -17,6 +17,7 @@ class Admin::AppointmentsController < AdminController
   def update
     @appt.update(appt_params)
     if @appt.save
+      @appt.send_update_or_cancel_appt_email(@appt.id, appt_params)
       flash[:notice] = "Appointment was succesfully updated."
       redirect_to :back
     else

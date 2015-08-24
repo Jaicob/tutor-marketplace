@@ -116,4 +116,13 @@ class Tutor < ActiveRecord::Base
     end
   end
 
+  def send_active_status_change_email(tutor_params)
+    if tutor_params[:active_status] == 'Active'
+      TutorManagementMailer.delay.activation_email(self.id)
+    end
+    if tutor_params[:active_status] == 'Inactive'
+      TutorManagementMailer.delay.deactivation_email(self.id)
+    end
+  end
+
 end
