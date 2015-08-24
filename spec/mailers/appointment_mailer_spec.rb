@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe AppointmentMailer, type: :mailer do
 
-# NOTE: the tests that check that emails are actually sent and sent to the right email addresses are in the API request specs. Tests to go here are unit-tests for emails that verify the correct information is in specific emails. This may or may not be necessary to test.
+# NOTE: the tests that check that emails are actually sent and sent to the right email addresses are in the API request specs. Tests to go here are unit-tests for emails that verify the correct information is in specific emails. This may or may not be necessary to test. Because we can just read the emails with our eyeballs?
 
 #   let(:student) { create(:student) }
 #   let(:tutor) { create(:complete_tutor) }
