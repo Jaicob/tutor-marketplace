@@ -28,7 +28,7 @@ module Processor
         },
         debit_negative_balances: true,
         tos_acceptance: {
-          date: Time.zone.now,
+          date: Time.zone.now.to_i,
           ip: tutor.sign_in_ip
         }
       )
