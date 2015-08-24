@@ -30,6 +30,10 @@ module V1
         optional  :original_duration,   type: Integer
         optional  :new_start_time,      type: String
         optional  :new_duration,        type: Integer
+
+        # Params for finding slots in date range
+        optional :start_date,           type: String
+        optional :end_date,             type: String
       end
       
 
@@ -40,6 +44,11 @@ module V1
           desc "Returns all slots for a tutor"
           get do 
             tutor.slots
+          end
+
+          desc "Returns all slots for a tutor in a date range" # start_date and end_date
+          post "date_range" do
+            tutor.get_slots_in_date_range(params[:start_date], params[:end_date]) 
           end
 
           desc "Returns a slot for a tutor"
