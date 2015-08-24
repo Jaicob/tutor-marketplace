@@ -1,0 +1,14 @@
+<%= simple_form_for @tutor, url: update_tutor_payment_info_path, remote: true do |pf| %>
+  <h3>Payment info</h3>
+  <h4>Address</h4>
+  <%= f.input :line1, "Address line 1" %>
+  <%= f.input :line2, "Address line 2" %>
+  <%= f.input :city %>
+  <%= f.select :state, options_for_select(us_states) %>
+  <%= f.input :postal_code %>
+  <h4>Bank info</h4>
+  <p>Note: This information will not be stored on our servers and will be used to create an account in our merchant service.</p>
+  <%= f.input :account_number %>
+  <%= f.input :routing_number, "Routing number (note: Use ACH routing number)" %>
+  <%= f.button :submit %>
+<% end %>
