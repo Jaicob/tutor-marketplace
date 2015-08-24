@@ -38,6 +38,9 @@ class User < ActiveRecord::Base
   has_one :student, dependent: :destroy
   belongs_to :school
 
+  validates :first_name, presence: true 
+  validates :last_name, presence: true
+
   enum role: [:user, :campus_manager, :super_admin]
   
   extend FriendlyId
@@ -46,15 +49,21 @@ class User < ActiveRecord::Base
   devise :async, :invitable, :database_authenticatable, :registerable, :confirmable,
     :recoverable, :rememberable, :trackable, :validatable
 
-  # This method is for when a Tutor profile has been created without a User (by a visitor or non-signed in user) and the Tutor needs to be assigned to the User after log-in or sign-up
-  def set_tutor_for_devise(user, params)
-    unless params[:tutor_id] == nil
-      user.tutor=Tutor.find(params[:tutor_id])
+  def create_tutor_account(user, params)
+    if params[:user][:tutor] != nil
+      user.create_tutor!(
+        extra_info: params[:user][:tutor][:extra_info],
+        phone_number: params[:user][:tutor][:extra_info]
+        )
+      user.tutor.tutor_courses.create(course_id: params[:course][:course_id], rate: params[:tutor_course][:rate])
     end
   end
 
- def slug_candidates
-    # These are simply various combinations of first and last names to create usernames in case of multiple users with the same name, the next available unique combo is used to create the slug
+  def set_school(user, params)
+    user.update(school_id: params[:course][:school_id])
+  end
+
+  def slug_candidates
     [ 
       "#{first_name}#{last_name}", 
       "#{first_name[0]}#{last_name}", 

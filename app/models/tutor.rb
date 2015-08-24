@@ -39,16 +39,8 @@ class Tutor < ActiveRecord::Base
   # Dimensions for cropping profile pics
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
 
-  validates :transcript, presence: true
   validates :extra_info, presence: true
-
-  # Neccessary to create a tutor's first tutor_course during sign-up process
-  # All subsequent tutor_courses will be added normally through the tutor_courses_controller
-  def set_first_tutor_course(tutor, params)
-    course_id = params[:course][:course_id]
-    rate = params[:tutor_course][:rate]
-    tutor.tutor_courses.create(tutor_id: tutor.id, course_id: course_id, rate: rate)
-  end
+  validates :phone_number, presence: true
 
   def crop_profile_pic(tutor_params)
     profile_pic.recreate_versions! if tutor_params[:crop_x]

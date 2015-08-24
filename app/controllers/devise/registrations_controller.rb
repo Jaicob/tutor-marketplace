@@ -15,7 +15,9 @@ class Devise::RegistrationsController < DeviseController
     build_resource(sign_up_params)
 
     resource.save
-    resource.set_tutor_for_devise(resource, params)
+    resource.set_school(resource, params)
+    resource.create_tutor_account(resource, params)
+    
     yield resource if block_given?
     if resource.persisted?
       if resource.active_for_authentication?
@@ -30,7 +32,9 @@ class Devise::RegistrationsController < DeviseController
     else
       clean_up_passwords resource
       set_minimum_password_length
-      respond_with resource
+      redirect_to :back
+      flash.notice = 'Your account was not created. All fields are required. Please try again.'
+      flash.alert = "#{resource.errors.full_messages}"
     end
   end
 

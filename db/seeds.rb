@@ -143,7 +143,7 @@ test_user = User.create(
   last_name: 'Cage', 
   email: 'nic@axontutors.com', 
   password: 'password', 
-  password_confirmation: 'password'
+  password_confirmation: 'password',
   role: 2
   )
 test_user.skip_confirmation!
