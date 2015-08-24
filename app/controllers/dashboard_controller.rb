@@ -3,5 +3,6 @@ class DashboardController < ApplicationController
   before_action :set_tutor
   
   helper DashboardNavHelper
+  helper IncompleteProfileProgressBarHelper
 
 end

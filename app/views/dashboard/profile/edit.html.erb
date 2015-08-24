@@ -18,7 +18,7 @@
           <%= @tutor.full_name %>
         </div>
         <a href="#" data-reveal-id="myModal">
-          <%= image_tag(@tutor.profile_pic_url(:thumb), class: 'profile-pic') %>
+          <%= image_tag(@tutor.profile_pic_url(:thumb), class: 'profile-pic', id:'profile-pic' ) %>
         </a>
       </div>
       <div class="profile-section">
@@ -27,7 +27,7 @@
           Good.
           </div>
       </div>
-      <div class="profile-section">
+      <div class="profile-section" id="profile-fields">
         <div class="profile-section-header">Qualifications</div>
         <div class="profile-section-inner">
           <p> Degree: <%= f.text_field :degree %> </p>
