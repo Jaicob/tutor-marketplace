@@ -85,7 +85,6 @@ class Tutor < ActiveRecord::Base
   end
 
   def incomplete_profile?
-    # This method sets the 'application_status' attribute. It returns 'Awaiting Approval' only if all fields have been completed, otherwise it returns "Applied"
     if self.birthdate && self.degree && self.major && self.extra_info && self.graduation_year && self.phone_number && self.profile_pic.url != 'panda.png' && self.transcript.url
       false
     else
@@ -125,26 +124,5 @@ class Tutor < ActiveRecord::Base
       TutorManagementMailer.delay.deactivation_email(self.id)
     end
   end
-
-  #
-  #   QUESTIONS ABOUT FILES FOR TUTORS - DISCUSS DURING CODE REVIEW!!
-  #
-  # things to complete after initial sign-up:
-  # -degree
-  # -major
-  # -extra-info (review/confirm)
-  # -graduation year 
-  # -phone_number
-  # -birthdate
-  # -profile_pic
-  # -appt_notes
-  # -DO WE MAKE THEM PROVIDE W2? (no place on model yet...)
-  # -DO WE CHANGE TRANSCRIPT TO SOMETHING THEY ADD IN DASHBOARD AFTER CREATING TUTOR ACCOUNT?
-  # -- ^* lower threshold to create account and get in...
-  # - items to add to Tutor model?
-  # --resume
-  # --w_two
-  # --void_check (not necessary with new payment system?)
-  # --direct_depost_form (not necessary with new payment system?)
 
 end
