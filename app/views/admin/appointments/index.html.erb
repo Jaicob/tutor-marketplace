@@ -35,8 +35,8 @@
 
       <div class="row">
         <div class="large-2 columns">
-          <%= f.label :course_subject_cont, "Subject" %>
-          <%= f.search_field :course_subject_cont %>
+          <%= f.label :course_subject_id_eq, "Subject" %>
+          <%= f.collection_select(:course_subject_id_eq, Subject.all, :id, :name, include_blank: true) %>
         </div>
         
         <div class="large-1 columns">

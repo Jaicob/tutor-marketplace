@@ -1,7 +1,7 @@
 <div class="row">
   <div class="large-8 large-offset-2 columns">
     <h5>Review course list for:</h5>
-    <h3><%= @subject %> at <%= @school_name %></h3>
+    <h3><%= @subject.name %> at <%= @school.name %></h3>
   </div>
 </div>
 
@@ -19,8 +19,8 @@
       <tbody>
         <% @course_list.each do |k,v| %>
         <tr>
-          <td><%= @school_name%></td>
-          <td><%= @subject %></td>
+          <td><%= @school.name %></td>
+          <td><%= @subject.name %></td>
           <td><%= v['call_number'] %></td>
           <td><%= v['friendly_name'] %></td>
         </tr>
@@ -41,8 +41,8 @@
             <% n += 1 %>
           <% end %>
       <% end %>
-      <%= hidden_field_tag(:school_name, @school_name) %>
-      <%= hidden_field_tag(:subject, @subject) %>
+      <%= hidden_field_tag(:school_id, @school.id) %>
+      <%= hidden_field_tag(:subject_id, @subject.id) %>
       <%= f.submit 'Create Courses', class: 'button expand success' %>
     <% end %>
   </div>
