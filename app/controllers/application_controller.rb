@@ -42,4 +42,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def authorized_for_admin_area?
+    if current_user.role != 'campus_manager'
+      redirect_to root_path
+    end
+  end
+
 end
