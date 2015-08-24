@@ -9,8 +9,6 @@
 #
 
 class Subject < ActiveRecord::Base
-  has_many :courses
-  has_many :appointments, through: :courses, dependent: :destroy
-  has_many :tutor_courses, through: :courses, dependent: :destroy
+  has_many :courses, dependent: :destroy
 
 end
