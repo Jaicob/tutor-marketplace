@@ -25,11 +25,11 @@ FactoryGirl.define do
     extra_info "Student Research Assistant for Biology Department"
     transcript Rack::Test::UploadedFile.new(File.open(File.join(Rails.root, '/spec/factories/files/transcript.doc')))
 
-      factory :invalid_tutor do
+      trait :invalid_tutor do
         extra_info nil
       end
   
-      factory :complete_tutor do
+      trait :complete_tutor do
         user
         rating 1
         active_status 0

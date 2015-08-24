@@ -42,6 +42,8 @@ class Tutor < ActiveRecord::Base
   validates :extra_info, presence: true
   validates :phone_number, presence: true
 
+  after_create :change_user_role_to_tutor
+
   def crop_profile_pic(tutor_params)
     profile_pic.recreate_versions! if tutor_params[:crop_x]
   end
@@ -126,6 +128,13 @@ class Tutor < ActiveRecord::Base
       "/#{self.user.id}/dashboard/settings"
     else
       "/#{self.user.id}/dashboard/profile"
+    end
+  end
+
+  def change_user_role_to_tutor
+    if self.user.role == 'student'
+      self.user.role = 'tutor'
+      self.user.save
     end
   end
 
