@@ -7,8 +7,8 @@ module Processor
       # Stripe.api_key = api_key
     end
 
-    def create_managed_account(tutor)
-      Stripe::Account.create(
+    def create_managed_account(tutor, token)
+      acct = ::Stripe::Account.create(
         managed: true,
         country: 'US',
         email: tutor.email,
@@ -23,7 +23,6 @@ module Processor
           },
           first_name: tutor.first_name,
           last_name: tutor.last_name,
-          dob: tutor.birthdate,
           ssn_last_4: tutor.ssn_last_4,
         },
         debit_negative_balances: true,
@@ -32,6 +31,14 @@ module Processor
           ip: tutor.sign_in_ip
         }
       )
+      acct.external_accounts.create(
+        object: "bank_account",
+        country: "US",
+        currency: "usd",
+        default_for_currency: true,
+        account_number: token
+      )
+      tutor.update_attributes(acct_id: acct[:id])
     end
 
     def send_charge(charge)

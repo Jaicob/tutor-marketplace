@@ -70,6 +70,11 @@ class TutorsController < ApplicationController
   def update_tutor_payment_info
     @tutor = Tutor.find(params[:id])
     if @tutor.update_attributes(tutor_params)
+      if @tutor.acct_id
+        UpdateTutorPayment.call(tutor: @tutor, token: params[:stripeToken])
+      else
+        CreateTutorAccount.call(tutor: @tutor, token: params[:stripeToken])
+      end
       respond_to do |format|
         format.js { render :payment_settings_updated }
       end

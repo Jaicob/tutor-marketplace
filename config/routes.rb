@@ -162,8 +162,13 @@ Rails.application.routes.draw do
 
   devise_for :users, controllers: { registrations: "tutor_registration" }
 
-  resources :tutors, :tutor_courses, :slots
-
+  resources :tutor_courses, :slots
+  resources :tutors do
+    member do
+      get 'tutor_payment_info_form' => 'tutors#tutor_payment_info_form', as: 'tutor_payment_info_form'
+      patch 'update_tutor_payment_info' => 'tutors#update_tutor_payment_info', as: 'update_tutor_payment_info'
+    end
+  end
   resources :users, only: [:update], path: '' do
     scope module: :dashboard do
       member do
