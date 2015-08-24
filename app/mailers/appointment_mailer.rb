@@ -3,14 +3,14 @@ class AppointmentMailer < ApplicationMailer
   default template_path: "mailers/#{self.name.underscore}"
 
   # ==============================
-  #      Confirmation Emails
+  #   Appointment Confirmation Emails
   # ==============================
 
   def appointment_confirmation_for_tutor(appointment_id)
     @appt = Appointment.find(appointment_id)
     @tutor = @appt.tutor
     @student = @appt.student 
-    mail(to: @tutor.email, subject: "You have a new appointment!")
+    mail(to: @tutor.email, subject: "You have a new appointment with Axon")
   end
 
   def appointment_confirmation_for_student(appointment_id)
@@ -21,7 +21,25 @@ class AppointmentMailer < ApplicationMailer
   end
 
   # ==============================
-  #   Update Appointment Emails
+  #  Appointment Reminder Emails
+  # ==============================
+
+  def appointment_reminder_for_tutor(appointment_id)
+    @appt = Appointment.find(appointment_id)
+    @tutor = @appt.tutor
+    @student = @appt.student 
+    mail(to: @tutor.email, subject: "Your upcoming Axon tutoring appointment")
+  end
+
+  def appointment_reminder_for_student(appointment_id)
+    @appt = Appointment.find(appointment_id)
+    @tutor = @appt.tutor
+    @student = @appt.student 
+    mail(to: @student.email, subject: "Your upcoming Axon tutoring appointment")
+  end
+
+  # ==============================
+  #   Appointment Updated Emails
   # ==============================
 
   def appointment_update_for_tutor(appointment_id)
@@ -38,42 +56,6 @@ class AppointmentMailer < ApplicationMailer
     mail(to: @student.email, subject: "Your Axon tutoring appointment has changed")
   end
 
-  # ==============================
-  #  Appointment Reminder Emails
-  # ==============================
-
-  def appointment_reminder_for_tutor(appointment_id)
-    @appt = Appointment.find(appointment_id)
-    @tutor = @appt.tutor
-    @student = @appt.student 
-    mail(to: @tutor.email, subject: "Your upcoming Axon appointment")
-  end
-
-  def appointment_reminder_for_student(appointment_id)
-    @appt = Appointment.find(appointment_id)
-    @tutor = @appt.tutor
-    @student = @appt.student 
-    mail(to: @student.email, subject: "Your upcoming Axon appointment")
-  end
-
-  # ================================
-  #  Appointment Rescheduled Emails
-  # ================================
-
-  def appointment_rescheduled_for_tutor(appointment_id)
-    @appt = Appointment.find(appointment_id)
-    @tutor = @appt.tutor
-    @student = @appt.student 
-    mail(to: @tutor.email, subject: "ATTN: Your upcoming Axon appointment has been rescheduled")
-  end
-
-  def appointment_rescheduled_for_student(appointment_id)
-    @appt = Appointment.find(appointment_id)
-    @tutor = @appt.tutor
-    @student = @appt.student 
-    mail(to: @student.email, subject: "ATTN: Your upcoming Axon appointment has been rescheduled")
-  end
-
   # ================================
   #  Appointment Cancellation Emails
   # ================================
@@ -82,13 +64,13 @@ class AppointmentMailer < ApplicationMailer
     @appt = Appointment.find(appointment_id)
     @tutor = @appt.tutor
     @student = @appt.student 
-    mail(to: @tutor.email, subject: "Your appointment cancellation confirmation")
+    mail(to: @tutor.email, subject: "One of your Axon appointments has been cancelled")
   end
 
   def appointment_cancellation_for_student(appointment_id)
     @appt = Appointment.find(appointment_id)
     @tutor = @appt.tutor
     @student = @appt.student    
-    mail(to: @student.email, subject: "Your appointment has been cancelled by your tutor")
+    mail(to: @student.email, subject: "Your appointment has been cancelled")
   end
 end

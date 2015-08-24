@@ -19,6 +19,7 @@ class Admin::TutorsController < AdminController
 
   def update
     if @tutor.update(tutor_params)
+      @tutor.send_active_status_change_email(tutor_params)
       redirect_to admin_tutor_path(@tutor)
     else
       flash[:error] = "Tutor was not updated: #{@tutor.errors.full_messages}"
