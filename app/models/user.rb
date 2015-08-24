@@ -41,7 +41,7 @@ class User < ActiveRecord::Base
   has_one :student, dependent: :destroy
   belongs_to :school
 
-  enum role: [:student, :campus_manager, :super_admin]
+  enum role: [:student, :tutor, :campus_manager, :super_admin]
   
   extend FriendlyId
   friendly_id :slug_candidates, use: :slugged

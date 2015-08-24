@@ -42,6 +42,8 @@ class Tutor < ActiveRecord::Base
   validates :transcript, presence: true
   validates :extra_info, presence: true
 
+  after_create :change_user_role_to_tutor
+
   # Neccessary to create a tutor's first tutor_course during sign-up process
   # All subsequent tutor_courses will be added normally through the tutor_courses_controller
   def set_first_tutor_course(tutor, params)
@@ -77,6 +79,13 @@ class Tutor < ActiveRecord::Base
   end
 
   def availability_booked_percent
+  end
+
+  def change_user_role_to_tutor
+    if self.user.role == 'student'
+      self.user.role = 'tutor'
+      self.user.save
+    end
   end
 
 end

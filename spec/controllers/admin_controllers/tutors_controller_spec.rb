@@ -2,13 +2,25 @@ require 'rails_helper'
 
 describe Admin::TutorsController do
   let(:tutor) { create(:tutor) } 
-  let(:admin) { create(:user, :admin) }
+  let(:) {}
+  let(:admin) { create(:user, :super_admin) }
+
 
   describe 'GET #index' do 
 
-    it 'renders the :index template' do
+    it 'redirects to root_path for visitors/non-signed-in users' do
       get :index
-      expect(response).to render_template :index 
+      expect(response).to redirect_to(root_path)
+    end
+
+    it 'redirects to dashboard_home for signed-in students' do
+      login_with(student)
+      get :index
+      expect(response).to redirect_to(dashboard_home_user_path(student))
+    end
+
+    it 'renders the :index template for signed-in admin' do
+
     end
 
     it 'assigns all tutors to @tutors' do 
