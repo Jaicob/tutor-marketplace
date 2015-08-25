@@ -43,7 +43,7 @@ class Tutor < ActiveRecord::Base
   validates :phone_number, presence: true
 
   after_create :change_user_role_to_tutor
-  before_save :update_application_status
+  after_commit :update_application_status
 
   def crop_profile_pic(tutor_params)
     profile_pic.recreate_versions! if tutor_params[:crop_x]
@@ -91,6 +91,10 @@ class Tutor < ActiveRecord::Base
     end
   end
 
+  def complete_profile?
+    self.incomplete_profile? ? false : true
+  end
+
   def awaiting_approval?
     if self.incomplete_profile? == false && self.active_status == 'Inactive'
       true
@@ -119,10 +123,10 @@ class Tutor < ActiveRecord::Base
 
   def send_active_status_change_email(tutor_params)
     if tutor_params[:active_status] == 'Active'
-      TutorManagementMailer.delay.activation_email(self.id)
+      TutorManagementMailer.delay.activation_email(self.user.id)
     end
     if tutor_params[:active_status] == 'Inactive'
-      TutorManagementMailer.delay.deactivation_email(self.id)
+      TutorManagementMailer.delay.deactivation_email(self.user.id)
     end
   end
 
@@ -146,11 +150,10 @@ class Tutor < ActiveRecord::Base
   end
 
   def update_application_status
-    unless self.incomplete_profile?
+    if self.complete_profile? && self.application_status == 'Incomplete'
       self.application_status = 'Complete'
       self.save
       TutorManagementMailer.delay.application_completed_email(self.user.id)
-      puts "WE MADE IT INSIDE!"
     end
   end
 

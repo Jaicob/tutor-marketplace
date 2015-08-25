@@ -22,24 +22,24 @@
 
 FactoryGirl.define do
   factory :tutor do
+    user
+    rating 1
+    active_status 0
+    application_status 0
+    birthdate "1992-05-28"
+    degree "B.A."
+    major "Biology"
+    graduation_year "2019"
+    phone_number "555-555-5555"
     extra_info "Student Research Assistant for Biology Department"
-    transcript Rack::Test::UploadedFile.new(File.open(File.join(Rails.root, '/spec/factories/files/transcript.doc')))
 
       trait :invalid_tutor do
         extra_info nil
       end
   
-      trait :complete_tutor do
-        user
-        rating 1
-        active_status 0
-        application_status 0
-        birthdate "1992-05-28"
-        degree "B.A."
-        major "Biology"
-        graduation_year "2019"
-        phone_number "555-555-5555"
+      trait :application_complete do
         profile_pic Rack::Test::UploadedFile.new(File.open(File.join(Rails.root, '/spec/factories/files/profile_pic.jpg')))
+        transcript Rack::Test::UploadedFile.new(File.open(File.join(Rails.root, '/spec/factories/files/transcript.doc')))
       end
 
       factory :second_complete_tutor do 
