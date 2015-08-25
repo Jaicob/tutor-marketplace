@@ -157,4 +157,12 @@ class Tutor < ActiveRecord::Base
     end
   end
 
+  def self.applications_awaiting_approval(user) # get user to determine admin level
+    if user.role == 'campus_manager' # campus-mangers only see applications at their school
+      user.school.tutors.where(application_status: 1, active_status: 0)
+    else # super-admin can see all applications across all schools
+      Tutor.where(application_status: 1, active_status: 0)
+    end
+  end
+
 end
