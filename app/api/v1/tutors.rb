@@ -37,15 +37,15 @@ module V1
         tutor
       end
 
-      desc "Updates a specific tutor's attributes"
-      put ":id" do
-        @tutor = tutor
-        if @tutor.update_attributes(params)
-          return @tutor
-        else
-          return "There was an error updating the tutor: #{@tutor.errors.full_messages}"
-        end
-      end
+      # desc "Updates a specific tutor's attributes"
+      # put ":id" do
+      #   @tutor = tutor
+      #   if @tutor.update_attributes(params)
+      #     return @tutor
+      #   else
+      #     return "There was an error updating the tutor: #{@tutor.errors.full_messages}"
+      #   end
+      # end
 
       desc "Searches for tutors based on params"
       get "search" do

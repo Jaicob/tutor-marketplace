@@ -35,7 +35,6 @@ module DashboardNavHelper
       student: {
         'Dashboard'      => dashboard_link,
         'Settings'       => settings_link,
-        'Become a Tutor' => become_a_tutor_link,
         'Find a Tutor'   => tutor_search_link,
       },
 

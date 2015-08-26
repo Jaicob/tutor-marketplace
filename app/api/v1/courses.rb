@@ -25,7 +25,7 @@ module V1
     resource :schools do 
 
       desc "Returns courses for a school"
-      get ":id/courses" do 
+      get ":school_id/courses" do 
         school.courses
       end
 

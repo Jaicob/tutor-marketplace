@@ -27,7 +27,8 @@ class TutorCoursesController < ApplicationController
   private
 
     def tutor_course_params
-      params.require(:tutor_course).permit(:tutor_id, :course_id, :rate,)
+      params.require(:tutor_course).permit(:tutor_id, :course_id, :rate)
+      # params.require(:tutor_course).permit()
     end
 
     def set_tutor_course

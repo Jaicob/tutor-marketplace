@@ -1,16 +1,25 @@
 <header>
   <div class="row">
-    <div class="large-12 columns">
+    <div class="large-3 columns">
       <h3>Tutors</h3>
     </div>
+    <% if Tutor.applications_awaiting_approval(current_user).count > 0 %>
+      <div class="large-4 columns">
+        <%= search_form_for @q, url: search_admin_tutors_path, html: { method: :post } do |f| %> 
+          <%= f.hidden_field :active_status_eq, value: '0' %>
+          <%= f.hidden_field :application_status_eq, value: '1' %>
+          <%= f.submit "Applications Awaiting Approval: #{Tutor.applications_awaiting_approval(current_user).count}", class: 'button radius alert small expand' %>
+        <% end %>
+      </div>
+    <% end %>
   </div>
 </header>
 
 <div class="row">
   <div class="large-12 columns">
   <%= search_form_for @q, url: search_admin_tutors_path, html: { method: :post } do |f| %>
-    <fieldset class="search-field-panel">
-      <legend class="search-field-legend">Search for Tutors</legend>
+    <fieldset class="admin-panel">
+      <legend class="admin-panel">Search for Tutors</legend>
       <div class="row">
         <div class="large-4 columns">   
           <%= f.label :id_eq, 'ID' %>
@@ -94,25 +103,6 @@
   </div>
   <% end %>
 </div>
-
-
-
-<!-- SAVED FOR REFERENCE OF COLORS FOR LATER IMPLEMENTATION IN TABLE (NO NEED FOR LEGEND THOUGH) -->
-<!-- <section>
-  <div class="row">
-    <div class="large-6 columns">
-      <h4>Active Status</h4>
-        <p class="button tiny success">Active</p><br>
-        <p class="button tiny secondary">Inactive</p>
-    </div>
-    <div class="large-6 columns">
-      <h4>Application Status</h4>
-        <p class="button tiny info">Applied</p><br>
-        <p class="button tiny alert">Awaiting Approval</p><br>
-        <p class="button tiny default">Approved</p><br>
-    </div>
-  </div>
-</section> -->
 
 <div class="row">
   <div class="large-12 columns">

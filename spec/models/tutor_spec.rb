@@ -25,8 +25,7 @@ require 'rails_helper'
 RSpec.describe Tutor, type: :model do
 
     let(:tutor) { create(:tutor) }
-    let(:complete_tutor) { create(:complete_tutor)}
-    let(:incomplete_tutor) { build_stubbed(:incomplete_tutor) }
+    let(:tutor_with_complete_application) { create(:tutor, :application_complete)}
 
     it "is valid with extra info, an attached transcript, and first tutor_course" do 
       expect(tutor).to be_valid
@@ -36,17 +35,12 @@ RSpec.describe Tutor, type: :model do
       expect(build(:tutor, extra_info: nil)).to_not be_valid
     end
 
-    # This validation has been removed, may add back later
-    # it "is invalid without an attached transcript" do 
-    #   expect(build(:tutor, transcript: nil)).to_not be_valid
-    # end
-
-    it "application status is 'Applied' by default" do
-      expect(tutor.application_status).to eq 'Applied'
+    it "application_status is 'Incomplete' by default" do
+      expect(tutor.application_status).to eq 'Incomplete'
     end
 
-    it "application status is 'Awaiting Appproval' when all Tutor fields are complete" do
-      expect(complete_tutor.application_status).to eq 'Awaiting Approval'
+    it "application_status is changed to 'Complete' when all required fields are complete" do
+      expect(tutor_with_complete_application.application_status).to eq 'Complete'
     end
 
     it "active status is 'Inactive' by default" do 
@@ -58,17 +52,12 @@ RSpec.describe Tutor, type: :model do
       expect(tutor.active_status).to eq 'Active'
     end
 
-    it "can list its schools with .schools" do
-      create_list(:tutor_course, 2, tutor: tutor)
-      expect(tutor.schools.length).to eq(2)
-    end
-
     it "shows User's name with .name" do 
-      expect(complete_tutor.full_name).to eq complete_tutor.user.full_name
+      expect(tutor.full_name).to eq tutor.user.full_name
     end
 
     it "shows User's email with .email" do 
-      expect(complete_tutor.email).to eq complete_tutor.user.email
+      expect(tutor.email).to eq tutor.user.email
     end
 
     it "shows tutor's sign_up_date with .sign_up_date" do 
