@@ -2,7 +2,6 @@ class TutorCoursesController < ApplicationController
   before_action :set_tutor_course, only: [:update, :destroy]
 
   def create
-    puts "ACCEPTED PARAMS = #{tutor_course_params}"
     @tutor_course = TutorCourse.create(tutor_course_params)
     if @tutor_course.save
       redirect_to dashboard_courses_user_path(current_user)
@@ -37,7 +36,3 @@ class TutorCoursesController < ApplicationController
     end
 
 end
-
-
-
-# {"utf8"=>"✓", "authenticity_token"=>"EytV/YzhBX8jNweRJNUpJ6PPT2YKxK1lgQiL+Vf5TX7lOIJxtk89fMRZ/vJm3Rev7jJWcCpa0EZK+m3TAiyFyg==", "course"=>{"school_id"=>"1", "subject_id"=>"2", "course_id"=>"2"}, "tutor_course"=>{"rate"=>"22"}, "tutor_id"=>"21", "commit"=>"Add course"}
