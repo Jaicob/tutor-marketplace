@@ -1,7 +1,21 @@
 <%= javascript_include_tag "single_views/search" %>
 
-<%= render '/course_selector/school' %>
-<%= render '/course_selector/subject_and_course' %>
+<div class="row">
+  <div class="medium-4 small-12 columns">
+    <%= render '/course_selector/school' %>
+  </div>
+  <div class="medium-2 small-12 columns">
+    <%= render '/course_selector/subject' %>
+  </div>
+  <div class="medium-4 small-12 columns">
+    <%= render '/course_selector/course' %>
+  </div>
+  <div class="medium-2 small-12 columns">
+    <input id="tutorSearchButton" type="submit" class="button radius success tiny right" value="Search"></input>
+  </div>
+</div>
 
-<input id="tutorSearchButton" type="submit" class="button radius success tiny right" style="margin-left: 20px; margin-right: 20px" id="add_course_button" value="Search"></input>
-<div id="tutorCardContainer"></div>
+<div class="row">
+  <div id="tutorCardContainer">
+  </div>
+</div>

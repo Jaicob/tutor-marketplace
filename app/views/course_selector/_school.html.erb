@@ -1,8 +1,19 @@
 <!-- Place immediately inside of parent div with correct grid sizing -->
 
-<select name="course[school_id]" id="school" required="true">
-  <option disabled="true" selected="true" value="">School</option>
-  <% School.all.each do |school| %>
-    <option value="<%= school.id %>"><%= school.name %></option>
-  <% end %>
-</select>
+<% if current_user && current_user.school %>
+  <!-- Only displays a user's set school in search when a user is logged in -->
+  <select name="course[school_id]" id="school" required="true">
+    <option selected="true" value="<%= current_user.school.id %>">
+      <%= current_user.school.name %>
+    </option>
+  </select>
+
+<% else %>
+  <!-- Displays all schools in search for visitors -->
+  <select name="course[school_id]" id="school" required="true">
+    <option disabled="true" selected="true" value="">School</option>
+    <% School.all.each do |school| %>
+      <option value="<%= school.id %>"><%= school.name %></option>
+    <% end %>
+  </select>
+<% end %>

@@ -23,12 +23,11 @@
 
           <div id="add_course_box">
             <%= javascript_include_tag "dashboard/courses" %>
-            <% @options = (local_variables().include? :options) ? options : {} %>
 
             <div class="row">
               <div class="medium-12 columns">
                 <p>School</p>
-                <%= f.collection_select(:school_id, School.all, :id, :name, {prompt: 'School'}, {name: 'course[school_id]', id: 'school', required: true} ) %>   
+                <%= render '/course_selector/school' %>
               </div>
             </div>
 
@@ -40,31 +39,17 @@
 
                 <p>Your First Course</p>
 
-                <!-- This section below creates a tutor's first tutor-course. The code for this is in the User model file in the method 'create_tutor_account(user, params)' -->
+                <!-- This section below creates a tutor's first tutor-course. The code for creating the TutorCourse is in 'user.rb' in the method 'create_tutor_account(user, params)' -->
 
                 <div class="row">
                   <div class="medium-4 columns">
-                    <select name="course[subject_id]" id="subject" required="true">
-                      <option disabled="true" selected="true" value="">Subject</option>
-                    </select>
+                    <%= render '/course_selector/subject' %>
                   </div>
                   <div class="medium-4 columns">
-                    <select name="course[course_id]" id="course" required="true">
-                      <option disabled="true" selected="true" value="">Course</option>
-                    </select>
+                    <%= render '/course_selector/course' %>
                   </div>
                   <div class="medium-4 columns">
-                    <div class="row collapse">
-                      <div class="small-2 large-2 columns">
-                        <span class="prefix">$</span>
-                      </div>
-                      <div class="small-7 medium-4 large-5 columns">
-                        <input name="tutor_course[rate]" id="rate" type="number" required="true" min="1" step="1" pattern="\d*" placeholder="25" style="text-align: center; border-right-width: 0px;">
-                      </div>
-                      <div class="small-3 medium-6 large-5 columns">
-                        <span class="postfix">per hour</span>
-                      </div>
-                    </div>
+                    <%= render '/course_selector/rate' %>
                   </div>
                 </div>
 
@@ -111,4 +96,4 @@
       <% end %>
     </fieldset>
   </div>
-</div
+</div>
