@@ -4,7 +4,7 @@ This is to inform you that there has been a change to your appointment.
 
 Your Student: <%= @student.full_name %>
 Subject: <%# @appt.subject %>
-Date/Time: <%= @appt.strftime("%b %e, %l:%M %p") %>
+Date/Time: <%= @appt.start_time.strftime("%b %e, %l:%M %p") %>
 
 If you have any questions or concerns, or would like to cancel or reschedule, please contact info@axontutors.com.
 

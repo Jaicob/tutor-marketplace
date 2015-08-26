@@ -6,13 +6,29 @@ describe Admin::CoursesController do
   let(:course_attributes) { attributes_for(:course, school_id: school.id) }
   let(:invalid_course_attributes) { attributes_for(:invalid_course) }
   let(:school) { create(:school) }
+  let(:student) { create(:user, :student) }
+  let(:tutor) { create(:tutor, :complete_tutor) } 
+  let(:admin) { create(:user, :super_admin) }
 
   describe 'GET #index' do 
-    
-    it 'renders the :index template' do 
+
+    it 'redirects to root_path for visitors/non-signed-in users' do
+      get :index
+      expect(response).to redirect_to(root_path)
+    end
+
+    it 'redirects to dashboard_home for signed-in students' do
+      login_with(student)
+      get :index
+      expect(response).to redirect_to(dashboard_home_user_path(student))
+    end
+
+    it 'renders the :index template for signed-in admin' do
+      login_with(admin)
       get :index
       expect(response).to render_template :index
-     end
+    end
+    
 
     it 'assigns all courses to @courses' do 
       create_list(:course, 2)

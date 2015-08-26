@@ -26,23 +26,6 @@ module V1
         school
       end
 
-      desc "Returns a school and all of its courses"
-      get ":id/courses" do 
-        school.courses
-      end
-
-      desc "Returns a school and all of its subjects"
-      get ":id/subjects" do 
-        school.subjects
-      end
-
-      desc "Returns a school and its courses for a subject"
-      get ":id/subjects/:subject_id/courses" do 
-        school.courses.find_all do |course| 
-          course.subject[:id] == params[:subject_id].to_i
-        end
-      end
-
       desc "Creates a school"
       post do 
         @school = School.create(declared_params)

@@ -4,19 +4,20 @@
 #
 #  id                 :integer          not null, primary key
 #  user_id            :integer
-#  rating             :integer
+#  active_status      :integer          default(0)
 #  application_status :integer          default(0)
-#  birthdate          :date
+#  rating             :integer
 #  degree             :string
 #  major              :string
 #  extra_info         :string
 #  graduation_year    :string
 #  phone_number       :string
-#  created_at         :datetime         not null
-#  updated_at         :datetime         not null
+#  birthdate          :date
 #  profile_pic        :string
 #  transcript         :string
-#  active_status      :integer          default(0)
+#  appt_notes         :string
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
 #
 
 class Tutor < ActiveRecord::Base
@@ -28,7 +29,7 @@ class Tutor < ActiveRecord::Base
 
   delegate :school, :full_name, :email, to: :user
 
-  enum application_status: ['Application Incomplete', 'Application Complete', 'Approved']
+  enum application_status: ['Incomplete', 'Complete', 'Approved']
   enum active_status: ['Inactive', 'Active']
 
   # Carrierwave setup for uploading files
@@ -38,36 +39,13 @@ class Tutor < ActiveRecord::Base
   # Dimensions for cropping profile pics
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
 
-  validates :transcript, presence: true
   validates :extra_info, presence: true
+  validates :phone_number, presence: true
 
-  # Neccessary to create a tutor's first tutor_course during sign-up process
-  # All subsequent tutor_courses will be added normally through the tutor_courses_controller
-  def set_first_tutor_course(tutor, params)
-    course_id = params[:course][:course_id]
-    rate = params[:tutor_course][:rate]
-    tutor.tutor_courses.create(tutor_id: tutor.id, course_id: course_id, rate: rate)
-  end
+  after_create :change_user_role_to_tutor
 
   def crop_profile_pic(tutor_params)
     profile_pic.recreate_versions! if tutor_params[:crop_x]
-  end
-
-  def schools
-    schools = []
-    self.courses.each do |course|
-      schools << course.school_name unless schools.include?(course.school_name)
-    end
-    schools
-  end
-
-  def application_status
-    # This method sets the 'application_status' attribute. It returns 'Awaiting Approval' only if all fields have been completed, otherwise it returns "Applied"
-    if self.birthdate && self.degree && self.major && self.extra_info && self.graduation_year && self.phone_number && self.profile_pic.url != 'panda.png' && self.transcript.url
-      'Awaiting Approval'
-    else
-      'Applied'
-    end
   end
 
   def self.to_csv
@@ -84,5 +62,80 @@ class Tutor < ActiveRecord::Base
     self.created_at.to_date
   end
 
+  def formatted_courses
+    courses = []
+    self.courses.each do |course|
+      courses << [course.formatted_name]
+    end
+    courses.join("<br>").html_safe()
+  end
+
+  def availability_booked_percent
+    # this method should calculate how many hours of a tutor's availability are actually booked
+    # possibly useful for identifying 'super-tutors'
+    # should probably only calculate percentages for past availability/appointments, since most bookins
+    # are only completed 2 days in advance. also, don't want a tutor with more future set availability (a
+    # good thing) to have a lower percentage than someone with less future availability
+  end
+
+  def incomplete_profile?
+    if self.birthdate && self.degree && self.major && self.extra_info && self.graduation_year && self.phone_number && self.profile_pic.url != 'panda.png' && self.transcript.url
+      false
+    else
+      true
+    end
+  end
+
+  def awaiting_approval?
+    if self.incomplete_profile? == false && self.active_status == 'Inactive'
+      true
+    else
+      false
+    end
+  end
+
+  def zero_availability_set?
+    if self.incomplete_profile? == false && self.awaiting_approval? == false && self.slots.count == 0
+      true
+    else
+      false
+    end
+  end
+
+  def profile_check(attribute)
+    if attribute == :profile_pic
+      self.profile_pic.url == 'panda.png' ? false : true
+    else
+      self.public_send(attribute) == nil ? false : true
+    end
+  end
+
+  def send_active_status_change_email(tutor_params)
+    if tutor_params[:active_status] == 'Active'
+      TutorManagementMailer.delay.activation_email(self.id)
+    end
+    if tutor_params[:active_status] == 'Inactive'
+      TutorManagementMailer.delay.deactivation_email(self.id)
+    end
+  end
+
+  def get_slots_in_date_range(start_date, end_date)
+    self.slots.select{|slot| slot.start_time.to_date >= start_date.to_date && slot.start_time.to_date <= end_date.to_date }
+  end
+
+  def update_action_redirect_path(tutor_params)
+    if tutor_params[:birthdate] || tutor_params[:phone_number]
+      "/#{self.user.id}/dashboard/settings"
+    else
+      "/#{self.user.id}/dashboard/profile"
+    end
+  end
+
+  def change_user_role_to_tutor
+    if self.user.role == 'student'
+      self.user.role = 'tutor'
+      self.user.save
+    end
+  end
 
 end

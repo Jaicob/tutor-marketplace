@@ -1,0 +1,22 @@
+<% content_for (:admin_panel) do %>
+  
+  <div class="header-block admin-row">
+    <div class="row">
+      <p class="admin-title"><%= @school.blank? ? 'Super-Admin Panel' : 'Campus Manager Panel' %></p>
+      <h3 class="school-name"><%= @school.blank? ? 'All Schools' : "#{@school.name}" %></h3>
+    </div>
+  </div>
+  
+  <nav class="breadcrumbs dashboard-nav">
+    <%= link_to 'Home', admin_home_path %>
+    <%= link_to 'Tutors', admin_tutors_path %>
+    <%= link_to 'Students', admin_students_path %>
+    <%= link_to 'Appointments', admin_appointments_path %>
+    <%= link_to 'Slots', admin_slots_path %>
+    <%= link_to 'Courses', admin_courses_path %>
+    <% if current_user.role == 'super_admin' %>
+      <%= link_to 'Schools', admin_schools_path %>
+    <% end %>
+  </nav>
+
+<% end %>

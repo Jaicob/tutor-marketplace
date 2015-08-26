@@ -53,19 +53,48 @@ module V1
             end
           end
 
-          desc "Updates an appointment for a student"
-          put ":id" do 
+          # Disabled because we currently don't use this endpoint. Instead of one update endpoint, we currently have separate endpoints for two different update scenarios below:
+          # 1) Rescheduling - changing start_time and possibly slot_id
+          # 2) Cancelling - changing the appointment status to cancelled (NOT deleting the appointment)
+          #
+          # desc "Updates an appointment for a student"
+          # put ":id" do 
+          #   @appt = appt
+          #   if @appt.update(declared_params)
+          #     AppointmentMailer.delay.appointment_update_for_tutor(@appt.id)
+          #     AppointmentMailer.delay.appointment_update_for_student(@appt.id)
+          #     if @appt.appt_reminder_email_date != nil
+          #       ApptReminderWorker.perform_at(@appt.appt_reminder_email_date, @appt.id)
+          #       ApptReminderWorker.perform_at(@appt.appt_reminder_email_date, @appt.id)
+          #     end
+          #     return @appt
+          #   else
+          #     return "Appointment was not updated: #{@appt.errors.full_messages}"
+          #   end
+          # end
+
+          desc "Reschedules an appointment for a student"
+          put ":id/reschedule" do 
             @appt = appt
             if @appt.update(declared_params)
-              AppointmentMailer.delay.appointment_update_for_tutor(@appt)
-              AppointmentMailer.delay.appointment_update_for_student(@appt)
-              if @appt.appt_reminder_email_date != nil
-                ApptReminderWorker.perform_at(@appt.appt_reminder_email_date, @appt.id)
-                ApptReminderWorker.perform_at(@appt.appt_reminder_email_date, @appt.id)
-              end
+              AppointmentMailer.delay.appointment_update_for_tutor(@appt.id) 
+              appointment_update_for_tutor(appointment_id)              
+              AppointmentMailer.delay.appointment_update_for_student(@appt.id)
               return @appt
             else
-              return "Appointment was not updated: #{@appt.errors.full_messages}"
+              return "Appointment was not rescheduled: #{@appt.errors.full_messages}"
+            end
+          end
+
+          desc "Cancels an appointment for a student"
+          put ":id/cancel" do 
+            @appt = appt
+            if @appt.update(declared_params)
+              AppointmentMailer.delay.appointment_cancellation_for_tutor(@appt.id)               
+              AppointmentMailer.delay.appointment_cancellation_for_student(@appt.id)
+              return @appt
+            else
+              return "Appointment was not cancelled: #{@appt.errors.full_messages}"
             end
           end
 

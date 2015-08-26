@@ -3,7 +3,7 @@ class CreateCourses < ActiveRecord::Migration
     create_table :courses do |t|
       
       t.belongs_to  :school, index: true, foreign_key: true
-      t.text        :subject
+      t.belongs_to  :subject, index: true, foreign_key: true
       t.string      :call_number
       t.string      :friendly_name
       

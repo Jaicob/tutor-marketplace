@@ -37,21 +37,32 @@ module V1
             appt
           end
 
-          desc "Updates an appointment status to CANCELLED for a tutor"
-          put ":id" do
+          desc "Reschedules an appointment for a tutor"
+          put ":id/reschedule" do 
+            @appt = appt
+            if @appt.update(declared_params)
+              AppointmentMailer.delay.appointment_update_for_tutor(@appt.id)               
+              AppointmentMailer.delay.appointment_update_for_student(@appt.id)
+              return @appt
+            else
+              return "Appointment was not rescheduled: #{@appt.errors.full_messages}"
+            end
+          end
+
+          desc "Cancels an appointment for a tutor"
+          put ":id/cancel" do
             @appt = appt
             if @appt.update(declared_params)
               AppointmentMailer.delay.appointment_cancellation_for_tutor(@appt.id)
               AppointmentMailer.delay.appointment_cancellation_for_student(@appt.id)
               return @appt
             else
-              return "Appointment was not updated: #{@appt.errors.full_messages}"
+              return "Appointment was not cancelled: #{@appt.errors.full_messages}"
             end
           end        
 
         end
       end
     end
-
   end
 end

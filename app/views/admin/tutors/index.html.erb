@@ -1,13 +1,104 @@
 <header>
   <div class="row">
     <div class="large-12 columns">
-      <h1>Tutors</h1>
-      <%= link_to 'Monitoring', sidekiq_web_path %>
+      <h3>Tutors</h3>
     </div>
   </div>
 </header>
 
-<section>
+<div class="row">
+  <div class="large-12 columns">
+  <%= search_form_for @q, url: search_admin_tutors_path, html: { method: :post } do |f| %>
+    <fieldset class="search-field-panel">
+      <legend class="search-field-legend">Search for Tutors</legend>
+      <div class="row">
+        <div class="large-4 columns">   
+          <%= f.label :id_eq, 'ID' %>
+          <%= f.search_field :id_eq %>
+        </div>
+
+        <div class="large-4 columns">   
+          <%= f.label :user_first_name_or_user_last_name_matches, 'Name' %>
+          <%= f.search_field :user_first_name_or_user_last_name_matches %>
+        </div>
+        
+        <div class="large-4 columns">   
+          <%= f.label :user_email_matches, 'Email' %>
+          <%= f.search_field :user_email_matches %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="large-4 columns"> 
+          <%= f.label :user_school_id_eq, "School" %>
+            <% if current_user.role == 'campus_manager' %>
+              <%= f.select(:user_school_id_eq, options_for_select(["#{@school.name}"])) %>
+            <% else %>
+              <%= f.collection_select(:user_school_id_eq, School.all, :id, :name, include_blank: true) %>
+          <% end %>
+        </div>
+        <div class="large-4 columns">   
+          <%= f.label :active_status_eq, 'Active Status' %>
+          <%= f.select(:active_status_eq, options_for_select([['Active', 1],['Inactive', 0]]), include_blank: true) %>
+        </div>
+        <div class="large-4 columns">   
+          <%= f.label :application_status_eq, 'Application Status' %>
+          <%= f.select(:application_status_eq, options_for_select([['Incomplete', 0],['Complete', 1],['Approved', 2]]), include_blank: true) %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="large-3 columns">
+          <%= f.label :courses_subject_id_eq, "Subject" %>
+          <%= f.collection_select(:courses_subject_id_eq, Subject.all, :id, :name, include_blank: true) %>
+        </div>
+
+        <div class="large-3 columns">
+          <%= f.label :courses_call_number_eq, 'Call Number' %>
+          <%= f.search_field :courses_call_number_eq %>
+        </div>
+
+        <div class="large-3 columns">
+          <%= f.label :created_at_gteq, 'Applied after:' %>
+          <%= f.date_select :created_at_gteq, {:include_blank => true, :default => nil} %>
+        </div>
+
+        <div class="large-3 columns">
+          <%= f.label :created_at_lteq, 'Applied before:' %>
+          <%= f.date_select :created_at_lteq, {:include_blank => true, :default => nil} %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="large-3 columns">
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="large-6 large-offset-6 columns">
+          <div class="row">
+            <div class="large-4 columns">
+              <%= link_to 'Download CSV', tutors_path(format: :csv), class: 'button secondary tiny full-width' %>
+            </div>
+            <div class="large-4 columns">
+              <%= link_to 'Reset', '/admin/tutors', class: 'button info tiny full-width' %>
+            </div>
+            <div class="large-4 columns">
+              <%= f.submit class: 'button success tiny full-width' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+  <% end %>
+</div>
+
+
+
+<!-- SAVED FOR REFERENCE OF COLORS FOR LATER IMPLEMENTATION IN TABLE (NO NEED FOR LEGEND THOUGH) -->
+<!-- <section>
   <div class="row">
     <div class="large-6 columns">
       <h4>Active Status</h4>
@@ -21,37 +112,41 @@
         <p class="button tiny default">Approved</p><br>
     </div>
   </div>
-</section>
+</section> -->
 
-<%= link_to 'Download CSV', tutors_path(format: :csv) %>
-
-<main>
-  <div class="row full-width">
-    <div class="large-12 columns">
-      <table>
-        <thead>
-          <tr>
-            <th width="150">Active Status</th>
-            <th width="250">Name</th>
-            <th width="300">Email</th>
-            <th width="250">School</th>
-            <th width="150">Application Status</th>
-            <th width="150">View</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @tutors.each do |tutor| %>
-          <tr>
-            <td><%= tutor.active_status %></td>
-            <td><%= tutor.user.full_name %></td>
-            <td><%= tutor.user.email %></td>
-            <td><% tutor.school %></td>
-            <td><%= tutor.application_status %></td>
-            <td><%= link_to "Details", admin_tutor_path(tutor) %></td>
-          </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
+<div class="row">
+  <div class="large-12 columns">
+    <table>
+      <thead>
+        <tr>
+          <th class="id">ID</th>
+          <th class="active-status">Active Status</th>
+          <th class="name">Name</th>
+          <th class="email">Email</th>
+          <th class="school">School</th>
+          <th class="courses">Courses</th>
+          <th class="appointments">Appts</th>
+          <th class="availability">Availabilty Booked</th>
+          <th class="application-status">Application Status</th>
+          <th class="applied-on">Applied On</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @tutors.each do |tutor| %>
+        <tr>
+          <td><%= link_to "#{tutor.id}", admin_tutor_path(tutor) %></td>
+          <td><%= tutor.active_status %></td>
+          <td><%= tutor.user.full_name %></td>
+          <td><%= tutor.user.email %></td>
+          <td><%= tutor.school.name %></td>
+          <td><%= tutor.formatted_courses %></td>
+          <td><%= tutor.appointments.count %></td>
+          <td><%= tutor.availability_booked_percent %>
+          <td><%= tutor.application_status %></td>
+          <td><%= tutor.created_at.strftime('%-m-%d-%y') %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
-</main>
+</div>

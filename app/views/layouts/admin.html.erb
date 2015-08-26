@@ -1,15 +1,2 @@
-<% content_for (:dashboard_nav) do %>
-  
-  <!-- This is just a placeholder, hence the ugly in-line CSS -->
-  <div style="display: block; background-color: #567E3A;">
-    <p style="text-align: center; padding: 1em; margin: 0; color: white;">ADMIN PANEL</p>
-  </div>
-
-  <nav class="breadcrumbs dashboard-nav">
-    <%= link_to 'Schools', admin_schools_path %>
-    <%= link_to 'Courses', admin_courses_path %>
-    <%= link_to 'Tutors', admin_tutors_path %>
-  </nav>
-
-<% end %>
+<%= render "layouts/partials/admin_panel" %>
 <%= render template: "layouts/application" %>
