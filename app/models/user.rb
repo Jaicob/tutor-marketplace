@@ -40,11 +40,11 @@ class User < ActiveRecord::Base
   has_one :student, dependent: :destroy
   belongs_to :school
 
-  validates :first_name, presence: true 
+  validates :first_name, presence: true
   validates :last_name, presence: true
 
   enum role: [:student, :tutor, :campus_manager, :super_admin]
-  
+
   extend FriendlyId
   friendly_id :slug_candidates, use: :slugged
 
@@ -75,7 +75,7 @@ class User < ActiveRecord::Base
 
   def slug_candidates
     # variations of a user's name to create unique slugs in case of duplicate names
-    [ "#{first_name}#{last_name}", "#{first_name[0]}#{last_name}", "#{first_name}#{last_name[0]}", "#{first_name[0..1]}#{last_name}", "#{first_name}#{last_name[0..1]}", "#{first_name[0..2]}#{last_name}", "#{first_name}#{last_name[0..2]}", "#{first_name[0..3]}#{last_name}", "#{first_name}#{last_name[0..3]}" 
+    [ "#{first_name}#{last_name}", "#{first_name[0]}#{last_name}", "#{first_name}#{last_name[0]}", "#{first_name[0..1]}#{last_name}", "#{first_name}#{last_name[0..1]}", "#{first_name[0..2]}#{last_name}", "#{first_name}#{last_name[0..2]}", "#{first_name[0..3]}#{last_name}", "#{first_name}#{last_name[0..3]}"
     ]
   end
 
@@ -88,7 +88,7 @@ class User < ActiveRecord::Base
     if self.role == 'campus_manager'
       collection = model_collection.to_s
       self.school.public_send(collection)
-    else 
+    else
     # return tutors/appointments/etc. from all schools for super_admin
       model = model_collection.to_s.humanize.chop.constantize
       model.all
