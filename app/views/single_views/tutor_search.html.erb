@@ -1,4 +1,7 @@
 <%= javascript_include_tag "single_views/search" %>
-<%= render 'dashboard/courses/course_selector', options: { rate: false } %>
+
+<%= render '/course_selector/school' %>
+<%= render '/course_selector/subject_and_course' %>
+
 <input id="tutorSearchButton" type="submit" class="button radius success tiny right" style="margin-left: 20px; margin-right: 20px" id="add_course_button" value="Search"></input>
 <div id="tutorCardContainer"></div>

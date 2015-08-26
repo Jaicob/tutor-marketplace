@@ -42,6 +42,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def set_school
+    @school = current_user.school
+  end
+
   def authorized_for_admin_area?
     # redirects to root for non-signed in users/visitors
     if !current_user 

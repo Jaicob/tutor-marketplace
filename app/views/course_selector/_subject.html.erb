@@ -1,0 +1,24 @@
+<!-- Place immediately inside of parent div with correct grid sizing -->
+
+<% if @school %>
+
+  <div style="display: none;">
+    <select name="course[school_id]" id="school" required="true">
+      <option selected="true" value="<%= @tutor.school.id %>">School</option>
+    </select>
+  </div>
+  
+  <select name="course[subject_id]" id="subject" required="true">
+    <option disabled="true" selected="true" value="">Subject</option>
+    <% @tutor.school.subjects.each do |subject| %>
+      <option value="<%= subject[:id] %>"><%= subject[:name] %></option>
+    <% end %>
+  </select>
+
+<% else %>
+
+  <select name="course[subject_id]" id="subject" required="true">
+    <option disabled="true" selected="true" value="">Subject</option>
+  </select>
+
+<% end %>
