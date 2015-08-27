@@ -50,6 +50,7 @@ class User < ActiveRecord::Base
     :recoverable, :rememberable, :trackable, :validatable
 
   def create_tutor_account(user, params)
+    # used in Devise::RegistrationsController to create a Tutor while creating a User
     if params[:user][:tutor] != nil
       user.create_tutor!(
         extra_info: params[:user][:tutor][:extra_info],
@@ -61,20 +62,13 @@ class User < ActiveRecord::Base
   end
 
   def set_school(user, params)
+    # used in Devise::RegistrationsController to set school during new Tutor sign-up
     user.update(school_id: params[:course][:school_id])
   end
 
   def slug_candidates
-    [ 
-      "#{first_name}#{last_name}", 
-      "#{first_name[0]}#{last_name}", 
-      "#{first_name}#{last_name[0]}", 
-      "#{first_name[0..1]}#{last_name}", 
-      "#{first_name}#{last_name[0..1]}", 
-      "#{first_name[0..2]}#{last_name}", 
-      "#{first_name}#{last_name[0..2]}", 
-      "#{first_name[0..3]}#{last_name}", 
-      "#{first_name}#{last_name[0..3]}"
+    # variations of a user's name to create unique slugs in case of duplicate names
+    [ "#{first_name}#{last_name}", "#{first_name[0]}#{last_name}", "#{first_name}#{last_name[0]}", "#{first_name[0..1]}#{last_name}", "#{first_name}#{last_name[0..1]}", "#{first_name[0..2]}#{last_name}", "#{first_name}#{last_name[0..2]}", "#{first_name[0..3]}#{last_name}", "#{first_name}#{last_name[0..3]}"
     ]
   end
 
@@ -83,10 +77,12 @@ class User < ActiveRecord::Base
   end
 
   def admin_scope(model_collection)
+    # only return tutors/appointments/etc. from one school for campus_manager
     if self.role == 'campus_manager'
       collection = model_collection.to_s
       self.school.public_send(collection)
-    else
+    else 
+    # return tutors/appointments/etc. from all schools for super_admin
       model = model_collection.to_s.humanize.chop.constantize
       model.all
     end
