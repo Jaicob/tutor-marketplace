@@ -62,7 +62,7 @@
       <legend class="admin-panel">Actions</legend>
       
       <div class="row">
-        <div class="large-3 columns">
+        <div class="medium-3 columns">
           <% if @tutor.active_status == 'Inactive' && @tutor.application_status != 'Approved' %>
               <button class="button tiny secondary expand" disabled="true">Can't Activate Until Approved</button>
           <% elsif @tutor.active_status == 'Inactive' && @tutor.application_status == 'Approved' %>
@@ -78,7 +78,7 @@
           <% end %>
         </div>
 
-        <div class="large-3 columns">
+        <div class="medium-3 columns">
           <% if @tutor.application_status == 'Complete' %>
             <%= form_for :tutor, url: admin_tutor_path(@tutor), method: 'patch' do |f| %>
               <%= f.hidden_field :application_status, value: 'Approved' %>
@@ -89,11 +89,11 @@
           <% end %>
         </div>
 
-        <div class="large-3 columns">
+        <div class="medium-3 columns">
           <%= mail_to @tutor.email, 'Email Tutor', class: 'button tiny expand secondary' %>
         </div>
 
-        <div class="large-3 columns">
+        <div class="medium-3 columns">
           <a href="#" data-reveal-id="confirmTutorDestroy" class='button tiny expand secondary'>Destroy Tutor</a>
         </div>
 
