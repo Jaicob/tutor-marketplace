@@ -70,7 +70,7 @@ class Tutor < ActiveRecord::Base
   def availability_booked_percent
     # this method should calculate how many hours of a tutor's availability are actually booked
     # possibly useful for identifying 'super-tutors'
-    # should probably only calculate percentages for past availability/appointments, since most bookins
+    # should probably only calculate percentages for past availability/appointments, since most bookings
     # are only completed 2 days in advance. also, don't want a tutor with more future set availability (a
     # good thing) to have a lower percentage than someone with less future availability
   end
@@ -80,11 +80,7 @@ class Tutor < ActiveRecord::Base
   end
 
   def incomplete_profile?
-    if self.birthdate && self.degree && self.major && self.extra_info && self.graduation_year && self.phone_number && self.profile_pic.url != 'panda.png' && self.transcript.url
-      false
-    else
-      true
-    end
+    (self.birthdate && self.degree && self.major && self.extra_info && self.graduation_year && self.phone_number && self.profile_pic.url != 'panda.png' && self.transcript.url) ? false : true
   end
 
   def complete_profile?
