@@ -1,6 +1,4 @@
 class TutorManagementMailer < ApplicationMailer
-  default from: 'info@axontutors.com'
-  default template_path: "mailers/#{self.name.underscore}"
 
   def welcome_email(user_id)
     @user = User.find(user_id)
