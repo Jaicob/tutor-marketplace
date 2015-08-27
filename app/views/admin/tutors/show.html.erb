@@ -20,7 +20,7 @@
           <td><%= @tutor.user.full_name %></td>
           <td><%= @tutor.user.email %></td>
           <td><%= @tutor.phone_number %></td>
-          <td><%= @tutor.birthdate.strftime('%-m-%d-%y') %></td>
+          <td><%= @tutor.birthdate.strftime('%-m-%d-%y') if @tutor.birthdate %></td>
           <td><%= @tutor.school.name %></td>
           <td></td>
         </tr>
@@ -94,9 +94,7 @@
         </div>
 
         <div class="large-3 columns">
-          <%= form_for :tutor, url: admin_tutor_path(@tutor), method: 'delete' do |f| %>
-              <%= f.submit 'Destroy Tutor', class: 'button tiny expand secondary' %>
-          <% end %>
+          <a href="#" data-reveal-id="confirmTutorDestroy" class='button tiny expand secondary'>Destroy Tutor</a>
         </div>
 
       </div>
@@ -133,3 +131,16 @@
   </div>
 </div>
 
+
+<!-- Confirmation model for destroying a Tutor account -->
+
+<div id="confirmTutorDestroy" class="reveal-modal small" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+  <h2 id="modalTitle">Are you sure you want to destroy this tutor account?</h2>
+  <p class="lead">All tutor information will be permanently deleted.</p>
+  <p>If you only want to temporarily suspend a tutor's account, you can de-activate it instead.</p>
+  <%= form_for :tutor, url: admin_tutor_path(@tutor), method: 'delete' do |f| %>
+    <%= f.submit 'Destroy Tutor', class: 'button tiny expand alert' %>
+  <% end %>
+  <%= link_to 'Back', admin_tutor_path(@tutor), class: 'button tiny expand secondary'  %>
+  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+</div>
