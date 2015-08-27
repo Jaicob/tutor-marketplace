@@ -64,11 +64,7 @@ class Tutor < ActiveRecord::Base
   end
 
   def formatted_courses
-    courses = []
-    self.courses.each do |course|
-      courses << [course.formatted_name]
-    end
-    courses.join("<br>").html_safe()
+    self.courses.map{ |course| course.formatted_name}.join("<br>").html_safe()
   end
 
   def availability_booked_percent
