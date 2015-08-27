@@ -57,6 +57,7 @@ source 'https://rubygems.org' do
   gem 'slim'
   gem 'devise-async'
   gem 'ransack'
+  gem 'doorkeeper'
 
   # Front End Stuff
   gem 'bower-rails', '~> 0.9.2'

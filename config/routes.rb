@@ -1,6 +1,23 @@
 # == Route Map
 #
 #                               Prefix Verb     URI Pattern                                     Controller#Action
+#                                      GET      /oauth/authorize/:code(.:format)                doorkeeper/authorizations#show
+#                  oauth_authorization GET      /oauth/authorize(.:format)                      doorkeeper/authorizations#new
+#                                      POST     /oauth/authorize(.:format)                      doorkeeper/authorizations#create
+#                                      DELETE   /oauth/authorize(.:format)                      doorkeeper/authorizations#destroy
+#                          oauth_token POST     /oauth/token(.:format)                          doorkeeper/tokens#create
+#                         oauth_revoke POST     /oauth/revoke(.:format)                         doorkeeper/tokens#revoke
+#                   oauth_applications GET      /oauth/applications(.:format)                   doorkeeper/applications#index
+#                                      POST     /oauth/applications(.:format)                   doorkeeper/applications#create
+#                new_oauth_application GET      /oauth/applications/new(.:format)               doorkeeper/applications#new
+#               edit_oauth_application GET      /oauth/applications/:id/edit(.:format)          doorkeeper/applications#edit
+#                    oauth_application GET      /oauth/applications/:id(.:format)               doorkeeper/applications#show
+#                                      PATCH    /oauth/applications/:id(.:format)               doorkeeper/applications#update
+#                                      PUT      /oauth/applications/:id(.:format)               doorkeeper/applications#update
+#                                      DELETE   /oauth/applications/:id(.:format)               doorkeeper/applications#destroy
+#        oauth_authorized_applications GET      /oauth/authorized_applications(.:format)        doorkeeper/authorized_applications#index
+#         oauth_authorized_application DELETE   /oauth/authorized_applications/:id(.:format)    doorkeeper/authorized_applications#destroy
+#                     oauth_token_info GET      /oauth/token/info(.:format)                     doorkeeper/token_info#show
 #                                 root GET      /                                               single_views#home
 #                     new_user_session GET      /users/sign_in(.:format)                        devise/sessions#new
 #                         user_session POST     /users/sign_in(.:format)                        devise/sessions#create
@@ -124,11 +141,27 @@
 
 Rails.application.routes.draw do
 
+  use_doorkeeper
+  # use_doorkeeper adds:
+  # GET       /oauth/authorize/:code
+  # GET       /oauth/authorize
+  # POST      /oauth/authorize
+  # DELETE    /oauth/authorize
+  # POST      /oauth/token
+  # POST      /oauth/revoke
+  # resources /oauth/applications
+  # GET       /oauth/authorized_applications
+  # DELETE    /oauth/authorized_applications/:id
+  # GET       /oauth/token/info
+
   root to: "single_views#home"
 
   devise_for :users, controllers: { registrations: "tutor_registration" }
+  
   resources :tutors
+  
   resources :tutor_courses
+  
   resources :slots
 
   get '/search' => 'single_views#tutor_search'
@@ -148,6 +181,28 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
+    get 'home'   => 'home#index'
+
+    resources :tutors do
+      collection { match 'search' => 'tutors#search', via: [:get, :post], as: :search }
+    end
+
+    resources :students do 
+       collection { match 'search' => 'students#search', via: [:get, :post], as: :search }
+    end
+    
+    resources :appointments do
+      collection { match 'search' => 'appointments#search', via: [:get, :post], as: :search }
+    end
+    
+    resources :slots do
+      collection { match 'search' => 'slots#search', via: [:get, :post], as: :search }
+    end
+    
+    resources :schools do 
+      collection { match 'search' => 'schools#search', via: [:get, :post], as: :search }
+    end
+
     resources :courses do
       collection do
         match 'search' => 'courses#search', via: [:get, :post], as: :search
@@ -156,37 +211,13 @@ Rails.application.routes.draw do
         post 'create_new_course_list' => 'courses#create_new_course_list'
       end
     end
-    resources :tutors do
-      collection do
-        match 'search' => 'tutors#search', via: [:get, :post], as: :search
-      end
-    end
-    resources :students do 
-       collection do
-        match 'search' => 'students#search', via: [:get, :post], as: :search
-      end
-    end
-    resources :appointments do
-      collection do
-        match 'search' => 'appointments#search', via: [:get, :post], as: :search
-      end
-    end
-    resources :slots do
-      collection do
-        match 'search' => 'slots#search', via: [:get, :post], as: :search
-      end
-    end
-    resources :schools do 
-      collection do
-        match 'search' => 'schools#search', via: [:get, :post], as: :search
-      end
-    end
-    get 'home'   => 'home#index'
+
   end
 
   mount API => '/'
 
   require 'sidekiq/web'
+
   mount Sidekiq::Web => '/sidekiq'
 
 end

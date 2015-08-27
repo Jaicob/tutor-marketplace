@@ -1,3 +1,5 @@
+require 'doorkeeper/grape/helpers'
+
 module V1
   class Subjects < Grape::API
 
@@ -5,6 +7,12 @@ module V1
 
       params do 
         optional :name, type: String
+      end
+
+      helpers Doorkeeper::Grape::Helpers
+
+      before do
+          doorkeeper_authorize!
       end
 
     resource :schools do
