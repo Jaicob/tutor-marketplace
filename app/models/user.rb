@@ -66,7 +66,7 @@ class User < ActiveRecord::Base
   end
 
   def set_school(user, params)
-    # used in Devise::RegistrationsController to set school during new Tutor sign-up
+    # used in Devise::RegistrationsController to set school during sign-up
     if params[:course][:school_id]
       user.update(school_id: params[:course][:school_id])
     end
@@ -74,7 +74,7 @@ class User < ActiveRecord::Base
 
   def slug_candidates
     # variations of a user's name to create unique slugs in case of duplicate names
-    [ "#{first_name}#{last_name}", "#{first_name[0]}#{last_name}", "#{first_name}#{last_name[0]}", "#{first_name[0..1]}#{last_name}", "#{first_name}#{last_name[0..1]}", "#{first_name[0..2]}#{last_name}", "#{first_name}#{last_name[0..2]}", "#{first_name[0..3]}#{last_name}", "#{first_name}#{last_name[0..3]}"
+    [ "#{first_name}#{last_name}", "#{first_name[0]}#{last_name}", "#{first_name}#{last_name[0]}", "#{first_name[0..1]}#{last_name}", "#{first_name}#{last_name[0..1]}", "#{first_name[0..2]}#{last_name}", "#{first_name}#{last_name[0..2]}", "#{first_name[0..3]}#{last_name}", "#{first_name}#{last_name[0..3]}" 
     ]
   end
 

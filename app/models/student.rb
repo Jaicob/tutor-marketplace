@@ -15,20 +15,11 @@ class Student < ActiveRecord::Base
   delegate :school, :full_name, :email, to: :user
 
   def subjects
+    # returns subjects that a student makes appointments for, only used in Admin section for analytics
     subjects = []
     self.appointments.map{ |appt| 
       subjects << appt.course.subject[:name] unless subjects.include?(appt.course.subject[:name])
     }
   end
-
-  # def days_since_last_appt
-  #   x = self.appointments.first.start_time.to_date
-  #   self.appointments.each do |appt|
-  #     if x < appt.start_time.to_date
-  #       x = appt.start_time.to_date
-  #     end
-  #   end
-  #   abs(x - Date.today)
-  # end
 
 end

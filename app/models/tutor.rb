@@ -68,11 +68,7 @@ class Tutor < ActiveRecord::Base
   end
 
   def availability_booked_percent
-    # this method should calculate how many hours of a tutor's availability are actually booked
-    # possibly useful for identifying 'super-tutors'
-    # should probably only calculate percentages for past availability/appointments, since most bookings
-    # are only completed 2 days in advance. also, don't want a tutor with more future set availability (a
-    # good thing) to have a lower percentage than someone with less future availability
+    # this method should calculate how many hours of a tutor's availability are actually booked possibly useful for identifying 'super-tutors' should probably only calculate percentages for past availability/appointments, since most bookings are only completed 2 days in advance. also, don't want a tutor with more future set availability (a good thing) to have a lower percentage than someone with less future availability
   end
 
   def active?
@@ -88,19 +84,11 @@ class Tutor < ActiveRecord::Base
   end
 
   def awaiting_approval?
-    if self.incomplete_profile? == false && self.active_status == 'Inactive'
-      true
-    else
-      false
-    end
+    (self.incomplete_profile? == false && self.active_status == 'Inactive') ? true : false
   end
 
   def zero_availability_set?
-    if self.incomplete_profile? == false && self.awaiting_approval? == false && self.slots.count == 0
-      true
-    else
-      false
-    end
+    (self.incomplete_profile? == false && self.awaiting_approval? == false && self.slots.count == 0) ? true : false
   end
 
   def profile_check(attribute)
@@ -127,24 +115,18 @@ class Tutor < ActiveRecord::Base
   end
 
   def update_action_redirect_path(tutor_params)
-    if tutor_params[:birthdate] || tutor_params[:phone_number]
-      "/#{self.user.slug}/dashboard/settings"
-    else
-      "/#{self.user.slug}/dashboard/profile"
-    end
+    (tutor_params[:birthdate] || tutor_params[:phone_number]) ? "/#{self.user.slug}/dashboard/settings" : "/#{self.user.slug}/dashboard/profile"
   end
 
   def change_user_role_to_tutor
     if self.user.role == 'student'
-      self.user.role = 'tutor'
-      self.user.save
+      self.user.update(role: 'tutor')
     end
   end
 
   def update_application_status
     if self.complete_profile? && self.application_status == 'Incomplete'
-      self.application_status = 'Complete'
-      self.save
+      self.update(application_status: 'Complete')
       TutorManagementMailer.delay.application_completed_email(self.user.id)
     end
   end
