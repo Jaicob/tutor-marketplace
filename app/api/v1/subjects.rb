@@ -1,5 +1,3 @@
-require 'doorkeeper/grape/helpers'
-
 module V1
   class Subjects < Grape::API
 

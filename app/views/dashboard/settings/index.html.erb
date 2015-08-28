@@ -18,7 +18,7 @@
 
     <% if @tutor %>
       <%= form_for @tutor do |f| %>
-        <h3>Tutor Settings</h3>
+        <h3 id="private-info">Private Info</h3>
 
         <%= f.label :birthdate %>
         <%= f.date_field :birthdate %>

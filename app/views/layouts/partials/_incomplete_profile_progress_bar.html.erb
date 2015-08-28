@@ -4,46 +4,22 @@
   </div>
 </div>
 <div class="row progress-icon">
-  <%= link_to(dashboard_edit_profile_user_path(@user, anchor: 'profile-fields')) do %>
-    <div class="medium-1 medium-offset-1 columns">
-      <p class="centered-for-icon"><%= @degree ? @check.html_safe() : @blank.html_safe() %></p>
-      <p class="subheader">Degree</p>
-    </div>
-  <% end %>
-  <%= link_to(dashboard_edit_profile_user_path(@user, anchor: 'profile-fields')) do %>
-    <div class="medium-1 columns">
-      <p class="centered-for-icon"><%= @major ? @check.html_safe() : @blank.html_safe()  %></p>
-      <p class="subheader">Major</p>
-    </div>
-  <% end %>
-  <%= link_to(dashboard_edit_profile_user_path(@user, anchor: 'profile-fields')) do %>
-    <div class="medium-1 columns">
-      <p class="centered-for-icon"><%= @extra_info ? @check.html_safe() : @blank.html_safe()  %></p>
-      <p class="subheader">Extra Info</p>
-    </div>
-  <% end %>
-  <%= link_to(dashboard_edit_profile_user_path(@user, anchor: 'profile-fields')) do %>
-    <div class="medium-1 columns">
-      <p class="centered-for-icon"><%= @graduation_year ? @check.html_safe() : @blank.html_safe()  %></p>
-      <p class="subheader">Graduation Year</p>
-    </div>
-  <% end %>
-  <%= link_to(dashboard_settings_user_path(@user, anchor: 'settings-form')) do %>
-    <div class="medium-1 columns">
-      <p class="centered-for-icon"><%= @phone_number ? @check.html_safe() : @blank.html_safe()  %></p>
-      <p class="subheader">Phone Number</p>
-    </div>
-  <% end %>
-  <%= link_to(dashboard_settings_user_path(@user, anchor: 'settings-form')) do %>
-    <div class="medium-1 columns">
-      <p class="centered-for-icon"><%= @birthdate ? @check.html_safe() : @blank.html_safe()  %></p>
-      <p class="subheader">Birthdate</p>
-    </div>
-  <% end %>
   <%= link_to(dashboard_edit_profile_user_path(@user, anchor: 'profile-pic')) do %>
-    <div class="medium-1 columns">
+    <div class="medium-1 medium-offset-3 columns">
       <p class="centered-for-icon"><%= @profile_pic ? @check.html_safe() : @blank.html_safe()  %></p>
       <p class="subheader">Profile Picture</p>
+    </div>
+  <% end %>
+  <%= link_to(dashboard_edit_profile_user_path(@user, anchor: 'public-info')) do %>
+    <div class="medium-1 columns">
+      <p class="centered-for-icon"><%= @public_info ? @check.html_safe() : @blank.html_safe() %></p>
+      <p class="subheader">Public Info</p>
+    </div>
+  <% end %>
+  <%= link_to(dashboard_settings_user_path(@user, anchor: 'private-info')) do %>
+    <div class="medium-1 columns">
+      <p class="centered-for-icon"><%= @private_info ? @check.html_safe() : @blank.html_safe()  %></p>
+      <p class="subheader">Private Info</p>
     </div>
   <% end %>
   <%= link_to(dashboard_settings_user_path(@user, anchor: 'appt-notes')) do %>
@@ -64,5 +40,4 @@
       <p class="subheader">Payment Info</p>
     </div>
   <% end %>
-  <div class="medium- columns"><!-- this is just a placeholder to push the last col to the left, def can be improved --></div>
 </div>

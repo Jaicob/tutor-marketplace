@@ -1,23 +1,6 @@
 # == Route Map
 #
 #                               Prefix Verb     URI Pattern                                     Controller#Action
-#                                      GET      /oauth/authorize/:code(.:format)                doorkeeper/authorizations#show
-#                  oauth_authorization GET      /oauth/authorize(.:format)                      doorkeeper/authorizations#new
-#                                      POST     /oauth/authorize(.:format)                      doorkeeper/authorizations#create
-#                                      DELETE   /oauth/authorize(.:format)                      doorkeeper/authorizations#destroy
-#                          oauth_token POST     /oauth/token(.:format)                          doorkeeper/tokens#create
-#                         oauth_revoke POST     /oauth/revoke(.:format)                         doorkeeper/tokens#revoke
-#                   oauth_applications GET      /oauth/applications(.:format)                   doorkeeper/applications#index
-#                                      POST     /oauth/applications(.:format)                   doorkeeper/applications#create
-#                new_oauth_application GET      /oauth/applications/new(.:format)               doorkeeper/applications#new
-#               edit_oauth_application GET      /oauth/applications/:id/edit(.:format)          doorkeeper/applications#edit
-#                    oauth_application GET      /oauth/applications/:id(.:format)               doorkeeper/applications#show
-#                                      PATCH    /oauth/applications/:id(.:format)               doorkeeper/applications#update
-#                                      PUT      /oauth/applications/:id(.:format)               doorkeeper/applications#update
-#                                      DELETE   /oauth/applications/:id(.:format)               doorkeeper/applications#destroy
-#        oauth_authorized_applications GET      /oauth/authorized_applications(.:format)        doorkeeper/authorized_applications#index
-#         oauth_authorized_application DELETE   /oauth/authorized_applications/:id(.:format)    doorkeeper/authorized_applications#destroy
-#                     oauth_token_info GET      /oauth/token/info(.:format)                     doorkeeper/token_info#show
 #                                 root GET      /                                               single_views#home
 #                     new_user_session GET      /users/sign_in(.:format)                        devise/sessions#new
 #                         user_session POST     /users/sign_in(.:format)                        devise/sessions#create
@@ -77,18 +60,7 @@
 #                dashboard_tutors_user GET      /:id/dashboard/tutors(.:format)                 dashboard/tutors#index
 #                                 user PATCH    /:id(.:format)                                  users#update
 #                                      PUT      /:id(.:format)                                  users#update
-#                 search_admin_courses GET|POST /admin/courses/search(.:format)                 admin/courses#search
-#        new_course_list_admin_courses POST     /admin/courses/new_course_list(.:format)        admin/courses#new_course_list
-# review_new_course_list_admin_courses POST     /admin/courses/review_new_course_list(.:format) admin/courses#review_new_course_list
-# create_new_course_list_admin_courses POST     /admin/courses/create_new_course_list(.:format) admin/courses#create_new_course_list
-#                        admin_courses GET      /admin/courses(.:format)                        admin/courses#index
-#                                      POST     /admin/courses(.:format)                        admin/courses#create
-#                     new_admin_course GET      /admin/courses/new(.:format)                    admin/courses#new
-#                    edit_admin_course GET      /admin/courses/:id/edit(.:format)               admin/courses#edit
-#                         admin_course GET      /admin/courses/:id(.:format)                    admin/courses#show
-#                                      PATCH    /admin/courses/:id(.:format)                    admin/courses#update
-#                                      PUT      /admin/courses/:id(.:format)                    admin/courses#update
-#                                      DELETE   /admin/courses/:id(.:format)                    admin/courses#destroy
+#                           admin_home GET      /admin/home(.:format)                           admin/home#index
 #                  search_admin_tutors GET|POST /admin/tutors/search(.:format)                  admin/tutors#search
 #                         admin_tutors GET      /admin/tutors(.:format)                         admin/tutors#index
 #                                      POST     /admin/tutors(.:format)                         admin/tutors#create
@@ -134,25 +106,23 @@
 #                                      PATCH    /admin/schools/:id(.:format)                    admin/schools#update
 #                                      PUT      /admin/schools/:id(.:format)                    admin/schools#update
 #                                      DELETE   /admin/schools/:id(.:format)                    admin/schools#destroy
-#                           admin_home GET      /admin/home(.:format)                           admin/home#index
+#                 search_admin_courses GET|POST /admin/courses/search(.:format)                 admin/courses#search
+#        new_course_list_admin_courses POST     /admin/courses/new_course_list(.:format)        admin/courses#new_course_list
+# review_new_course_list_admin_courses POST     /admin/courses/review_new_course_list(.:format) admin/courses#review_new_course_list
+# create_new_course_list_admin_courses POST     /admin/courses/create_new_course_list(.:format) admin/courses#create_new_course_list
+#                        admin_courses GET      /admin/courses(.:format)                        admin/courses#index
+#                                      POST     /admin/courses(.:format)                        admin/courses#create
+#                     new_admin_course GET      /admin/courses/new(.:format)                    admin/courses#new
+#                    edit_admin_course GET      /admin/courses/:id/edit(.:format)               admin/courses#edit
+#                         admin_course GET      /admin/courses/:id(.:format)                    admin/courses#show
+#                                      PATCH    /admin/courses/:id(.:format)                    admin/courses#update
+#                                      PUT      /admin/courses/:id(.:format)                    admin/courses#update
+#                                      DELETE   /admin/courses/:id(.:format)                    admin/courses#destroy
 #                                  api          /                                               API
 #                          sidekiq_web          /sidekiq                                        Sidekiq::Web
 #
 
 Rails.application.routes.draw do
-
-  use_doorkeeper
-  # use_doorkeeper adds:
-  # GET       /oauth/authorize/:code
-  # GET       /oauth/authorize
-  # POST      /oauth/authorize
-  # DELETE    /oauth/authorize
-  # POST      /oauth/token
-  # POST      /oauth/revoke
-  # resources /oauth/applications
-  # GET       /oauth/authorized_applications
-  # DELETE    /oauth/authorized_applications/:id
-  # GET       /oauth/token/info
 
   root to: "single_views#home"
 

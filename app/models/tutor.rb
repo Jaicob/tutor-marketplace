@@ -96,9 +96,16 @@ class Tutor < ActiveRecord::Base
       self.profile_pic.url == 'panda.png' ? false : true
     elsif attribute == :transcript
       self.transcript.url == nil ? false : true
+    elsif attribute == :public_info
+      (self.degree && self.major && self.extra_info && self.graduation_year) ? true : false
+    elsif attribute == :private_info
+      (self.birthdate && self.phone_number) ? true : false
+    elsif attribute == :payment_info
+      false # need to change, but waiting on payment fields to be added to model
     else
-      self.public_send(attribute) == nil ? false : true
+      self.public_send(attribute) ? true : false
     end
+
   end
 
   def send_active_status_change_email(tutor_params)
