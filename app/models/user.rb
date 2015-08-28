@@ -51,33 +51,30 @@ class User < ActiveRecord::Base
     :recoverable, :rememberable, :trackable, :validatable
 
   def create_tutor_account(user, params)
+    # used in Devise::RegistrationsController to create a Tutor while creating a User
     if params[:user][:tutor] != nil
+      # creates the tutor
       user.create_tutor!(
         extra_info: params[:user][:tutor][:extra_info],
         phone_number: params[:user][:tutor][:extra_info]
         )
+      # creates the tutor's first tutor_course
       user.tutor.tutor_courses.create(course_id: params[:tutor_course][:course_id], rate: params[:tutor_course][:rate])
+      # send welcome email
       TutorManagementMailer.delay.welcome_email(user.id)
     end
   end
 
   def set_school(user, params)
+    # used in Devise::RegistrationsController to set school during new Tutor sign-up
     if params[:course][:school_id]
       user.update(school_id: params[:course][:school_id])
     end
   end
 
   def slug_candidates
-    [ 
-      "#{first_name}#{last_name}", 
-      "#{first_name[0]}#{last_name}", 
-      "#{first_name}#{last_name[0]}", 
-      "#{first_name[0..1]}#{last_name}", 
-      "#{first_name}#{last_name[0..1]}", 
-      "#{first_name[0..2]}#{last_name}", 
-      "#{first_name}#{last_name[0..2]}", 
-      "#{first_name[0..3]}#{last_name}", 
-      "#{first_name}#{last_name[0..3]}"
+    # variations of a user's name to create unique slugs in case of duplicate names
+    [ "#{first_name}#{last_name}", "#{first_name[0]}#{last_name}", "#{first_name}#{last_name[0]}", "#{first_name[0..1]}#{last_name}", "#{first_name}#{last_name[0..1]}", "#{first_name[0..2]}#{last_name}", "#{first_name}#{last_name[0..2]}", "#{first_name[0..3]}#{last_name}", "#{first_name}#{last_name[0..3]}"
     ]
   end
 
@@ -86,10 +83,12 @@ class User < ActiveRecord::Base
   end
 
   def admin_scope(model_collection)
+    # only return tutors/appointments/etc. from one school for campus_manager
     if self.role == 'campus_manager'
       collection = model_collection.to_s
       self.school.public_send(collection)
-    else
+    else 
+    # return tutors/appointments/etc. from all schools for super_admin
       model = model_collection.to_s.humanize.chop.constantize
       model.all
     end

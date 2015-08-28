@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: "from@example.com"
-  layout 'mailer'
+  default from: 'info@axontutors.com'
+  default template_path: "mailers/#{self.name.underscore}"
 end
