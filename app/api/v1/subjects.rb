@@ -9,12 +9,6 @@ module V1
         optional :name, type: String
       end
 
-      helpers Doorkeeper::Grape::Helpers
-
-      before do
-          doorkeeper_authorize!
-      end
-
     resource :schools do
 
       desc "Returns a school and all of its subjects"

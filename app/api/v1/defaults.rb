@@ -29,10 +29,6 @@ module V1
           def declared_params
             declared(params, include_missing: false)
           end
-
-          def current_resource_owner
-            User.find(doorkeeper_token.resource_owner_id) if doorkeeper_token
-          end
         end
 
     end

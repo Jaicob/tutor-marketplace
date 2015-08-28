@@ -42,7 +42,7 @@ class User < ActiveRecord::Base
   validates :first_name, presence: true 
   validates :last_name, presence: true
 
-  enum role: [:student, :tutor, :campus_manager, :super_admin]\
+  enum role: [:student, :tutor, :campus_manager, :super_admin]
   
   extend FriendlyId
   friendly_id :slug_candidates, use: :slugged
@@ -62,7 +62,7 @@ class User < ActiveRecord::Base
   end
 
   def set_school(user, params)
-    if [:course][:school_id]
+    if params[:course][:school_id]
       user.update(school_id: params[:course][:school_id])
     end
   end
