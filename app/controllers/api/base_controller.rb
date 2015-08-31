@@ -10,7 +10,7 @@ class API::BaseController < ApplicationController
       restricted_controllers = %w(SlotsController)
       restricted_controllers.each do |controller|
         if self.class.to_s.include?(controller) && !current_user
-          return redirect_to restricted_access_page_path status: 401
+          return redirect_to restricted_access_path, status: 401
         end
       end
     end

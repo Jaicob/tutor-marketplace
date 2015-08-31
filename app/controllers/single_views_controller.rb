@@ -5,7 +5,7 @@ class SingleViewsController < ApplicationController
     @search_path = search_path()
   end
 
-  def restricted_access_page
+  def restricted_access
   end
 
 end
