@@ -8,10 +8,4 @@ class API::V1::CoursesController < API::V1::Defaults
     respond_with(@courses)
   end
 
-  private
-
-    def course_params
-      params.require(:course).permit(:call_number, :friendly_name, :school_id, :subject_id)
-    end
-
 end
