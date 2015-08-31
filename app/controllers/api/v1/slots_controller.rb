@@ -12,7 +12,7 @@ class API::V1::SlotsController < API::V1::Defaults
     if @slot.save
       respond_with(@slot)
     else
-      respond_with(status: 400)s
+      respond_with(status: 400)
     end
   end
 
