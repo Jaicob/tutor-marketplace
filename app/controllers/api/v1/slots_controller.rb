@@ -4,7 +4,8 @@ class API::V1::SlotsController < API::V1::Defaults
   before_action :set_slot, only: [:update, :destroy]
 
   def index
-    respond_with(@tutor.slots)
+    @slots = @tutor.slots
+    respond_with(@slots)
   end
 
   def create

@@ -135,9 +135,7 @@ Rails.application.routes.draw do
   root to: "single_views#home"
 
   devise_for :users, controllers: { registrations: "tutor_registration" }
-  resources :tutors
-  resources :tutor_courses
-  resources :slots
+  resources :tutors, :tutor_courses, :slots
 
   get '/search' => 'single_views#tutor_search'
   get '/restricted_access' => 'single_views#restricted_access'
@@ -165,31 +163,11 @@ Rails.application.routes.draw do
         post 'create_new_course_list' => 'courses#create_new_course_list'
       end
     end
-    resources :tutors do
-      collection do
-        match 'search' => 'tutors#search', via: [:get, :post], as: :search
-      end
-    end
-    resources :students do 
-       collection do
-        match 'search' => 'students#search', via: [:get, :post], as: :search
-      end
-    end
-    resources :appointments do
-      collection do
-        match 'search' => 'appointments#search', via: [:get, :post], as: :search
-      end
-    end
-    resources :slots do
-      collection do
-        match 'search' => 'slots#search', via: [:get, :post], as: :search
-      end
-    end
-    resources :schools do 
-      collection do
-        match 'search' => 'schools#search', via: [:get, :post], as: :search
-      end
-    end
+    resources :tutors       { collection { match 'search' => 'tutors#search', via: [:get, :post], as: :search }}
+    resources :students     { collection { match 'search' => 'students#search', via: [:get, :post], as: :search } }
+    resources :appointments { collection { match 'search' => 'appointments#search', via: [:get, :post], as: :search } }
+    resources :slots        { collection { match 'search' => 'slots#search', via: [:get, :post], as: :search } }
+    resources :schools      { collection { match 'search' => 'schools#search', via: [:get, :post], as: :search } }
     get 'home'   => 'home#index'
   end
 
