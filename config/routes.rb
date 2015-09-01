@@ -51,7 +51,7 @@
 #                                      PUT      /slots/:id(.:format)                                              slots#update
 #                                      DELETE   /slots/:id(.:format)                                              slots#destroy
 #                               search GET      /search(.:format)                                                 single_views#tutor_search
-#               restricted_access_page GET      /restricted_access_page(.:format)                                 single_views#restricted_access_page
+#                    restricted_access GET      /restricted_access(.:format)                                      single_views#restricted_access
 #                  dashboard_home_user GET      /:id/dashboard/home(.:format)                                     dashboard/home#index
 #              dashboard_schedule_user GET      /:id/dashboard/schedule(.:format)                                 dashboard/schedule#index
 #               dashboard_courses_user GET      /:id/dashboard/courses(.:format)                                  dashboard/courses#index
@@ -193,6 +193,7 @@ Rails.application.routes.draw do
     get 'home'   => 'home#index'
   end
 
+  # the 'only: []' syntax below after resources manually specifies which actions we want for a resource in order to avoid many extra, unused routes
   namespace :api, defaults: {format: :json} do
     namespace :v1 do 
       resources :schools, only: [] do 
