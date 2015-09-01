@@ -179,15 +179,15 @@ Rails.application.routes.draw do
         post 'create_new_course_list' => 'courses#create_new_course_list'
       end
     end
-    resources :tutors do collection { match 'search' => 'tutors#search', via: [:get, :post], as: :search } end
-    resources :students do collection { match 'search' => 'students#search', via: [:get, :post], as: :search } end
+    resources :tutors       do collection { match 'search' => 'tutors#search', via: [:get, :post], as: :search } end
+    resources :students     do collection { match 'search' => 'students#search', via: [:get, :post], as: :search } end
     resources :appointments do collection { match 'search' => 'appointments#search', via: [:get, :post], as: :search } end
     resources :slots        do collection { match 'search' => 'slots#search', via: [:get, :post], as: :search } end
     resources :schools      do collection { match 'search' => 'schools#search', via: [:get, :post], as: :search } end
     get 'home'   => 'home#index'
   end
 
-  # the 'only: []' syntax below after resources manually specifies which actions we want for a resource in order to avoid many extra, unused routes
+  # the 'only: []' syntax below after 'resources: collection_name' manually specifies which actions we want for a resource in order to avoid many extra, unused routes
   namespace :api, defaults: {format: :json} do
     namespace :v1 do 
       resources :schools, only: [] do 

@@ -1,5 +1,6 @@
 class API::BaseController < ApplicationController
   # before_action :restricted_access
+  before_filter :parse_request
   respond_to :json
 
   private 
@@ -14,5 +15,9 @@ class API::BaseController < ApplicationController
     #     end
     #   end
     # end
+
+    def parse_request
+      @json = JSON.parse(request.body.read)
+    end
 
 end
