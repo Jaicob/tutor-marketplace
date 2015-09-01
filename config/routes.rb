@@ -126,6 +126,22 @@
 #                    api_v1_tutor_slot PATCH    /api/v1/tutors/:tutor_id/slots/:id(.:format)                      api/v1/slots#update {:format=>:json}
 #                                      PUT      /api/v1/tutors/:tutor_id/slots/:id(.:format)                      api/v1/slots#update {:format=>:json}
 #                                      DELETE   /api/v1/tutors/:tutor_id/slots/:id(.:format)                      api/v1/slots#destroy {:format=>:json}
+#            api_v1_tutor_appointments GET      /api/v1/tutors/:tutor_id/appointments(.:format)                   api/v1/tutor_appointments#index {:format=>:json}
+#                                      POST     /api/v1/tutors/:tutor_id/appointments(.:format)                   api/v1/tutor_appointments#create {:format=>:json}
+#         new_api_v1_tutor_appointment GET      /api/v1/tutors/:tutor_id/appointments/new(.:format)               api/v1/tutor_appointments#new {:format=>:json}
+#        edit_api_v1_tutor_appointment GET      /api/v1/tutors/:tutor_id/appointments/:id/edit(.:format)          api/v1/tutor_appointments#edit {:format=>:json}
+#             api_v1_tutor_appointment GET      /api/v1/tutors/:tutor_id/appointments/:id(.:format)               api/v1/tutor_appointments#show {:format=>:json}
+#                                      PATCH    /api/v1/tutors/:tutor_id/appointments/:id(.:format)               api/v1/tutor_appointments#update {:format=>:json}
+#                                      PUT      /api/v1/tutors/:tutor_id/appointments/:id(.:format)               api/v1/tutor_appointments#update {:format=>:json}
+#                                      DELETE   /api/v1/tutors/:tutor_id/appointments/:id(.:format)               api/v1/tutor_appointments#destroy {:format=>:json}
+#          api_v1_student_appointments GET      /api/v1/students/:student_id/appointments(.:format)               api/v1/student_appointments#index {:format=>:json}
+#                                      POST     /api/v1/students/:student_id/appointments(.:format)               api/v1/student_appointments#create {:format=>:json}
+#       new_api_v1_student_appointment GET      /api/v1/students/:student_id/appointments/new(.:format)           api/v1/student_appointments#new {:format=>:json}
+#      edit_api_v1_student_appointment GET      /api/v1/students/:student_id/appointments/:id/edit(.:format)      api/v1/student_appointments#edit {:format=>:json}
+#           api_v1_student_appointment GET      /api/v1/students/:student_id/appointments/:id(.:format)           api/v1/student_appointments#show {:format=>:json}
+#                                      PATCH    /api/v1/students/:student_id/appointments/:id(.:format)           api/v1/student_appointments#update {:format=>:json}
+#                                      PUT      /api/v1/students/:student_id/appointments/:id(.:format)           api/v1/student_appointments#update {:format=>:json}
+#                                      DELETE   /api/v1/students/:student_id/appointments/:id(.:format)           api/v1/student_appointments#destroy {:format=>:json}
 #                 api_v1_search_tutors GET      /api/v1/search/tutors(.:format)                                   api/v1/search#tutors {:format=>:json}
 #                          sidekiq_web          /sidekiq                                                          Sidekiq::Web
 #
@@ -163,11 +179,11 @@ Rails.application.routes.draw do
         post 'create_new_course_list' => 'courses#create_new_course_list'
       end
     end
-    resources :tutors       { collection { match 'search' => 'tutors#search', via: [:get, :post], as: :search }}
-    resources :students     { collection { match 'search' => 'students#search', via: [:get, :post], as: :search } }
-    resources :appointments { collection { match 'search' => 'appointments#search', via: [:get, :post], as: :search } }
-    resources :slots        { collection { match 'search' => 'slots#search', via: [:get, :post], as: :search } }
-    resources :schools      { collection { match 'search' => 'schools#search', via: [:get, :post], as: :search } }
+    resources :tutors do collection { match 'search' => 'tutors#search', via: [:get, :post], as: :search } end
+    resources :students do collection { match 'search' => 'students#search', via: [:get, :post], as: :search } end
+    resources :appointments do collection { match 'search' => 'appointments#search', via: [:get, :post], as: :search } end
+    resources :slots        do collection { match 'search' => 'slots#search', via: [:get, :post], as: :search } end
+    resources :schools      do collection { match 'search' => 'schools#search', via: [:get, :post], as: :search } end
     get 'home'   => 'home#index'
   end
 
