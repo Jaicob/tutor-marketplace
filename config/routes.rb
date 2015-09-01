@@ -201,7 +201,11 @@ Rails.application.routes.draw do
         end
       end
       resources :tutors, only: [] do 
-        resources :slots, only: [:index, :create, :update, :destroy]     
+        resources :slots, only: [:index, :create, :update, :destroy]
+        resources :appointments, controller: 'tutor_appointments'   
+      end
+      resources :students, only: [] do
+        resources :appointments, controller: 'student_appointments'
       end
       get '/search/tutors' => 'search#tutors'
     end
