@@ -24,7 +24,7 @@ class School < ActiveRecord::Base
   extend FriendlyId
   friendly_id :name, use: :slugged
 
-  # This method is necessary for populating the drop-down menu of subjects in the course selector forms
+  # This method is necessary for populating the drop-down menu of subjects in the course selector form
   def subjects
     self.courses.map { |course|
       {
@@ -32,6 +32,13 @@ class School < ActiveRecord::Base
         id:   course.subject[:id]
       }
     }.uniq { |course| course[:name] }
+  end
+
+  # This method is necessary for populating the drop-down menu of courses in the course selector form
+  def courses_for_subject(subject_id)
+    self.courses.find_all do |course|
+      course.subject_id == subject_id.to_i
+    end
   end
 
 
