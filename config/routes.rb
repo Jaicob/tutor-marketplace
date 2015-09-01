@@ -193,6 +193,7 @@ Rails.application.routes.draw do
     get 'home'   => 'home#index'
   end
 
+  # the 'only: []' syntax below after resources manually specifies which actions we want for a resource in order to avoid many extra, unused routes
   namespace :api, defaults: {format: :json} do
     namespace :v1 do 
       resources :schools, only: [] do 
