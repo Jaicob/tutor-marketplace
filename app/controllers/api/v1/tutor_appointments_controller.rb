@@ -1,43 +1,69 @@
 class API::V1::TutorAppointmentsController < API::V1::Defaults
+  before_action :set_tutor
+  before_action :restrict_to_resource_owner, only: [:create, :update, :destroy]
+  before_filter :set_appointment, only: [:show, :update, :destroy]
 
   def index
-    @appointments = Tutor.find(params[:tutor_id]).appointments
+    @appointments = @tutor.appointments
     respond_with(@appointments)
   end
 
+  def show
+    respond_with(@appointment)
+  end
+
   def create
-    @appt = Appointment.new(appt_params)
-    if @appt.save
-      respond_with(@appt)
+    @appointment = Appointment.new
+    @appointment.assign_attributes(safe_params)
+    if @appointment.save
+      render json: @appointment
     else
-      respond_with(status: 400)
+      render nothing: true, status: 400
     end
   end
 
-  def show
-    respond_with(@appt)
-  end
-
   def update
-    if @appt.update(appt_params)
-      respond_with(@appt)
+    @appointment.assign_attributes(safe_params)
+    if @appointment.save
+      render json: @appointment
     else
-      respong_with(status: 400)
+      render nothing: true, status: 400
     end
   end
 
   def destroy
-    @appt.destroy
+    if @appointment.destroy
+      render nothing: true, status: 200
+    else
+      render nothing: true, status: 500
+    end
   end
 
   private
 
-    def set_appt
-      @appt = Appointment.find(params[:id])
+    def set_tutor
+      @tutor = Tutor.find(params[:tutor_id])
     end
-  
-    def appt_params
-      params.require(:appointment).permit(:student_id, :slot_id, :course_id, :start_time, :status)
+
+    def set_appointment
+      @appointment = Appointment.find(params[:id])
+    end
+
+    def safe_params
+      # Could not get default strong_params syntax to work with JSON format, this does exactly the same thing, except manually
+      hash = {}
+      hash[:student_id] = params[:student_id] if params[:student_id]
+      hash[:slot_id] = params[:slot_id] if params[:slot_id]
+      hash[:course_id] = params[:course_id] if params[:course_id]
+      hash[:start_time] = params[:start_time] if params[:start_time]
+      hash[:status] = params[:status] if params[:status]
+      return hash
+    end  
+
+    def restrict_to_resource_owner
+      if current_user.tutor != @tutor
+        return redirect_to restricted_access_path, status: 401
+      end
     end
 
 end

@@ -1,24 +1,10 @@
 class API::V1::StudentAppointmentsController < API::V1::Defaults
-  before_filter :find_appointment, only: [:show, :update]
-
-  before_filter only: :create do
-    unless @json.has_key?('appointment') && @json['appointment'].responds_to?(:[]) && @json['appointment']['name']
-      render nothing: true, status: :bad_request
-    end
-  end
-
-  before_filter only: :update do
-    unless @json.has_key?('appointment')
-      render nothing: true, status: :bad_request
-    end
-  end
-
-  before_filter only: :create do
-    @appointment = Appointment.find_by_name(@json['appointment']['name'])
-  end
+  before_action :set_student
+  before_action :restrict_to_resource_owner, only: [:create, :update, :destroy]
+  before_filter :set_appointment, only: [:show, :update, :destroy]
 
   def index
-    @appointments = Student.find(params[:student_id]).appointments
+    @appointments = @student.appointments
     respond_with(@appointments)
   end
 
@@ -27,31 +13,57 @@ class API::V1::StudentAppointmentsController < API::V1::Defaults
   end
 
   def create
-    if @appointment.present?
-      render nothing: true, status: :conflict
+    @appointment = Appointment.new
+    @appointment.assign_attributes(safe_params)
+    if @appointment.save
+      render json: @appointment
     else
-      @appointment = Appointment.new
-      @appointment.assign_attributes(@json['appointment'])
-      if @appointment.save
-        render json: @appointment
-      else
-         render nothing: true, status: :bad_request
-      end
+      render nothing: true, status: 400
     end
   end
 
   def update
-    @appointment.assign_attributes(@json['appointment'])
+    @appointment.assign_attributes(safe_params)
     if @appointment.save
-        render json: @appointment
+      render json: @appointment
     else
-        render nothing: true, status: :bad_request
+      render nothing: true, status: 400
     end
   end
 
- private
-   def find_appointment
-     @appointment = Appointment.find(params[:id])
-   end
+  def destroy
+    if @appointment.destroy
+      render nothing: true, status: 200
+    else
+      render nothing: true, status: 500
+    end
+  end
+
+  private
+
+    def set_student
+      @student = Student.find(params[:student_id])
+    end
+
+    def set_appointment
+      @appointment = Appointment.find(params[:id])
+    end
+
+    def safe_params
+      # Could not get default strong_params syntax to work with the JSON format, this does exactly the same thing, except manually
+      hash = {}
+      hash[:student_id] = params[:student_id] if params[:student_id]
+      hash[:slot_id] = params[:slot_id] if params[:slot_id]
+      hash[:course_id] = params[:course_id] if params[:course_id]
+      hash[:start_time] = params[:start_time] if params[:start_time]
+      hash[:status] = params[:status] if params[:status]
+      return hash
+    end
+
+    def restrict_to_resource_owner
+      if current_user.student != @student
+        return redirect_to restricted_access_path, status: 401
+      end
+    end  
 
 end
