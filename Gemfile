@@ -58,6 +58,9 @@ source 'https://rubygems.org' do
   gem 'devise-async'
   gem 'ransack'
 
+  gem 'fog'
+  gem 'fog-aws'
+
   # Front End Stuff
   gem 'bower-rails', '~> 0.9.2'
   gem 'react-rails', '~> 1.0'
