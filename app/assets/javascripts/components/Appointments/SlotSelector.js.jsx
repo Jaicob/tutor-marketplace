@@ -202,24 +202,17 @@ var SlotSelector = React.createClass({
     if (active) {
       // user un-selects a slot
       newSelectedSlots = newSelectedSlots.filter((targetSlot) => slot.start_time != targetSlot.start_time);
-
-      console.log("-----------------------------");
-      console.log("selected", newSelectedSlots.map((sslot) => moment(sslot.start_time).utc().format()));
       this.props.handleSlots(newSelectedSlots);
 
       var disabledSlots = this.getDisabledSlots(newSelectedSlots);
       this.props.handleDisabledSlots(disabledSlots);
-      console.log("disabled", disabledSlots.map((dslot) => moment(dslot.start_time).utc().format()));
     } else {
       // user selects a slot
       newSelectedSlots.push(slot);
       this.props.handleSlots(newSelectedSlots);
-      console.log("-----------------------------");
-      console.log("selected", newSelectedSlots.map((sslot) => moment(sslot.start_time).utc().format()));
 
       var disabledSlots = this.getDisabledSlots(newSelectedSlots);
       this.props.handleDisabledSlots(disabledSlots);
-      console.log("disabled", disabledSlots.map((dslot) => moment(dslot.start_time).utc().format()));
     }
   },
   renderSlotDays: function () {
