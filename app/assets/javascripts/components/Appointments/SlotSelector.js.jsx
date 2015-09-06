@@ -1,18 +1,20 @@
 var SlotSelector = React.createClass({
-  rangeDistance: 6, // visible dates is rangeDistance + 1
+  rangeDistance: 5,
   rangeUnit: 'days',
   getInitialState: function () {
-      return {
-          allSlots: [],
-          startRange: moment(),
-          endRange:   moment().add(this.rangeDistance, this.rangeUnit)
-      };
+    return {
+        allSlots: [],
+        startRange: moment(),
+        endRange:   moment().add(2 + this.rangeDistance, this.rangeUnit)
+    };
   },
   componentDidMount: function () {
     this.componentWillReceiveProps(this.props);
   },
   componentWillReceiveProps: function (nextProps) {
-    this.fetchSlots(nextProps.tutor);
+    if(nextProps.disabledSlots.length == 0) {
+      this.fetchSlots(nextProps.tutor);
+    }
   },
   fetchSlots: function (tutor) {
     var endpoint = API.endpoints.tutor_slots.get({
@@ -37,11 +39,8 @@ var SlotSelector = React.createClass({
 
     request.success(function(data){
       this.setState({
-        allSlots: this.groupSlotsByDate(
-          this.divideAvailabilityIntoSlots(data)
-        )
+        allSlots: this.parseData(data)
       });
-      console.log(this.state.allSlots);
     }.bind(this));
 
 
@@ -58,7 +57,13 @@ var SlotSelector = React.createClass({
     //   });
     // }.bind(this)
   },
-  divideAvailabilityIntoSlots: function (slots) {
+  parseData: function (data) {
+    appointmentCandidates = this.getAppointmentCandidates(data);
+    goodCandidates = this.disableBadCandidates(appointmentCandidates);
+    parsedData = this.groupAppointmentCandidates(goodCandidates);
+    return parsedData;
+  },
+  getAppointmentCandidates: function (slots) {
       slots = slots.map(function(slot){
         var startTimeOfSlot = moment(slot.start_time);
         var endTimeOfSlot = moment(startTimeOfSlot).add(slot.duration, 's');
@@ -83,7 +88,7 @@ var SlotSelector = React.createClass({
         } else {
           return allStartTimesForSlot;
         }
-      }, true);
+      });
 
       if (slots.length < 1) {
         console.log("not enough slot times");
@@ -96,11 +101,16 @@ var SlotSelector = React.createClass({
 
       return slots;
   },
-  groupSlotsByDate: function (slots) {
+  disableBadCandidates: function(data){
+    return data.map(function(slot){
+      slot.enabled = (this.props.disabledSlots.indexOf(slot) < 0);
+      return slot;
+    }.bind(this));
+  },
+  groupAppointmentCandidates: function (slots) {
     var newSlots = {}
     for (var slot = 0; slot < slots.length; slot++) {
-    // for (var slot = slots.length - 1; slot >= 0; slot--) {
-      var date = moment(slots[slot].start_time).format("MM-DD-YYYY")
+      var date = moment(slots[slot].start_time).utc().format("MM-DD-YYYY")
       if (newSlots[date]) {
         newSlots[date].push(slots[slot])
       } else {
@@ -111,34 +121,98 @@ var SlotSelector = React.createClass({
   },
   handleNextRange: function () {
     this.setState({
-      startRange: this.state.startRange.add(this.rangeDistance, this.rangeUnit),
-      endRange:   this.state.endRange.add(this.rangeDistance, this.rangeUnit)
+      startRange: this.state.startRange.add(1 + this.rangeDistance, this.rangeUnit),
+      endRange:   this.state.endRange.add(1 + this.rangeDistance, this.rangeUnit)
     });
   },
   handlePreviousRange: function () {
     this.setState({
-      startRange: this.state.startRange.subtract(this.rangeDistance, this.rangeUnit),
-      endRange:   this.state.endRange.subtract(this.rangeDistance, this.rangeUnit)
+      startRange: this.state.startRange.subtract(1 + this.rangeDistance, this.rangeUnit),
+      endRange:   this.state.endRange.subtract(1 + this.rangeDistance, this.rangeUnit)
     });
   },
-  handleSlotClick: function (slot) {
-    var newSelectedSlots = this.props.selectedSlots
+  flatten: function (target) {
+    var flattenedObject = [];
+    for (key in target) {
+      Array.prototype.push.apply(flattenedObject, target[key]);
+    }
+    return flattenedObject;
+  },
+  getDisabledSlots: function (selectedSlots) {
+    selectedTimeRanges = selectedSlots.map(function(slot) {
+        futureNearbySlots = moment.range(
+          moment(slot.start_time).add({ minutes: 1 }),
+          moment(slot.start_time).add({ minutes: 59 })
+        );
+        pastNearbySlots = moment.range(
+            moment(slot.start_time).subtract({ minutes: 59 }),
+            moment(slot.start_time).subtract({ minutes: 1 })
+        );
+        return [futureNearbySlots, pastNearbySlots];
+    })
+
+    if (selectedTimeRanges.length > 0) {
+      selectedTimeRanges = selectedTimeRanges.reduce((finalRange, partialRange) => finalRange.concat(partialRange));
+    };
+
+    var disabledSlots = [];
+    var allSlots = this.flatten(this.state.allSlots);
+
+    selectedTimeRanges.forEach(function(slotRange){
+      allSlots.forEach(function(slot) {
+        var condition = moment(slot.start_time).within(slotRange);
+
+        if (condition) {
+          disabledSlots.push(slot);
+        }
+      }.bind(this))
+    }.bind(this));
+
+    // merge with existing disabled slots and make unique
+    // disabledSlots = disabledSlots.concat(this.props.disabledSlots)
+    disabledSlots = disabledSlots.filter(
+      (item, pos) => disabledSlots.indexOf(item) == pos
+    );
+
+    return disabledSlots;
+  },
+  handleSlotClick: function (slot, active) {
+    var newSelectedSlots = this.props.selectedSlots;
+
+    // checks if slot exists in selectedSlots
+    // var exists = newSelectedSlots.filter(
+    //   (item) => (item.id === slot.id) && (item.start_time === slot.start_time)
+    // ).length > 0;
 
     // toggle slot from selected/unselected states
-    var exists = newSelectedSlots.filter(function (item) { return item.id === slot.id }).length > 0
-    if (exists) {
-      newSelectedSlots = newSelectedSlots.filter(function (item) { return item.id !== slot.id })
-    } else {
-      newSelectedSlots.push(slot);
-    }
+    if (active) {
+      // user un-selects a slot
+      newSelectedSlots = newSelectedSlots.filter((targetSlot) => slot.start_time != targetSlot.start_time);
 
-    this.props.handleSlots(newSelectedSlots);
+      console.log("-----------------------------");
+      console.log("selected", newSelectedSlots.map((sslot) => moment(sslot.start_time).utc().format()));
+      this.props.handleSlots(newSelectedSlots);
+
+      var disabledSlots = this.getDisabledSlots(newSelectedSlots);
+      this.props.handleDisabledSlots(disabledSlots);
+      console.log("disabled", disabledSlots.map((dslot) => moment(dslot.start_time).utc().format()));
+    } else {
+      // user selects a slot
+      newSelectedSlots.push(slot);
+      this.props.handleSlots(newSelectedSlots);
+      console.log("-----------------------------");
+      console.log("selected", newSelectedSlots.map((sslot) => moment(sslot.start_time).utc().format()));
+
+      var disabledSlots = this.getDisabledSlots(newSelectedSlots);
+      this.props.handleDisabledSlots(disabledSlots);
+      console.log("disabled", disabledSlots.map((dslot) => moment(dslot.start_time).utc().format()));
+    }
   },
   renderSlotDays: function () {
     var result = [];
     moment.range([this.state.startRange, this.state.endRange]).by("day", function (day) {
       var slots = this.state.allSlots[day.format("MM-DD-YYYY")] || [];
-      result.push(<Day day={day} slots={slots} handleSlotClick={this.handleSlotClick} />);
+      result.push(<Day day={day} slots={slots} selectedSlots={this.props.selectedSlots} disabledSlots={this.props.disabledSlots} handleSlotClick={this.handleSlotClick} />);
     }.bind(this));
     return result;
   },

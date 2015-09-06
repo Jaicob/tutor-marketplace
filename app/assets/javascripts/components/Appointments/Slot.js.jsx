@@ -1,14 +1,14 @@
 var Slot = React.createClass({
   getInitialState: function () {
       return {
-          active: false
+          active: this.props.selected
       };
   },
   handleClick: function () {
     this.setState({
       active: !this.state.active
     })
-    this.props.handleSlotClick(this.props.slot)
+    this.props.handleSlotClick(this.props.slot, this.state.active)
   },
   generateStyle: function () {
     if(this.state.active) {
