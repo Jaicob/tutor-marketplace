@@ -128,10 +128,22 @@ var SlotSelector = React.createClass({
     });
   },
   handlePreviousRange: function () {
-    this.setState({
-      startRange: this.state.startRange.subtract(1 + this.rangeDistance, this.rangeUnit),
-      endRange:   this.state.endRange.subtract(1 + this.rangeDistance, this.rangeUnit)
-    });
+    var today = moment();
+    var proposedStartRange = this.state.startRange.subtract(1 + this.rangeDistance, this.rangeUnit);
+    var proposedEndRange   = this.state.endRange.subtract(1 + this.rangeDistance, this.rangeUnit);
+
+    var isValidRange = !proposedStartRange.isBefore(today, 'day');
+    if (isValidRange) {
+      this.setState({
+        startRange: proposedStartRange,
+        endRange:   proposedEndRange
+      });
+    } else {
+      this.setState({
+        startRange: moment(),
+        endRange:   moment().add(2 + this.rangeDistance, this.rangeUnit)
+      })
+    };
   },
   flatten: function (target) {
     var flattenedObject = [];
