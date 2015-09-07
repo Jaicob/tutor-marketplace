@@ -31,13 +31,7 @@ module Processor
           ip: tutor.sign_in_ip
         }
       )
-      acct.external_accounts.create(
-        object: "bank_account",
-        country: "US",
-        currency: "usd",
-        default_for_currency: true,
-        account_number: token
-      )
+      acct.external_accounts.create({ :external_account => token })
       tutor.update_attributes(acct_id: acct[:id])
     end
 
