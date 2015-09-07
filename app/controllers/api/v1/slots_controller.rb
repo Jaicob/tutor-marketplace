@@ -55,15 +55,12 @@ class API::V1::SlotsController < API::V1::Defaults
 
     def safe_params
       hash = {}
-      attributes = [:tutor_id, :status, :start_time, :duration, :reservation_min, :reservation_max]
-      attributes.each do |attr|
-      end
-      # hash[:tutor_id] = params[:tutor_id] if params[:tutor_id]
-      # hash[:status] = params[:status] if params[:status]
-      # hash[:start_time] = params[:start_time] if params[:start_time]
-      # hash[:duration] = params[:duration] if params[:duration]
-      # hash[:reservation_min] = params[:reservation_min] if params[:reservation_min]
-      # hash[:reservation_max] = params[:reservation_max] if params[:reservation_max]
+      hash[:tutor_id] = params[:tutor_id] if params[:tutor_id]
+      hash[:status] = params[:status] if params[:status]
+      hash[:start_time] = params[:start_time] if params[:start_time]
+      hash[:duration] = params[:duration] if params[:duration]
+      hash[:reservation_min] = params[:reservation_min] if params[:reservation_min]
+      hash[:reservation_max] = params[:reservation_max] if params[:reservation_max]
       return hash
     end 
 
