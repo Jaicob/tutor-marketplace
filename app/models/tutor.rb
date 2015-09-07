@@ -41,6 +41,7 @@ class Tutor < ActiveRecord::Base
 
   validates :extra_info, presence: true
   validates :phone_number, presence: true
+  validates :phone_number, format: { with: /\d{3}-\d{3}-\d{4}/, message: "bad format" }
 
   after_create :change_user_role_to_tutor
   after_commit :update_application_status
@@ -122,7 +123,7 @@ class Tutor < ActiveRecord::Base
   end
 
   def update_action_redirect_path(tutor_params)
-    (tutor_params[:birthdate] || tutor_params[:phone_number]) ? "/#{self.user.slug}/dashboard/settings" : "/#{self.user.slug}/dashboard/profile"
+    (tutor_params[:birthdate] || tutor_params[:phone_number]) ? "/#{self.user.slug}/dashboard/settings/private_information" : "/#{self.user.slug}/dashboard/settings/profile_settings"
   end
 
   def change_user_role_to_tutor
