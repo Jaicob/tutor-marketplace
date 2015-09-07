@@ -53,6 +53,8 @@ source 'https://rubygems.org' do
   gem 'slim'
   gem 'devise-async'
   gem 'ransack'
+  gem 'fog'
+  gem 'fog-aws'
 
   # Front End Stuff
   gem 'bower-rails', '~> 0.9.2'
