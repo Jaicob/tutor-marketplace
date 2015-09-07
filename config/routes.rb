@@ -58,7 +58,7 @@
 #                           dashboard_profile_user GET      /:id/dashboard/profile(.:format)                                  dashboard/profile#index
 #                      dashboard_edit_profile_user GET      /:id/dashboard/edit_profile(.:format)                             dashboard/profile#edit
 #         dashboard_settings_account_settings_user GET      /:id/dashboard/settings/account_settings(.:format)                dashboard/settings#account_settings
-#           dashboard_settings_tutor_settings_user GET      /:id/dashboard/settings/tutor_settings(.:format)                  dashboard/settings#tutor_settings
+#      dashboard_settings_private_information_user GET      /:id/dashboard/settings/private_information(.:format)             dashboard/settings#private_information
 #         dashboard_settings_profile_settings_user GET      /:id/dashboard/settings/profile_settings(.:format)                dashboard/settings#profile_settings
 #     dashboard_settings_appointment_settings_user GET      /:id/dashboard/settings/appointment_settings(.:format)            dashboard/settings#appointment_settings
 #   dashboard_settings_tutor_payment_settings_user GET      /:id/dashboard/settings/tutor_payment_settings(.:format)          dashboard/settings#tutor_payment_settings
