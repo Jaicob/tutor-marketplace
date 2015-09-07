@@ -31,7 +31,7 @@ RSpec.describe TutorCourse, type: :model do
   end
 
   it "returns a nicely formatted name with .formatted_name" do 
-    expect(build(:tutor_course).formatted_name).to start_with("Chemistry 101: Intro to Chemistry at University") # University number will change, start_with and leaving off number avoids that problem
+    expect(build(:tutor_course).formatted_name).to start_with("Math 101: Pre Calculus") # University number will change, start_with and leaving off number avoids that problem
   end
 
 end
