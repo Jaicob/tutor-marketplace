@@ -7,8 +7,9 @@ WORKDIR /home/rails/my-app
 RUN sudo npm install -g bower
 
 # Install virtual window for capybara-webkit
+RUN sudo apt-get update
 RUN yes | sudo apt-get install xvfb
-# RUN yes | sudo apt-get install dbus
+RUN yes | sudo apt-get install dbus --fix-missing
 
 # Place custom unicorn configs here
 ADD config/unicorn.rb /etc/my-app/config/unicorn.rb

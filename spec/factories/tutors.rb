@@ -40,6 +40,7 @@ FactoryGirl.define do
       trait :application_complete do
         profile_pic Rack::Test::UploadedFile.new(File.open(File.join(Rails.root, '/spec/factories/files/profile_pic.jpg')))
         transcript Rack::Test::UploadedFile.new(File.open(File.join(Rails.root, '/spec/factories/files/transcript.doc')))
+        application_status "Complete"
       end
 
       factory :second_complete_tutor do 

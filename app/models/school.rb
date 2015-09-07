@@ -18,7 +18,7 @@ class School < ActiveRecord::Base
   has_many :appointments, through: :courses, dependent: :destroy
   has_many :slots, through: :tutors, dependent: :destroy
 
-  validates :name, presence: true, uniqueness: true
+  validates :name, presence: true
   validates :location, presence: true
 
   extend FriendlyId
