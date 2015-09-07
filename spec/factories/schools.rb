@@ -41,8 +41,8 @@ FactoryGirl.define do
 
     factory :school_with_two_subjects do 
       after(:create) do |school|
-        create(:course, school: school, subject: {name: 'Biology', id: 0})
-        create(:course, school: school, subject: {name: 'Chemistry', id: 1})
+        create(:course, school: school, subject: FactoryGirl.create(:subject) )
+        create(:course, school: school, subject: FactoryGirl.create(:subject, :Chem) )
       end
     end
   end
