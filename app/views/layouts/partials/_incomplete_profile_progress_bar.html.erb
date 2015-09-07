@@ -22,19 +22,19 @@
       <p class="subheader">Private Info</p>
     </div>
   <% end %>
-  <%= link_to(dashboard_settings_user_path(@user, anchor: 'appt-notes')) do %>
+  <%= link_to(dashboard_settings_appointment_settings_user_path(@user, anchor: 'appt-notes')) do %>
     <div class="medium-1 columns">
       <p class="centered-for-icon"><%= @appt_notes ? @check.html_safe() : @blank.html_safe()  %></p>
       <p class="subheader">Personal Note</p>
     </div>
   <% end %>
-  <%= link_to(dashboard_settings_user_path(@user, anchor: 'appt-notes')) do %>
+  <%= link_to(dashboard_settings_tutor_settings_user_path(@user, anchor: 'appt-notes')) do %>
     <div class="medium-1 columns">
       <p class="centered-for-icon"><%= @transcript ? @check.html_safe() : @blank.html_safe()  %></p>
       <p class="subheader">Transcript</p>
     </div>
   <% end %>
-  <%= link_to(dashboard_settings_user_path(@user, anchor: 'appt-notes')) do %>
+  <%= link_to(dashboard_settings_payment_settings_user_path(@user, anchor: 'appt-notes')) do %>
     <div class="medium-1 columns">
       <p class="centered-for-icon"><%= @payment_info ? @check.html_safe() : @blank.html_safe()  %></p>
       <p class="subheader">Payment Info</p>
