@@ -116,7 +116,7 @@ ActiveRecord::Schema.define(version: 20150729152259) do
     t.date     "birthdate"
     t.string   "profile_pic"
     t.string   "transcript"
-    t.string   "appt_notes"
+    t.text     "appt_notes"
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
   end
