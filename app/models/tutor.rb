@@ -43,6 +43,7 @@ class Tutor < ActiveRecord::Base
   validates :phone_number, presence: true
 
   after_create :change_user_role_to_tutor
+  after_commit :update_application_status
 
   def crop_profile_pic(tutor_params)
     profile_pic.recreate_versions! if tutor_params[:crop_x]
@@ -78,12 +79,20 @@ class Tutor < ActiveRecord::Base
     # good thing) to have a lower percentage than someone with less future availability
   end
 
+  def active?
+    self.active_status == 'Active' ? true : false
+  end
+
   def incomplete_profile?
     if self.birthdate && self.degree && self.major && self.extra_info && self.graduation_year && self.phone_number && self.profile_pic.url != 'panda.png' && self.transcript.url
       false
     else
       true
     end
+  end
+
+  def complete_profile?
+    self.incomplete_profile? ? false : true
   end
 
   def awaiting_approval?
@@ -105,6 +114,8 @@ class Tutor < ActiveRecord::Base
   def profile_check(attribute)
     if attribute == :profile_pic
       self.profile_pic.url == 'panda.png' ? false : true
+    elsif attribute == :transcript
+      self.transcript.url == nil ? false : true
     else
       self.public_send(attribute) == nil ? false : true
     end
@@ -112,10 +123,10 @@ class Tutor < ActiveRecord::Base
 
   def send_active_status_change_email(tutor_params)
     if tutor_params[:active_status] == 'Active'
-      TutorManagementMailer.delay.activation_email(self.id)
+      TutorManagementMailer.delay.activation_email(self.user.id)
     end
     if tutor_params[:active_status] == 'Inactive'
-      TutorManagementMailer.delay.deactivation_email(self.id)
+      TutorManagementMailer.delay.deactivation_email(self.user.id)
     end
   end
 
@@ -125,9 +136,9 @@ class Tutor < ActiveRecord::Base
 
   def update_action_redirect_path(tutor_params)
     if tutor_params[:birthdate] || tutor_params[:phone_number]
-      "/#{self.user.id}/dashboard/settings"
+      "/#{self.user.slug}/dashboard/settings"
     else
-      "/#{self.user.id}/dashboard/profile"
+      "/#{self.user.slug}/dashboard/profile"
     end
   end
 
@@ -135,6 +146,22 @@ class Tutor < ActiveRecord::Base
     if self.user.role == 'student'
       self.user.role = 'tutor'
       self.user.save
+    end
+  end
+
+  def update_application_status
+    if self.complete_profile? && self.application_status == 'Incomplete'
+      self.application_status = 'Complete'
+      self.save
+      TutorManagementMailer.delay.application_completed_email(self.user.id)
+    end
+  end
+
+  def self.applications_awaiting_approval(user) # get user to determine admin level
+    if user.role == 'campus_manager' # campus-mangers only see applications at their school
+      user.school.tutors.where(application_status: 1, active_status: 0)
+    else # super-admin can see all applications across all schools
+      Tutor.where(application_status: 1, active_status: 0)
     end
   end
 

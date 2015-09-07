@@ -21,6 +21,7 @@
 #  first_name             :string
 #  last_name              :string
 #  role                   :integer          default(0)
+#  payment_info           :string
 #  invitation_token       :string
 #  invitation_created_at  :datetime
 #  invitation_sent_at     :datetime
@@ -55,7 +56,8 @@ class User < ActiveRecord::Base
         extra_info: params[:user][:tutor][:extra_info],
         phone_number: params[:user][:tutor][:extra_info]
         )
-      user.tutor.tutor_courses.create(course_id: params[:course][:course_id], rate: params[:tutor_course][:rate])
+      user.tutor.tutor_courses.create(course_id: params[:tutor_course][:course_id], rate: params[:tutor_course][:rate])
+      TutorManagementMailer.delay.welcome_email(user.id)
     end
   end
 

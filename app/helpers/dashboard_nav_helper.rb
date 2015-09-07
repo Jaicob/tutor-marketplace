@@ -16,7 +16,7 @@ module DashboardNavHelper
       schedule_link           = dashboard_schedule_user_path(current_user)
       courses_link            = dashboard_courses_user_path(current_user)
       profile_link            = dashboard_profile_user_path(current_user)
-      settings_link           = dashboard_settings_user_path(current_user)
+      settings_link           = dashboard_settings_account_settings_user_path(current_user)
       school_and_courses_link = dashboard_link
       reports_link            = dashboard_link
       become_a_tutor_link     = new_tutor_path
@@ -35,7 +35,6 @@ module DashboardNavHelper
       student: {
         'Dashboard'      => dashboard_link,
         'Settings'       => settings_link,
-        'Become a Tutor' => become_a_tutor_link,
         'Find a Tutor'   => tutor_search_link,
       },
 

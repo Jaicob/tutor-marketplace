@@ -25,7 +25,12 @@ class ApplicationController < ActionController::Base
   end
 
   def set_user
-    @user = User.find(current_user.id)
+    if current_user
+      @user = User.find(current_user.id)
+    else
+      flash.alert = 'Please sign in to access your dashboard.'
+      redirect_to new_user_session_path
+    end
   end
 
   def set_tutor
@@ -40,6 +45,10 @@ class ApplicationController < ActionController::Base
     if current_user.role == 'campus_manager'
       @school = current_user.school
     end
+  end
+
+  def set_school
+    @school = current_user.school
   end
 
   def authorized_for_admin_area?
