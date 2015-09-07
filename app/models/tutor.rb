@@ -41,6 +41,8 @@ class Tutor < ActiveRecord::Base
 
   validates :extra_info, presence: true
   validates :phone_number, presence: true
+  validates :phone_number, format: { with: /\d{3}-\d{3}-\d{4}/, message: "bad format" }
+  # only accepts 10 digit number with two hyphens - ex: '111-111-1111'
 
   after_create :change_user_role_to_tutor
   after_commit :update_application_status
@@ -64,19 +66,11 @@ class Tutor < ActiveRecord::Base
   end
 
   def formatted_courses
-    courses = []
-    self.courses.each do |course|
-      courses << [course.formatted_name]
-    end
-    courses.join("<br>").html_safe()
+    self.courses.map{ |course| course.formatted_name}.join("<br>").html_safe()
   end
 
   def availability_booked_percent
-    # this method should calculate how many hours of a tutor's availability are actually booked
-    # possibly useful for identifying 'super-tutors'
-    # should probably only calculate percentages for past availability/appointments, since most bookins
-    # are only completed 2 days in advance. also, don't want a tutor with more future set availability (a
-    # good thing) to have a lower percentage than someone with less future availability
+    # this method should calculate how many hours of a tutor's availability are actually booked possibly useful for identifying 'super-tutors' should probably only calculate percentages for past availability/appointments, since most bookings are only completed 2 days in advance. also, don't want a tutor with more future set availability (a good thing) to have a lower percentage than someone with less future availability
   end
 
   def active?
@@ -84,11 +78,7 @@ class Tutor < ActiveRecord::Base
   end
 
   def incomplete_profile?
-    if self.birthdate && self.degree && self.major && self.extra_info && self.graduation_year && self.phone_number && self.profile_pic.url != 'panda.png' && self.transcript.url
-      false
-    else
-      true
-    end
+    (self.birthdate && self.degree && self.major && self.extra_info && self.graduation_year && self.phone_number && self.profile_pic.url != 'panda.png' && self.transcript.url) ? false : true
   end
 
   def complete_profile?
@@ -96,19 +86,11 @@ class Tutor < ActiveRecord::Base
   end
 
   def awaiting_approval?
-    if self.incomplete_profile? == false && self.active_status == 'Inactive'
-      true
-    else
-      false
-    end
+    (self.incomplete_profile? == false && self.active_status == 'Inactive') ? true : false
   end
 
   def zero_availability_set?
-    if self.incomplete_profile? == false && self.awaiting_approval? == false && self.slots.count == 0
-      true
-    else
-      false
-    end
+    (self.incomplete_profile? == false && self.awaiting_approval? == false && self.slots.count == 0) ? true : false
   end
 
   def profile_check(attribute)
@@ -116,9 +98,16 @@ class Tutor < ActiveRecord::Base
       self.profile_pic.url == 'panda.png' ? false : true
     elsif attribute == :transcript
       self.transcript.url == nil ? false : true
+    elsif attribute == :public_info
+      (self.degree && self.major && self.extra_info && self.graduation_year) ? true : false
+    elsif attribute == :private_info
+      (self.birthdate && self.phone_number) ? true : false
+    elsif attribute == :payment_info
+      false # need to change, but waiting on payment fields to be added to model
     else
-      self.public_send(attribute) == nil ? false : true
+      self.public_send(attribute) ? true : false
     end
+
   end
 
   def send_active_status_change_email(tutor_params)
@@ -135,24 +124,18 @@ class Tutor < ActiveRecord::Base
   end
 
   def update_action_redirect_path(tutor_params)
-    if tutor_params[:birthdate] || tutor_params[:phone_number]
-      "/#{self.user.slug}/dashboard/settings"
-    else
-      "/#{self.user.slug}/dashboard/profile"
-    end
+    (tutor_params[:birthdate] || tutor_params[:phone_number]) ? "/#{self.user.slug}/dashboard/settings/private_information" : "/#{self.user.slug}/dashboard/settings/profile_settings"
   end
 
   def change_user_role_to_tutor
     if self.user.role == 'student'
-      self.user.role = 'tutor'
-      self.user.save
+      self.user.update(role: 'tutor')
     end
   end
 
   def update_application_status
     if self.complete_profile? && self.application_status == 'Incomplete'
-      self.application_status = 'Complete'
-      self.save
+      self.update(application_status: 'Complete')
       TutorManagementMailer.delay.application_completed_email(self.user.id)
     end
   end

@@ -4,9 +4,9 @@
   </div>
   <div class="medium-9 columns">
     <div class="row">
-      <div class="medium-10 columns">
+      <div class="medium-5 columns">
         <%= form_for @tutor do |f| %>
-          <h3>Private Tutor Settings</h3>
+          <h3>Private Information</h3>
 
           <%= f.label :birthdate %>
           <%= f.date_field :birthdate %>
@@ -21,7 +21,7 @@
             <p>Current Transcript: <%= File.basename(@tutor.transcript.path) %></p>
           <% end %>
 
-          <%= f.submit 'Save' %>
+          <%= f.submit 'Save', class: 'button tiny expand success' %>
         <% end %>
       </div>
     </div>

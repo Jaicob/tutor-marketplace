@@ -1,29 +1,137 @@
+<style>
+.profile-pic-preview {
+  border: 1px solid #000;
+}
+</style>
+
 <div class="row">
   <div class="medium-3 columns">
     <%= render 'vertical_sub_menu' %>
   </div>
   <div class="medium-9 columns">
+
     <div class="row">
-      <div class="medium-10 columns">
+      <div class="medium-5 columns">
+        <h3>Profile Picture</h3>
+        <%= image_tag(@tutor.profile_pic_url(:thumb), class: 'profile-pic-preview') %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="medium-5 columns">
+        <div class="row">
+          <div class="small-12 columns">
+            <a href="#" data-reveal-id="newPhotoModal" class="button small secondary-CTA-color">
+              <i class="fi-page-add icon-margin-right"></i>Upload New Photo
+            </a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="small-12 columns">
+            <a href="#" data-reveal-id="cropCurrentPhotoModal" class="button small secondary-CTA-color">
+              <i class="fi-page-edit icon-margin-right"></i>Crop Current Photo
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="medium-5 columns">
         <%= form_for @tutor do |f| %>
-          <h3>Public Profile Fields</h3>
-          
+          <h3 class="header-top-margin">Public Profile Fields</h3>
+      
           <%= f.label :degree %>
           <%= f.text_field :degree %>
           
           <%= f.label :major %>
           <%= f.text_field :major %>
 
-          <%= f.label :extra_info %>
-          <%= f.text_field :extra_info %>
-          
           <%= f.label :graduation_year %>
           <%= f.number_field :graduation_year %>
 
-          <%= f.submit 'Save' %>
+          <%= f.label :extra_info, 'Extra Information' %>
+          <%= f.text_area :extra_info %>
+
+          <%= f.submit 'Save', class: 'button tiny expand success' %>
 
         <% end %>
       </div>
     </div>
+
   </div>
+</div>
+
+<!-- Modal for Uploading a New Profile Picture -->
+
+<div id="newPhotoModal" class="reveal-modal small" data-reveal aria-labelledby="secondModalTitle" aria-hidden="true" role="dialog">
+  <h4 id="secondModalTitle" class="text-center">Upload a new profile picture</h4>
+
+    <div class="row">
+      <div class="small-8 small-centered columns">
+        <div class="text-center">
+          <%= form_for @tutor do |f| %>
+            <%= f.file_field :profile_pic %>
+            <%= f.submit 'Update Profile Picture', class: 'button radius' %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <a href="#" data-reveal-id="myModal">
+      <i class="fi-arrow-left"></i>&nbsp;Back
+    </a>
+
+  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+</div>
+
+
+<!-- Modal for Cropping/Re-cropping Current Profile Picture -->
+
+<div id="cropCurrentPhotoModal" class="reveal-modal full" data-reveal aria-labelledby="secondModalTitle" aria-hidden="true" role="dialog">
+  <h4 id="secondModalTitle" class="text-center">Crop your current profile picture</h4>
+
+    <div class="row">
+      <div class="cropbox-container">
+        <div class="cropbox">
+          <%= image_tag @tutor.profile_pic_url(:large), id: 'cropbox' %>
+        </div>
+      </div>
+    </div>
+<script type="text/javascript">
+  jQuery('#cropbox').Jcrop({
+    onChange: showCoords,
+    onSelect: showCoords,
+    aspectRatio: 1/1
+  });
+
+  // Simple event handler, called from onChange and onSelect
+  // event handlers, as per the Jcrop invocation above
+  function showCoords(c){
+    jQuery('#tutor_crop_x').val(c.x);
+    jQuery('#tutor_crop_y').val(c.y);
+    jQuery('#tutor_crop_w').val(c.w);
+    jQuery('#tutor_crop_h').val(c.h);
+  };
+</script>
+    <div class="row">
+      <div class="small-6 small-centered columns">
+        <div class="text-center">
+          <%= form_for @tutor do |f| %>
+            <% %w[x y w h].each do |attribute| %>
+              <%= f.hidden_field "crop_#{attribute}" %>
+            <% end %>
+            <div class="actions">
+              <%= f.submit "Crop", class: 'button radius expand' %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <a href="#" data-reveal-id="myModal">
+      <i class="fi-arrow-left"></i>&nbsp;Back
+    </a>
+
+  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
 </div>

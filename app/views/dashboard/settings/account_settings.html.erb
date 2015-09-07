@@ -4,7 +4,7 @@
   </div>
   <div class="medium-9 columns">
     <div class="row">
-      <div class="medium-10 columns">
+      <div class="medium-5 columns">
         <%= form_for @user do |f| %>
           <h3>User Account Settings</h3>
 
@@ -17,7 +17,7 @@
           <%= f.label :email %>
           <%= f.email_field :email %>
 
-          <%= f.submit 'Save' %>
+          <%= f.submit 'Save', class: 'button tiny expand success' %>
         <% end %>
       </div>
     </div>
