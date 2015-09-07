@@ -42,6 +42,7 @@ class Tutor < ActiveRecord::Base
   validates :extra_info, presence: true
   validates :phone_number, presence: true
   validates :phone_number, format: { with: /\d{3}-\d{3}-\d{4}/, message: "bad format" }
+  # only accepts 10 digit number with two hyphens - ex: '111-111-1111'
 
   after_create :change_user_role_to_tutor
   after_commit :update_application_status
