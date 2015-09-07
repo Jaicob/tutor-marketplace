@@ -1,0 +1,25 @@
+<div class="row">
+  <div class="medium-3 columns">
+    <%= render 'vertical_sub_menu' %>
+  </div>
+  <div class="medium-9 columns">
+    <div class="row">
+      <div class="medium-10 columns">
+        <%= form_for @user do |f| %>
+          <h3>User Account Settings</h3>
+
+          <%= f.label :first_name %>
+          <%= f.text_field :first_name %>
+
+          <%= f.label :last_name %>
+          <%= f.text_field :last_name %>
+
+          <%= f.label :email %>
+          <%= f.email_field :email %>
+
+          <%= f.submit 'Save' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
