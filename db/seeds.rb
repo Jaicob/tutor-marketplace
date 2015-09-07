@@ -73,7 +73,7 @@ User.all.each do |user|
     major: 'Marine Biology', 
     extra_info: Faker::Lorem.sentence, 
     graduation_year: '2018', 
-    phone_number: Faker::Number.number(10), 
+    phone_number: '123-123-1234', 
     transcript: File.new(File.join(Rails.root, 'app/assets/images/file-icon.png'))
     )
 end
