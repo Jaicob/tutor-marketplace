@@ -20,6 +20,7 @@ class Slot < ActiveRecord::Base
   validates :tutor_id, presence: true
   validates :start_time, presence: true
   validates :duration, presence: true
+  validates :status, presence: true
 
   enum status: ['Open', 'Blocked']
 

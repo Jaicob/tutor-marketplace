@@ -1,12 +1,11 @@
 class API::BaseController < ApplicationController
-  before_action :restricted_access
+  before_action :restricted_access_controllers
   respond_to :json
 
   private 
 
-    def restricted_access
-      # simply restricts access to visitors, does not stop logged-in users
-      # more extensive restrictions are implemented in specific controllers
+    def restricted_access_controllers
+      # only include controllers in which there are no actions that need to be public
       restricted_controllers = %w(AppointmentsController)
       restricted_controllers.each do |controller|
         if self.class.to_s.include?(controller) && !current_user

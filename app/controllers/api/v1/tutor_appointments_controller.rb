@@ -50,7 +50,6 @@ class API::V1::TutorAppointmentsController < API::V1::Defaults
     end
 
     def safe_params
-      # Could not get default strong_params syntax to work with JSON format, this does exactly the same thing, except manually
       hash = {}
       hash[:student_id] = params[:student_id] if params[:student_id]
       hash[:slot_id] = params[:slot_id] if params[:slot_id]
