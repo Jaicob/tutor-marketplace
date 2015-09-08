@@ -23,4 +23,7 @@ class SingleViewsController < ApplicationController
   def tutor_search
   end
 
+  def contact
+  end
+
 end

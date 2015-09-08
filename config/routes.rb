@@ -165,6 +165,7 @@ Rails.application.routes.draw do
   get '/faqs'               => 'single_views#faqs'
   get '/partnerships'       => 'single_views#partnerships'
   get '/tutor-with-us'      => 'single_views#tutor_landing'
+  get '/contact'            => 'single_views#contact'
 
   devise_for :users, controllers: { registrations: "tutor_registration" }
   resources :tutors, :tutor_courses, :slots
