@@ -7,7 +7,8 @@
 #                                         about_us GET      /about-us(.:format)                                               single_views#about_us
 #                                             faqs GET      /faqs(.:format)                                                   single_views#faqs
 #                                     partnerships GET      /partnerships(.:format)                                           single_views#partnerships
-#                                    tutor_with_us GET      /tutor-with-us(.:format)                                          single_views#tutor_landing
+#                                   become_a_tutor GET      /become-a-tutor(.:format)                                         single_views#tutor_landing
+#                                          contact GET      /contact(.:format)                                                single_views#contact
 #                                 new_user_session GET      /users/sign_in(.:format)                                          devise/sessions#new
 #                                     user_session POST     /users/sign_in(.:format)                                          devise/sessions#create
 #                             destroy_user_session DELETE   /users/sign_out(.:format)                                         devise/sessions#destroy
@@ -164,7 +165,7 @@ Rails.application.routes.draw do
   get '/about-us'           => 'single_views#about_us'
   get '/faqs'               => 'single_views#faqs'
   get '/partnerships'       => 'single_views#partnerships'
-  get '/tutor-with-us'      => 'single_views#tutor_landing'
+  get '/become-a-tutor'     => 'single_views#tutor_landing'
   get '/contact'            => 'single_views#contact'
 
   devise_for :users, controllers: { registrations: "tutor_registration" }
