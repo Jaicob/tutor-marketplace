@@ -49,15 +49,15 @@ class Tutor < ActiveRecord::Base
     profile_pic.recreate_versions! if tutor_params[:crop_x]
   end
 
-  def self.to_csv
-    attributes = %w{name email phone_number active_status rating application_status degree major graduation_year birthdate sign_up_date}
-    CSV.generate(headers: true) do |csv|
-      csv << attributes
-      all.each do |user|
-        csv << attributes.map{ |attr| user.send(attr) }
-      end
-    end
-  end
+  # def self.to_csv
+  #   attributes = %w{name email phone_number active_status rating application_status degree major graduation_year birthdate sign_up_date}
+  #   CSV.generate(headers: true) do |csv|
+  #     csv << attributes
+  #     all.each do |user|
+  #       csv << attributes.map{ |attr| user.send(attr) }
+  #     end
+  #   end
+  # end
 
   def sign_up_date
     self.created_at.to_date
@@ -91,19 +91,20 @@ class Tutor < ActiveRecord::Base
     (self.incomplete_profile? == false && self.awaiting_approval? == false && self.slots.count == 0) ? true : false
   end
 
-  def profile_check(attribute)
-    if attribute == :profile_pic
+  def check_profile_for(field)
+    case field
+    when :profile_pic
       self.profile_pic.url == 'panda.png' ? false : true
-    elsif attribute == :transcript
+    when :transcript
       self.transcript.url == nil ? false : true
-    elsif attribute == :public_info
+    when :public_info
       (self.degree && self.major && self.extra_info && self.graduation_year) ? true : false
-    elsif attribute == :private_info
+    when :private_info
       (self.birthdate && self.phone_number) ? true : false
-    elsif attribute == :payment_info
+    when :payment_info
       false # need to change, but waiting on payment fields to be added to model
-    else
-      self.public_send(attribute) ? true : false
+    when :appt_settings
+      self.appt_notes ? true : false
     end
 
   end
@@ -122,7 +123,9 @@ class Tutor < ActiveRecord::Base
   end
 
   def update_action_redirect_path(tutor_params)
-    (tutor_params[:birthdate] || tutor_params[:phone_number]) ? "/#{self.user.slug}/dashboard/settings/private_information" : "/#{self.user.slug}/dashboard/settings/profile_settings"
+    (tutor_params[:birthdate] || tutor_params[:phone_number] || tutor_params[:transcript]) ? 
+    "/#{self.user.slug}/dashboard/settings/private_information" : 
+    "/#{self.user.slug}/dashboard/settings/profile_settings"
   end
 
   def change_user_role_to_tutor

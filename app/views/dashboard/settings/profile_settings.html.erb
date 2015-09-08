@@ -8,17 +8,17 @@
   <div class="medium-3 columns">
     <%= render 'vertical_sub_menu' %>
   </div>
-  <div class="medium-9 columns">
+  <div class="medium-8 medium-offset-1 columns">
 
     <div class="row">
-      <div class="medium-5 columns">
+      <div class="medium-6 columns">
         <h3>Profile Picture</h3>
         <%= image_tag(@tutor.profile_pic_url(:thumb), class: 'profile-pic-preview') %>
       </div>
     </div>
 
     <div class="row">
-      <div class="medium-5 columns">
+      <div class="medium-6 columns">
         <div class="row">
           <div class="small-12 columns">
             <a href="#" data-reveal-id="newPhotoModal" class="button small secondary-CTA-color">
@@ -37,9 +37,9 @@
     </div>
 
     <div class="row">
-      <div class="medium-5 columns">
+      <div class="medium-6 columns">
         <%= form_for @tutor do |f| %>
-          <h3 class="header-top-margin">Public Profile Fields</h3>
+          <h3 class="header-top-margin" id="profile-fields">Profile Info</h3>
       
           <%= f.label :degree %>
           <%= f.text_field :degree %>
@@ -51,9 +51,9 @@
           <%= f.number_field :graduation_year %>
 
           <%= f.label :extra_info, 'Extra Information' %>
-          <%= f.text_area :extra_info %>
+          <%= f.text_area :extra_info, row: 3 %>
 
-          <%= f.submit 'Save', class: 'button tiny expand success' %>
+          <%= f.submit 'Save', class: 'button tiny expand success'%>
 
         <% end %>
       </div>
