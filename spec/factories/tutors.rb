@@ -15,7 +15,7 @@
 #  birthdate          :date
 #  profile_pic        :string
 #  transcript         :string
-#  appt_notes         :string
+#  appt_notes         :text
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #

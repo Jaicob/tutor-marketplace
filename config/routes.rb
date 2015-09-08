@@ -2,6 +2,12 @@
 #
 #                                           Prefix Verb     URI Pattern                                                       Controller#Action
 #                                             root GET      /                                                                 single_views#home
+#                                           search GET      /search(.:format)                                                 single_views#tutor_search
+#                                restricted_access GET      /restricted-access(.:format)                                      single_views#restricted_access
+#                                         about_us GET      /about-us(.:format)                                               single_views#about_us
+#                                             faqs GET      /faqs(.:format)                                                   single_views#faqs
+#                                     partnerships GET      /partnerships(.:format)                                           single_views#partnerships
+#                                    tutor_with_us GET      /tutor-with-us(.:format)                                          single_views#tutor_landing
 #                                 new_user_session GET      /users/sign_in(.:format)                                          devise/sessions#new
 #                                     user_session POST     /users/sign_in(.:format)                                          devise/sessions#create
 #                             destroy_user_session DELETE   /users/sign_out(.:format)                                         devise/sessions#destroy
@@ -50,8 +56,6 @@
 #                                                  PATCH    /slots/:id(.:format)                                              slots#update
 #                                                  PUT      /slots/:id(.:format)                                              slots#update
 #                                                  DELETE   /slots/:id(.:format)                                              slots#destroy
-#                                           search GET      /search(.:format)                                                 single_views#tutor_search
-#                                restricted_access GET      /restricted_access(.:format)                                      single_views#restricted_access
 #                              dashboard_home_user GET      /:id/dashboard/home(.:format)                                     dashboard/home#index
 #                          dashboard_schedule_user GET      /:id/dashboard/schedule(.:format)                                 dashboard/schedule#index
 #                           dashboard_courses_user GET      /:id/dashboard/courses(.:format)                                  dashboard/courses#index
@@ -154,13 +158,16 @@
 
 Rails.application.routes.draw do
 
-  root to: "single_views#home"
+  root                         'single_views#home'
+  get '/search'             => 'single_views#tutor_search'
+  get '/restricted-access'  => 'single_views#restricted_access'
+  get '/about-us'           => 'single_views#about_us'
+  get '/faqs'               => 'single_views#faqs'
+  get '/partnerships'       => 'single_views#partnerships'
+  get '/tutor-with-us'      => 'single_views#tutor_landing'
 
   devise_for :users, controllers: { registrations: "tutor_registration" }
   resources :tutors, :tutor_courses, :slots
-
-  get '/search' => 'single_views#tutor_search'
-  get '/restricted_access' => 'single_views#restricted_access'
 
   resources :users, only: [:update], path: '' do
     scope module: :dashboard do
