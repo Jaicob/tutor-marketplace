@@ -1,4 +1,4 @@
-class CreateTutorAccount
+class UpdateTutorAccount
   include Interactor
 
   def call
