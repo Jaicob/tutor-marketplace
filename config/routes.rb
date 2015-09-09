@@ -169,6 +169,7 @@ Rails.application.routes.draw do
       patch 'update_tutor_payment_info' => 'tutors#update_tutor_payment_info', as: 'update_tutor_payment_info'
     end
   end
+
   resources :users, only: [:update], path: '' do
     scope module: :dashboard do
       member do
