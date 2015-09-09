@@ -2,7 +2,7 @@ require "rails_helper"
 
 feature "Tutor Profile" do
   let(:user)  { create(:user) }
-  let(:tutor) { create(:complete_tutor) }
+  let(:tutor) { create(:tutor) }
 
   before :each do
     @tutor = tutor
@@ -12,43 +12,35 @@ feature "Tutor Profile" do
   scenario "a tutor can access the edit profile page" do
     visit "/#{tutor.user.slug}/dashboard/profile"
     click_link 'Edit'
-    expect(page).to have_css '#finish_edit_profile_button'
+    expect(page).to have_content ('Public Profile Fields')
   end
 
   scenario 'a tutor can edit their degree' do 
-    visit "/#{tutor.user.slug}/dashboard/profile"
-    expect(page).to have_content 'Degree: B.A.'
-    click_link 'Edit'
-    fill_in 'tutor_degree', with: 'Bachelors'
-    click_button 'Save Changes'
-    expect(page).to have_content 'Degree: Bachelors'
+    visit "/#{tutor.user.slug}/dashboard/settings/profile_settings"
+    fill_in 'tutor_degree', with: 'Test Degree'
+    click_button 'Save'
+    expect(page).to have_field('tutor_degree', with: 'Test Degree')
   end
 
   scenario 'a tutor can edit their major' do 
-    visit "/#{tutor.user.slug}/dashboard/profile"
-    expect(page).to have_content 'Major: Biology'
-    click_link 'Edit'
-    fill_in 'tutor_major', with: 'Computer Science'
-    click_button 'Save Changes'
-    expect(page).to have_content 'Major: Computer Science'
+    visit "/#{tutor.user.slug}/dashboard/settings/profile_settings"
+    fill_in 'tutor_major', with: 'Test Major'
+    click_button 'Save'
+    expect(page).to have_field('tutor_major', with: 'Test Major')
   end
 
   scenario 'a tutor can edit their extra_info' do 
-    visit "/#{tutor.user.slug}/dashboard/profile"
-    expect(page).to have_content 'Extra Info: Student Research Assistant for Biology Department'
-    click_link 'Edit'
-    fill_in 'tutor_extra_info', with: 'I can tutor you'
-    click_button 'Save Changes'
-    expect(page).to have_content 'Extra Info: I can tutor you'
+    visit "/#{tutor.user.slug}/dashboard/settings/profile_settings"
+    fill_in 'tutor_extra_info', with: 'Test Extra Info'
+    click_button 'Save'
+    expect(page).to have_field('tutor_extra_info', with: 'Test Extra Info')
   end
   
   scenario 'a tutor can edit their graduation_year' do
-    visit "/#{tutor.user.slug}/dashboard/profile"
-    expect(page).to have_content 'Graduation Year: 2019'
-    click_link 'Edit'
-    fill_in 'tutor_graduation_year', with: '2025'
-    click_button 'Save Changes'
-    expect(page).to have_content 'Graduation Year: 2025'
+    visit "/#{tutor.user.slug}/dashboard/settings/profile_settings"
+    fill_in 'tutor_graduation_year', with: 'Test Year'
+    click_button 'Save'
+    expect(page).to have_field('tutor_graduation_year', with: 'Test Year')
   end
 
 

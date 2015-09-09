@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe "AppointmentsByTutor endpoints" do
   let(:tutor) { create(:tutor) }
-  let(:second_tutor) { create(:second_complete_tutor ) }
+  let(:second_tutor) { create(:second_complete_tutor) }
   let(:course) { create(:course) }
   let(:slot) { create(:slot, tutor: tutor) }
   let(:student) { create(:student) }
