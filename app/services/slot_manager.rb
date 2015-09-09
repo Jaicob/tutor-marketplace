@@ -1,6 +1,6 @@
 class SlotManager
 
-  # sm = SlotManager.new(tutor_id: 1, original_start_time: '2015-08-01 12:00:00', original_duration: 2, new_start_time: '2015-08-02 11:00:00', new_duration: '3')
+  # sm = SlotManager.new(tutor_id: 1, original_start_time: '2015-08-01 12:00:00', original_duration: 3600, new_start_time: '2015-08-02 11:00:00', new_duration: '7200')
 
   attr_accessor :tutor, :original_start_time, :original_duration, :new_start_time, :new_duration, :slots
 
@@ -8,9 +8,9 @@ class SlotManager
     # ex. params = (
     #   tutor_id: 1, 
     #   original_start_time: '2015-08-01 12:00:00', 
-    #   original_duration: '2015-08-01 16:00:00', 
+    #   original_duration: '3600', 
     #   new_start_time: '2015-08-02 11:00:00', 
-    #   new_duration: '2015-08-02 12:00:00'
+    #   new_duration: '7200'
     # )
 
     # Required
@@ -23,7 +23,7 @@ class SlotManager
     @new_duration = params[:new_duration]
 
     # Calculated
-    @start_adjustment = @new_start_time.to_time - @original_start_time.to_time #result is in seconds    
+    @start_adjustment = @new_start_time.to_time - @original_start_time.to_time # result is in seconds    
     @original_start_DOW_time = @original_start_time.strftime('%a %T') # Used for finding slots by weekday and time
   end
 
@@ -47,9 +47,8 @@ class SlotManager
   def update_slots
     get_slots_for_range
     @slots.each do |slot|
-      slot.start_time = slot.start_time + @start_adjustment.seconds
-      slot.duration = @new_duration
-      slot.save
+      new_start_time = slot.start_time + @start_adjustment.seconds
+      slot.update(start_time: new_start_time, duration: @new_duration)
     end
     @slots
   end

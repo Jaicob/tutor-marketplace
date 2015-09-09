@@ -216,7 +216,8 @@ Rails.application.routes.draw do
         end
       end
       resources :tutors, only: [] do 
-        resources :slots, only: [:index, :show, :create, :update, :destroy]
+        resources :slots, only: [:index, :show, :create, :destroy]
+        post '/slots/update' => 'slots#update_slots' # this action had to be renamed 'update_slots' from 'update' because update expects an ID because of convention, but we are modifying multiple objects through the slot_manager service object
         resources :appointments, controller: 'tutor_appointments'   
       end
       resources :students, only: [] do

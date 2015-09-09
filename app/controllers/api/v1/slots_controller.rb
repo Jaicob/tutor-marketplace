@@ -13,19 +13,22 @@ class API::V1::SlotsController < API::V1::Defaults
   end
 
   def create
-    @slot = @tutor.slots.new(safe_params)
-    if @slot.save
-      resnder json: @slot, status: 200
+    slot_creator = SlotCreator.new(safe_params) 
+    @slots = slot_creator.create_slots
+    if @slots 
+       render json: @slots, status: 200
     else
-      render nothing: true, status: 500
+      return "Slot could not be saved: #{@slot.errors.full_messages}", status: 500
     end
   end
 
-  def update
-    if @slot.update(safe_params)
-      render json: @slot, status: 200
+  def update_slots
+    slot_manager = SlotManager.new(safe_params) 
+    @slots = slot_manager.update_slots 
+    if @slots 
+      render json: @slots, status: 200
     else
-      render nothing: true, status: 500
+      return "Slot could not be updated: #{@slot.errors.full_messages}", status: 500
     end
   end
 
@@ -59,8 +62,14 @@ class API::V1::SlotsController < API::V1::Defaults
       hash[:status] = params[:status] if params[:status]
       hash[:start_time] = params[:start_time] if params[:start_time]
       hash[:duration] = params[:duration] if params[:duration]
+      hash[:weeks_to_repeat] = params[:weeks_to_repeat] if params[:weeks_to_repeat]
       hash[:reservation_min] = params[:reservation_min] if params[:reservation_min]
       hash[:reservation_max] = params[:reservation_max] if params[:reservation_max]
+
+      hash[:original_start_time] = params[:original_start_time] if params[:original_start_time]
+      hash[:original_duration] = params[:original_duration] if params[:original_duration]
+      hash[:new_start_time] = params[:new_start_time] if params[:new_start_time]
+      hash[:new_duration] = params[:new_duration] if params[:new_duration]
       return hash
     end 
 
