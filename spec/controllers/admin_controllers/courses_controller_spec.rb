@@ -12,12 +12,12 @@ describe Admin::CoursesController do
 
   describe 'GET #index' do 
 
-    it 'redirects to root_path for visitors/non-signed-in users' do
+    it 'denies access and redirects to root_path for visitors/non-signed-in users' do
       get :index
       expect(response).to redirect_to(root_path)
     end
 
-    it 'redirects to dashboard_home for signed-in students' do
+    it 'denies access and redirects to dashboard_home for signed-in students' do
       login_with(student)
       get :index
       expect(response).to redirect_to(dashboard_home_user_path(student))
@@ -27,13 +27,6 @@ describe Admin::CoursesController do
       login_with(admin)
       get :index
       expect(response).to render_template :index
-    end
-    
-
-    it 'assigns all courses to @courses' do 
-      create_list(:course, 2)
-      get :index
-      expect(assigns(:courses).length).to eq(2)
     end
   end
 

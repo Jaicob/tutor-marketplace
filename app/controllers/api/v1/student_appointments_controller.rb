@@ -1,7 +1,7 @@
 class API::V1::StudentAppointmentsController < API::V1::Defaults
   before_action :set_student
-  before_action :restrict_to_resource_owner, only: [:create, :update, :destroy]
-  before_filter :set_appointment, only: [:show, :update, :destroy]
+  before_action :restrict_to_resource_owner
+  before_action :set_appointment, only: [:show, :update, :destroy]
 
   def index
     @appointments = @student.appointments

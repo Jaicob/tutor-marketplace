@@ -27,7 +27,7 @@ class Tutor < ActiveRecord::Base
   has_many :slots, dependent: :destroy
   has_many :appointments, through: :slots, dependent: :destroy
 
-  delegate :school, :full_name, :email, to: :user
+  delegate :school, :full_name, :email, :password, to: :user
 
   enum application_status: ['Incomplete', 'Complete', 'Approved']
   enum active_status: ['Inactive', 'Active']
