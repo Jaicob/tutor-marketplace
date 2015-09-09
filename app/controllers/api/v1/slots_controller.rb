@@ -1,6 +1,6 @@
 class API::V1::SlotsController < API::V1::Defaults
   before_action :set_tutor
-  before_action :restrict_to_resource_owner, only: [:create, :update, :destroy]
+  before_action :restrict_to_resource_owner, except: [:index]
   before_action :set_slot, only: [:show, :update, :destroy]
 
   def index
@@ -15,9 +15,9 @@ class API::V1::SlotsController < API::V1::Defaults
   def create
     @slot = @tutor.slots.new(safe_params)
     if @slot.save
-      respond_with(@slot)
+      resnder json: @slot, status: 200
     else
-      respond_with(status: 400)
+      render nothing: true, status: 500
     end
   end
 
@@ -39,18 +39,18 @@ class API::V1::SlotsController < API::V1::Defaults
 
   private
 
-    def restrict_to_resource_owner
-      if current_user.tutor != @tutor
-        return redirect_to restricted_access_path, status: 401
-      end
-    end
-
     def set_tutor
       @tutor = Tutor.find(params[:tutor_id])
     end
 
     def set_slot
       @slot = Slot.find(params[:id])
+    end
+
+    def restrict_to_resource_owner
+      if current_user.nil? || current_user.tutor != @tutor
+        return redirect_to restricted_access_path, status: 401
+      end
     end
 
     def safe_params

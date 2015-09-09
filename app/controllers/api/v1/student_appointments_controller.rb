@@ -49,6 +49,12 @@ class API::V1::StudentAppointmentsController < API::V1::Defaults
       @appointment = Appointment.find(params[:id])
     end
 
+    def restrict_to_resource_owner
+      if current_user.nil? || current_user.student != @student
+        return redirect_to restricted_access_path, status: 401
+      end
+    end  
+
     def safe_params
       hash = {}
       hash[:student_id] = params[:student_id] if params[:student_id]
@@ -58,11 +64,5 @@ class API::V1::StudentAppointmentsController < API::V1::Defaults
       hash[:status] = params[:status] if params[:status]
       return hash
     end
-
-    def restrict_to_resource_owner
-      if current_user.nil? || current_user.student != @student
-        return redirect_to restricted_access_path, status: 401
-      end
-    end  
 
 end
