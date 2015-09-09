@@ -5,6 +5,7 @@ describe "AppointmentsByTutor endpoints" do
   let(:second_tutor) { create(:second_complete_tutor ) }
   let(:course) { create(:course) }
   let(:slot) { create(:slot, tutor: tutor) }
+  let(:student) { create(:student) }
 
   # creates two appointments for tutor
   before :each do
@@ -18,24 +19,25 @@ describe "AppointmentsByTutor endpoints" do
     post "/users/sign_in", login_params
   end
 
-  it 'denies access to get appointment(s) for a non-logged in user' do 
-    get "/api/v1/tutors/#{tutor.id}/appointments"
-    expect(response).to_not be_success
-    expect(response.status).to eq(401)
-    
+  it 'denies access to get a single appointment for a visitor' do 
     get "/api/v1/tutors/#{tutor.id}/appointments/#{@appt_a.id}"
     expect(response).to_not be_success
     expect(response.status).to eq(401)
   end
 
-  it 'does return appointments for a tutor' do 
+  it 'returns limited information of a tutors appointments for a visitor' do
+    get "/api/v1/tutors/#{tutor.id}/appointments"
+    expect(response).to be_success
+    expect(json.length).to eq(2)
+    expect(json[0].keys).to_not include('student_id')
   end
 
-  it 'does not return appointments for a tutor other than the owner' do 
-    request_spec_login(second_tutor.user)
+  it 'returns all information of a tutors appointment for the tutor owner' do 
+    request_spec_login(tutor.user)
     get "/api/v1/tutors/#{tutor.id}/appointments"
-    expect(response).to_not be_success
-    expect(response.status).to eq(401)
+    expect(response).to be_success
+    expect(json.length).to eq(2)
+    expect(json[0].keys).to include('student_id')
   end
 
   it 'returns list of all appointments for a tutor' do
@@ -55,7 +57,7 @@ describe "AppointmentsByTutor endpoints" do
   it 'creates an appointment for a tutor' do
     request_spec_login(tutor.user)
     params = {
-      tutor_id: tutor.id,
+      student_id: student.id,
       course_id: course.id,
       slot_id: slot.id,
       start_time: "2015-09-01 10:00:00"

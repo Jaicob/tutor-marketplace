@@ -60,7 +60,7 @@ class API::V1::StudentAppointmentsController < API::V1::Defaults
     end
 
     def restrict_to_resource_owner
-      if current_user.student != @student
+      if current_user.nil? || current_user.student != @student
         return redirect_to restricted_access_path, status: 401
       end
     end  

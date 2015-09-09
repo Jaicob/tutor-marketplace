@@ -149,10 +149,10 @@ class Tutor < ActiveRecord::Base
 
   def appointments_with_times_only_for_public_scheduler
     # returns limited information about a tutor's appointments for public API call for scheduler
-    self.appointments.map{ |appt| [id: appt.id, start_time: appt.start_time, status: appt.status]}
+    self.appointments.map{ |appt| {id: appt.id, start_time: appt.start_time, status: appt.status}}
   end
 
-  def appointments_scope(tutor, current_user)
+  def restricted_appointments_info(tutor, current_user)
     # returns all appointment details (including student_id) for logged-in tutor that owns appointment, returns only necessary details for scheduler for all others (only: id, start_time, status)
     if current_user && current_user.tutor == self
       @appointments = self.appointments
