@@ -132,6 +132,7 @@ class Tutor < ActiveRecord::Base
   end
 
   def update_application_status
+    # method called in after_commit hook to automatically update a tutor's application status and send application_completed email
     if self.complete_profile? && self.application_status == 'Incomplete'
       self.update(application_status: 'Complete')
       TutorManagementMailer.delay.application_completed_email(self.user.id)
@@ -143,6 +144,20 @@ class Tutor < ActiveRecord::Base
       user.school.tutors.where(application_status: 1, active_status: 0)
     else # super-admin can see all applications across all schools
       Tutor.where(application_status: 1, active_status: 0)
+    end
+  end
+
+  def appointments_with_times_only_for_public_scheduler
+    # returns limited information about a tutor's appointments for public API call for scheduler
+    self.appointments.map{ |appt| [id: appt.id, start_time: appt.start_time, status: appt.status]}
+  end
+
+  def appointments_scope(tutor, current_user)
+    # returns all appointment details (including student_id) for logged-in tutor that owns appointment, returns only necessary details for scheduler for all others (only: id, start_time, status)
+    if current_user && current_user.tutor == self
+      @appointments = self.appointments
+    else
+      @appointments = self.appointments_with_times_only_for_public_scheduler
     end
   end
 

@@ -4,7 +4,7 @@ class API::V1::TutorAppointmentsController < API::V1::Defaults
   before_filter :set_appointment, only: [:show, :update, :destroy]
 
   def index
-    @appointments = @tutor.appointments
+    @appointments = @tutor.appointments_scope(@tutor, current_user)
     respond_with(@appointments)
   end
 
