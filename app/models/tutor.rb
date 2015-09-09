@@ -122,7 +122,13 @@ class Tutor < ActiveRecord::Base
   end
 
   def update_action_redirect_path(tutor_params)
-    (tutor_params[:birthdate] || tutor_params[:phone_number]) ? "/#{self.user.slug}/dashboard/settings/private_information" : "/#{self.user.slug}/dashboard/settings/profile_settings"
+    if tutor_params[:birthdate] || tutor_params[:phone_number]
+      "/#{self.user.slug}/dashboard/settings/private_information"
+    elsif tutor_params[:appt_notes]
+      "/#{self.user.slug}/dashboard/settings/appointment_settings"
+    else
+      "/#{self.user.slug}/dashboard/settings/profile_settings"
+    end
   end
 
   def change_user_role_to_tutor
