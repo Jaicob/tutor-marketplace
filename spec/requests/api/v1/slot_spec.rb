@@ -100,7 +100,6 @@ describe "Slot endpoints" do
     expect(tutor.slots.last.start_time).to eq ('2015-08-30 9:00:00')
     expect(tutor.slots.last.duration).to eq (2400)
 
-
   end
 
 end

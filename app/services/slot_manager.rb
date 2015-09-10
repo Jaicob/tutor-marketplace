@@ -35,13 +35,12 @@ class SlotManager
     @slots = []
     @tutor.slots.each do |slot|
       @slot_start_DOW_time = slot.start_time.strftime('%a %T')
-      @slot_duration = slot.duration.to_s
+      @slot_duration = slot.duration
         
-      if @slot_start_DOW_time == @original_start_DOW_time && @slot_duration == @original_duration
+      if @slot_start_DOW_time == @original_start_DOW_time && @slot_duration == @original_duration.to_i
         @slots << slot
       end
     end
-    info = {tutor: @tutor.id, original_start_DOW_time: @original_start_DOW_time, slot_start_DOW_time: @slot_start_DOW_time, original_duration: @original_duration, slot_duration: @slot_duration}
     return @slots
   end
 

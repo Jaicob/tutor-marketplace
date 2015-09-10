@@ -1,6 +1,6 @@
 class API::V1::SlotsController < API::V1::Defaults
   before_action :set_tutor
-  # before_action :restrict_to_resource_owner, except: [:index]
+  before_action :restrict_to_resource_owner, except: [:index]
   before_action :set_slot, only: [:show, :update, :destroy]
 
   def index
