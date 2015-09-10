@@ -50,5 +50,9 @@ FactoryGirl.define do
         graduation_year '2017'
         phone_number '999-999-9999'
       end
+
+      trait :at_UNC do 
+        association :user, factory: [:user, :UNC]
+      end
   end
 end
