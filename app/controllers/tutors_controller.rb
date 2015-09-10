@@ -28,18 +28,19 @@ class TutorsController < ApplicationController
   end
 
   def tutor_payment_info_form
-    @tutor = User.find(params[:id]).tutor
+    @tutor = Tutor.find(params[:id])
     respond_to do |format|
       format.js { render :load_payment_form }
     end
   end
 
   def update_tutor_payment_info
-    @tutor = User.find(params[:id]).tutor
+    @tutor = Tutor.find(params[:id])
     if @tutor.update_attributes(tutor_params)
-      UpdateTutorPayment.call(tutor: @tutor, token: params[:stripeToken])
+      UpdateTutorAccount.call(tutor: @tutor, token: params[:stripeToken])
       respond_to do |format|
         format.js { render :payment_settings_updated }
+        format.html { redirect_to dashboard_settings_payment_settings_user_path(@tutor.user) }
       end
     else
       respond_to do |format|
