@@ -14,7 +14,7 @@ class API::V1::TutorAppointmentsController < API::V1::Defaults
 
   def create
     @appointment = Appointment.new
-    @appointment.assign_attributes(safe_params)
+    @appointment.update(safe_params)
     if @appointment.save
       render json: @appointment
     else
@@ -23,7 +23,7 @@ class API::V1::TutorAppointmentsController < API::V1::Defaults
   end
 
   def update
-    @appointment.assign_attributes(safe_params)
+    @appointment.update(safe_params)
     if @appointment.save
       render json: @appointment
     else
