@@ -1,5 +1,7 @@
 class SlotManager
 
+  # sc = SlotCreator.new(tutor_id: 1, start_time: '2015-08-01 12:00', duration: 3600, weeks_to_repeat: 10)
+  
   # sm = SlotManager.new(tutor_id: 1, original_start_time: '2015-08-01 12:00:00', original_duration: 3600, new_start_time: '2015-08-02 11:00:00', new_duration: '7200')
 
   attr_accessor :tutor, :original_start_time, :original_duration, :new_start_time, :new_duration, :slots
@@ -33,27 +35,54 @@ class SlotManager
     @slots = []
     @tutor.slots.each do |slot|
       @slot_start_DOW_time = slot.start_time.strftime('%a %T')
-      @slot_duration = slot.duration
+      @slot_duration = slot.duration.to_s
         
       if @slot_start_DOW_time == @original_start_DOW_time && @slot_duration == @original_duration
         @slots << slot
       end
     end
-    @slots
+    info = {tutor: @tutor.id, original_start_DOW_time: @original_start_DOW_time, slot_start_DOW_time: @slot_start_DOW_time, original_duration: @original_duration, slot_duration: @slot_duration}
+    return @slots
   end
+  # def get_slots_for_range
+  #   @slots = []
+  #   @tutor.slots.each do |slot|
+  #     @slot_start_DOW_time = slot.start_time.strftime('%a %T')
+  #     @slot_duration = slot.duration
+        
+  #     if @slot_start_DOW_time == @original_start_DOW_time && @slot_duration == @original_duration
+  #       @slots << slot
+  #     end
+  #   end
+  #   info = {tutor: @tutor.id, original_start_DOW_time: @original_start_DOW_time, slot_start_DOW_time: @slot_start_DOW_time, original_duration: @original_duration, slot_duration: @slot_duration}
+  #   return info
+  # end
 
   # Load slots and update all that match the range
   # might want to try find_each here to speed things up
   def update_slots
-    get_slots_for_range
+    @slots = get_slots_for_range
     @slots.each do |slot|
-      new_start_time = slot.start_time + @start_adjustment.seconds
-      slot.update(start_time: new_start_time, duration: @new_duration)
+      slot.start_time = slot.start_time + @start_adjustment.seconds
+      slot.duration = @new_duration
+      slot.save
     end
-    @slots
+    return @slots
   end
 
-  # Destroy all sots that match the range
+  #   {
+  #   "id": 492,
+  #   "tutor_id": 1,
+  #   "status": "Open",
+  #   "start_time": "2015-08-01T12:00:00.000Z",
+  #   "duration": 3600,
+  #   "reservation_min": null,
+  #   "reservation_max": null,
+  #   "created_at": "2015-09-10T16:42:11.560Z",
+  #   "updated_at": "2015-09-10T16:42:11.560Z"
+  # },
+
+  # Destroy all slots that match the range
   def destroy_slots
     get_slots_for_range
     @slot_ids = []

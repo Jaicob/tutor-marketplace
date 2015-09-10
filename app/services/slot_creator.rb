@@ -28,7 +28,7 @@ class SlotCreator
       date = date + 7
       @start_time = @start_time + 7
     end
-    @slots
+    return @slots
   end
 
 end

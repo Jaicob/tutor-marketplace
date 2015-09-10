@@ -3,6 +3,7 @@ require 'rails_helper'
 describe "Slot endpoints" do 
   
   let(:slot)  { create(:slot) }
+  let(:tutor) { create(:tutor) }
 
   # logs in tutor to gain access to protected API endpoints
   def request_spec_login(user)
@@ -31,66 +32,78 @@ describe "Slot endpoints" do
   end
 
   it "Creates a single slot with SlotCreator" do
-    request_spec_login(slot.tutor.user) 
+    request_spec_login(tutor.user) 
     params = {
-        tutor_id:         slot.tutor.id, 
-        start_time:       '2015-08-01 17:00', 
-        duration:         3600, 
-        weeks_to_repeat:  1
-      }
-    expect { post "/api/v1/tutors/#{slot.tutor.id}/slots", params
+      tutor_id: tutor.id, 
+      start_time: '2015-08-01 12:00:00', 
+      duration: 1200, 
+      weeks_to_repeat: 1
+    }
+    expect { post "/api/v1/tutors/#{tutor.id}/slots", params
     }.to change(Slot, :count).by(1)
     expect(response).to be_success
   end
 
   it "Creates multiple repeating slots with SlotCreator" do 
-    request_spec_login(slot.tutor.user) 
+    request_spec_login(tutor.user) 
     params = {
-        tutor_id:         slot.tutor.id, 
-        start_time:       '2015-08-01 17:00', 
-        duration:         3600, 
-        weeks_to_repeat:  5
-      }
-    expect { post "/api/v1/tutors/#{slot.tutor.id}/slots", params
+      tutor_id: tutor.id, 
+      start_time: '2015-08-01 12:00:00', 
+      duration: 1200, 
+      weeks_to_repeat: 5
+    }
+    expect { post "/api/v1/tutors/#{tutor.id}/slots", params
     }.to change(Slot, :count).by(5)
     expect(response).to be_success
   end
 
   it "Update all slots for tutor in a range" do
-    request_spec_login(slot.tutor.user) 
-    slot_creator = SlotCreator.new(
-      tutor_id: slot.tutor.id, 
-      start_time: '2015-08-01 12:00:00', 
-      duration: 3600, 
-      weeks_to_repeat: 5
-    ) 
-    @slots = slot_creator.create_slots
-
-    # Slot A before
-    expect(@slots.first.start_time).to eq('2015-08-01 12:00:00')
-    expect(@slots.first.duration).to eq(3600)
-
-    # Slot B before
-    expect(@slots.second.start_time).to eq('2015-08-08 12:00:00')
-    expect(@slots.second.duration).to eq(3600)
-
+    # long, but necessary setup for test (need to create slots with SlotCreator first)
+    request_spec_login(tutor.user) 
     params = {
-      tutor_id: slot.tutor.id,
-      original_start_time: '2015-08-01 12:00:00', 
-      original_duration: 3600, 
-      new_start_time: '2015-08-02 9:00:00', 
-      new_duration: 7200
-      }
-    post "/api/v1/tutors/#{slot.tutor.id}/slots/update", params
+      tutor_id: tutor.id, 
+      start_time: '2015-08-01 12:00:00', 
+      duration: 1200, 
+      weeks_to_repeat: 5
+    }
+    expect { post "/api/v1/tutors/#{tutor.id}/slots", params
+    }.to change(Slot, :count).by(5)
     expect(response).to be_success
+    # end of SlotCreator setup, now to test SlotManager for updating functionality
 
-    # Slot A after
-    expect(@slots.first.reload.start_time).to eq('2015-08-02 9:00:00')
-    expect(@slots.first.reload.duration).to eq(7200)
+    # confirm slot details before updating
+      # first slot details
+    expect(tutor.slots.first.start_time).to eq ('2015-08-01 12:00:00')
+    expect(tutor.slots.first.duration).to eq (1200)
+      # second slot details
+    expect(tutor.slots.last.start_time).to eq ('2015-08-29 12:00:00')
+    expect(tutor.slots.last.duration).to eq (1200)
 
-    # Slot B after
-    expect(@slots.second.reload.start_time).to eq('2015-08-09 9:00:00')
-    expect(@slots.second.reload.duration).to eq(7200)
+    puts "FIRST SLOT ID = #{tutor.slots.first.id}"
+
+    # post request to update slots
+    params = {
+      tutor_id: tutor.id, 
+      original_start_time: '2015-08-01 12:00:00', 
+      original_duration: 1200, 
+      new_start_time: '2015-08-02 9:00:00', 
+      new_duration: 2400
+    }
+    post "/api/v1/tutors/#{tutor.id}/slots/update", params
+    expect(response.status).to eq(200)
+
+    slot = Slot.first
+    slot.reload
+    expect(slot.duration).to eq(2400)
+    # check for updated values
+      # first slot details
+    # expect(tutor.slots.first.reload.start_time).to eq ('2015-08-02 12:00:00')
+    # expect(tutor.slots.first.duration).to eq (2400)
+    #   # second slot details
+    # expect(tutor.slots.last.start_time).to eq ('2015-08-30 12:00:00')
+    # expect(tutor.slots.last.duration).to eq (2400)
+
+
   end
 
 end

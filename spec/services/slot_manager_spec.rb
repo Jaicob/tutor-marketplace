@@ -7,16 +7,16 @@ RSpec.describe SlotManager do
   let(:slot_creator) {  SlotCreator.new(
       tutor_id: tutor.id, 
       start_time: '2015-08-01 12:00:00', 
-      duration: 2, 
+      duration: 1200, 
       weeks_to_repeat: 5) 
   }
   
   let(:slot_manager) { SlotManager.new(
     tutor_id: tutor.id, 
     original_start_time: '2015-08-01 12:00:00', 
-    original_duration: 2, 
+    original_duration: 1200, 
     new_start_time: '2015-08-02 9:00:00', 
-    new_duration: 3) 
+    new_duration: 2400) 
   }
 
   before :each do
@@ -36,13 +36,13 @@ RSpec.describe SlotManager do
   end
 
   it "updates the duration of all slots in a slot_manager" do 
-    expect(@slots.first.duration).to eq(2)
-    expect(@slots.last.duration).to eq(2)
+    expect(@slots.first.duration).to eq(1200)
+    expect(@slots.last.duration).to eq(1200)
 
     @slot_manager.update_slots
 
-    expect(@slots.first.duration).to eq(3)
-    expect(@slots.last.duration).to eq(3)
+    expect(@slots.first.duration).to eq(2400)
+    expect(@slots.last.duration).to eq(2400)
   end
 
 end

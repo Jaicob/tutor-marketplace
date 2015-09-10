@@ -1,6 +1,6 @@
 class API::V1::SlotsController < API::V1::Defaults
   before_action :set_tutor
-  before_action :restrict_to_resource_owner, except: [:index]
+  # before_action :restrict_to_resource_owner, except: [:index]
   before_action :set_slot, only: [:show, :update, :destroy]
 
   def index
@@ -15,17 +15,20 @@ class API::V1::SlotsController < API::V1::Defaults
   def create
     slot_creator = SlotCreator.new(safe_params) 
     @slots = slot_creator.create_slots
-    if @slots 
+    if @slots
        render json: @slots, status: 200
     else
-      return "Slot could not be saved: #{@slot.errors.full_messages}", status: 500
+      render nothing: true, status: 500
     end
   end
 
   def update_slots
-    slot_manager = SlotManager.new(safe_params) 
-    @slots = slot_manager.update_slots 
-    if @slots 
+    slot_manager = SlotManager.new(safe_params)
+    # slots = slot_manager.get_slots_for_range
+    # render json: slots
+
+    @slots = slot_manager.update_slots    
+    if @slots
       render json: @slots, status: 200
     else
       return "Slot could not be updated: #{@slot.errors.full_messages}", status: 500
