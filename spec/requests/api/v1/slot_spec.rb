@@ -92,16 +92,13 @@ describe "Slot endpoints" do
     post "/api/v1/tutors/#{tutor.id}/slots/update", params
     expect(response.status).to eq(200)
 
-    slot = Slot.first
-    slot.reload
-    expect(slot.duration).to eq(2400)
     # check for updated values
       # first slot details
-    # expect(tutor.slots.first.reload.start_time).to eq ('2015-08-02 12:00:00')
-    # expect(tutor.slots.first.duration).to eq (2400)
+    expect(tutor.slots.first.reload.start_time).to eq ('2015-08-02 9:00:00')
+    expect(tutor.slots.first.duration).to eq (2400)
     #   # second slot details
-    # expect(tutor.slots.last.start_time).to eq ('2015-08-30 12:00:00')
-    # expect(tutor.slots.last.duration).to eq (2400)
+    expect(tutor.slots.last.start_time).to eq ('2015-08-30 9:00:00')
+    expect(tutor.slots.last.duration).to eq (2400)
 
 
   end

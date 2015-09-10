@@ -1,5 +1,9 @@
 class SlotCreator
 
+  ## For easy creation for testing in console
+  # sc = SlotCreator.new(tutor_id: 1, start_time: '2015-08-01 12:00', duration: 3600, weeks_to_repeat: 10)
+  # sm = SlotManager.new(tutor_id: 1, original_start_time: '2015-08-01 12:00:00', original_duration: 3600, new_start_time: '2015-08-02 11:00:00', new_duration: '7200')
+
   attr_accessor :tutor, :start_time, :duration, :weeks_to_repeat, :start_date, :end_date, :slots
 
   def initialize(params)
@@ -32,5 +36,3 @@ class SlotCreator
   end
 
 end
-
-# sc = SlotCreator.new(tutor_id: 1, start_time: '2015-08-01 17:00', duration: 2, weeks_to_repeat: 1)
