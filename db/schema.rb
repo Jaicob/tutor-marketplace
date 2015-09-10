@@ -136,6 +136,14 @@ ActiveRecord::Schema.define(version: 20150814212520) do
     t.text     "appt_notes"
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
+    t.string   "line1"
+    t.string   "line2"
+    t.string   "city"
+    t.string   "state"
+    t.string   "postal_code"
+    t.string   "ssn_last_4"
+    t.string   "acct_id"
+    t.string   "last_4_acct"
   end
 
   add_index "tutors", ["user_id"], name: "index_tutors_on_user_id", using: :btree
@@ -181,11 +189,8 @@ ActiveRecord::Schema.define(version: 20150814212520) do
   add_index "users", ["school_id"], name: "index_users_on_school_id", using: :btree
   add_index "users", ["slug"], name: "index_users_on_slug", unique: true, using: :btree
 
-<<<<<<< 65047c7d791d4f225427b43a43bd6d493f09b049
   add_foreign_key "appointments", "courses"
-=======
   add_foreign_key "appointments", "charges"
->>>>>>> Added Charge reference to Appointment
   add_foreign_key "appointments", "slots"
   add_foreign_key "appointments", "students"
   add_foreign_key "charges", "tutors"

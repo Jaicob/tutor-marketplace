@@ -14,6 +14,7 @@
   <%= text_field_tag :account_number %>
   <%= label_tag :routing_number, "Routing number (note: Use ACH routing number)" %>
   <%= text_field_tag :routing_number %>
+  <%= hidden_field_tag :last_4_acct %>
   <%= pf.button :submit %>
 <% end %>
 <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
@@ -34,6 +35,9 @@
 
       // Clear the bank account info so it's not sent through params
       $('#routing_number').val("");
+      var acct_val = $('#account_number').val();
+      var new_val = acct_val.substring(acct_val.length - 4);
+      $('#last_4_acct').val(new_val);
       $('#account_number').val("");
 
       // Prevent the form from submitting with the default action

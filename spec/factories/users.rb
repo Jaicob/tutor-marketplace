@@ -21,7 +21,6 @@
 #  first_name             :string
 #  last_name              :string
 #  role                   :integer          default(0)
-#  payment_info           :string
 #  invitation_token       :string
 #  invitation_created_at  :datetime
 #  invitation_sent_at     :datetime
