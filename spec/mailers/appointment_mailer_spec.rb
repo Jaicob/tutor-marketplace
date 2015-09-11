@@ -18,25 +18,21 @@ describe 'Appointment mailers', type: 'request' do
     @appt_b = create(:appointment, slot_id: slot.id, start_time: '2016-01-01 13:00')
   end
 
-  it "returns a list of all appointments for a tutor" do 
-    get "/api/v1/tutors/#{tutor.id}/appointments"
-    expect(response).to be_success
-    expect(json.length).to eq(2)
+  it 'sends appointment confirmation to a tutor for a new booking' do 
+    
   end
 
-  it "returns a specific appointment for a tutor" do 
-    get "/api/v1/tutors/#{tutor.id}/appointments/#{@appt_a.id}"
-    expect(response).to be_success
-    expect(json['id']).to eq(@appt_a.id)
-    expect(json['slot_id']).to eq(@appt_a.slot_id)
-  end
-
-  it "updates an appointment for a tutor" do 
-    expect(Sidekiq::Extensions::DelayedMailer.jobs.count).to eq 0
-    expect(@appt_a.status).to eq('Scheduled')
-    params = {status: 'Cancelled'}
-    put "/api/v1/tutors/#{tutor.id}/appointments/#{@appt_a.id}", params
-    expect(@appt_a.reload.status).to eq('Cancelled')
-    expect(Sidekiq::Extensions::DelayedMailer.jobs.count).to eq 2
-  end
 end
+
+
+# appointment_confirmation_for_tutor(appointment_id)
+# appointment_confirmation_for_student(appointment_id)
+
+# appointment_reminder_for_tutor(appointment_id)
+# appointment_reminder_for_student(appointment_id)
+
+# appointment_update_for_tutor(appointment_id)
+# appointment_update_for_student(appointment_id)
+
+# appointment_cancellation_for_tutor(appointment_id)
+# appointment_cancellation_for_student(appointment_id)

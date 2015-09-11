@@ -54,20 +54,6 @@ describe "AppointmentsByTutor endpoints" do
     expect(json['id']).to eq(@appt_a.id)
   end
 
-  it 'creates an appointment for a tutor' do
-    request_spec_login(tutor.user)
-    params = {
-      student_id: student.id,
-      course_id: course.id,
-      slot_id: slot.id,
-      start_time: "2015-09-01 10:00:00"
-    }
-    expect{
-      post "/api/v1/tutors/#{tutor.id}/appointments/", params
-    }.to change(Appointment, :count).by(1)
-    expect(response).to be_success
-  end
-
   it 'cancels an appointment for a tutor' do 
     request_spec_login(tutor.user)
     get "/api/v1/tutors/#{tutor.id}/appointments/#{@appt_a.id}"

@@ -12,16 +12,6 @@ class API::V1::TutorAppointmentsController < API::V1::Defaults
     respond_with(@appointment)
   end
 
-  def create
-    @appointment = Appointment.new
-    @appointment.update(safe_params)
-    if @appointment.save
-      render json: @appointment
-    else
-      render nothing: true, status: 400
-    end
-  end
-
   def cancel
     if @appointment.update(safe_params)
       render json: @appointment

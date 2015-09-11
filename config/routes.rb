@@ -210,7 +210,7 @@ Rails.application.routes.draw do
       resources :tutors, only: [] do 
         resources :slots, only: [:index, :show, :create, :destroy]
         post '/slots/update' => 'slots#update_slots'
-        resources :appointments, only: [:index, :show, :create], controller: 'tutor_appointments' do 
+        resources :appointments, only: [:index, :show], controller: 'tutor_appointments' do 
           member do
             put 'cancel'
           end
