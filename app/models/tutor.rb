@@ -27,7 +27,7 @@ class Tutor < ActiveRecord::Base
   has_many :slots, dependent: :destroy
   has_many :appointments, through: :slots, dependent: :destroy
 
-  delegate :school, :full_name, :email, to: :user
+  delegate :school, :full_name, :email, :password, to: :user
 
   enum application_status: ['Incomplete', 'Complete', 'Approved']
   enum active_status: ['Inactive', 'Active']
@@ -123,9 +123,13 @@ class Tutor < ActiveRecord::Base
   end
 
   def update_action_redirect_path(tutor_params)
-    (tutor_params[:birthdate] || tutor_params[:phone_number] || tutor_params[:transcript]) ? 
-    "/#{self.user.slug}/dashboard/settings/private_information" : 
-    "/#{self.user.slug}/dashboard/settings/profile_settings"
+    if tutor_params[:birthdate] || tutor_params[:phone_number]
+      "/#{self.user.slug}/dashboard/settings/private_information"
+    elsif tutor_params[:appt_notes]
+      "/#{self.user.slug}/dashboard/settings/appointment_settings"
+    else
+      "/#{self.user.slug}/dashboard/settings/profile_settings"
+    end
   end
 
   def change_user_role_to_tutor
@@ -135,6 +139,7 @@ class Tutor < ActiveRecord::Base
   end
 
   def update_application_status
+    # method called in after_commit hook to automatically update a tutor's application status and send application_completed email
     if self.complete_profile? && self.application_status == 'Incomplete'
       self.update(application_status: 'Complete')
       TutorManagementMailer.delay.application_completed_email(self.user.id)
@@ -146,6 +151,20 @@ class Tutor < ActiveRecord::Base
       user.school.tutors.where(application_status: 1, active_status: 0)
     else # super-admin can see all applications across all schools
       Tutor.where(application_status: 1, active_status: 0)
+    end
+  end
+
+  def appointments_with_times_only_for_public_scheduler
+    # returns limited information about a tutor's appointments for public API call for scheduler
+    self.appointments.map{ |appt| {id: appt.id, start_time: appt.start_time, status: appt.status}}
+  end
+
+  def restricted_appointments_info(tutor, current_user)
+    # returns all appointment details (including student_id) for logged-in tutor that owns appointment, returns only necessary details for scheduler for all others (only: id, start_time, status)
+    if current_user && current_user.tutor == self
+      @appointments = self.appointments
+    else
+      @appointments = self.appointments_with_times_only_for_public_scheduler
     end
   end
 

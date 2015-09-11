@@ -16,17 +16,17 @@ FactoryGirl.define do
   # subject_hash = {name: 'Chemistry', id: 1}
 
   factory :course do
-    subject         { FactoryGirl.create(:subject) }
+    subject
     call_number     101
     friendly_name   "Pre Calculus"
-    school          { FactoryGirl.create(:school, :UNC) }
+    association     :school, factory: [:school, :UNC]
 
     factory :invalid_course do
       subject   nil
     end
 
     factory :second_course do
-      subject         { FactoryGirl.create(:subject) }
+      subject
       call_number     202
       friendly_name   "Cellular Biology"
       association     :school, factory: :second_school

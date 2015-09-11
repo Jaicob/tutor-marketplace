@@ -1,10 +1,10 @@
 class API::V1::TutorAppointmentsController < API::V1::Defaults
   before_action :set_tutor
-  before_action :restrict_to_resource_owner, only: [:create, :update, :destroy]
-  before_filter :set_appointment, only: [:show, :update, :destroy]
+  before_action :restrict_to_resource_owner, except: [:index]
+  before_filter :set_appointment, only: [:show, :cancel]
 
   def index
-    @appointments = @tutor.appointments
+    @appointments = @tutor.restricted_appointments_info(@tutor, current_user)
     respond_with(@appointments)
   end
 
@@ -14,7 +14,7 @@ class API::V1::TutorAppointmentsController < API::V1::Defaults
 
   def create
     @appointment = Appointment.new
-    @appointment.assign_attributes(safe_params)
+    @appointment.update(safe_params)
     if @appointment.save
       render json: @appointment
     else
@@ -22,18 +22,9 @@ class API::V1::TutorAppointmentsController < API::V1::Defaults
     end
   end
 
-  def update
-    @appointment.assign_attributes(safe_params)
-    if @appointment.save
+  def cancel
+    if @appointment.update(safe_params)
       render json: @appointment
-    else
-      render nothing: true, status: 400
-    end
-  end
-
-  def destroy
-    if @appointment.destroy
-      render nothing: true, status: 200
     else
       render nothing: true, status: 500
     end
@@ -49,6 +40,12 @@ class API::V1::TutorAppointmentsController < API::V1::Defaults
       @appointment = Appointment.find(params[:id])
     end
 
+    def restrict_to_resource_owner
+      if current_user.nil? || current_user.tutor != @tutor
+        return redirect_to restricted_access_path, status: 401
+      end
+    end
+
     def safe_params
       hash = {}
       hash[:student_id] = params[:student_id] if params[:student_id]
@@ -58,11 +55,5 @@ class API::V1::TutorAppointmentsController < API::V1::Defaults
       hash[:status] = params[:status] if params[:status]
       return hash
     end  
-
-    def restrict_to_resource_owner
-      if current_user.tutor != @tutor
-        return redirect_to restricted_access_path, status: 401
-      end
-    end
 
 end

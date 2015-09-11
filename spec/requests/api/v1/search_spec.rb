@@ -1,6 +1,15 @@
 require 'rails_helper'
 
 describe "Search endpoints" do 
+  let(:school) { create(:school, :UNC) }
+  let(:course) { create(:course, school_id: school.id) }
+  let(:tutor)  { create(:tutor) }
+
+  before :each do
+    school
+    course
+    tutor
+  end
 
   it "Returns all tutors at a school" do
     get "/api/v1/search/tutors?school_id=1"

@@ -11,6 +11,10 @@
 FactoryGirl.define do
   factory :student do
     user
+
+    trait :alternate do 
+      association :user, factory: :alternate_user
+    end
     
   end
 
