@@ -44,26 +44,24 @@ describe 'Appointment mailers', type: 'request' do
   end
 
   it 'does not set up an ApptReminderWorker for appts booked less than 24 out' do
-    slot_12_hours_from_now = create(:)
+    start_time = DateTime.now
+    no_reminder_slot = create(:slot, tutor: tutor, start_time: start_time)
     request_spec_login(student.user)
     params = {
       student_id: student.id,
       course_id: course.id,
       slot_id: slot.id,
-      start_time: "2020-01-01 10:00:00"
+      start_time: start_time
     }
     expect{
       post "/api/v1/students/#{student.id}/appointments/", params
-    }.to change(ApptReminderWorker.jobs, :size).by(2)
+    }.to change(ApptReminderWorker.jobs, :size).by(0)
   end
+
+  it 'sent appointment_update (to tutors and students) when changes are made'
 
 end
 
-
-
-
-# appointment_reminder_for_tutor(appointment_id)
-# appointment_reminder_for_student(appointment_id)
 
 # appointment_update_for_tutor(appointment_id)
 # appointment_update_for_student(appointment_id)

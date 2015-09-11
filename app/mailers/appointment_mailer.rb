@@ -25,15 +25,15 @@ class AppointmentMailer < ApplicationMailer
     mail(to: @student.email, subject: "Your upcoming Axon tutoring appointment")
   end
 
-  # ==============================
-  #   Appointment Updated Emails
-  # ==============================
+  # ================================
+  #   Appointment Rescheduled Emails
+  # ================================
 
-  def appointment_update_for_tutor(appointment_id)
+  def appointment_reschedule_for_tutor(appointment_id)
     mail(to: @tutor.email, subject: "Your Axon tutoring appointment has changed")
   end
 
-  def appointment_update_for_student(appointment_id)
+  def appointment_reschedule_for_student(appointment_id)
     mail(to: @student.email, subject: "Your Axon tutoring appointment has changed")
   end
 
