@@ -6,19 +6,12 @@ describe 'Appointment mailers', type: 'request' do
   let(:tutor) { create(:tutor) }
   let(:student) { create(:student) }
   let(:course) { create(:course) }
-  let(:slot) { create(:slot, tutor: tutor) }
+  let(:slot) { create(:slot, tutor: tutor, start_time: '2020-01-01 10:00') }
 
   # logs in tutor/student to gain access to protected API endpoints
   def request_spec_login(user)
     login_params = {user: {email: user.email, password: user.password}}
     post "/users/sign_in", login_params
-  end
-
-  before :each do
-  #   request_spec_login(tutor.user)
-    slot = create(:slot, tutor_id: tutor.id, start_time: '2016-01-01 12:00')
-  #   @appt_a = create(:appointment, slot_id: slot.id, start_time: '2016-01-01 12:00')
-  #   @appt_b = create(:appointment, slot_id: slot.id, start_time: '2016-01-01 13:00')
   end
 
   it 'sends appointment confirmations (to tutor and student) for a new booking' do 
@@ -28,7 +21,7 @@ describe 'Appointment mailers', type: 'request' do
       student_id: student.id,
       course_id: course.id,
       slot_id: slot.id,
-      start_time: "2015-09-01 10:00:00"
+      start_time: "2020-01-01 10:00:00"
     }
     expect{
       post "/api/v1/students/#{student.id}/appointments/", params
@@ -37,11 +30,37 @@ describe 'Appointment mailers', type: 'request' do
     expect(Sidekiq::Extensions::DelayedMailer.jobs.count).to eq 2
   end
 
+  it 'sets up an ApptReminderWorker for appts booked more than 24 hours out' do 
+    request_spec_login(student.user)
+    params = {
+      student_id: student.id,
+      course_id: course.id,
+      slot_id: slot.id,
+      start_time: "2020-01-01 10:00:00"
+    }
+    expect{
+      post "/api/v1/students/#{student.id}/appointments/", params
+    }.to change(ApptReminderWorker.jobs, :size).by(2)
+  end
+
+  it 'does not set up an ApptReminderWorker for appts booked less than 24 out' do
+    slot_12_hours_from_now = create(:)
+    request_spec_login(student.user)
+    params = {
+      student_id: student.id,
+      course_id: course.id,
+      slot_id: slot.id,
+      start_time: "2020-01-01 10:00:00"
+    }
+    expect{
+      post "/api/v1/students/#{student.id}/appointments/", params
+    }.to change(ApptReminderWorker.jobs, :size).by(2)
+  end
+
 end
 
 
-# appointment_confirmation_for_tutor(appointment_id)
-# appointment_confirmation_for_student(appointment_id)
+
 
 # appointment_reminder_for_tutor(appointment_id)
 # appointment_reminder_for_student(appointment_id)
