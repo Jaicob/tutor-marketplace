@@ -15,12 +15,12 @@ class Admin::SchoolsController < AdminController
     if @school.save
       redirect_to admin_school_path(@school)
     else
-      flash[:error] = "School was not created: #{@school.errors.full_messages}" 
+      flash[:error] = "School was not created: #{@school.errors.full_messages}"
       render :new
     end
   end
 
-  def show 
+  def show
   end
 
   def edit
@@ -43,14 +43,14 @@ class Admin::SchoolsController < AdminController
     end
   end
 
-  private 
+  private
 
     def set_school
       @school = School.find(params[:id])
     end
 
     def school_params
-      params.require(:school).permit(:name, :location)
+      params.require(:school).permit(:name, :location, :transaction_percentage)
     end
 
 end

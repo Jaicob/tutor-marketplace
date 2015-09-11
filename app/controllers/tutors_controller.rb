@@ -1,7 +1,6 @@
 class TutorsController < ApplicationController
-  before_action :set_user, only: [:edit, :update, :destroy, :create_tutor_course]
-  before_action :set_tutor, only: [:show, :edit, :update, :update_settings, :destroy, :create_tutor_course]
-  before_action :set_tutor_for_admin_or_visitor_sign_up, only: [:register_or_sign_in, :visitor_sign_in, :visitor_sign_up, :update_active_status, :destroy_by_admin]
+  before_action :set_user, only: [:edit, :update, :destroy]
+  before_action :set_tutor, only: [:show, :edit, :update, :destroy]
 
   # TUTOR CREATION IS HANDLED THROUGH THE DEVISE REGISTRATION CONTROLLER - ONE FORM CREATES USER AND TUTOR
 
@@ -28,10 +27,34 @@ class TutorsController < ApplicationController
     end
   end
 
+  def tutor_payment_info_form
+    @tutor = Tutor.find(params[:id])
+    respond_to do |format|
+      format.js { render :load_payment_form }
+    end
+  end
+
+  def update_tutor_payment_info
+    @tutor = Tutor.find(params[:id])
+    if @tutor.update_attributes(tutor_params)
+      @tutor.update_attributes(last_4_acct: params[:last_4_acct])
+      UpdateTutorAccount.call(tutor: @tutor, token: params[:stripeToken])
+      respond_to do |format|
+        format.js { render :payment_settings_updated }
+        format.html { redirect_to dashboard_settings_payment_settings_user_path(@tutor.user) }
+      end
+    else
+      respond_to do |format|
+        format.js { render :load_payment_form }
+        flash[:error] = "Something went wrong"
+      end
+    end
+  end
+
   private
 
-    def tutor_params
-      params.require(:tutor).permit(:rating, :application_status, :appt_notes, :birthdate, :degree, :major, :extra_info, :graduation_year, :phone_number, :profile_pic, :transcript, :active_status, :crop_x, :crop_y, :crop_w, :crop_h, course: [:course_id], tutor_course: [:rate], user_attributes: [:first_name, :last_name, :email, :phone_number, :password, :password_confirmation])
-    end
+  def tutor_params
+    params.require(:tutor).permit(:rating, :application_status, :appt_notes, :birthdate, :degree, :major, :extra_info, :graduation_year, :phone_number, :profile_pic, :transcript, :active_status, :crop_x, :crop_y, :crop_w, :crop_h, :line1, :line2, :city, :state, :postal_code, course: [:course_id], tutor_course: [:rate], user_attributes: [:first_name, :last_name, :email, :phone_number, :password, :password_confirmation])
+  end
 
 end

@@ -18,6 +18,14 @@
 #  appt_notes         :text
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
+#  line1              :string
+#  line2              :string
+#  city               :string
+#  state              :string
+#  postal_code        :string
+#  ssn_last_4         :string
+#  acct_id            :string
+#  last_4_acct        :string
 #
 
 class Tutor < ActiveRecord::Base
@@ -26,8 +34,9 @@ class Tutor < ActiveRecord::Base
   has_many :courses, through: :tutor_courses, dependent: :destroy
   has_many :slots, dependent: :destroy
   has_many :appointments, through: :slots, dependent: :destroy
+  has_many :charges, dependent: :destroy
 
-  delegate :school, :full_name, :email, :password, to: :user
+  delegate :school, :first_name, :last_name, :full_name, :sign_in_ip, :email, :password, to: :user
 
   enum application_status: ['Incomplete', 'Complete', 'Approved']
   enum active_status: ['Inactive', 'Active']

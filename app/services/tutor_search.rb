@@ -80,19 +80,19 @@ class TutorSearch
   def tutors_for_school (school_id)
     school = School.find school_id
     if @requires_availability
-      school.tutors.includes(:slots).where.not(slots: { id: nil }) 
+      school.tutors.includes(:slots).where.not(slots: { id: nil })
     else
-      school.tutors 
-    end     
+      school.tutors
+    end
   end
 
   def tutors_for_course (course_id)
     course = Course.find course_id
     if @requires_availability
-      course.tutors.includes(:slots).where.not(slots: { id: nil }) 
+      course.tutors.includes(:slots).where.not(slots: { id: nil })
     else
-      course.tutors 
-    end    
+      course.tutors
+    end
   end
 
   #

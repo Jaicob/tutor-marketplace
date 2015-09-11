@@ -161,7 +161,14 @@ Rails.application.routes.draw do
   get '/contact'            => 'single_views#contact'
 
   devise_for :users, controllers: { registrations: "tutor_registration" }
-  resources :tutors, :tutor_courses, :slots
+
+  resources :tutor_courses, :slots
+  resources :tutors do
+    member do
+      get 'tutor_payment_info_form' => 'tutors#tutor_payment_info_form', as: 'tutor_payment_info_form'
+      patch 'update_tutor_payment_info' => 'tutors#update_tutor_payment_info', as: 'update_tutor_payment_info'
+    end
+  end
 
   resources :users, only: [:update], path: '' do
     scope module: :dashboard do
@@ -201,24 +208,24 @@ Rails.application.routes.draw do
 
   # the 'only: []' syntax below after 'resources: collection_name' manually specifies which actions we want for a resource in order to avoid many extra, unused routes
   namespace :api, defaults: {format: :json} do
-    namespace :v1 do 
-      resources :schools, only: [] do 
-        resources :subjects, only: [:index] do 
+    namespace :v1 do
+      resources :schools, only: [] do
+        resources :subjects, only: [:index] do
           resources :courses, only: [:index]
         end
       end
-      resources :tutors, only: [] do 
+      resources :tutors, only: [] do
         resources :slots, only: [:index, :show, :create, :destroy]
         post '/slots/update' => 'slots#update_slots'
-        resources :appointments, only: [:index, :show, :create], controller: 'tutor_appointments' do 
+        resources :appointments, only: [:index, :show, :create], controller: 'tutor_appointments' do
           member do
             put 'cancel'
           end
         end
       end
       resources :students, only: [] do
-        resources :appointments, only: [:index, :show, :create], controller: 'student_appointments' do 
-          member do 
+        resources :appointments, only: [:index, :show, :create], controller: 'student_appointments' do
+          member do
             put 'reschedule'
             put 'cancel'
           end

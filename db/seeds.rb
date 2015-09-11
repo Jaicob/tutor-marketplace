@@ -3,15 +3,15 @@
 
 # Info for 4 schools
 school_list = [
-  [ "University of North Carolina", "Chapel Hill, NC" ],
-  [ "University of Georgia", "Athens, GA" ],
-  [ "Duke University", "Durham, NC" ],
-  [ "Clemson University", "Clemson, SC" ]
-] 
+  [ "University of North Carolina", "Chapel Hill, NC", 17.5 ],
+  [ "University of Georgia", "Athens, GA", 17.5 ],
+  [ "Duke University", "Durham, NC", 17.5 ],
+  [ "Clemson University", "Clemson, SC", 17.5 ]
+]
 
 # Create Schools out of the school_list
-school_list.each do |name, location|
-  School.create(name: name, location: location)
+school_list.each do |name, location, tp|
+  School.create(name: name, location: location, transaction_percentage: tp)
 end
 
 subject_list = %w(Biology Chemistry Math Computer\ Science Physics)
@@ -55,12 +55,12 @@ n = 0
   n += 1
   5.times{
     User.create!(
-      school_id: n, 
-      first_name: Faker::Name.first_name, 
-      last_name: Faker::Name.last_name, 
-      email: Faker::Internet.safe_email, 
-      password: 'password', 
-      password_confirmation: 'password') 
+      school_id: n,
+      first_name: Faker::Name.first_name,
+      last_name: Faker::Name.last_name,
+      email: Faker::Internet.safe_email,
+      password: 'password',
+      password_confirmation: 'password')
   }
 }
 
@@ -69,11 +69,11 @@ User.all.each do |user|
   user.create_tutor(
     rating: 5,
     birthdate: '1990-01-01',
-    degree: 'B.A.', 
-    major: 'Marine Biology', 
-    extra_info: Faker::Lorem.sentence, 
-    graduation_year: '2018', 
-    phone_number: '123-123-1234', 
+    degree: 'B.A.',
+    major: 'Marine Biology',
+    extra_info: Faker::Lorem.sentence,
+    graduation_year: '2018',
+    phone_number: Faker::Number.number(10),
     transcript: File.new(File.join(Rails.root, 'app/assets/images/file-icon.png'))
     )
 end
@@ -92,18 +92,18 @@ Tutor.all.each do |tutor|
   slot_creator.create_slots
 end
 
-# Create 20 Users to become Students, 5 for each school 
+# Create 20 Users to become Students, 5 for each school
 n = 0
 4.times{
   n += 1
   5.times{
     User.create!(
-      school_id: n, 
-      first_name: Faker::Name.first_name, 
-      last_name: Faker::Name.last_name, 
-      email: Faker::Internet.safe_email, 
-      password: 'password', 
-      password_confirmation: 'password') 
+      school_id: n,
+      first_name: Faker::Name.first_name,
+      last_name: Faker::Name.last_name,
+      email: Faker::Internet.safe_email,
+      password: 'password',
+      password_confirmation: 'password')
   }
 }
 
@@ -125,9 +125,9 @@ School.all.each do |school|
   @tutors = school.tutors
   5.times {
     Appointment.create(
-      student_id: @students[ordinal].id, 
-      slot_id: @tutors[ordinal].slots.first.id, 
-      course_id: @tutors[ordinal].courses.first.id, 
+      student_id: @students[ordinal].id,
+      slot_id: @tutors[ordinal].slots.first.id,
+      course_id: @tutors[ordinal].courses.first.id,
       start_time: "2015-08-01 12:00:00"
     )
     ordinal += 1
@@ -138,11 +138,11 @@ end
 # => nic@axontutors.com
 # => password
 test_user = User.create(
-  school_id: 1, 
-  first_name: 'Nicolas', 
-  last_name: 'Cage', 
-  email: 'nic@axontutors.com', 
-  password: 'password', 
+  school_id: 1,
+  first_name: 'Nicolas',
+  last_name: 'Cage',
+  email: 'nic@axontutors.com',
+  password: 'password',
   password_confirmation: 'password',
   role: 3
   )
