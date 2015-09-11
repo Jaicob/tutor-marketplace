@@ -136,13 +136,14 @@
 #                                api_v1_tutor_slot GET      /api/v1/tutors/:tutor_id/slots/:id(.:format)                       api/v1/slots#show {:format=>:json}
 #                                                  DELETE   /api/v1/tutors/:tutor_id/slots/:id(.:format)                       api/v1/slots#destroy {:format=>:json}
 #                        api_v1_tutor_slots_update POST     /api/v1/tutors/:tutor_id/slots/update(.:format)                    api/v1/slots#update_slots {:format=>:json}
-#              reschedule_api_v1_tutor_appointment PUT      /api/v1/tutors/:tutor_id/appointments/:id/reschedule(.:format)     api/v1/tutor_appointments#reschedule {:format=>:json}
 #                  cancel_api_v1_tutor_appointment PUT      /api/v1/tutors/:tutor_id/appointments/:id/cancel(.:format)         api/v1/tutor_appointments#cancel {:format=>:json}
 #                        api_v1_tutor_appointments GET      /api/v1/tutors/:tutor_id/appointments(.:format)                    api/v1/tutor_appointments#index {:format=>:json}
+#                                                  POST     /api/v1/tutors/:tutor_id/appointments(.:format)                    api/v1/tutor_appointments#create {:format=>:json}
 #                         api_v1_tutor_appointment GET      /api/v1/tutors/:tutor_id/appointments/:id(.:format)                api/v1/tutor_appointments#show {:format=>:json}
 #            reschedule_api_v1_student_appointment PUT      /api/v1/students/:student_id/appointments/:id/reschedule(.:format) api/v1/student_appointments#reschedule {:format=>:json}
 #                cancel_api_v1_student_appointment PUT      /api/v1/students/:student_id/appointments/:id/cancel(.:format)     api/v1/student_appointments#cancel {:format=>:json}
 #                      api_v1_student_appointments GET      /api/v1/students/:student_id/appointments(.:format)                api/v1/student_appointments#index {:format=>:json}
+#                                                  POST     /api/v1/students/:student_id/appointments(.:format)                api/v1/student_appointments#create {:format=>:json}
 #                       api_v1_student_appointment GET      /api/v1/students/:student_id/appointments/:id(.:format)            api/v1/student_appointments#show {:format=>:json}
 #                             api_v1_search_tutors GET      /api/v1/search/tutors(.:format)                                    api/v1/search#tutors {:format=>:json}
 #                                      sidekiq_web          /sidekiq                                                           Sidekiq::Web
