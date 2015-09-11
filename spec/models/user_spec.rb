@@ -82,13 +82,13 @@ describe User do
     expect(user).to be_valid
   end
 
-  it "sets default role to user" do 
-    expect(user.role).to eq "user"
+  it "sets default role to student" do 
+    expect(user.role).to eq "student"
   end
 
-  it "allows role to be changed to admin" do 
-    user.role=1
-    expect(user.role).to eq "admin"
+  it "allows role to be changed to campus_manager" do 
+    user.role=2
+    expect(user.role).to eq "campus_manager"
   end
 
   it "joins first and last name to create full name" do 

@@ -11,6 +11,10 @@
 FactoryGirl.define do
   factory :subject do
     name 'Math'
+
+    trait :Chem do 
+      name "Chemistry"
+    end
   end
 
 end

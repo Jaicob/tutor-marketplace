@@ -2,16 +2,16 @@
   <div class="medium-3 columns">
     <%= render 'vertical_sub_menu' %>
   </div>
-  <div class="medium-9 columns">
+  <div class="medium-8 medium-offset-1 columns">
     <div class="row">
-      <div class="medium-10 columns">
+      <div class="medium-6 columns">
         <%= form_for @tutor do |f| %>
           <h3>Appointment Settings</h3>
 
           <%= f.label :appt_notes, 'Personal Note to Students' %>
-          <%= f.text_area :appt_notes %>
+          <%= f.text_area :appt_notes, rows: 10 %>
 
-          <%= f.submit 'Save' %>
+          <%= f.submit 'Save', class: 'button tiny expand success' %>
         <% end %>
       </div>
     </div>

@@ -1,0 +1,60 @@
+<div class="row">
+  <div class="medium-3 columns">
+    <%= render 'vertical_sub_menu' %>
+  </div>
+  <div class="medium-8 medium-offset-1 columns">
+    <div class="row">
+      <div class="medium-6 columns">
+        <p>All information on this page is private and only accesible to Axon administrators.</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="medium-6 columns">
+        <%= form_for @tutor do |f| %>
+          <h3>Personal Information</h3>
+
+          <%= f.label :birthdate %>
+          <%= f.date_field :birthdate %>
+
+          <%= f.label :phone_number %>
+          <%= f.telephone_field :phone_number %>
+
+          <%= f.submit 'Save', class: 'button tiny expand success' %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="medium-6 columns">
+        <%= form_for @tutor do |f| %>
+          <h3 id="transcript">Transcript</h3>
+
+          <p>Current Transcript: 
+            <%= @tutor.transcript.url.nil? ? 
+            'None' : 
+             File.basename(@tutor.transcript.path)
+              %>
+          </p>
+          <% if !@tutor.transcript.url.nil? %>
+            <a href="#" data-reveal-id="viewTranscript">View Transcript</a>
+          <% end %>
+
+          <%= f.label :transcript %>
+          <%= f.file_field :transcript %>
+
+          <%= f.submit 'Save', class: 'button tiny expand success' %>
+        <% end %>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
+<div id="viewTranscript" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+  <h2 id="modalTitle">Current Transcript</h2>
+  <p class="lead">File.basename(@tutor.transcript.path)</p>
+  <%= image_tag @tutor.transcript_url %>
+  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+</div>

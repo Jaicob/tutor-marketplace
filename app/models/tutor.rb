@@ -15,7 +15,7 @@
 #  birthdate          :date
 #  profile_pic        :string
 #  transcript         :string
-#  appt_notes         :string
+#  appt_notes         :text
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #
@@ -27,7 +27,7 @@ class Tutor < ActiveRecord::Base
   has_many :slots, dependent: :destroy
   has_many :appointments, through: :slots, dependent: :destroy
 
-  delegate :school, :full_name, :email, to: :user
+  delegate :school, :full_name, :email, :password, to: :user
 
   enum application_status: ['Incomplete', 'Complete', 'Approved']
   enum active_status: ['Inactive', 'Active']
@@ -49,34 +49,26 @@ class Tutor < ActiveRecord::Base
     profile_pic.recreate_versions! if tutor_params[:crop_x]
   end
 
-  def self.to_csv
-    attributes = %w{name email phone_number active_status rating application_status degree major graduation_year birthdate sign_up_date}
-    CSV.generate(headers: true) do |csv|
-      csv << attributes
-      all.each do |user|
-        csv << attributes.map{ |attr| user.send(attr) }
-      end
-    end
-  end
+  # def self.to_csv
+  #   attributes = %w{name email phone_number active_status rating application_status degree major graduation_year birthdate sign_up_date}
+  #   CSV.generate(headers: true) do |csv|
+  #     csv << attributes
+  #     all.each do |user|
+  #       csv << attributes.map{ |attr| user.send(attr) }
+  #     end
+  #   end
+  # end
 
   def sign_up_date
     self.created_at.to_date
   end
 
   def formatted_courses
-    courses = []
-    self.courses.each do |course|
-      courses << [course.formatted_name]
-    end
-    courses.join("<br>").html_safe()
+    self.courses.map{ |course| course.formatted_name}.join("<br>").html_safe()
   end
 
   def availability_booked_percent
-    # this method should calculate how many hours of a tutor's availability are actually booked
-    # possibly useful for identifying 'super-tutors'
-    # should probably only calculate percentages for past availability/appointments, since most bookins
-    # are only completed 2 days in advance. also, don't want a tutor with more future set availability (a
-    # good thing) to have a lower percentage than someone with less future availability
+    # this method should calculate how many hours of a tutor's availability are actually booked possibly useful for identifying 'super-tutors' should probably only calculate percentages for past availability/appointments, since most bookings are only completed 2 days in advance. also, don't want a tutor with more future set availability (a good thing) to have a lower percentage than someone with less future availability
   end
 
   def active?
@@ -84,11 +76,7 @@ class Tutor < ActiveRecord::Base
   end
 
   def incomplete_profile?
-    if self.birthdate && self.degree && self.major && self.extra_info && self.graduation_year && self.phone_number && self.profile_pic.url != 'panda.png' && self.transcript.url
-      false
-    else
-      true
-    end
+    (self.birthdate && self.degree && self.major && self.extra_info && self.graduation_year && self.phone_number && self.profile_pic.url != 'panda.png' && self.transcript.url) ? false : true
   end
 
   def complete_profile?
@@ -96,29 +84,29 @@ class Tutor < ActiveRecord::Base
   end
 
   def awaiting_approval?
-    if self.incomplete_profile? == false && self.active_status == 'Inactive'
-      true
-    else
-      false
-    end
+    (self.incomplete_profile? == false && self.active_status == 'Inactive') ? true : false
   end
 
   def zero_availability_set?
-    if self.incomplete_profile? == false && self.awaiting_approval? == false && self.slots.count == 0
-      true
-    else
-      false
-    end
+    (self.incomplete_profile? == false && self.awaiting_approval? == false && self.slots.count == 0) ? true : false
   end
 
-  def profile_check(attribute)
-    if attribute == :profile_pic
+  def check_profile_for(field)
+    case field
+    when :profile_pic
       self.profile_pic.url == 'panda.png' ? false : true
-    elsif attribute == :transcript
+    when :transcript
       self.transcript.url == nil ? false : true
-    else
-      self.public_send(attribute) == nil ? false : true
+    when :public_info
+      (self.degree && self.major && self.extra_info && self.graduation_year) ? true : false
+    when :private_info
+      (self.birthdate && self.phone_number) ? true : false
+    when :payment_info
+      false # need to change, but waiting on payment fields to be added to model
+    when :appt_settings
+      self.appt_notes ? true : false
     end
+
   end
 
   def send_active_status_change_email(tutor_params)
@@ -136,23 +124,24 @@ class Tutor < ActiveRecord::Base
 
   def update_action_redirect_path(tutor_params)
     if tutor_params[:birthdate] || tutor_params[:phone_number]
-      "/#{self.user.slug}/dashboard/settings"
+      "/#{self.user.slug}/dashboard/settings/private_information"
+    elsif tutor_params[:appt_notes]
+      "/#{self.user.slug}/dashboard/settings/appointment_settings"
     else
-      "/#{self.user.slug}/dashboard/profile"
+      "/#{self.user.slug}/dashboard/settings/profile_settings"
     end
   end
 
   def change_user_role_to_tutor
     if self.user.role == 'student'
-      self.user.role = 'tutor'
-      self.user.save
+      self.user.update(role: 'tutor')
     end
   end
 
   def update_application_status
+    # method called in after_commit hook to automatically update a tutor's application status and send application_completed email
     if self.complete_profile? && self.application_status == 'Incomplete'
-      self.application_status = 'Complete'
-      self.save
+      self.update(application_status: 'Complete')
       TutorManagementMailer.delay.application_completed_email(self.user.id)
     end
   end
@@ -162,6 +151,20 @@ class Tutor < ActiveRecord::Base
       user.school.tutors.where(application_status: 1, active_status: 0)
     else # super-admin can see all applications across all schools
       Tutor.where(application_status: 1, active_status: 0)
+    end
+  end
+
+  def appointments_with_times_only_for_public_scheduler
+    # returns limited information about a tutor's appointments for public API call for scheduler
+    self.appointments.map{ |appt| {id: appt.id, start_time: appt.start_time, status: appt.status}}
+  end
+
+  def restricted_appointments_info(tutor, current_user)
+    # returns all appointment details (including student_id) for logged-in tutor that owns appointment, returns only necessary details for scheduler for all others (only: id, start_time, status)
+    if current_user && current_user.tutor == self
+      @appointments = self.appointments
+    else
+      @appointments = self.appointments_with_times_only_for_public_scheduler
     end
   end
 

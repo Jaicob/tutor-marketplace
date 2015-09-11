@@ -1,6 +1,4 @@
 class AppointmentMailer < ApplicationMailer
-  default from: 'info@axontutors.com'
-  default template_path: "mailers/#{self.name.underscore}"
 
   # ==============================
   #   Appointment Confirmation Emails

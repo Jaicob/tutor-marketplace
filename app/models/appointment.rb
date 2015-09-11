@@ -3,6 +3,15 @@
 # Table name: appointments
 #
 #  id         :integer          not null, primary key
+#  student_id :integer
+#  slot_id    :integer
+#  course_id  :integer
+#  start_time :datetime
+#  status     :integer          default(0)
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
  # student_id :integer
  # slot_id    :integer
  # course_id  :integer
@@ -57,8 +66,8 @@ class Appointment < ActiveRecord::Base
     tutor = Tutor.find(tutor_id)
     student = Student.find(student_id)
     course = Course.find(course_id)
-    if !(tutor.school == course.school && student.school == course.school)
-      errors.add(:course_id, "is not the same for tutor, student and course")
+    if !(tutor.school.name == course.school.name && student.school.name == course.school.name)
+      errors.add(:course_id, "is not the same for tutor, student and course: \ntutor and course = #{student.school.name == course.school.name}\nstudent and course = #{tutor.school.name == course.school.name}")
     end
   end
 

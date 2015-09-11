@@ -1,11 +1,11 @@
 require "rails_helper"
 
 feature "A tutor can edit their settings" do
-  let(:tutor) { create(:complete_tutor) }
+  let(:tutor) { create(:tutor) }
 
   before :each do
     sign_in(tutor.user.email, tutor.user.password)
-    visit "/#{tutor.user.slug}/dashboard/settings"
+    visit "/#{tutor.user.slug}/dashboard/settings/account_settings"
   end
 
   scenario "a tutor can edit their first name (on user account)" do
