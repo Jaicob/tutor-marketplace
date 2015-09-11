@@ -63,21 +63,24 @@ describe "AppointmentsByStudent endpoints" do
     expect(response).to be_success
   end
 
-  it 'updates an appointment for a student' do 
+  it 'reschedules an appointment for a student' do 
+    request_spec_login(student.user)
+    get "/api/v1/students/#{student.id}/appointments/#{@appt_a.id}"
+    expect(@appt_a.start_time).to eq('2015-09-01 12:00')
+    params = {start_time: '2015-09-01 13:00'}
+    put "/api/v1/students/#{student.id}/appointments/#{@appt_a.id}/reschedule", params
+    expect(response).to be_success
+    expect(@appt_a.reload.start_time).to eq('2015-09-01 13:00')
+  end
+
+  it 'cancels an appointment for a student' do 
     request_spec_login(student.user)
     get "/api/v1/students/#{student.id}/appointments/#{@appt_a.id}"
     expect(@appt_a.status).to eq('Scheduled')
     params = {status: 'Cancelled'}
-    put "/api/v1/students/#{student.id}/appointments/#{@appt_a.id}", params
-    expect(@appt_a.reload.status).to eq('Cancelled')
+    put "/api/v1/students/#{student.id}/appointments/#{@appt_a.id}/cancel", params
     expect(response).to be_success
-  end
-
-  it 'destroys an appointment for a student' do 
-    request_spec_login(student.user)
-    expect{
-      delete "/api/v1/students/#{student.id}/appointments/#{@appt_a.id}"
-    }.to change(Appointment, :count).by(-1)
+    expect(@appt_a.reload.status).to eq('Cancelled')
   end
 
 end

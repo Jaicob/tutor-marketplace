@@ -68,21 +68,14 @@ describe "AppointmentsByTutor endpoints" do
     expect(response).to be_success
   end
 
-  it 'updates an appointment for a tutor' do 
+  it 'cancels an appointment for a tutor' do 
     request_spec_login(tutor.user)
     get "/api/v1/tutors/#{tutor.id}/appointments/#{@appt_a.id}"
     expect(@appt_a.status).to eq('Scheduled')
     params = {status: 'Cancelled'}
-    put "/api/v1/tutors/#{tutor.id}/appointments/#{@appt_a.id}", params
+    put "/api/v1/tutors/#{tutor.id}/appointments/#{@appt_a.id}/cancel", params
     expect(@appt_a.reload.status).to eq('Cancelled')
     expect(response).to be_success
-  end
-
-  it 'destroys an appointment for a tutor' do 
-    request_spec_login(tutor.user)
-    expect{
-      delete "/api/v1/tutors/#{tutor.id}/appointments/#{@appt_a.id}"
-    }.to change(Appointment, :count).by(-1)
   end
 
 end

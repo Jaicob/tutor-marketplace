@@ -1,7 +1,7 @@
 class API::V1::TutorAppointmentsController < API::V1::Defaults
   before_action :set_tutor
   before_action :restrict_to_resource_owner, except: [:index]
-  before_filter :set_appointment, only: [:show, :update, :destroy]
+  before_filter :set_appointment, only: [:show, :cancel]
 
   def index
     @appointments = @tutor.restricted_appointments_info(@tutor, current_user)
@@ -22,18 +22,9 @@ class API::V1::TutorAppointmentsController < API::V1::Defaults
     end
   end
 
-  def update
-    @appointment.update(safe_params)
-    if @appointment.save
+  def cancel
+    if @appointment.update(safe_params)
       render json: @appointment
-    else
-      render nothing: true, status: 400
-    end
-  end
-
-  def destroy
-    if @appointment.destroy
-      render nothing: true, status: 200
     else
       render nothing: true, status: 500
     end
