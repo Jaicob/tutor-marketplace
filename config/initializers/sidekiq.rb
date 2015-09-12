@@ -1,5 +1,5 @@
-redis_domain = ENV['VAGRANT_REDIS_1_PORT_6379_TCP_ADDR']
-redis_port = ENV['VAGRANT_REDIS_1_PORT_6379_TCP_PORT']
+redis_domain = ENV['VAGRANT_REDIS_1_PORT_6379_TCP_ADDR'] || ENV['WEBAPP_REDIS_1_PORT_6379_TCP_ADDR']
+redis_port = ENV['VAGRANT_REDIS_1_PORT_6379_TCP_PORT'] || ENV['WEBAPP_REDIS_1_PORT_6379_TCP_PORT']
 
 if redis_domain && redis_port
   redis_url = "redis://#{redis_domain}:#{redis_port}"
