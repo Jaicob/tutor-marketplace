@@ -80,19 +80,21 @@ class TutorSearch
   def tutors_for_school (school_id)
     school = School.find school_id
     if @requires_availability
-      school.tutors.includes(:slots).where.not(slots: { id: nil })
+      tutors = school.tutors.includes(:user, :slots).where.not(slots: { id: nil })
     else
-      school.tutors
+      tutors = school.tutors.includes(:user)
     end
+    return tutors.to_json(include: :user)
   end
 
   def tutors_for_course (course_id)
     course = Course.find course_id
     if @requires_availability
-      course.tutors.includes(:slots).where.not(slots: { id: nil })
+      tutors = course.tutors.includes(:user, :slots).where.not(slots: { id: nil })
     else
-      course.tutors
+      tutors = course.tutors.includes(:user)
     end
+    return tutors.to_json(include: :user)
   end
 
   #
@@ -119,7 +121,8 @@ class TutorSearch
   def tutors_for_school_course (school_id, course_id)
     school = School.find school_id
     course = school.courses.find course_id
-    course.tutors
+    tutors = course.tutors.includes(:user)
+    return tutors.to_json(include: :user)
   end
 
   #
