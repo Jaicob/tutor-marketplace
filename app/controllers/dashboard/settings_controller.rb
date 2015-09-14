@@ -21,7 +21,7 @@ class Dashboard::SettingsController < DashboardController
   end
 
   def tutor_payment_settings
-    # Payment forms for Tutor to recieve funds
+    @tutor = User.find(params[:id]).tutor
   end
 
   def payment_settings

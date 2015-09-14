@@ -4,4 +4,5 @@
    <%= @tutor.line2 %><br>
    <%= @tutor.city %>, <%= @tutor.state %> <%= @tutor.postal_code %>
 </p>
+<p>Active account: ******<%= @tutor.last_4_acct %></p>
 <%= link_to "Edit Payment Settings", tutor_payment_info_form_tutor_path(@tutor), remote: true %>
