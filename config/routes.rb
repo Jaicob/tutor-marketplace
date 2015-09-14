@@ -33,14 +33,6 @@
 #                              new_user_invitation GET      /users/invitation/new(.:format)                                    devise/invitations#new
 #                                                  PATCH    /users/invitation(.:format)                                        devise/invitations#update
 #                                                  PUT      /users/invitation(.:format)                                        devise/invitations#update
-#                                           tutors GET      /tutors(.:format)                                                  tutors#index
-#                                                  POST     /tutors(.:format)                                                  tutors#create
-#                                        new_tutor GET      /tutors/new(.:format)                                              tutors#new
-#                                       edit_tutor GET      /tutors/:id/edit(.:format)                                         tutors#edit
-#                                            tutor GET      /tutors/:id(.:format)                                              tutors#show
-#                                                  PATCH    /tutors/:id(.:format)                                              tutors#update
-#                                                  PUT      /tutors/:id(.:format)                                              tutors#update
-#                                                  DELETE   /tutors/:id(.:format)                                              tutors#destroy
 #                                    tutor_courses GET      /tutor_courses(.:format)                                           tutor_courses#index
 #                                                  POST     /tutor_courses(.:format)                                           tutor_courses#create
 #                                 new_tutor_course GET      /tutor_courses/new(.:format)                                       tutor_courses#new
@@ -57,6 +49,16 @@
 #                                                  PATCH    /slots/:id(.:format)                                               slots#update
 #                                                  PUT      /slots/:id(.:format)                                               slots#update
 #                                                  DELETE   /slots/:id(.:format)                                               slots#destroy
+#                    tutor_payment_info_form_tutor GET      /tutors/:id/tutor_payment_info_form(.:format)                      tutors#tutor_payment_info_form
+#                  update_tutor_payment_info_tutor PATCH    /tutors/:id/update_tutor_payment_info(.:format)                    tutors#update_tutor_payment_info
+#                                           tutors GET      /tutors(.:format)                                                  tutors#index
+#                                                  POST     /tutors(.:format)                                                  tutors#create
+#                                        new_tutor GET      /tutors/new(.:format)                                              tutors#new
+#                                       edit_tutor GET      /tutors/:id/edit(.:format)                                         tutors#edit
+#                                            tutor GET      /tutors/:id(.:format)                                              tutors#show
+#                                                  PATCH    /tutors/:id(.:format)                                              tutors#update
+#                                                  PUT      /tutors/:id(.:format)                                              tutors#update
+#                                                  DELETE   /tutors/:id(.:format)                                              tutors#destroy
 #                              dashboard_home_user GET      /:id/dashboard/home(.:format)                                      dashboard/home#index
 #                          dashboard_schedule_user GET      /:id/dashboard/schedule(.:format)                                  dashboard/schedule#index
 #                           dashboard_courses_user GET      /:id/dashboard/courses(.:format)                                   dashboard/courses#index
@@ -138,7 +140,6 @@
 #                        api_v1_tutor_slots_update POST     /api/v1/tutors/:tutor_id/slots/update(.:format)                    api/v1/slots#update_slots {:format=>:json}
 #                  cancel_api_v1_tutor_appointment PUT      /api/v1/tutors/:tutor_id/appointments/:id/cancel(.:format)         api/v1/tutor_appointments#cancel {:format=>:json}
 #                        api_v1_tutor_appointments GET      /api/v1/tutors/:tutor_id/appointments(.:format)                    api/v1/tutor_appointments#index {:format=>:json}
-#                                                  POST     /api/v1/tutors/:tutor_id/appointments(.:format)                    api/v1/tutor_appointments#create {:format=>:json}
 #                         api_v1_tutor_appointment GET      /api/v1/tutors/:tutor_id/appointments/:id(.:format)                api/v1/tutor_appointments#show {:format=>:json}
 #            reschedule_api_v1_student_appointment PUT      /api/v1/students/:student_id/appointments/:id/reschedule(.:format) api/v1/student_appointments#reschedule {:format=>:json}
 #                cancel_api_v1_student_appointment PUT      /api/v1/students/:student_id/appointments/:id/cancel(.:format)     api/v1/student_appointments#cancel {:format=>:json}
@@ -148,6 +149,7 @@
 #                             api_v1_search_tutors GET      /api/v1/search/tutors(.:format)                                    api/v1/search#tutors {:format=>:json}
 #                                      sidekiq_web          /sidekiq                                                           Sidekiq::Web
 #
+
 
 Rails.application.routes.draw do
 
@@ -217,7 +219,7 @@ Rails.application.routes.draw do
       resources :tutors, only: [] do
         resources :slots, only: [:index, :show, :create, :destroy]
         post '/slots/update' => 'slots#update_slots'
-        resources :appointments, only: [:index, :show, :create], controller: 'tutor_appointments' do
+        resources :appointments, only: [:index, :show], controller: 'tutor_appointments' do 
           member do
             put 'cancel'
           end

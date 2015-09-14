@@ -4,6 +4,10 @@ require "rails_helper"
 
 describe 'Appointment mailers', type: 'request' do 
   let(:tutor) { create(:tutor) }
+  let(:student) { create(:student) }
+  let(:course) { create(:course) }
+  let(:slot) { create(:slot, tutor: tutor, start_time: '2020-01-01 10:00') }
+  let(:appt) { create(:appointment) }
 
   # logs in tutor/student to gain access to protected API endpoints
   def request_spec_login(user)
@@ -11,32 +15,74 @@ describe 'Appointment mailers', type: 'request' do
     post "/users/sign_in", login_params
   end
 
-  before :each do
-    request_spec_login(tutor.user)
-    slot = create(:slot, tutor_id: tutor.id, start_time: '2016-01-01 12:00')
-    @appt_a = create(:appointment, slot_id: slot.id, start_time: '2016-01-01 12:00')
-    @appt_b = create(:appointment, slot_id: slot.id, start_time: '2016-01-01 13:00')
-  end
-
-  it "returns a list of all appointments for a tutor" do 
-    get "/api/v1/tutors/#{tutor.id}/appointments"
-    expect(response).to be_success
-    expect(json.length).to eq(2)
-  end
-
-  it "returns a specific appointment for a tutor" do 
-    get "/api/v1/tutors/#{tutor.id}/appointments/#{@appt_a.id}"
-    expect(response).to be_success
-    expect(json['id']).to eq(@appt_a.id)
-    expect(json['slot_id']).to eq(@appt_a.slot_id)
-  end
-
-  it "updates an appointment for a tutor" do 
+  it 'sends appointment confirmations (to tutor and student) for a new booking' do 
+    request_spec_login(student.user)
     expect(Sidekiq::Extensions::DelayedMailer.jobs.count).to eq 0
-    expect(@appt_a.status).to eq('Scheduled')
-    params = {status: 'Cancelled'}
-    put "/api/v1/tutors/#{tutor.id}/appointments/#{@appt_a.id}", params
-    expect(@appt_a.reload.status).to eq('Cancelled')
+    params = {
+      student_id: student.id,
+      course_id: course.id,
+      slot_id: slot.id,
+      start_time: "2020-01-01 10:00:00"
+    }
+    expect{
+      post "/api/v1/students/#{student.id}/appointments/", params
+    }.to change(Appointment, :count).by(1)
+    expect(response).to be_success
     expect(Sidekiq::Extensions::DelayedMailer.jobs.count).to eq 2
   end
+
+  it 'sets up an ApptReminderWorker for appts booked more than 24 hours out' do 
+    request_spec_login(student.user)
+    params = {
+      student_id: student.id,
+      course_id: course.id,
+      slot_id: slot.id,
+      start_time: "2020-01-01 10:00:00"
+    }
+    expect{
+      post "/api/v1/students/#{student.id}/appointments/", params
+    }.to change(ApptReminderWorker.jobs, :size).by(2)
+  end
+
+  it 'does not set up an ApptReminderWorker for appts booked less than 24 out' do
+    start_time = DateTime.now
+    no_reminder_slot = create(:slot, tutor: tutor, start_time: start_time)
+    request_spec_login(student.user)
+    params = {
+      student_id: student.id,
+      course_id: course.id,
+      slot_id: slot.id,
+      start_time: start_time
+    }
+    expect{
+      post "/api/v1/students/#{student.id}/appointments/", params
+    }.to change(ApptReminderWorker.jobs, :size).by(0)
+  end
+
+  it 'sends appointment_update (to tutor and student) when changes are made' do
+    student = appt.student
+    request_spec_login(student.user)
+    params = {
+      start_time: (appt.start_time.to_datetime + 2.hours).to_s
+    }
+    expect{
+      put "/api/v1/students/#{student.id}/appointments/#{appt.id}/reschedule", params
+    }.to change(Appointment, :count).by(0)
+    expect(response).to be_success
+    expect(Sidekiq::Extensions::DelayedMailer.jobs.count).to eq 2
+  end
+
+  it 'sends appointment_cancellation (to tutor and student) when appt is cancelled' do 
+    student = appt.student
+    request_spec_login(student.user)
+    params = {
+      status: 'Cancelled'
+    }
+    expect{
+      put "/api/v1/students/#{student.id}/appointments/#{appt.id}/reschedule", params
+    }.to change(Appointment, :count).by(0)
+    expect(response).to be_success
+    expect(Sidekiq::Extensions::DelayedMailer.jobs.count).to eq 2
+  end
+
 end

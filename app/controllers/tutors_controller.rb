@@ -41,7 +41,7 @@ class TutorsController < ApplicationController
       UpdateTutorAccount.call(tutor: @tutor, token: params[:stripeToken])
       respond_to do |format|
         format.js { render :payment_settings_updated }
-        format.html { redirect_to dashboard_settings_payment_settings_user_path(@tutor.user) }
+        format.html { redirect_to dashboard_settings_tutor_payment_settings_user_path(@tutor.user) }
       end
     else
       respond_to do |format|

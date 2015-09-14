@@ -1,38 +1,48 @@
 class API::V1::StudentAppointmentsController < API::V1::Defaults
   before_action :set_student
   before_action :restrict_to_resource_owner
-  before_action :set_appointment, only: [:show, :reschedule, :cancel]
+  before_action :set_appt, only: [:show, :reschedule, :cancel]
 
   def index
-    @appointments = @student.appointments
-    respond_with(@appointments)
+    @appts = @student.appointments
+    respond_with(@appts)
   end
 
   def show
-    respond_with(@appointment)
+    respond_with(@appt)
   end
 
   def create
-    @appointment = Appointment.new
-    @appointment.update(safe_params)
-    if @appointment.save
-      render json: @appointment
+    @appt = Appointment.new
+    @appt.update(safe_params)
+    if @appt.save
+      AppointmentMailer.delay.appointment_confirmation_for_tutor(@appt.id)
+      AppointmentMailer.delay.appointment_confirmation_for_student(@appt.id)
+      if @appt.appt_reminder_email_date != nil
+        ApptReminderWorker.perform_at(@appt.appt_reminder_email_date, @appt.id)
+        ApptReminderWorker.perform_at(@appt.appt_reminder_email_date, @appt.id)
+      end
+      render json: @appt
     else
       render nothing: true, status: 500
     end
   end
 
   def reschedule
-    if @appointment.update(safe_params)
-      render json: @appointment
+    if @appt.update(safe_params)
+      AppointmentMailer.delay.appointment_rescheduled_for_tutor(@appt.id)               
+      AppointmentMailer.delay.appointment_rescheduled_for_student(@appt.id)
+      render json: @appt
     else
       render nothing: true, status: 500
     end
   end
 
   def cancel
-    if @appointment.update(safe_params)
-      render json: @appointment
+    if @appt.update(safe_params)
+      AppointmentMailer.delay.appointment_cancellation_for_tutor(@appt.id)               
+      AppointmentMailer.delay.appointment_cancellation_for_student(@appt.id)
+      render json: @appt
     else
       render nothing: true, status: 500
     end
@@ -44,8 +54,8 @@ class API::V1::StudentAppointmentsController < API::V1::Defaults
       @student = Student.find(params[:student_id])
     end
 
-    def set_appointment
-      @appointment = Appointment.find(params[:id])
+    def set_appt
+      @appt = Appointment.find(params[:id])
     end
 
     def restrict_to_resource_owner

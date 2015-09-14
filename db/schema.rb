@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150814212520) do
+ActiveRecord::Schema.define(version: 20150910212642) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,8 +27,8 @@ ActiveRecord::Schema.define(version: 20150814212520) do
     t.datetime "updated_at",             null: false
   end
 
-  add_index "appointments", ["course_id"], name: "index_appointments_on_course_id", using: :btree
   add_index "appointments", ["charge_id"], name: "index_appointments_on_charge_id", using: :btree
+  add_index "appointments", ["course_id"], name: "index_appointments_on_course_id", using: :btree
   add_index "appointments", ["slot_id"], name: "index_appointments_on_slot_id", using: :btree
   add_index "appointments", ["student_id"], name: "index_appointments_on_student_id", using: :btree
 
@@ -189,8 +189,8 @@ ActiveRecord::Schema.define(version: 20150814212520) do
   add_index "users", ["school_id"], name: "index_users_on_school_id", using: :btree
   add_index "users", ["slug"], name: "index_users_on_slug", unique: true, using: :btree
 
-  add_foreign_key "appointments", "courses"
   add_foreign_key "appointments", "charges"
+  add_foreign_key "appointments", "courses"
   add_foreign_key "appointments", "slots"
   add_foreign_key "appointments", "students"
   add_foreign_key "charges", "tutors"
