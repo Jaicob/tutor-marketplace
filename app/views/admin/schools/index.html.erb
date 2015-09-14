@@ -21,6 +21,7 @@
           <th width='150'>Courses</th>
           <th width='150'>Tutors</th>
           <th width='150'>Appointments</th>
+          <th>Transaction Percentage</th>
           <th>Campus Manager</th>
         </tr>
       </thead>
@@ -33,6 +34,7 @@
           <td></td>
           <td></td>
           <td></td>
+          <td><%= school.transaction_percentage %>%</td>
           <td></td>
           <td><%= link_to 'View', admin_school_path(school) %></td>
         </tr>

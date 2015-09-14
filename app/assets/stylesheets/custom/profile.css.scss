@@ -31,3 +31,14 @@ div.profile-section-header{
   color: white;
   background-color: rgb(63, 63, 63);
 }
+
+.appointment-selector__slot-selector__day--slot--neutral {
+    color: grey;
+    background-color: lightgrey;
+    padding: 5px;
+}
+.appointment-selector__slot-selector__day--slot--active {
+    color: white;
+    background-color: green;
+    padding: 5px;
+}

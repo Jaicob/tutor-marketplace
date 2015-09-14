@@ -15,6 +15,7 @@
           <th>Courses</th>
           <th>Tutors</th>
           <th>Appointments</th>
+          <th>Transaction Percentage</th>
           <th>Edit</th>
           <th>Delete</th>
         </tr>
@@ -27,6 +28,7 @@
           <td></td>
           <td></td>
           <td></td>
+          <td><%= @school.transaction_percentage %>%</td>
           <td><%= link_to 'Edit', edit_admin_school_path(@school) %>
           <td><a href="#" data-reveal-id="confirmDeleteSchool">Delete</a></td>
         </tr>

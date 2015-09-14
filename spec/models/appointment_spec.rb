@@ -7,6 +7,7 @@
 #  slot_id    :integer
 #  course_id  :integer
 #  start_time :datetime
+#  charge_id  :integer
 #  status     :integer          default(0)
 #  created_at :datetime         not null
 #  updated_at :datetime         not null

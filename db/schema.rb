@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150729152259) do
+ActiveRecord::Schema.define(version: 20150814212520) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,14 +21,28 @@ ActiveRecord::Schema.define(version: 20150729152259) do
     t.integer  "slot_id"
     t.integer  "course_id"
     t.datetime "start_time"
+    t.integer  "charge_id"
     t.integer  "status",     default: 0
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
 
   add_index "appointments", ["course_id"], name: "index_appointments_on_course_id", using: :btree
+  add_index "appointments", ["charge_id"], name: "index_appointments_on_charge_id", using: :btree
   add_index "appointments", ["slot_id"], name: "index_appointments_on_slot_id", using: :btree
   add_index "appointments", ["student_id"], name: "index_appointments_on_student_id", using: :btree
+
+  create_table "charges", force: :cascade do |t|
+    t.integer  "amount"
+    t.integer  "transaction_fee"
+    t.string   "customer_id"
+    t.integer  "tutor_id"
+    t.string   "token"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "charges", ["tutor_id"], name: "index_charges_on_tutor_id", using: :btree
 
   create_table "courses", force: :cascade do |t|
     t.integer  "school_id"
@@ -58,9 +72,10 @@ ActiveRecord::Schema.define(version: 20150729152259) do
   create_table "schools", force: :cascade do |t|
     t.string   "name"
     t.string   "location"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.string   "slug"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.float    "transaction_percentage"
   end
 
   add_index "schools", ["slug"], name: "index_schools_on_slug", unique: true, using: :btree
@@ -80,8 +95,10 @@ ActiveRecord::Schema.define(version: 20150729152259) do
 
   create_table "students", force: :cascade do |t|
     t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.string   "customer_id"
+    t.string   "last_4_digits"
   end
 
   add_index "students", ["user_id"], name: "index_students_on_user_id", using: :btree
@@ -119,6 +136,14 @@ ActiveRecord::Schema.define(version: 20150729152259) do
     t.text     "appt_notes"
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
+    t.string   "line1"
+    t.string   "line2"
+    t.string   "city"
+    t.string   "state"
+    t.string   "postal_code"
+    t.string   "ssn_last_4"
+    t.string   "acct_id"
+    t.string   "last_4_acct"
   end
 
   add_index "tutors", ["user_id"], name: "index_tutors_on_user_id", using: :btree
@@ -153,6 +178,7 @@ ActiveRecord::Schema.define(version: 20150729152259) do
     t.integer  "invitations_count",      default: 0
     t.string   "slug"
     t.integer  "school_id"
+    t.string   "sign_in_ip"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
@@ -164,8 +190,10 @@ ActiveRecord::Schema.define(version: 20150729152259) do
   add_index "users", ["slug"], name: "index_users_on_slug", unique: true, using: :btree
 
   add_foreign_key "appointments", "courses"
+  add_foreign_key "appointments", "charges"
   add_foreign_key "appointments", "slots"
   add_foreign_key "appointments", "students"
+  add_foreign_key "charges", "tutors"
   add_foreign_key "courses", "schools"
   add_foreign_key "courses", "subjects"
   add_foreign_key "slots", "tutors"

@@ -7,25 +7,17 @@
 #  slot_id    :integer
 #  course_id  :integer
 #  start_time :datetime
+#  charge_id  :integer
 #  status     :integer          default(0)
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#
-
- # student_id :integer
- # slot_id    :integer
- # course_id  :integer
- # start_time :datetime
- # status     :integer          default(0)
- # created_at :datetime         not null
- # updated_at :datetime         not null
 #
 
 class Appointment < ActiveRecord::Base
   belongs_to :student
   belongs_to :slot
   belongs_to :course
-  
+  belongs_to :charge
   delegate :tutor, to: :slot
   delegate :school, to: :course
 
@@ -45,7 +37,7 @@ class Appointment < ActiveRecord::Base
   def one_hour_appointment_buffer
     Slot.find(slot_id).appointments.each do |appt|
       start_time_diff = (appt.start_time - start_time).abs
-      if start_time_diff < ( 3600 ) && start_time_diff != 0 
+      if start_time_diff < ( 3600 ) && start_time_diff != 0
         errors.add(:start_time, "can't be within an hour of another appointment")
       end
     end
@@ -74,7 +66,7 @@ class Appointment < ActiveRecord::Base
   # This sets the delivery time for reminder emails as 12 hours before the appointment, except in the case where the appointment is tomorrow and no reminder is needed
   def appt_reminder_email_date
     if self.start_time.to_date > (self.created_at.to_date + 1)
-      (self.start_time.to_time - 43200).to_time 
+      (self.start_time.to_time - 43200).to_i
     end
   end
 
@@ -93,11 +85,11 @@ class Appointment < ActiveRecord::Base
   # sends appropriate email based on changes made to an appt in Admin section
   def send_update_or_cancel_appt_email(appt_id, appt_params)
     if appt_params[:status] == 'Scheduled'
-      AppointmentMailer.delay.appointment_update_for_tutor(appt_id)               
+      AppointmentMailer.delay.appointment_update_for_tutor(appt_id)
       AppointmentMailer.delay.appointment_update_for_student(appt_id)
     end
     if appt_params[:status] == 'Cancelled'
-      AppointmentMailer.delay.appointment_cancellation_for_tutor(appt_id)               
+      AppointmentMailer.delay.appointment_cancellation_for_tutor(appt_id)
       AppointmentMailer.delay.appointment_cancellation_for_student(appt_id)
     end
   end
