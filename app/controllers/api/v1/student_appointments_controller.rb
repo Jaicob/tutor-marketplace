@@ -30,6 +30,8 @@ class API::V1::StudentAppointmentsController < API::V1::Defaults
 
   def reschedule
     if @appt.update(safe_params)
+      AppointmentMailer.delay.appointment_rescheduled_for_tutor(@appt.id)               
+      AppointmentMailer.delay.appointment_rescheduled_for_student(@appt.id)
       render json: @appt
     else
       render nothing: true, status: 500
@@ -38,6 +40,8 @@ class API::V1::StudentAppointmentsController < API::V1::Defaults
 
   def cancel
     if @appt.update(safe_params)
+      AppointmentMailer.delay.appointment_cancellation_for_tutor(@appt.id)               
+      AppointmentMailer.delay.appointment_cancellation_for_student(@appt.id)
       render json: @appt
     else
       render nothing: true, status: 500

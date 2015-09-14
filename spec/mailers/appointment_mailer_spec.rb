@@ -7,6 +7,7 @@ describe 'Appointment mailers', type: 'request' do
   let(:student) { create(:student) }
   let(:course) { create(:course) }
   let(:slot) { create(:slot, tutor: tutor, start_time: '2020-01-01 10:00') }
+  let(:appt) { create(:appointment) }
 
   # logs in tutor/student to gain access to protected API endpoints
   def request_spec_login(user)
@@ -58,26 +59,30 @@ describe 'Appointment mailers', type: 'request' do
     }.to change(ApptReminderWorker.jobs, :size).by(0)
   end
 
-  it 'sent appointment_update (to tutors and students) when changes are made'
+  it 'sends appointment_update (to tutor and student) when changes are made' do
+    student = appt.student
+    request_spec_login(student.user)
+    params = {
+      start_time: (appt.start_time.to_datetime + 2.hours).to_s
+    }
+    expect{
+      put "/api/v1/students/#{student.id}/appointments/#{appt.id}/reschedule", params
+    }.to change(Appointment, :count).by(0)
+    expect(response).to be_success
+    expect(Sidekiq::Extensions::DelayedMailer.jobs.count).to eq 2
+  end
+
+  it 'sends appointment_cancellation (to tutor and student) when appt is cancelled' do 
+    student = appt.student
+    request_spec_login(student.user)
+    params = {
+      status: 'Cancelled'
+    }
+    expect{
+      put "/api/v1/students/#{student.id}/appointments/#{appt.id}/reschedule", params
+    }.to change(Appointment, :count).by(0)
+    expect(response).to be_success
+    expect(Sidekiq::Extensions::DelayedMailer.jobs.count).to eq 2
+  end
 
 end
-
-
-# appointment_update_for_tutor(appointment_id)
-# appointment_update_for_student(appointment_id)
-
-# appointment_cancellation_for_tutor(appointment_id)
-# appointment_cancellation_for_student(appointment_id)
-
-
-  # {
-  #   "id": 507,
-  #   "tutor_id": 1,
-  #   "status": "Open",
-  #   "start_time": "2015-09-06T11:00:00.000Z",
-  #   "duration": 7200,
-  #   "reservation_min": null,
-  #   "reservation_max": null,
-  #   "created_at": "2015-09-10T16:56:12.543Z",
-  #   "updated_at": "2015-09-10T16:56:31.076Z"
-  # },
