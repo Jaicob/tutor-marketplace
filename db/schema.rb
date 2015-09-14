@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150910212642) do
+ActiveRecord::Schema.define(version: 20150914154002) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,10 +21,10 @@ ActiveRecord::Schema.define(version: 20150910212642) do
     t.integer  "slot_id"
     t.integer  "course_id"
     t.datetime "start_time"
-    t.integer  "charge_id"
     t.integer  "status",     default: 0
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.integer  "charge_id"
   end
 
   add_index "appointments", ["charge_id"], name: "index_appointments_on_charge_id", using: :btree
@@ -72,9 +72,9 @@ ActiveRecord::Schema.define(version: 20150910212642) do
   create_table "schools", force: :cascade do |t|
     t.string   "name"
     t.string   "location"
-    t.string   "slug"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.string   "slug"
     t.float    "transaction_percentage"
   end
 
@@ -136,6 +136,7 @@ ActiveRecord::Schema.define(version: 20150910212642) do
     t.text     "appt_notes"
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
+    t.string   "last_4_acct"
     t.string   "line1"
     t.string   "line2"
     t.string   "city"
@@ -143,7 +144,6 @@ ActiveRecord::Schema.define(version: 20150910212642) do
     t.string   "postal_code"
     t.string   "ssn_last_4"
     t.string   "acct_id"
-    t.string   "last_4_acct"
   end
 
   add_index "tutors", ["user_id"], name: "index_tutors_on_user_id", using: :btree
