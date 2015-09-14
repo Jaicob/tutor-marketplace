@@ -102,3 +102,4 @@ Z-notes.rb
 /vendor/assets/*
 /vendor/assets/bower_components/
 
+*.sublime-*
