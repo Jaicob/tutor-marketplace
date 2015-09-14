@@ -33,14 +33,6 @@
 #                              new_user_invitation GET      /users/invitation/new(.:format)                                    devise/invitations#new
 #                                                  PATCH    /users/invitation(.:format)                                        devise/invitations#update
 #                                                  PUT      /users/invitation(.:format)                                        devise/invitations#update
-#                                           tutors GET      /tutors(.:format)                                                  tutors#index
-#                                                  POST     /tutors(.:format)                                                  tutors#create
-#                                        new_tutor GET      /tutors/new(.:format)                                              tutors#new
-#                                       edit_tutor GET      /tutors/:id/edit(.:format)                                         tutors#edit
-#                                            tutor GET      /tutors/:id(.:format)                                              tutors#show
-#                                                  PATCH    /tutors/:id(.:format)                                              tutors#update
-#                                                  PUT      /tutors/:id(.:format)                                              tutors#update
-#                                                  DELETE   /tutors/:id(.:format)                                              tutors#destroy
 #                                    tutor_courses GET      /tutor_courses(.:format)                                           tutor_courses#index
 #                                                  POST     /tutor_courses(.:format)                                           tutor_courses#create
 #                                 new_tutor_course GET      /tutor_courses/new(.:format)                                       tutor_courses#new
@@ -57,6 +49,16 @@
 #                                                  PATCH    /slots/:id(.:format)                                               slots#update
 #                                                  PUT      /slots/:id(.:format)                                               slots#update
 #                                                  DELETE   /slots/:id(.:format)                                               slots#destroy
+#                    tutor_payment_info_form_tutor GET      /tutors/:id/tutor_payment_info_form(.:format)                      tutors#tutor_payment_info_form
+#                  update_tutor_payment_info_tutor PATCH    /tutors/:id/update_tutor_payment_info(.:format)                    tutors#update_tutor_payment_info
+#                                           tutors GET      /tutors(.:format)                                                  tutors#index
+#                                                  POST     /tutors(.:format)                                                  tutors#create
+#                                        new_tutor GET      /tutors/new(.:format)                                              tutors#new
+#                                       edit_tutor GET      /tutors/:id/edit(.:format)                                         tutors#edit
+#                                            tutor GET      /tutors/:id(.:format)                                              tutors#show
+#                                                  PATCH    /tutors/:id(.:format)                                              tutors#update
+#                                                  PUT      /tutors/:id(.:format)                                              tutors#update
+#                                                  DELETE   /tutors/:id(.:format)                                              tutors#destroy
 #                              dashboard_home_user GET      /:id/dashboard/home(.:format)                                      dashboard/home#index
 #                          dashboard_schedule_user GET      /:id/dashboard/schedule(.:format)                                  dashboard/schedule#index
 #                           dashboard_courses_user GET      /:id/dashboard/courses(.:format)                                   dashboard/courses#index
@@ -147,6 +149,7 @@
 #                             api_v1_search_tutors GET      /api/v1/search/tutors(.:format)                                    api/v1/search#tutors {:format=>:json}
 #                                      sidekiq_web          /sidekiq                                                           Sidekiq::Web
 #
+
 
 Rails.application.routes.draw do
 
