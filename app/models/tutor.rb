@@ -56,6 +56,7 @@ class Tutor < ActiveRecord::Base
 
   def crop_profile_pic(tutor_params)
     profile_pic.recreate_versions! if tutor_params[:crop_x]
+    profile_pic.delete_cache_id
   end
 
   def sign_up_date

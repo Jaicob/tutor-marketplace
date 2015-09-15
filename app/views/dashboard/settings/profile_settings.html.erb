@@ -13,7 +13,7 @@
     <div class="row">
       <div class="medium-6 columns">
         <h3>Profile Picture</h3>
-        <%= image_tag(@tutor.profile_pic_url(:thumb), class: 'profile-pic-preview') %>
+        <%= image_tag(@tutor.reload.profile_pic_url(:thumb), class: 'profile-pic-preview') %>
       </div>
     </div>
 
@@ -21,14 +21,14 @@
       <div class="medium-6 columns">
         <div class="row">
           <div class="small-12 columns">
-            <a href="#" data-reveal-id="newPhotoModal" class="button small secondary-CTA-color">
+            <a href="#" data-reveal-id="newPhotoModal" class="button tiny expand secondary">
               <i class="fi-page-add icon-margin-right"></i>Upload New Photo
             </a>
           </div>
         </div>
         <div class="row">
           <div class="small-12 columns">
-            <a href="#" data-reveal-id="cropCurrentPhotoModal" class="button small secondary-CTA-color">
+            <a href="#" data-reveal-id="cropCurrentPhotoModal" class="button tiny expand secondary">
               <i class="fi-page-edit icon-margin-right"></i>Crop Current Photo
             </a>
           </div>
@@ -70,17 +70,17 @@
     <script type="text/javascript">
     $(document).ready(
     function(){
-        $('input:submit').attr('disabled',true);
-        $('input:file').change(
-            function(){
-                if ($(this).val()){
-                    $('input:submit').removeAttr('disabled'); 
-                }
-                else {
-                    $('input:submit').attr('disabled',true);
-                }
-            });
-    });
+      $('#upload-pic').attr('disabled',true);
+      $('input:file').change(
+        function(){
+          if ($(this).val()){
+            $('input:submit').removeAttr('disabled'); 
+          }
+          else {
+            $('input:submit').attr('disabled',true);
+          }
+        });
+      });
     </script>
 
     <div class="row">
@@ -88,7 +88,7 @@
         <div class="text-center">
           <%= form_for @tutor do |f| %>
             <%= f.file_field :profile_pic %>
-            <%= f.submit 'Update Profile Picture', class: 'button radius' %>
+            <%= f.submit 'Update Profile Picture', class: 'button radius', id: 'upload-pic' %>
           <% end %>
         </div>
       </div>

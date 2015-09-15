@@ -11,7 +11,7 @@ class TutorsController < ApplicationController
     @tutor.update(tutor_params)
     @tutor.crop_profile_pic(tutor_params)
     if @tutor.save
-      redirect_to @tutor.update_action_redirect_path(tutor_params) # redirects to either settings or profile page
+      redirect_to @tutor.update_action_redirect_path(tutor_params) # redirects back to current page in settings
     else
       flash[:notice] = "Tutor was not updated: #{@tutor.errors.full_messages}"
       redirect_to :back
