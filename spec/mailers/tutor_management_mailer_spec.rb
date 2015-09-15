@@ -10,6 +10,7 @@ describe 'Tutor Management mailers', type: 'request' do
   let(:appt) { create(:appointment) }
   let(:almost_complete_tutor) { create(:tutor_with_complete_application, degree: nil) }
   let(:school) { create(:school) }
+  let(:admin) { create(:user, :super_admin) }
 
   # logs in tutor/student to gain access to protected API endpoints
   def request_spec_login(user)
@@ -20,6 +21,7 @@ describe 'Tutor Management mailers', type: 'request' do
   it 'sends welcome_email upon tutor sign_up' do
     expect(User.count).to eq 0
     expect(Tutor.count).to eq 0
+    expect(Sidekiq::Extensions::DelayedMailer.jobs.count).to eq 0
     params = {
       user: {
         first_name: 'Jane',
@@ -46,31 +48,53 @@ describe 'Tutor Management mailers', type: 'request' do
     expect(Tutor.count).to eq 1
   end
 
+
+ # self.complete_profile? && self.application_status == 'Incomplete'
   it 'sends application_completed_email to tutors upon application completion' do
     @tutor = almost_complete_tutor
     request_spec_login(@tutor.user)
-    expect(@tutor.degree).to eq nil
+    expect(@tutor.complete_profile?).to eq false
+    expect(@tutor.application_status).to eq 'Incomplete'
+    expect(Sidekiq::Extensions::DelayedMailer.jobs.count).to eq 0
     params = {
         tutor: {
           degree: 'B.A.'
       }
     }
-    put "/tutors/#{@tutor.id}", params 
-    @tutor.reload
-    expect(@tutor.reload.degree).to eq 'B.A.'
-        puts "Application status = #{@tutor.application_status}"
-        puts "Complete profile = #{@tutor.complete_profile?}"
-    @tutor.update_application_status
+    put "/tutors/#{@tutor.id}", params
+    @tutor.reload.update_application_status
     expect(@tutor.application_status).to eq 'Complete'
-  end
-
-  it 'sends rejection_email when an admin rejects an application' do
+    expect(Sidekiq::Extensions::DelayedMailer.jobs.count).to eq 1
   end
 
   it 'sends activation_email when an admin accepts an application' do
+    request_spec_login(admin)
+    expect(tutor.active_status).to eq 'Inactive'
+    expect(Sidekiq::Extensions::DelayedMailer.jobs.count).to eq 0
+    params = {
+      tutor: {
+        active_status: 'Active'
+      }
+    }
+    patch "/admin/tutors/#{tutor.id}", params
+    expect(tutor.reload.active_status).to eq 'Active'
+    expect(Sidekiq::Extensions::DelayedMailer.jobs.count).to eq 1
   end
 
   it 'sends deactivation_email when an admin deactives a tutor' do
+    request_spec_login(admin)
+    request_spec_login(admin)
+    tutor = create(:tutor, active_status: 'Active')
+    expect(tutor.active_status).to eq 'Active'
+    expect(Sidekiq::Extensions::DelayedMailer.jobs.count).to eq 0
+    params = {
+      tutor: {
+        active_status: 'Inactive'
+      }
+    }
+    patch "/admin/tutors/#{tutor.id}", params
+    expect(tutor.reload.active_status).to eq 'Inactive'
+    expect(Sidekiq::Extensions::DelayedMailer.jobs.count).to eq 1
   end
 
 end

@@ -14,13 +14,6 @@ class TutorManagementMailer < ApplicationMailer
     mail(to: @user.email, subject: "You've completed your application to become an Axon Tutor")
   end
 
-  def rejection_email(user_id)
-    @user = User.find(user_id)
-    @tutor = @user.tutor
-    @user = @tutor.user
-    mail(to: @user.email, subject: "Regarding your recent application to become an Axon Tutor")
-  end
-
   def activation_email(user_id)
     @user = User.find(user_id)
     @tutor = @user.tutor
