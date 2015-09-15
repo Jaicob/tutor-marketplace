@@ -111,11 +111,10 @@ class Tutor < ActiveRecord::Base
     when :private_info
       (self.birthdate && self.phone_number) ? true : false
     when :payment_info
-      false # need to change, but waiting on payment fields to be added to model
+      (self.line1 && self.line2 && self.city && self.state && self.postal_code && self.ssn_last_4 && self.acct_id && self.last_4_acct) ? true : false
     when :appt_settings
       self.appt_notes ? true : false
     end
-
   end
 
   def send_active_status_change_email(tutor_params)

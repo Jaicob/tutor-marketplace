@@ -59,17 +59,12 @@ RSpec.describe Tutor, type: :model do
       expect(tutor.active_status).to eq 'Active'
     end
 
-    it "can list its schools with .schools" do
-      create_list(:tutor_course, 2, tutor: tutor)
-      expect(tutor.schools.length).to eq(2)
-    end
-
     it "shows User's name with .name" do
-      expect(complete_tutor.full_name).to eq complete_tutor.user.full_name
+      expect(tutor.full_name).to eq tutor.user.full_name
     end
 
     it "shows User's email with .email" do
-      expect(complete_tutor.email).to eq complete_tutor.user.email
+      expect(tutor.email).to eq tutor.user.email
     end
 
     it "shows tutor's sign_up_date with .sign_up_date" do
