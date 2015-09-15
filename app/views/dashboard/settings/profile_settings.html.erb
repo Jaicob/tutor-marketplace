@@ -67,6 +67,22 @@
 <div id="newPhotoModal" class="reveal-modal small" data-reveal aria-labelledby="secondModalTitle" aria-hidden="true" role="dialog">
   <h4 id="secondModalTitle" class="text-center">Upload a new profile picture</h4>
 
+    <script type="text/javascript">
+    $(document).ready(
+    function(){
+        $('input:submit').attr('disabled',true);
+        $('input:file').change(
+            function(){
+                if ($(this).val()){
+                    $('input:submit').removeAttr('disabled'); 
+                }
+                else {
+                    $('input:submit').attr('disabled',true);
+                }
+            });
+    });
+    </script>
+
     <div class="row">
       <div class="small-8 small-centered columns">
         <div class="text-center">
@@ -98,6 +114,7 @@
         </div>
       </div>
     </div>
+
 <script type="text/javascript">
   jQuery('#cropbox').Jcrop({
     onChange: showCoords,
@@ -114,6 +131,7 @@
     jQuery('#tutor_crop_h').val(c.h);
   };
 </script>
+
     <div class="row">
       <div class="small-6 small-centered columns">
         <div class="text-center">

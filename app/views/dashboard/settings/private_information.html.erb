@@ -31,14 +31,8 @@
           <h3 id="transcript">Transcript</h3>
 
           <p>Current Transcript: 
-            <%= @tutor.transcript.url.nil? ? 
-            'None' : 
-             File.basename(@tutor.transcript.path)
-              %>
+            <%= @tutor.transcript.url.nil? ? 'None' : File.basename(@tutor.transcript.path) %>
           </p>
-          <% if !@tutor.transcript.url.nil? %>
-            <a href="#" data-reveal-id="viewTranscript">View Transcript</a>
-          <% end %>
 
           <%= f.label :transcript %>
           <%= f.file_field :transcript %>
