@@ -18,6 +18,7 @@ FactoryGirl.define do
   factory :school do
     name
     location  "Athens, GA"
+    transaction_percentage 15
 
     trait :invalid do
       name nil
