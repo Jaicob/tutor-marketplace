@@ -49,28 +49,19 @@ describe 'Tutor Management mailers', type: 'request' do
   it 'sends application_completed_email to tutors upon application completion' do
     @tutor = almost_complete_tutor
     request_spec_login(@tutor.user)
-    expect(@tutor.application_status).to eq 'Incomplete'
+    expect(@tutor.degree).to eq nil
     params = {
-        degree: 'B.A.'
+        tutor: {
+          degree: 'B.A.'
+      }
     }
     put "/tutors/#{@tutor.id}", params 
     @tutor.reload
-    puts "STATUS = #{@tutor.application_status}"
-    puts "COMPLETE_PROFILE? = #{@tutor.complete_profile?}"
-    # @tutor.update_application_status
-    puts "Public Info? = #{@tutor.check_profile_for(:public_info)}"
-    puts "Degree? = #{@tutor.degree}"
-    puts "Major? = #{@tutor.major}"
-    puts "Extra Info? = #{@tutor.extra_info}"
-    puts "Graduation Year? = #{@tutor.graduation_year}"
-
-    puts "Private Info? = #{@tutor.check_profile_for(:private_info)}"
-    # puts "Profile Pic? = #{@tutor.check_profile_for(:profile_pic)}"
-    puts "Appt Settings? = #{@tutor.check_profile_for(:appt_settings)}"
-    # puts "Transcript? = #{@tutor.check_profile_for(:transcript)}"
-    puts "Payment info? = #{@tutor.check_profile_for(:payment_info)}"
-    # expect(@tutor.application_status).to eq 'Complete'
-
+    expect(@tutor.reload.degree).to eq 'B.A.'
+        puts "Application status = #{@tutor.application_status}"
+        puts "Complete profile = #{@tutor.complete_profile?}"
+    @tutor.update_application_status
+    expect(@tutor.application_status).to eq 'Complete'
   end
 
   it 'sends rejection_email when an admin rejects an application' do

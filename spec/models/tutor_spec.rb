@@ -33,6 +33,7 @@ require 'rails_helper'
 RSpec.describe Tutor, type: :model do
 
     let(:tutor) { create(:tutor) }
+    let(:complete_tutor) { create(:tutor_with_complete_application) }
 
     it "is valid with extra info, an attached transcript, and first tutor_course" do
       expect(tutor).to be_valid
