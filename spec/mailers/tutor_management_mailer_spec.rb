@@ -50,7 +50,9 @@ describe 'Tutor Management mailers', type: 'request' do
     @tutor = almost_complete_tutor
     request_spec_login(@tutor.user)
     expect(@tutor.application_status).to eq 'Incomplete'
-    params = {degree: 'B.A.'}
+    params = {
+        degree: 'B.A.'
+    }
     put "/tutors/#{@tutor.id}", params 
     @tutor.reload
     puts "STATUS = #{@tutor.application_status}"

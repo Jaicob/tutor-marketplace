@@ -85,11 +85,15 @@ class Tutor < ActiveRecord::Base
   end
 
   def incomplete_profile?
-    (self.birthdate && self.degree && self.major && self.extra_info && self.graduation_year && self.phone_number && self.profile_pic.url != 'panda.png' && self.transcript.url) ? false : true
+    (self.birthdate && self.degree && self.major && self.extra_info && self.graduation_year && self.phone_number && self.profile_pic.url != 'panda.png' && self.transcript.url && self.complete_payment_info_details?) ? false : true
   end
 
   def complete_profile?
     self.incomplete_profile? ? false : true
+  end
+
+  def complete_payment_info_details?
+    (self.line1 && self.line2 && self.city && self.state && self.postal_code && self.ssn_last_4 && self.acct_id && self.last_4_acct) ? true : false
   end
 
   def awaiting_approval?
@@ -111,7 +115,7 @@ class Tutor < ActiveRecord::Base
     when :private_info
       (self.birthdate && self.phone_number) ? true : false
     when :payment_info
-      (self.line1 && self.line2 && self.city && self.state && self.postal_code && self.ssn_last_4 && self.acct_id && self.last_4_acct) ? true : false
+      self.complete_payment_info_details? ? true : false
     when :appt_settings
       self.appt_notes ? true : false
     end
@@ -131,7 +135,7 @@ class Tutor < ActiveRecord::Base
   end
 
   def update_action_redirect_path(tutor_params)
-    if tutor_params[:birthdate] || tutor_params[:phone_number]
+    if tutor_params[:birthdate] || tutor_params[:phone_number] || tutor_params[:transcript]
       "/#{self.user.slug}/dashboard/settings/private_information"
     elsif tutor_params[:appt_notes]
       "/#{self.user.slug}/dashboard/settings/appointment_settings"
