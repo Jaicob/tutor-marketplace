@@ -185,6 +185,7 @@ Rails.application.routes.draw do
           get  '/dashboard/settings/profile_settings'         => 'settings#profile_settings'
           get  '/dashboard/settings/appointment_settings'     => 'settings#appointment_settings'
           get  '/dashboard/settings/tutor_payment_settings'   => 'settings#tutor_payment_settings'
+          get  '/dashboard/settings/tutor_payment_settings/edit_address' => 'settings#edit_tutor_payment_address'
           get  '/dashboard/settings/student_payment_settings' => 'settings#student_payment_settings'
           get  '/dashboard/settings/appointment_history'      => 'settings#appointment_history'
       end

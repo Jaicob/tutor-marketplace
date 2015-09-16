@@ -2,11 +2,12 @@
   <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
   <h3>Payment Info</h3>
   <h4>Address</h4>
-  <%= pf.input :line1 %>
-  <%= pf.input :line2 %>
-  <%= pf.input :city %>
+  <%= pf.input :line1, label: 'Line 1' %>
+  <%= pf.input :line2, label: 'Line 2' %>
+  <%= pf.input :city, label: 'City' %>
+  <%= label_tag 'State' %>
   <%= pf.select :state, options_for_select(us_states), default: @tutor.state %>
-  <%= pf.input :postal_code %>
+  <%= pf.input :postal_code, label: 'Zip Code' %>
   <h4>Bank info</h4>
   <h1 class="bank-errors"></h1>
   <p>Note: Your bank account information will not be stored on our servers, it will only be used to create an account with our secure merchant service.</p>

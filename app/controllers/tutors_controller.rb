@@ -51,6 +51,9 @@ class TutorsController < ApplicationController
     end
   end
 
+  def edit_tutor_address_form
+  end
+
   private
 
   def tutor_params

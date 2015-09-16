@@ -131,6 +131,8 @@ class Tutor < ActiveRecord::Base
       "/#{self.user.slug}/dashboard/settings/private_information"
     elsif tutor_params[:appt_notes]
       "/#{self.user.slug}/dashboard/settings/appointment_settings"
+    elsif tutor_params[:line1] || tutor_params[:city] || tutor_params[:state] || tutor_params [:postal_code]
+      "/#{self.user.slug}/dashboard/settings/tutor_payment_settings"
     else
       "/#{self.user.slug}/dashboard/settings/profile_settings"
     end
