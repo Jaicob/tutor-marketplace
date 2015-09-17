@@ -19,7 +19,7 @@
       <select name="course[school_id]" id="school" class="select-menu" required="true">
         <option disabled="true" selected="true" value="">School</option>
         <% School.all.each do |school| %>
-          <option value="school.id"><%= school.name %></option>
+          <option value="<%= school.id %>"><%= school.name %></option>
         <% end %>
       </select>
     </div>
