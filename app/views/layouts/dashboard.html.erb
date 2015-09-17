@@ -1,25 +1,3 @@
-<% if current_user.tutor %>
-  <% tutor = current_user.tutor %>
-  
-  <% if tutor.incomplete_profile? %>
-    <% content_for (:incomplete_profile_progress_bar) do %>
-      <%= check_profile_progress and render 'layouts/partials/incomplete_profile_progress_bar' %>
-    <% end %>
-  <% end %>
-
-  <% if tutor.awaiting_approval? %>
-    <% content_for (:awaiting_approval) do %>
-      <%= render 'layouts/partials/awaiting_approval' %>
-    <% end %>
-  <% end %>
-
-  <% if tutor.zero_availability_set? %>
-    <% content_for (:set_availability_prompt) do %>
-      <%= render 'layouts/partials/set_availability_prompt' %>
-    <% end %>
-  <% end %>
-<% end %>
-
 <% content_for (:dashboard_nav) do %>
   <%= generate_dashboard_nav_links and render 'layouts/partials/dashboard_nav' %>
 <% end %>
