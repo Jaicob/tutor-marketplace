@@ -1,36 +1,34 @@
 <!DOCTYPE html>
-<html>
+<html class="pl">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= content_for?(:title) ? yield(:title) : "Web App" %></title>
-    <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Web App" %>">
+    <title><%= content_for?(:title) ? yield(:title) : "Axon Tutors" %></title>
+    <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Axon Tutors" %>">
     <%= stylesheet_link_tag 'application', media: 'all' %>
-    <!-- Put this in for styling Progress Bar but probably should be moved -->
-    <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:700,100' rel='stylesheet' type='text/css'>
-    <%# Modernizr is required for Zurb Foundation %>
-    <%= javascript_include_tag 'vendor/modernizr' %>
     <%= javascript_include_tag 'application' %>
     <%= csrf_meta_tags %>
     <%= yield(:header) %>
   </head>
-  <body>
-    <header class="header cf" role="banner">
-      <div class="wrapper">
-        <%= render 'layouts/partials/navigation' %>
-      </div>
-      <%= yield(:admin_panel) if content_for? (:admin_panel) %>
-      <%= yield(:incomplete_profile_progress_bar) if content_for? (:incomplete_profile_progress_bar) %>
-      <%= yield(:awaiting_approval) if content_for? (:awaiting_approval) %>
-      <%= yield(:set_availability_prompt) if content_for? (:set_availability_prompt) %>
-      <%= yield(:dashboard_nav) if content_for? (:dashboard_nav) %> 
-    </header>
-    <main role="main">     
-      <p class="notice"><%= notice %></p>
-      <p class="alert"><%= alert %></p>
-      <%= yield %>
-    </main>
-    <footer>
-      <%= render 'layouts/partials/footer' %>
-    </footer>
+  <body class="body">
+    <div class="page" id="page">
+      <header class="header cf" role="banner">
+        <div class="wrapper">
+          <%= render 'layouts/partials/navigation' %>
+        </div>
+        <%= yield(:admin_panel) if content_for? (:admin_panel) %>
+        <%= yield(:incomplete_profile_progress_bar) if content_for? (:incomplete_profile_progress_bar) %>
+        <%= yield(:awaiting_approval) if content_for? (:awaiting_approval) %>
+        <%= yield(:set_availability_prompt) if content_for? (:set_availability_prompt) %>
+        <%= yield(:dashboard_nav) if content_for? (:dashboard_nav) %> 
+      </header>
+      <main role="main">     
+        <p class="notice"><%= notice %></p>
+        <p class="alert"><%= alert %></p>
+        <%= yield %>
+      </main>
+      <footer>
+        <%= render 'layouts/partials/footer' %>
+      </footer>
+    </div>
   </body>
 </html>
