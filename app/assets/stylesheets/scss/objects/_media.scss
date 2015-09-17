@@ -1,0 +1,57 @@
+/*------------------------------------*\
+    $MEDIA ELEMENTS
+\*------------------------------------*/
+
+img, svg {
+  width: auto;
+  height: auto;
+}
+
+iframe {
+  margin-bottom: $base-spacing;
+}
+
+figure {
+  margin-bottom: $base-spacing;
+  
+  img {
+    margin-bottom: $base-spacing / 2;
+  }
+}
+
+figcaption {
+  font-style: italic;
+}
+
+.thumb-wrapper {
+  overflow: hidden;
+  text-align: center;
+
+  img {
+    @extend %flexible-media;
+    margin: 0;
+  }
+}
+
+.avatar {
+  @extend .thumb-wrapper;
+  background-color: $gray;
+  border-radius: 50%;
+}
+
+.video-wrapper {
+  height: 0; width: 100%;    
+  margin: 0 auto $pad;
+  position: relative;
+  padding-bottom: 56.25%; /* 16/9 ratio */
+  overflow: hidden;
+
+  video,
+  iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+  }
+}
