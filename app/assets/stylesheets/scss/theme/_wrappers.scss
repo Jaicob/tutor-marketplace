@@ -1,0 +1,70 @@
+/* Wrappers */
+.wrapper {
+  @include outer-container;
+  position: relative;
+
+  &--logo {
+    display: block;
+    margin: 0 auto;
+
+    @include media($medium-screen) {
+      float: left;
+    }
+  }
+
+  &--image {
+    position: relative;
+    margin: 0 auto;
+    text-align: center;
+    overflow: hidden;
+    display: inline-block;
+
+    svg, img {
+      @extend %flexible-media;
+    }
+  }
+
+  &--icon {
+    @extend .wrapper--image;
+  }
+
+}
+
+.thumb-wrapper {
+  @extend .wrapper--image;
+}
+
+.wrapper__text {
+  display: inline-block;
+
+  p {
+    max-width: 52em;
+  }
+}
+
+.wrapper__form {
+  @extend %callout--background;
+  box-shadow: 0 1px 3px darken($gray, 10%);
+  padding: 1.25em;
+  width: 100%;
+  max-width: 25em;
+  text-align: center;
+  margin: 0 auto;
+
+  form {
+    text-align: left;
+  }
+
+  &.authform {
+    font-size: 14px;
+    max-width: 30em;
+
+    .title {
+      color: $darkPrimaryColor;
+    }
+
+    form {
+      font-size: 18px;
+    }
+  }
+}

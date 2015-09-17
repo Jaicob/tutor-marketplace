@@ -44,7 +44,7 @@ module Processor
         amount: charge.amount,
         currency: 'usd',
         source: charge.token || charge.customer_id,
-        destination: charge.tutor.acct_number,
+        destination: charge.tutor.acct_id,
         application_fee: charge.transaction_fee
       )
     end

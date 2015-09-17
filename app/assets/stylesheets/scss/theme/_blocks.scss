@@ -1,0 +1,19 @@
+/* Blocks */
+
+.headline {
+  @extend .block;
+  //background-color: darken($gray, 10);
+
+  @include media($medium-screen) {
+    //background-color: $white;
+  }
+
+  h1, h2 {
+    margin: 0 auto $base-spacing;
+  }
+}
+
+.callout {
+	padding: 2em;
+	margin: 0 auto;
+}
