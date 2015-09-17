@@ -1,0 +1,32 @@
+/* Header */
+.header {
+  background-color: $white;
+  color: $gray;
+
+  .wrapper--logo {
+    position: absolute;
+    max-width: 6em;
+    left: em(8);
+    top: em(7);
+  }
+
+  @include media($medium-screen) {
+    border-bottom: solid 1px $gray;
+    
+    .wrapper {
+      height: 4em;
+    }
+
+    nav,
+    .wrapper--logo {
+      @include vertical-align;
+    }
+
+    .wrapper--logo {
+      max-width: 10em;
+      position: relative;
+      float: left;
+      left: 0;
+    }
+  }
+}

@@ -1,0 +1,14 @@
+.header {
+  text-align: center;
+  line-height: 1;
+  padding: $pad-half 0 0;
+  z-index: 10;
+
+  @include media($medium-screen) {
+    text-align: left;
+  }
+
+  @media all and (min-width: $large-screen) {
+    padding: ($pad / 4) 0;
+  }
+}

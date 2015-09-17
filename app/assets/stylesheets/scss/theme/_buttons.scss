@@ -1,0 +1,44 @@
+/* Buttons */
+.btn {
+  @extend %button;
+  text-align: center;
+  padding: 0.7em;
+
+  @include media($medium-screen) {
+    padding: 0.7em 1em;
+  }
+
+  &--login,
+  &--register {
+    @extend .btn;
+    width: 100%;
+    margin-bottom: ($base-spacing / 3);
+  }
+
+  &--cta {
+    @extend .btn;
+    background-color: $base-cta-color;
+
+    &:hover,
+    &:focus {
+      background-color: $hover-cta-color;
+    }
+
+    .hero--inner & {
+      @extend %button--large;
+      margin: $base-spacing auto 0;
+    }
+  }
+
+  &--clear {
+    @extend %button--hollow;
+    border-color: $base-link-color;
+    color: $base-link-color;
+
+    &:hover,
+    &:focus {
+      color: lighten($base-link-color, 5);
+      border-color: lighten($base-link-color, 5);
+    }
+  }
+}

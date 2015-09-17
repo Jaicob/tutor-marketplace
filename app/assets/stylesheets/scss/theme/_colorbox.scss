@@ -1,0 +1,144 @@
+#colorbox, #cboxOverlay, #cboxWrapper{
+  position:absolute;
+  top:0; left:0;
+  z-index:9999;
+}
+#cboxWrapper {
+  max-width:none;
+}
+#cboxMiddleLeft,
+#cboxBottomLeft {
+  clear:left;
+}
+#cboxContent {
+  position:relative;
+}
+#cboxLoadedContent {
+  overflow:auto;
+  -webkit-overflow-scrolling: touch;
+}
+#cboxTitle {
+  margin:0;
+}
+#cboxLoadingOverlay,
+#cboxLoadingGraphic {
+  @extend #colorbox;
+  width:100%;
+  height:100%;
+}
+#cboxPrevious, #cboxNext, #cboxClose, #cboxSlideshow{
+  cursor:pointer;
+}
+.cboxPhoto{
+  float:left;
+  margin:auto;
+  border:0;
+  display:block;
+  max-width:none;
+  -ms-interpolation-mode:bicubic;
+  border-radius: 8px;
+}
+.cboxIframe{
+  width:100%;
+  height:100%;
+  display:block;
+  border:0;
+  padding:0;
+  margin:0;
+}
+#colorbox, #cboxContent, #cboxLoadedContent{
+  box-sizing:content-box;
+  -moz-box-sizing:content-box;
+  -webkit-box-sizing:content-box;
+}
+
+#cboxLoadedContent {
+  -webkit-box-shadow: 2px 3px 5px 0px  rgba(darken($gray, 10%),1);
+  box-shadow: 2px 3px 5px 0px  rgba(darken($gray, 10%),1);
+}
+
+#cboxOverlay{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: darken($gray, 5%);
+  opacity: 0.8;
+  filter: alpha(opacity = 80);
+}
+
+#colorbox{
+  outline:0;
+
+  #cboxContent{
+    background: transparent;
+    border-radius: 8px;
+    border: solid 1px $gray;
+  }
+
+  #cboxError{padding:50px; border:1px solid #ccc;}
+  #cboxTitle{position:absolute; bottom:0px; left:0; text-align:center; width:100%; color:#999;}
+  #cboxCurrent{position:absolute; bottom:0px; left:100px; color:#999;}
+  //#cboxLoadingOverlay{background:#fff url(../../images/colorbox/loading.gif) no-repeat 5px 5px;}
+
+  %colorbox-nav-buttons {
+    position: absolute;
+    bottom: 0;
+    color: $gray;
+    border:0;
+    padding:0;
+    margin:0;
+    overflow:visible;
+    width:auto;
+    background:none;
+
+    &:active,
+    &:focus {
+      outline: 0;
+    }
+  }
+
+  #cboxSlideshow{
+    @extend %colorbox-nav-buttons;
+    right: 42px;
+  }
+  #cboxPrevious{
+    @extend %colorbox-nav-buttons;
+    left: 0;
+  }
+  #cboxNext{
+    @extend %colorbox-nav-buttons;
+    left: 63px;
+  }
+  #cboxClose{
+    @extend %colorbox-nav-buttons;
+    display:block;
+    right: em(-8);
+    bottom: em(-8);
+    padding: em(4);
+    background: $accentColor;
+    color: $white;
+    border-radius: 50%;
+    height: em(32);
+    width: em(32);
+    text-align: center;
+    font-weight: bold;
+    border: solid 1px darken($accentColor, 5%);
+    -webkit-box-shadow: 2px 3px 5px 0px  rgba(darken($gray, 15%),1);
+    box-shadow: 2px 3px 5px 0px  rgba(darken($gray, 15%),1);
+  }
+}
+/*
+  The following fixes a problem where IE7 and IE8 replace a PNG's alpha transparency with a black fill
+  when an alpha filter (opacity change) is set on the element or ancestor element.  This style is not applied to or needed in IE9.
+  See: http://jacklmoore.com/notes/ie-transparency-problems/
+*/
+.cboxIE #cboxTopLeft,
+.cboxIE #cboxTopCenter,
+.cboxIE #cboxTopRight,
+.cboxIE #cboxBottomLeft,
+.cboxIE #cboxBottomCenter,
+.cboxIE #cboxBottomRight,
+.cboxIE #cboxMiddleLeft,
+.cboxIE #cboxMiddleRight {
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#00FFFFFF,endColorstr=#00FFFFFF);
+}

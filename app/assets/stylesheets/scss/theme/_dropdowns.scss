@@ -1,0 +1,69 @@
+// Dropdown menu items layout
+
+.menu-item.has-dropdown {
+  // We only need these positioning items on the medium sized screens +
+  @include media($medium-screen) {
+    padding-right: 0;
+    margin-left: 1em;
+  }
+
+  .dropdown-toggle  {
+    position: relative;
+    display: block;
+    padding: 0.5em 0.7em 0.5em 0;
+    margin: 0;
+    color: $base-link-color;
+    cursor: pointer;
+    width: 100%;
+
+    @include media($medium-screen) {
+      float: left;
+      display: inline-block;
+      width: auto;
+    }
+  }
+
+  .dropdown-toggle:after {
+    content: '\25BE';
+    color: $base-link-color;
+
+    @include media($medium-screen) {
+      @include position(absolute, 20% 0 0 auto);
+    }
+  }
+}
+
+.submenu {
+  background-color: $white;
+  position: absolute;
+  top: em(36);
+  right: 0;
+  min-width: em(280);
+  width: 100%;
+
+  li {
+    width: 100%;
+
+    a {
+      display: inline-block;
+      padding: 1em $pad-half;
+      text-align: center;
+    }
+  }
+
+  @include media($medium-screen) {
+    background-color: rgba($white, 0.95);
+    //width: em(205);
+  }
+
+}
+
+#dropdown-toggle ~ .submenu {
+  display: none;
+}
+
+#dropdown-toggle:checked ~ .submenu {
+  display: block;
+  float: left;
+  z-index: 9995;
+}
