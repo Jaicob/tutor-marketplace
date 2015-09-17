@@ -14,8 +14,10 @@
     <%= yield(:header) %>
   </head>
   <body>
-    <header>
-      <%= render 'layouts/partials/navigation' %>
+    <header class="header cf" role="banner">
+      <div class="wrapper">
+        <%= render 'layouts/partials/navigation' %>
+      </div>
       <%= yield(:admin_panel) if content_for? (:admin_panel) %>
       <%= yield(:incomplete_profile_progress_bar) if content_for? (:incomplete_profile_progress_bar) %>
       <%= yield(:awaiting_approval) if content_for? (:awaiting_approval) %>
