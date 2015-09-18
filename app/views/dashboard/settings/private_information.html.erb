@@ -26,10 +26,7 @@
           <h3 id="transcript">Transcript</h3>
 
           <p>Current Transcript: 
-            <%= @tutor.transcript.url.nil? ? 
-            'None' : 
-             File.basename(@tutor.transcript.path)
-              %>
+            <%= @tutor.transcript.url.nil? ? 'None' : File.basename(@tutor.transcript.path) %>
           </p>
 
           <%= f.label :transcript %>
