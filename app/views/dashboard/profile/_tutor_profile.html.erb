@@ -1,53 +1,21 @@
-<div class="row">
-  <div class="medium-4 columns">
-    <!-- Profile Pic -->
-    <div class="profile-section profile-pic-container">
-      <!-- Name -->
-      <div class="profile-section-header">
-        <%= @tutor.full_name %>
+<section class="main profile" role="main">
+  <div class="wrapper">
+    <article class="tutor-profile">
+      <div class="tutor-image">
+        <h1 class="title"><%= @tutor.full_name %></h1>
+        <%= image_tag(@tutor.profile_pic_url(:thumb), class: 'profile-pic') %>              
       </div>
-      <a href="#" data-reveal-id="myModal">
-        <%= image_tag(@tutor.profile_pic_url(:thumb), class: 'profile-pic') %>
-      </a>
-    </div>
-    <div class="profile-section">
-      <div class="profile-section-header">Rating</div>
-      <div class="profile-section-inner">
-        Good.
+      <div class="tutor-qualifications">
+        <h2 class="title">Qualifications</h2>
+        <div class="text">
+          <ul class="default-ul">
+            <li> Degree: <%= @tutor.degree || "None specified." %> </li>
+            <li> Major: <%= @tutor.major || "None specified." %> </li>
+            <li> Extra Info: <%= @tutor.extra_info || "None specified." %> </li>
+            <li> Graduation Year: <%= @tutor.graduation_year || "None specified." %> </li>
+          </ul>
+        </div>              
       </div>
-    </div>
-    <div class="profile-section">
-      <div class="profile-section-header">Qualifications</div>
-      <div class="profile-section-inner">
-        <p> Degree: <%= @tutor.degree || "None specified." %> </p>
-        <p> Major: <%= @tutor.major || "None specified." %> </p>
-        <p> Extra Info: <%= @tutor.extra_info || "None specified." %> </p>
-        <p> Graduation Year: <%= @tutor.graduation_year || "None specified." %> </p>
-      </div>
-    </div>
+    </article>      
   </div>
-  <div class="medium-8 columns">
-    <div class="profile-section">
-      <div class="profile-section-header">Schedule</div>
-      <div class="profile-section-inner">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-      </div>
-    </div>
-    <div class="profile-section">
-      <div class="profile-section-header">Courses Tutored</div>
-      <div class="profile-section-inner">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-      </div>
-    </div>
-  </div>
-</div>
+</section>
