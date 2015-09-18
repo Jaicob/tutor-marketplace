@@ -1,22 +1,33 @@
 <%= javascript_include_tag "single_views/search" %>
 
-<div class="row">
-  <div class="medium-4 small-12 columns">
-    <%= render '/course_selector/school' %>
+<section class="tutor-search-filter">
+  <div class="wrapper">
+    <h1 class="title">Book your tutor</h1>
+    <form class="search-criteria">
+      <div class="field-container">
+        <label for="select">Select</label>
+        <%= render '/course_selector/school' %>
+      </div>          
+      <div class="field-container">
+        <label for="select">Select</label>
+        <%= render '/course_selector/subject' %>
+      </div>          
+      <div class="field-container">
+        <label for="select">Select</label>
+        <%= render '/course_selector/course' %>
+      </div>
+      <div class="field-container">          
+        <input id="tutorSearchButton" type="submit" class="btn btn--search" value="Search"></input>
+      </div>
+    </form>
   </div>
-  <div class="medium-2 small-12 columns">
-    <%= render '/course_selector/subject' %>
-  </div>
-  <div class="medium-4 small-12 columns">
-    <%= render '/course_selector/course' %>
-  </div>
-  <div class="medium-2 small-12 columns">
-    <input id="tutorSearchButton" type="submit" class="button radius success tiny right" value="Search"></input>
-  </div>
-</div>
+</section>
 
-<div class="row">
-  <div id="tutorCardContainer">
-    <p>Welcome and instructions go here</p>
+
+<section class="tutor-profiles" role="main">
+  <div class="wrapper">
+    <div id="tutorCardContainer" class="cards">
+      <p>Welcome</p>
+    </div>
   </div>
-</div>
+</section>
