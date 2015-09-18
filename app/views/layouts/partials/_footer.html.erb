@@ -4,9 +4,12 @@
       <%= image_tag('logo_white.png', class: 'footer-logo') %>
     </div>
     <ul class="nav-footer">
-      <li><a href="#">About</a></li>
-      <li><a href="#">Contact</a></li>
-      <li><a href="#">Partners</a></li>
+      <li><%= link_to 'Home', root_path %></li>
+      <li><%= link_to 'About', about_us_path %></li>
+      <li><%= link_to 'FAQ', faqs_path %></li>
+      <li><%= link_to 'Become a Tutor', become_a_tutor_path %></li>
+      <li><%= link_to 'Contact', contact_path %></li>
+      <li><%= link_to 'Partners', partners_path %></li>
     </ul>     
     <div class="footer-secondary-links">
       <ul>

@@ -14,7 +14,7 @@ class SingleViewsController < ApplicationController
   def faqs
   end
 
-  def partnerships
+  def partners
   end
 
   def tutor_landing

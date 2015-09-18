@@ -6,7 +6,7 @@
 #                                restricted_access GET      /restricted-access(.:format)                                       single_views#restricted_access
 #                                         about_us GET      /about-us(.:format)                                                single_views#about_us
 #                                             faqs GET      /faqs(.:format)                                                    single_views#faqs
-#                                     partnerships GET      /partnerships(.:format)                                            single_views#partnerships
+#                                         partners GET      /partners(.:format)                                                single_views#partners
 #                                   become_a_tutor GET      /become-a-tutor(.:format)                                          single_views#tutor_landing
 #                                          contact GET      /contact(.:format)                                                 single_views#contact
 #                                 new_user_session GET      /users/sign_in(.:format)                                           devise/sessions#new
@@ -158,7 +158,7 @@ Rails.application.routes.draw do
   get '/restricted-access'  => 'single_views#restricted_access'
   get '/about-us'           => 'single_views#about_us'
   get '/faqs'               => 'single_views#faqs'
-  get '/partnerships'       => 'single_views#partnerships'
+  get '/partners'           => 'single_views#partners'
   get '/become-a-tutor'     => 'single_views#tutor_landing'
   get '/contact'            => 'single_views#contact'
 
