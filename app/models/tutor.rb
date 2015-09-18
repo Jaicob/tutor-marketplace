@@ -58,16 +58,6 @@ class Tutor < ActiveRecord::Base
     profile_pic.recreate_versions! if tutor_params[:crop_x]
   end
 
-  # def self.to_csv
-  #   attributes = %w{name email phone_number active_status rating application_status degree major graduation_year birthdate sign_up_date}
-  #   CSV.generate(headers: true) do |csv|
-  #     csv << attributes
-  #     all.each do |user|
-  #       csv << attributes.map{ |attr| user.send(attr) }
-  #     end
-  #   end
-  # end
-
   def sign_up_date
     self.created_at.to_date
   end
@@ -76,20 +66,25 @@ class Tutor < ActiveRecord::Base
     self.courses.map{ |course| course.formatted_name}.join("<br>").html_safe()
   end
 
-  def availability_booked_percent
-    # this method should calculate how many hours of a tutor's availability are actually booked possibly useful for identifying 'super-tutors' should probably only calculate percentages for past availability/appointments, since most bookings are only completed 2 days in advance. also, don't want a tutor with more future set availability (a good thing) to have a lower percentage than someone with less future availability
-  end
-
   def active?
     self.active_status == 'Active' ? true : false
   end
 
   def incomplete_profile?
-    (self.birthdate && self.degree && self.major && self.extra_info && self.graduation_year && self.phone_number && self.profile_pic.url != 'panda.png' && self.transcript.url) ? false : true
+    fields = [:profile_pic, :transcript, :public_info, :private_info, :payment_info, :appt_settings]
+    fields.each do |field|
+      if check_profile_for(field) == false then return true end
+    end
+    false
   end
 
   def complete_profile?
     self.incomplete_profile? ? false : true
+  end
+
+  def complete_payment_info_details?
+    # need to add back in last_4_ssn
+    (self.line1 && self.line2 && self.city && self.state && self.postal_code && self.acct_id && self.last_4_acct && self.ssn_last_4) ? true : false
   end
 
   def awaiting_approval?
@@ -111,11 +106,10 @@ class Tutor < ActiveRecord::Base
     when :private_info
       (self.birthdate && self.phone_number) ? true : false
     when :payment_info
-      false # need to change, but waiting on payment fields to be added to model
+      self.complete_payment_info_details? ? true : false
     when :appt_settings
       self.appt_notes ? true : false
     end
-
   end
 
   def send_active_status_change_email(tutor_params)
@@ -132,7 +126,7 @@ class Tutor < ActiveRecord::Base
   end
 
   def update_action_redirect_path(tutor_params)
-    if tutor_params[:birthdate] || tutor_params[:phone_number]
+    if tutor_params[:birthdate] || tutor_params[:phone_number] || tutor_params[:transcript]
       "/#{self.user.slug}/dashboard/settings/private_information"
     elsif tutor_params[:appt_notes]
       "/#{self.user.slug}/dashboard/settings/appointment_settings"
@@ -142,6 +136,7 @@ class Tutor < ActiveRecord::Base
   end
 
   def change_user_role_to_tutor
+    # method called in after_create hook to automatically change the default role of student to tutor
     if self.user.role == 'student'
       self.user.update(role: 'tutor')
     end
