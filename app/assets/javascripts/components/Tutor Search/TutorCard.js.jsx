@@ -1,22 +1,28 @@
 var TutorCard = React.createClass({
 	render: function(){
 		var tutor = this.props.tutor;
-    var profile_pic_url = "/public/uploads/" + tutor.profile_pic.url;
+    var profile_pic_url = "/public/uploads/" + tutor.profile_pic_url;
 		return (
-			<div className="tutor-card">
-        <img className="tutor-card__picture" src={profile_pic_url}></img>
-        <div className="tutor-card__rate">${tutor.rate}</div>
-        <div className="tutor-card__name">{tutor.user.first_name} {tutor.user.last_name}</div>
-        <div className="tutor-card__description">
-          <ul className="tutor-card__description--container">
-            <li className="tutor-card__description--item">{tutor.degree + " " + tutor.major + " '" + tutor.graduation_year.slice(2, 4)}</li>
-            <li className="tutor-card__description--item">{tutor.extra_info}</li>
-          </ul>
-        </div>
-        <div className="btn--book-now--wide">
-          Book Now
-        </div>
-			</div>
+            <div className="card">
+              <div className="card-image">
+                <img src="http://placehold.it/200x200" alt="4x3 Image"></img>
+              </div>
+              <div className="card-header">
+                <h3 className="title">{tutor.name}</h3>
+              </div>
+              <div className="card-copy">
+                <ul className="tutor-qualifications">
+                  <li>{tutor.degree + ', ' + tutor.major + ' ' + tutor.graduation_year}</li>
+                  <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li>
+                  <li>Fuga, officiis sunt neque facilis culpa molestiae.</li>
+                  <li>Fuga, officiis sunt neque facilis culpa molestiae.</li>
+                </ul>
+                <a href="#" className="btn">Book Now</a>
+              </div>
+              <div className="cost">
+                <p>$25</p>
+              </div>
+            </div>
 		);
 	}
 });

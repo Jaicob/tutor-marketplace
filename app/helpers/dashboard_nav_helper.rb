@@ -25,7 +25,7 @@ module DashboardNavHelper
     all_dashboard_links = {
       tutor: {
         # name seen on the dashboard nav => where it links to
-        'Dashboard' => dashboard_link,
+        'Home' => dashboard_link,
         'Schedule'  => schedule_link,
         'Courses'   => courses_link,
         'Profile'   => profile_link,
@@ -39,7 +39,7 @@ module DashboardNavHelper
       },
 
       admin: {
-        'Dashboard'         => dashboard_link,
+        'Home'         => dashboard_link,
         'Tutors'            => schedule_link,
         'Reports'           => reports_link,
         'Schools & Courses' => school_and_courses_link,

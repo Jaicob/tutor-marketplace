@@ -1,11 +1,11 @@
 <%# add navigation links to this file %>
 <% if user_signed_in? %>
-  <li><%= link_to 'Dashboard', dashboard_home_user_path(current_user) %></li>
+  <li class="menu-item"><%= link_to 'Dashboard', dashboard_home_user_path(current_user) %></li>
   <% if current_user.role == 'campus_manager' || current_user.role == 'super_admin' %>
-    <li><%= link_to 'Admin', admin_home_path %></li>
+    <li class="menu-item"><%= link_to 'Admin', admin_home_path %></li>
   <% end %>
-  <li><%= link_to 'Sign out', destroy_user_session_path, method: 'delete' %></li>
+  <li class="menu-item"><%= link_to 'Sign out', destroy_user_session_path, method: 'delete' %></li>
 <% else %>
-  <li><%= link_to 'Login', new_user_session_path %></li>
-  <li><%= link_to 'Become a Tutor', new_tutor_path %></li>
+  <li class="menu-item"><%= link_to 'Login', new_user_session_path %></li>
+  <li class="menu-item"><%= link_to 'Become a Tutor', new_tutor_path %></li>
 <% end %>

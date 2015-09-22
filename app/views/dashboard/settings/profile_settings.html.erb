@@ -1,19 +1,15 @@
-<style>
-.profile-pic-preview {
-  border: 1px solid #000;
-}
-</style>
-
-<div class="row">
-  <div class="medium-3 columns">
-    <%= render 'vertical_sub_menu' %>
-  </div>
-  <div class="medium-8 medium-offset-1 columns">
-
-    <div class="row">
-      <div class="medium-6 columns">
-        <h3>Profile Picture</h3>
-        <%= image_tag(@tutor.reload.profile_pic_url(:thumb), class: 'profile-pic-preview') %>
+<section class="dashboard tutor">
+  <div class="wrapper">
+    <div class="wrapper__text">
+      <h1 class="title">Setttings Area</h1>
+    </div>
+    <div class="g g-3up">
+      <div class="gi">
+        <%= render 'vertical_sub_menu' %>
+      </div>
+      <div class="gi">
+                <h3>Profile Picture</h3>
+        <%= image_tag(@tutor.profile_pic_url(:thumb), class: 'profile-pic-preview') %>
       </div>
     </div>
 
@@ -36,11 +32,9 @@
       </div>
     </div>
 
-    <div class="row">
-      <div class="medium-6 columns">
         <%= form_for @tutor do |f| %>
           <h3 class="header-top-margin" id="profile-fields">Profile Info</h3>
-      
+
           <%= f.label :degree %>
           <%= f.text_field :degree %>
           
@@ -56,11 +50,22 @@
           <%= f.submit 'Save', class: 'button tiny expand success'%>
 
         <% end %>
-      </div>
-    </div>
 
+      </div>
+      <div class="gi"></div>
+    </div>
   </div>
-</div>
+</section>
+
+
+
+
+
+
+
+
+
+
 
 <!-- Modal for Uploading a New Profile Picture -->
 
