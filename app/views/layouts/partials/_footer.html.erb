@@ -1,1 +1,34 @@
-The footer goes here.
+<footer class="footer" role="contentinfo">
+  <div class="wrapper">
+    <div class="footer-logo">
+      <%= image_tag('logo_white.png', class: 'footer-logo') %>
+    </div>
+    <ul class="nav-footer">
+      <li><%= link_to 'Home', root_path %></li>
+      <li><%= link_to 'Find a Tutor',search_path %></li>
+      <li><%= link_to 'About', about_us_path %></li>
+      <li><%= link_to 'FAQ', faqs_path %></li>
+      <li><%= link_to 'Become a Tutor', become_a_tutor_path %></li>
+      <li><%= link_to 'Contact', contact_path %></li>
+      <li><%= link_to 'Partners', partners_path %></li>
+    </ul>     
+    <div class="footer-secondary-links">
+      <ul>
+        <li><a href="javascript:void(0)">Terms and Conditions</a></li>
+        <li><a href="javascript:void(0)">Privacy Policy</a></li>
+      </ul>            
+      <ul class="social-nav">
+        <li>
+          <a href="javascript:void(0)">
+            <img src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/facebook-logo-circle.png" alt="Facebook">
+          </a>
+        </li>
+        <li>
+          <a href="javascript:void(0)">
+            <img src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/twitter-logo-circle.png" alt="Twitter">
+          </a>
+        </li>
+      </ul>     
+    </div>
+  </div>
+</footer>

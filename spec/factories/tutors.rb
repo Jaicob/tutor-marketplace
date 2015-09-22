@@ -39,13 +39,23 @@ FactoryGirl.define do
     major "Biology"
     graduation_year "2019"
     phone_number "555-555-5555"
-    extra_info "Student Research Assistant for Biology Department"
+    extra_info "Default Extra Info"
+    appt_notes "Default Appt Notes"
 
       factory :invalid_tutor do
         extra_info nil
       end
 
       factory :tutor_with_complete_application do
+        line1        '101 Axon Way'
+        line2        'Suite A'
+        city         'Athens'
+        state        'GA'
+        postal_code  '23123'
+        ssn_last_4   '1211'
+        acct_id      '123456789'
+        last_4_acct  '2222'
+
         after :create do |t|
           t.update_column(:transcript, "/assets/images/file-icon.png")
           t.update_column(:profile_pic, "/assets/images/doge.png")

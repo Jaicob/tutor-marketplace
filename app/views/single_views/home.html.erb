@@ -1,38 +1,37 @@
-<style type="text/css">
-
-body{
-	background: url(http://d22dch6673yntu.cloudfront.net/cover_v1.jpg);
-	background-size: cover;
-}
-
-main{
-	background: transparent;
-}
-
-#main-homepage-spotlight{
-	background: rgba(0, 0, 0, 0.2);
-	border-radius: 5px;
-	padding-top: 70px;
-	padding-bottom: 70px;
-	text-align: center;
-}
-
-.main-header{
-	font-family: Lobster;
-	font-size: 5em;
-	color: white;
-	padding-bottom: 20px;
-}
-
-</style>
-<link href="http://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css">
-
-<div class="container" style="display:flex;justify-content:center;align-items:center;height: 85vh;">
-  <div class="row" id="main-homepage-spotlight">
-  	<h1 class="main-header">Join the tutoring revolution!</h1>
-  	<% if !user_signed_in? || (user_signed_in? && current_user.tutor.nil?) %>
-  	  <%= link_to "Become a Tutor", new_tutor_path, class: 'button large radius' %>
-  	<% end %>
-	<%= link_to "Find Your Tutor", search_path, class: 'button large radius' %>
+<section class="hero" role="banner">
+  <div class="wrapper">
+    <div class="callout--hero">
+    <h1>Join the tutoring revolution</h1>
+      <% if !user_signed_in? || (user_signed_in? && current_user.tutor.nil?) %>
+        <%= link_to "Become a Tutor", new_tutor_path, class: 'btn' %>
+      <% end %>
+      <%= link_to "Find Your Tutor", search_path, class: 'btn' %>
+    </div>
   </div>
-</div>
+</section>
+
+<section class="main how-does-axon-work" role="main">
+  <div class="wrapper">
+    <h2 class="title">How Does Axon Work?</h2>
+    <ul class="axon-usage-steps">
+      <li class="usage-step">
+        <h3 class="title">Select a Something, Do something</h3>
+        <img src="http://placehold.it/150x250">
+        <p class="step-info">Select a lorum, ipsem, dolar sit amet.</p>
+        <p class="numeral">1</p>
+      </li>
+      <li class="usage-step">
+        <h3 class="title">Select a Something, Do something</h3>
+        <img src="http://placehold.it/150x250">
+        <p class="step-info">Select a lorum, ipsem, dolar sit amet.</p>
+        <p class="numeral">2</p>
+      </li>
+      <li class="usage-step">
+        <h3 class="title">Select a Something, Do something</h3>
+        <img src="http://placehold.it/150x250">
+        <p class="step-info">Select a lorum, ipsem, dolar sit amet.</p>
+        <p class="numeral">3</p>
+      </li>
+    </ul>
+  </div>
+</section>

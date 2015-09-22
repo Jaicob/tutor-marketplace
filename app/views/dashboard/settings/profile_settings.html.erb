@@ -1,18 +1,14 @@
-<style>
-.profile-pic-preview {
-  border: 1px solid #000;
-}
-</style>
-
-<div class="row">
-  <div class="medium-3 columns">
-    <%= render 'vertical_sub_menu' %>
-  </div>
-  <div class="medium-8 medium-offset-1 columns">
-
-    <div class="row">
-      <div class="medium-6 columns">
-        <h3>Profile Picture</h3>
+<section class="dashboard tutor">
+  <div class="wrapper">
+    <div class="wrapper__text">
+      <h1 class="title">Setttings Area</h1>
+    </div>
+    <div class="g g-3up">
+      <div class="gi">
+        <%= render 'vertical_sub_menu' %>
+      </div>
+      <div class="gi">
+                <h3>Profile Picture</h3>
         <%= image_tag(@tutor.profile_pic_url(:thumb), class: 'profile-pic-preview') %>
       </div>
     </div>
@@ -21,14 +17,14 @@
       <div class="medium-6 columns">
         <div class="row">
           <div class="small-12 columns">
-            <a href="#" data-reveal-id="newPhotoModal" class="button small secondary-CTA-color">
+            <a href="#" data-reveal-id="newPhotoModal" class="button tiny expand secondary">
               <i class="fi-page-add icon-margin-right"></i>Upload New Photo
             </a>
           </div>
         </div>
         <div class="row">
           <div class="small-12 columns">
-            <a href="#" data-reveal-id="cropCurrentPhotoModal" class="button small secondary-CTA-color">
+            <a href="#" data-reveal-id="cropCurrentPhotoModal" class="button tiny expand secondary">
               <i class="fi-page-edit icon-margin-right"></i>Crop Current Photo
             </a>
           </div>
@@ -36,11 +32,9 @@
       </div>
     </div>
 
-    <div class="row">
-      <div class="medium-6 columns">
         <%= form_for @tutor do |f| %>
           <h3 class="header-top-margin" id="profile-fields">Profile Info</h3>
-      
+
           <%= f.label :degree %>
           <%= f.text_field :degree %>
           
@@ -56,23 +50,50 @@
           <%= f.submit 'Save', class: 'button tiny expand success'%>
 
         <% end %>
-      </div>
-    </div>
 
+      </div>
+      <div class="gi"></div>
+    </div>
   </div>
-</div>
+</section>
+
+
+
+
+
+
+
+
+
+
 
 <!-- Modal for Uploading a New Profile Picture -->
 
 <div id="newPhotoModal" class="reveal-modal small" data-reveal aria-labelledby="secondModalTitle" aria-hidden="true" role="dialog">
   <h4 id="secondModalTitle" class="text-center">Upload a new profile picture</h4>
 
+    <script type="text/javascript">
+    $(document).ready(
+    function(){
+      $('#upload-pic').attr('disabled',true);
+      $('input:file').change(
+        function(){
+          if ($(this).val()){
+            $('input:submit').removeAttr('disabled'); 
+          }
+          else {
+            $('input:submit').attr('disabled',true);
+          }
+        });
+      });
+    </script>
+
     <div class="row">
       <div class="small-8 small-centered columns">
         <div class="text-center">
           <%= form_for @tutor do |f| %>
             <%= f.file_field :profile_pic %>
-            <%= f.submit 'Update Profile Picture', class: 'button radius' %>
+            <%= f.submit 'Update Profile Picture', class: 'button radius', id: 'upload-pic' %>
           <% end %>
         </div>
       </div>
@@ -98,6 +119,7 @@
         </div>
       </div>
     </div>
+
 <script type="text/javascript">
   jQuery('#cropbox').Jcrop({
     onChange: showCoords,
@@ -114,6 +136,7 @@
     jQuery('#tutor_crop_h').val(c.h);
   };
 </script>
+
     <div class="row">
       <div class="small-6 small-centered columns">
         <div class="text-center">

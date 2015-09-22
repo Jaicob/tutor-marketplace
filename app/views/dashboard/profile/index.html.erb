@@ -1,22 +1,124 @@
-<!-- THE TWO SECTIONS ON THIS PAGE ABOVE AND BELOW THE RENDERED PARTIAL ARE HERE BECAUSE THEY SHOULD ONLY BE PRESENT FOR TUTORS VIEWING THEIR PROFILE - NOT FOR ADMIN OR PUBLIC VIEWERS -->
-
-<!-- Share profile page link & edit profile button -->
-<div class="row">
-  <div class="medium-12 columns">
-    <p>
-      Share your profile link: <%= link_to "www.axontutors.com/tutors/#{@tutor.user.friendly_id}", tutor_path(@tutor.user) %>
-      <br>
-      <a href="<%= dashboard_settings_profile_settings_user_path %>"</a>
-      <button type="button" class="btn-labeled radius primary right" id="edit_profile_button">
-        Edit
-      </button>
-    </p>
+<section class="dashboard tutor">
+  <div class="wrapper">
+    <div class="wrapper__text">
+      <h1 class="title">Profile Preview</h1>
+    </div>
+    <p>Share your profile link: <%= link_to "www.axontutors.com/tutors/#{@tutor.user.friendly_id}", tutor_path(@tutor.user) %></p>
+    <%= link_to dashboard_settings_profile_settings_user_path do %>
+      <button type="button" class="btn-labeled radius primary right" id="edit_profile_button">Edit</button>
+    <% end %>
+    <%= render 'tutor_profile' %>
   </div>
-</div>
+</section>
 
-<%= render 'tutor_profile' %>
-
-<!-- Update Profile Pic Modal -->
-<div id="myModal" class="reveal-modal medium" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
-  <%= render '/dashboard/profile/update_profile_pic' %>
-</div>
+<section class="availability">
+  <div class="wrapper">
+    <article class="availability-calendar">
+      <header class="row">
+        <h3 class="title"><%= @tutor.full_name %>'s Availability</h3>
+        <div class="dropdown--subject">
+           <label for="select-subject">Course:</label>
+           <div class="select-wrapper">
+             <select id="select-subject" class="select-menu">
+              <optgroup label="Available Courses">
+                <% @tutor.courses.each do |course| %>
+                  <option><%= course.formatted_name %></option>
+                <% end %>
+              </optgroup>
+            </select>
+          </div>
+        </div>
+      </header>
+        <nav class="calendar-nav">
+          <ul class="navigation-menu navigation--schedule">
+            <li class="menu-item">
+              <a href="#" class="btn date-range-paginate previous" alt="This Week" title="This Week" rel="nofollow"><span class="fi-arrow-left"></span> Previous Week</a></li>
+            <li class="menu-item">
+              <a href="#" class="btn date-range-paginate next" alt="Next Week" title="Next Week" rel="nofollow">Next Week <span class="fi-arrow-right"></span></a></li>
+          </ul>
+        </nav>
+        <ul class="schedule weekly-schedule">
+          <li class="day monday">
+            <label for="monday">Mon</label>
+            <input id="monday" name="radio" type="radio" class="radio" checked="">  
+            <ul class="available-times">
+              <li><a href="#">1:30pm</a></li>
+              <li><a href="#">1:30pm</a></li>
+              <li><a href="#">1:30pm</a></li>
+            </ul>
+          </li>
+          <li class="day tuesday">
+            <label for="tuesday">Tues</label>
+            <input id="tuesday" name="radio" type="radio" class="radio">
+            <ul class="available-times">
+              <li><a href="#">1:30pm</a></li>
+              <li><a href="#">1:30pm</a></li>
+              <li><a href="#">1:30pm</a></li>
+              <li><a href="#">1:30pm</a></li>
+              <li><a href="#">1:30pm</a></li>
+            </ul>
+          </li>
+          <li class="day wednesday">
+            <label for="wednesday">Wed</label>
+            <input id="wednesday" name="radio" type="radio" class="radio">
+            <ul class="available-times">
+              <li><a href="#">1:30pm</a></li>
+              <li><a href="#">1:30pm</a></li>
+              <li><a href="#">1:30pm</a></li>
+              <li><a href="#">1:30pm</a></li>
+              <li><a href="#">1:30pm</a></li>
+            </ul>
+          </li>
+          <li class="day thursday">
+            <label for="thursday">Thurs</label>
+            <input id="thursday" name="radio" type="radio" class="radio">
+            <ul class="available-times">
+              <li><a href="#">1:30pm</a></li>
+              <li><a href="#">1:30pm</a></li>
+              <li><a href="#">1:30pm</a></li>
+              <li><a href="#">1:30pm</a></li>
+            </ul>
+          </li>
+          <li class="day friday">
+            <label for="friday">Fri</label>
+            <input id="friday" name="radio" type="radio" class="radio">
+            <ul class="available-times">
+              <li><a href="#">1:30pm</a></li>
+              <li><a href="#">1:30pm</a></li>
+              <li><a href="#">1:30pm</a></li>
+              <li><a href="#">1:30pm</a></li>
+              <li><a href="#">1:30pm</a></li>
+            </ul>
+          </li>
+          <li class="day satuday">
+            <label for="saturday">Sat</label>
+            <input id="saturday" name="radio" type="radio" class="radio">
+            <ul class="available-times">
+              <li><a href="#">1:30pm</a></li>
+              <li><a href="#">1:30pm</a></li>
+              <li><a href="#">1:30pm</a></li>
+              <li><a href="#">1:30pm</a></li>
+              <li><a href="#">1:30pm</a></li>
+            </ul>
+          </li>
+          <li class="day sunday">
+            <label for="sunday">Sun</label>
+            <input id="sunday" name="radio" type="radio" class="radio">
+            <ul class="available-times">
+              <li><a href="#">1:30pm</a></li>
+              <li><a href="#">1:30pm</a></li>
+            </ul>
+          </li>
+        </ul>             
+        <footer class="row">
+        <div class="column selected-class-output">
+          <p>Selected Date will show here.</p>
+          <p>Selected Class will show here.</p>
+        </div>
+        <div class="column submit">
+          <a href="#" class="btn">Book Time and Continue <span class="fi-arrow-right"></span></a>
+        </div>
+      </footer>
+    </article>      
+  </div>
+</section>
