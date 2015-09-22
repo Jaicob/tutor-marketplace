@@ -75,10 +75,14 @@ module Processor
           description: "#{student.full_name} - #{student.email}",
           email: student.email
         )
+        cust.default_source = token
+        cust.save
         student.update_attributes(customer_id: cust.id)
       else
         cust = ::Stripe::Customer.retrieve(student.customer_id)
         cust.sources.create(source: token)
+        cust.default_source = token
+        cust.save
       end
     end
 
