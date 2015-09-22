@@ -15,4 +15,6 @@
 class Charge < ActiveRecord::Base
   belongs_to :tutor
   has_many :appointments
+  has_one :promotion
+
 end

@@ -15,4 +15,19 @@
 #
 
 class Promotion < ActiveRecord::Base
+  validates :code, presence: true, uniqueness: :true
+  validates :amount, presence: :true
+
+  enum category: ['Free', 'Percent Off', 'Dollar Amount Off', 'Semester Package']
 end
+
+
+# A promotion may have many applications.
+# A coupon is applied to a charge.
+# Some coupon codes can be applied to many different charges. (generic free session by Axon, semeseter package code)
+
+# We want to be able to track a coupon.
+# A coupon is simply a promotions code.
+
+
+

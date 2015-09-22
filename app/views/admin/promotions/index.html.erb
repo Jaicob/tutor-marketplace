@@ -1,1 +1,31 @@
-index.html.erb
+<section class="secondary-content main" role="main">
+  <div class="wrapper">
+
+    <div class="g g-3up">
+      <div class="gi">
+        <h3>Promotions</h3>
+      </div>
+      <div class="gi">
+      </div>
+      <div class="gi">
+        <%= link_to 'New Promotion', new_admin_promotion_path, class: 'btn' %>
+      </div>
+    </div>
+
+    <% @promotions.each do |promotion| %>
+    <div class="g g-1up">
+      <div class="gi">
+        <p><%= "Promotion ##{promotion.id}"%></p>
+        <p>Code: <%= promotion.code %></p>
+        <p>Category: <%= promotion.category %></p>
+        <p>Amount: <%= promotion.amount %></p>
+        <p>Valid from: <%= promotion.valid_from %></p>
+        <p>Valid until: <%= promotion.valid_until %></p>
+        <p>Redemption limit: <%= promotion.redemption_limit %></p>
+        <p>Redemption count: <%= promotion.redemption_count %></p>
+      </div>
+    </div>
+    <% end %>
+
+  </div>
+</section>

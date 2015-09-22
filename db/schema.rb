@@ -40,8 +40,10 @@ ActiveRecord::Schema.define(version: 20150921152603) do
     t.string   "token"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.integer  "promotion_id"
   end
 
+  add_index "charges", ["promotion_id"], name: "index_charges_on_promotion_id", using: :btree
   add_index "charges", ["tutor_id"], name: "index_charges_on_tutor_id", using: :btree
 
   create_table "courses", force: :cascade do |t|
@@ -71,14 +73,15 @@ ActiveRecord::Schema.define(version: 20150921152603) do
 
   create_table "promotions", force: :cascade do |t|
     t.string   "code"
-    t.integer  "type"
+    t.integer  "category"
     t.integer  "amount"
     t.date     "valid_from"
     t.date     "valid_until"
     t.integer  "redemption_limit"
-    t.integer  "redemption_count"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.integer  "redemption_count", default: 0
+    t.text     "description"
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
   create_table "schools", force: :cascade do |t|

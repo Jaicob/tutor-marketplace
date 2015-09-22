@@ -8,7 +8,7 @@ class Admin::PromotionsController < AdminController
 
   def index
     @q = current_user.admin_scope(:promotions).ransack(params[:q])
-    @students = @q.result
+    @promotions = @q.result
   end
 
   def new
@@ -56,7 +56,7 @@ class Admin::PromotionsController < AdminController
     end
 
     def promotion_params
-      params.require(:promotion).permit(:name, :location, :transaction_percentage)
+      params.require(:promotion).permit(:code, :category, :amount, :valid_from, :valid_until, :redemption_limit)
     end
     
 end
