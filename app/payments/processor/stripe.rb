@@ -82,5 +82,9 @@ module Processor
       end
     end
 
+    def reconcile_tutor_difference(tutor, amount)
+      # TODO: Stripe Transfer that sends the difference from an Axon coupon to a Tutor's Stripe account
+    end
+
   end
 end
