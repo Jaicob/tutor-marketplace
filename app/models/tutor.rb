@@ -56,6 +56,7 @@ class Tutor < ActiveRecord::Base
 
   def crop_profile_pic(tutor_params)
     profile_pic.recreate_versions! if tutor_params[:crop_x]
+    profile_pic.delete_cache_id
   end
 
   def sign_up_date
@@ -102,13 +103,13 @@ class Tutor < ActiveRecord::Base
     when :transcript
       self.transcript.url == nil ? false : true
     when :public_info
-      (self.degree && self.major && self.extra_info && self.graduation_year) ? true : false
+      (self.degree.present? && self.major.present? && self.extra_info.present? && self.graduation_year.present?) ? true : false
     when :private_info
-      (self.birthdate && self.phone_number) ? true : false
+      (self.birthdate.present? && self.phone_number.present?) ? true : false
     when :payment_info
       self.complete_payment_info_details? ? true : false
     when :appt_settings
-      self.appt_notes ? true : false
+      self.appt_notes.present? ? true : false
     end
   end
 
@@ -130,6 +131,8 @@ class Tutor < ActiveRecord::Base
       "/#{self.user.slug}/dashboard/settings/private_information"
     elsif tutor_params[:appt_notes]
       "/#{self.user.slug}/dashboard/settings/appointment_settings"
+    elsif tutor_params[:line1] || tutor_params[:city] || tutor_params[:state] || tutor_params [:postal_code]
+      "/#{self.user.slug}/dashboard/settings/tutor_payment_settings"
     else
       "/#{self.user.slug}/dashboard/settings/profile_settings"
     end
