@@ -33,34 +33,6 @@ params = {
   token: 789867877868,
   rates: [30, 25],
   transaction_percentage: 17.5,
-  promotion_id: 1
+  promotion_id: 1,
+  is_payment_required: true,
 }
-
-# tutor
-# tutor=
-# appointments
-# appointments=
-# customer_id
-# customer_id=
-# token
-# token=
-# rates
-# rates=
-# transaction_percentage
-# transaction_percentage=
-# charge
-# charge=
-# success?
-# failure?
-
-
-# $25 appointment at 17.5%
-# full-price = 29.375
-# 5-off after = 24.375
-# 5-off before = 23.5
-
-# $30 apppointment at 17.5%
-# full-price = 35.25
-# 20-off after = 15.25
-# 20-off before = 11.75
-

@@ -18,7 +18,7 @@ class Promotion < ActiveRecord::Base
   validates :code, presence: true, uniqueness: :true
   validates :amount, presence: :true
 
-  enum category: ['Free', 'Percent Off', 'Dollar Amount Off', 'Semester Package']
+  enum category: [:free_from_axon, :free_from_tutor, :percent_off, :dollar_amount_off, :semester_package]
 end
 
 

@@ -16,13 +16,13 @@
 
 FactoryGirl.define do
   factory :promotion do
-    code "MyString"
-type 1
-amount 1
-valid_from "2015-09-21"
-valid_until "2015-09-21"
-redemption_limit 1
-redemption_count 1
+    code 'TestPromo'
+    category 'Free'
+    amount 10
+    valid_from "2015-09-21"
+    valid_until "2020-01-01"
+    redemption_limit 100
+    redemption_count 0
   end
 
 end
