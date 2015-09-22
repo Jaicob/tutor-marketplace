@@ -20,7 +20,6 @@
 require_relative 'support/controller_helpers'
 require_relative 'support/request_helpers'
 require_relative 'support/session_helpers'
-require_relative 'support/serialize_matcher.rb'
 require 'devise'
 require 'capybara/rspec'
 require 'sidekiq/testing'

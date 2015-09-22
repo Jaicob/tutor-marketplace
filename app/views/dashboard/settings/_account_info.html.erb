@@ -7,6 +7,7 @@
   <%= pf.input :city %>
   <%= pf.select :state, options_for_select(us_states), default: @tutor.state %>
   <%= pf.input :postal_code %>
+  <%= pf.input :ssn_last_4, label: 'Last 4 of SSN' %>
   <h4>Bank info</h4>
   <h1 class="bank-errors"></h1>
   <p>Note: This information will not be stored on our servers and will be used to create an account in our merchant service.</p>
