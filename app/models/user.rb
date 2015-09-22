@@ -57,7 +57,7 @@ class User < ActiveRecord::Base
       # creates the tutor
       user.create_tutor!(
         extra_info: params[:user][:tutor][:extra_info],
-        phone_number: params[:user][:tutor][:extra_info]
+        phone_number: params[:user][:tutor][:phone_number]
         )
       # creates the tutor's first tutor_course
       user.tutor.tutor_courses.create(course_id: params[:tutor_course][:course_id], rate: params[:tutor_course][:rate])
