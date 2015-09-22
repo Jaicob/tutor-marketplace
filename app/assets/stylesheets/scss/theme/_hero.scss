@@ -1,0 +1,49 @@
+/* Hero Elements */
+
+.hero {
+	background: image-url('hero.jpg') no-repeat top center;
+	background-size: cover;
+	padding: 3em 1em 4em;
+	font-size: 10px;
+
+	@include media($medium-screen) {
+		font-size: 12px;
+	}
+
+	@include media($large-screen) {
+		padding-bottom: 10em;
+		font-size: 1em;
+	}
+
+	.callout--hero {
+		@extend .callout;
+		background-color: rgba($accentColor, 0.75);
+		color: $white;
+		text-align: center;
+		text-transform: uppercase;
+		width: 100%;
+		max-width: 90%;
+		padding-top: 4em;
+		padding-bottom: 5em;
+
+		.btn {
+			font-size: 1.5em;
+		}
+
+		@include media($medium-screen) {
+			max-width: 75%;
+		}
+	}
+}
+
+.hero--landing {
+	@extend .hero;
+
+	background-image: url('../images/landing-bg.jpg');
+
+	.title {
+		text-align: center;
+		margin: em(8) auto 1em;
+		color: $white;
+	}
+}

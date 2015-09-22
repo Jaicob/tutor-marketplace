@@ -1,20 +1,22 @@
 <%= simple_form_for( @tutor, url: update_tutor_payment_info_tutor_path, remote: true, html: {class: 'payment-form'}) do |pf| %>
   <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
-  <h3>Payment info</h3>
+  <h3>Payment Info</h3>
   <h4>Address</h4>
-  <%= pf.input :line1 %>
-  <%= pf.input :line2 %>
-  <%= pf.input :city %>
+  <%= pf.input :line1, label: 'Line 1' %>
+  <%= pf.input :line2, label: 'Line 2' %>
+  <%= pf.input :city, label: 'City' %>
+  <%= label_tag 'State' %>
   <%= pf.select :state, options_for_select(us_states), default: @tutor.state %>
-  <%= pf.input :postal_code %>
+  <%= pf.input :postal_code, label: 'Zip Code' %>
   <h4>Bank info</h4>
   <h1 class="bank-errors"></h1>
-  <p>Note: This information will not be stored on our servers and will be used to create an account in our merchant service.</p>
+  <p>Note: Your bank account information will not be stored on our servers, it will only be used to create an account with our secure merchant service.</p>
   <%= label_tag :account_number %>
   <%= text_field_tag :account_number %>
   <%= label_tag :routing_number, "Routing number (note: Use ACH routing number)" %>
   <%= text_field_tag :routing_number %>
   <%= hidden_field_tag :last_4_acct %>
+  <%= pf.input :ssn_last_4, label: 'Last 4 of SSN' %>
   <%= pf.button :submit %>
 <% end %>
 <script type="text/javascript" src="https://js.stripe.com/v2/"></script>

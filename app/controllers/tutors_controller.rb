@@ -11,7 +11,7 @@ class TutorsController < ApplicationController
     @tutor.update(tutor_params)
     @tutor.crop_profile_pic(tutor_params)
     if @tutor.save
-      redirect_to @tutor.update_action_redirect_path(tutor_params) # redirects to either settings or profile page
+      redirect_to @tutor.update_action_redirect_path(tutor_params) # redirects back to current page in settings
     else
       flash[:notice] = "Tutor was not updated: #{@tutor.errors.full_messages}"
       redirect_to :back
@@ -51,10 +51,13 @@ class TutorsController < ApplicationController
     end
   end
 
+  def edit_tutor_address_form
+  end
+
   private
 
   def tutor_params
-    params.require(:tutor).permit(:rating, :application_status, :appt_notes, :birthdate, :degree, :major, :extra_info, :graduation_year, :phone_number, :profile_pic, :transcript, :active_status, :crop_x, :crop_y, :crop_w, :crop_h, :line1, :line2, :city, :state, :postal_code, course: [:course_id], tutor_course: [:rate], user_attributes: [:first_name, :last_name, :email, :phone_number, :password, :password_confirmation])
+    params.require(:tutor).permit(:rating, :application_status, :appt_notes, :birthdate, :degree, :major, :extra_info, :graduation_year, :phone_number, :profile_pic, :transcript, :active_status, :crop_x, :crop_y, :crop_w, :crop_h, :line1, :line2, :city, :state, :postal_code, :ssn_last_4, course: [:course_id], tutor_course: [:rate], user_attributes: [:first_name, :last_name, :email, :phone_number, :password, :password_confirmation])
   end
 
 end

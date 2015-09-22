@@ -21,6 +21,7 @@
 #  first_name             :string
 #  last_name              :string
 #  role                   :integer          default(0)
+#  payment_info           :string
 #  invitation_token       :string
 #  invitation_created_at  :datetime
 #  invitation_sent_at     :datetime
@@ -56,7 +57,7 @@ class User < ActiveRecord::Base
       # creates the tutor
       user.create_tutor!(
         extra_info: params[:user][:tutor][:extra_info],
-        phone_number: params[:user][:tutor][:extra_info]
+        phone_number: params[:user][:tutor][:phone_number]
         )
       # creates the tutor's first tutor_course
       user.tutor.tutor_courses.create(course_id: params[:tutor_course][:course_id], rate: params[:tutor_course][:rate])
