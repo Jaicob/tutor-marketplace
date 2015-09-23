@@ -40,7 +40,7 @@ RSpec.describe "ApplyPromoCode's dollar_off_amount_promo" do
       expect(context.is_payment_required).to eq true
     end
 
-    it 'finds the cash value of the promo code in cents' do 
+    it 'context.promotion_discount finds promotion value in cents' do 
       expect(@setup.promotion_discount).to eq nil
       context = ApplyPromoCode.call(@setup)
       expect(context.promotion_discount).to eq 1000

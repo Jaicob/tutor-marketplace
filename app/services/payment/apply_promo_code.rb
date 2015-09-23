@@ -42,42 +42,32 @@ class ApplyPromoCode
     def apply_dollar_amount_off_promo
       # record promotion_id on charge
       context.charge.update(promotion_id: context.promotion_id)
+      
       # flag charge as requiring payment
       context.is_payment_required = true
+      
       # find cash value of promo code (in cents!)
       promotion = Promotion.find(context.promotion_id)
       context.promotion_discount = promotion.amount * 100
+      
       # decrease amount by promotion discount
       context.charge.amount = context.charge.amount - context.promotion_discount
-      # calculate the difference between the amount and tutor_fee to see if Axon owes the tutor additional money, or if Axon just needs to take less money, to pay tutor their total expected rate
-      context.axon_owes_tutor = context.charge.tutor_fee - context.charge.amount
-      # if Axon owes
-      if context.axon_owes_tutor > 0
+      
+      # calculate whether the amount after discount covers a booking's tutor_fee
+      if context.charge.amount > context.charge.tutor_fee
+        # if the amount covers the tutor_fee, then it's only necessary to reduce Axon's fee to the remaining margin
+        context.charge.axon_fee = context.charge.amount - context.charge.tutor_fee
+      else
+        # if the amount does NOT cover the tutor_fee, then the tutor is given the entire transaction, Axon's fee is set to 0, and the additional amount owed to the tutor is recorded and transferred to the tutor via ReconcileCouponDifference
+        context.axon_owes_tutor = context.charge.tutor_fee - context.charge.amount
         context.charge.axon_fee = 0
         context.charge.tutor_fee = context.charge.amount
-      else
-        context.charge.axon_fee = context.charge.amount - context.charge.tutor_fee
       end
       
-      # this line below was necessary to allow testing of this particular method in isolation, I could not get the linked interactor below to work, because it involves creating an account for a tutor which proved difficult to test
+      # this if? was necessary to allow testing of this particular method in isolation
       if Rails.env.test? then return end
-      
         ReconcileCouponDifference.call(context)
-
-      # puts "Original total amount = #{context.charge.amount}"
-      # puts "Original Axon Fee = #{context.charge.axon_fee}"
-      # puts "Original Tutor Fee = #{context.charge.tutor_fee}"
-      # puts "Promotion value = #{promotion_discount}"
-      # puts "Discounted amount = #{context.charge.amount}"
-      # puts "Tutor fee = #{context.charge.tutor_fee}"
-      # puts "Axon owes tutor = #{axon_owes_tutor}"
-      # puts "Discount price = #{context.charge.amount}"
-      # puts "Axon fee = #{context.charge.axon_fee}"
-      # puts "Tutor fee = #{context.charge.tutor_fee}"
-      # puts "Axon owes tutor = #{axon_owes_tutor}"
     end
-
-    #<Charge id: 61, amount: 6462, transaction_fee: 962, customer_id: "1", tutor_id: 1, token: "789867877868", created_at: "2015-09-22 22:01:42", updated_at: "2015-09-22 22:01:42", promotion_id: 1>
 
     def apply_percentage_off_promo
       # record promotion_id on charge
