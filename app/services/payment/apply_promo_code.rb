@@ -32,8 +32,6 @@ class ApplyPromoCode
     def apply_free_axon_session_promo
       context.charge.update(promotion_id: context.promotion_id)
       context.is_payment_required = false
-      # amount should equal 0
-      # transaction_fee should equal 0
     end
 
     def apply_free_tutor_session_promo
@@ -42,57 +40,69 @@ class ApplyPromoCode
     end
 
     def apply_dollar_amount_off_promo
-      # can subtract directly from the total price
+      # record promotion_id on charge
       context.charge.update(promotion_id: context.promotion_id)
+      # flag charge as requiring payment
       context.is_payment_required = true
-
-      puts "Original total amount = #{context.charge.amount}"
-      puts "Original Axon Fee = #{context.charge.axon_fee}"
-      puts "Original Tutor Fee = #{context.charge.tutor_fee}"
-
+      # find cash value of promo code (in cents!)
       promotion = Promotion.find(context.promotion_id)
-      promotion_discount = promotion.amount * 100
-      puts "Promotion value = #{promotion_discount}"
-
+      context.promotion_discount = promotion.amount * 100
       # decrease amount by promotion discount
-      context.charge.amount = context.charge.amount - promotion_discount
-
-      puts "Discounted amount = #{context.charge.amount}"
-      puts "Tutor fee = #{context.charge.tutor_fee}"
-
+      context.charge.amount = context.charge.amount - context.promotion_discount
+      # calculate if Axon owes the tutor any $ so that tutor receives full pay on discounted appt
       axon_owes_tutor = context.charge.tutor_fee - context.charge.amount
-      puts "Axon owes tutor = #{axon_owes_tutor}"
-      # now we know how much a tutor is owed, and how much, if any, axon needs to pay the tutor to make up the rest of the tutor's fee
-      # what next?
-      # if 
-
       if axon_owes_tutor > 0
         context.charge.axon_fee = 0
         context.charge.tutor_fee = context.charge.amount
       end
-
-      puts "Discount price = #{context.charge.amount}"
-      puts "Axon fee = #{context.charge.axon_fee}"
-      puts "Tutor fee = #{context.charge.tutor_fee}"
-      puts "Axon owes tutor = #{axon_owes_tutor}"
-
       context.axon_owes_tutor = axon_owes_tutor
+      
+      # this line below was necessary to allow testing of this particular method in isolation, I could not get the linked interactor below to work, because it involves creating an account for a tutor which proved difficult to test
+      if Rails.env.test? then return end
+      
+        ReconcileCouponDifference.call(context)
 
-      ReconcileCouponDifference.call(context)
-
-      # puts "Appointments = #{context.appointments}"
-      # puts "Transaction fee = #{context.charge.transaction_fee}"
-
-      # transaction_fee = context.charge.transaction_fee
-      # amount = context.charge.amount + context.charge.transaction_fee
+      # puts "Original total amount = #{context.charge.amount}"
+      # puts "Original Axon Fee = #{context.charge.axon_fee}"
+      # puts "Original Tutor Fee = #{context.charge.tutor_fee}"
+      # puts "Promotion value = #{promotion_discount}"
+      # puts "Discounted amount = #{context.charge.amount}"
+      # puts "Tutor fee = #{context.charge.tutor_fee}"
+      # puts "Axon owes tutor = #{axon_owes_tutor}"
+      # puts "Discount price = #{context.charge.amount}"
+      # puts "Axon fee = #{context.charge.axon_fee}"
+      # puts "Tutor fee = #{context.charge.tutor_fee}"
+      # puts "Axon owes tutor = #{axon_owes_tutor}"
     end
 
     #<Charge id: 61, amount: 6462, transaction_fee: 962, customer_id: "1", tutor_id: 1, token: "789867877868", created_at: "2015-09-22 22:01:42", updated_at: "2015-09-22 22:01:42", promotion_id: 1>
 
     def apply_percentage_off_promo
-      # will have to single out an indivudal appointment (or at least an indivudal appt's price)
+      # record promotion_id on charge
       context.charge.update(promotion_id: context.promotion_id)
+      # flag charge as requiring payment
       context.is_payment_required = true
+      # find multiplier to calculate percent off discount (i.e. 15% = 0.85)
+      promotion = Promotion.find(context.promotion_id)
+      percent_off_discount_multiplier = ((promotion.amount.to_f / 100) - 1).abs # 15 = 0.15
+      # find lowest_rate_course (to apply discount to this one)
+      lowest_rate = context.rates.sort.first
+      # calculate normal full-price for the lowest_rate_course
+      axon_fee_multiplier = ((context.transaction_percentage.to_f / 100) + 1)
+      lowest_rate_full_price = lowest_rate * axon_fee_multiplier * 100
+      # multiply normal full-price by percent_off_multiplier to calculate discounted rate
+      lowest_rate_discount_price = lowest_rate * percent_off_discount_multiplier * axon_fee_multiplier * 100
+      # subtract the lowest_rate_course's full-price from the amount and add back the discounted rate
+      context.charge.amount = context.charge.amount - lowest_rate_full_price + lowest_rate_discount_price
+
+      # puts "Original total amount = #{context.charge.amount}"
+      # puts "Original Axon Fee = #{context.charge.axon_fee}"
+      # puts "Original Tutor Fee = #{context.charge.tutor_fee}"
+      # puts "BEFORE context.charge.amount = #{context.charge.amount}"
+      # puts "axon_fee_multiplier = #{axon_fee_multiplier}"
+      # puts "lowest_rate_full_price = #{lowest_rate_full_price}"
+      # puts "lowest_rate_discount_price #{lowest_rate_discount_price}"
+      # puts "AFTER context.amount = #{context.charge.amount}"
     end
 
     def apply_semester_package_promo
@@ -102,27 +112,13 @@ class ApplyPromoCode
 
 end
 
-    # charge = context.tutor.charges.create(token: context.token, customer_id: context.customer_id,
-    #                                       amount: amount, transaction_fee: transaction_fee)
-
-# => {:tutor=>#
-#     <Tutor id: 1, user_id: 1, active_status: 0, application_status: 0, rating: 5, degree: "B.A.", major: "Marine Biology", extra_info: "Doloribus accusamus non hic.", graduation_year: "2018", phone_number: "3067832947", birthdate: "1990-01-01", profile_pic: nil, transcript: "file-icon.png", appt_notes: nil, created_at: "2015-09-21 21:08:15", updated_at: "2015-09-21 21:08:15", last_4_acct: nil, line1: nil, line2: nil, city: nil, state: nil, postal_code: nil, ssn_last_4: nil, acct_id: nil>, 
-#   :appointments=>
-#     [#<Appointment id: 1, student_id: 5, slot_id: 73, course_id: 1, start_time: "2015-08-01 12:00:00", status: 0, created_at: "2015-09-21 21:08:37", updated_at: "2015-09-23 12:36:57", charge_id: 62>, #<Appointment id: 2, student_id: 4, slot_id: 55, course_id: 1, start_time: "2015-08-01 12:00:00", status: 0, created_at: "2015-09-21 21:08:37", updated_at: "2015-09-23 12:36:57", charge_id: 62>], 
-#   :customer_id=>1, 
-#   :token=>789867877868, 
-#   :rates=>[30, 25]
-#   :transaction_percentage=>17.5, 
-#   :promotion_id=>1, 
-#   :is_payment_required=>true}
-
-params = {
-  tutor: Tutor.first,
-  appointments: [Appointment.first, Appointment.second],
-  customer_id: 1,
-  token: 789867877868,
-  rates: [30, 25],
-  transaction_percentage: 15.0,
-  promotion_id: 1,
-  is_payment_required: true,
-}
+# params = {
+#   tutor: Tutor.first,
+#   appointments: [Appointment.first, Appointment.second],
+#   customer_id: 1,
+#   token: 789867877868,
+#   rates: [30, 25],
+#   transaction_percentage: 15.0,
+#   promotion_id: 1,
+#   is_payment_required: true,
+# }

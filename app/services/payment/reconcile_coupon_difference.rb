@@ -7,6 +7,7 @@ class ReconcileCouponDifference
 
   def call
     processor = PaymentFactory.new.build
+    processor.update_managed_account(context.tutor, context.token)
     payment = processor.send_charge(context.charge)
     puts "ZZZZZZ Discount price = #{context.charge.amount}"
     puts "ZZZZZZ Axon fee = #{context.charge.axon_fee}"

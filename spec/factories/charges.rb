@@ -16,11 +16,12 @@
 
 FactoryGirl.define do
   factory :charge do
-    amount 1
-transaction_fee 1
-customer_id "MyString"
-tutor nil
-token "MyString"
+    amount        1
+    axon_fee      3
+    tutor_fee     20
+    customer_id   1
+    tutor         1
+    token         nil
   end
 
 end

@@ -4,7 +4,7 @@ module Processor
   class Stripe
 
     def initialize()
-      # Stripe.api_key = api_key
+      ::Stripe.api_key = ENV['stripe_secret_key']
     end
 
     def update_managed_account(tutor, token)

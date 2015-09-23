@@ -20,7 +20,6 @@ FactoryGirl.define do
     course
     start_time '2015-09-01 12:00'
     status 0
+
   end
-
-
 end
