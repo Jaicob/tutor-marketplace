@@ -49,13 +49,15 @@ class ApplyPromoCode
       context.promotion_discount = promotion.amount * 100
       # decrease amount by promotion discount
       context.charge.amount = context.charge.amount - context.promotion_discount
-      # calculate if Axon owes the tutor any $ so that tutor receives full pay on discounted appt
-      axon_owes_tutor = context.charge.tutor_fee - context.charge.amount
-      if axon_owes_tutor > 0
+      # calculate the difference between the amount and tutor_fee to see if Axon owes the tutor additional money, or if Axon just needs to take less money, to pay tutor their total expected rate
+      context.axon_owes_tutor = context.charge.tutor_fee - context.charge.amount
+      # if Axon owes
+      if context.axon_owes_tutor > 0
         context.charge.axon_fee = 0
         context.charge.tutor_fee = context.charge.amount
+      else
+        context.charge.axon_fee = context.charge.amount - context.charge.tutor_fee
       end
-      context.axon_owes_tutor = axon_owes_tutor
       
       # this line below was necessary to allow testing of this particular method in isolation, I could not get the linked interactor below to work, because it involves creating an account for a tutor which proved difficult to test
       if Rails.env.test? then return end
