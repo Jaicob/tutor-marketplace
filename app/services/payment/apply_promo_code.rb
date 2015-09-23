@@ -13,8 +13,8 @@ class ApplyPromoCode
         @method = apply_free_tutor_session_promo
       when 'dollar_amount_off'
         @method = apply_dollar_amount_off_promo
-      when 'percent_off'
-        @method = apply_percentage_off_promo
+      when 'percent_off_from_tutor'
+        @method = apply_percentage_off_from_axon_promo
       when 'semester_package'
         @method = apply_semester_package_promo
       end
@@ -40,36 +40,15 @@ class ApplyPromoCode
     end
 
     def apply_dollar_amount_off_promo
-      # record promotion_id on charge
-      context.charge.update(promotion_id: context.promotion_id)
-      
-      # flag charge as requiring payment
-      context.is_payment_required = true
-      
-      # find cash value of promo code (in cents!)
-      promotion = Promotion.find(context.promotion_id)
-      context.promotion_discount = promotion.amount * 100
-      
-      # decrease amount by promotion discount
-      context.charge.amount = context.charge.amount - context.promotion_discount
-      
-      # calculate whether the amount after discount covers a booking's tutor_fee
-      if context.charge.amount > context.charge.tutor_fee
-        # if the amount covers the tutor_fee, then it's only necessary to reduce Axon's fee to the remaining margin
-        context.charge.axon_fee = context.charge.amount - context.charge.tutor_fee
-      else
-        # if the amount does NOT cover the tutor_fee, then the tutor is given the entire transaction, Axon's fee is set to 0, and the additional amount owed to the tutor is recorded and transferred to the tutor via ReconcileCouponDifference
-        context.axon_owes_tutor = context.charge.tutor_fee - context.charge.amount
-        context.charge.axon_fee = 0
-        context.charge.tutor_fee = context.charge.amount
-      end
-      
+      service = PromoCodeServices::ApplyDollarAmountOffFromAxon.new(context)
+      context = service.return_adjusted_fees
+      puts "NEW FUCKING CONTEXT = #{context}"
       # this if? was necessary to allow testing of this particular method in isolation
-      if Rails.env.test? then return end
+      if !Rails.env.production? then return end
         ReconcileCouponDifference.call(context)
     end
 
-    def apply_percentage_off_promo
+    def apply_percentage_off_from_tutor_promo
       # record promotion_id on charge
       context.charge.update(promotion_id: context.promotion_id)
       # flag charge as requiring payment
@@ -95,13 +74,13 @@ class ApplyPromoCode
 
 end
 
-# params = {
-#   tutor: Tutor.first,
-#   appointments: [Appointment.first, Appointment.second],
-#   customer_id: 1,
-#   token: 789867877868,
-#   rates: [30, 25],
-#   transaction_percentage: 15.0,
-#   promotion_id: 1,
-#   is_payment_required: true,
-# }
+params = {
+  tutor: Tutor.first,
+  appointments: [Appointment.first, Appointment.second],
+  customer_id: 1,
+  token: 789867877868,
+  rates: [30, 25],
+  transaction_percentage: 15.0,
+  promotion_id: 1,
+  is_payment_required: true,
+}
