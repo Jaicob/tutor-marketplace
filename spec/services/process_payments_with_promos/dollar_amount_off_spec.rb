@@ -2,7 +2,7 @@ require 'rails_helper'
 
 # This file tests the ApplyPromoCode interactor's apply_dollar_amount_off_promo method with various appointments being booked
 
-RSpec.describe "ApplyPromoCode's dollar_off_amount_promo" do
+RSpec.describe "ApplyPromoCode's dollar_off_amount_promo method" do
   let(:tutor)       { create(:tutor) }
   let(:appointment) { create(:appointment) }
   let(:appointment_2) { create(:appointment, :second)}

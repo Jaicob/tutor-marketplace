@@ -76,25 +76,16 @@ class ApplyPromoCode
       context.is_payment_required = true
       # find multiplier to calculate percent off discount (i.e. 15% = 0.85)
       promotion = Promotion.find(context.promotion_id)
-      percent_off_discount_multiplier = ((promotion.amount.to_f / 100) - 1).abs # 15 = 0.15
+      context.percent_off_discount_multiplier = ((promotion.amount.to_f / 100) - 1).abs # 15 = 0.15
       # find lowest_rate_course (to apply discount to this one)
-      lowest_rate = context.rates.sort.first
+      context.lowest_rate = context.rates.sort.first
       # calculate normal full-price for the lowest_rate_course
-      axon_fee_multiplier = ((context.transaction_percentage.to_f / 100) + 1)
-      lowest_rate_full_price = lowest_rate * axon_fee_multiplier * 100
+      context.axon_fee_multiplier = ((context.transaction_percentage.to_f / 100) + 1)
+      context.lowest_rate_full_price = context.lowest_rate * context.axon_fee_multiplier * 100
       # multiply normal full-price by percent_off_multiplier to calculate discounted rate
-      lowest_rate_discount_price = lowest_rate * percent_off_discount_multiplier * axon_fee_multiplier * 100
+      context.lowest_rate_discount_price = context.lowest_rate * context.percent_off_discount_multiplier * context.axon_fee_multiplier * 100
       # subtract the lowest_rate_course's full-price from the amount and add back the discounted rate
-      context.charge.amount = context.charge.amount - lowest_rate_full_price + lowest_rate_discount_price
-
-      # puts "Original total amount = #{context.charge.amount}"
-      # puts "Original Axon Fee = #{context.charge.axon_fee}"
-      # puts "Original Tutor Fee = #{context.charge.tutor_fee}"
-      # puts "BEFORE context.charge.amount = #{context.charge.amount}"
-      # puts "axon_fee_multiplier = #{axon_fee_multiplier}"
-      # puts "lowest_rate_full_price = #{lowest_rate_full_price}"
-      # puts "lowest_rate_discount_price #{lowest_rate_discount_price}"
-      # puts "AFTER context.amount = #{context.charge.amount}"
+      context.charge.amount = context.charge.amount - context.lowest_rate_full_price + context.lowest_rate_discount_price
     end
 
     def apply_semester_package_promo
