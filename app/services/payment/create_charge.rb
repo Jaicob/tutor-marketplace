@@ -9,30 +9,19 @@ class CreateCharge
   #            transaction_percentage: School.transaction_percentage
   #            promotion_id: promotion.id (or nil)
   def call
-    transaction_percentage = ((context.transaction_percentage / 100) + 1)
-    total_amount = []
+    axon_fee_multiplier = ((context.transaction_percentage.to_f / 100) + 1)
+    tutor_fee = []
     context.rates.each do |rate|
       session_amount = (rate * 100)
-      total_amount << session_amount
+      tutor_fee << session_amount
     end
-    total_amount = total_amount.map(&:to_i).reduce(:+)
-    amount = total_amount * transaction_percentage
-    transaction_fee = amount - total_amount
+    tutor_fee = tutor_fee.map(&:to_i).reduce(:+)
+    amount = tutor_fee * axon_fee_multiplier
+    axon_fee = amount - tutor_fee
     charge = context.tutor.charges.create(token: context.token, customer_id: context.customer_id,
-                                          amount: amount, transaction_fee: transaction_fee)
+                                          amount: amount, axon_fee: axon_fee, tutor_fee: tutor_fee)
     context.appointments.each{|appt| appt.update_attributes(charge_id: charge.id)}
     context.charge = charge
   end
 
 end
-
-params = {
-  tutor: Tutor.first,
-  appointments: [Appointment.first, Appointment.second],
-  customer_id: 1,
-  token: 789867877868,
-  rates: [30, 25],
-  transaction_percentage: 17.5,
-  promotion_id: 1,
-  is_payment_required: true,
-}
