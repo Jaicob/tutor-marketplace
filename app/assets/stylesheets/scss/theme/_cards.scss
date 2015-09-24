@@ -8,10 +8,10 @@
 
 .card {
   box-shadow: 0 3px 6px darken($base-background-color, 10%);
-  @include flex-basis(20em);
+  @include flex-basis(17em);
   @include flex-grow(1);
   margin: 0 ( $base-spacing / 3 ) $base-spacing;
-  max-width: 24em;
+  max-width: 17em;
 
   .card-header {
     background-color: $accentColor;
