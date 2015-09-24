@@ -11,8 +11,8 @@ class ApplyPromoCode
         @method = apply_free_axon_session_promo
       when 'free_from_tutor'
         @method = apply_free_tutor_session_promo
-      when 'dollar_amount_off'
-        @method = apply_dollar_amount_off_promo
+      when 'dollar_amount_off_from_axon'
+        @method = apply_dollar_amount_off_from_axon_promo
       when 'percent_off_from_tutor'
         @method = apply_percentage_off_from_axon_promo
       when 'semester_package'
@@ -39,13 +39,20 @@ class ApplyPromoCode
       context.is_payment_required = false
     end
 
-    def apply_dollar_amount_off_promo
+    def apply_dollar_amount_off_from_axon_promo
       service = PromoCodeServices::ApplyDollarAmountOffFromAxon.new(context)
       context = service.return_adjusted_fees
-      puts "NEW FUCKING CONTEXT = #{context}"
       # this if? was necessary to allow testing of this particular method in isolation
       if !Rails.env.production? then return end
-        ReconcileCouponDifference.call(context)
+      ReconcileCouponDifference.call(context)
+    end
+
+    def apply_dollar_amount_off_from_tutor_promo
+      service = PromoCodeServices::ApplyDollarAmountOffFromTutor.new(context)
+      context = service.return_adjusted_fees
+      # this if? was necessary to allow testing of this particular method in isolation
+      if !Rails.env.production? then return end
+      ReconcileCouponDifference.call(context)
     end
 
     def apply_percentage_off_from_tutor_promo
