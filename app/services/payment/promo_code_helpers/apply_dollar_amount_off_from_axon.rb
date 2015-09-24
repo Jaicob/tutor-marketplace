@@ -23,8 +23,8 @@ module PromoCodeHelpers
       return @context
     end
 
-    def record_promotion_id_on_charge(charge, promotion_id)
-      charge.update(promotion_id: promotion_id)
+    def record_promotion_id_on_charge(charge, promotion)
+      charge.update(promotion_id: promotion.id)
     end
 
     def is_payment_required?

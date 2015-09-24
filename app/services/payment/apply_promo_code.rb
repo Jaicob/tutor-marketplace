@@ -42,17 +42,11 @@ class ApplyPromoCode
     def apply_dollar_amount_off_from_axon_promo
       service = PromoCodeServices::ApplyDollarAmountOffFromAxon.new(context)
       context = service.return_adjusted_fees
-      # this if? was necessary to allow testing of this particular method in isolation
-      if !Rails.env.production? then return end
-      ReconcileCouponDifference.call(context)
     end
 
     def apply_dollar_amount_off_from_tutor_promo
       service = PromoCodeServices::ApplyDollarAmountOffFromTutor.new(context)
       context = service.return_adjusted_fees
-      # this if? was necessary to allow testing of this particular method in isolation
-      if !Rails.env.production? then return end
-      ReconcileCouponDifference.call(context)
     end
 
     def apply_percentage_off_from_tutor_promo

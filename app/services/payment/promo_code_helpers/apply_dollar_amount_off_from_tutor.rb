@@ -15,7 +15,6 @@ module PromoCodeHelpers
       @rates = context.rates
       @number_of_appointments = context.rates.count
       @discount_tutor_fee = context.discount_tutor_fee
-      @example = 5
     end
 
     def return_adjusted_fees
@@ -27,8 +26,8 @@ module PromoCodeHelpers
       return @context
     end
 
-    def record_promotion_id_on_charge(charge, promotion_id)
-      charge.update(promotion_id: promotion_id)
+    def record_promotion_id_on_charge(charge, promotion)
+      charge.update(promotion_id: promotion.id)
     end
 
     def is_payment_required?
