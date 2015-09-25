@@ -64,21 +64,31 @@ RSpec.describe 'PromoCodeHelpers::ApplyPercentOffFromTutor' do
       rate = 20
       transaction_percentage = 15
       @context.find_regular_price_for_a_session(rate, transaction_percentage)
-      expect(@context.regular_session_price).to eq 23
+      expect(@context.regular_session_price).to eq 2300
     end
 
     it "finds the discount price for a session" do
       discount_rate = 10
       transaction_percentage = 15
       @context.find_discount_price_for_a_session(discount_rate, transaction_percentage)
-      expect(@context.discount_session_price).to eq 11.5
+      expect(@context.discount_session_price).to eq 1150
     end
 
     it "recalculates the new amount with the one discounted session rate" do 
       regular_session_price = 2300
       discount_session_price = 1150
-      @context.recalculate_amount_with_discount_price_session(@charge, @amount, regular_session_price, discount_session_price)
-      expect(@context.charge.amount).to eq (4600) # bc there's still a regular price $30 session
+      @context.recalculate_fees_with_discount_price_session(@charge, @amount, regular_session_price, discount_session_price)
+      expect(@context.charge.amount).to eq 4600 # bc there's still a regular price $30 session
+    end
+
+    it 'combines all the methods correctly to return adjusted fees with .return_adjusted_fees' do 
+      expect(@context.charge.amount).to eq 5750
+      expect(@context.charge.tutor_fee).to eq 5000
+      expect(@context.charge.axon_fee).to eq 750
+      @context.return_adjusted_fees
+      expect(@context.charge.amount).to eq 4600
+      expect(@context.charge.tutor_fee).to eq 4000
+      expect(@context.charge.axon_fee).to eq 600
     end
 
   end
