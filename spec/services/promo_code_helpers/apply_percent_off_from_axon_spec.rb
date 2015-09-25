@@ -35,8 +35,8 @@ RSpec.describe 'PromoCodeHelpers::ApplyPercentOffFromAxon' do
     end
 
     it "records the promotion_id on a charge with .record_promotion_id_on_charge" do 
-      @context.record_promotion_id_on_charge(@charge, @promotion_id)
-      expect(@charge.promotion_id).to eq @promotion_id
+      @context.record_promotion_id_on_charge(@charge, @promotion)
+      expect(@charge.promotion_id).to eq @promotion.id
     end 
 
     it "sets is_payment_required to true with .is_payment_required?" do 
@@ -73,38 +73,6 @@ RSpec.describe 'PromoCodeHelpers::ApplyPercentOffFromAxon' do
       @context.recalculate_amount_with_discount_price_session(@charge, @amount, regular_session_price, discount_session_price)
       expect(@context.charge.amount).to eq (5175) # bc there's still a regular price $30 session
     end
-
-    it
-
-    #     def recalculate_amount_with_discount_price_session(charge, amount, regular_session_price, discount_session_price)
-    #    new_amount = amount - regular_session_price + discount_session_price
-    #    charge.update(amount: new_amount)
-    # end
-
-
-    # def find_regular_price_for_a_session(rate, transaction_percentage)
-    #   transaction_fee = ((transaction_percentage.to_f / 100) + 1 )
-    #   @regular_session_price = lowest_rate * transaction_fee
-    # end
-
-    # def find_discount_price_for_a_session(rate, transaction_percentage, discount_multiplier)
-    #   transaction_fee = ((transaction_percentage.to_f / 100) + 1 )
-    #   @discount_session_price = lowest_rate * transaction_percentage * discount_multiplier
-    # end
-
-
-    # it "finds the discount_tutor_fee with .calculate_discount_tutor_fee" do
-    #   @context.calculate_discount_tutor_fee(@charge, @tutor_fee, @promotion_discount, @number_of_appointments)
-    #   expect(@charge.tutor_fee).to eq 1000
-    # end
-
-    # it 'recalcuates fees with tutor_fee_discount with method by same name' do
-    #   discount_tutor_fee = 1000
-    #   @context.recalculate_fees_with_tutor_fee_discount(@charge, discount_tutor_fee, @context.transaction_percentage)
-    #   expect(@context.charge.amount).to eq 1150
-    #   expect(discount_tutor_fee).to eq 1000
-    #   expect(@context.charge.axon_fee).to eq 150
-    # end
 
   end
 end

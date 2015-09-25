@@ -27,15 +27,14 @@ RSpec.describe 'PromoCodeHelpers::ApplyDollarAmountOffFromTutor' do
 
       @charge = @context.charge
       @amount = @context.charge.amount
-      @promotion_id = @context.promotion_id
       @promotion_discount = @context.find_promo_code_value(@promotion)
       @tutor_fee = @context.tutor_fee
       @number_of_appointments = @context.rates.count
     end
 
     it "records the promotion_id on a charge with .record_promotion_id_on_charge" do 
-      @context.record_promotion_id_on_charge(@charge, @promotion_id)
-      expect(@charge.promotion_id).to eq @promotion_id
+      @context.record_promotion_id_on_charge(@charge, @promotion)
+      expect(@charge.promotion_id).to eq @promotion.id
     end 
 
     it "sets is_payment_required to true with .is_payment_required?" do 
