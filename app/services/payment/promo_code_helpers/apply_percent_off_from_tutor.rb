@@ -1,7 +1,7 @@
 module PromoCodeHelpers
   class ApplyPercentOffFromTutor
 
-    attr_accessor :context, :charge, :is_payment_required, :rates, :discount_multiplier, :lowest_rate, :regular_session_price, :transaction_percentage, :discount_session_price, :discount_rate
+    attr_accessor :charge
 
     def initialize(context)
       @context = context

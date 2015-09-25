@@ -6,82 +6,79 @@ RSpec.describe 'PromoCodeHelpers::ApplyPercentOffFromAxon' do
 
   describe 'Methods in PromoCodeServices::ApplyPercentOffFromAxon' do
     
-    before :each do
-
-      # Do not change inputs in this before_action, or tests may break
-      @promotion = create(:promotion, category: :dollar_amount_off_from_tutor, amount: 25)
+    it 'correctly adjusts fees for a 10%-off coupon issued by Axon' do
+      @promotion = create(:promotion, category: :percent_off_from_axon, amount: 10)
       params = {
         tutor: tutor,
         appointments: [appointment],
         customer_id: 1,
         token: 1111111111,
-        rates: [20, 30],
+        rates: [23],
         transaction_percentage: 15,
         promotion_id: @promotion.id,
         is_payment_required: true,
         promotion_category: nil
       }
-      # the CreateCharge.call isn't being tested here, but it's necessary set up (to create the charge)
+      context = CreateCharge.call(params)
+      @context = PromoCodeHelpers::ApplyPercentOffFromAxon.new(context)
+ 
+      expect(@context.charge.amount).to eq 2645
+      expect(@context.charge.tutor_fee).to eq 2300
+      expect(@context.charge.axon_fee).to eq 345
+      @context.return_adjusted_fees
+      expect(@context.charge.amount).to eq 2381
+      expect(@context.charge.tutor_fee).to eq 2300
+      expect(@context.charge.axon_fee).to eq 81
+    end
+
+    it 'correctly adjusts fees for a 25%-off coupon issued by Axon' do 
+      @promotion = create(:promotion, category: :percent_off_from_axon, amount: 25)
+      params = {
+        tutor: tutor,
+        appointments: [appointment],
+        customer_id: 1,
+        token: 1111111111,
+        rates: [23],
+        transaction_percentage: 15,
+        promotion_id: @promotion.id,
+        is_payment_required: true,
+        promotion_category: nil
+      }
       context = CreateCharge.call(params)
       @context = PromoCodeHelpers::ApplyPercentOffFromAxon.new(context)
 
-      @charge = @context.charge
-      @amount = @context.charge.amount
-      @promotion_id = @context.promotion_id
-      @tutor_fee = @context.tutor_fee
-      @rates = @context.rates
-      @number_of_appointments = @context.rates.count
-      @transaction_percentage = @context.transaction_percentage
-    end
-
-    it "records the promotion_id on a charge with .record_promotion_id_on_charge" do 
-      @context.record_promotion_id_on_charge(@charge, @promotion)
-      expect(@charge.promotion_id).to eq @promotion.id
-    end 
-
-    it "sets is_payment_required to true with .is_payment_required?" do 
-      @context.is_payment_required?
-      expect(@context.is_payment_required).to eq true
-    end
-
-    it "gets the discount multiplier for the percentage off" do 
-      @context.find_discount_multiplier_for_percent_off(@promotion)
-      expect(@context.discount_multiplier).to eq 0.75
-    end
-
-    it "finds the lowest session rate (in case of multiple appts)" do 
-      @context.find_lowest_rate_session(@rates)
-      expect(@context.lowest_rate).to eq 20
-    end
-
-    it "finds the regular price for the lowest rate session" do
-      rate = 20 
-      @context.find_regular_price_for_a_session(rate, @transaction_percentage)
-      expect(@context.regular_session_price).to eq 23
-    end
-
-    it "finds the discount price for the lowest rate session" do
-      rate = 20
-      discount_multiplier = 0.75 
-      @context.find_discount_price_for_a_session(rate, @transaction_percentage, discount_multiplier)
-      expect(@context.discount_session_price).to eq 17.25
-    end
-
-    it "recalculates the new amount with the one discounted session rate" do 
-      regular_session_price = 2300
-      discount_session_price = 1725
-      @context.recalculate_amount_with_discount_price_session(@charge, @amount, regular_session_price, discount_session_price)
-      expect(@context.charge.amount).to eq (5175) # bc there's still a regular price $30 session
-    end
-
-    it 'combines all the methods correctly to return adjusted fees with .return_adjusted_fees' do 
-      expect(@context.charge.amount).to eq 5750
-      expect(@context.charge.tutor_fee).to eq 5000
-      expect(@context.charge.axon_fee).to eq 750
+      expect(@context.charge.amount).to eq 2645
+      expect(@context.charge.tutor_fee).to eq 2300
+      expect(@context.charge.axon_fee).to eq 345
       @context.return_adjusted_fees
-      expect(@context.charge.amount).to eq 4600
-      expect(@context.charge.tutor_fee).to eq 4000
-      expect(@context.charge.axon_fee).to eq 600
+      expect(@context.charge.amount).to eq 1984
+      expect(@context.charge.tutor_fee).to eq 2300
+      expect(@context.charge.axon_fee).to eq -316
+    end
+
+    it 'correctly adjusts fees for a 50%-off coupon issued by Axon' do 
+      @promotion = create(:promotion, category: :percent_off_from_axon, amount: 50)
+      params = {
+        tutor: tutor,
+        appointments: [appointment],
+        customer_id: 1,
+        token: 1111111111,
+        rates: [23],
+        transaction_percentage: 15,
+        promotion_id: @promotion.id,
+        is_payment_required: true,
+        promotion_category: nil
+      }
+      context = CreateCharge.call(params)
+      @context = PromoCodeHelpers::ApplyPercentOffFromAxon.new(context)
+
+      expect(@context.charge.amount).to eq 2645
+      expect(@context.charge.tutor_fee).to eq 2300
+      expect(@context.charge.axon_fee).to eq 345
+      @context.return_adjusted_fees
+      expect(@context.charge.amount).to eq 1323
+      expect(@context.charge.tutor_fee).to eq 2300
+      expect(@context.charge.axon_fee).to eq -977
     end
 
   end

@@ -15,40 +15,20 @@ module PromoCodeHelpers
     end
 
     def return_adjusted_fees
-      record_promotion_id_on_charge(@charge, @promotion)
-      is_payment_required?
       find_promo_code_value(@promotion)
       find_discounted_price(@charge, @amount, @promotion_discount)
       adjust_fees_to_cover_tutor_fee(@discount_price, @tutor_fee)
       return @context
     end
 
-    def record_promotion_id_on_charge(charge, promotion)
-      charge.update(promotion_id: promotion.id)
+    def find_discount_price_difference(charge, amount, promotion_discount)
+      
     end
 
-    def is_payment_required?
-      @is_payment_required = true
-    end
-
-    def find_promo_code_value(promotion)
-      value = promotion.amount * 100
-      @promotion_discount = value
-    end
-
-    def find_discount_price(charge, amount, promotion_discount)
-      @discount_price = amount - promotion_discount
-      charge.update(amount: @discount_price)
-    end
-
-    def adjust_fees_to_cover_tutor_fee(discount_price, tutor_fee)
-      if discount_price > tutor_fee
-        @axon_fee = discount_price - tutor_fee
-      else
-        @axon_owes_tutor = tutor_fee - discount_price
-        @axon_fee = 0
-        @tutor_fee = discount_price
-      end
+    def update_charge(amount, axon_fee, promotion_id)
+      new_amount
+      new_axon_fee
+      charge.update(amount: new_amount, axon_fee: new_axon_fee, promotion_id: promotion.id)
     end
 
   end
