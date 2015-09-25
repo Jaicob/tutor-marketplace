@@ -14,7 +14,7 @@
 }
 
 .availability-calendar {
-  header, 
+  header,
   footer {
     padding: $pad 0;
   }
@@ -44,7 +44,7 @@
     }
   }
 
-  .title, 
+  .title,
   .dropdown--subject {
     float: left;
     margin: 0 auto $base-spacing;
@@ -85,11 +85,11 @@
   }
 }
 
-// These rules should apply to *any* schedule. 
+// These rules should apply to *any* schedule.
 .schedule {
   @extend %flex__wrapper;
   // Bump the base font size up just a bit to make things easier to touch on mobile.
-  font-size: 18px; 
+  font-size: 18px;
   width: 100%;
   float: left;
 
@@ -99,7 +99,7 @@
     padding: 0;
   }
 
-  .available-times {    
+  .available-times {
     > li {
       padding: $pad-half;
     }
@@ -116,7 +116,8 @@
       border-radius: 2px;
 
       &:hover,
-      &:focus {
+      &:focus,
+      &.active {
         background-color: $highlightColor;
         color: $white;
       }
@@ -171,7 +172,7 @@
   }
 
   .radio ~ .available-times {
-    height: 0;    
+    height: 0;
     min-height: 0; max-height: 0;
     margin: 0;
     overflow: hidden;

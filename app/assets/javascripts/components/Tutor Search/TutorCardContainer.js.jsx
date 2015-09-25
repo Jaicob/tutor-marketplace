@@ -34,8 +34,8 @@ var TutorCardContainer = React.createClass({
 	},
 	showTutorCards: function() {
 		return this.state.tutors.map(function(tutor){
-			return <TutorCard tutor={tutor} />;
-		});
+			return <TutorCard search={this.props} tutor={tutor} />;
+		}.bind(this));
 	},
 	showLoadingScreen: function(){
 		return "Loading...";

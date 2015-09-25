@@ -34,19 +34,28 @@ var SubjectSelector = React.createClass({
     // });
   },
   handleClick: function (subject) {
-    this.props.handleSubject(subject)
+    newSubject = this.state.availableSubjects.filter(
+      (potentialSubject) => potentialSubject.id == subject.target.value
+    )[0]
+    this.props.handleSubject(newSubject)
   },
   render: function () {
     return (
-      <div className="appointment-selector__header__subject-selector">
-        {
-          this.state.availableSubjects.map(function(subject){
-            return <Subject subject={subject}
-                            selectedSubject={this.props.selectedSubject}
-                            handleClick={this.handleClick}
-                            />
-          }.bind(this))
-        }
+      <div className="dropdown--subject">
+        <label for="select-subject">Course:</label>
+        <div className="select-wrapper">
+          <select id="select-subject" className="select-menu" onChange={this.handleClick}>
+            <optgroup label="Available Courses">
+              {
+                this.state.availableSubjects.map(function(subject){
+                  return <Subject subject={subject}
+                                  selectedSubject={this.props.selectedSubject}
+                                  />
+                }.bind(this))
+              }
+            </optgroup>
+          </select>
+        </div>
       </div>
     );
   }

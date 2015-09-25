@@ -12,6 +12,15 @@
   @include flex-grow(1);
   margin: 0 ( $base-spacing / 3 ) $base-spacing;
   max-width: 17em;
+  transition: all 0.2s linear;
+  opacity: 0.75;
+
+  &:hover {
+    @include transform(
+      scale(1.05)
+    );
+    opacity: 1;
+  }
 
   .card-header {
     background-color: $accentColor;
@@ -26,6 +35,8 @@
   }
 
   .card-copy {
+    width: 100%;
+
     .tutor-qualifications {
       @extend .default-ul;
     }
@@ -43,7 +54,8 @@
     position: relative;
     max-height: 24em;
     max-width: 24em;
-    text-align: center
+    text-align: center;
+    cursor: pointer;
   }
 
   .cost {
