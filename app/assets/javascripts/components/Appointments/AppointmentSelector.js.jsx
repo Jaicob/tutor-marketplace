@@ -31,13 +31,15 @@ var AppointmentSelector = React.createClass({
   },
   renderMainView: function () {
     switch(this.state.currentStep){
-      case 1: return <SlotSelector tutor={this.props.tutor}
+      case 1:
+              return <SlotSelector tutor={this.props.tutor}
                                    selectedSlots={this.state.selectedSlots}
                                    handleSlots={this.handleSlots}
                                    disabledSlots={this.state.disabledSlots}
                                    handleDisabledSlots={this.handleDisabledSlots}
                                    />
       case 2: return <PaymentForm {...this.props} />
+      case 3: return <ConfirmationScreen {...this.props} />
       default: break
     };
   },
