@@ -74,5 +74,15 @@ RSpec.describe 'PromoCodeHelpers::ApplyPercentOffFromAxon' do
       expect(@context.charge.amount).to eq (5175) # bc there's still a regular price $30 session
     end
 
+    it 'combines all the methods correctly to return adjusted fees with .return_adjusted_fees' do 
+      expect(@context.charge.amount).to eq 5750
+      expect(@context.charge.tutor_fee).to eq 5000
+      expect(@context.charge.axon_fee).to eq 750
+      @context.return_adjusted_fees
+      expect(@context.charge.amount).to eq 4600
+      expect(@context.charge.tutor_fee).to eq 4000
+      expect(@context.charge.axon_fee).to eq 600
+    end
+
   end
 end
