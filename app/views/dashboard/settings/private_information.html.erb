@@ -26,7 +26,11 @@
           <h3 id="transcript">Transcript</h3>
 
           <p>Current Transcript: 
-            <%= @tutor.transcript.url.nil? ? 'None' : File.basename(@tutor.transcript.path) %>
+            <% if @tutor.transcript.url.nil? %>
+              'None'
+            <% else %>
+              <%= link_to File.basename(@tutor.transcript.path), @tutor.transcript.url, target: '_blank' %>
+            <% end %>
           </p>
 
           <%= f.label :transcript %>

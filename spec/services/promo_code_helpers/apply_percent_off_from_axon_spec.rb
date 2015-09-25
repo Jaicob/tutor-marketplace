@@ -74,6 +74,8 @@ RSpec.describe 'PromoCodeHelpers::ApplyPercentOffFromAxon' do
       expect(@context.charge.amount).to eq (5175) # bc there's still a regular price $30 session
     end
 
+    it
+
     #     def recalculate_amount_with_discount_price_session(charge, amount, regular_session_price, discount_session_price)
     #    new_amount = amount - regular_session_price + discount_session_price
     #    charge.update(amount: new_amount)
