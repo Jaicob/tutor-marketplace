@@ -1,21 +1,26 @@
-<section class="main profile" role="main">
+<section class="dashboard tutor">
   <div class="wrapper">
-    <article class="tutor-profile">
-      <div class="tutor-image">
-        <h1 class="title"><%= @tutor.full_name %></h1>
-        <%= image_tag(@tutor.profile_pic_url(:thumb), class: 'profile-pic') %>              
+    <section class="main profile" role="main">
+      <div class="wrapper">
+        <article class="tutor-profile">
+          <div class="tutor-image">
+            <h1 class="title"><%= @tutor.full_name %></h1>
+            <%= image_tag(@tutor.profile_pic_url(:thumb), class: 'profile-pic') %>
+          </div>
+          <div class="tutor-qualifications">
+            <h2 class="title">Qualifications</h2>
+            <div class="text">
+              <ul class="default-ul">
+                <li> Degree: <%= @tutor.degree || "None specified." %> </li>
+                <li> Major: <%= @tutor.major || "None specified." %> </li>
+                <li> Extra Info: <%= @tutor.extra_info || "None specified." %> </li>
+                <li> Graduation Year: <%= @tutor.graduation_year || "None specified." %> </li>
+              </ul>
+            </div>
+          </div>
+        </article>
       </div>
-      <div class="tutor-qualifications">
-        <h2 class="title">Qualifications</h2>
-        <div class="text">
-          <ul class="default-ul">
-            <li> Degree: <%= @tutor.degree || "None specified." %> </li>
-            <li> Major: <%= @tutor.major || "None specified." %> </li>
-            <li> Extra Info: <%= @tutor.extra_info || "None specified." %> </li>
-            <li> Graduation Year: <%= @tutor.graduation_year || "None specified." %> </li>
-          </ul>
-        </div>              
-      </div>
-    </article>      
+    </section>
   </div>
 </section>
+<%= react_component('AppointmentSelector', tutor: @tutor.id) %>

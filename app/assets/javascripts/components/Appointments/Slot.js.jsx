@@ -12,13 +12,15 @@ var Slot = React.createClass({
   },
   generateStyle: function () {
     if(this.state.active) {
-      return "appointment-selector__slot-selector__day--slot--active"
+      return "active"
     } else {
-      return "appointment-selector__slot-selector__day--slot--neutral"
+      return "neutral"
     }
   },
   render: function () {
     var time = moment.utc(this.props.slot.start_time).format("hh:mm A");
-    return <div ref="slot" className={this.generateStyle()} onClick={this.handleClick}>{time}</div>
+    return (
+      <li onClick={this.handleClick}><a className={this.generateStyle()}>{time}</a></li>
+    );
   }
 })
