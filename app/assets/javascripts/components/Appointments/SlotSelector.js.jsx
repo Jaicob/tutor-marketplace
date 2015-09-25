@@ -12,9 +12,9 @@ var SlotSelector = React.createClass({
     this.componentWillReceiveProps(this.props);
   },
   componentWillReceiveProps: function (nextProps) {
-    // if(nextProps.disabledSlots.length == 0 && nextProps.selectedSlots.length == 0) {
+    if(nextProps.disabledSlots.length == 0 && nextProps.selectedSlots.length == 0) {
       this.fetchSlots(nextProps.tutor);
-    // }
+    }
   },
   fetchSlots: function (tutor) {
     var endpoint = API.endpoints.tutor_slots.get({
@@ -38,11 +38,11 @@ var SlotSelector = React.createClass({
     //           ];
 
     request.success(function(data){
-      // if (this.props.disabledSlots.length == 0 && this.props.selectedSlots.length == 0) {
+      if (this.props.disabledSlots.length == 0 && this.props.selectedSlots.length == 0) {
         this.setState({
           allSlots: this.parseData(data)
         });
-      // }
+      }
     }.bind(this));
 
 
