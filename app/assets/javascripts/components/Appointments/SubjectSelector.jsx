@@ -23,7 +23,7 @@ var SubjectSelector = React.createClass({
     //   ]
     // });
 
-    var endpoint = API.endpoints.courses({
+    var endpoint = API.endpoints.tutor.courses({
       tutor_id: this.props.tutor
     });
 
