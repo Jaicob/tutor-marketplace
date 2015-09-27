@@ -1,5 +1,5 @@
 var SlotSelector = React.createClass({
-  rangeDistance: 5,
+  rangeDistance: 4,
   rangeUnit: 'days',
   getInitialState: function () {
     return {
@@ -225,13 +225,15 @@ var SlotSelector = React.createClass({
   },
   render: function () {
     return (
-      <div className="appointment-selector__slot-selector">
+      <div>
         <SlotRangeControls handleNextRange={this.handleNextRange}
                            handlePreviousRange={this.handlePreviousRange}
                            />
+       <ul className="schedule weekly-schedule">
         {
           this.renderSlotDays()
         }
+        </ul>
       </div>
     );
   }

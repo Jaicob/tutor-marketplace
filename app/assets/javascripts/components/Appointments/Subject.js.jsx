@@ -1,6 +1,6 @@
 var Subject = React.createClass({
   componentWillMount: function () {
-    this.componentWillReceiveProps(this.props)
+    this.componentWillReceiveProps(this.props);
   },
   componentWillReceiveProps: function (newProps) {
       if(newProps.selectedSubject == newProps.subject ) {
@@ -22,14 +22,11 @@ var Subject = React.createClass({
     return ["subject-item", this.state.state].join("--");
   },
   handleClick: function () {
-    this.props.handleClick(this.props.subject)
+    this.props.handleClick(this.props.subject);
   },
   render: function () {
     return (
-      <a onClick={this.handleClick}
-         className={this.getBackground()}>
-        {this.props.subject.name} -- ${this.props.subject.rate}/hr
-      </a>
-    )
+      <option value={this.props.subject.id}>{this.props.subject.name} -- ${this.props.subject.rate}/hr</option>
+    );
   }
 });
