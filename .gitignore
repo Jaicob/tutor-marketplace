@@ -103,3 +103,5 @@ Z-notes.rb
 /vendor/assets/bower_components/
 
 *.sublime-*
+node_modules
+npm-debug.*
