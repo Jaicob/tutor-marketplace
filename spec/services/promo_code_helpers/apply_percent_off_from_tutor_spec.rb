@@ -13,7 +13,7 @@ RSpec.describe 'PromoCodeHelpers::ApplyPercentOffFromTutor' do
         appointments: [appointment],
         customer_id: 1,
         token: 1111111111,
-        rates: [20, 30],
+        rates: [23],
         transaction_percentage: 15,
         promotion_id: @promotion.id,
         is_payment_required: true,
@@ -22,13 +22,13 @@ RSpec.describe 'PromoCodeHelpers::ApplyPercentOffFromTutor' do
       context = CreateCharge.call(params)
       @context = PromoCodeHelpers::ApplyPercentOffFromTutor.new(context)
 
-      expect(@context.charge.amount).to eq 5750
-      expect(@context.charge.tutor_fee).to eq 5000
-      expect(@context.charge.axon_fee).to eq 750
+      expect(@context.charge.amount).to eq 2645
+      expect(@context.charge.tutor_fee).to eq 2300
+      expect(@context.charge.axon_fee).to eq 345
       @context.return_adjusted_fees
-      expect(@context.charge.amount).to eq 5520
-      expect(@context.charge.tutor_fee).to eq 4800
-      expect(@context.charge.axon_fee).to eq 720
+      expect(@context.charge.amount).to eq 2380
+      expect(@context.charge.tutor_fee).to eq 2070
+      expect(@context.charge.axon_fee).to eq 310
     end
 
     it 'correctly adjusts fees for a 25%-off coupon issued by a Tutor' do 
@@ -38,7 +38,7 @@ RSpec.describe 'PromoCodeHelpers::ApplyPercentOffFromTutor' do
         appointments: [appointment],
         customer_id: 1,
         token: 1111111111,
-        rates: [20, 30],
+        rates: [23],
         transaction_percentage: 15,
         promotion_id: @promotion.id,
         is_payment_required: true,
@@ -47,13 +47,13 @@ RSpec.describe 'PromoCodeHelpers::ApplyPercentOffFromTutor' do
       context = CreateCharge.call(params)
       @context = PromoCodeHelpers::ApplyPercentOffFromTutor.new(context)
 
-      expect(@context.charge.amount).to eq 5750
-      expect(@context.charge.tutor_fee).to eq 5000
-      expect(@context.charge.axon_fee).to eq 750
+      expect(@context.charge.amount).to eq 2645
+      expect(@context.charge.tutor_fee).to eq 2300
+      expect(@context.charge.axon_fee).to eq 345
       @context.return_adjusted_fees
-      expect(@context.charge.amount).to eq 5175
-      expect(@context.charge.tutor_fee).to eq 4500
-      expect(@context.charge.axon_fee).to eq 675
+      expect(@context.charge.amount).to eq 1983
+      expect(@context.charge.tutor_fee).to eq 1725
+      expect(@context.charge.axon_fee).to eq 258
     end
 
     it 'correctly adjusts fees for a 50%-off coupon issued by a Tutor' do 
@@ -63,7 +63,7 @@ RSpec.describe 'PromoCodeHelpers::ApplyPercentOffFromTutor' do
         appointments: [appointment],
         customer_id: 1,
         token: 1111111111,
-        rates: [20, 30],
+        rates: [23],
         transaction_percentage: 15,
         promotion_id: @promotion.id,
         is_payment_required: true,
@@ -72,13 +72,13 @@ RSpec.describe 'PromoCodeHelpers::ApplyPercentOffFromTutor' do
       context = CreateCharge.call(params)
       @context = PromoCodeHelpers::ApplyPercentOffFromTutor.new(context)
 
-      expect(@context.charge.amount).to eq 5750
-      expect(@context.charge.tutor_fee).to eq 5000
-      expect(@context.charge.axon_fee).to eq 750
+      expect(@context.charge.amount).to eq 2645
+      expect(@context.charge.tutor_fee).to eq 2300
+      expect(@context.charge.axon_fee).to eq 345
       @context.return_adjusted_fees
-      expect(@context.charge.amount).to eq 4600
-      expect(@context.charge.tutor_fee).to eq 4000
-      expect(@context.charge.axon_fee).to eq 600
+      expect(@context.charge.amount).to eq 1322
+      expect(@context.charge.tutor_fee).to eq 1150
+      expect(@context.charge.axon_fee).to eq 172
     end
   end
 end

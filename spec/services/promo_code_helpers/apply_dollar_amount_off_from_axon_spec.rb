@@ -6,7 +6,7 @@ RSpec.describe 'PromoCodeHelpers::ApplyDollarAmountOffFromAxon' do
 
   describe 'Methods in PromoCodeServices::ApplyDollarAmountOffFromAxon' do
 
-    it 'correctly adjusts fees for a $20-off coupon issued by Axon' do 
+    it 'correctly adjusts fees for a $5-off coupon issued by Axon' do 
       @promotion = create(:promotion, category: :dollar_amount_off_from_axon, amount: 5)
       params = {
         tutor: tutor,
