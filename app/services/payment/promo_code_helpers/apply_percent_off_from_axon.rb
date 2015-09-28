@@ -15,15 +15,18 @@ module PromoCodeHelpers
     end
 
     def return_adjusted_fees
-      find_discount_price_difference(@lowest_rate, @discount_multiplier, @transaction_fee)
-      update_charge(@charge, @amount, @tutor_fee, @price_difference, @promotion)
+      if find_discount_price_difference(@lowest_rate, @discount_multiplier, @transaction_fee)
+        update_charge(@charge, @amount, @tutor_fee, @price_difference, @promotion)
+      else
+        errors.add(:discount_price, "could not be caluclated. Make sure all necessary parameters are passed in.")
+      end
       @context
     end
 
     def find_discount_price_difference(rate, discount_multiplier, transaction_fee)
-      regular_session_price = rate * transaction_fee * 100
-      discount_session_price = rate * transaction_fee * discount_multiplier * 100
-      @price_difference = regular_session_price - discount_session_price
+      regular_price = rate * transaction_fee * 100
+      discount_price = rate * transaction_fee * 100 * discount_multiplier 
+      @price_difference = regular_price - discount_price
     end
 
     def update_charge(charge, amount, tutor_fee, price_difference, promotion)

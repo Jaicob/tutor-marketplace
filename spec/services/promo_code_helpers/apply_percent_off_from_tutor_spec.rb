@@ -6,7 +6,7 @@ RSpec.describe 'PromoCodeHelpers::ApplyPercentOffFromTutor' do
 
   describe 'Methods in PromoCodeServices::ApplyPercentOffFromTutor' do
 
-    it 'correctly adjusts fees for a 10%-off coupon issued by a tutor' do 
+    it 'correctly adjusts fees for a 10%-off coupon issued by a Tutor' do 
       @promotion = create(:promotion, category: :percent_off_from_tutor, amount: 10)
       params = {
         tutor: tutor,
@@ -31,7 +31,7 @@ RSpec.describe 'PromoCodeHelpers::ApplyPercentOffFromTutor' do
       expect(@context.charge.axon_fee).to eq 720
     end
 
-    it 'correctly adjusts fees for a 25%-off coupon issued by a tutor' do 
+    it 'correctly adjusts fees for a 25%-off coupon issued by a Tutor' do 
       @promotion = create(:promotion, category: :percent_off_from_tutor, amount: 25)
       params = {
         tutor: tutor,
@@ -56,7 +56,7 @@ RSpec.describe 'PromoCodeHelpers::ApplyPercentOffFromTutor' do
       expect(@context.charge.axon_fee).to eq 675
     end
 
-    it 'correctly adjusts fees for a 50%-off coupon issued by a tutor' do 
+    it 'correctly adjusts fees for a 50%-off coupon issued by a Tutor' do 
       @promotion = create(:promotion, category: :percent_off_from_tutor, amount: 50)
       params = {
         tutor: tutor,
