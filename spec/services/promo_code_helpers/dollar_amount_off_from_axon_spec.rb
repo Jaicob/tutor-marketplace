@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe 'PromoCodeHelpers::ApplyDollarAmountOffFromAxon' do
+RSpec.describe 'PromoCodeHelpers::DollarAmountOffFromAxon' do
   let(:tutor)       { create(:tutor) }
   let(:appointment) { create(:appointment) }
 
-  describe 'Methods in PromoCodeServices::ApplyDollarAmountOffFromAxon' do
+  describe 'Methods in PromoCodeServices::DollarAmountOffFromAxon' do
 
     it 'correctly adjusts fees for a $5-off coupon issued by Axon' do 
       @promotion = create(:promotion, category: :dollar_amount_off_from_axon, amount: 5)

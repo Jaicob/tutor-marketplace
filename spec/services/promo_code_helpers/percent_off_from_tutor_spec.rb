@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe 'PromoCodeHelpers::ApplyPercentOffFromTutor' do
+RSpec.describe 'PromoCodeHelpers::PercentOffFromTutor' do
   let(:tutor)       { create(:tutor) }
   let(:appointment) { create(:appointment) }
 
-  describe 'Methods in PromoCodeServices::ApplyPercentOffFromTutor' do
+  describe 'Methods in PromoCodeServices::PercentOffFromTutor' do
 
     it 'correctly adjusts fees for a 10%-off coupon issued by a Tutor' do 
       @promotion = create(:promotion, category: :percent_off_from_tutor, amount: 10)
