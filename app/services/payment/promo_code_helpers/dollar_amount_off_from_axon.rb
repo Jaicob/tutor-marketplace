@@ -17,7 +17,7 @@ module PromoCodeHelpers
       if update_charge(@charge, @amount, @price_difference, @tutor_fee, @promotion)
         return @context
       else
-        errors.add(:discount_price, "could not be caluclated. Make sure all necessary parameters are passed in.")
+        errors.add(:discount_price, "could not be calculated. Make sure all necessary parameters are passed in.")
       end
     end
 
