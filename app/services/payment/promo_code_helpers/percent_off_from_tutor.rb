@@ -1,5 +1,5 @@
 module PromoCodeHelpers
-  class ApplyPercentOffFromTutor
+  class PercentOffFromTutor
 
     attr_accessor :charge
 
@@ -14,12 +14,19 @@ module PromoCodeHelpers
     end
 
     def return_adjusted_fees
-      if find_discount_price_difference(@lowest_rate, @discount_multiplier, @transaction_fee)
-        update_charge(@charge, @amount, @price_difference, @promotion)
-      else
-        errors.add(:discount_price, "could not be caluclated. Make sure all necessary parameters are passed in.")
+      if !is_redemption_valid?(@promotion)
+        puts 'Promo code is invalid'
+        return
       end
+      find_discount_price_difference(@lowest_rate, @discount_multiplier, @transaction_fee)
+      update_charge(@charge, @amount, @price_difference, @promotion)
       @context
+    end
+
+    def is_redemption_valid?(promotion)
+      (promotion.redemption_count < promotion.redemption_limit) && 
+      (promotion.valid_from.to_date <= Date.today && Date.today <= promotion.valid_until.to_date ) ? 
+      true : false
     end
 
     def find_discount_price_difference(rate, discount_multiplier, transaction_fee)

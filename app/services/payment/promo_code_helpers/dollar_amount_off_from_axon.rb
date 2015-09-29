@@ -1,7 +1,7 @@
 module PromoCodeHelpers
-  class ApplyDollarAmountOffFromAxon
+  class DollarAmountOffFromAxon
 
-    attr_accessor :charge
+    attr_accessor :charge, :error
 
     def initialize(context)
       @context = context
@@ -14,15 +14,22 @@ module PromoCodeHelpers
     end
 
     def return_adjusted_fees
-      if update_charge(@charge, @amount, @price_difference, @tutor_fee, @promotion)
-        return @context
-      else
-        errors.add(:discount_price, "could not be calculated. Make sure all necessary parameters are passed in.")
+      if !is_redemption_valid?(@promotion)
+        puts 'Promo code is invalid'
+        return 
       end
+      update_charge(@charge, @amount, @price_difference, @tutor_fee, @promotion)
+      @context
+    end
+
+    def is_redemption_valid?(promotion)
+      (promotion.redemption_count < promotion.redemption_limit) && 
+      (promotion.valid_from.to_date <= Date.today && Date.today <= promotion.valid_until.to_date ) ? 
+      true : false
     end
 
     def update_charge(charge, amount, price_difference, tutor_fee, promotion)
-      new_amount = amount - (@promotion.amount * 100)
+      new_amount = amount - (promotion.amount * 100)
       new_axon_fee = new_amount - tutor_fee
       charge.update(
         amount: new_amount,

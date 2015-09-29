@@ -1,7 +1,7 @@
 module PromoCodeHelpers
   class FreeSessionFromAxon
 
-    attr_accessor :charge
+    attr_accessor :charge, :is_payment_required
 
     def initialize(context)
       @context = context
@@ -10,35 +10,44 @@ module PromoCodeHelpers
       @promotion = Promotion.find(context.promotion_id)
       @transaction_fee = ((@context.transaction_percentage.to_f / 100) + 1)
       @rates = context.rates
+      @is_payment_required = context.is_payment_required
     end
 
     def return_adjusted_fees
-      if update_charge
-        return @context
-      else
-        puts "Fees could not be calculated. Make sure all necessary parameters are passed in."
+      if !is_redemption_valid?(@promotion)
+        puts 'Promo code is invalid'
+        return
       end
+      update_charge(@context, @charge, @rates, @transaction_fee, @promotion)
+      @context
     end
 
-    def update_charge
-      if @rates.count == 1
+    def is_redemption_valid?(promotion)
+      (promotion.redemption_count < promotion.redemption_limit) && 
+      (promotion.valid_from.to_date <= Date.today && Date.today <= promotion.valid_until.to_date ) ? 
+      true : false
+    end
+
+    def update_charge(context, charge, rates, transaction_fee, promotion)
+      if rates.count == 1
         new_amount = 0
         new_axon_fee = 0 - @charge.tutor_fee
-        @charge.update(
+        charge.update(
           amount: new_amount,
           axon_fee: new_axon_fee,
           promotion_id: @promotion.id
         )
+        @is_payment_required = false
       else
-        lowest_rate = @rates.sort.first
-        total_price_of_lowest_rate = lowest_rate * @transaction_fee * 100
+        lowest_rate = rates.sort.first
+        total_price_of_lowest_rate = lowest_rate * transaction_fee * 100
         axon_fee_on_lowest_rate_price = total_price_of_lowest_rate - (lowest_rate * 100)
-        new_amount = @charge.amount - total_price_of_lowest_rate
-        new_axon_fee = new_amount - @charge.tutor_fee
-        @charge.update(
+        new_amount = charge.amount - total_price_of_lowest_rate
+        new_axon_fee = new_amount - charge.tutor_fee
+        charge.update(
           amount: new_amount,
           axon_fee: new_axon_fee,
-          promotion_id: @promotion.id
+          promotion_id: promotion.id
         )
       end
     end
