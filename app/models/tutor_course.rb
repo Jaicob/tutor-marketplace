@@ -19,6 +19,6 @@ class TutorCourse < ActiveRecord::Base
   validates :rate, presence: true
 
   def formatted_name
-    "#{self.course.subject.name} #{self.course.call_number}: #{self.course.friendly_name} at #{self.course.school.name}"
+    "#{self.course.subject.name} #{self.course.call_number}: #{self.course.friendly_name}"
   end
 end

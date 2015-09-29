@@ -11,8 +11,8 @@
 #  redemption_limit :integer
 #  redemption_count :integer          default(0)
 #  description      :text
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
+#  tutor_id         :integer
+#  course_id        :integer
 #
 
 FactoryGirl.define do
@@ -24,6 +24,8 @@ FactoryGirl.define do
     valid_until "2020-01-01"
     redemption_limit 100
     redemption_count 0
+    tutor
+    course_id 1
   end
 
 end

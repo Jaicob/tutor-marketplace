@@ -11,10 +11,11 @@ module PromoCodeHelpers
       @transaction_fee = ((@context.transaction_percentage.to_f / 100) + 1)
       @rates = context.rates
       @is_payment_required = context.is_payment_required
+      @tutor = context.tutor
     end
 
     def return_adjusted_fees
-      if is_redemption_valid?(@promotion)
+      if is_redemption_valid?(@promotion, @tutor)
         @promotion.redemption_count += 1
         @promotion.save
       else
@@ -25,9 +26,10 @@ module PromoCodeHelpers
       return @context
     end
 
-    def is_redemption_valid?(promotion)
+    def is_redemption_valid?(promotion, tutor)
       (promotion.redemption_count < promotion.redemption_limit) && 
-      (promotion.valid_from.to_date <= Date.today && Date.today <= promotion.valid_until.to_date ) ? 
+      (promotion.valid_from.to_date <= Date.today && Date.today <= promotion.valid_until.to_date ) &&
+      (promotion.tutor_id == tutor.id) ? 
       true : false
     end
 

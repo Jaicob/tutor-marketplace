@@ -1,7 +1,7 @@
 module PromoCodeHelpers
   class DollarAmountOffFromAxon
 
-    attr_accessor :charge, :error
+    attr_accessor :charge
 
     def initialize(context)
       @context = context
@@ -14,7 +14,7 @@ module PromoCodeHelpers
     end
 
     def return_adjusted_fees
-      if is_redemption_valid?(@promotion)
+      if is_redemption_valid?(@promotion, @tutor)
         @promotion.redemption_count += 1
         @promotion.save
       else
@@ -25,7 +25,7 @@ module PromoCodeHelpers
       return @context
     end
 
-    def is_redemption_valid?(promotion)
+    def is_redemption_valid?(promotion, tutor)
       (promotion.redemption_count < promotion.redemption_limit) && 
       (promotion.valid_from.to_date <= Date.today && Date.today <= promotion.valid_until.to_date ) ? 
       true : false

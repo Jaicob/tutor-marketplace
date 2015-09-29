@@ -140,7 +140,6 @@
 #                                                             PATCH    /admin/promotions/:id(.:format)                                       admin/promotions#update
 #                                                             PUT      /admin/promotions/:id(.:format)                                       admin/promotions#update
 #                                                             DELETE   /admin/promotions/:id(.:format)                                       admin/promotions#destroy
-#                                                  admin_home GET      /admin/home(.:format)                                                 admin/home#index
 #                               api_v1_school_subject_courses GET      /api/v1/schools/:school_id/subjects/:subject_id/courses(.:format)     api/v1/courses#index {:format=>:json}
 #                                      api_v1_school_subjects GET      /api/v1/schools/:school_id/subjects(.:format)                         api/v1/subjects#index {:format=>:json}
 #                                          api_v1_tutor_slots GET      /api/v1/tutors/:tutor_id/slots(.:format)                              api/v1/slots#index {:format=>:json}

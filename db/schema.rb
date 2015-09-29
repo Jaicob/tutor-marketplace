@@ -73,17 +73,19 @@ ActiveRecord::Schema.define(version: 20150921152603) do
   add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
 
   create_table "promotions", force: :cascade do |t|
-    t.string   "code"
-    t.integer  "category"
-    t.integer  "amount"
-    t.date     "valid_from"
-    t.date     "valid_until"
-    t.integer  "redemption_limit"
-    t.integer  "redemption_count", default: 0
-    t.text     "description"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.string  "code"
+    t.integer "category"
+    t.integer "amount"
+    t.date    "valid_from"
+    t.date    "valid_until"
+    t.integer "redemption_limit"
+    t.integer "redemption_count", default: 0
+    t.text    "description"
+    t.integer "tutor_id"
+    t.integer "course_id"
   end
+
+  add_index "promotions", ["tutor_id"], name: "index_promotions_on_tutor_id", using: :btree
 
   create_table "schools", force: :cascade do |t|
     t.string   "name"

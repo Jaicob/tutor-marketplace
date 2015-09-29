@@ -72,5 +72,15 @@ FactoryGirl.define do
       trait :at_UNC do
         association :user, factory: [:user, :UNC]
       end
+
+      trait :with_tutor_courses do 
+        after :create do |tutor|
+          course = create(:course)
+          tutor_course = create(:tutor_course, tutor: tutor, course: course)
+          puts "DID IT"
+          puts "TUTOR_COURSE = #{tutor_course}"
+          puts "Tutor_course_tutor = #{tutor_course.tutor.id}"
+        end
+      end
   end
 end

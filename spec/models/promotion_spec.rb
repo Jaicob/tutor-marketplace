@@ -11,8 +11,8 @@
 #  redemption_limit :integer
 #  redemption_count :integer          default(0)
 #  description      :text
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
+#  tutor_id         :integer
+#  course_id        :integer
 #
 
 require 'rails_helper'
