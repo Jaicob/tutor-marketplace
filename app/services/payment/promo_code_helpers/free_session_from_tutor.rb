@@ -14,12 +14,15 @@ module PromoCodeHelpers
     end
 
     def return_adjusted_fees
-      if !is_redemption_valid?(@promotion)
+      if is_redemption_valid?(@promotion)
+        @promotion.redemption_count += 1
+        @promotion.save
+      else
         puts 'Promo code is invalid'
-        return
+        return 
       end
       update_charge(@context, @charge, @rates, @transaction_fee, @promotion)
-      @context
+      return @context
     end
 
     def is_redemption_valid?(promotion)

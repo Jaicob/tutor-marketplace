@@ -1,6 +1,16 @@
 module PromoCodeHelpers
   class RepeatingDiscountFromTutor
 
+
+#  category         :integer    :repeating_percent_off_from_tutor / :repeating_dollar_amount_off_from_tutor
+#  amount           :integer    percent-off / dollar-amount
+#  valid_from       :date              
+#  valid_until      :date
+#  redemption_limit :integer    nil
+#  redemption_count :integer          default(0)
+#  description      :text
+
+
     attr_accessor :charge
 
     # def initialize(context)

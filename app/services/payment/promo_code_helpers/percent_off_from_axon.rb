@@ -15,16 +15,16 @@ module PromoCodeHelpers
     end
 
     def return_adjusted_fees
-      if !is_redemption_valid?(@promotion)
-        puts 'Promo code is invalid'
-        return
-      end
-      if find_discount_price_difference(@lowest_rate, @discount_multiplier, @transaction_fee)
-        update_charge(@charge, @amount, @tutor_fee, @price_difference, @promotion)
+      if is_redemption_valid?(@promotion)
+        @promotion.redemption_count += 1
+        @promotion.save
       else
-        puts "Discount price could not be caluclated. Make sure all necessary parameters are passed in."
+        puts 'Promo code is invalid'
+        return 
       end
-      @context
+      find_discount_price_difference(@lowest_rate, @discount_multiplier, @transaction_fee)
+      update_charge(@charge, @amount, @tutor_fee, @price_difference, @promotion)
+      return @context
     end
 
     def is_redemption_valid?(promotion)
