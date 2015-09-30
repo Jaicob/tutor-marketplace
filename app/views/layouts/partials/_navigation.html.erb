@@ -16,11 +16,20 @@
     <li class="menu-item has-dropdown">
       <input type="checkbox" id="dropdown-toggle" style="display:none">
       <label for="dropdown-toggle" class="dropdown-toggle">
-        Choose Your School
+        <% if current_user && current_user.school %>
+          <%= current_user.school.name %>
+        <% else %>
+          Choose Your School
+        <% end %>
       </label>
       <ul class="submenu">
         <% School.all.each do |school| %>
-          <li><a href="#"><%= school.name %></a></li>
+          <li>
+            <%= form_for @user do |f| %>
+              <%= f.hidden_field :school_id, value: school.id %>
+              <%= f.submit school.name %>
+            <% end %>
+          </li>
         <% end %>
       </ul>
     </li>

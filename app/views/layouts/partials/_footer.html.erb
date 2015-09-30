@@ -6,7 +6,7 @@
     <ul class="nav-footer">
       <li><%= link_to 'Home', root_path %></li>
       <li><%= link_to 'Find a Tutor',search_path %></li>
-      <li><%= link_to 'About', about_us_path %></li>
+      <li><%= link_to 'About', about_path %></li>
       <li><%= link_to 'FAQ', faqs_path %></li>
       <li><%= link_to 'Become a Tutor', become_a_tutor_path %></li>
       <li><%= link_to 'Contact', contact_path %></li>
@@ -14,19 +14,19 @@
     </ul>     
     <div class="footer-secondary-links">
       <ul>
-        <li><a href="javascript:void(0)">Terms and Conditions</a></li>
-        <li><a href="javascript:void(0)">Privacy Policy</a></li>
-      </ul>            
+        <li><%= link_to 'Terms and Conditions', terms_and_conditions_path %></li>
+        <li><%= link_to 'Privacy Policy', privacy_policy_path %></li>
+      </ul>
       <ul class="social-nav">
         <li>
-          <a href="javascript:void(0)">
+          <%= link_to('https://www.facebook.com/axontutors', target: '_blank') do %>
             <img src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/facebook-logo-circle.png" alt="Facebook">
-          </a>
+          <% end %>
         </li>
         <li>
-          <a href="javascript:void(0)">
+          <%= link_to('https://twitter.com/axontutors', target: '_blank') do %>
             <img src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/twitter-logo-circle.png" alt="Twitter">
-          </a>
+          <% end %>
         </li>
       </ul>     
     </div>
