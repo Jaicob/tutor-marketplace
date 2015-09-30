@@ -95,9 +95,7 @@ class Appointment < ActiveRecord::Base
   end
 
   def tutor_rate
-    if self.tutor.tutor_courses.count > 0
-      self.tutor.tutor_courses.find_by(course_id: self.course_id).rate
-    end
+    self.tutor.tutor_courses.find_by(course_id: self.course_id).rate
   end
 
 end

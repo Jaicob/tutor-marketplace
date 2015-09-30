@@ -1,11 +1,7 @@
 module PromoCodeHelpers
   class RepeatingDollarAmountOffFromTutor
 
-# Apply discount in similar fashion as non-repeating dollar_amount_off_from_tutor and percent_off_from_tutor promos, except:
-# -do not increment redemption_count
-# -validate that discount is only applied to appropriate course(s)
-
-    attr_accessor :charge, :appointments
+    attr_accessor :charge
 
     def initialize(context)
       @context = context
@@ -24,11 +20,11 @@ module PromoCodeHelpers
         if @eligible_appts.count > 0
           find_discount_price_difference(@promotion, @appointments, @eligible_appts, @rates, @transaction_fee)
         else
-          puts 'Promo code does not discount selected courses'
+          puts 'Promo code is invalid for selected courses.'
           return
         end
       else
-        puts 'Promo code is invalid'
+        puts 'Promo code is invalid. It has reached its redemption limit, expired, or only applies to a different tutor.' 
         return 
       end
       update_charge(@charge, @discount_amount, @transaction_fee, @promotion)

@@ -1,10 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'PromoCodeHelpers::RepeatingDollarAmountOffFromTutor' do
-  let(:course) { create(:course) }
   let(:second_course) { create(:second_course) }
-
-
 
   describe 'Methods in PromoCodeServices::RepeatingDollarAmountOffFromTutor' do
 
@@ -14,11 +11,10 @@ RSpec.describe 'PromoCodeHelpers::RepeatingDollarAmountOffFromTutor' do
       slot_id = @tutor.slots.create(start_time: "2015-09-01 10:00:00", duration: 21600).id
       @appointment = create(:appointment, slot_id: slot_id, course_id: course_id)
       @promotion = @tutor.promotions.create(code: '123', category: :repeating_dollar_amount_off_from_tutor, amount: 5, valid_from: Date.today, valid_until: Date.today + 30, redemption_limit: 5, redemption_count: 0, course_id: course_id)
-      tutor_course = create(:tutor_course, tutor_id: @tutor.id, course_id: course_id )
+      tutor_course = create(:tutor_course, tutor_id: @tutor.id, course_id: course_id, rate: 23)
     end
 
     it 'adjusts fees for a $5-off repeating-tutor-discount for one eligible appt' do 
-      @promotion.update(amount: 5)
       params = {
         tutor: @tutor,
         appointments: [@appointment],
@@ -43,7 +39,6 @@ RSpec.describe 'PromoCodeHelpers::RepeatingDollarAmountOffFromTutor' do
     end
 
     it 'adjusts fees for a $5-off repeating-tutor-discount for two eligible appts' do 
-      @promotion.update(amount: 5)
       new_slot_id = @tutor.slots.create(start_time: '2015-09-20 10:00:00', duration: 3600).id
       course_id = @promotion.course_id
       @appointment_two = create(:appointment, slot_id: new_slot_id, course_id: course_id, start_time: '2015-09-20 10:00:00')
@@ -71,7 +66,6 @@ RSpec.describe 'PromoCodeHelpers::RepeatingDollarAmountOffFromTutor' do
     end
 
     it 'does not adjust fees for a $5-off repeating-tutor-discount for a non-eligible appt' do 
-      @promotion.update(amount: 5)
       @appointment.update(course_id: second_course.id)
       params = {
         tutor: @tutor,
@@ -97,7 +91,6 @@ RSpec.describe 'PromoCodeHelpers::RepeatingDollarAmountOffFromTutor' do
     end
 
     it 'only adjust fees for eligible appts with a $5-off repeating-tutor-discount on a booking with both eligible and non-eligible appts' do 
-      @promotion.update(amount: 5)
       new_slot_id = @tutor.slots.create(start_time: '2015-09-20 10:00:00', duration: 3600).id
       course_id = @promotion.course_id
       @appointment_two = create(:appointment, slot_id: new_slot_id, course_id: second_course.id, start_time: '2015-09-20 10:00:00')
