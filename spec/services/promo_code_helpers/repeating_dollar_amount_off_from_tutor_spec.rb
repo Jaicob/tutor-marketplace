@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'PromoCodeHelpers::RepeatingDollarAmountOffFromTutor' do
   let(:course) { create(:course) }
+  let(:second_course) { create(:second_course) }
 
 
 
@@ -16,7 +17,7 @@ RSpec.describe 'PromoCodeHelpers::RepeatingDollarAmountOffFromTutor' do
       tutor_course = create(:tutor_course, tutor_id: @tutor.id, course_id: course_id )
     end
 
-    it 'correctly adjusts fees for a $5-off coupon issued by a Tutor' do 
+    it 'adjusts fees for a $5-off coupon issued by a Tutor for one eligible appt' do 
       @promotion.update(amount: 5)
       params = {
         tutor: @tutor,
@@ -39,6 +40,32 @@ RSpec.describe 'PromoCodeHelpers::RepeatingDollarAmountOffFromTutor' do
       expect(@context.charge.amount).to eq 2070
       expect(@context.charge.tutor_fee).to eq 1800
       expect(@context.charge.axon_fee).to eq 270
+    end
+
+    it 'does not adjust fees for a $5-off coupon issued by a Tutor for a non-eligible appt' do 
+      @promotion.update(amount: 5)
+      @appointment.update(course_id: second_course.id)
+      params = {
+        tutor: @tutor,
+        appointments: [@appointment],
+        customer_id: 1,
+        token: 1111111111,
+        rates: [23],
+        transaction_percentage: 15,
+        promotion_id: @promotion.id,
+        is_payment_required: true,
+        promotion_category: nil
+      }
+      context = CreateCharge.call(params)
+      @context = PromoCodeHelpers::RepeatingDollarAmountOffFromTutor.new(context)
+
+      expect(@context.charge.amount).to eq 2645
+      expect(@context.charge.tutor_fee).to eq 2300
+      expect(@context.charge.axon_fee).to eq 345
+      @context.return_adjusted_fees
+      expect(@context.charge.amount).to eq 2645
+      expect(@context.charge.tutor_fee).to eq 2300
+      expect(@context.charge.axon_fee).to eq 345
     end
 
     # it 'correctly adjusts fees for a $10-off coupon issued by a Tutor' do 

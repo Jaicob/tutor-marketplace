@@ -21,7 +21,12 @@ module PromoCodeHelpers
 
     def return_adjusted_fees
       if is_redemption_valid?(@promotion, @tutor)
-        find_discount_price_difference(@promotion, @appointments, @eligible_appts, @rates, @transaction_fee)
+        if @eligible_appts.count > 0
+          find_discount_price_difference(@promotion, @appointments, @eligible_appts, @rates, @transaction_fee)
+        else
+          puts 'Promo code does not discount selected courses'
+          return
+        end
       else
         puts 'Promo code is invalid'
         return 
