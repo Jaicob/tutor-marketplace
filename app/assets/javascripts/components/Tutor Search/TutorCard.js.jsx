@@ -1,28 +1,32 @@
 var TutorCard = React.createClass({
 	render: function(){
+    var search = ""
+    if (this.props.search && this.props.search.course != -1) {
+      var search = "?course=" + this.props.search.course;
+    }
 		var tutor = this.props.tutor;
     var profile_pic_url = "/public/uploads/" + tutor.profile_pic_url;
 		return (
-            <div className="card">
-              <div className="card-image">
-                <img src="http://placehold.it/200x200" alt="4x3 Image"></img>
-              </div>
-              <div className="card-header">
-                <h3 className="title">{tutor.name}</h3>
-              </div>
-              <div className="card-copy">
-                <ul className="tutor-qualifications">
-                  <li>{tutor.degree + ', ' + tutor.major + ' ' + tutor.graduation_year}</li>
-                  <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li>
-                  <li>Fuga, officiis sunt neque facilis culpa molestiae.</li>
-                  <li>Fuga, officiis sunt neque facilis culpa molestiae.</li>
-                </ul>
-                <a href="#" className="btn">Book Now</a>
-              </div>
-              <div className="cost">
-                <p>$25</p>
-              </div>
-            </div>
+      <div className="card">
+        <a href={"/tutors/" + tutor.id}>
+          <div className="card-image">
+            <img src={profile_pic_url} alt="Profile Picture"></img>
+          </div></a>
+        <div className="card-header">
+          <h3 className="title">{tutor.user.first_name + " " + tutor.user.last_name}</h3>
+        </div>
+        <div className="card-copy">
+          <ul className="tutor-qualifications">
+            <li>{tutor.degree + ', ' + tutor.major + ' ' + tutor.graduation_year}</li>
+            <li>{tutor.line_one}</li>
+            <li>{tutor.line_two}</li>
+          </ul>
+          <a href={"/tutors/" + tutor.id + search} className="btn">Book Now</a>
+        </div>
+        <div className="cost">
+          <p>${tutor.rate}</p>
+        </div>
+      </div>
 		);
 	}
 });
