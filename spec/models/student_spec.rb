@@ -8,6 +8,7 @@
 #  updated_at    :datetime         not null
 #  customer_id   :string
 #  last_4_digits :string
+#  card_brand    :string
 #
 
 require 'rails_helper'
