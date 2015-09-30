@@ -175,4 +175,8 @@ class Tutor < ActiveRecord::Base
     end
   end
 
+  def total_income
+    self.charges.map(&:tutor_fee).reduce(:+) || 0
+  end
+
 end
