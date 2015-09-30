@@ -66,5 +66,4 @@ source 'https://rubygems.org' do
   gem 'bower-rails', '~> 0.9.2'
   gem 'react-rails', '~> 1.0'
   gem 'sass-rails', '~> 5.0'
-  gem 'browserify-rails'
 end
