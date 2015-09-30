@@ -77,9 +77,6 @@ FactoryGirl.define do
         after :create do |tutor|
           course = create(:course)
           tutor_course = create(:tutor_course, tutor: tutor, course: course)
-          puts "DID IT"
-          puts "TUTOR_COURSE = #{tutor_course}"
-          puts "Tutor_course_tutor = #{tutor_course.tutor.id}"
         end
       end
   end

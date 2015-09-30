@@ -1,23 +1,26 @@
 require 'rails_helper'
 
 RSpec.describe 'PromoCodeHelpers::RepeatingDollarAmountOffFromTutor' do
-  let(:appointment) { create(:appointment) }
   let(:course) { create(:course) }
+
 
 
   describe 'Methods in PromoCodeServices::RepeatingDollarAmountOffFromTutor' do
 
     before :each do 
       @tutor = create(:tutor, :with_tutor_courses)
-      @promotion = @tutor.promotions.create(code: '123', category: :repeating_dollar_amount_off_from_tutor, amount: 5, valid_from: Date.today, valid_until: Date.today + 30, redemption_limit: 5, redemption_count: 0, course_id: course.id)
-      @tutor_course = create(:tutor_course, tutor_id: @tutor.id, course_id: appointment.course.id)
+      course_id = @tutor.courses.first.id
+      slot_id = @tutor.slots.create(start_time: "2015-09-01 10:00:00", duration: 21600).id
+      @appointment = create(:appointment, slot_id: slot_id, course_id: course_id)
+      @promotion = @tutor.promotions.create(code: '123', category: :repeating_dollar_amount_off_from_tutor, amount: 5, valid_from: Date.today, valid_until: Date.today + 30, redemption_limit: 5, redemption_count: 0, course_id: course_id)
+      tutor_course = create(:tutor_course, tutor_id: @tutor.id, course_id: course_id )
     end
 
     it 'correctly adjusts fees for a $5-off coupon issued by a Tutor' do 
       @promotion.update(amount: 5)
       params = {
         tutor: @tutor,
-        appointments: [appointment],
+        appointments: [@appointment],
         customer_id: 1,
         token: 1111111111,
         rates: [23],
@@ -28,9 +31,6 @@ RSpec.describe 'PromoCodeHelpers::RepeatingDollarAmountOffFromTutor' do
       }
       context = CreateCharge.call(params)
       @context = PromoCodeHelpers::RepeatingDollarAmountOffFromTutor.new(context)
-
-      # puts "context appts = #{context.appointments}"
-      # puts "@context appts = #{@context.appointments}"
 
       expect(@context.charge.amount).to eq 2645
       expect(@context.charge.tutor_fee).to eq 2300

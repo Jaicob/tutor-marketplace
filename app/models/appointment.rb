@@ -95,10 +95,7 @@ class Appointment < ActiveRecord::Base
   end
 
   def tutor_rate
-    puts "SELF = #{self}"
-    puts "self.tutor.id = #{self.tutor.id}"
-    puts "self.tutor.tutor_courses = #{self.tutor.tutor_courses.count}"
-    self.tutor.tutor_courses.find_by(course_id: self.course_id).rate
+    self.tutor.tutor_courses.first.rate
   end
 
 end

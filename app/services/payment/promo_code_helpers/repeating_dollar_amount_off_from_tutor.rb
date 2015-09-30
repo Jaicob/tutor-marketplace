@@ -16,20 +16,17 @@ module PromoCodeHelpers
       @rates = context.rates
       @tutor = context.tutor
       @appointments = context.appointments
-      # puts "COURSE ID ON PROMOTION? = #{@promotion.methods.include?(:course_id)}"
       @eligible_appts = @appointments.select{|appt| appt.course_id == @promotion.course_id}
-      puts "@eligible_appts!!!!!!!! = #{@eligible_appts}"
-      # @eligible_appts = @appointments.select{|appt| appt.course_id == @promotion.course_id}
     end
 
     def return_adjusted_fees
       if is_redemption_valid?(@promotion, @tutor)
-        find_discount_price_difference(@promotion, @appointments, @eligible_appts, @rates)
+        find_discount_price_difference(@promotion, @appointments, @eligible_appts, @rates, @transaction_fee)
       else
         puts 'Promo code is invalid'
         return 
       end
-      update_charge(@charge, @amount, @rates, @transaction_fee, @promotion)
+      update_charge(@charge, @discount_amount, @transaction_fee, @promotion)
       return @context
     end
 
@@ -40,13 +37,9 @@ module PromoCodeHelpers
       true : false
     end
 
-    def find_discount_price_difference(promotion, appointments, eligible_appts, rates)
-      # puts "@eligible_appts!!!!!!!!!!!!! = #{@eligible_appts}"
+    def find_discount_price_difference(promotion, appointments, eligible_appts, rates, transaction_fee)
       rates_total = rates.map(&:to_i).reduce(:+)
       regular_rate_for_eligible_appts = @eligible_appts.map(&:tutor_rate).reduce(:+)
-      # puts "appointments = #{appointments}"
-      puts "eligible_apptsXxXXXXXX = #{eligible_appts}"
-      # puts "regular_rate_for_eligible_appts = #{regular_rate_for_eligible_appts}"
       discount_rate_for_eligible_appts = regular_rate_for_eligible_appts - (eligible_appts.count * promotion.amount.to_i)
       rates_total_with_discount = rates_total - regular_rate_for_eligible_appts + discount_rate_for_eligible_appts
       @discount_amount = rates_total_with_discount * transaction_fee * 100
