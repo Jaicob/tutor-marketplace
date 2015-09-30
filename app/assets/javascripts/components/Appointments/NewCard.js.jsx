@@ -1,12 +1,11 @@
 var NewCard = React.createClass({
 
-  getInitialState: function() {
-
-  },
-
   render: function() {
     return (
-      <div></div>
+      <div>
+        <h3>New Card</h3>
+        {this.props.currentStudent}
+      </div>
     );
   }
 });

@@ -2,7 +2,7 @@ var DefaultCard = React.createClass({
 
   render: function() {
     return (
-      <div></div>
+      <div>Default Card</div>
     );
   }
 });
