@@ -2,8 +2,12 @@ var PaymentForm = React.createClass({
 
   getInitialState: function() {
     return {
-      student: this.getStudent(),
+      student: {}
     };
+  },
+
+  componentDidMount: function() {
+    this.getStudent();
   },
 
   getStudent: function() {

@@ -4,7 +4,7 @@ var NewCard = React.createClass({
     return (
       <div>
         <h3>New Card</h3>
-        {this.props.currentStudent}
+        {this.props.currentStudent.student.user.full_name}
       </div>
     );
   }
