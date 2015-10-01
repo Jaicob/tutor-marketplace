@@ -16,20 +16,17 @@
     <li class="menu-item has-dropdown">
       <input type="checkbox" id="dropdown-toggle" style="display:none">
       <label for="dropdown-toggle" class="dropdown-toggle">
-        <% if current_user && current_user.school %>
-          <%= current_user.school.name %>
+        <% if @school %>
+          <%= @school.name %>
         <% else %>
           Choose Your School
         <% end %>
       </label>
       <ul class="submenu">
         <% School.all.each do |school| %>
-          <li>
-            <%= form_for @user do |f| %>
-              <%= f.hidden_field :school_id, value: school.id %>
-              <%= f.submit school.name %>
-            <% end %>
-          </li>
+          <%= link_to(set_school_path(school_id: school.id), method: :post)  do %>
+            <li><%= school.name %></li>
+          <% end %>
         <% end %>
       </ul>
     </li>
@@ -41,3 +38,4 @@
     <%= render 'layouts/partials/navigation_links' %>
   </ul>
 </nav>
+

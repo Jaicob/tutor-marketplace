@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   before_filter :configure_permitted_parameters, if: :devise_controller?
+  before_action :set_school_selection
 
   protected
 
@@ -69,6 +70,14 @@ class ApplicationController < ActionController::Base
       # redirects to root for signed-in users
       if current_user.role == 'student' || current_user.role == 'tutor'
         redirect_to dashboard_home_user_path(current_user)
+      end
+    end
+
+    def set_school_selection
+      if current_user
+        @school = current_user.school
+      else
+        @school = School.find(cookies[:school_id])
       end
     end
 

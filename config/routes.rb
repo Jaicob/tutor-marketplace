@@ -163,6 +163,8 @@ Rails.application.routes.draw do
   get '/contact'            => 'single_views#contact'
   get '/privacy-policy'     => 'single_views#privacy_policy'
   get '/terms-and-conditions' => 'single_views#terms_and_conditions'
+  
+  post '/set-school'         => 'cookies#set_school_id_cookie'
 
   devise_for :users, controllers: { registrations: "tutor_registration" }
 

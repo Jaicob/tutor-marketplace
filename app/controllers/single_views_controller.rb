@@ -31,5 +31,5 @@ class SingleViewsController < ApplicationController
 
   def privacy_policy
   end
-
+  
 end
