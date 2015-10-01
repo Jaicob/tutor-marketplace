@@ -2,7 +2,10 @@ var PaymentForm = React.createClass({
 
   getInitialState: function() {
     return {
-      student: {}
+      student: {
+        card: {card: ""},
+        user: {full_name: ""}
+      }
     };
   },
 
@@ -13,14 +16,15 @@ var PaymentForm = React.createClass({
   getStudent: function() {
     var endpoint = API.endpoints.students();
 
-    var request = $.getJSON(endpoint);
-    request.success(function(data){
-      this.setState({ student: data });
-    }.bind(this));
+    var request = $.get(endpoint);
+    if (this.isMounted()) {
+      request.success(function(data){
+        this.setState({ student: data });
+      }.bind(this));
+    }
   },
 
   render: function() {
-    console.log(this.state.student);
     return (
       <div id="payment-form">
         <DefaultCard currentStudent={this.state.student} />
