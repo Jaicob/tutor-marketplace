@@ -8,7 +8,9 @@
       <li><%= link_to 'Find a Tutor',search_path %></li>
       <li><%= link_to 'About', about_path %></li>
       <li><%= link_to 'FAQ', faqs_path %></li>
-      <li><%= link_to 'Become a Tutor', become_a_tutor_path %></li>
+      <% if !current_user %>
+        <li><%= link_to 'Become a Tutor', become_a_tutor_path %></li>
+      <% end %>
       <li><%= link_to 'Contact', contact_path %></li>
       <li><%= link_to 'Partners', partners_path %></li>
     </ul>     

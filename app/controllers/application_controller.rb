@@ -73,11 +73,14 @@ class ApplicationController < ActionController::Base
       end
     end
 
+    # Before_action to set school selection
     def set_school_selection
       if current_user
         @school = current_user.school
-      else
+      elsif cookies[:school_id]
         @school = School.find(cookies[:school_id])
+      else
+        @school = nil
       end
     end
 
