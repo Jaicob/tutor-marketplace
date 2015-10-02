@@ -49,9 +49,6 @@ class Tutor < ActiveRecord::Base
   # Dimensions for cropping profile pics
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
 
-  validates :extra_info, presence: true
-  validates :phone_number, presence: true
-
   after_create :change_user_role_to_tutor
   after_commit :update_application_status
 
@@ -174,6 +171,10 @@ class Tutor < ActiveRecord::Base
     else
       @appointments = self.appointments_with_times_only_for_public_scheduler
     end
+  end
+
+  def total_income
+    self.charges.map(&:tutor_fee).reduce(:+) || 0
   end
 
 end

@@ -21,4 +21,9 @@ class TutorCourse < ActiveRecord::Base
   def formatted_name
     "#{self.course.subject.name} #{self.course.call_number}: #{self.course.friendly_name}"
   end
+
+  def full_price
+    transaction_fee = ((self.course.school.transaction_percentage / 100) + 1)
+    full_price = (transaction_fee * self.rate).round(2)
+  end
 end

@@ -7,14 +7,14 @@ class UsersController < ApplicationController
       redirect_to dashboard_settings_account_settings_user_path(current_user)
     else
       flash[:notice] = "There was an error updating your settings."
-      redirect to  dashboard_settings_account_settings_user_path(current_user)
+      redirect_to  dashboard_settings_account_settings_user_path(current_user)
     end
   end
 
   private
 
     def user_params
-      params.require(:user).permit(:email, :slug, :first_name, :last_name)
+      params.require(:user).permit(:email, :slug, :first_name, :last_name, :school_id)
     end
 
 end

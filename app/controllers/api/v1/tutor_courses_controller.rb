@@ -12,5 +12,4 @@ class API::V1::TutorCoursesController < API::V1::Defaults
       @tutor = Tutor.find(params[:tutor_id])
     end
 
-
 end
