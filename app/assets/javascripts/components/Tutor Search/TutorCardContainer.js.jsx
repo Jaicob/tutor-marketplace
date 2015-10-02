@@ -5,7 +5,7 @@ var TutorCardContainer = React.createClass({
 	componentWillReceiveProps: function (nextProps) {
 		this.setState({ loaded: false });
 
-		var endpoint = API.endpoints.tutors({
+		var endpoint = API.endpoints.tutor.all({
 			school_id: nextProps["school"],
 			course_id: nextProps["course"]
 		});

@@ -8,7 +8,7 @@ var TutorCard = React.createClass({
     var profile_pic_url = "/public/uploads/" + tutor.profile_pic_url;
 		return (
       <div className="card">
-        <a href={"/tutors/" + tutor.id}>
+        <a href={"/tutors/" + tutor.user.slug}>
           <div className="card-image">
             <img src={profile_pic_url} alt="Profile Picture"></img>
           </div></a>
@@ -18,10 +18,9 @@ var TutorCard = React.createClass({
         <div className="card-copy">
           <ul className="tutor-qualifications">
             <li>{tutor.degree + ', ' + tutor.major + ' ' + tutor.graduation_year}</li>
-            <li>{tutor.line_one}</li>
-            <li>{tutor.line_two}</li>
+            <li>{tutor.extra_info}</li>
           </ul>
-          <a href={"/tutors/" + tutor.id + search} className="btn">Book Now</a>
+          <a href={"/tutors/" + tutor.user.slug + search} className="btn">Book Now</a>
         </div>
         <div className="cost">
           <p>${tutor.rate}</p>
