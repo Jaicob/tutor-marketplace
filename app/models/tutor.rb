@@ -178,16 +178,14 @@ class Tutor < ActiveRecord::Base
   end
 
   def course_list
-    course_list = []
-    self.tutor_courses.each do |tc|
+    self.tutor_courses.map do |tc|
       tutor_course_info = {}
       tutor_course_info[:id] = tc.id
       tutor_course_info[:course_id] = tc.course.id 
       tutor_course_info[:course_name] = tc.course.friendly_name
       tutor_course_info[:rate] = tc.rate
-      course_list << tutor_course_info
+      return tutor_course_info
     end
-    course_list
   end
 
 end
