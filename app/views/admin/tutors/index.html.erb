@@ -1,19 +1,39 @@
-<header>
-  <div class="row">
-    <div class="medium-3 columns">
-      <h3>Tutors</h3>
-    </div>
+<section class="secondary-content main" role="main">
+    <div class="wrapper">
+
+<div class="g g-3up">
+  <div class="gi">
+    <h3>Tutors</h3>
+  </div>
+  <div class="gi">
+  </div>
+  <div class="gi">
     <% if Tutor.applications_awaiting_approval(current_user).count > 0 %>
-      <div class="medium-4 columns">
-        <%= search_form_for @q, url: search_admin_tutors_path, html: { method: :post } do |f| %> 
-          <%= f.hidden_field :active_status_eq, value: '0' %>
-          <%= f.hidden_field :application_status_eq, value: '1' %>
-          <%= f.submit "Applications Awaiting Approval: #{Tutor.applications_awaiting_approval(current_user).count}", class: 'button radius alert small expand' %>
-        <% end %>
-      </div>
+      <%= search_form_for @q, url: search_admin_tutors_path, html: { method: :post } do |f| %> 
+        <%= f.hidden_field :active_status_eq, value: '0' %>
+        <%= f.hidden_field :application_status_eq, value: '1' %>
+        <%= f.submit "Applications Awaiting Approval: #{Tutor.applications_awaiting_approval(current_user).count}", class: 'button radius alert small expand' %>
+      <% end %>
     <% end %>
   </div>
-</header>
+</div>
+
+<div class="g g-3up">
+  <%= search_form_for @q, url: search_admin_tutors_path, html: { method: :post } do |f| %>
+    <div class="gi">
+      <%= f.label :id_eq, 'ID' %>
+      <%= f.search_field :id_eq %>
+    </div>
+    <div class="gi">
+      <%= f.label :user_first_name_or_user_last_name_matches, 'Name' %>
+      <%= f.search_field :user_first_name_or_user_last_name_matches %>
+    </div>
+    <div class="gi">
+      <%= f.label :user_email_matches, 'Email' %>
+      <%= f.search_field :user_email_matches %>
+    </div>
+  </div>
+<% end %>
 
 <div class="row">
   <div class="medium-12 columns">
@@ -32,9 +52,6 @@
         </div>
         
         <div class="medium-4 columns">   
-          <%= f.label :user_email_matches, 'Email' %>
-          <%= f.search_field :user_email_matches %>
-        </div>
       </div>
 
       <div class="row">
@@ -139,4 +156,7 @@
       </tbody>
     </table>
   </div>
+</div>
+
+</section>
 </div>

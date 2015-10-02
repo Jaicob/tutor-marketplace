@@ -74,7 +74,6 @@ User.all.each do |user|
     extra_info: Faker::Lorem.sentence,
     graduation_year: '2018',
     phone_number: Faker::Number.number(10),
-    transcript: File.new(File.join(Rails.root, 'app/assets/images/file-icon.png'))
     )
 end
 
