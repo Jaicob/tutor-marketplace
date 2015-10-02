@@ -94,4 +94,8 @@ class Appointment < ActiveRecord::Base
     end
   end
 
+  def tutor_rate
+    self.tutor.tutor_courses.find_by(course_id: self.course_id).rate
+  end
+
 end

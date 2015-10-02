@@ -14,7 +14,7 @@ FactoryGirl.define do
   factory :tutor_course do
     tutor
     course
-    rate   30
+    rate   23
   end
 
 end

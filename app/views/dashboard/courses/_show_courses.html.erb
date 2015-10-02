@@ -1,7 +1,6 @@
 <table>
   <thead>
     <tr>
-      <th width="400">School</th>
       <th width="150">Subject</th>
       <th width="150">Call Number</th>
       <th width="400">Course Name</th>
@@ -12,11 +11,11 @@
   <tbody>
     <% @tutor.tutor_courses.each do |tutor_course| %>
     <tr>
-      <td><%= tutor_course.course.school.name %></td>
       <td><%= tutor_course.course.subject.name %></td>
       <td><%= tutor_course.course.call_number %></td>
       <td><%= tutor_course.course.friendly_name %></td>
       <td>$<%= tutor_course.rate %></td>
+      <td>$<%= tutor_course.full_price %></td>
       <td><a href="#" data-reveal-id="editTutorCourseRate"><i class="fi-pencil"></a></td>
       <td><a href="#" data-reveal-id="confirmDeleteTutorCourse"><i class="fi-trash"></a></td>
     </tr>
