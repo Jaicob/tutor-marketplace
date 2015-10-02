@@ -63,7 +63,7 @@ class ApplicationController < ActionController::Base
     # Before_action for admin-area
     def authorized_for_admin_area?
       # redirects to root for non-signed in users/visitors
-      if !current_user 
+      if !current_user
         redirect_to root_path
         return
       end
@@ -76,8 +76,10 @@ class ApplicationController < ActionController::Base
     def set_school_selection
       if current_user
         @school = current_user.school
-      else
+      elsif cookies[:school_id]
         @school = School.find(cookies[:school_id])
+      else
+        @school = nil
       end
     end
 

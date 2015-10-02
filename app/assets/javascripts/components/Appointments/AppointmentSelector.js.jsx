@@ -93,8 +93,16 @@ var AppointmentSelector = React.createClass({
                     <p>Selected Class will show here.</p>
                   </div>
                   <div className="column submit">
-                    { this.canGoBack() ? <a className="btn" onClick={this.handleBackStep}><span className="fi-arrow-left"></span> Go back</a> : ""}
-                    { this.canGoForward() ? <a className="btn" onClick={this.handleNextStep}>Next <span className="fi-arrow-right"></span></a> : ""}
+                    { this.canGoBack() &&
+                    <a className="btn" onClick={this.handleBackStep}>
+                      <span className="fi-arrow-left"></span> Go back
+                    </a>
+                    }
+                    { this.canGoForward() &&
+                    <a className="btn" onClick={this.handleNextStep}>
+                      Next <span className="fi-arrow-right"></span>
+                    </a>
+                    }
                   </div>
                 </footer>
           </div>

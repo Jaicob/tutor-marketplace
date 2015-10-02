@@ -31,7 +31,7 @@ var SubjectSelector = React.createClass({
       this.setState({
         availableSubjects: data
       });
-    });
+    }.bind(this));
   },
   handleClick: function (subject) {
     newSubject = this.state.availableSubjects.filter(
