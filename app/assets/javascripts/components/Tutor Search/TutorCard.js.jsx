@@ -13,25 +13,19 @@ var TutorCard = React.createClass({
             <img src={profile_pic_url} alt="Profile Picture"></img>
           </div>
         </a>
-        <a href={"/tutors/" + tutor.user.slug}>
-          <div className="card-header">
-            <h3 className="title">{tutor.user.first_name + " " + tutor.user.last_name}</h3>
-          </div>
-        </a>
-        <div className="card-copy">
-          <a href={"/tutors/" + tutor.user.slug}>
-            <ul className="tutor-qualifications">
-              <li>{tutor.degree + ', ' + tutor.major + ' ' + tutor.graduation_year}</li>
-              <li>{tutor.extra_info}</li>
-            </ul>
-          </a>
-          <a href={"/tutors/" + tutor.user.slug + search} className="btn">Book Now</a>
+        <div className="card-header">
+          <h3 className="title">{tutor.user.first_name + " " + tutor.user.last_name}</h3>
         </div>
-        <a href={"/tutors/" + tutor.user.slug}>
-          <div className="cost">
-            <p>${tutor.rate}</p>
-          </div>
-        </a>
+        <div className="card-copy">
+          <ul className="tutor-qualifications">
+            <li>{tutor.degree + ', ' + tutor.major + ' ' + tutor.graduation_year}</li>
+            <li>{tutor.extra_info}</li>
+          </ul>
+          <a href={"/tutors/" + tutor.user.slug + search + "#book"} className="btn">Book Now</a>
+        </div>
+        <div className="cost">
+          <p>${tutor.rate}</p>
+        </div>
       </div>
 		);
 	}

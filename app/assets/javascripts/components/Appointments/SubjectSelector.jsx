@@ -28,16 +28,22 @@ var SubjectSelector = React.createClass({
     });
 
     $.getJSON(endpoint, function (data) {
-      this.setState({
-        availableSubjects: data
-      });
-    }.bind(this));
+        this.setState({
+          availableSubjects: data
+        });
+
+        var passedInSubject = this.state.availableSubjects.find(
+          (subject) => subject.course_id == getSearchQueryVariable("course")
+        );
+        if (passedInSubject) { this.props.handleSubject(passedInSubject); }
+      }.bind(this)
+    );
   },
   handleClick: function (subject) {
-    newSubject = this.state.availableSubjects.filter(
+    newSubject = this.state.availableSubjects.find(
       (potentialSubject) => potentialSubject.id == subject.target.value
-    )[0]
-    this.props.handleSubject(newSubject)
+    );
+    this.props.handleSubject(newSubject);
   },
   render: function () {
     return (
@@ -48,9 +54,7 @@ var SubjectSelector = React.createClass({
             <optgroup label="Available Courses">
               {
                 this.state.availableSubjects.map(function(subject){
-                  return <Subject subject={subject}
-                                  selectedSubject={this.props.selectedSubject}
-                                  />
+                  return <Subject subject={subject} selectedSubject={this.props.selectedSubject} />
                 }.bind(this))
               }
             </optgroup>
