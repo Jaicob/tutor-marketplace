@@ -5,8 +5,12 @@ var AppointmentSelector = React.createClass({
           selectedSubject: this.props.subject || {},
           disabledSlots: [],
           currentStep: 1,
-          forceFetch: false
+          forceFetch: false,
+          student: {}
       };
+  },
+  componentDidMount: function() {
+    this.fetchStudent();
   },
   handleSubject: function (newSubject) {
     this.setState({ selectedSubject: newSubject });
@@ -51,6 +55,13 @@ var AppointmentSelector = React.createClass({
       case 1: return this.state.selectedSlots.length > 0
       default: return true
     }
+  fetchStudent: function () {
+    var endpoint = API.endpoints.students();
+    $.getJSON(endpoint, function (data) {
+      this.setState({
+        student: data
+      });
+    }.bind(this));
   },
   renderSubjectSelector: function () {
     if (this.state.currentStep == 1) {
@@ -70,7 +81,7 @@ var AppointmentSelector = React.createClass({
                                    handleDisabledSlots={this.handleDisabledSlots}
                                    forceFetch={this.state.forceFetch}
                                    />
-      case 2: return <PaymentForm {...this.props} />
+      case 2: return <PaymentForm {...this.props} currentStudent={this.state.student} />
       case 3: return <ConfirmationScreen {...this.props} />
       default: break
     };
