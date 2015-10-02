@@ -50,12 +50,6 @@ module Processor
     end
 
     def reconcile_coupon_difference(charge)
-    # def reconcile_coupon_difference(tutor_account_id, amount, promotion_description)
-      # TODO: Stripe Transfer to send money owed to a tutor following a booking in which a student uses an Axon promotion code and discounted rate does not cover the tutor's hourly fee. This money comes from Axon's account and goes to the tutor's account.
-      puts "AMMMMOOOUNNNT = #{charge.amount}"
-      puts "Tutor Acct = #{charge.tutor.acct_id}"
-      promotion = Promotion.find(charge.promotion_id)
-      puts "PROMO DESC = #{promotion.description}"
       transfer = ::Stripe::Transfer.create(
         amount: charge.amount,
         currency: 'usd',

@@ -10,12 +10,12 @@ class CreateCharge
   #            promotion_id: promotion.id (or nil)
   def call
     axon_fee_multiplier = ((context.transaction_percentage.to_f / 100) + 1)
-    tutor_fee = []
+    tutor_rates = []
     context.rates.each do |rate|
       session_amount = (rate * 100)
-      tutor_fee << session_amount
+      tutor_rates << session_amount
     end
-    tutor_fee = tutor_fee.map(&:to_i).reduce(:+)
+    tutor_fee = tutor_rates.map(&:to_i).reduce(:+)
     amount = tutor_fee * axon_fee_multiplier
     axon_fee = amount - tutor_fee
     charge = context.tutor.charges.create(token: context.token, customer_id: context.customer_id,

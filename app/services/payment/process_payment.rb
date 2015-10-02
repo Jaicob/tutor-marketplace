@@ -2,18 +2,17 @@ class ProcessPayment
   include Interactor::Organizer
 
   organize CreateCharge, ApplyPromoCode, SendPayment
-  # , SendEmails
+  # TODO: add SendEmails interactor
 
 end
 
-
-params = {
-  tutor: Tutor.first,
-  appointments: [Appointment.first],
-  customer_id: 1,
-  token: 789867877868,
-  rates: [23],
-  transaction_percentage: 15.0,
-  promotion_id: 1,
-  is_payment_required: true,
-}
+# params = {
+#   tutor: Tutor.first,
+#   appointments: [Appointment.first],
+#   customer_id: 1,
+#   token: 789867877868,
+#   rates: [23],
+#   transaction_percentage: 15.0,
+#   promotion_id: 1,
+#   is_payment_required: true,
+# }
