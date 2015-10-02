@@ -2,10 +2,7 @@ var PaymentForm = React.createClass({
 
   getInitialState: function() {
     return {
-      student: {
-        card: {card: ""},
-        user: {full_name: ""}
-      }
+      student: {}
     };
   },
 
@@ -15,13 +12,11 @@ var PaymentForm = React.createClass({
 
   getStudent: function() {
     var endpoint = API.endpoints.students();
-
     var request = $.get(endpoint);
-    if (this.isMounted()) {
-      request.success(function(data){
-        this.setState({ student: data });
-      }.bind(this));
-    }
+    var callback = function(data){
+      this.setState({ student: data });
+    }.bind(this)
+    request.success(callback);
   },
 
   render: function() {
