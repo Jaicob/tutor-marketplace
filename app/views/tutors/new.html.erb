@@ -14,10 +14,10 @@
             <p>Name</p>
             <div class="row">
               <div class="medium-6 small-12 columns">
-                <%= f.text_field :first_name, placeholder: 'First Name' %>
+                <%= f.text_field :first_name, placeholder: 'First Name', required: true  %>
               </div>
               <div class="medium-6 small-12 columns">
-                <%= f.text_field :last_name, placeholder: 'Last Name' %>
+                <%= f.text_field :last_name, placeholder: 'Last Name', required: true %>
               </div>
             </div>
           </div>
@@ -68,7 +68,7 @@
           <div class="medium-12 columns">
             <p>Qualifications, experiences, goals, fun facts etc.</p>
             <%= f.fields_for :tutor do |tt| %>
-              <%= tt.text_field :extra_info, :required => true %>
+              <%= tt.text_field :extra_info, required: true %>
             <% end %>
           </div>
         </div>
@@ -78,10 +78,10 @@
         <div class="row">
           <div class="medium-12 columns">
             <h5>Account Information</h5>
-            <%= f.email_field :email, placeholder: 'Email' %>
-            <%= f.password_field :password, placeholder: 'Password' %>
+            <%= f.email_field :email, placeholder: 'Email', required: true %>
+            <%= f.password_field :password, placeholder: 'Password', required: true  %>
             <%= f.fields_for :tutor do |tt| %>
-              <%= tt.text_field :phone_number, placeholder: 'Phone Number' %>
+              <%= tt.text_field :phone_number, placeholder: 'Phone Number', required: true %>
             <% end %>
           </div>
         </div>

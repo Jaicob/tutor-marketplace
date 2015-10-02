@@ -48,9 +48,6 @@ class Tutor < ActiveRecord::Base
   # Dimensions for cropping profile pics
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
 
-  validates :extra_info, presence: true
-  validates :phone_number, presence: true
-
   after_create :change_user_role_to_tutor
   after_commit :update_application_status
 

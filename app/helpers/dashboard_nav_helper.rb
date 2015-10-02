@@ -25,7 +25,7 @@ module DashboardNavHelper
     all_dashboard_links = {
       tutor: {
         # name seen on the dashboard nav => where it links to
-        'Home' => dashboard_link,
+        'Home'      => dashboard_link,
         'Schedule'  => schedule_link,
         'Courses'   => courses_link,
         'Profile'   => profile_link,
@@ -33,9 +33,9 @@ module DashboardNavHelper
       },
 
       student: {
-        'Dashboard'      => dashboard_link,
-        'Settings'       => settings_link,
-        'Find a Tutor'   => tutor_search_link,
+        'Home'          => dashboard_link,
+        'Settings'      => settings_link,
+        'Find a Tutor'  => tutor_search_link,
       },
 
       admin: {
