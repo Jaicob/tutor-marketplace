@@ -55,6 +55,7 @@ var AppointmentSelector = React.createClass({
       case 1: return this.state.selectedSlots.length > 0
       default: return true
     }
+  },
   fetchStudent: function () {
     var endpoint = API.endpoints.students();
     $.getJSON(endpoint, function (data) {
@@ -83,6 +84,7 @@ var AppointmentSelector = React.createClass({
                                    />
       case 2: return <PaymentForm {...this.props} currentStudent={this.state.student} />
       case 3: return <ConfirmationScreen {...this.props} />
+      case 4: return <Summary {...this.props} />
       default: break
     };
   },
