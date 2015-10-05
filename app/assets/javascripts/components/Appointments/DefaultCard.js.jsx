@@ -1,9 +1,5 @@
 var DefaultCard = React.createClass({
 
-  // shouldComponentUpdate: function() {
-  //   return this.props.currentStudent !== {};
-  // },
-
   render: function() {
     return (
       <div>

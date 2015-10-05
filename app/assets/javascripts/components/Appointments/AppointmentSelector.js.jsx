@@ -6,7 +6,8 @@ var AppointmentSelector = React.createClass({
           disabledSlots: [],
           currentStep: 1,
           forceFetch: false,
-          student: {}
+          student: {},
+          token: ""
       };
   },
   componentDidMount: function() {
@@ -64,6 +65,9 @@ var AppointmentSelector = React.createClass({
       });
     }.bind(this));
   },
+  handleCard: function(token) {
+    this.setState({token: token})
+  },
   renderSubjectSelector: function () {
     if (this.state.currentStep == 1) {
       return <SubjectSelector tutor={this.props.tutor}
@@ -82,7 +86,7 @@ var AppointmentSelector = React.createClass({
                                    handleDisabledSlots={this.handleDisabledSlots}
                                    forceFetch={this.state.forceFetch}
                                    />
-      case 2: return <PaymentForm {...this.props} currentStudent={this.state.student} />
+      case 2: return <PaymentForm {...this.props} currentStudent={this.state.student} onChange={this.handleCard} />
       case 3: return <ConfirmationScreen {...this.props} />
       case 4: return <Summary {...this.props} />
       default: break

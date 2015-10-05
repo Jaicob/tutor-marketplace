@@ -3,13 +3,16 @@ class API::V1::PaymentsController < API::V1::Defaults
 
   def current_student
     respond_with(@student)
-    puts @student.to_json
   end
 
   private
 
   def set_student
-    @student = current_user.student
+    if current_user
+      @student = current_user.student
+    else
+      @student = Student.new
+    end
   end
 
 end

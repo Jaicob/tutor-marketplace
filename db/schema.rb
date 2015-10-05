@@ -34,13 +34,12 @@ ActiveRecord::Schema.define(version: 20150930154059) do
 
   create_table "charges", force: :cascade do |t|
     t.integer  "amount"
-    t.integer  "axon_fee"
-    t.integer  "tutor_fee"
+    t.integer  "transaction_fee"
     t.string   "customer_id"
     t.integer  "tutor_id"
     t.string   "token"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.integer  "promotion_id"
   end
 
