@@ -1,7 +1,7 @@
 class Dashboard::SettingsController < DashboardController
 
   def account_settings
-    # User's first_name, last_name and email
+    # User's first_name, last_name, email and school
   end
 
   def appointment_history

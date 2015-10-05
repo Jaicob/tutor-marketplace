@@ -35,6 +35,7 @@ class Tutor < ActiveRecord::Base
   has_many :slots, dependent: :destroy
   has_many :appointments, through: :slots, dependent: :destroy
   has_many :charges, dependent: :destroy
+  has_many :promotions
 
   delegate :school, :first_name, :last_name, :full_name, :sign_in_ip, :email, :password, to: :user
 
@@ -47,9 +48,6 @@ class Tutor < ActiveRecord::Base
 
   # Dimensions for cropping profile pics
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
-
-  validates :extra_info, presence: true
-  validates :phone_number, presence: true
 
   after_create :change_user_role_to_tutor
   after_commit :update_application_status
@@ -177,6 +175,17 @@ class Tutor < ActiveRecord::Base
 
   def total_income
     self.charges.map(&:tutor_fee).reduce(:+) || 0
+  end
+
+  def course_list
+    self.tutor_courses.map do |tc|
+      tutor_course_info = {}
+      tutor_course_info[:id] = tc.id
+      tutor_course_info[:course_id] = tc.course.id 
+      tutor_course_info[:course_name] = tc.course.friendly_name
+      tutor_course_info[:rate] = tc.rate
+      return tutor_course_info
+    end
   end
 
 end

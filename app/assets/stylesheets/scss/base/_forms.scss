@@ -1,4 +1,4 @@
-fieldset {
+fieldset:not(.sweet-alert > fieldset) {
   background: lighten($base-border-color, 10);
   border: $base-border;
   margin: 0 0 ($base-spacing / 2) 0;
@@ -54,7 +54,7 @@ select[multiple=multiple] {
 
 %input-short {
   width: auto;
-  max-width: 25% 
+  max-width: 25%
 }
 
 textarea {

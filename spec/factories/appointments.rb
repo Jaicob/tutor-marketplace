@@ -20,7 +20,14 @@ FactoryGirl.define do
     course
     start_time '2015-09-01 12:00'
     status 0
+
+    trait :second do
+      start_time '2015-09-01 13:00'
+    end
+
+    # trait :with_tutor_course do 
+    #   association :course, factory: [:course, :with_tutor_course]
+    # end
+
   end
-
-
 end

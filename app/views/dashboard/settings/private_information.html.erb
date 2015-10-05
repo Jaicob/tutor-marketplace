@@ -1,7 +1,7 @@
 <section class="dashboard tutor">
   <div class="wrapper">
     <div class="wrapper__text">
-      <h1 class="title">Setttings Area</h1>
+      <h2 class="title">Setttings Manager</h2>
     </div>
     <div class="g g-3up">
       <div class="gi">
@@ -26,7 +26,11 @@
           <h3 id="transcript">Transcript</h3>
 
           <p>Current Transcript: 
-            <%= @tutor.transcript.url.nil? ? 'None' : File.basename(@tutor.transcript.path) %>
+            <% if @tutor.transcript.url.nil? %>
+              'None'
+            <% else %>
+              <%= link_to File.basename(@tutor.transcript.path), @tutor.transcript.url, target: '_blank' %>
+            <% end %>
           </p>
 
           <%= f.label :transcript %>

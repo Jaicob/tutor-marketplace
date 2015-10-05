@@ -4,7 +4,8 @@ var AppointmentSelector = React.createClass({
           selectedSlots: [],
           selectedSubject: this.props.subject || {},
           disabledSlots: [],
-          currentStep: 1
+          currentStep: 1,
+          forceFetch: false
       };
   },
   handleSubject: function (newSubject) {
@@ -12,7 +13,10 @@ var AppointmentSelector = React.createClass({
   },
   handleSlots: function (newSlots) {
     newSlots.unique((slot) => slot.start_time);
-    this.setState({ selectedSlots: newSlots });
+    this.setState({
+      selectedSlots: newSlots,
+      forceFetch: false
+    });
   },
   handleSteps: function (newStep) {
     this.setState({ currentStep: newStep });
@@ -20,6 +24,33 @@ var AppointmentSelector = React.createClass({
   handleDisabledSlots: function (newDisabledSlots) {
     newDisabledSlots.unique((slot) => slot.start_time);
     this.setState({ disabledSlots: newDisabledSlots })
+  },
+  handleBackStep: function () {
+    if (this.state.currentStep > 1) {
+      this.setState({
+        currentStep: this.state.currentStep - 1,
+        forceFetch: true
+      })
+    }
+  },
+  handleNextStep: function () {
+    if (this.state.selectedSlots.length > 0) {
+      this.setState({
+        currentStep: this.state.currentStep + 1
+      })
+    };
+  },
+  canGoBack: function () {
+    switch(this.state.currentStep) {
+      case 1: return false
+      default: return true
+    }
+  },
+  canGoForward: function () {
+    switch(this.state.currentStep) {
+      case 1: return this.state.selectedSlots.length > 0
+      default: return true
+    }
   },
   renderSubjectSelector: function () {
     if (this.state.currentStep == 1) {
@@ -37,6 +68,7 @@ var AppointmentSelector = React.createClass({
                                    handleSlots={this.handleSlots}
                                    disabledSlots={this.state.disabledSlots}
                                    handleDisabledSlots={this.handleDisabledSlots}
+                                   forceFetch={this.state.forceFetch}
                                    />
       case 2: return <PaymentForm {...this.props} />
       case 3: return <ConfirmationScreen {...this.props} />
@@ -61,20 +93,8 @@ var AppointmentSelector = React.createClass({
                     <p>Selected Class will show here.</p>
                   </div>
                   <div className="column submit">
-                    <a className="btn" onClick={function(){
-                      if (this.state.currentStep > 1) {
-                        this.setState({
-                          currentStep: this.state.currentStep - 1
-                        })
-                      };
-                    }.bind(this)}><span className="fi-arrow-left"></span> Go back</a>
-                    <a className="btn" onClick={function(){
-                      if (this.state.selectedSlots.length > 0) {
-                        this.setState({
-                          currentStep: this.state.currentStep + 1
-                        })
-                      };
-                    }.bind(this)}>Next <span className="fi-arrow-right"></span></a>
+                    { this.canGoBack() ? <a className="btn" onClick={this.handleBackStep}><span className="fi-arrow-left"></span> Go back</a> : ""}
+                    { this.canGoForward() ? <a className="btn" onClick={this.handleNextStep}>Next <span className="fi-arrow-right"></span></a> : ""}
                   </div>
                 </footer>
           </div>

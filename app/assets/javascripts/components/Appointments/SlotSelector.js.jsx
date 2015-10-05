@@ -12,7 +12,7 @@ var SlotSelector = React.createClass({
     this.componentWillReceiveProps(this.props);
   },
   componentWillReceiveProps: function (nextProps) {
-    if(nextProps.disabledSlots.length == 0 && nextProps.selectedSlots.length == 0) {
+    if((nextProps.disabledSlots.length == 0 && nextProps.selectedSlots.length == 0) || nextProps.forceFetch) {
       this.fetchSlots(nextProps.tutor);
     }
   },
@@ -38,10 +38,15 @@ var SlotSelector = React.createClass({
     //           ];
 
     request.success(function(data){
-      if (this.props.disabledSlots.length == 0 && this.props.selectedSlots.length == 0) {
+      if ((this.props.disabledSlots.length == 0 && this.props.selectedSlots.length == 0) || this.props.forceFetch) {
         this.setState({
           allSlots: this.parseData(data)
         });
+
+        if (this.props.forceFetch) {
+          var disabledSlots = this.getDisabledSlots(this.props.selectedSlots);
+          this.props.handleDisabledSlots(disabledSlots);
+        };
       }
     }.bind(this));
 
@@ -61,8 +66,7 @@ var SlotSelector = React.createClass({
   },
   parseData: function (data) {
     appointmentCandidates = this.getAppointmentCandidates(data);
-    goodCandidates = this.disableBadCandidates(appointmentCandidates);
-    parsedData = this.groupAppointmentCandidates(goodCandidates);
+    parsedData = this.groupAppointmentCandidates(appointmentCandidates);
     return parsedData;
   },
   getAppointmentCandidates: function (slots) {
@@ -102,12 +106,6 @@ var SlotSelector = React.createClass({
       }
 
       return slots;
-  },
-  disableBadCandidates: function(data){
-    return data.map(function(slot){
-      slot.enabled = (this.props.disabledSlots.indexOf(slot) < 0);
-      return slot;
-    }.bind(this));
   },
   groupAppointmentCandidates: function (slots) {
     var newSlots = {}

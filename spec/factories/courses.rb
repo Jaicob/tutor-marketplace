@@ -13,8 +13,6 @@
 
 FactoryGirl.define do
 
-  # subject_hash = {name: 'Chemistry', id: 1}
-
   factory :course do
     subject
     call_number     101
@@ -26,10 +24,8 @@ FactoryGirl.define do
     end
 
     factory :second_course do
-      subject
       call_number     202
       friendly_name   "Cellular Biology"
-      association     :school, factory: :second_school
     end
   end
 end

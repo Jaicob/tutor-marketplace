@@ -4,7 +4,7 @@ module Processor
   class Stripe
 
     def initialize()
-      # Stripe.api_key = api_key
+      ::Stripe.api_key = ENV['stripe_secret_key']
     end
 
     def update_managed_account(tutor, token)
@@ -40,12 +40,21 @@ module Processor
     end
 
     def send_charge(charge)
-      Stripe::Charge.create(
+      ::Stripe::Charge.create(
         amount: charge.amount,
         currency: 'usd',
         source: charge.token || charge.customer_id,
         destination: charge.tutor.acct_id,
-        application_fee: charge.transaction_fee
+        application_fee: charge.axon_fee
+      )
+    end
+
+    def reconcile_coupon_difference(charge)
+      transfer = ::Stripe::Transfer.create(
+        amount: charge.amount,
+        currency: 'usd',
+        destination: charge.tutor.acct_id,
+        description: "Reconciliation for Coupon #{promotion.description}"
       )
     end
 
