@@ -64,7 +64,6 @@
 #                                                             DELETE   /tutors/:id(.:format)                                                 tutors#destroy
 #                                         dashboard_home_user GET      /:id/dashboard/home(.:format)                                         dashboard/home#index
 #                                     dashboard_schedule_user GET      /:id/dashboard/schedule(.:format)                                     dashboard/schedule#index
-#                                      dashboard_courses_user GET      /:id/dashboard/courses(.:format)                                      dashboard/courses#index
 #                                      dashboard_profile_user GET      /:id/dashboard/profile(.:format)                                      dashboard/profile#index
 #                                 dashboard_edit_profile_user GET      /:id/dashboard/edit_profile(.:format)                                 dashboard/profile#edit
 #                    dashboard_settings_account_settings_user GET      /:id/dashboard/settings/account_settings(.:format)                    dashboard/settings#account_settings
@@ -75,6 +74,22 @@
 # dashboard_settings_tutor_payment_settings_edit_address_user GET      /:id/dashboard/settings/tutor_payment_settings/edit_address(.:format) dashboard/settings#edit_tutor_payment_address
 #            dashboard_settings_student_payment_settings_user GET      /:id/dashboard/settings/student_payment_settings(.:format)            dashboard/settings#student_payment_settings
 #                 dashboard_settings_appointment_history_user GET      /:id/dashboard/settings/appointment_history(.:format)                 dashboard/settings#appointment_history
+#                                     dashboard_tutor_courses GET      /:id/dashboard/courses(.:format)                                      dashboard/courses#index
+#                                                             POST     /:id/dashboard/courses(.:format)                                      dashboard/courses#create
+#                                  new_dashboard_tutor_course GET      /:id/dashboard/courses/new(.:format)                                  dashboard/courses#new
+#                                 edit_dashboard_tutor_course GET      /:id/dashboard/courses/:id/edit(.:format)                             dashboard/courses#edit
+#                                      dashboard_tutor_course GET      /:id/dashboard/courses/:id(.:format)                                  dashboard/courses#show
+#                                                             PATCH    /:id/dashboard/courses/:id(.:format)                                  dashboard/courses#update
+#                                                             PUT      /:id/dashboard/courses/:id(.:format)                                  dashboard/courses#update
+#                                                             DELETE   /:id/dashboard/courses/:id(.:format)                                  dashboard/courses#destroy
+#                                  dashboard_tutor_promotions GET      /:id/dashboard/promotions(.:format)                                   dashboard/promotions#index
+#                                                             POST     /:id/dashboard/promotions(.:format)                                   dashboard/promotions#create
+#                               new_dashboard_tutor_promotion GET      /:id/dashboard/promotions/new(.:format)                               dashboard/promotions#new
+#                              edit_dashboard_tutor_promotion GET      /:id/dashboard/promotions/:id/edit(.:format)                          dashboard/promotions#edit
+#                                   dashboard_tutor_promotion GET      /:id/dashboard/promotions/:id(.:format)                               dashboard/promotions#show
+#                                                             PATCH    /:id/dashboard/promotions/:id(.:format)                               dashboard/promotions#update
+#                                                             PUT      /:id/dashboard/promotions/:id(.:format)                               dashboard/promotions#update
+#                                                             DELETE   /:id/dashboard/promotions/:id(.:format)                               dashboard/promotions#destroy
 #                                                        user PATCH    /:id(.:format)                                                        users#update
 #                                                             PUT      /:id(.:format)                                                        users#update
 #                                        search_admin_courses GET|POST /admin/courses/search(.:format)                                       admin/courses#search
@@ -176,7 +191,6 @@ Rails.application.routes.draw do
   get '/contact'            => 'single_views#contact'
   get '/privacy-policy'     => 'single_views#privacy_policy'
   get '/terms-and-conditions' => 'single_views#terms_and_conditions'
-  
   post '/set-school'         => 'cookies#set_school_id_cookie'
 
   devise_for :users, controllers: { registrations: "tutor_registration" }
@@ -194,7 +208,6 @@ Rails.application.routes.draw do
       member do
           get  '/dashboard/home'                              => 'home#index'
           get  '/dashboard/schedule'                          => 'schedule#index'
-          get  '/dashboard/courses'                           => 'courses#index'
           get  '/dashboard/profile'                           => 'profile#index'
           get  '/dashboard/edit_profile'                      => 'profile#edit'
           get  '/dashboard/settings/account_settings'         => 'settings#account_settings'
@@ -205,6 +218,8 @@ Rails.application.routes.draw do
           get  '/dashboard/settings/tutor_payment_settings/edit_address' => 'settings#edit_tutor_payment_address'
           get  '/dashboard/settings/student_payment_settings' => 'settings#student_payment_settings'
           get  '/dashboard/settings/appointment_history'      => 'settings#appointment_history'
+          resources :courses, path: '/dashboard/courses', as: 'dashboard_tutor_courses'
+          resources :promotions, path: '/dashboard/promotions', as: 'dashboard_tutor_promotions'
       end
     end
   end

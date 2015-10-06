@@ -1,0 +1,47 @@
+<section class="dashboard tutor">
+  <div class="wrapper">
+    <div class="wrapper__text">
+      <h1 class="title">Course Details</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>Subject</th>
+            <th>Call Number</th>
+            <th>Course Name</th>
+            <th>My Rate</th>
+            <th>Full Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><%= @tutor_course.course.subject.name %></td>
+            <td><%= @tutor_course.course.call_number %></td>
+            <td><%= @tutor_course.course.friendly_name %></td>
+            <td>$<%= @tutor_course.rate %></td>
+            <td>$<%= @tutor_course.full_price %></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="g g-2up">
+        <div class="gi">
+          <h4>Change Rate</h4>
+          <%= form_for @tutor_course, url: dashboard_tutor_course_path, method: :put do |f| %>
+            <%= f.label :rate %>
+            <%= f.text_field :rate %>
+            <%= f.submit 'Update Rate' %>
+          <% end %>
+        </div>
+
+        <div class="gi">
+          <h4>Delete Course</h4>
+          <%= button_to('Delete Course', "/#{current_user.slug}/dashboard/courses/#{@tutor_course.id}", method: 'delete') %>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</section>
+
+

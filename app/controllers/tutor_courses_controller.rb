@@ -13,7 +13,7 @@ class TutorCoursesController < ApplicationController
 
   def update
     if @tutor_course.update(tutor_course_params)
-      redirect_to dashboard_courses_user_path(current_user)
+      redirect_to dashboard_tutor_courses_path(current_user)
     else
       flash[:notice] = "Tutor course was not edited: #{@tutor_course.errors.full_messages}"
     end
@@ -21,14 +21,13 @@ class TutorCoursesController < ApplicationController
 
   def destroy
     @tutor_course.destroy
-    redirect_to dashboard_courses_user_path(current_user)
+    redirect_to dashboard_tutor_courses_path(current_user)
   end
 
   private
 
     def tutor_course_params
       params.require(:tutor_course).permit(:tutor_id, :course_id, :rate)
-      # params.require(:tutor_course).permit()
     end
 
     def set_tutor_course
