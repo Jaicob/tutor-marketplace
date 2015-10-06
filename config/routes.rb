@@ -4,11 +4,14 @@
 #                                                        root GET      /                                                                     single_views#home
 #                                                      search GET      /search(.:format)                                                     single_views#tutor_search
 #                                           restricted_access GET      /restricted-access(.:format)                                          single_views#restricted_access
-#                                                    about_us GET      /about-us(.:format)                                                   single_views#about_us
+#                                                       about GET      /about(.:format)                                                      single_views#about
 #                                                        faqs GET      /faqs(.:format)                                                       single_views#faqs
 #                                                    partners GET      /partners(.:format)                                                   single_views#partners
 #                                              become_a_tutor GET      /become-a-tutor(.:format)                                             single_views#tutor_landing
 #                                                     contact GET      /contact(.:format)                                                    single_views#contact
+#                                              privacy_policy GET      /privacy-policy(.:format)                                             single_views#privacy_policy
+#                                        terms_and_conditions GET      /terms-and-conditions(.:format)                                       single_views#terms_and_conditions
+#                                                  set_school POST     /set-school(.:format)                                                 cookies#set_school_id_cookie
 #                                            new_user_session GET      /users/sign_in(.:format)                                              devise/sessions#new
 #                                                user_session POST     /users/sign_in(.:format)                                              devise/sessions#create
 #                                        destroy_user_session DELETE   /users/sign_out(.:format)                                             devise/sessions#destroy
@@ -147,6 +150,7 @@
 #                                           api_v1_tutor_slot GET      /api/v1/tutors/:tutor_id/slots/:id(.:format)                          api/v1/slots#show {:format=>:json}
 #                                                             DELETE   /api/v1/tutors/:tutor_id/slots/:id(.:format)                          api/v1/slots#destroy {:format=>:json}
 #                                   api_v1_tutor_slots_update POST     /api/v1/tutors/:tutor_id/slots/update(.:format)                       api/v1/slots#update_slots {:format=>:json}
+#                                        api_v1_tutor_courses GET      /api/v1/tutors/:tutor_id/courses(.:format)                            api/v1/tutor_courses#index {:format=>:json}
 #                             cancel_api_v1_tutor_appointment PUT      /api/v1/tutors/:tutor_id/appointments/:id/cancel(.:format)            api/v1/tutor_appointments#cancel {:format=>:json}
 #                                   api_v1_tutor_appointments GET      /api/v1/tutors/:tutor_id/appointments(.:format)                       api/v1/tutor_appointments#index {:format=>:json}
 #                                    api_v1_tutor_appointment GET      /api/v1/tutors/:tutor_id/appointments/:id(.:format)                   api/v1/tutor_appointments#show {:format=>:json}
