@@ -7,7 +7,8 @@ var AppointmentSelector = React.createClass({
           currentStep: 1,
           forceFetch: false,
           student: {},
-          token: ""
+          token: "",
+          customer_id: ""
       };
   },
   componentDidMount: function() {
@@ -65,8 +66,12 @@ var AppointmentSelector = React.createClass({
       });
     }.bind(this));
   },
-  handleCard: function(token) {
-    this.setState({token: token})
+  handleCard: function(customer_id, token) {
+    if (customer_id == null) {
+      this.setState({token: token})
+    } else {
+      this.setState({customer_id: customer_id})
+    };
   },
   renderSubjectSelector: function () {
     if (this.state.currentStep == 1) {

@@ -1,11 +1,19 @@
 var PaymentForm = React.createClass({
 
+  handleDefaultCard: function(customer_id) {
+    this.props.onChange(customer_id, null)
+  },
+
+  handleNewCard: function(token) {
+    this.props.onChange(null, token)
+  },
+
   render: function () {
     if (Object.keys(this.props.currentStudent).length > 0) {
       return (
         <div>
-          <DefaultCard currentStudent={this.props.currentStudent} />
-          <NewCard currentStudent={this.props.currentStudent} />
+          <DefaultCard currentStudent={this.props.currentStudent} onCardSelect={this.handleDefaultCard} />
+          <NewCard currentStudent={this.props.currentStudent} onTokenChange={this.handleNewCard} />
         </div>
       );
     } else {
