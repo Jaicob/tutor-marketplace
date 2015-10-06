@@ -4,7 +4,8 @@ var NewCard = React.createClass({
     return {
       cardNumber: "",
       exp: "",
-      cvc: ""
+      cvc: "",
+      success: false
     };
   },
 
@@ -35,22 +36,32 @@ var NewCard = React.createClass({
     var token = response.id;
     console.log(token);
     this.props.onTokenChange(token);
+    this.setState({cardNumber: "", exp: "", cvc: "", success: true})
   },
 
   render: function() {
-    return (
-      <div>
-        <h3>New Card</h3>
-        <div id="card-form">
-          <label htmlFor="card-number">Card Number</label>
-          <input id="card-number" type="text" value={this.state.cardNumber} onChange={this.handleCardNumber}/>
-          <label htmlFor="exp">Expiration MM/YY</label>
-          <input id="exp" type="text" value={this.state.exp} onChange={this.handleExpDate}/>
-          <label htmlFor="cvc">CVC</label>
-          <input id="cvc" type="text" value={this.state.cvc} onChange={this.handleCVC}/>
-          <a  onClick={this.handleStripe} className="btn">Use Card</a>
+    if (this.state.success == false) {
+      return (
+        <div>
+          <h3>New Card</h3>
+          <div id="card-form">
+            <label htmlFor="card-number">Card Number</label>
+            <input id="card-number" type="text" value={this.state.cardNumber} onChange={this.handleCardNumber}/>
+            <label htmlFor="exp">Expiration MM/YY</label>
+            <input id="exp" type="text" value={this.state.exp} onChange={this.handleExpDate}/>
+            <label htmlFor="cvc">CVC</label>
+            <input id="cvc" type="text" value={this.state.cvc} onChange={this.handleCVC}/>
+            <a  onClick={this.handleStripe} className="btn">Use Card</a>
+          </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div>
+          <h3>Card validated and ready for use.</h3>
+          <h5>Note: Your card will not be charged until you confirm on the next screen.</h5>
+        </div>
+      );
+    }
   }
 });
