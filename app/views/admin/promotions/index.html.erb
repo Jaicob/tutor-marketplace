@@ -17,7 +17,7 @@
       <div class="gi">
         <p><%= "Promotion ##{promotion.id}"%></p>
         <p>Code: <%= promotion.code %></p>
-        <p>Category: <%= promotion.category %></p>
+        <p>Category: <%= promotion.category.humanize.gsub(/[A-Za-z']+/,&:capitalize) %></p>
         <p>Amount: <%= promotion.amount %></p>
         <p>Valid from: <%= promotion.valid_from %></p>
         <p>Valid until: <%= promotion.valid_until %></p>

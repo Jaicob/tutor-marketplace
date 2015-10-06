@@ -16,10 +16,11 @@
 #
 
 class Promotion < ActiveRecord::Base
-  validates :code, presence: true, uniqueness: :true
   validates :amount, presence: :true
 
   belongs_to :tutor # or if tutor_id is blank, is an Axon HQ coupon
+
+  after_create :generate_secure_code
 
   enum category: [
     :free_from_axon, 
@@ -31,14 +32,29 @@ class Promotion < ActiveRecord::Base
     :repeating_percent_off_from_tutor, 
     :repeating_dollar_amount_off_from_tutor]
 
-  # EXPLANATION OF AMOUNT FOR EACH PROMO TYPE
-  # free_from_axon: nil
-  # free_from_tutor: nil
-  # percent_off: integer representing percentage off (15 = 15% off, etc.)
-  # dollar_off_amount: integer representing dollar_amount off (15 = 15 dollars off)
-  # semester_package: integer representing the amount of sessions in a package
+  def generate_secure_code
+    puts "CATEGORY = #{self.category}"
+    promo_category = self.category
+    case self.category
+    when 'free_from_axon'
+      prefix = 'AXONFREE'
+    when 'free_from_tutor'
+      prefix = 'TUTORFREE'
+    when 'percent_off_from_axon'
+      prefix = 'AXONPER'
+    when 'percent_off_from_tutor'
+      prefix = 'TUTORPER'
+    when 'dollar_amount_off_from_axon'
+      prefix = 'AXONDLR'
+    when 'dollar_amount_off_from_tutor'
+      prefix = 'TUTORDLR'
+    when 'repeating_percent_off_from_tutor'
+      prefix = 'TUTORPKPER'
+    when 'repeating_dollar_amount_off_from_tutor'
+      prefix = 'TUTORPKDLR'
+    end
+    self.code = prefix + SecureRandom.hex(6)
+    self.save
+  end
 
 end
-
-
-# Promotion.create(code: 'AXON', category: 4, amount: 10, valid_from: Date.today, valid_until: Date.today + 30, redemption_limit: 100, description: 'promo session 1', tutor_id: 1, course_id: 1)
