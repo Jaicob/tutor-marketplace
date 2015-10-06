@@ -22,7 +22,6 @@
 //= require sweetalert
 //= require moment
 //= require moment-range
-//= require stripe/index.js
 
 //= require ./base.js
 //= require ./dashboard/courses.js

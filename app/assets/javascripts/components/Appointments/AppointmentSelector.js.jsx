@@ -110,15 +110,15 @@ var AppointmentSelector = React.createClass({
               {this.renderMainView()}
             </article>
             <footer className="row">
-                  <div className="column selected-class-output">
-                    <p>Selected Date will show here.</p>
-                    <p>Selected Class will show here.</p>
-                  </div>
-                  <div className="column submit">
-                    { this.canGoBack() ? <a className="btn" onClick={this.handleBackStep}><span className="fi-arrow-left"></span> Go back</a> : ""}
-                    { this.canGoForward() ? <a className="btn" onClick={this.handleNextStep}>Next <span className="fi-arrow-right"></span></a> : ""}
-                  </div>
-                </footer>
+              <div className="column selected-class-output">
+                <p>Selected Date will show here.</p>
+                <p>Selected Class will show here.</p>
+              </div>
+              <div className="column submit">
+                { this.canGoBack() ? <a className="btn" onClick={this.handleBackStep}><span className="fi-arrow-left"></span> Go back</a> : ""}
+                { this.canGoForward() ? <a className="btn" onClick={this.handleNextStep}>Next <span className="fi-arrow-right"></span></a> : ""}
+              </div>
+            </footer>
           </div>
         </section>
       </div>

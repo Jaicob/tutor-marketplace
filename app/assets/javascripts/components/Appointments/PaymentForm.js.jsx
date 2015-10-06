@@ -11,19 +11,23 @@ var PaymentForm = React.createClass({
   render: function () {
     if (Object.keys(this.props.currentStudent).length > 0) {
       return (
-        <div>
-          <DefaultCard currentStudent={this.props.currentStudent} onCardSelect={this.handleDefaultCard} />
-          <NewCard currentStudent={this.props.currentStudent} onTokenChange={this.handleNewCard} />
+        <div className="row">
+          <div className="small-6 columns">
+            <DefaultCard currentStudent={this.props.currentStudent} onCardSelect={this.handleDefaultCard} />
+          </div>
+          <div className="small-6 columns">
+            <NewCard currentStudent={this.props.currentStudent} onTokenChange={this.handleNewCard} />
+          </div>
         </div>
       );
     } else {
       return (
-        <div>
+        <div className="row">
           <h3>You are not signed in</h3>
-          <div className="gi-1-2">
+          <div className="small-6 columns">
             <h4>Log in</h4>
           </div>
-          <div className="gi-1-2">
+          <div className="small-6 columns">
             <h4>Sign Up</h4>
           </div>
         </div>
