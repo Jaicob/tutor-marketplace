@@ -71,11 +71,13 @@ var AppointmentSelector = React.createClass({
                                    forceFetch={this.state.forceFetch}
                                    />
       case 2: return <PaymentForm {...this.props} />
-      case 3: return <ConfirmationScreen {...this.props} />
+      case 3: return <ConfirmationScreen {...this.props} {...this.state} />
       default: break
     };
   },
   render: function(){
+    // <div className="column selected-class-output">
+    // </div>
     return (
       <section className="availability" id="book">
         <div className="wrapper">
@@ -87,10 +89,6 @@ var AppointmentSelector = React.createClass({
             {this.renderMainView()}
           </article>
           <footer className="row">
-                <div className="column selected-class-output">
-                  <p>Selected Date will show here.</p>
-                  <p>Selected Class will show here.</p>
-                </div>
                 <div className="column submit">
                   { this.canGoBack() &&
                   <a className="btn" onClick={this.handleBackStep}>

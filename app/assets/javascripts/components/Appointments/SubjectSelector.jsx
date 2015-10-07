@@ -8,21 +8,6 @@ var SubjectSelector = React.createClass({
     };
   },
   fetchSubjects: function () {
-    // this.setState({
-    //   availableSubjects: [
-    //     {
-    //       "name": "intro to calculus",
-    //       "id": 23,
-    //       "rate": 25,
-    //     },
-    //     {
-    //       "name": "advanced biology",
-    //       "id": 24,
-    //       "rate": 35,
-    //     }
-    //   ]
-    // });
-
     var endpoint = API.endpoints.tutor.courses({
       tutor_id: this.props.tutor
     });
@@ -35,7 +20,9 @@ var SubjectSelector = React.createClass({
         var passedInSubject = this.state.availableSubjects.find(
           (subject) => subject.course_id == getSearchQueryVariable("course")
         );
-        if (passedInSubject) { this.props.handleSubject(passedInSubject); }
+        if (this.props.selectedSubject || passedInSubject) {
+          this.props.handleSubject(this.props.selectedSubject || passedInSubject);
+        }
       }.bind(this)
     );
   },
