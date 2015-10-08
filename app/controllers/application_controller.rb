@@ -16,17 +16,17 @@ class ApplicationController < ActionController::Base
 
     # Devise modification
     def after_sign_in_path_for(resource)
-      dashboard_home_user_path(resource)
+      home_dashboard_user_path(resource)
     end
 
     # Devise modification
     def after_sign_up_path_for(resource)
-      dashboard_home_user_path(resource)
+      home_dashboard_user_path(resource)
     end
 
     # Devise modification
     def after_inactive_sign_up_path_for(resource)
-      dashboard_home_user_path(resource)
+      home_dashboard_user_path(resource)
     end
 
     # Before_action for multiple controllers
@@ -69,7 +69,7 @@ class ApplicationController < ActionController::Base
       end
       # redirects to root for signed-in users
       if current_user.role == 'student' || current_user.role == 'tutor'
-        redirect_to dashboard_home_user_path(current_user)
+        redirect_to home_dashboard_user_path(current_user)
       end
     end
 

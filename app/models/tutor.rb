@@ -37,7 +37,7 @@ class Tutor < ActiveRecord::Base
   has_many :charges, dependent: :destroy
   has_many :promotions
 
-  delegate :school, :first_name, :last_name, :full_name, :sign_in_ip, :email, :password, to: :user
+  delegate :school, :first_name, :last_name, :full_name, :sign_in_ip, :email, :password, :slug, to: :user
 
   enum application_status: ['Incomplete', 'Complete', 'Approved']
   enum active_status: ['Inactive', 'Active']

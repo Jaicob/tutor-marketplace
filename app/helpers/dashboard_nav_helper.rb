@@ -12,11 +12,10 @@ module DashboardNavHelper
   def generate_dashboard_nav_links
     # user must be signed in to view dashbar pages
     return false unless user_signed_in?
-      dashboard_link          = dashboard_home_user_path(current_user)
-      schedule_link           = dashboard_schedule_user_path(current_user)
-      courses_link            = dashboard_tutor_courses_path(current_user)
-      profile_link            = dashboard_profile_user_path(current_user)
-      settings_link           = dashboard_settings_account_settings_user_path(current_user)
+      courses_link            = dashboard_user_courses_path(current_user)
+      promotions_link         = dashboard_user_promotions_path(current_user)
+      profile_link            = profile_dashboard_user_path(current_user)
+      settings_link           = account_settings_dashboard_user_path(current_user)
       school_and_courses_link = dashboard_link
       reports_link            = dashboard_link
       become_a_tutor_link     = new_tutor_path
@@ -25,16 +24,17 @@ module DashboardNavHelper
     all_dashboard_links = {
       tutor: {
         # name seen on the dashboard nav => where it links to
-        'Home'      => dashboard_link,
-        'Schedule'  => schedule_link,
-        'Courses'   => courses_link,
+        'Home'      => home_tutor_path(current_user.id),
+        'Schedule'  => schedule_tutor_path(current_user.id),
+        'Courses'   => tutor_courses_path,
+        'Promotions' => promotions_link,
         'Profile'   => profile_link,
         'Settings'  => settings_link
       },
 
       student: {
-        'Home'          => dashboard_link,
-        'Settings'      => settings_link,
+        'Home'          => home_student_path,
+        'Settings'      => account_student_path,
         'Find a Tutor'  => tutor_search_link,
       },
 

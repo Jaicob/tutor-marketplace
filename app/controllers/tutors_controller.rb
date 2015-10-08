@@ -20,7 +20,7 @@ class TutorsController < ApplicationController
 
   def destroy
     if @tutor.destroy
-      redirect_to dashboard_home_user_path(current_user)
+      redirect_to home_dashboard_user_path(current_user)
     else
       flash[:alert] = "Your tutor account was not deleted."
       render :show
@@ -41,7 +41,7 @@ class TutorsController < ApplicationController
       UpdateTutorAccount.call(tutor: @tutor, token: params[:stripeToken])
       respond_to do |format|
         format.js { render :payment_settings_updated }
-        format.html { redirect_to dashboard_settings_tutor_payment_settings_user_path(@tutor.user) }
+        format.html { redirect_to tutor_payment_settings_dashboard_user(@tutor.slug) }
       end
     else
       respond_to do |format|
@@ -49,9 +49,6 @@ class TutorsController < ApplicationController
         flash[:error] = "Something went wrong"
       end
     end
-  end
-
-  def edit_tutor_address_form
   end
 
   private

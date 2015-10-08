@@ -1,0 +1,31 @@
+class Dashboard::Tutor::SettingsController < ApplicationController
+
+  def account
+    # User's first_name, last_name, email and school
+  end
+
+  def appointment_history
+    # User's appointment history
+  end
+
+  def private_information
+    # Tutor's birthdate, phone_number and transcript
+  end
+
+  def profile
+    # Tutor's profile_pic, degree, major, graduation_year and extra_information
+  end
+
+  def appointment_settings
+    # Tutor's personal note to students upon booking (also future restrictions, i.e. reservation min/max, cut-off time for bookings, etc.)
+  end
+
+  def tutor_payment
+    @tutor = User.find(params[:id]).tutor
+  end
+
+  def payment
+    @tutor = User.find(params[:id]).tutor
+  end
+
+end

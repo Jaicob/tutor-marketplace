@@ -1,0 +1,32 @@
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Category</th>
+      <th>Course</th>
+      <th>Amount</th>
+      <th>Valid From</th>
+      <th>Valid Until</th>
+      <th>Redemption Limit</th>
+      <th>Redemption Count</th>
+      <th>Description</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tutor.promotions.each do |promotion| %>
+    <tr>
+      <td><%= promotion.code %></td>
+      <td><%= promotion.category.humanize.gsub(/[A-Za-z']+/,&:capitalize) %></td>
+      <td><%= Course.find(promotion.course_id).friendly_name unless !promotion.course_id %></td>
+      <td><%= promotion.amount %></td>
+      <td><%= promotion.valid_from %></td>
+      <td><%= promotion.valid_until %></td>
+      <td><%= promotion.redemption_limit %></td>
+      <td><%= promotion.redemption_count %></td>
+      <td><%= promotion.description %></td>
+      <td><%= link_to 'Edit', dashboard_user_promotion_path(current_user.slug, promotion.id) %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
