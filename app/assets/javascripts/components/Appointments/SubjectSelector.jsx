@@ -8,36 +8,29 @@ var SubjectSelector = React.createClass({
     };
   },
   fetchSubjects: function () {
-    // this.setState({
-    //   availableSubjects: [
-    //     {
-    //       "name": "intro to calculus",
-    //       "id": 23,
-    //       "rate": 25,
-    //     },
-    //     {
-    //       "name": "advanced biology",
-    //       "id": 24,
-    //       "rate": 35,
-    //     }
-    //   ]
-    // });
-
     var endpoint = API.endpoints.tutor.courses({
       tutor_id: this.props.tutor
     });
 
     $.getJSON(endpoint, function (data) {
-      this.setState({
-        availableSubjects: data
-      });
-    });
+        this.setState({
+          availableSubjects: data
+        });
+
+        var passedInSubject = this.state.availableSubjects.find(
+          (subject) => subject.course_id == getSearchQueryVariable("course")
+        );
+        if (this.props.selectedSubject || passedInSubject) {
+          this.props.handleSubject(this.props.selectedSubject || passedInSubject);
+        }
+      }.bind(this)
+    );
   },
   handleClick: function (subject) {
-    newSubject = this.state.availableSubjects.filter(
+    newSubject = this.state.availableSubjects.find(
       (potentialSubject) => potentialSubject.id == subject.target.value
-    )[0]
-    this.props.handleSubject(newSubject)
+    );
+    this.props.handleSubject(newSubject);
   },
   render: function () {
     return (
@@ -48,9 +41,7 @@ var SubjectSelector = React.createClass({
             <optgroup label="Available Courses">
               {
                 this.state.availableSubjects.map(function(subject){
-                  return <Subject subject={subject}
-                                  selectedSubject={this.props.selectedSubject}
-                                  />
+                  return <Subject subject={subject} selectedSubject={this.props.selectedSubject} />
                 }.bind(this))
               }
             </optgroup>

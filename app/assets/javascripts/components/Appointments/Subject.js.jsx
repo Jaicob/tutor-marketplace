@@ -26,7 +26,9 @@ var Subject = React.createClass({
   },
   render: function () {
     return (
-      <option value={this.props.subject.id}>{this.props.subject.name} -- ${this.props.subject.rate}/hr</option>
+      <option value={this.props.subject.id} selected={this.props.selectedSubject.id == this.props.subject.id}>
+        {this.props.subject.course_name} -- ${this.props.subject.rate}/hr
+      </option>
     );
   }
 });

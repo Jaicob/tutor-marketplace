@@ -63,7 +63,7 @@ class ApplicationController < ActionController::Base
     # Before_action for admin-area
     def authorized_for_admin_area?
       # redirects to root for non-signed in users/visitors
-      if !current_user 
+      if !current_user
         redirect_to root_path
         return
       end

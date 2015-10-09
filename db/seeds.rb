@@ -119,17 +119,15 @@ end
 
 # Create an appointment for each student and tutor at each school
 School.all.each do |school|
-  ordinal = 0
   @students = school.students
   @tutors = school.tutors
-  5.times {
+  5.times { |ordinal|
     Appointment.create(
       student_id: @students[ordinal].id,
       slot_id: @tutors[ordinal].slots.first.id,
       course_id: @tutors[ordinal].courses.first.id,
       start_time: "2015-08-01 12:00:00"
     )
-    ordinal += 1
   }
 end
 

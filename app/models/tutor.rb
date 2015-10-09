@@ -181,10 +181,10 @@ class Tutor < ActiveRecord::Base
     self.tutor_courses.map do |tc|
       tutor_course_info = {}
       tutor_course_info[:id] = tc.id
-      tutor_course_info[:course_id] = tc.course.id 
+      tutor_course_info[:course_id] = tc.course.id
       tutor_course_info[:course_name] = tc.course.friendly_name
       tutor_course_info[:rate] = tc.rate
-      return tutor_course_info
+      tutor_course_info
     end
   end
 
