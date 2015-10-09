@@ -82,5 +82,6 @@ module WebApp
     #   optional: ["transformerName"],  # pass extra babel options
     #   whitelist: ["useStrict"] # even more options
     # }
+
   end
 end

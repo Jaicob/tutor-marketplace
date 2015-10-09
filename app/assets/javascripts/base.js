@@ -56,6 +56,9 @@ var API = {
             courses: function(data) {
                 return API_LOCATION + "/tutors/" + data["tutor_id"] + "/courses/"
             }
-        }
+        },
+       students: function(data) {
+        return API_LOCATION + "/payments/current_student/"
+       }
     }
 };

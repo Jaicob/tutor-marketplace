@@ -5,8 +5,14 @@ var AppointmentSelector = React.createClass({
           selectedSubject: this.props.subject || {},
           disabledSlots: [],
           currentStep: 1,
-          forceFetch: false
+          forceFetch: false,
+          student: {},
+          token: "",
+          customer_id: ""
       };
+  },
+  componentDidMount: function() {
+    this.fetchStudent();
   },
   handleSubject: function (newSubject) {
     this.setState({ selectedSubject: newSubject });
@@ -52,6 +58,21 @@ var AppointmentSelector = React.createClass({
       default: return true
     }
   },
+  fetchStudent: function () {
+    var endpoint = API.endpoints.students();
+    $.getJSON(endpoint, function (data) {
+      this.setState({
+        student: data
+      });
+    }.bind(this));
+  },
+  handleCard: function(customer_id, token) {
+    if (customer_id == null) {
+      this.setState({token: token})
+    } else {
+      this.setState({customer_id: customer_id})
+    };
+  },
   renderSubjectSelector: function () {
     if (this.state.currentStep == 1) {
       return <SubjectSelector tutor={this.props.tutor}
@@ -70,8 +91,9 @@ var AppointmentSelector = React.createClass({
                                    handleDisabledSlots={this.handleDisabledSlots}
                                    forceFetch={this.state.forceFetch}
                                    />
-      case 2: return <PaymentForm {...this.props} />
-      case 3: return <ConfirmationScreen {...this.props} {...this.state} />
+      case 2: return <PaymentForm {...this.props} currentStudent={this.state.student} onChange={this.handleCard} />
+      case 3: return <ConfirmationScreen {...this.props} />
+      case 4: return <Summary {...this.props} />
       default: break
     };
   },
