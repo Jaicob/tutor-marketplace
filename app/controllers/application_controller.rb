@@ -49,6 +49,15 @@ class ApplicationController < ActionController::Base
     end
 
     # Before_action for multiple controllers
+    def set_student
+      if @user.student
+        @student = @user.student
+      else
+        @student = nil
+      end
+    end
+
+    # Before_action for multiple controllers
     def set_school
       @school = current_user.school
     end
