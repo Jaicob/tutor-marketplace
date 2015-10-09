@@ -39,22 +39,60 @@ module Processor
       acct.external_accounts.create({ :external_account => token })
     end
 
-    def send_charge(charge)
-      ::Stripe::Charge.create(
-        amount: charge.amount,
-        currency: 'usd',
-        source: charge.token || charge.customer_id,
-        destination: charge.tutor.acct_id,
-        application_fee: charge.axon_fee
-      )
-    end
-
     def reconcile_coupon_difference(charge)
       transfer = ::Stripe::Transfer.create(
         amount: charge.amount,
         currency: 'usd',
         destination: charge.tutor.acct_id,
         description: "Reconciliation for Coupon #{promotion.description}"
+      )
+    end
+
+    def send_charge(charge)
+      if charge.customer_id.nil?
+        ::Stripe::Charge.create(
+          amount: charge.amount,
+          currency: 'usd',
+          source: charge.token,
+          destination: charge.tutor.acct_id,
+          application_fee: charge.transaction_fee
+        )
+      else
+        ::Stripe::Charge.create(
+          amount: charge.amount,
+          currency: 'usd',
+          customer: charge.customer_id,
+          destination: charge.tutor.acct_id,
+          application_fee: charge.transaction_fee
+        )
+      end
+    end
+
+    def update_customer(student, token)
+      if student.customer_id.nil?
+        cust = ::Stripe::Customer.create(
+          card: token,
+          description: "#{student.full_name} - #{student.email}",
+          email: student.email
+        )
+        cust.default_source = token
+        cust.save
+        student.update_attributes(customer_id: cust.id)
+      else
+        cust = ::Stripe::Customer.retrieve(student.customer_id)
+        cust.sources.create(source: token)
+        cust.default_source = token
+        cust.save
+      end
+    end
+
+    def reconcile_coupon_difference(tutor, amount, promotion)
+      # TODO: Stripe Transfer that sends the difference from an Axon coupon to a Tutor's Stripe account
+      transfer = ::Stripe::Transfer.create(
+        amount: amount,
+        currency: 'usd',
+        destination: tutor.acct_id,
+        description: "Reconciliation for Coupon #{promotion.name}"
       )
     end
 

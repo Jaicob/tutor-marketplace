@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150921152603) do
+ActiveRecord::Schema.define(version: 20150930154059) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,13 +34,12 @@ ActiveRecord::Schema.define(version: 20150921152603) do
 
   create_table "charges", force: :cascade do |t|
     t.integer  "amount"
-    t.integer  "axon_fee"
-    t.integer  "tutor_fee"
+    t.integer  "transaction_fee"
     t.string   "customer_id"
     t.integer  "tutor_id"
     t.string   "token"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.integer  "promotion_id"
   end
 
@@ -117,6 +116,7 @@ ActiveRecord::Schema.define(version: 20150921152603) do
     t.datetime "updated_at",    null: false
     t.string   "customer_id"
     t.string   "last_4_digits"
+    t.string   "card_brand"
   end
 
   add_index "students", ["user_id"], name: "index_students_on_user_id", using: :btree
