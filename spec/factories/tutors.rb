@@ -7,7 +7,7 @@
 #  active_status      :integer          default(0)
 #  application_status :integer          default(0)
 #  rating             :integer
-#  degree             :string
+#  degree             :integer          default(0)
 #  major              :string
 #  extra_info         :string
 #  graduation_year    :string
@@ -18,6 +18,7 @@
 #  appt_notes         :text
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
+#  last_4_acct        :string
 #  line1              :string
 #  line2              :string
 #  city               :string
@@ -25,7 +26,6 @@
 #  postal_code        :string
 #  ssn_last_4         :string
 #  acct_id            :string
-#  last_4_acct        :string
 #
 
 FactoryGirl.define do

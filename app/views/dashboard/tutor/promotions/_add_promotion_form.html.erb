@@ -37,6 +37,9 @@
           <%= f.label :redemption_limit %>
           <%= f.number_field :redemption_limit %>
 
+          <%= f.label :course_id %>
+          <%= f.select(:course_id, options_for_select(@course_collection)) %>
+
           <%= f.label :description %>
           <%= f.text_area :description %>
 

@@ -16,17 +16,25 @@ class ApplicationController < ActionController::Base
 
     # Devise modification
     def after_sign_in_path_for(resource)
-      home_dashboard_user_path(resource)
+      if resource.tutor
+        home_tutor_path(resource)
+      else
+        home_student_path(resource)
+      end
     end
 
     # Devise modification
     def after_sign_up_path_for(resource)
-      home_dashboard_user_path(resource)
+      if resource.tutor
+        home_tutor_path(resource)
+      else
+        home_student_path(resource)
+      end
     end
 
     # Devise modification
     def after_inactive_sign_up_path_for(resource)
-      home_dashboard_user_path(resource)
+      home_tutor_path(resource)
     end
 
     # Before_action for multiple controllers

@@ -38,7 +38,7 @@
           <h3 class="header-top-margin" id="profile-fields">Profile Info</h3>
 
           <%= f.label :degree %>
-          <%= f.text_field :degree %>
+          <%= f.select(:degree, options_for_select(["Bachelor's", "Master's", "PhD"],["#{@tutor.degree}"]), include_blank: true) %>
           
           <%= f.label :major %>
           <%= f.text_field :major %>

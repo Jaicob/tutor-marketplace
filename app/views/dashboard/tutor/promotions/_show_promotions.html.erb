@@ -14,7 +14,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @tutor.promotions.each do |promotion| %>
+    <% @promotions.each do |promotion| %>
     <tr>
       <td><%= promotion.code %></td>
       <td><%= promotion.category.humanize.gsub(/[A-Za-z']+/,&:capitalize) %></td>
@@ -25,7 +25,7 @@
       <td><%= promotion.redemption_limit %></td>
       <td><%= promotion.redemption_count %></td>
       <td><%= promotion.description %></td>
-      <td><%= link_to 'Edit', dashboard_user_promotion_path(current_user.slug, promotion.id) %></td>
+      <td><%= link_to 'Edit', tutor_promotion_path(@tutor.slug, promotion.id) %></td>
     </tr>
     <% end %>
   </tbody>

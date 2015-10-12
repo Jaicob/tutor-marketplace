@@ -28,4 +28,38 @@
   </tbody>
 </table>
 
-<%= link_to 'All Promotions', dashboard_tutor_promotions_path(@tutor.slug), class: 'btn' %>
+<%= form_for @promotion, url: tutor_promotion_path(@tutor.slug, @promotion) do |f| %>
+  <%= f.label :category %>
+  <%= f.select(:category,
+    options_for_select([
+      ['Free', :free_from_tutor], 
+      ['Percent Off', :percent_off_from_tutor],
+      ['Dollar Amount Off', :dollar_amount_off_from_tutor],
+      ['Repeating Percent Off', :repeating_percent_off_from_tutor], 
+      ['Repeating Dollar Amount Off', :repeating_dollar_amount_off_from_tutor]
+    ]), include_blank: true)  %>
+
+  <%= f.label :amount %>
+  <%= f.number_field :amount %>
+
+  <%= f.label :valid_from %>
+  <%= f.date_select :valid_from %>
+
+  <%= f.label :valid_until %>
+  <%= f.date_select :valid_until %>
+
+  <%= f.label :redemption_limit %>
+  <%= f.number_field :redemption_limit %>
+
+  <%= f.label :course_id %>
+  <%= f.select(:course_id, options_for_select(@course_collection)) %>
+
+  <%= f.label :description %>
+  <%= f.text_area :description %>
+
+  <%= f.hidden_field :tutor_id, value: @tutor.id %>
+  
+  <%= f.submit 'Create Promotion' %>
+<% end %>
+
+<%= link_to 'All Promotions', tutor_promotions_path(@tutor.slug), class: 'btn' %>

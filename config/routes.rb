@@ -44,6 +44,9 @@
 #                                       PATCH    /slots/:id(.:format)                                               slots#update
 #                                       PUT      /slots/:id(.:format)                                               slots#update
 #                                       DELETE   /slots/:id(.:format)                                               slots#destroy
+#                                  user PATCH    /users/:id(.:format)                                               users#update
+#                                       PUT      /users/:id(.:format)                                               users#update
+#                                       DELETE   /users/:id(.:format)                                               users#destroy
 #         tutor_payment_info_form_tutor GET      /tutors/:id/tutor_payment_info_form(.:format)                      tutors#tutor_payment_info_form
 #       update_tutor_payment_info_tutor PATCH    /tutors/:id/update_tutor_payment_info(.:format)                    tutors#update_tutor_payment_info
 #                                tutors GET      /tutors(.:format)                                                  tutors#index
@@ -54,42 +57,43 @@
 #                                       PATCH    /tutors/:id(.:format)                                              tutors#update
 #                                       PUT      /tutors/:id(.:format)                                              tutors#update
 #                                       DELETE   /tutors/:id(.:format)                                              tutors#destroy
-#                            home_tutor GET      /:id/home(.:format)                                                dashboard/tutor/home#index
-#                        schedule_tutor GET      /:id/schedule(.:format)                                            dashboard/tutor/schedule#index
-#                         profile_tutor GET      /:id/profile(.:format)                                             dashboard/tutor/profile#index
-#                    edit_profile_tutor GET      /:id/edit_profile(.:format)                                        dashboard/tutor/profile#edit
-#                         account_tutor GET      /:id/settings/account(.:format)                                    dashboard/tutor/settings#account
-#                    private_info_tutor GET      /:id/settings/private_info(.:format)                               dashboard/tutor/settings#private_info
-#                                       GET      /:id/settings/profile(.:format)                                    dashboard/tutor/settings#profile
-#                    appointments_tutor GET      /:id/settings/appointments(.:format)                               dashboard/tutor/settings#appointment_settings
-#                   tutor_payment_tutor GET      /:id/settings/tutor_payment(.:format)                              dashboard/tutor/settings#tutor_payment
-#      tutor_payment_edit_address_tutor GET      /:id/settings/tutor_payment_edit_address(.:format)                 dashboard/tutor/settings#edit_tutor_payment_address
-#                 student_payment_tutor GET      /:id/settings/student_payment(.:format)                            dashboard/tutor/settings#student_payment
-#             appointment_history_tutor GET      /:id/settings/appointment_history(.:format)                        dashboard/tutor/settings#appointment_history
-#                         tutor_courses GET      /:tutor_id/courses(.:format)                                       dashboard/tutor/courses#index
-#                                       POST     /:tutor_id/courses(.:format)                                       dashboard/tutor/courses#create
-#                      new_tutor_course GET      /:tutor_id/courses/new(.:format)                                   dashboard/tutor/courses#new
-#                     edit_tutor_course GET      /:tutor_id/courses/:id/edit(.:format)                              dashboard/tutor/courses#edit
-#                          tutor_course GET      /:tutor_id/courses/:id(.:format)                                   dashboard/tutor/courses#show
-#                                       PATCH    /:tutor_id/courses/:id(.:format)                                   dashboard/tutor/courses#update
-#                                       PUT      /:tutor_id/courses/:id(.:format)                                   dashboard/tutor/courses#update
-#                                       DELETE   /:tutor_id/courses/:id(.:format)                                   dashboard/tutor/courses#destroy
-#                      tutor_promotions GET      /:tutor_id/promotions(.:format)                                    dashboard/tutor/promotions#index
-#                                       POST     /:tutor_id/promotions(.:format)                                    dashboard/tutor/promotions#create
-#                   new_tutor_promotion GET      /:tutor_id/promotions/new(.:format)                                dashboard/tutor/promotions#new
-#                  edit_tutor_promotion GET      /:tutor_id/promotions/:id/edit(.:format)                           dashboard/tutor/promotions#edit
-#                       tutor_promotion GET      /:tutor_id/promotions/:id(.:format)                                dashboard/tutor/promotions#show
-#                                       PATCH    /:tutor_id/promotions/:id(.:format)                                dashboard/tutor/promotions#update
-#                                       PUT      /:tutor_id/promotions/:id(.:format)                                dashboard/tutor/promotions#update
-#                                       DELETE   /:tutor_id/promotions/:id(.:format)                                dashboard/tutor/promotions#destroy
-#                                       PATCH    /:id(.:format)                                                     users#update
-#                                       PUT      /:id(.:format)                                                     users#update
-#                          home_student GET      /:id/home(.:format)                                                dashboard/student/home#index
-#                        search_student GET      /:id/search(.:format)                                              single_views#tutor_search
-#               student_payment_student GET      /:id/settings/student_payment(.:format)                            dashboard/student/settings#student_payment
-#           appointment_history_student GET      /:id/settings/appointment_history(.:format)                        dashboard/student/settings#appointment_history
-#                               student PATCH    /:id(.:format)                                                     users#update
-#                                       PUT      /:id(.:format)                                                     users#update
+#                            home_tutor GET      /tutors/:id/home(.:format)                                         dashboard/tutor/home#index
+#                        schedule_tutor GET      /tutors/:id/schedule(.:format)                                     dashboard/tutor/schedule#index
+#                         profile_tutor GET      /tutors/:id/profile(.:format)                                      dashboard/tutor/profile#index
+#                         account_tutor GET      /tutors/:id/settings/account(.:format)                             dashboard/tutor/settings#account
+#                    private_info_tutor GET      /tutors/:id/settings/private_info(.:format)                        dashboard/tutor/settings#private_info
+#                    edit_profile_tutor GET      /tutors/:id/settings/edit_profile(.:format)                        dashboard/tutor/settings#edit_profile
+#            appointment_settings_tutor GET      /tutors/:id/settings/appointment_settings(.:format)                dashboard/tutor/settings#appointment_settings
+#                    payment_info_tutor GET      /tutors/:id/settings/payment_info(.:format)                        dashboard/tutor/settings#tutor_payment
+#               edit_address_info_tutor GET      /tutors/:id/settings/edit_address_info(.:format)                   dashboard/tutor/settings#edit_tutor_payment_address
+#             appointment_history_tutor GET      /tutors/:id/settings/appointment_history(.:format)                 dashboard/tutor/settings#appointment_history
+#                         tutor_courses GET      /tutors/:tutor_id/courses(.:format)                                dashboard/tutor/courses#index
+#                                       POST     /tutors/:tutor_id/courses(.:format)                                dashboard/tutor/courses#create
+#                      new_tutor_course GET      /tutors/:tutor_id/courses/new(.:format)                            dashboard/tutor/courses#new
+#                     edit_tutor_course GET      /tutors/:tutor_id/courses/:id/edit(.:format)                       dashboard/tutor/courses#edit
+#                          tutor_course GET      /tutors/:tutor_id/courses/:id(.:format)                            dashboard/tutor/courses#show
+#                                       PATCH    /tutors/:tutor_id/courses/:id(.:format)                            dashboard/tutor/courses#update
+#                                       PUT      /tutors/:tutor_id/courses/:id(.:format)                            dashboard/tutor/courses#update
+#                                       DELETE   /tutors/:tutor_id/courses/:id(.:format)                            dashboard/tutor/courses#destroy
+#                      tutor_promotions GET      /tutors/:tutor_id/promotions(.:format)                             dashboard/tutor/promotions#index
+#                                       POST     /tutors/:tutor_id/promotions(.:format)                             dashboard/tutor/promotions#create
+#                   new_tutor_promotion GET      /tutors/:tutor_id/promotions/new(.:format)                         dashboard/tutor/promotions#new
+#                  edit_tutor_promotion GET      /tutors/:tutor_id/promotions/:id/edit(.:format)                    dashboard/tutor/promotions#edit
+#                       tutor_promotion GET      /tutors/:tutor_id/promotions/:id(.:format)                         dashboard/tutor/promotions#show
+#                                       PATCH    /tutors/:tutor_id/promotions/:id(.:format)                         dashboard/tutor/promotions#update
+#                                       PUT      /tutors/:tutor_id/promotions/:id(.:format)                         dashboard/tutor/promotions#update
+#                                       DELETE   /tutors/:tutor_id/promotions/:id(.:format)                         dashboard/tutor/promotions#destroy
+#                                       PATCH    /tutors/:id(.:format)                                              tutors#update
+#                                       PUT      /tutors/:id(.:format)                                              tutors#update
+#                                       DELETE   /tutors/:id(.:format)                                              tutors#destroy
+#                          home_student GET      /students/:id/home(.:format)                                       dashboard/student/home#index
+#                        search_student GET      /students/:id/search(.:format)                                     single_views#tutor_search
+#                       account_student GET      /students/:id/settings/account(.:format)                           dashboard/student/settings#account
+#               student_payment_student GET      /students/:id/settings/student_payment(.:format)                   dashboard/student/settings#student_payment
+#           appointment_history_student GET      /students/:id/settings/appointment_history(.:format)               dashboard/student/settings#appointment_history
+#                               student PATCH    /students/:id(.:format)                                            students#update
+#                                       PUT      /students/:id(.:format)                                            students#update
+#                                       DELETE   /students/:id(.:format)                                            students#destroy
 #                  search_admin_courses GET|POST /admin/courses/search(.:format)                                    admin/courses#search
 #         new_course_list_admin_courses POST     /admin/courses/new_course_list(.:format)                           admin/courses#new_course_list
 #  review_new_course_list_admin_courses POST     /admin/courses/review_new_course_list(.:format)                    admin/courses#review_new_course_list
@@ -205,8 +209,8 @@ Rails.application.routes.draw do
 
   resources :tutors do
     member do
-              get '/tutor_payment_info_form'       => 'tutors#tutor_payment_info_form', as: 'tutor_payment_info_form'
-        patch '/update_tutor_payment_info'   => 'tutors#update_tutor_payment_info', as: 'update_tutor_payment_info'
+      get 'tutor_payment_info_form' => 'tutors#tutor_payment_info_form', as: 'tutor_payment_info_form'
+      patch 'update_tutor_payment_info' => 'tutors#update_tutor_payment_info', as: 'update_tutor_payment_info'
     end
   end
 

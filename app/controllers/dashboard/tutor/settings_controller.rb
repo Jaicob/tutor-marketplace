@@ -8,7 +8,7 @@ class Dashboard::Tutor::SettingsController < DashboardController
     # User's appointment history
   end
 
-  def private_information
+  def private_info
     # Tutor's birthdate, phone_number and transcript
   end
 

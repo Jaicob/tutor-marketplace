@@ -143,7 +143,7 @@ ActiveRecord::Schema.define(version: 20150921152603) do
     t.integer  "active_status",      default: 0
     t.integer  "application_status", default: 0
     t.integer  "rating"
-    t.string   "degree"
+    t.integer  "degree",             default: 0
     t.string   "major"
     t.string   "extra_info"
     t.string   "graduation_year"

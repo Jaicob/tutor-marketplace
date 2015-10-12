@@ -27,7 +27,7 @@
 
           <p>Current Transcript: 
             <% if @tutor.transcript.url.nil? %>
-              'None'
+              None
             <% else %>
               <%= link_to File.basename(@tutor.transcript.path), @tutor.transcript.url, target: '_blank' %>
             <% end %>
