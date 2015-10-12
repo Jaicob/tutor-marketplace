@@ -98,30 +98,34 @@ var AppointmentSelector = React.createClass({
     };
   },
   render: function(){
+    // <div className="column selected-class-output">
+    // </div>
     return (
-      <div>
-        <section className="availability">
-          <div className="wrapper">
-            <article className="availability-calendar">
-              <header className="row">
-                <h3 className="title">Availability</h3>
-                  {this.renderSubjectSelector()}
-              </header>
-              {this.renderMainView()}
-            </article>
-            <footer className="row">
-              <div className="column selected-class-output">
-                <p>Selected Date will show here.</p>
-                <p>Selected Class will show here.</p>
-              </div>
-              <div className="column submit">
-                { this.canGoBack() ? <a className="btn" onClick={this.handleBackStep}><span className="fi-arrow-left"></span> Go back</a> : ""}
-                { this.canGoForward() ? <a className="btn" onClick={this.handleNextStep}>Next <span className="fi-arrow-right"></span></a> : ""}
-              </div>
-            </footer>
-          </div>
-        </section>
-      </div>
+      <section className="availability" id="book">
+        <div className="wrapper">
+          <article className="availability-calendar">
+            <header className="row">
+              <h3 className="title">Availability</h3>
+                {this.renderSubjectSelector()}
+            </header>
+            {this.renderMainView()}
+          </article>
+          <footer className="row">
+                <div className="column submit">
+                  { this.canGoBack() &&
+                  <a className="btn" onClick={this.handleBackStep}>
+                    <span className="fi-arrow-left"></span> Go back
+                  </a>
+                  }
+                  { this.canGoForward() &&
+                  <a className="btn" onClick={this.handleNextStep}>
+                    Next <span className="fi-arrow-right"></span>
+                  </a>
+                  }
+                </div>
+              </footer>
+        </div>
+      </section>
     );
   }
 });
