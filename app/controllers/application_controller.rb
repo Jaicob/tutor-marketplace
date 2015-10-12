@@ -16,17 +16,25 @@ class ApplicationController < ActionController::Base
 
     # Devise modification
     def after_sign_in_path_for(resource)
-      dashboard_home_user_path(resource)
+      if resource.tutor
+        home_tutor_path(resource)
+      else
+        home_student_path(resource)
+      end
     end
 
     # Devise modification
     def after_sign_up_path_for(resource)
-      dashboard_home_user_path(resource)
+      if resource.tutor
+        home_tutor_path(resource)
+      else
+        home_student_path(resource)
+      end
     end
 
     # Devise modification
     def after_inactive_sign_up_path_for(resource)
-      dashboard_home_user_path(resource)
+      home_tutor_path(resource)
     end
 
     # Before_action for multiple controllers
@@ -41,10 +49,19 @@ class ApplicationController < ActionController::Base
 
     # Before_action for multiple controllers
     def set_tutor
-      if @user
-        @tutor = @user.tutor
+      if current_user.tutor
+        @tutor = current_user.tutor
       else
         @tutor = User.find(params[:id]).tutor # This sets @tutor for the show action when a user is not logged in which is necessary for visitors to see a tutor's profile
+      end
+    end
+
+    # Before_action for multiple controllers
+    def set_student
+      if current_user.student
+        @student = current_user.student
+      else
+        @student = nil
       end
     end
 
@@ -67,9 +84,13 @@ class ApplicationController < ActionController::Base
         redirect_to root_path
         return
       end
-      # redirects to root for signed-in users
-      if current_user.role == 'student' || current_user.role == 'tutor'
-        redirect_to dashboard_home_user_path(current_user)
+      # redirects to dashboard home for signed-in students
+      if current_user.role == 'student'
+        redirect_to home_student_path(current_user)
+      end
+      # redirects to dashboard home for signed-in tutors
+      if current_user.role == 'student'
+        redirect_to home_tutor_path(current_user)
       end
     end
 

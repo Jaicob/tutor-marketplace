@@ -1,6 +1,6 @@
 <%# add navigation links to this file %>
 <% if user_signed_in? %>
-  <li class="menu-item"><%= link_to 'Dashboard', dashboard_home_user_path(current_user) %></li>
+  <li class="menu-item"><%= link_to 'Dashboard', home_tutor_path(current_user) %></li>
   <% if current_user.role == 'campus_manager' || current_user.role == 'super_admin' %>
     <li class="menu-item"><%= link_to 'Admin', admin_tutors_path %></li>
   <% end %>

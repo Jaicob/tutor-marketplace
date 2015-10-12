@@ -7,7 +7,7 @@
 #  active_status      :integer          default(0)
 #  application_status :integer          default(0)
 #  rating             :integer
-#  degree             :string
+#  degree             :integer          default(0)
 #  major              :string
 #  extra_info         :string
 #  graduation_year    :string

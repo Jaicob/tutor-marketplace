@@ -7,7 +7,7 @@
 #  active_status      :integer          default(0)
 #  application_status :integer          default(0)
 #  rating             :integer
-#  degree             :string
+#  degree             :integer          default(0)
 #  major              :string
 #  extra_info         :string
 #  graduation_year    :string
@@ -37,10 +37,11 @@ class Tutor < ActiveRecord::Base
   has_many :charges, dependent: :destroy
   has_many :promotions
 
-  delegate :school, :first_name, :last_name, :full_name, :sign_in_ip, :email, :password, to: :user
+  delegate :school, :first_name, :last_name, :full_name, :sign_in_ip, :email, :password, :slug, to: :user
 
   enum application_status: ['Incomplete', 'Complete', 'Approved']
   enum active_status: ['Inactive', 'Active']
+  enum degree: ["Bachelor's", "Master's", "PhD"]
 
   # Carrierwave setup for uploading files
   mount_uploader :profile_pic, ProfilePicUploader
@@ -126,13 +127,13 @@ class Tutor < ActiveRecord::Base
 
   def update_action_redirect_path(tutor_params)
     if tutor_params[:birthdate] || tutor_params[:phone_number] || tutor_params[:transcript]
-      "/#{self.user.slug}/dashboard/settings/private_information"
+      "/tutors/#{self.user.slug}/settings/private_info"
     elsif tutor_params[:appt_notes]
-      "/#{self.user.slug}/dashboard/settings/appointment_settings"
+      "/tutors/#{self.user.slug}/settings/appointment_settings"
     elsif tutor_params[:line1] || tutor_params[:city] || tutor_params[:state] || tutor_params [:postal_code]
-      "/#{self.user.slug}/dashboard/settings/tutor_payment_settings"
+      "/tutors/#{self.user.slug}/settings/payment_info"
     else
-      "/#{self.user.slug}/dashboard/settings/profile_settings"
+      "/tutors/#{self.user.slug}/settings/edit_profile"
     end
   end
 

@@ -15,11 +15,18 @@
     <div class="g g-1up">
       <div class="gi">
         <%= form_for :promotion, url: admin_promotions_path do |f| %>
-          <%= f.label :code %>
-          <%= f.text_field :code %>
-
           <%= f.label :category %>
-          <%= f.select(:category, options_for_select([['Free'],['Percent Off'],['Dollar Amount Off'],['Semester Package']]), include_blank: true) %>
+          <%= f.select(:category,
+            options_for_select([
+              ['Free from Axon', :free_from_axon],
+              ['Free from Tutor', :free_from_tutor], 
+              ['Percent off from Axon', :percent_off_from_axon],
+              ['Percent off from Tutor', :percent_off_from_tutor],
+              ['Dollar Amount off from Axon', :dollar_amount_off_from_axon],
+              ['Dollar Amount off from Tutor', :dollar_amount_off_from_tutor],
+              ['Repeating Percent off from Tutor', :repeating_percent_off_from_tutor], 
+              ['Repeating Dollar Amount off from Tutor', :repeating_dollar_amount_off_from_tutor]
+            ]), include_blank: true)  %>
 
           <%= f.label :amount %>
           <%= f.number_field :amount %>
@@ -32,6 +39,9 @@
 
           <%= f.label :redemption_limit %>
           <%= f.number_field :redemption_limit %>
+
+          <%= f.label :description %>
+          <%= f.text_area :description %>
           
           <%= f.submit 'Create Promotion' %>
         <% end %>

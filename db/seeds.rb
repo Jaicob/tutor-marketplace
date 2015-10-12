@@ -69,7 +69,7 @@ User.all.each do |user|
   user.create_tutor(
     rating: 5,
     birthdate: '1990-01-01',
-    degree: 'B.A.',
+    degree: 0,
     major: 'Marine Biology',
     extra_info: Faker::Lorem.sentence,
     graduation_year: '2018',

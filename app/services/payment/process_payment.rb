@@ -1,7 +1,7 @@
 class ProcessPayment
   include Interactor::Organizer
 
-  organize CreateCharge, ApplyPromoCode, SendPayment
+  organize CreateCharge, ApplyPromoCode, ReconcileCouponDifference, SendPayment
   # TODO: add SendEmails interactor
 
 end

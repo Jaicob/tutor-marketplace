@@ -1,0 +1,65 @@
+<h1 class="title">Promotion Details</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Category</th>
+      <th>Course</th>
+      <th>Amount</th>
+      <th>Valid From</th>
+      <th>Valid Until</th>
+      <th>Redemption Limit</th>
+      <th>Redemption Count</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><%= @promotion.code %></td>
+      <td><%= @promotion.category.humanize.gsub(/[A-Za-z']+/,&:capitalize) %></td>
+      <td><%= Course.find(@promotion.course_id).friendly_name unless !@promotion.course_id %></td>
+      <td><%= @promotion.amount %></td>
+      <td><%= @promotion.valid_from %></td>
+      <td><%= @promotion.valid_until %></td>
+      <td><%= @promotion.redemption_limit %></td>
+      <td><%= @promotion.redemption_count %></td>
+      <td><%= @promotion.description %></td>
+    </tr>
+  </tbody>
+</table>
+
+<%= form_for @promotion, url: tutor_promotion_path(@tutor.slug, @promotion) do |f| %>
+  <%= f.label :category %>
+  <%= f.select(:category,
+    options_for_select([
+      ['Free', :free_from_tutor], 
+      ['Percent Off', :percent_off_from_tutor],
+      ['Dollar Amount Off', :dollar_amount_off_from_tutor],
+      ['Repeating Percent Off', :repeating_percent_off_from_tutor], 
+      ['Repeating Dollar Amount Off', :repeating_dollar_amount_off_from_tutor]
+    ]), include_blank: true)  %>
+
+  <%= f.label :amount %>
+  <%= f.number_field :amount %>
+
+  <%= f.label :valid_from %>
+  <%= f.date_select :valid_from %>
+
+  <%= f.label :valid_until %>
+  <%= f.date_select :valid_until %>
+
+  <%= f.label :redemption_limit %>
+  <%= f.number_field :redemption_limit %>
+
+  <%= f.label :course_id %>
+  <%= f.select(:course_id, options_for_select(@course_collection)) %>
+
+  <%= f.label :description %>
+  <%= f.text_area :description %>
+
+  <%= f.hidden_field :tutor_id, value: @tutor.id %>
+  
+  <%= f.submit 'Create Promotion' %>
+<% end %>
+
+<%= link_to 'All Promotions', tutor_promotions_path(@tutor.slug), class: 'btn' %>

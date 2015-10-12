@@ -34,12 +34,13 @@ ActiveRecord::Schema.define(version: 20150930154059) do
 
   create_table "charges", force: :cascade do |t|
     t.integer  "amount"
-    t.integer  "transaction_fee"
+    t.integer  "axon_fee"
+    t.integer  "tutor_fee"
     t.string   "customer_id"
     t.integer  "tutor_id"
     t.string   "token"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
     t.integer  "promotion_id"
   end
 
@@ -143,7 +144,7 @@ ActiveRecord::Schema.define(version: 20150930154059) do
     t.integer  "active_status",      default: 0
     t.integer  "application_status", default: 0
     t.integer  "rating"
-    t.string   "degree"
+    t.integer  "degree",             default: 0
     t.string   "major"
     t.string   "extra_info"
     t.string   "graduation_year"
