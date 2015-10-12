@@ -84,9 +84,13 @@ class ApplicationController < ActionController::Base
         redirect_to root_path
         return
       end
-      # redirects to root for signed-in users
-      if current_user.role == 'student' || current_user.role == 'tutor'
-        redirect_to home_dashboard_user_path(current_user)
+      # redirects to dashboard home for signed-in students
+      if current_user.role == 'student'
+        redirect_to home_student_path(current_user)
+      end
+      # redirects to dashboard home for signed-in tutors
+      if current_user.role == 'student'
+        redirect_to home_tutor_path(current_user)
       end
     end
 

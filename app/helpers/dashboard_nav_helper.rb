@@ -21,8 +21,8 @@ module DashboardNavHelper
       },
 
       student: {
-        # 'Home'          => home_student_path(@student.slug),
-        # 'Settings'      => account_student_path(@student.slug),
+        'Home'          => home_student_path(@student.slug),
+        'Settings'      => account_student_path(@student.slug),
         'Find a Tutor'  => search_path,
       },
 

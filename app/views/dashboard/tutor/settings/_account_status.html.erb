@@ -6,7 +6,7 @@
      <%= @tutor.city %>, <%= @tutor.state %> <%= @tutor.postal_code %>
   </p>
   <p>Active account: ******<%= @tutor.last_4_acct %></p>
-  <p><%= link_to "Change address", tutor_payment_edit_address_dashboard_user_path(current_user), class: 'button secondary tiny expand' %></p>
+  <p><%= link_to "Change address", edit_address_info_tutor_path(current_user), class: 'button secondary tiny expand' %></p>
   <p><%= link_to "Change bank account", tutor_payment_info_form_tutor_path(@tutor), class: 'button secondary tiny expand', remote: true %></p>
 <% else %>
   <%= link_to "Set up account", tutor_payment_info_form_tutor_path(@tutor), class: 'btn', remote: true %>

@@ -4,24 +4,26 @@ class TutorCoursesController < ApplicationController
   def create
     @tutor_course = TutorCourse.create(tutor_course_params)
     if @tutor_course.save
-      redirect_to dashboard_user_courses_path(current_user)
+      redirect_to tutor_courses_path(@tutor.slug)
     else
-      flash[:notice] = "Tutor course was not created: #{@tutor_course.errors.full_messages}"
       redirect_to :back
     end
   end
 
   def update
     if @tutor_course.update(tutor_course_params)
-      redirect_to dashboard_user_courses_path(current_user)
+      redirect_to tutor_courses_path(@tutor.slug)
     else
-      flash[:notice] = "Tutor course was not edited: #{@tutor_course.errors.full_messages}"
+      redirect_to :back
     end
   end
 
   def destroy
-    @tutor_course.destroy
-    redirect_to dashboard_user_courses_path(current_user)
+    if @tutor_course.destroy
+      redirect_to tutor_courses_path(@tutor.slug)
+    else
+      redirect_to :back
+    end
   end
 
   private
