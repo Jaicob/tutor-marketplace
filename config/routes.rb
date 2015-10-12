@@ -277,7 +277,7 @@ Rails.application.routes.draw do
         resources :slots, only: [:index, :show, :create, :destroy]
         post '/slots/update' => 'slots#update_slots'
         get '/courses' => 'tutor_courses#index'
-        resources :appointments, only: [:index, :show], controller: 'tutor_appointments' do 
+        resources :appointments, only: [:index, :show], controller: 'tutor_appointments' do
           member do
             put 'cancel'
           end
@@ -292,6 +292,7 @@ Rails.application.routes.draw do
         end
       end
       get '/search/tutors' => 'search#tutors'
+      get '/payments/current_student' => 'payments#current_student'
     end
   end
 

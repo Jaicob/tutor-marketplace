@@ -5,8 +5,14 @@ var AppointmentSelector = React.createClass({
           selectedSubject: this.props.subject || {},
           disabledSlots: [],
           currentStep: 1,
-          forceFetch: false
+          forceFetch: false,
+          student: {},
+          token: "",
+          customer_id: ""
       };
+  },
+  componentDidMount: function() {
+    this.fetchStudent();
   },
   handleSubject: function (newSubject) {
     this.setState({ selectedSubject: newSubject });
@@ -52,6 +58,21 @@ var AppointmentSelector = React.createClass({
       default: return true
     }
   },
+  fetchStudent: function () {
+    var endpoint = API.endpoints.students();
+    $.getJSON(endpoint, function (data) {
+      this.setState({
+        student: data
+      });
+    }.bind(this));
+  },
+  handleCard: function(customer_id, token) {
+    if (customer_id == null) {
+      this.setState({token: token})
+    } else {
+      this.setState({customer_id: customer_id})
+    };
+  },
   renderSubjectSelector: function () {
     if (this.state.currentStep == 1) {
       return <SubjectSelector tutor={this.props.tutor}
@@ -70,36 +91,41 @@ var AppointmentSelector = React.createClass({
                                    handleDisabledSlots={this.handleDisabledSlots}
                                    forceFetch={this.state.forceFetch}
                                    />
-      case 2: return <PaymentForm {...this.props} />
+      case 2: return <PaymentForm {...this.props} currentStudent={this.state.student} onChange={this.handleCard} />
       case 3: return <ConfirmationScreen {...this.props} />
+      case 4: return <Summary {...this.props} />
       default: break
     };
   },
   render: function(){
+    // <div className="column selected-class-output">
+    // </div>
     return (
-      <div>
-        <section className="availability">
-          <div className="wrapper">
-            <article className="availability-calendar">
-              <header className="row">
-                <h3 className="title">Availability</h3>
-                  {this.renderSubjectSelector()}
-              </header>
-              {this.renderMainView()}
-            </article>
-            <footer className="row">
-                  <div className="column selected-class-output">
-                    <p>Selected Date will show here.</p>
-                    <p>Selected Class will show here.</p>
-                  </div>
-                  <div className="column submit">
-                    { this.canGoBack() ? <a className="btn" onClick={this.handleBackStep}><span className="fi-arrow-left"></span> Go back</a> : ""}
-                    { this.canGoForward() ? <a className="btn" onClick={this.handleNextStep}>Next <span className="fi-arrow-right"></span></a> : ""}
-                  </div>
-                </footer>
-          </div>
-        </section>
-      </div>
+      <section className="availability" id="book">
+        <div className="wrapper">
+          <article className="availability-calendar">
+            <header className="row">
+              <h3 className="title">Availability</h3>
+                {this.renderSubjectSelector()}
+            </header>
+            {this.renderMainView()}
+          </article>
+          <footer className="row">
+                <div className="column submit">
+                  { this.canGoBack() &&
+                  <a className="btn" onClick={this.handleBackStep}>
+                    <span className="fi-arrow-left"></span> Go back
+                  </a>
+                  }
+                  { this.canGoForward() &&
+                  <a className="btn" onClick={this.handleNextStep}>
+                    Next <span className="fi-arrow-right"></span>
+                  </a>
+                  }
+                </div>
+              </footer>
+        </div>
+      </section>
     );
   }
 });
