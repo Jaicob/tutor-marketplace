@@ -1,12 +1,6 @@
-<p><%= link_to 'Account Settings', account_dashboard_user_path(current_user) %></p>
-
-<% if current_user.tutor %>
-  <p><%= link_to 'Payment Settings', tutor_payment_dashboard_user_path(current_user) %></p>
-  <p><%= link_to 'Profile Settings', profile_dashboard_user_path(current_user) %></p>
-  <p><%= link_to 'Appointment Settings', appointment_settings_dashboard_user_path(current_user) %></p>
-  <p><%= link_to 'Private Information', private_info_dashboard_user_path(current_user) %></p>
-<% else %>
-  <p><%= link_to 'Payment Settings', student_payment_dashboard_user_path(current_user) %></p>
-<% end %>
-
-<p><%= link_to 'Appointment History', appointment_history_dashboard_user_path(current_user) %></p>
+<p><%= link_to 'Account Settings', account_tutor_path(current_user) %></p>
+<p><%= link_to 'Payment Settings', payment_info_tutor_path(current_user) %></p>
+<p><%= link_to 'Profile Settings', edit_profile_tutor_path(current_user) %></p>
+<p><%= link_to 'Appointment Settings', appointment_settings_tutor_path(current_user) %></p>
+<p><%= link_to 'Private Information', private_info_tutor_path(current_user) %></p>
+<p><%= link_to 'Appointment History', appointment_history_tutor_path(current_user) %></p>

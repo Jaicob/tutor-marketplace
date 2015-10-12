@@ -4,10 +4,14 @@ class UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      redirect_to account_settings_dashboard_user_path(current_user)
+      if @user.tutor
+        redirect_to account_tutor_path(current_user)
+      else
+        redirect_to account_student_path(current_user)
+      end
     else
       flash[:notice] = "There was an error updating your settings."
-      redirect_to account_settings_dashboard_user_path(current_user)
+      redirect_to :back
     end
   end
 

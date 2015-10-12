@@ -1,4 +1,4 @@
-class Dashboard::Tutor::ScheduleController < ApplicationController
+class Dashboard::Tutor::ScheduleController < DashboardController
 
   def index
   end

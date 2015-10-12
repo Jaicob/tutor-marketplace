@@ -1,4 +1,4 @@
-class Dashboard::Tutor::PromotionsController < ApplicationController
+class Dashboard::Tutor::PromotionsController < DashboardController
   before_action :set_promotion, only: [:show, :edit, :destroy]
 
   def new

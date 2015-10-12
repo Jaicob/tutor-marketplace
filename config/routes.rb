@@ -197,32 +197,32 @@ Rails.application.routes.draw do
   # custom_devise_routes
   devise_for :users, controllers: { registrations: "tutor_registration" }
 
-  # standard resources for tutor_courses, slots
+  # standard resources for slots
   resources :slots
 
-  # standard resources for tutors, with two extra actions for individual tutor instances
+  # user endpoints for update and destroy 
+  resources :users, only: [:update, :destroy]
+
   resources :tutors do
     member do
-      get 'tutor_payment_info_form' => 'tutors#tutor_payment_info_form', as: 'tutor_payment_info_form'
-      patch 'update_tutor_payment_info' => 'tutors#update_tutor_payment_info', as: 'update_tutor_payment_info'
+              get '/tutor_payment_info_form'       => 'tutors#tutor_payment_info_form', as: 'tutor_payment_info_form'
+        patch '/update_tutor_payment_info'   => 'tutors#update_tutor_payment_info', as: 'update_tutor_payment_info'
     end
   end
 
   # all dashboard routes for signed-in tutors
-  resources :users, only: [:update], path: '', as: 'tutor' do
+  resources :tutors, only: [:update, :destroy] do
     member do
       get  '/home'                        => 'dashboard/tutor/home#index'
       get  '/schedule'                    => 'dashboard/tutor/schedule#index'
       get  '/profile'                     => 'dashboard/tutor/profile#index'
-      get  '/edit_profile'                => 'dashboard/tutor/profile#edit'
       scope 'settings' do 
         get  '/account'                     => 'dashboard/tutor/settings#account'
         get  '/private_info'                => 'dashboard/tutor/settings#private_info'
-        get  '/profile'                     => 'dashboard/tutor/settings#profile'
-        get  '/appointments'                => 'dashboard/tutor/settings#appointment_settings' 
-        get  '/tutor_payment'               => 'dashboard/tutor/settings#tutor_payment'
-        get  '/tutor_payment_edit_address'  => 'dashboard/tutor/settings#edit_tutor_payment_address'
-        get  '/student_payment'             => 'dashboard/tutor/settings#student_payment'
+        get  '/edit_profile'                => 'dashboard/tutor/settings#edit_profile'
+        get  '/appointment_settings'        => 'dashboard/tutor/settings#appointment_settings' 
+        get  '/payment_info'                => 'dashboard/tutor/settings#tutor_payment'
+        get  '/edit_address_info'           => 'dashboard/tutor/settings#edit_tutor_payment_address'
         get  '/appointment_history'         => 'dashboard/tutor/settings#appointment_history'
       end
     end
@@ -231,10 +231,10 @@ Rails.application.routes.draw do
   end
 
   # all dashboard routes for signed-in students
-  resources :users, only: [:update], path: '', as: 'student' do 
+  resources :students, only: [:update, :destroy] do 
     member do 
       get  '/home'                 => 'dashboard/student/home#index'
-      get '/search'                => 'single_views#tutor_search'      
+      get  '/search'               => 'single_views#tutor_search'      
       scope 'settings' do
         get  '/account'               => 'dashboard/student/settings#account'
         get  '/student_payment'       => 'dashboard/student/settings#student_payment'

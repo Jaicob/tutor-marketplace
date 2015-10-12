@@ -126,13 +126,13 @@ class Tutor < ActiveRecord::Base
 
   def update_action_redirect_path(tutor_params)
     if tutor_params[:birthdate] || tutor_params[:phone_number] || tutor_params[:transcript]
-      "/#{self.user.slug}/dashboard/settings/private_information"
+      "/tutors/#{self.user.slug}/settings/private_info"
     elsif tutor_params[:appt_notes]
-      "/#{self.user.slug}/dashboard/settings/appointment_settings"
+      "/tutors/#{self.user.slug}/dashboard/settings/appointment_settings"
     elsif tutor_params[:line1] || tutor_params[:city] || tutor_params[:state] || tutor_params [:postal_code]
-      "/#{self.user.slug}/dashboard/settings/tutor_payment_settings"
+      "/tutors/#{self.user.slug}/settings/payment_info"
     else
-      "/#{self.user.slug}/dashboard/settings/profile_settings"
+      "/tutors/#{self.user.slug}/settings/edit_profile"
     end
   end
 

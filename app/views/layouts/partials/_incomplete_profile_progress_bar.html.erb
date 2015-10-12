@@ -23,42 +23,42 @@
     <h3 class="no-top-margin"><%= @user.first_name %>, you're just a few steps away from your first appointment:</h3>
 
     <div class="tutor-profile-progress-icon-div">
-      <%= link_to(profile_settings_dashboard_user_path(current_user)) do %>
+      <%= link_to(edit_profile_tutor_path(current_user)) do %>
         <p class="tutor-profile-progress-icon"><%= @profile_pic ? @check.html_safe() : @blank.html_safe()  %></p>
         <h6 class="center tutor-profile-progress-title">Profile Picture</h6>
       <% end %>
     </div>
     
     <div class="tutor-profile-progress-icon-div">
-      <%= link_to(profile_settings_dashboard_user_path(current_user, anchor: 'profile-fields')) do %>
+      <%= link_to(edit_profile_tutor_path(current_user, anchor: 'profile-fields')) do %>
         <p class="tutor-profile-progress-icon"><%= @profile_fields ? @check.html_safe() : @blank.html_safe() %></p>
         <h6 class="center tutor-profile-progress-title">Profile Info</h6>
       <% end %>
     </div>
 
     <div class="tutor-profile-progress-icon-div">
-      <%= link_to(private_information_dashboard_user_path(@user, anchor: 'private-info')) do %>
+      <%= link_to(private_info_tutor_path(@user, anchor: 'private-info')) do %>
         <p class="tutor-profile-progress-icon"><%= @private_info ? @check.html_safe() : @blank.html_safe()  %></p>
         <h6 class="center tutor-profile-progress-title">Private Info</h6>
       <% end %>
     </div>
     
     <div class="tutor-profile-progress-icon-div">
-      <%= link_to(appointment_settings_dashboard_user_path(@user, anchor: 'appt-notes')) do %>
+      <%= link_to(appointment_settings_tutor_path(@user, anchor: 'appt-notes')) do %>
         <p class="tutor-profile-progress-icon"><%= @appt_notes ? @check.html_safe() : @blank.html_safe()  %></p>
         <h6 class="center tutor-profile-progress-title">Appt. Settings</h6>
       <% end %>
     </div>
     
     <div class="tutor-profile-progress-icon-div">
-      <%= link_to(private_information_dashboard_user_path(@user, anchor: 'transcript')) do %>
+      <%= link_to(private_info_tutor_path(@user, anchor: 'transcript')) do %>
         <p class="tutor-profile-progress-icon"><%= @transcript ? @check.html_safe() : @blank.html_safe()  %></p>
         <h6 class="center tutor-profile-progress-title">Transcript</h6>
       <% end %>
     </div>
 
     <div class="tutor-profile-progress-icon-div">
-      <%= link_to(tutor_payment_settings_dashboard_user_path(@user, anchor: 'appt-notes')) do %>
+      <%= link_to(payment_info_tutor_path(@user, anchor: 'appt-notes')) do %>
         <p class="tutor-profile-progress-icon"><%= @payment_info ? @check.html_safe() : @blank.html_safe()  %></p>
         <h6 class="center tutor-profile-progress-title">Payment Info</h6>
       <% end %>

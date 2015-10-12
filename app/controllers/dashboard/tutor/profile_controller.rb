@@ -1,6 +1,6 @@
-class Dashboard::Tutor::ProfileController < ApplicationController
+class Dashboard::Tutor::ProfileController < DashboardController
 
   def index
   end
-
+  
 end

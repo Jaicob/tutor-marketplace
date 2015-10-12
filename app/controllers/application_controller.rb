@@ -41,7 +41,7 @@ class ApplicationController < ActionController::Base
 
     # Before_action for multiple controllers
     def set_tutor
-      if current_user
+      if current_user.tutor
         @tutor = current_user.tutor
       else
         @tutor = User.find(params[:id]).tutor # This sets @tutor for the show action when a user is not logged in which is necessary for visitors to see a tutor's profile
@@ -50,7 +50,7 @@ class ApplicationController < ActionController::Base
 
     # Before_action for multiple controllers
     def set_student
-      if current_user
+      if current_user.student
         @student = current_user.student
       else
         @student = nil

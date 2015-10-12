@@ -4,7 +4,7 @@
       <h1 class="title">Profile Preview</h1>
     </div>
     <p>Share your profile link: <%= link_to "www.axontutors.com/tutors/#{@tutor.user.friendly_id}", tutor_path(@tutor.user) %></p>
-    <%= link_to profile_settings_dashboard_user_path do %>
+    <%= link_to profile_tutor_path do %>
       <button type="button" class="btn-labeled radius primary right" id="edit_profile_button">Edit</button>
     <% end %>
     <%= render 'tutor_profile' %>
