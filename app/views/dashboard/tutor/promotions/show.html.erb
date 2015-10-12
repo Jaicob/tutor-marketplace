@@ -37,7 +37,9 @@
       ['Dollar Amount Off', :dollar_amount_off_from_tutor],
       ['Repeating Percent Off', :repeating_percent_off_from_tutor], 
       ['Repeating Dollar Amount Off', :repeating_dollar_amount_off_from_tutor]
-    ]), include_blank: true)  %>
+      ],
+      ["#{@promotion.category}", @promotion.category.to_i]
+    ), include_blank: true)  %>
 
   <%= f.label :amount %>
   <%= f.number_field :amount %>
