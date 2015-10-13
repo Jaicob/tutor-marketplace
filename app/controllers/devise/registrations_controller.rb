@@ -16,7 +16,7 @@ class Devise::RegistrationsController < DeviseController
     resource.sign_in_ip = request.env['REMOTE_ADDR']
     resource.save
     resource.set_school(resource, params)
-    resource.create_tutor_account(resource, params)
+    resource.create_associated_student_or_tutor(resource, params)
     
     yield resource if block_given?
     if resource.persisted?

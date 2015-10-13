@@ -1,2 +1,2 @@
-class Dashboard::Student::HomeController < ApplicationController
+class Dashboard::Student::HomeController < DashboardController
 end

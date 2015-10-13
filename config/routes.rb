@@ -225,8 +225,8 @@ Rails.application.routes.draw do
         get  '/private_info'                => 'dashboard/tutor/settings#private_info'
         get  '/edit_profile'                => 'dashboard/tutor/settings#edit_profile'
         get  '/appointment_settings'        => 'dashboard/tutor/settings#appointment_settings' 
-        get  '/payment_info'                => 'dashboard/tutor/settings#tutor_payment'
-        get  '/edit_address_info'           => 'dashboard/tutor/settings#edit_tutor_payment_address'
+        get  '/payment_info'                => 'dashboard/tutor/settings#payment_info'
+        get  '/edit_address_info'           => 'dashboard/tutor/settings#edit_payment_address'
         get  '/appointment_history'         => 'dashboard/tutor/settings#appointment_history'
       end
     end
@@ -241,7 +241,8 @@ Rails.application.routes.draw do
       get  '/search'               => 'single_views#tutor_search'      
       scope 'settings' do
         get  '/account'               => 'dashboard/student/settings#account'
-        get  '/student_payment'       => 'dashboard/student/settings#student_payment'
+        get  '/payment_info'       => 'dashboard/student/settings#payment_info'
+        post  '/payment_info'       => 'dashboard/student/settings#save_payment_info'
         get  '/appointment_history'   => 'dashboard/student/settings#appointment_history'
       end
     end
