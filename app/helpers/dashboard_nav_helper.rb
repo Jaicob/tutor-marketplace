@@ -11,17 +11,17 @@ module DashboardNavHelper
     
     if current_user.role.to_sym == :tutor
       @dashboard_links = {
-        'Home'      => home_tutor_path(@tutor.slug),
-        'Schedule'  => schedule_tutor_path(@tutor.slug),
-        'Courses'   => tutor_courses_path(@tutor.slug),
-        'Promotions' => tutor_promotions_path(@tutor.slug),
-        'Profile'   => profile_tutor_path(@tutor.slug),
-        'Settings'  => account_tutor_path(@tutor.slug)
+        'Home'      => home_tutor_path(current_user.slug),
+        'Schedule'  => schedule_tutor_path(current_user.slug),
+        'Courses'   => tutor_courses_path(current_user.slug),
+        'Promotions' => tutor_promotions_path(current_user.slug),
+        'Profile'   => profile_tutor_path(current_user.slug),
+        'Settings'  => account_tutor_path(current_user.slug)
       }
     else
       @dashboard_links = {
-        'Home'          => home_student_path(@student.slug),
-        'Settings'      => account_student_path(@student.slug),
+        'Home'          => home_student_path(current_user.slug),
+        'Settings'      => account_student_path(current_user.slug),
         'Find a Tutor'  => search_path,
       }
     end
