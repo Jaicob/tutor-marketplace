@@ -10,7 +10,7 @@ end
 # Params for easy setup/testing in console
 
 params = {
-  tutor: Tutor.first,
+  tutor: Tutor.find(23),
   appointments: [Appointment.first],
   customer_id: Student.find(22).customer_id,
   token: 789867877868,
