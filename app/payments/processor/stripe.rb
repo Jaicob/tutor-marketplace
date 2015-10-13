@@ -55,7 +55,7 @@ module Processor
           currency: 'usd',
           source: charge.token,
           destination: charge.tutor.acct_id,
-          application_fee: charge.transaction_fee
+          application_fee: charge.axon_fee
         )
       else
         ::Stripe::Charge.create(
@@ -63,11 +63,12 @@ module Processor
           currency: 'usd',
           customer: charge.customer_id,
           destination: charge.tutor.acct_id,
-          application_fee: charge.transaction_fee
+          application_fee: charge.axon_fee
         )
       end
     end
 
+    # method also used to create customer
     def update_customer(student, token)
       if student.customer_id.nil?
         cust = ::Stripe::Customer.create(

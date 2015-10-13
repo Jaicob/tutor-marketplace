@@ -1,0 +1,79 @@
+Searching 8191 files for "customer_id"
+
+/Users/johnthomasjobe/web-app/app/assets/javascripts/components/Appointments/AppointmentSelector.js.jsx:
+    9            student: {},
+   10            token: "",
+   11:           customer_id: ""
+   12        };
+   13    },
+   ..
+   67      }.bind(this));
+   68    },
+   69:   handleCard: function(customer_id, token) {
+   70:     if (customer_id == null) {
+   71        this.setState({token: token})
+   72      } else {
+   73:       this.setState({customer_id: customer_id})
+   74      };
+   75    },
+
+/Users/johnthomasjobe/web-app/app/assets/javascripts/components/Appointments/DefaultCard.js.jsx:
+    8    handleUseDefault: function(event) {
+    9      this.setState({checked: !this.state.checked});
+   10:     this.props.onCardSelect(this.props.currentStudent.customer_id);
+   11    },
+   12  
+
+/Users/johnthomasjobe/web-app/app/assets/javascripts/components/Appointments/PaymentForm.js.jsx:
+    1  var PaymentForm = React.createClass({
+    2  
+    3:   handleDefaultCard: function(customer_id) {
+    4:     this.props.onChange(customer_id, null)
+    5    },
+    6  
+
+
+/Users/johnthomasjobe/web-app/app/payments/processor/stripe.rb:
+   50  
+   51      def send_charge(charge)
+   52:       if charge.customer_id.nil?
+   53          ::Stripe::Charge.create(
+   54            amount: charge.amount,
+   ..
+   62            amount: charge.amount,
+   63            currency: 'usd',
+   64:           customer: charge.customer_id,
+   65            destination: charge.tutor.acct_id,
+   66            application_fee: charge.axon_fee
+   ..
+   70  
+   71      def update_customer(student, token)
+   72:       if student.customer_id.nil?
+   73          cust = ::Stripe::Customer.create(
+   74            card: token,
+   ..
+   78          cust.default_source = token
+   79          cust.save
+   80:         student.update_attributes(customer_id: cust.id)
+   81        else
+   82:         cust = ::Stripe::Customer.retrieve(student.customer_id)
+   83          cust.sources.create(source: token)
+   84          cust.default_source = token
+
+/Users/johnthomasjobe/web-app/app/services/payment/create_charge.rb:
+    4    # Call with: tutor: instance_of Tutor
+    5    #            appointments: array of Appointment
+    6:   #            customer_id: student.customer_id
+    7    #            token: params[:token]
+    8    #            rates: array of TutorCourse.rate in dollars
+    .
+   19      amount = tutor_fee * axon_fee_multiplier
+   20      axon_fee = amount - tutor_fee
+   21:     charge = context.tutor.charges.create(token: context.token, customer_id: context.customer_id,
+   22                                            amount: amount, axon_fee: axon_fee, tutor_fee: tutor_fee)
+   23      context.appointments.each{|appt| appt.update_attributes(charge_id: charge.id)}
+
+/Users/johnthomasjobe/web-app/app/views/api/v1/payments/current_student.json.jbuilder:
+    4  
+    5  json.card @student.card_brand + " **** " + @student.last_4_digits
+    6: json.customer @student.customer_id
