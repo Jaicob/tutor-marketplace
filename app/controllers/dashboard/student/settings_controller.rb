@@ -14,6 +14,4 @@ class Dashboard::Student::SettingsController < DashboardController
     redirect_to :back
   end
 
-  # 4242424242424242
-
 end

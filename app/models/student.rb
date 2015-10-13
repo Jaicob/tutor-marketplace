@@ -15,7 +15,7 @@ class Student < ActiveRecord::Base
   belongs_to :user
   has_many :appointments, dependent: :destroy
 
-  delegate :school, :full_name, :email, :password, to: :user
+  delegate :school, :full_name, :email, :password, :slug, to: :user
 
   def subjects
     # returns subjects that a student makes appointments for, only used in Admin section for analytics
