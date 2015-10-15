@@ -16,9 +16,11 @@
 #
 
 class Promotion < ActiveRecord::Base
-  validates :amount, presence: :true
-
   belongs_to :tutor # or if tutor_id is blank, is an Axon HQ coupon
+
+  validates :redemption_limit, presence: true
+  validates :valid_from, presence: true
+  validates :valid_until, presence: true
 
   after_create :generate_secure_code
 

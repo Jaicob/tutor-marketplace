@@ -15,6 +15,7 @@ module PromoCodeHelpers
     end
 
     def return_adjusted_fees
+      return false unless @promotion.category == 'free_from_tutor'
       if is_redemption_valid?(@promotion, @tutor)
         @promotion.redemption_count += 1
         @promotion.save

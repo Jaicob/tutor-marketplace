@@ -2,7 +2,7 @@ class SendPayment
   include Interactor
 
   def call
-    if context.is_payment_required == true
+    if context.is_payment_required == true && context.charge.amount > 0
       charge = context.charge
       processor = PaymentFactory.new.build
       payment = processor.send_charge(charge)

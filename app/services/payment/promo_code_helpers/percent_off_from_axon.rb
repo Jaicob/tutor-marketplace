@@ -15,6 +15,7 @@ module PromoCodeHelpers
     end
 
     def return_adjusted_fees
+      return false unless @promotion.category == 'percent_off_from_axon'
       if is_redemption_valid?(@promotion)
         @promotion.redemption_count += 1
         @promotion.save
@@ -35,8 +36,11 @@ module PromoCodeHelpers
 
     def find_discount_price_difference(rate, discount_multiplier, transaction_fee)
       regular_price = rate * transaction_fee * 100
+      puts "REGULAR PRICE = #{regular_price}"
       discount_price = rate * transaction_fee * 100 * discount_multiplier 
+      puts "DISCOUNT PRICE = #{discount_price}"
       @price_difference = regular_price - discount_price
+      puts "@price_difference = #{@price_difference}"
     end
 
     def update_charge(charge, amount, tutor_fee, price_difference, promotion)
