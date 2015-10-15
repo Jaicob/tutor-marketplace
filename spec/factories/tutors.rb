@@ -35,7 +35,7 @@ FactoryGirl.define do
     active_status 0
     application_status 0
     birthdate "1992-05-28"
-    degree "B.A."
+    degree 0
     major "Biology"
     graduation_year "2019"
     phone_number "555-555-5555"

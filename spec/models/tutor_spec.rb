@@ -39,10 +39,6 @@ RSpec.describe Tutor, type: :model do
       expect(tutor).to be_valid
     end
 
-    it "is invalid without extra info" do
-      expect(build(:tutor, extra_info: nil)).to_not be_valid
-    end
-
     it "application_status is 'Incomplete' by default" do
       expect(tutor.application_status).to eq 'Incomplete'
     end
