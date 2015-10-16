@@ -53,17 +53,19 @@ class User < ActiveRecord::Base
 
   def create_tutor_account(user, params)
     # used in Devise::RegistrationsController to create a Tutor while creating a User
-    if params[:user][:tutor] != nil
-      # creates the tutor
-      user.create_tutor!(
-        extra_info: params[:user][:tutor][:extra_info],
-        phone_number: params[:user][:tutor][:phone_number]
-        )
-      # creates the tutor's first tutor_course
-      user.tutor.tutor_courses.create(course_id: params[:course][:course_id], rate: params[:tutor_course][:rate])
-      # send welcome email
-      TutorManagementMailer.delay.welcome_email(user.id)
-    end
+    user.create_tutor!(
+      extra_info: params[:user][:tutor][:extra_info],
+      phone_number: params[:user][:tutor][:phone_number]
+      )
+    # creates the tutor's first tutor_course
+    user.tutor.tutor_courses.create(course_id: params[:course][:course_id], rate: params[:tutor_course][:rate])
+    # send welcome email
+    TutorManagementMailer.delay.welcome_email(user.id)
+  end
+
+  def create_student_account(user, params)
+    user.create_student!
+    # TODO: send welcome email to student?
   end
 
   def set_school(user, params)

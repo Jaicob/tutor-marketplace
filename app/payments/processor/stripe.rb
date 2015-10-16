@@ -75,13 +75,18 @@ module Processor
           description: "#{student.full_name} - #{student.email}",
           email: student.email
         )
-        cust.default_source = token
-        cust.save
-        student.update_attributes(customer_id: cust.id)
+        if cust.sources['data'].first
+          brand = cust.sources['data'].first['brand']
+          last_4 = cust.sources['data'].first['last4']
+          student.update_attributes(
+            customer_id: cust.id, 
+            last_4_digits: last_4,
+            card_brand: brand
+          )
+        end
       else
         cust = ::Stripe::Customer.retrieve(student.customer_id)
         cust.sources.create(source: token)
-        cust.default_source = token
         cust.save
       end
     end

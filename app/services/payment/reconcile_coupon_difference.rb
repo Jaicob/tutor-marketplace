@@ -16,11 +16,11 @@ end
 
 
 
-    # def reconcile_coupon_difference(charge)
-    #   transfer = ::Stripe::Transfer.create(
-    #     amount: charge.amount,
-    #     currency: 'usd',
-    #     destination: charge.tutor.acct_id,
-    #     description: "Reconciliation for Coupon #{promotion.description}"
-    #   )
-    # end
+# def reconcile_coupon_difference(charge)
+#   transfer = ::Stripe::Transfer.create(
+#     amount: charge.amount,
+#     currency: 'usd',
+#     destination: charge.tutor.acct_id,
+#     description: "Reconciliation for Coupon #{promotion.description}"
+#   )
+# end

@@ -6,6 +6,9 @@ class ProcessPayment
 
 end
 
+##
+# Params for easy setup/testing in console
+
 # params = {
 #   tutor: Tutor.first,
 #   appointments: [Appointment.first],
