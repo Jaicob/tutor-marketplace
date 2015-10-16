@@ -16,12 +16,42 @@ class API::V1::StudentAppointmentsController < API::V1::Defaults
     @appt = Appointment.new
     @appt.update(safe_params)
     if @appt.save
-      AppointmentMailer.delay.appointment_confirmation_for_tutor(@appt.id)
-      AppointmentMailer.delay.appointment_confirmation_for_student(@appt.id)
-      if @appt.appt_reminder_email_date != nil
-        ApptReminderWorker.perform_at(@appt.appt_reminder_email_date, @appt.id)
-        ApptReminderWorker.perform_at(@appt.appt_reminder_email_date, @appt.id)
-      end
+      ProcessPayment.call(
+        tutor: @appt.tutor,
+        appointments: [@appt],
+        customer_id: 
+      )
+
+# params = {
+#   tutor: Tutor.find(23),
+#   appointments: [Appointment.first],
+#   customer_id: Student.find(22).customer_id,
+#   rates: [23],
+#   transaction_percentage: 15.0,
+#   promotion_id: @promotion.id,
+#   is_payment_required: true,
+# }
+
+#  id         :integer          not null, primary key
+#  student_id :integer
+#  slot_id    :integer
+#  course_id  :integer
+#  start_time :datetime
+#  status     :integer          default(0)
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  charge_id  :integer
+#
+  # delegate :tutor, to: :slot
+  # delegate :school, to: :course
+
+
+      # AppointmentMailer.delay.appointment_confirmation_for_tutor(@appt.id)
+      # AppointmentMailer.delay.appointment_confirmation_for_student(@appt.id)
+      # if @appt.appt_reminder_email_date != nil
+      #   ApptReminderWorker.perform_at(@appt.appt_reminder_email_date, @appt.id)
+      #   ApptReminderWorker.perform_at(@appt.appt_reminder_email_date, @appt.id)
+      # end
       render json: @appt
     else
       render nothing: true, status: 500
