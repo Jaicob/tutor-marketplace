@@ -51,14 +51,6 @@ class User < ActiveRecord::Base
   devise :async, :invitable, :database_authenticatable, :registerable, :confirmable,
     :recoverable, :rememberable, :trackable, :validatable
 
-  def create_associated_student_or_tutor(user, params)
-    if params[:user][:tutor] != nil
-      create_tutor_account(user, params)
-    else
-      create_student_account(user, params)
-    end
-  end
-
   def create_tutor_account(user, params)
     # used in Devise::RegistrationsController to create a Tutor while creating a User
     user.create_tutor!(
