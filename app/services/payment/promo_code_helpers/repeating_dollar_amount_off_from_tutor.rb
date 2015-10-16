@@ -16,6 +16,7 @@ module PromoCodeHelpers
     end
 
     def return_adjusted_fees
+      return false unless @promotion.category == 'repeating_dollar_amount_off_from_tutor'
       if is_redemption_valid?(@promotion, @tutor)
         if @eligible_appts.count > 0
           find_discount_price_difference(@promotion, @appointments, @eligible_appts, @rates, @transaction_fee)

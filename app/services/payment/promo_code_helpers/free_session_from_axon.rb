@@ -14,6 +14,7 @@ module PromoCodeHelpers
     end
 
     def return_adjusted_fees
+      return false unless @promotion.category == 'free_from_axon'
       if is_redemption_valid?(@promotion)
         @promotion.redemption_count += 1
         @promotion.save

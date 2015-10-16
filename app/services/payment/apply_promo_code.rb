@@ -4,15 +4,15 @@ class ApplyPromoCode
   before do
     # Determines the type of a promo code (if one exists) and calls the appropriate method to evaluate that promo code category
     if context.promotion_id != nil
-      promo_category = Promotion.find(context.promotion_id).category
+      promo_category = Promotion.find(context.promotion_id).category.to_sym
 
       case promo_category
       
       when :free_from_axon
-        @method = apply_free_axon_session_promo
+        @method = apply_free_from_axon_promo
       
       when :free_from_tutor
-        @method = apply_free_tutor_session_promo
+        @method = apply_free_from_tutor_promo
       
       when :percent_off_from_axon
         @method = apply_percentage_off_from_axon_promo
@@ -41,19 +41,20 @@ class ApplyPromoCode
   def call
     @method
   end
-  
+
   private
 
     #---------------------
     # Free Session Promos
     #---------------------
 
-    def apply_free_session_from_axon_promo
+    def apply_free_from_axon_promo
       service = PromoCodeHelpers::FreeSessionFromAxon.new(context)
       context = service.return_adjusted_fees
+      puts "I GOT CALLED, I GOT CALLED. I GOT CALLED. I GOT CALLED!!!!!!!!!"
     end
 
-    def apply_free_session_from_tutor_promo
+    def apply_free_from_tutor_promo
       service = PromoCodeHelpers::FreeSessionFromTutor.new(context)
       context = service.return_adjusted_fees
     end
