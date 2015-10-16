@@ -27,28 +27,4 @@ class Dashboard::Tutor::SettingsController < DashboardController
   def edit_address
   end
 
-  # def tutor_payment_info_form
-  #   @tutor = Tutor.find(params[:id])
-  #   respond_to do |format|
-  #     format.js { render :load_payment_form }
-  #   end
-  # end
-
-  # def update_tutor_payment_info
-  #   @tutor = Tutor.find(params[:id])
-  #   if @tutor.update_attributes(tutor_params)
-  #     @tutor.update_attributes(last_4_acct: params[:last_4_acct])
-  #     UpdateTutorAccount.call(tutor: @tutor, token: params[:stripeToken])
-  #     respond_to do |format|
-  #       format.js { render :payment_settings_updated }
-  #       format.html { redirect_to tutor_payment_settings_dashboard_user(@tutor.slug) }
-  #     end
-  #   else
-  #     respond_to do |format|
-  #       format.js { render :load_payment_form }
-  #       flash[:error] = "Something went wrong"
-  #     end
-  #   end
-  # end
-
 end
