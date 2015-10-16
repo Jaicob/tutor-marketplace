@@ -17,12 +17,10 @@ class Devise::RegistrationsController < DeviseController
     resource.save
     resource.set_school(resource, params)
     if params[:user][:tutor] != nil
-      create_tutor_account(resource, params)
+      resource.create_tutor_account(resource, params)
     else
-      create_student_account(resource, params)
+      resource.create_student_account(resource, params)
     end
-  end
-
     
     yield resource if block_given?
     if resource.persisted?
