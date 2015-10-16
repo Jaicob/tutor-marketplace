@@ -18,7 +18,7 @@ class API::V1::SlotsController < API::V1::Defaults
     if @slots
        render json: @slots, status: 200
     else
-      render nothing: true, status: 500
+      render json: @slots.errors.full_messages
     end
   end
 
@@ -31,7 +31,7 @@ class API::V1::SlotsController < API::V1::Defaults
     if @slots
       render json: @slots, status: 200
     else
-      return "Slot could not be updated: #{@slot.errors.full_messages}", status: 500
+      render json: @slots.errors.full_messages
     end
   end
 
@@ -39,7 +39,7 @@ class API::V1::SlotsController < API::V1::Defaults
     if @slot.destroy
       render nothing: true, status: 200
     else
-      render nothing: true, status: 500
+      render json: @slots.errors.full_messages
     end
   end
 

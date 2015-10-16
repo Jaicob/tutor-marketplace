@@ -51,7 +51,6 @@ class ApplyPromoCode
     def apply_free_from_axon_promo
       service = PromoCodeHelpers::FreeSessionFromAxon.new(context)
       context = service.return_adjusted_fees
-      puts "I GOT CALLED, I GOT CALLED. I GOT CALLED. I GOT CALLED!!!!!!!!!"
     end
 
     def apply_free_from_tutor_promo
