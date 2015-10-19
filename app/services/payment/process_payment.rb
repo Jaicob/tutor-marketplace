@@ -18,5 +18,7 @@ params = {
   rates: [23],
   transaction_percentage: 15.0,
   promotion_id: @promotion.id,
-  is_payment_required: true,
+  is_payment_required: true
 }
+
+# When called in isolation for preview of charges during checkout, before final payment, it's OK to omit customer_id
