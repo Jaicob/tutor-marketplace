@@ -16,7 +16,7 @@ class API::V1::TutorAppointmentsController < API::V1::Defaults
     if @appointment.update(safe_params)
       render json: @appointment
     else
-      render nothing: true, status: 500
+      render json: @appointment.errors.full_messages
     end
   end
 
