@@ -1,0 +1,127 @@
+<style>
+.boxy {
+  border: 1px solid black;
+  display: block;
+  width: 50%;
+  min-width: 600px;
+  margin: auto;
+}
+.checklist-link-box {
+  display: block;
+  margin-left: 25%;
+  height: 3em;
+}
+.checklist-icon-box {
+  display: inline-block;
+  width: 10%;
+  height: 3em;
+}
+.checklist-text-box {
+  display: inline-block;
+  width: 80%;
+  height: 3em;
+}
+.checklist-link-text {
+  line-height: 3em;
+  color: #4F5252;
+  font-weight: bold;
+}
+.checklist-link-text:hover {
+  color: #2BC2DE;
+}
+.checklist-icon {
+  height: 1.7em;
+  width: 1.7em;
+  position: relative;
+  top: 0.5em;
+}
+.centered {
+  text-align: center;
+}
+
+/*@media (min-width: 1300px) {
+.checklist-link {
+  margin-left: 25%;
+}
+
+}*/
+</style>
+
+<div class="wrapper">
+  <div class="boxy">
+    <p class="centered">Welcome to your dashboard, <%= @tutor.first_name %></p>
+
+    <p class="centered">Once you complete your application, you can set your courses, rates and availability, manage your session and payment information, etc. right here.</p>
+    <p class="centered">Right now, you're just a few steps away from your first appointment.</p>
+
+    <% complete_icon = image_tag('check_mark.png', class: 'checklist-icon') %>
+    <% incomplete_icon = image_tag('empty_circle.png', class: 'checklist-icon') %>
+
+    <div class="checklist-link-box">
+      <%= link_to home_tutor_path(@tutor.slug) do %>
+        <div class="checklist-icon-box">
+          <%= @tutor.application_status == 'Incomplete' ? incomplete_icon : complete_icon %>
+        </div>
+        <div class="checklist-text-box">
+          <p class="checklist-link-text">Complete your application</p>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="checklist-link-box">
+      <%= link_to home_tutor_path(@tutor.slug) do %>
+        <div class="checklist-icon-box">
+          <%= @tutor.application_status == 'Approved' ? complete_icon : incomplete_icon %> 
+        </div>
+        <div class="checklist-text-box">
+          <p class="checklist-link-text">Recieve application approval</p>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="checklist-link-box">
+      <%= link_to tutor_courses_path(@tutor.slug) do %>
+        <div class="checklist-icon-box">
+          <%= @tutor.application_status == 'Incomplete' ? complete_icon : incomplete_icon %> 
+        </div>
+        <div class="checklist-text-box">
+          <p class="checklist-link-text">Add additional courses with rates</p>
+        </div>
+      <% end %>   
+    </div>
+    
+    <div class="checklist-link-box">
+      <%= link_to schedule_tutor_path(@tutor.slug) do %>
+        <div class="checklist-icon-box">
+          <%= @tutor.slots.count > 0 ? complete_icon : incomplete_icon %> 
+        </div>
+        <div class="checklist-text-box">
+          <p class="checklist-link-text">Set your availability</p>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="checklist-link-box">
+      <%= link_to profile_tutor_path(@tutor.slug) do %>
+        <div class="checklist-icon-box">
+          <%= @tutor.complete_profile? ? complete_icon : incomplete_icon %> 
+        </div>
+        <div class="checklist-text-box">
+          <p class="checklist-link-text">Review your public profile</p>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="checklist-link-box">
+      <%= link_to payment_info_tutor_path(@tutor.slug) do %>      
+        <div class="checklist-icon-box">
+          <%= @tutor.acct_id ? complete_icon : incomplete_icon %>
+        </div>
+        <div class="checklist-text-box">
+          <p class="checklist-link-text">Link your bank account</p>
+        </div>
+      <% end %>
+    </div>
+
+  </div>
+</div>

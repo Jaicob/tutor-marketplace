@@ -19,6 +19,7 @@
       <!-- Secondary banners/headers below until <main> -->
       <%= yield(:admin_panel) if content_for? (:admin_panel) %>
       <%= yield(:dashboard_nav) if content_for? (:dashboard_nav) %> 
+      <%= yield(:new_tutor_checklist) if content_for? (:new_tutor_checklist) %>
       <main role="main">     
         <p class="notice"><%= notice %></p>
         <p class="alert"><%= alert %></p>

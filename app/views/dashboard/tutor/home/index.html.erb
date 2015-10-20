@@ -3,28 +3,10 @@
     <div class="wrapper__text">
       <h1 class="title">Home</h1>
 
-      <% if @tutor.incomplete_profile? %>
-        <% content_for (:incomplete_profile_prompt) do %>
-          <%= check_profile_progress and render 'layouts/partials/incomplete_profile_prompt' %>
-        <% end %>
+      <% if @tutor.application_status.to_sym == :incomplete %>
+        <%= render 'layouts/partials/tutor/application' %>
       <% end %>
 
-      <% if @tutor.awaiting_approval? %>
-        <% content_for (:awaiting_approval) do %>
-          <%= render 'layouts/partials/awaiting_approval' %>
-        <% end %>
-      <% end %>
-
-      <% if @tutor.zero_availability_set? %>
-        <% content_for (:set_availability_prompt) do %>
-          <%= render 'layouts/partials/set_availability_prompt' %>
-        <% end %>
-      <% end %>
-
-      <%= yield(:incomplete_profile_prompt) if content_for? (:incomplete_profile_prompt) %>
-      <%= yield(:awaiting_approval) if content_for? (:awaiting_approval) %>
-      <%= yield(:set_availability_prompt) if content_for? (:set_availability_prompt) %>
-      
     </div>
   </div>
 </section>
