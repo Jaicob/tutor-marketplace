@@ -92,8 +92,20 @@ module Processor
         end
       else
         cust = ::Stripe::Customer.retrieve(student.customer_id)
+        # delete old card
+        cust.sources.first.delete()
+        # save new card
         cust.sources.create(source: token)
         cust.save
+        if cust.sources['data'].first
+          brand = cust.sources['data'].first['brand']
+          last_4 = cust.sources['data'].first['last4']
+          student.update_attributes(
+            customer_id: cust.id, 
+            last_4_digits: last_4,
+            card_brand: brand
+          )
+        end
       end
     end
 
