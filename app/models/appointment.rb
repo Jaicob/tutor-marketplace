@@ -98,4 +98,17 @@ class Appointment < ActiveRecord::Base
     self.tutor.tutor_courses.find_by(course_id: self.course_id).rate
   end
 
+  def self.create_appts_from_array(params)
+    appts_count = params[:data].count
+    n = 0
+    appts_count.times do
+      Appointment.create(
+        student_id: params[:data][n][:student_id],
+        slot_id: params[:data][n][:slot_id],
+        course_id: params[:data][n][:course_id],
+        start_time: params[:data][n][:start_time]
+      )
+      n += 1
+    end
+  end
 end

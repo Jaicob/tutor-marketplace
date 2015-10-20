@@ -14,4 +14,10 @@ class Dashboard::Student::SettingsController < DashboardController
     redirect_to :back
   end
 
+  def student_payment_info_form
+    respond_to do |format|
+      format.js { render :load_payment_form }
+    end
+  end
+
 end
