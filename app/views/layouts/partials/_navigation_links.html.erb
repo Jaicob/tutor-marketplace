@@ -1,7 +1,10 @@
 <%# add navigation links to this file %>
 <% if user_signed_in? %>
-  <li class="menu-item"><%= link_to 'Dashboard', home_tutor_path(current_user) %></li>
-  <% if current_user.role == 'campus_manager' || current_user.role == 'super_admin' %>
+  <% if current_user.role == 'student' %>
+    <li class="menu-item"><%= link_to 'Dashboard', home_student_path(current_user) %></li>
+  <% elsif current_user.role == 'tutor' %>
+    <li class="menu-item"><%= link_to 'Dashboard', home_tutor_path(current_user) %></li>
+  <% elsif current_user.role == 'campus_manager' || current_user.role == 'super_admin' %>
     <li class="menu-item"><%= link_to 'Admin', admin_tutors_path %></li>
   <% end %>
   <li class="menu-item"><%= link_to 'Sign out', destroy_user_session_path, method: 'delete' %></li>
