@@ -110,8 +110,7 @@ module Processor
     end
 
     def reconcile_coupon_difference(tutor, transfer_amount, promotion)
-      # TODO: Stripe Transfer that sends the difference from an Axon coupon to a Tutor's Stripe account
-      # transfer_amount = amount that Axon owes tutor (represented by a negative Axon fee)
+      # transfer_amount = amount that Axon owes tutor (represented by a negative Axon fee converted to positive integer)
       transfer = ::Stripe::Transfer.create(
         amount: transfer_amount,
         currency: 'usd',
