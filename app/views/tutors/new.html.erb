@@ -64,15 +64,6 @@
 
         </div> <!-- End of add-course-box -->
 
-        <div class="row">
-          <div class="medium-12 columns">
-            <p>Qualifications, experiences, goals, fun facts etc.</p>
-            <%= f.fields_for :tutor do |tt| %>
-              <%= tt.text_field :extra_info, required: true %>
-            <% end %>
-          </div>
-        </div>
-
         <p class="fine-print">This will appear on your public tutor profile<p>
 
         <div class="row">

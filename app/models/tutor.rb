@@ -102,7 +102,7 @@ class Tutor < ActiveRecord::Base
     when :transcript
       self.transcript.url == nil ? false : true
     when :public_info
-      (self.degree.present? && self.major.present? && self.extra_info.present? && self.graduation_year.present?) ? true : false
+      (self.degree.present? && self.major.present? && self.extra_info_1.present? && self.graduation_year.present?) ? true : false
     when :private_info
       (self.birthdate.present? && self.phone_number.present?) ? true : false
     when :payment_info

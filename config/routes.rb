@@ -211,6 +211,7 @@ Rails.application.routes.draw do
     member do
       get 'tutor_payment_info_form' => 'tutors#tutor_payment_info_form', as: 'tutor_payment_info_form'
       patch 'update_tutor_payment_info' => 'tutors#update_tutor_payment_info', as: 'update_tutor_payment_info'
+      patch 'submit_application' => 'tutors#submit_application'
     end
   end
 

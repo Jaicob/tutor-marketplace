@@ -9,18 +9,48 @@
   width: 50%;
   min-width: 600px;
   margin: auto;
-  background-color: #efefef;
 }
-.box-title {
-  background-color: gray;
+.application-row {
+  padding: 0.5em 1em;
+}
+.header-box {
+  background-color: #0095AC;
+  padding: 0.7em;
+  text-align: center;
+  line-height: 0.7em;
+  margin-bottom: 1.5em;
 }
 .label {
   display: inline-block;
-  width: 20%;
+  width: 25%;
+  padding-left: 1em;
+}
+.long-label {
+  display: inline-block;
+  width: 50%;
+  padding-left: 1em;
 }
 .input {
   display: inline-block;
-  width: 78%;
+  width: 70%;
+  padding-right: 1em;
+}
+.file-input {
+  display: inline-block;
+  width: 48%;
+}
+.header-text {
+    color: white;
+    margin: 0.3em;
+}
+.submit-box {
+  display: block;
+  width: 20em;
+  margin: auto;
+  padding: 1em;
+}
+input.submit-button {
+  width: 100%;
 }
 </style>
 
@@ -28,23 +58,14 @@
   <div class="gi-center-80">
 
     <div class="application-box">
-      <div class="box-title">
-        <p>Complete your application</p>
+      <div class="header-box">
+        <h3 class="header-text">1. Complete Your Application</h3>
       </div>
-      <%= form_for @tutor do |f| %>
+      <%= form_for @tutor, url: submit_application_tutor_path do |f| %>
 
         <div class="application-row">
           <div class="label">Degree</div>
           <div class="input">
-<!--             <div class="select-wrapper">
-              <select id="select-subject" class="select-menu">
-                <optgroup label="Available Subjects">
-                    <option>BIO 1101</option>
-                    <option selected="">CHEM 1202</option>
-                    <option>CS 1303</option>
-                </optgroup>
-              </select>
-            </div> -->
             <div class="select-wrapper">
               <%= f.select(:degree, options_for_select(["Bachelor's", "Master's", "PhD"],["#{@tutor.degree}"]), {}, {class: 'select-menu'}) %>
             </div>
@@ -53,45 +74,42 @@
 
         <div class="application-row">
           <div class="label">Major</div>
-          <div class="input"><%= f.text_field :major %></input>
+          <div class="input"><%= f.text_field :major %></div>
         </div>
 
         <div class="application-row">
-          <div class="label">Graduation Year</div>
-          <div class="input"><%= f.number_field :graduation_year %></input>
+          <div class="label">Year</div>
+          <div class="input"><%= f.number_field :graduation_year %></div>
         </div>
 
         <div class="application-row">
           <div class="label">Extra Info</div>
-          <div class="input"><%= f.text_area :extra_info_1 %></div>
+          <div class="input"><%= f.text_field :extra_info_1 %></div>
         </div>
 
         <div class="application-row">
           <div class="label">Extra Info 2</div>
-          <div class="input"><%= f.text_area :extra_info_2 %></div>
+          <div class="input"><%= f.text_field :extra_info_2 %></div>
         </div>
 
         <div class="application-row">
           <div class="label">Extra Info 3</div>
-          <div class="input"><%= f.text_area :extra_info_3 %></div>
+          <div class="input"><%= f.text_field :extra_info_3 %></div>
         </div>
 
         <div class="application-row">
-          <div class="label">Phone</div>
-          <div class="input"><%= f.telephone_field :phone_number %></div>
+          <div class="long-label">Transcript or Resume</div>
+          <div class="file-input"><%= f.file_field :transcript %></div>
         </div>
 
         <div class="application-row">
-          <div class="label">Unofficial Transcript or Resume</div>
-          <div class="input"><%= f.file_field :transcript %></div>
+          <div class="long-label">Profile Picture</div>
+          <div class="file-input"><%= f.file_field :profile_pic %></div>
         </div>
 
-        <div class="application-row">
-          <div class="label">Profile Picture</div>
-          <div class="input"></div>
+        <div class="submit-box">
+          <%= f.submit 'Save', class: 'submit-button' %>
         </div>
-
-        <%= f.submit 'Save' %>
 
       <% end %>
     </div>
