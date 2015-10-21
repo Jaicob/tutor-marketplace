@@ -1,14 +1,22 @@
 <style>
-.boxy {
-  border: 4px solid #2BC2DE;
+.checklist-box {
+  border: 1px solid #0095AC;
   display: block;
   width: 50%;
   min-width: 600px;
   margin: auto;
-  border-radius: 10px;
-  background-color: #efefef;
 }
-.checklist-link-box {
+.checklist-header-box {
+  display: block;
+  margin: auto;
+  background-color: #0095AC;
+}
+.checklist-header-text {
+  color: white;
+  margin: 0;
+  padding: 0.7em;
+}
+.checklist-item-box {
   display: block;
   margin-left: 25%;
   height: 3em;
@@ -18,33 +26,37 @@
   width: 10%;
   height: 3em;
 }
-.checklist-text-box {
-  display: inline-block;
-  width: 80%;
-  height: 3em;
-}
-.checklist-link-text {
-  line-height: 3em;
-  color: #4F5252;
-  font-weight: bold;
-}
-.checklist-link-text:hover {
-  color: #2BC2DE;
-}
 .checklist-icon {
   height: 1.7em;
   width: 1.7em;
   position: relative;
   top: 0.5em;
 }
+.checklist-item-text-box {
+  display: inline-block;
+  width: 80%;
+  height: 3em;
+}
+.checklist-item-text {
+  line-height: 3em;
+  color: #4F5252;
+  font-weight: bold;
+}
+.checklist-item-text:hover {
+  color: #2BC2DE;
+}
 .centered {
   text-align: center;
 }
+
+
 </style>
 
 <div class="wrapper">
-  <div class="boxy">
-    <h3 class="centered">Welcome to your dashboard, <%= @tutor.first_name %></h3>
+  <div class="checklist-box">
+    <div class="checklist-header-box">
+      <h3 class="checklist-header-text centered">Welcome to your dashboard, <%= @tutor.first_name %></h3>
+    </div>
 
     <p class="centered">Once you complete your application and are approved, you can easily manage all aspects of your tutoring business here: set your courses, rates and availability, manage your sessions and payment information, and contact your students.</p>
     <p class="centered">Right now, you're just a few steps away from your first appointment.</p>
@@ -52,68 +64,68 @@
     <% complete_icon = image_tag('check_mark.png', class: 'checklist-icon') %>
     <% incomplete_icon = image_tag('empty_circle.png', class: 'checklist-icon') %>
 
-    <div class="checklist-link-box">
+    <div class="checklist-item-box">
       <%= link_to home_tutor_path(@tutor.slug) do %>
         <div class="checklist-icon-box">
           <%= @tutor.application_status == 'Incomplete' ? incomplete_icon : complete_icon %>
         </div>
-        <div class="checklist-text-box">
-          <p class="checklist-link-text">Complete your application</p>
+        <div class="checklist-item-text-box">
+          <p class="checklist-item-text">Complete your application</p>
         </div>
       <% end %>
     </div>
 
-    <div class="checklist-link-box">
+    <div class="checklist-item-box">
       <%= link_to home_tutor_path(@tutor.slug) do %>
         <div class="checklist-icon-box">
           <%= @tutor.application_status == 'Approved' ? complete_icon : incomplete_icon %> 
         </div>
-        <div class="checklist-text-box">
-          <p class="checklist-link-text">Recieve application approval</p>
+        <div class="checklist-item-text-box">
+          <p class="checklist-item-text">Recieve application approval</p>
         </div>
       <% end %>
     </div>
 
-    <div class="checklist-link-box">
+    <div class="checklist-item-box">
       <%= link_to tutor_courses_path(@tutor.slug) do %>
         <div class="checklist-icon-box">
           <%= @tutor.application_status == 'Incomplete' ? complete_icon : incomplete_icon %> 
         </div>
-        <div class="checklist-text-box">
-          <p class="checklist-link-text">Add additional courses with rates</p>
+        <div class="checklist-item-text-box">
+          <p class="checklist-item-text">Add additional courses with rates</p>
         </div>
       <% end %>   
     </div>
     
-    <div class="checklist-link-box">
+    <div class="checklist-item-box">
       <%= link_to schedule_tutor_path(@tutor.slug) do %>
         <div class="checklist-icon-box">
           <%= @tutor.slots.count > 0 ? complete_icon : incomplete_icon %> 
         </div>
-        <div class="checklist-text-box">
-          <p class="checklist-link-text">Set your availability</p>
+        <div class="checklist-item-text-box">
+          <p class="checklist-item-text">Set your availability</p>
         </div>
       <% end %>
     </div>
 
-    <div class="checklist-link-box">
+    <div class="checklist-item-box">
       <%= link_to profile_tutor_path(@tutor.slug) do %>
         <div class="checklist-icon-box">
           <%= @tutor.complete_profile? ? complete_icon : incomplete_icon %> 
         </div>
-        <div class="checklist-text-box">
-          <p class="checklist-link-text">Review your public profile</p>
+        <div class="checklist-item-text-box">
+          <p class="checklist-item-text">Review your public profile</p>
         </div>
       <% end %>
     </div>
 
-    <div class="checklist-link-box">
+    <div class="checklist-item-box">
       <%= link_to payment_info_tutor_path(@tutor.slug) do %>      
         <div class="checklist-icon-box">
           <%= @tutor.acct_id ? complete_icon : incomplete_icon %>
         </div>
-        <div class="checklist-text-box">
-          <p class="checklist-link-text">Link your bank account</p>
+        <div class="checklist-item-text-box">
+          <p class="checklist-item-text">Link your bank account</p>
         </div>
       <% end %>
     </div>
