@@ -1,51 +1,54 @@
-<div class="g g-1up">
-  <div class="gi">
-    <h3 class="no-top-margin"><%= @user.first_name %>, you're just a few steps away from your first appointment. Complete your application below.</h3>
+<style>
+.application-container {
+  display: block;
+  width: 100%;
+}
+.application-box {
+  border: 1px solid #2BC2DE;
+  display: block;
+  width: 50%;
+  min-width: 600px;
+  margin: auto;
+  background-color: #efefef;
+}
+.box-title {
+  background-color: gray;
+}
+</style>
 
-    <h5>Finish telling us about yourself</h5>
+<div class="g">
+  <div class="gi-center-80">
 
-    <%= form_for @tutor do |f| %>
+    <div class="application-box">
+      <div class="box-title">
+        <p>Complete your application</p>
+      </div>
+      <%= form_for @tutor do |f| %>
 
-      <h3 class="header-top-margin" id="profile-fields">Profile Info</h3>
+        <%= f.label :degree %>
+        <%= f.select(:degree, options_for_select(["Bachelor's", "Master's", "PhD"],["#{@tutor.degree}"])) %>
+        
+        <%= f.label :major %>
+        <%= f.text_field :major %>
 
-      <%= f.label :degree %>
-      <%= f.select(:degree, options_for_select(["Bachelor's", "Master's", "PhD"],["#{@tutor.degree}"])) %>
-      
-      <%= f.label :major %>
-      <%= f.text_field :major %>
+        <%= f.label :graduation_year %>
+        <%= f.number_field :graduation_year %>
 
-      <%= f.label :graduation_year %>
-      <%= f.number_field :graduation_year %>
+        <%= f.label :extra_info, 'Extra Information' %>
+        <%= f.text_area :extra_info, row: 3 %>
 
-      <%= f.label :extra_info, 'Extra Information' %>
-      <%= f.text_area :extra_info, row: 3 %>
+        <%= f.label :birthdate %>
+        <%= f.date_field :birthdate %>
 
-      <%= f.label :birthdate %>
-      <%= f.date_field :birthdate %>
+        <%= f.label :phone_number %>
+        <%= f.telephone_field :phone_number %>
 
-      <%= f.label :phone_number %>
-      <%= f.telephone_field :phone_number %>
+        <%= f.label :transcript %>
+        <%= f.file_field :transcript %>
 
-      <%= f.label :transcript %>
-      <%= f.file_field :transcript %>
+        <%= f.submit 'Save' %>
 
-    <h5>Set your default message to students</h5>
-
-      <h3>Appointment Settings</h3>
-
-      <%= f.label :appt_notes, 'Personal Note to Students' %>
-      <%= f.text_area :appt_notes, rows: 10 %>
-
-      <%= f.submit 'Save' %>
-
-    <% end %>
-
-    <h5>Set your availability</h5>
-
-    <h5>Create an account with Stripe to recieve your funds</h5>
-    
-    <h5>Set your courses and rates</h5>
-
-
+      <% end %>
+    </div>
   </div>
 </div>
