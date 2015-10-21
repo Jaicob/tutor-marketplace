@@ -70,16 +70,23 @@ class Tutor < ActiveRecord::Base
     self.active_status == 'Active' ? true : false
   end
 
-  def incomplete_profile?
-    fields = [:profile_pic, :transcript, :public_info, :private_info, :payment_info, :appt_settings]
+  def complete_application?
+    fields = [:profile_pic, :transcript, :profile_info]
     fields.each do |field|
-      if check_profile_for(field) == false then return true end
+      if account_has?(field) == false then return false end
     end
-    false
+    true
   end
 
-  def complete_profile?
-    self.incomplete_profile? ? false : true
+  def account_has?(field)
+    case field
+    when :profile_pic
+      self.profile_pic.url == 'panda.png' ? false : true
+    when :transcript
+      self.transcript.url == nil ? false : true
+    when :profile_info
+      (self.degree.present? && self.major.present? && self.extra_info_1.present? && self.graduation_year.present?) ? true : false
+    end
   end
 
   def complete_payment_info_details?
@@ -88,28 +95,11 @@ class Tutor < ActiveRecord::Base
   end
 
   def awaiting_approval?
-    (self.incomplete_profile? == false && self.active_status == 'Inactive') ? true : false
+    # (self.incomplete_profile? == false && self.active_status == 'Inactive') ? true : false
   end
 
   def zero_availability_set?
     (self.incomplete_profile? == false && self.awaiting_approval? == false && self.slots.count == 0) ? true : false
-  end
-
-  def check_profile_for(field)
-    case field
-    when :profile_pic
-      self.profile_pic.url == 'panda.png' ? false : true
-    when :transcript
-      self.transcript.url == nil ? false : true
-    when :public_info
-      (self.degree.present? && self.major.present? && self.extra_info_1.present? && self.graduation_year.present?) ? true : false
-    when :private_info
-      (self.birthdate.present? && self.phone_number.present?) ? true : false
-    when :payment_info
-      self.complete_payment_info_details? ? true : false
-    when :appt_settings
-      self.appt_notes.present? ? true : false
-    end
   end
 
   def send_active_status_change_email(tutor_params)
@@ -146,7 +136,7 @@ class Tutor < ActiveRecord::Base
 
   def update_application_status
     # method called in after_commit hook to automatically update a tutor's application status and send application_completed email
-    if self.complete_profile? && self.application_status == 'Incomplete'
+    if self.complete_application? && self.application_status == 'Incomplete'
       self.update(application_status: 'Complete')
       TutorManagementMailer.delay.application_completed_email(self.user.id)
     end

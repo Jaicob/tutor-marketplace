@@ -109,17 +109,6 @@
     </div>
 
     <div class="checklist-item-box">
-      <%= link_to profile_tutor_path(@tutor.slug) do %>
-        <div class="checklist-icon-box">
-          <%= @tutor.complete_profile? ? complete_icon : incomplete_icon %> 
-        </div>
-        <div class="checklist-item-text-box">
-          <p class="checklist-item-text">Review your public profile</p>
-        </div>
-      <% end %>
-    </div>
-
-    <div class="checklist-item-box">
       <%= link_to payment_info_tutor_path(@tutor.slug) do %>      
         <div class="checklist-icon-box">
           <%= @tutor.acct_id ? complete_icon : incomplete_icon %>

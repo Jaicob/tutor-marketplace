@@ -5,6 +5,5 @@ class DashboardController < ApplicationController
   before_action :set_student
 
   helper DashboardNavHelper
-  helper IncompleteProfileProgressBarHelper
 
 end

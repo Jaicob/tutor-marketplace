@@ -2,9 +2,9 @@
   <%= generate_dashboard_nav_links and render 'layouts/partials/dashboard_nav' %>
 <% end %>
 
-<% if @tutor.incomplete_profile? %>
+<% if !@tutor.complete_application? %>
   <% content_for (:new_tutor_checklist) do %>
-    <%= check_profile_progress and render 'layouts/partials/tutor/new_tutor_checklist' %>
+    <%= render 'layouts/partials/tutor/new_tutor_checklist' %>
   <% end %>
 <% end %>
 
