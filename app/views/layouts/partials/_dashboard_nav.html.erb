@@ -1,9 +1,32 @@
-<section class="secondary-nav">
-  <nav class="wrapper nav--secondary">
-    <ul class="breadcrumbs">
-      <% @dashboard_links.each do |name, link| %>
-        <li><%= link_to "#{name}", link, class: (if @current == name then 'current' else '' end) %></li>
-      <% end %>
-    </ul>     
-  </nav>
-</section>
+<style>
+nav.dashboard-nav {
+  width: 100%;
+  background-color: #0095AC;
+}
+ul.dashboard-nav {
+  height: 3em;
+  max-width: 72rem;
+/*  border: 1px solid yellow; */  
+  margin: auto;
+}
+li.dashboard-nav-block {
+  display: inline-block;
+/*  border: 1px solid white; */  
+  width: 16%;
+}
+li.dashboard-nav-block:hover {
+  background-color: #2BC2DE;
+}
+a.dashboard-nav-link {
+  color: white;
+  line-height: 3em;
+}
+</style>
+
+<nav role="navigation" class="dashboard-nav">
+  <ul class="dashboard-nav">
+    <% @dashboard_links.each do |name, link| %>
+      <li class="dashboard-nav-block"><%= link_to "#{name}", link, class: 'dashboard-nav-link'%></li>
+    <% end %>
+  </ul>
+</nav>

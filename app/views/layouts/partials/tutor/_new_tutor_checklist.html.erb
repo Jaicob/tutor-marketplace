@@ -4,7 +4,7 @@
   display: block;
   width: 50%;
   min-width: 600px;
-  margin: auto;
+  margin: 3em auto;
 }
 .checklist-header-box {
   display: block;
@@ -55,7 +55,7 @@
 <div class="wrapper">
   <div class="checklist-box">
     <div class="checklist-header-box">
-      <h3 class="checklist-header-text centered">Welcome to your dashboard, <%= @tutor.first_name %></h3>
+      <h3 class="checklist-header-text centered">Welcome to your Dashboard, <%= @tutor.first_name %></h3>
     </div>
 
     <p class="centered">Once you complete your application and are approved, you can easily manage all aspects of your tutoring business here: set your courses, rates and availability, manage your sessions and payment information, and contact your students.</p>
@@ -65,7 +65,7 @@
     <% incomplete_icon = image_tag('empty_circle.png', class: 'checklist-icon') %>
 
     <div class="checklist-item-box">
-      <%= link_to home_tutor_path(@tutor.slug) do %>
+      <%= link_to anchor: 'application' do %>
         <div class="checklist-icon-box">
           <%= @tutor.application_status == 'Incomplete' ? incomplete_icon : complete_icon %>
         </div>

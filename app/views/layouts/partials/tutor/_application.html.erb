@@ -8,7 +8,7 @@
   display: block;
   width: 50%;
   min-width: 600px;
-  margin: auto;
+  margin: 3em auto;
 }
 .application-row {
   padding: 0.5em 1em;
@@ -61,6 +61,7 @@ input.submit-button {
       <div class="header-box">
         <h3 class="header-text">1. Complete Your Application</h3>
       </div>
+      <a name="application"></a>
       <%= form_for @tutor, url: submit_application_tutor_path do |f| %>
 
         <div class="application-row">
