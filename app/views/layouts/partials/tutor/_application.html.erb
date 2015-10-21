@@ -14,6 +14,14 @@
 .box-title {
   background-color: gray;
 }
+.label {
+  display: inline-block;
+  width: 20%;
+}
+.input {
+  display: inline-block;
+  width: 78%;
+}
 </style>
 
 <div class="g">
@@ -25,26 +33,63 @@
       </div>
       <%= form_for @tutor do |f| %>
 
-        <%= f.label :degree %>
-        <%= f.select(:degree, options_for_select(["Bachelor's", "Master's", "PhD"],["#{@tutor.degree}"])) %>
-        
-        <%= f.label :major %>
-        <%= f.text_field :major %>
+        <div class="application-row">
+          <div class="label">Degree</div>
+          <div class="input">
+<!--             <div class="select-wrapper">
+              <select id="select-subject" class="select-menu">
+                <optgroup label="Available Subjects">
+                    <option>BIO 1101</option>
+                    <option selected="">CHEM 1202</option>
+                    <option>CS 1303</option>
+                </optgroup>
+              </select>
+            </div> -->
+            <div class="select-wrapper">
+              <%= f.select(:degree, options_for_select(["Bachelor's", "Master's", "PhD"],["#{@tutor.degree}"]), {}, {class: 'select-menu'}) %>
+            </div>
+          </div>
+        </div>
 
-        <%= f.label :graduation_year %>
-        <%= f.number_field :graduation_year %>
+        <div class="application-row">
+          <div class="label">Major</div>
+          <div class="input"><%= f.text_field :major %></input>
+        </div>
 
-        <%= f.label :extra_info, 'Extra Information' %>
-        <%= f.text_area :extra_info, row: 3 %>
+        <div class="application-row">
+          <div class="label">Graduation Year</div>
+          <div class="input"><%= f.number_field :graduation_year %></input>
+        </div>
 
-        <%= f.label :birthdate %>
-        <%= f.date_field :birthdate %>
+        <div class="application-row">
+          <div class="label">Extra Info</div>
+          <div class="input"><%= f.text_area :extra_info_1 %></div>
+        </div>
 
-        <%= f.label :phone_number %>
-        <%= f.telephone_field :phone_number %>
+        <div class="application-row">
+          <div class="label">Extra Info 2</div>
+          <div class="input"><%= f.text_area :extra_info_2 %></div>
+        </div>
 
-        <%= f.label :transcript %>
-        <%= f.file_field :transcript %>
+        <div class="application-row">
+          <div class="label">Extra Info 3</div>
+          <div class="input"><%= f.text_area :extra_info_3 %></div>
+        </div>
+
+        <div class="application-row">
+          <div class="label">Phone</div>
+          <div class="input"><%= f.telephone_field :phone_number %></div>
+        </div>
+
+        <div class="application-row">
+          <div class="label">Unofficial Transcript or Resume</div>
+          <div class="input"><%= f.file_field :transcript %></div>
+        </div>
+
+        <div class="application-row">
+          <div class="label">Profile Picture</div>
+          <div class="input"></div>
+        </div>
 
         <%= f.submit 'Save' %>
 

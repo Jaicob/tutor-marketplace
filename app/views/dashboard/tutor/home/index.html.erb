@@ -2,11 +2,11 @@
   <div class="wrapper">
     <div class="wrapper__text">
       <h1 class="title">Home</h1>
-
-      <% if @tutor.application_status == 'Incomplete' %>
-        <%= render 'layouts/partials/tutor/application' %>
-      <% end %>
-
     </div>
+
+    <% if @tutor.application_status == 'Incomplete' %>
+      <%= render 'layouts/partials/tutor/application' %>
+    <% end %>
+    
   </div>
 </section>
