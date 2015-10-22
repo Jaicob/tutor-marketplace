@@ -9,13 +9,16 @@
 #  rating             :integer
 #  degree             :integer          default(0)
 #  major              :string
-#  extra_info         :string
+#  extra_info_1       :string
+#  extra_info_2       :string
+#  extra_info_3       :string
 #  graduation_year    :string
 #  phone_number       :string
 #  birthdate          :date
 #  profile_pic        :string
 #  transcript         :string
 #  appt_notes         :text
+#  approved_courses   :boolean          default(FALSE)
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  last_4_acct        :string
@@ -90,16 +93,27 @@ class Tutor < ActiveRecord::Base
   end
 
   def complete_payment_info_details?
-    # need to add back in last_4_ssn
     (self.line1 && self.line2 && self.city && self.state && self.postal_code && self.acct_id && self.last_4_acct && self.ssn_last_4) ? true : false
   end
 
   def awaiting_approval?
-    # (self.incomplete_profile? == false && self.active_status == 'Inactive') ? true : false
+    self.application_status == 'Complete' ? true : false
   end
 
   def zero_availability_set?
-    (self.incomplete_profile? == false && self.awaiting_approval? == false && self.slots.count == 0) ? true : false
+    self.incomplete_profile? == false && 
+    self.awaiting_approval? == false && 
+    self.slots.count == 0 ? 
+    true : false
+  end
+
+  def onboarding_complete?
+    self.complete_application? && 
+    self.application_status == 'Approved' && 
+    self.courses_approved? &&
+    self.slots.count > 0 &&
+    self.acct_id ? 
+    true : false 
   end
 
   def send_active_status_change_email(tutor_params)

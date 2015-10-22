@@ -119,5 +119,12 @@
       <% end %>
     </div>
 
+    <% if @tutor.awaiting_approval? %>
+      <div class="awaiting-approval-message-box">
+        <h3>You gotta wait, brah</h3>
+      </div>
+    <% end %>
+
+
   </div>
 </div>

@@ -17,6 +17,7 @@ class CreateTutors < ActiveRecord::Migration
       t.string      :profile_pic
       t.string      :transcript
       t.text        :appt_notes
+      t.boolean     :courses_approved, default: false
 
       t.timestamps null: false
     end
