@@ -19,9 +19,13 @@
     margin-top: 2em;
     margin: 3em auto;
 }
-.bottom-form {
+.button-box {
   width: 28em;
   margin: 0 auto 3em;
+}
+button.btn.full-width {
+    width: 100%;
+    padding: 1em;
 }
 .centered {
   text-align: center;
@@ -42,6 +46,7 @@
         <p>We know college tutoring. Our founders were all tutors in college and tutoring on college campuses is our sole focus. We have expert knowledge of the market and our own custom software to help you work smarter - rather than harder - and to make more money than ever before.</p>
       </div>
       <div class="top-form">
+        <a name="sign-up-form"></a>
         <%= render 'tutors/tutor_sign_up_form' %>
       </div>
     </div>
@@ -67,15 +72,16 @@
 
     </div>
     
-    <div class="bottom-form">
-      <%= render 'tutors/tutor_sign_up_form' %>
+    <div class="button-box">
+      <%= link_to anchor: 'sign-up-form' do %>
+        <button class="btn full-width">Register and start tutoring</button>
+      <% end %>
     </div>
 
     <h3 class="centered">Still have questions?</h3>
     <%= link_to '/faqs' do %>
       <h4 class="centered faq-line">Check out our FAQs</h4>
     <% end %>
-
 
   </div>
 </section>

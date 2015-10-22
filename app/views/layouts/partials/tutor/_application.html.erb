@@ -1,118 +1,72 @@
 <style>
-.application-container {
+.application-box {
   display: block;
+  border: 2px solid #0095AC;
+  padding: 1em;
+  border-radius: 2px;
+  background-color: #0095AC;
+  width: 25em;
+  margin: 2em auto;
+}
+.application-title {
+  margin: 0 0 0.5em;
+  color: white;
+  text-align: center;
+}
+.select-menu {
   width: 100%;
 }
-.application-box {
-  border: 1px solid #0095AC;
-  display: block;
-  width: 50%;
-  min-width: 600px;
-  margin: 3em auto;
-}
-.application-row {
-  padding: 0.5em 1em;
-}
-.header-box {
-  background-color: #0095AC;
-  padding: 0.7em;
-  text-align: center;
-  line-height: 0.7em;
-  margin-bottom: 1.5em;
-}
-.label {
-  display: inline-block;
-  width: 25%;
-  padding-left: 1em;
-}
-.long-label {
-  display: inline-block;
-  width: 50%;
-  padding-left: 1em;
-}
 .input {
-  display: inline-block;
-  width: 70%;
-  padding-right: 1em;
-}
-.file-input {
-  display: inline-block;
-  width: 48%;
-}
-.header-text {
-  color: white;
-  margin: 0.3em;
-}
-.submit-box {
-  display: block;
-  width: 20em;
-  margin: auto;
-  padding: 1em;
+  width: 100%;
 }
 input.submit-button {
   width: 100%;
 }
 </style>
 
-<div class="g">
-  <div class="gi-center-80">
+<div class="application-box">
+  <h3 class="application-title">Complete Your Application</h3>
 
-    <div class="application-box">
-      <div class="header-box">
-        <h3 class="header-text">1. Complete Your Application</h3>
+  <a name="application"></a>
+  <%= form_for @tutor, url: submit_application_tutor_path do |f| %>
+
+    <div class="application-row">
+      <div class="input">
+        <div class="select-wrapper">
+          <%= f.select(:degree, options_for_select(["Bachelor's", "Master's", "PhD"],["Degree"]), {}, {class: 'select-menu'}) %>
+        </div>
       </div>
-      <a name="application"></a>
-      <%= form_for @tutor, url: submit_application_tutor_path do |f| %>
-
-        <div class="application-row">
-          <div class="label">Degree</div>
-          <div class="input">
-            <div class="select-wrapper">
-              <%= f.select(:degree, options_for_select(["Bachelor's", "Master's", "PhD"],["#{@tutor.degree}"]), {}, {class: 'select-menu'}) %>
-            </div>
-          </div>
-        </div>
-
-        <div class="application-row">
-          <div class="label">Major</div>
-          <div class="input"><%= f.text_field :major %></div>
-        </div>
-
-        <div class="application-row">
-          <div class="label">Year</div>
-          <div class="input"><%= f.number_field :graduation_year %></div>
-        </div>
-
-        <div class="application-row">
-          <div class="label">Extra Info</div>
-          <div class="input"><%= f.text_field :extra_info_1 %></div>
-        </div>
-
-        <div class="application-row">
-          <div class="label">Extra Info 2</div>
-          <div class="input"><%= f.text_field :extra_info_2 %></div>
-        </div>
-
-        <div class="application-row">
-          <div class="label">Extra Info 3</div>
-          <div class="input"><%= f.text_field :extra_info_3 %></div>
-        </div>
-
-        <div class="application-row">
-          <div class="long-label">Transcript or Resume</div>
-          <div class="file-input"><%= f.file_field :transcript %></div>
-        </div>
-
-        <div class="application-row">
-          <div class="long-label">Profile Picture</div>
-          <div class="file-input"><%= f.file_field :profile_pic %></div>
-        </div>
-
-        <div class="submit-box">
-          <%= f.submit 'Save', class: 'submit-button' %>
-        </div>
-
-      <% end %>
     </div>
-  </div>
+
+    <div class="input">
+      <%= f.text_field :major, placeholder: 'Major' %>
+    </div>
+
+    <div class="input">
+      <%= f.number_field :graduation_year, placeholder: 'Graduation Year' %>
+    </div>
+
+    <div class="input">
+      <%= f.text_field :extra_info_1, placeholder: 'Fact #1' %>
+    </div>
+
+    <div class="input">
+      <%= f.text_field :extra_info_2, placeholder: 'Fact #2' %>
+    </div>
+
+    <div class="input">
+      <%= f.text_field :extra_info_3, placeholder: 'Fact #3' %>
+    </div>
+
+    <div class="input">
+      Transcript or Resume <%= f.file_field :transcript %>
+    </div>
+
+    <div class="input">
+      Profile Picture <%= f.file_field :profile_pic %>
+    </div>
+
+    <%= f.submit 'Save', class: 'submit-button' %>
+
+  <% end %>
 </div>

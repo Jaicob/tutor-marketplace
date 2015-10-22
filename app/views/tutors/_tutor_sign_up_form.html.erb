@@ -46,7 +46,7 @@ input.btn.blue {
 
   <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :role => 'form'}) do |f| %>
     <div class="row">
-      <p class="tiny-text">Get started by creating an account and selecting your school.</p>
+      <p class="tiny-text">Get started by creating an account and selecting your school</p>
     </div>
     <div class="row">
       <div class="one-half right-pad">
@@ -75,12 +75,12 @@ input.btn.blue {
         <%= render '/course_selector/school' %>
       </div>
     </div>
-  
 
     <%= f.fields_for :tutor do |tt| %>
       <!-- This section below creates a tutor's first tutor-course. The code for creating the TutorCourse is in 'user.rb' in the method 'create_tutor_account(user, params)' -->
     <div class="row">
-      <p class="tiny-text">Set your first course with an hourly rate - you can add more later</p>
+      <p class="tiny-text">Set your first course with an hourly rate - you can add more later</br>
+        The average hourly rate for Axon tutoring appointments is $23.01</p>
     </div>
     <div class="row">
       <div class="one-third">

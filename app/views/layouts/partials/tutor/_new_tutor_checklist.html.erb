@@ -1,10 +1,13 @@
 <style>
+.checklist-container {
+  background-image: url(image-path('unicorn.jpg'));
+}
 .checklist-box {
   border: 1px solid #0095AC;
   display: block;
   width: 50%;
   min-width: 600px;
-  margin: 3em auto;
+  margin: 3em auto 1em;
 }
 .checklist-header-box {
   display: block;
@@ -53,78 +56,80 @@
 </style>
 
 <div class="wrapper">
-  <div class="checklist-box">
-    <div class="checklist-header-box">
-      <h3 class="checklist-header-text centered">Welcome to your Dashboard, <%= @tutor.first_name %></h3>
-    </div>
-
-    <p class="centered">Once you complete your application and are approved, you can easily manage all aspects of your tutoring business here: set your courses, rates and availability, manage your sessions and payment information, and contact your students.</p>
-    <p class="centered">Right now, you're just a few steps away from your first appointment.</p>
-
-    <% complete_icon = image_tag('check_mark.png', class: 'checklist-icon') %>
-    <% incomplete_icon = image_tag('empty_circle.png', class: 'checklist-icon') %>
-
-    <div class="checklist-item-box">
-      <%= link_to anchor: 'application' do %>
-        <div class="checklist-icon-box">
-          <%= @tutor.application_status == 'Incomplete' ? incomplete_icon : complete_icon %>
-        </div>
-        <div class="checklist-item-text-box">
-          <p class="checklist-item-text">Complete your application</p>
-        </div>
-      <% end %>
-    </div>
-
-    <div class="checklist-item-box">
-      <%= link_to home_tutor_path(@tutor.slug) do %>
-        <div class="checklist-icon-box">
-          <%= @tutor.application_status == 'Approved' ? complete_icon : incomplete_icon %> 
-        </div>
-        <div class="checklist-item-text-box">
-          <p class="checklist-item-text">Recieve application approval</p>
-        </div>
-      <% end %>
-    </div>
-
-    <div class="checklist-item-box">
-      <%= link_to tutor_courses_path(@tutor.slug) do %>
-        <div class="checklist-icon-box">
-          <%= @tutor.application_status == 'Incomplete' ? complete_icon : incomplete_icon %> 
-        </div>
-        <div class="checklist-item-text-box">
-          <p class="checklist-item-text">Add additional courses with rates</p>
-        </div>
-      <% end %>   
-    </div>
-    
-    <div class="checklist-item-box">
-      <%= link_to schedule_tutor_path(@tutor.slug) do %>
-        <div class="checklist-icon-box">
-          <%= @tutor.slots.count > 0 ? complete_icon : incomplete_icon %> 
-        </div>
-        <div class="checklist-item-text-box">
-          <p class="checklist-item-text">Set your availability</p>
-        </div>
-      <% end %>
-    </div>
-
-    <div class="checklist-item-box">
-      <%= link_to payment_info_tutor_path(@tutor.slug) do %>      
-        <div class="checklist-icon-box">
-          <%= @tutor.acct_id ? complete_icon : incomplete_icon %>
-        </div>
-        <div class="checklist-item-text-box">
-          <p class="checklist-item-text">Link your bank account</p>
-        </div>
-      <% end %>
-    </div>
-
-    <% if @tutor.awaiting_approval? %>
-      <div class="awaiting-approval-message-box">
-        <h3>You gotta wait, brah</h3>
+  <div class="checklist-container">
+    <div class="checklist-box">
+      <div class="checklist-header-box">
+        <h3 class="checklist-header-text centered">Welcome to your Dashboard, <%= @tutor.first_name %></h3>
       </div>
-    <% end %>
+
+      <p class="centered">Once you complete your application and are approved, you can easily manage all aspects of your tutoring business here: set your courses, rates and availability, manage your sessions and payment information, and contact your students.</p>
+      <p class="centered">Right now, you're just a few steps away from your first appointment.</p>
+
+      <% complete_icon = image_tag('check_mark.png', class: 'checklist-icon') %>
+      <% incomplete_icon = image_tag('empty_circle.png', class: 'checklist-icon') %>
+
+      <div class="checklist-item-box">
+        <%= link_to anchor: 'application' do %>
+          <div class="checklist-icon-box">
+            <%= @tutor.application_status == 'Incomplete' ? incomplete_icon : complete_icon %>
+          </div>
+          <div class="checklist-item-text-box">
+            <p class="checklist-item-text">Complete your application</p>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="checklist-item-box">
+        <%= link_to home_tutor_path(@tutor.slug) do %>
+          <div class="checklist-icon-box">
+            <%= @tutor.application_status == 'Approved' ? complete_icon : incomplete_icon %> 
+          </div>
+          <div class="checklist-item-text-box">
+            <p class="checklist-item-text">Recieve application approval</p>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="checklist-item-box">
+        <%= link_to tutor_courses_path(@tutor.slug) do %>
+          <div class="checklist-icon-box">
+            <%= @tutor.courses_approved? ? complete_icon : incomplete_icon %> 
+          </div>
+          <div class="checklist-item-text-box">
+            <p class="checklist-item-text">Add additional courses with rates</p>
+          </div>
+        <% end %>   
+      </div>
+      
+      <div class="checklist-item-box">
+        <%= link_to schedule_tutor_path(@tutor.slug) do %>
+          <div class="checklist-icon-box">
+            <%= @tutor.slots.count > 0 ? complete_icon : incomplete_icon %> 
+          </div>
+          <div class="checklist-item-text-box">
+            <p class="checklist-item-text">Set your availability</p>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="checklist-item-box">
+        <%= link_to payment_info_tutor_path(@tutor.slug) do %>      
+          <div class="checklist-icon-box">
+            <%= @tutor.acct_id ? complete_icon : incomplete_icon %>
+          </div>
+          <div class="checklist-item-text-box">
+            <p class="checklist-item-text">Link your bank account</p>
+          </div>
+        <% end %>
+      </div>
+
+      <% if @tutor.awaiting_approval? %>
+        <div class="awaiting-approval-message-box">
+          <h3>You gotta wait, brah</h3>
+        </div>
+      <% end %>
 
 
+    </div>
   </div>
 </div>
