@@ -1,18 +1,11 @@
 <style>
-.sign-up-form-container {
-  display: block;
-  width: 40%;
-  margin: auto;
-}
 .sign-up-form-box {
-  display: block;
+  display: inline-block;
   border: 2px solid #0095AC;
   padding: 1em;
   border-radius: 2px;
   background-color: #0095AC;
-}
-.cell {
-  display: block;
+  width: 28em;
 }
 .row {
   display: block;
@@ -38,67 +31,71 @@
 }
 input.btn.blue {
   background-color: #58AA4D;
+  width: 100%;
+}
+.sign-up-title {
+  margin: 0 0 0.5em;
+  color: white;
 }
 
 </style>
 <%= javascript_include_tag "dashboard/courses" %>
 
-<div class="sign-up-form-container">
-  <div class="sign-up-form-box">
+<div class="sign-up-form-box">
+  <h3 class="sign-up-title">Register to Tutor with Axon</h3>
 
-    <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :role => 'form'}) do |f| %>
-      <div class="row">
-        <p class="tiny-text">Get started by creating an account and selecting your school.</p>
+  <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :role => 'form'}) do |f| %>
+    <div class="row">
+      <p class="tiny-text">Get started by creating an account and selecting your school.</p>
+    </div>
+    <div class="row">
+      <div class="one-half right-pad">
+        <%= f.text_field :first_name, placeholder: 'First Name', required: true  %>
       </div>
-      <div class="row">
-        <div class="one-half right-pad">
-          <%= f.text_field :first_name, placeholder: 'First Name', required: true  %>
-        </div>
-        <div class="one-half left-pad">
-           <%= f.text_field :last_name, placeholder: 'Last Name', required: true %>
-        </div>
+      <div class="one-half left-pad">
+         <%= f.text_field :last_name, placeholder: 'Last Name', required: true %>
       </div>
-        
-      <div class="row">
-        <div class="one-half right-pad">
-          <%= f.email_field :email, placeholder: 'Email', required: true %>
-        </div>
-        <div class="one-half left-pad">
-          <%= f.password_field :password, placeholder: 'Password', required: true  %>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="one-half right-pad">
-          <%= f.fields_for :tutor do |tt| %>
-            <%= tt.text_field :phone_number, placeholder: 'Phone Number', required: true %>
-          <% end %>            </div>
-        <div class="one-half left-pad">
-          <%= render '/course_selector/school' %>
-        </div>
-      </div>
-    
-  
-      <%= f.fields_for :tutor do |tt| %>
-        <!-- This section below creates a tutor's first tutor-course. The code for creating the TutorCourse is in 'user.rb' in the method 'create_tutor_account(user, params)' -->
-      <div class="row">
-        <p class="tiny-text">Set your first course with an hourly rate ( you can add more later )</p>
-      </div>
-      <div class="row">
-        <div class="one-third">
-          <%= render '/course_selector/subject' %>
-        </div>
-        <div class="one-third">
-          <%= render '/course_selector/course' %>
-        </div>
-        <div class="one-third">
-          <%= render '/course_selector/rate' %>
-        </div>
-      </div>
-  
-      <% end %>
+    </div>
       
-      <%= f.submit "Next", class: 'btn blue' %>
+    <div class="row">
+      <div class="one-half right-pad">
+        <%= f.email_field :email, placeholder: 'Email', required: true %>
+      </div>
+      <div class="one-half left-pad">
+        <%= f.password_field :password, placeholder: 'Password', required: true  %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="one-half right-pad">
+        <%= f.fields_for :tutor do |tt| %>
+          <%= tt.text_field :phone_number, placeholder: 'Phone Number', required: true %>
+        <% end %>            </div>
+      <div class="one-half left-pad">
+        <%= render '/course_selector/school' %>
+      </div>
+    </div>
+  
+
+    <%= f.fields_for :tutor do |tt| %>
+      <!-- This section below creates a tutor's first tutor-course. The code for creating the TutorCourse is in 'user.rb' in the method 'create_tutor_account(user, params)' -->
+    <div class="row">
+      <p class="tiny-text">Set your first course with an hourly rate - you can add more later</p>
+    </div>
+    <div class="row">
+      <div class="one-third">
+        <%= render '/course_selector/subject' %>
+      </div>
+      <div class="one-third">
+        <%= render '/course_selector/course' %>
+      </div>
+      <div class="one-third">
+        <%= render '/course_selector/rate' %>
+      </div>
+    </div>
+
     <% end %>
-  </div>
+    
+    <%= f.submit "Next", class: 'btn blue' %>
+  <% end %>
 </div>

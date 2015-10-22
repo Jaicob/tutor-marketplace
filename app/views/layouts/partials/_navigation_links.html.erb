@@ -10,5 +10,5 @@
   <li class="menu-item"><%= link_to 'Sign out', destroy_user_session_path, method: 'delete' %></li>
 <% else %>
   <li class="menu-item"><%= link_to 'Login', new_user_session_path %></li>
-  <li class="menu-item"><%= link_to 'Become a Tutor', new_tutor_path %></li>
+  <li class="menu-item"><%= link_to 'Become a Tutor', become_a_tutor_path %></li>
 <% end %>
