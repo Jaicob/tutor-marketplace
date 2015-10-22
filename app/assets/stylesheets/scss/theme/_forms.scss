@@ -12,6 +12,7 @@ input[type="tel"] {
 // Make better looking select boxes
 .select-wrapper {
 	border: solid 1px $primaryTextColor;
+  background-color: white;
 	position: relative;
 	width: 100%;
 	padding: em(8);
