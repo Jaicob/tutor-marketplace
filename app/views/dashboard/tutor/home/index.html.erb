@@ -1,6 +1,9 @@
 <% if @tutor.application_status == 'Incomplete' %>
   <!-- only application shows (no other home screen stuff) until application is completed -->
-  <%= render 'layouts/partials/tutor/application' %>
+  <%= render 'tutors/application' %>
+<% elsif @tutor.application_status == 'Complete' %>
+  <!-- only awaiting approval message shows until submitted application is approved -->
+  <%= render 'tutors/application' %>
 <% elsif @tutor.application_status == 'Approved' %> %>
   <!-- normal home screen once application is completed and approved-->
   <section class="dashboard tutor">
