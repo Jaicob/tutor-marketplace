@@ -1,10 +1,15 @@
 <style>
+.background-wrapper {
+  background-color: #BBE5EE;
+  padding: 2em;
+  padding-top: 4em;
+}
 .application-title-box {
   display: block;
   border-radius: 2px;
   background-color: #0095AC;
   width: 30em;
-  margin: 2em auto 0;
+  margin: auto;
 }
 .application-box {
   display: block;
@@ -78,6 +83,7 @@ button.file-input-button {
 }
 
 </style>
+<div class="background-wrapper">
 
 <div class="application-title-box">
   <h2 class="application-title">Complete Your Application</h2>
@@ -151,4 +157,6 @@ button.file-input-button {
     <%= f.submit 'Submit Application', class: 'submit-button' %>
 
   <% end %>
+</div>
+
 </div>

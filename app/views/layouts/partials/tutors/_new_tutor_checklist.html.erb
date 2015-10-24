@@ -1,21 +1,40 @@
 <style>
-.checklist-container {
-  background-color: #f6f6f6;
-  height: 100%;
-  padding: 2em;
+.checklist-box {
+  display: block;
+  border: 1px solid #4F5252;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  width: 80%;
+  margin: 0 0 2em;
+  height: 14em;
+  font-weight: bold;
+  padding-top: 0.8em;
 }
 .checklist-title {
   margin: 0 0 1em;
+  text-align: center;
+  color: white;
+  line-height: 2.5em;
+}
+.checklist-title-box {
+  background-color: #58AA4D;
+  width: 80%;
+  margin: 3.5em 0 0;
+  height: 3em;
+  border: 1px solid #4F5252;
+  border-bottom: 0;
+}
+.checklist-row {
+  display: block;
+  width: 100%;
 }
 .checklist-item-box {
-  display: block;
-  margin-left: 20%;
-  height: 2.5em;
+  padding-top: 0.2em;
 }
 .checklist-icon-box {
   display: inline-block;
-  width: 10%;
-  height: 3em;
+  width: 25%;
+  text-align: center;
 }
 .checklist-icon {
   height: 1.2em;
@@ -25,7 +44,7 @@
 }
 .checklist-item-text-box {
   display: inline-block;
-  width: 80%;
+  margin-left: -0.5em;
 }
 .checklist-item-text {
   color: #4F5252;
@@ -33,15 +52,13 @@
 .checklist-item-text:hover {
   color: #2BC2DE;
 }
-.centered {
-  text-align: center;
-}
-
 </style>
 
-<div class="checklist-container">
-
+<div class="checklist-title-box">
   <h4 class="centered checklist-title">Account Setup Checklist</h4>
+</div>
+
+<div class="checklist-box">
 
   <% complete_icon = image_tag('check_mark.png', class: 'checklist-icon') %>
   <% incomplete_icon = image_tag('empty_circle.png', class: 'checklist-icon') %>
@@ -78,7 +95,7 @@
       </div>
     <% end %>   
   </div>
-  
+
   <div class="checklist-item-box">
     <%= link_to schedule_tutor_path(@tutor.slug) do %>
       <div class="checklist-icon-box">
