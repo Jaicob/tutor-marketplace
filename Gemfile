@@ -66,4 +66,6 @@ source 'https://rubygems.org' do
   gem 'bower-rails', '~> 0.9.2'
   gem 'react-rails', '~> 1.0'
   gem 'sass-rails', '~> 5.0'
+  gem "foundation-rails", "~> 5.5"
+  gem "foundation-icons-sass-rails", "~> 3.0"
 end
