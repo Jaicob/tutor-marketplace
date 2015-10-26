@@ -1,0 +1,95 @@
+<style>
+.checklist-box {
+  display: block;
+  margin: 0 0 2em;
+  height: 14em;
+  font-weight: bold;
+  padding-top: 0.8em;
+}
+.checklist-title {
+  margin: 0 0 1em;
+  text-align: center;
+  color: white;
+  line-height: 2.5em;
+}
+.checklist-title-box {
+  background-color: #58AA4D;
+  margin: 1.5em 0 0;
+  height: 3em;
+  border-radius: 10px;
+}
+.checklist-row {
+  display: block;
+  width: 100%;
+}
+.checklist-item-box {
+  padding-top: 0.2em;
+}
+.checklist-icon {
+  margin-left: 1.8em;
+  margin-right: 1em;
+}
+.checklist-item-text {
+  color: #4F5252;
+  font-size: 1.1em;
+}
+.checklist-item-text:hover {
+  color: #2BC2DE;
+}
+</style>
+
+<div class="checklist-title-box">
+  <h4 class="centered checklist-title">Account Setup Checklist</h4>
+</div>
+
+<div class="checklist-box">
+
+  <% complete_icon = ('<i class="fi-check checklist-item-text checklist-icon"></i>').html_safe() %>
+  <% incomplete_icon = ('<i class="fi-plus checklist-item-text checklist-icon"></i>').html_safe() %>
+
+  <div class="checklist-item-box">
+    <%= link_to anchor: 'application' do %>
+      <p class="checklist-item-text">
+        <%= @tutor.application_status == 'Incomplete' ? incomplete_icon : complete_icon %>
+        Complete your application
+      </p>
+    <% end %>
+  </div>
+
+  <div class="checklist-item-box">
+    <%= link_to home_tutor_path(@tutor.slug) do %>
+      <p class="checklist-item-text">
+        <%= @tutor.application_status == 'Incomplete' ? incomplete_icon : complete_icon %>
+        Receive application approval
+      </p>
+    <% end %>
+  </div>
+
+  <div class="checklist-item-box">
+    <%= link_to tutor_courses_path(@tutor.slug) do %>
+      <p class="checklist-item-text">
+        <%= @tutor.application_status == 'Incomplete' ? incomplete_icon : complete_icon %>
+        Approve courses and rates
+      </p>
+    <% end %>   
+  </div>
+
+  <div class="checklist-item-box">
+    <%= link_to schedule_tutor_path(@tutor.slug) do %>
+      <p class="checklist-item-text">
+        <%= @tutor.application_status == 'Incomplete' ? incomplete_icon : complete_icon %>
+        Set your availability
+      </p>
+    <% end %>
+  </div>
+
+  <div class="checklist-item-box">
+    <%= link_to payment_info_tutor_path(@tutor.slug) do %>  
+      <p class="checklist-item-text">
+        <%= @tutor.application_status == 'Incomplete' ? incomplete_icon : complete_icon %>
+        Link your bank account
+      </p>
+    <% end %>
+  </div>
+
+</div>

@@ -1,33 +1,87 @@
+<style>
+.tutor-landing-top-row {
+/*  border: 1px solid black;
+*/}
+.tutor-landing-title {
+  display: inline-block;
+  width: 50%;
+  vertical-align: top;
+  float: left;
+}
+.top-form {
+  float: right;
+}
+.more-info-box {
+    border: 20px solid #efefef;
+    border-radius: 10px;
+    width: 90%;
+    padding: 0 4em 2em;
+    margin-top: 2em;
+    margin: 3em auto;
+}
+.button-box {
+  width: 28em;
+  margin: 0 auto 3em;
+}
+button.btn.full-width {
+    width: 100%;
+    padding: 1em;
+}
+.centered {
+  text-align: center;
+}
+.faq-line {
+  margin: 0 0 3em;
+}
+.faq-line:hover {
+  color: #2BC2DE;
+}
+</style>
 <section class="secondary-content main" role="main">
   <div class="wrapper">
-    <h1>Apply to start tutoring with Axon</h1>
-    <h3>We specialize in the college tutoring industry and give our tutors an incredible edge </h3>
-    <p>We know college tutoring. Our founders were all tutors and tutoring is our sole focus. We have expert knowledge of the market and our own custom software to help you work smarter - rather than harder - and to make more money than ever before.</p>
+    <div class="row tutor-landing-top-row">
+      <div class="tutor-landing-title">
+        <h1>Apply to start tutoring with Axon</h1>
+        <h3>We specialize in the college tutoring industry and give our tutors an incredible edge</h3>
+        <p>We know college tutoring. Our founders were all tutors in college and tutoring on college campuses is our sole focus. We have expert knowledge of the market and our own custom software to help you work smarter - rather than harder - and to make more money than ever before.</p>
+      </div>
+      <div class="top-form">
+        <a name="sign-up-form"></a>
+        <%= render 'tutors/tutor_sign_up_form' %>
+      </div>
+    </div>
 
-    <%= link_to 'Become a Tutor', new_tutor_path, class: 'btn' %>
+    <div class="row">
+    <div class="more-info-box">
+      <h3>How we help you and your tutoring business</h3>
 
-    <h3>How we help you and your tutoring business</h3>
+      <h4><b>We Let You Make Your Schedule</b></h4>
+      <p>Beef jerky short ribs shankle. Salami meatball ham turducken jowl rump. Venison tenderloin brisket, jowl ham fatback kielbasa. Ham hock bresaola tri-tip, pork chop pig tail chuck tongue beef ribs corned beef spare ribs pork loin.</p>
 
-    <h4><b>We Let You Make Your Schedule</b></h4>
+      <h4><b>We Secure Your Payments</b></h4>
+      <p>Beef jerky short ribs shankle. Salami meatball ham turducken jowl rump. Venison tenderloin brisket, jowl ham fatback kielbasa. Ham hock bresaola tri-tip, pork chop pig tail chuck tongue beef ribs corned beef spare ribs pork loin.</p>
 
-    <p>Beef jerky short ribs shankle. Salami meatball ham turducken jowl rump. Venison tenderloin brisket, jowl ham fatback kielbasa. Ham hock bresaola tri-tip, pork chop pig tail chuck tongue beef ribs corned beef spare ribs pork loin.</p>
+      <h4><b>We Let You Keep Your Money</b></h4>
+      <p>Beef jerky short ribs shankle. Salami meatball ham turducken jowl rump. Venison tenderloin brisket, jowl ham fatback kielbasa. Ham hock bresaola tri-tip, pork chop pig tail chuck tongue beef ribs corned beef spare ribs pork loin.</p>
 
-    <h4><b>We Secure Your Payments</b></h4>
+      <h4><b>We Advertise for You</b></h4>
+      <p>Beef jerky short ribs shankle. Salami meatball ham turducken jowl rump. Venison tenderloin brisket, jowl ham fatback kielbasa. Ham hock bresaola tri-tip, pork chop pig tail chuck tongue beef ribs corned beef spare ribs pork loin.</p>
 
-    <p>Beef jerky short ribs shankle. Salami meatball ham turducken jowl rump. Venison tenderloin brisket, jowl ham fatback kielbasa. Ham hock bresaola tri-tip, pork chop pig tail chuck tongue beef ribs corned beef spare ribs pork loin.</p>
+      <h4><b>We Provide You with a Professional Barrier</b></h4>
+      <p>Beef jerky short ribs shankle. Salami meatball ham turducken jowl rump. Venison tenderloin brisket, jowl ham fatback kielbasa. Ham hock bresaola tri-tip, pork chop pig tail chuck tongue beef ribs corned beef spare ribs pork loin.</p>
 
-    <h4><b>We Let You Keep Your Money</b></h4>
+    </div>
+    
+    <div class="button-box">
+      <%= link_to anchor: 'sign-up-form' do %>
+        <button class="btn full-width">Register and start tutoring</button>
+      <% end %>
+    </div>
 
-    <p>Beef jerky short ribs shankle. Salami meatball ham turducken jowl rump. Venison tenderloin brisket, jowl ham fatback kielbasa. Ham hock bresaola tri-tip, pork chop pig tail chuck tongue beef ribs corned beef spare ribs pork loin.</p>
-
-    <h4><b>We Provide You with a Professional Barrier</b></h4>
-
-    <p>Beef jerky short ribs shankle. Salami meatball ham turducken jowl rump. Venison tenderloin brisket, jowl ham fatback kielbasa. Ham hock bresaola tri-tip, pork chop pig tail chuck tongue beef ribs corned beef spare ribs pork loin.</p>
-
-    <h4><b>We Advertise for You</b></h4>
-
-    <p>Beef jerky short ribs shankle. Salami meatball ham turducken jowl rump. Venison tenderloin brisket, jowl ham fatback kielbasa. Ham hock bresaola tri-tip, pork chop pig tail chuck tongue beef ribs corned beef spare ribs pork loin.</p>
+    <h3 class="centered">Still have questions?</h3>
+    <%= link_to '/faqs' do %>
+      <h4 class="centered faq-line">Check out our FAQs</h4>
+    <% end %>
 
   </div>
 </section>
-

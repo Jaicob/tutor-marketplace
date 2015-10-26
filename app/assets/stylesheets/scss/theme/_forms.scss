@@ -11,7 +11,8 @@ input[type="tel"] {
 
 // Make better looking select boxes
 .select-wrapper {
-	border: solid 1px $primaryTextColor;
+	border: solid 1px #a8a8a8;
+  background-color: white;
 	position: relative;
 	width: 100%;
 	padding: em(8);
@@ -21,7 +22,7 @@ input[type="tel"] {
 		content: '\25bc';
     position: absolute;
     pointer-events: none;
-    color: $primaryTextColor;
+    color: #a8a8a8;
     top: 0;
     bottom: 1px;
     padding-top: 0.7em;
@@ -39,6 +40,12 @@ input[type="tel"] {
 		box-shadow: 0 0 3px 0 $hover-link-color;
 	}
 }
+
+// Make select options background white
+select {
+  background-color: white;
+}
+
 // Wrapper addes the border, now remove all browser chrome from the input
 .select-menu {
 	-webkit-appearance: none;

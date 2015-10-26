@@ -54,7 +54,6 @@ class User < ActiveRecord::Base
   def create_tutor_account(user, params)
     # used in Devise::RegistrationsController to create a Tutor while creating a User
     user.create_tutor!(
-      extra_info: params[:user][:tutor][:extra_info],
       phone_number: params[:user][:tutor][:phone_number]
       )
     # creates the tutor's first tutor_course

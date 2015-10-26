@@ -9,13 +9,16 @@
 #  rating             :integer
 #  degree             :integer          default(0)
 #  major              :string
-#  extra_info         :string
+#  extra_info_1       :string
+#  extra_info_2       :string
+#  extra_info_3       :string
 #  graduation_year    :string
 #  phone_number       :string
 #  birthdate          :date
 #  profile_pic        :string
 #  transcript         :string
 #  appt_notes         :text
+#  approved_courses   :boolean          default(FALSE)
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  last_4_acct        :string

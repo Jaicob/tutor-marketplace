@@ -11,7 +11,10 @@ class Dashboard::Student::SettingsController < DashboardController
     token = params[:stripeToken]
     processor = PaymentFactory.new.build
     processor.update_customer(@student, token)
-    redirect_to :back
+    redirect_to payment_info_student_path
+  end
+
+  def edit_payment_info
   end
 
 end
