@@ -17,22 +17,15 @@
       </div>
     </header>
     <!-- Secondary banners/headers below until <main> -->
-    <div class="row">
-      <div class="nav-wrapper">
-        <%= yield(:admin_panel) if content_for? (:admin_panel) %>
-        <%= yield(:dashboard_nav) if content_for? (:dashboard_nav) %> 
-        <%= yield(:new_tutor_checklist) if content_for? (:new_tutor_checklist) %>
-      </div>
+    <div class="row alert-row">
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
     </div>
-    <main role="main">
-      <div class="row alert-row">
-        <p class="notice"><%= notice %></p>
-        <p class="alert"><%= alert %></p>
-      </div>
-      <div class="row">
+    <div class="row full-width-row">
+      <main role="main">
         <%= yield %>
-      </div>
-    </main>
+      </main>
+    </div>
     <footer>
       <div class="footer-wrapper">
         <div class="row">
