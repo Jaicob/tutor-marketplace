@@ -1,61 +1,57 @@
 <style>
 .welcome-message-container {
   display: block;
-  padding: 2em 2em 0;
+  padding-top: 1.5em;
 }
 .welcome-header {
   margin: 0;
 }
 .welcome-text-top {
+  margin: 0.8em 0;
   max-width: 26em;
 }
 .welcome-text-bottom {
-    margin: 0.5em 0;
+  margin: 0.8em 0;
 }
 .welcome-icons-container {
   display: block;
   width: 80%;
 }
-.welcome-icons-half {
-  display: inline-block;
-  width: 49%;
-}
 .welcome-icon-box {
   display: inline-block;
-  padding: 1em;
-  width: 49%;
+  max-width: 6em;
   text-align: center;
+  vertical-align: top;
 }
 .big-welcome-fi {
   font-size: 3em;
+}
+.icon-text {
+  font-size: 0.8em;
 }
 </style>
 
 <div class="welcome-message-container">
   <h2 class="welcome-header">Welcome <%= @tutor.first_name %>!</h2>
-  <h5 class="welcome-text-top">Complete your application below and then follow the checklist on the right to get ready to start tutoring!</h5>
-  <h5 class="welcome-text-bottom">From this dashboard, you will be able to:</h5>
+  <p class="welcome-text-top">Complete your application below and then follow the checklist on the right to start tutoring with Axon!</h5>
+  <p class="welcome-text-bottom">From this dashboard, you will be able to:</h5>
 </div>
 
 <div class="welcome-icons-container">
-  <div class="welcome-icons-half">
-    <div class="welcome-icon-box">
-      <i class="fi-torsos big-welcome-fi"></i>
-      <p>Manage Your Profile</p>
-    </div>
-    <div class="welcome-icon-box">
-      <i class="fi-calendar big-welcome-fi"></i>
-      <p>Create Your Schedule</p>
-    </div>
+  <div class="welcome-icon-box">
+    <i class="fi-torsos big-welcome-fi"></i>
+    <p class="icon-text">Manage Your Profile</p>
   </div>
-  <div class="welcome-icons-half">
-    <div class="welcome-icon-box">
-      <i class="fi-list-bullet big-welcome-fi"></i>
-      <p>Set Courses and Rates</p>
-    </div>
-    <div class="welcome-icon-box">
-      <i class="fi-credit-card big-welcome-fi"></i>
-      <p>Accept Payments</p>
-    </div>
+  <div class="welcome-icon-box">
+    <i class="fi-calendar big-welcome-fi"></i>
+    <p class="icon-text">Create Your Schedule</p>
+  </div>
+  <div class="welcome-icon-box">
+    <i class="fi-list-bullet big-welcome-fi"></i>
+    <p class="icon-text">Set Courses and Rates</p>
+  </div>
+  <div class="welcome-icon-box">
+    <i class="fi-credit-card big-welcome-fi"></i>
+    <p class="icon-text">Accept Payments</p>
   </div>
 </div>
