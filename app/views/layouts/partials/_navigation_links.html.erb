@@ -1,14 +1,14 @@
 <%# add navigation links to this file %>
 <% if user_signed_in? %>
   <% if current_user.role == 'student' %>
-    <li class="menu-item"><%= link_to 'Dashboard', home_student_path(current_user) %></li>
+    <div class="nav-links-right"><%= link_to 'Dashboard', home_student_path(current_user) %></div>
   <% elsif current_user.role == 'tutor' %>
-    <li class="menu-item"><%= link_to 'Dashboard', home_tutor_path(current_user) %></li>
+    <div class="nav-links-right"><%= link_to 'Dashboard', home_tutor_path(current_user) %></div>
   <% elsif current_user.role == 'campus_manager' || current_user.role == 'super_admin' %>
-    <li class="menu-item"><%= link_to 'Admin', admin_tutors_path %></li>
+    <div class="nav-links-right"><%= link_to 'Admin', admin_tutors_path %></div>
   <% end %>
-  <li class="menu-item"><%= link_to 'Sign out', destroy_user_session_path, method: 'delete' %></li>
+  <div class="nav-links-right"><%= link_to 'Sign out', destroy_user_session_path, method: 'delete' %></div>
 <% else %>
-  <li class="menu-item"><%= link_to 'Login', new_user_session_path %></li>
-  <li class="menu-item"><%= link_to 'Become a Tutor', become_a_tutor_path %></li>
+  <div class="nav-links-right"><%= link_to 'Login', new_user_session_path %></div>
+  <div class="nav-links-right"><%= link_to 'Become a Tutor', become_a_tutor_path %></div>
 <% end %>

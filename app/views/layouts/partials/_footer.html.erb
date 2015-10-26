@@ -1,36 +1,61 @@
-<footer class="footer" role="contentinfo">
-  <div class="wrapper">
-    <div class="footer-logo">
-      <%= image_tag('logo_white.png', class: 'footer-logo') %>
-    </div>
-    <ul class="nav-footer">
-      <li><%= link_to 'Home', root_path %></li>
-      <li><%= link_to 'Find a Tutor',search_path %></li>
-      <li><%= link_to 'About', about_path %></li>
-      <li><%= link_to 'FAQ', faqs_path %></li>
-      <% if !current_user %>
-        <li><%= link_to 'Become a Tutor', become_a_tutor_path %></li>
-      <% end %>
-      <li><%= link_to 'Contact', contact_path %></li>
-      <li><%= link_to 'Partners', partners_path %></li>
-    </ul>     
-    <div class="footer-secondary-links">
-      <ul>
-        <li><%= link_to 'Terms and Conditions', terms_and_conditions_path %></li>
-        <li><%= link_to 'Privacy Policy', privacy_policy_path %></li>
-      </ul>
-      <ul class="social-nav">
-        <li>
+<style>
+.footer-wrapper {
+  background-color: #0095AC;
+}
+.footer-row {
+  display: block;
+}
+.footer-logo {
+  width: 8em;
+}
+.footer-box {
+  display: inline-block;
+}
+.footer-right-side {
+  float: right;
+}
+.footer-link {
+  display: inline-block;
+  color: white;
+  font-size: 0.7em;
+}
+.footer-link-social-icon {
+  width: 1.5em;
+}
+</style>
+<div class="footer-wrapper">
+  <footer>
+    <div class="row footer-row">
+      <div class="footer-logo footer-box">
+        <%= image_tag('logo_white.png', class: 'footer-logo') %>
+      </div>
+      <div class="footer-main-links footer-box">
+        <%= link_to 'Home', root_path, class: 'footer-link' %>
+        <%= link_to 'Find a Tutor',search_path, class: 'footer-link' %>
+        <%= link_to 'About', about_path, class: 'footer-link' %>
+        <%= link_to 'FAQ', faqs_path, class: 'footer-link' %>
+        <% if !current_user %>
+          <%= link_to 'Become a Tutor', become_a_tutor_path, class: 'footer-link' %>
+        <% end %>
+        <%= link_to 'Contact', contact_path, class: 'footer-link' %>
+        <%= link_to 'Partners', partners_path, class: 'footer-link' %>
+      </div>
+
+      <div class="footer-right-side">
+        <div class="footer-secondary-links footer-box">
+          <%= link_to 'Terms and Conditions', terms_and_conditions_path, class: 'footer-link' %>
+          <%= link_to 'Privacy Policy', privacy_policy_path, class: 'footer-link' %>
+        </div>
+
+        <div class="footer-social-links footer-box">      
           <%= link_to('https://www.facebook.com/axontutors', target: '_blank') do %>
-            <img src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/facebook-logo-circle.png" alt="Facebook">
+            <img src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/facebook-logo-circle.png" alt="Facebook" class='footer-link-social-icon'>
           <% end %>
-        </li>
-        <li>
           <%= link_to('https://twitter.com/axontutors', target: '_blank') do %>
-            <img src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/twitter-logo-circle.png" alt="Twitter">
+            <img src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/twitter-logo-circle.png" alt="Twitter" class='footer-link-social-icon'>
           <% end %>
-        </li>
-      </ul>     
+        </div>
+      </div>
     </div>
-  </div>
-</footer>
+  </footer>
+</div>

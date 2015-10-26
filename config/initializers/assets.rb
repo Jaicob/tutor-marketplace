@@ -15,4 +15,5 @@ Rails.application.config.assets.precompile += %w(
 	dashboard/schedule.js
 	single_views/search.js
   custom/admin_panel.css.scss
+  vendor/modernizr.js
 )

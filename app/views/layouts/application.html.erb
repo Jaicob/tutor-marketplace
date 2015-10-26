@@ -12,19 +12,33 @@
   </head>
   <body>
     <header>
-      <%= render 'layouts/partials/navigation' %>
+      <div class="row">
+        <%= render 'layouts/partials/navigation' %>
+      </div>
     </header>
     <!-- Secondary banners/headers below until <main> -->
-    <%= yield(:admin_panel) if content_for? (:admin_panel) %>
-    <%= yield(:dashboard_nav) if content_for? (:dashboard_nav) %> 
-    <%= yield(:new_tutor_checklist) if content_for? (:new_tutor_checklist) %>
+    <div class="row">
+      <div class="nav-wrapper">
+        <%= yield(:admin_panel) if content_for? (:admin_panel) %>
+        <%= yield(:dashboard_nav) if content_for? (:dashboard_nav) %> 
+        <%= yield(:new_tutor_checklist) if content_for? (:new_tutor_checklist) %>
+      </div>
+    </div>
     <main role="main">
-      <p class="notice"><%= notice %></p>
-      <p class="alert"><%= alert %></p>
-      <%= yield %>
+      <div class="row alert-row">
+        <p class="notice"><%= notice %></p>
+        <p class="alert"><%= alert %></p>
+      </div>
+      <div class="row">
+        <%= yield %>
+      </div>
     </main>
     <footer>
-      <%= render 'layouts/partials/footer' %>
+      <div class="footer-wrapper">
+        <div class="row">
+          <%= render 'layouts/partials/footer' %>
+        </div>
+      </div>
     </footer>
   </body>
 </html>

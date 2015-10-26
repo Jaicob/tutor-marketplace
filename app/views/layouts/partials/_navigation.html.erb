@@ -1,5 +1,5 @@
 <style>
-.nav-bar-sides {
+.nav-bar-wrapper {
   display: block;
   background-color: white;
 }
@@ -17,24 +17,16 @@
   font-weight: 500;
   color: #4F5252;
 }
-.nav-logo-box {
-}
-.nav-campus-box {
-}
-.nav-right-links {
+.nav-links-right-container {
   float: right;
 }
-.nav-link-right-1 {
-}
-.nav-link-right-2 {
-}
-.no-margin {
-  margin: 0;
+.nav-links-right {
+  display: inline-block;
+  padding: 0 1em;
 }
 </style>
-
 <nav>
-  <div class="nav-bar-sides">
+  <div class="nav-bar-wrapper">
     <div class="row nav-row">
       <div class="nav-logo-box nav-link-box">
         <%= link_to '/' do %>
@@ -51,20 +43,9 @@
           <% end %>
         </ul>
       </div>
-      <div class="nav-right-links nav-link-box">
-        <div class="nav-link-right-1 nav-link-box">
-          Login
-        </div>
-        <div class="nav-link-right-2 nav-link-box">
-          <button class="btn success tiny no-margin">Become A Tutor</button>
-        </div>
+      <div class="nav-links-right-container nav-link-box">
+        <%= render 'layouts/partials/navigation_links' %>
       </div>
     </div>
   </div>
 </nav>
-<a data-dropdown="drop1" aria-controls="drop1" aria-expanded="false">Has Dropdown</a>
-<ul id="drop1" class="f-dropdown" data-dropdown-content aria-hidden="true" tabindex="-1">
-  <li><a href="#">This is a link</a></li>
-  <li><a href="#">This is another</a></li>
-  <li><a href="#">Yet another</a></li>
-</ul>

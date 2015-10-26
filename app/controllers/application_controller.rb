@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
 
   before_filter :configure_permitted_parameters, if: :devise_controller?
   before_action :set_school_selection
+  # before_action :set_right_side_nav_links
 
   protected
 
@@ -105,5 +106,27 @@ class ApplicationController < ActionController::Base
         @school = nil
       end
     end
+
+    # # These two links should change based on a user's role/if they are a guest
+    # def set_right_side_nav_links
+    #   if current_user == nil 
+    #     @nav_link_1_name = "Login"
+    #     @nav_link_1_path = 'new_user_session_path'
+    #     @nav_link_2_name = "Become A Tutor"
+    #     @nav_link_2_path = 'become_a_tutor_path'
+    #     return
+    #   else
+    #     if current_user.role == 'student'
+    #       @nav_link_1_name = '<%= link_to "Dashboard", home_student_path(current_user) %>'
+    #       @nav_link_1_path
+    #     elsif current_user.role == 'tutor'
+    #       @nav_link_1 = '<%= link_to "Dashboard", home_tutor_path(current_user) %></li>'
+    #     elsif current_user.role == 'campus_manager' || current_user.role == 'super_admin'
+    #       @nav_link_1 = '<%= link_to "Admin", admin_tutors_path %></li>'
+    #     end
+    #     @nav_link_2_name = "Sign out"
+    #     @nav_link_2_path = 'destroy_user_session_path'
+    #   end
+    # end
 
 end
