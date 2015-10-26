@@ -13,18 +13,10 @@ class API::V1::StudentAppointmentsController < API::V1::Defaults
   end
 
   def create
-    @appt = Appointment.new
-    @appt.update(safe_params)
-    if @appt.save
-      AppointmentMailer.delay.appointment_confirmation_for_tutor(@appt.id)
-      AppointmentMailer.delay.appointment_confirmation_for_student(@appt.id)
-      if @appt.appt_reminder_email_date != nil
-        ApptReminderWorker.perform_at(@appt.appt_reminder_email_date, @appt.id)
-        ApptReminderWorker.perform_at(@appt.appt_reminder_email_date, @appt.id)
-      end
-      render json: @appt
+    if Appointment.create_appts_from_array(params)
+      render json: @appts
     else
-      render nothing: true, status: 500
+      render json: @appts.errors.full_messages
     end
   end
 
@@ -34,7 +26,7 @@ class API::V1::StudentAppointmentsController < API::V1::Defaults
       AppointmentMailer.delay.appointment_rescheduled_for_student(@appt.id)
       render json: @appt
     else
-      render nothing: true, status: 500
+      render json: @appt.errors.full_messages
     end
   end
 
@@ -44,7 +36,7 @@ class API::V1::StudentAppointmentsController < API::V1::Defaults
       AppointmentMailer.delay.appointment_cancellation_for_student(@appt.id)
       render json: @appt
     else
-      render nothing: true, status: 500
+      render json: @appt.errors.full_messages
     end
   end
 

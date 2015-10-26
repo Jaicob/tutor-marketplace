@@ -55,15 +55,21 @@ module Processor
           currency: 'usd',
           source: charge.token,
           destination: charge.tutor.acct_id,
-          application_fee: charge.transaction_fee
+          application_fee: charge.axon_fee
         )
       else
+        puts "SEND CHARGE METHOD IN STRIPE.RB"
+        puts "charge.amount = #{charge.amount}"
+        puts "charge.customer_id = #{charge.customer_id}"
+        puts "charge.tutor_acct_id = #{charge.tutor.acct_id}"
+        puts "charge.axon_fee = #{charge.axon_fee}"
+        puts "charge.tutor_fee = #{charge.tutor_fee}"
         ::Stripe::Charge.create(
           amount: charge.amount,
           currency: 'usd',
           customer: charge.customer_id,
           destination: charge.tutor.acct_id,
-          application_fee: charge.transaction_fee
+          application_fee: charge.axon_fee
         )
       end
     end
@@ -75,24 +81,30 @@ module Processor
           description: "#{student.full_name} - #{student.email}",
           email: student.email
         )
-        cust.default_source = token
-        cust.save
-        student.update_attributes(customer_id: cust.id)
+        if cust.sources['data'].first
+          brand = cust.sources['data'].first['brand']
+          last_4 = cust.sources['data'].first['last4']
+          student.update_attributes(
+            customer_id: cust.id, 
+            last_4_digits: last_4,
+            card_brand: brand
+          )
+        end
       else
         cust = ::Stripe::Customer.retrieve(student.customer_id)
         cust.sources.create(source: token)
-        cust.default_source = token
         cust.save
       end
     end
 
-    def reconcile_coupon_difference(tutor, amount, promotion)
+    def reconcile_coupon_difference(tutor, transfer_amount, promotion)
       # TODO: Stripe Transfer that sends the difference from an Axon coupon to a Tutor's Stripe account
+      # transfer_amount = amount that Axon owes tutor (represented by a negative Axon fee)
       transfer = ::Stripe::Transfer.create(
-        amount: amount,
+        amount: transfer_amount,
         currency: 'usd',
         destination: tutor.acct_id,
-        description: "Reconciliation for Coupon #{promotion.name}"
+        description: "Reconciliation for Promo ID ##{promotion.id}"
       )
     end
 

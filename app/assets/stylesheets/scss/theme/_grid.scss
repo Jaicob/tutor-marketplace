@@ -266,3 +266,33 @@
 		}
 	}
 }
+
+/* Grid Centered Col 20% Width */
+.gi-center-20 {
+	@extend .g;
+	margin: auto;
+
+	@include media($large-screen) {
+		width: 20%;
+	}
+}
+
+/* Grid Centered Col 50% Width */
+.gi-center-50 {
+	@extend .g;
+	margin: auto;
+
+	@include media($large-screen) {
+		width: 50%;
+	}
+}
+
+/* Grid Centered Col 80% Width */
+.gi-center-80 {
+	@extend .g;
+	margin: auto;
+
+	@include media($large-screen) {
+		width: 80%;
+	}
+}

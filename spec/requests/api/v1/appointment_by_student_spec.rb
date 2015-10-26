@@ -49,18 +49,76 @@ describe "AppointmentsByStudent endpoints" do
     expect(json['id']).to eq(@appt_a.id)
   end
 
-  it 'creates an appointment for a student' do
+  it 'creates a single appointment for a student' do
     request_spec_login(student.user)
     params = {
-      student_id: student.id,
-      course_id: course.id,
-      slot_id: slot.id,
-      start_time: "2015-09-01 10:00:00"
+      data: [
+        {
+          student_id: student.id,
+          course_id: course.id,
+          slot_id: slot.id,
+          start_time: "2015-09-01 10:00:00"
+        }
+      ]
     }
     expect{
       post "/api/v1/students/#{student.id}/appointments/", params
     }.to change(Appointment, :count).by(1)
     expect(response).to be_success
+  end
+
+  it 'creates two appointments for a student' do
+    request_spec_login(student.user)
+    params = {
+      data: [
+        {
+          student_id: student.id,
+          course_id: course.id,
+          slot_id: slot.id,
+          start_time: "2015-09-01 10:00:00"
+        },
+        {
+          student_id: student.id,
+          course_id: course.id,
+          slot_id: slot.id,
+          start_time: "2015-09-01 11:00:00"
+        }
+      ]
+    }
+    expect{
+      post "/api/v1/students/#{student.id}/appointments/", params
+    }.to change(Appointment, :count).by(2)
+    expect(response).to be_success 
+  end
+
+  it 'creates three appointments for a student' do 
+    request_spec_login(student.user)
+    params = {
+      data: [
+        {
+          student_id: student.id,
+          course_id: course.id,
+          slot_id: slot.id,
+          start_time: "2015-09-01 10:00:00"
+        },
+        {
+          student_id: student.id,
+          course_id: course.id,
+          slot_id: slot.id,
+          start_time: "2015-09-01 11:00:00"
+        },
+        {
+          student_id: student.id,
+          course_id: course.id,
+          slot_id: slot.id,
+          start_time: "2015-09-01 12:00:00"
+        }
+      ]
+    }
+    expect{
+      post "/api/v1/students/#{student.id}/appointments/", params
+    }.to change(Appointment, :count).by(3)
+    expect(response).to be_success 
   end
 
   it 'reschedules an appointment for a student' do 

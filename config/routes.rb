@@ -217,17 +217,17 @@ Rails.application.routes.draw do
   # all dashboard routes for signed-in tutors
   resources :tutors, only: [:update, :destroy] do
     member do
-      get  '/home'                        => 'dashboard/tutor/home#index'
-      get  '/schedule'                    => 'dashboard/tutor/schedule#index'
-      get  '/profile'                     => 'dashboard/tutor/profile#index'
+      get  '/home'                    => 'dashboard/tutor/home#index'
+      get  '/schedule'                => 'dashboard/tutor/schedule#index'
+      get  '/profile'                 => 'dashboard/tutor/profile#index'
       scope 'settings' do 
-        get  '/account'                     => 'dashboard/tutor/settings#account'
-        get  '/private_info'                => 'dashboard/tutor/settings#private_info'
-        get  '/edit_profile'                => 'dashboard/tutor/settings#edit_profile'
-        get  '/appointment_settings'        => 'dashboard/tutor/settings#appointment_settings' 
-        get  '/payment_info'                => 'dashboard/tutor/settings#tutor_payment'
-        get  '/edit_address_info'           => 'dashboard/tutor/settings#edit_tutor_payment_address'
-        get  '/appointment_history'         => 'dashboard/tutor/settings#appointment_history'
+        get  '/account'                 => 'dashboard/tutor/settings#account'
+        get  '/private_info'            => 'dashboard/tutor/settings#private_info'
+        get  '/edit_profile'            => 'dashboard/tutor/settings#edit_profile'
+        get  '/appointment_settings'    => 'dashboard/tutor/settings#appointment_settings' 
+        get  '/payment_info'            => 'dashboard/tutor/settings#payment_info'
+        get  '/edit_address'            => 'dashboard/tutor/settings#edit_address'
+        get  '/appointment_history'     => 'dashboard/tutor/settings#appointment_history'
       end
     end
     resources :courses, controller: 'dashboard/tutor/courses'
@@ -241,7 +241,8 @@ Rails.application.routes.draw do
       get  '/search'               => 'single_views#tutor_search'      
       scope 'settings' do
         get  '/account'               => 'dashboard/student/settings#account'
-        get  '/student_payment'       => 'dashboard/student/settings#student_payment'
+        get  '/payment_info'          => 'dashboard/student/settings#payment_info'
+        post '/payment_info'          => 'dashboard/student/settings#save_payment_info'
         get  '/appointment_history'   => 'dashboard/student/settings#appointment_history'
       end
     end
