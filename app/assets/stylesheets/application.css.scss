@@ -19,18 +19,31 @@
  *= require framework_and_overrides
  */
 
- .nav-wrapper {
+  .nav-wrapper {
     display: block;
     width: 100%;
- }
- .full-width-row {
-    width: 100%;
- }
- main {
-    background-color: #fff;
- }
- .footer-wrapper {
+  }
+
+  .main-wrapper {
     display: block;
     width: 100%;
+    background-color: yellow;
+  }
+
+  main {
+    background-color: white;
+  }
+
+  .footer-bg {
     background-color: #0095AC;
- }
+  }
+
+  .row{
+    &.full-width{
+      max-width: 100% !important;
+      .row{
+        margin: 0 auto;
+        max-width: 62.5rem;
+      }
+    }
+  }

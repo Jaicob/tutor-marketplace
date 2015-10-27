@@ -12,25 +12,24 @@
   </head>
   <body>
     <header>
-      <div class="row">
+      <div class="row full-width">
         <%= render 'layouts/partials/navigation' %>
       </div>
     </header>
-    <!-- Secondary banners/headers below until <main> -->
-    <div class="row alert-row">
-      <p class="notice"><%= notice %></p>
-      <p class="alert"><%= alert %></p>
+    <div class="row full-width">
+      <div class="alert-row">
+        <p class="notice"><%= notice %></p>
+        <p class="alert"><%= alert %></p>
+      </div>
     </div>
-    <div class="row full-width-row">
+    <div class="row full-width">
       <main role="main">
         <%= yield %>
       </main>
     </div>
     <footer>
-      <div class="footer-wrapper">
-        <div class="row">
-          <%= render 'layouts/partials/footer' %>
-        </div>
+      <div class="row full-width footer-bg">
+        <%= render 'layouts/partials/footer' %>
       </div>
     </footer>
   </body>
