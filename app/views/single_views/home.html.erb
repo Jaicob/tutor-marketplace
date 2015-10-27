@@ -1,9 +1,8 @@
 <style>
 
+/* iPhone 5 view */
 p {
   font-family: 'Roboto Slab';
-}
-.landing-page-top {
 }
 .center {
   text-align: center;
@@ -17,8 +16,56 @@ p {
 .shadow {
   text-shadow: 1px 1px 1px black;
 }
+.bottom-margin {
+  margin-bottom: 1em;
+}
 .school-selection-box {
   display: block;
+  width: 90%;
+  margin: auto;
+}
+.school-selection {
+  display: block;
+  width: 100%;
+  text-align: center;
+  background-color: #0095AC;
+  border: 2px solid white;
+  border-radius: 4px;
+  color: white;
+  font-size: 0.8em;
+  padding: 1em;
+}
+.numbers-banner-box {
+  display: block;
+}
+.number-banner {
+  display: block;
+  text-align: center;
+  background-color: #2BC2DE;
+  border: 1px solid white;
+  color: white;
+  margin-bottom: 0;
+  padding: 0.5em;
+  border-bottom: 0;
+  font-family: 'Lato';
+}
+.top-padding {
+  padding-top: 1.5em;
+}
+
+/* iPad view */
+
+@media screen and (min-width: 768px) {
+.school-selection {
+  width: 50%;
+  margin: 1em auto;
+}
+}
+
+/* Full view */
+
+@media screen and (min-width: 1200px) {
+.school-selection-box {
   width: 40%;
   margin: auto;
 }
@@ -33,17 +80,22 @@ p {
   color: white;
   font-size: 0.8em;
 }
-.numbers-banner {
-  display: block;
+.numbers-banner-box {
+  background-color: #2BC2DE;
 }
-.top-padding {
-  padding-top: 1.5em;
+.number-banner {
+  display: inline-block;
+  width: 33%;
+  border: none;
+  background: inherit;
 }
+}
+
 </style>
 <div class="top-image-bg">
   <div class="row landing-page-top">
     <h1 class="center white shadow top-padding">Meet your personal campus tutor</h1>
-    <h2 class="center blue-3 shadow">Choose your campus:</h2>
+    <h2 class="center blue-3 shadow bottom-margin">Choose your campus:</h2>
     <div class="school-selection-box">
       <p class="school-selection">University of Georgia</p>
       <p class="school-selection">Georgia State</p>
@@ -51,10 +103,10 @@ p {
       <p class="school-selection">Kennesaw State</p>
     </div>
     <p class="center white shadow">Book your in-person & on-campus tutor in just two minutes</p>
-    <div class="numbers-banner">
-      <p>Join over 2,000 students on Axon</p>
-      <p>Over 6,000+ tutoring sessions</p>
-      <p>Featured in: The Odyssey | Red & Black</p>
+    <div class="numbers-banner-box">
+      <p class="number-banner">Join over 2,000 students on Axon</p>
+      <p class="number-banner">Over 6,000+ tutoring sessions</p>
+      <p class="number-banner">Featured in: The Odyssey | Red & Black</p>
     </div>
   </div>
 </div>
