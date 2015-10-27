@@ -19,19 +19,18 @@
  *= require framework_and_overrides
  */
 
+  * {
+    font-family: 'Lato';
+   }
+
   .nav-wrapper {
     display: block;
     width: 100%;
   }
 
-  .main-wrapper {
-    display: block;
-    width: 100%;
-    background-color: yellow;
-  }
-
   main {
-    background-color: white;
+    padding: 0;
+    background: inherit;
   }
 
   .footer-bg {
