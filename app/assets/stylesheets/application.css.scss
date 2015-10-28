@@ -19,9 +19,18 @@
  *= require framework_and_overrides
  */
 
-  * {
+  *, p, h3, h4, h5, h6 {
     font-family: 'Lato';
+    color: #4F5252;
    }
+
+  p {
+    font-weight: 100;
+  }
+
+  h1, h2 {
+    font-family: 'Roboto Slab';
+  }
 
   .nav-wrapper {
     display: block;

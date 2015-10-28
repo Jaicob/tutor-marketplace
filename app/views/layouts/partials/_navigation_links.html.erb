@@ -10,5 +10,5 @@
   <div class="nav-links-right"><%= link_to 'Sign out', destroy_user_session_path, method: 'delete' %></div>
 <% else %>
   <div class="nav-links-right"><%= link_to 'Login', new_user_session_path %></div>
-  <div class="nav-links-right"><%= link_to 'Become a Tutor', become_a_tutor_path %></div>
+  <div class="nav-links-right"><%= link_to 'Become a Tutor', become_a_tutor_path, class: 'become-a-tutor-button' %></div>
 <% end %>
