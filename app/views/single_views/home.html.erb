@@ -16,6 +16,9 @@
 .bottom-margin {
   margin-bottom: 1em;
 }
+.headline {
+  font-family: 'Lato';
+}
 .school-selection-box {
   display: block;
   width: 90%;
@@ -60,15 +63,26 @@
   padding: 1em;
   text-align: center;
 }
+.landing-page p {
+  text-align: center;
+  max-width: 30em;
+  width: 100%;
+  margin: 1em auto;
+}
 .section-header p {
   font-family: 'Roboto Slab';
   font-size: 1.2em;
   font-weight: 100;
+  max-width: 20em;
+}
+p.axon-is-easy {
+  max-width: 20em;
+  margin: 0 auto 1em;
 }
 p.section-sub-header {
   font-family: 'Lato';
   font-size: 1.2em;
-  font-weight: 400;
+  margin-top: 0;
 }
 p.pic-caption {
   font-size: 1.3em;
@@ -88,8 +102,8 @@ p.pic-caption {
   width: 60%;
   margin: auto;
 }
-p.different-text {
-  font-weight: 100;
+p.difference-text {
+  padding-bottom: 2em;
 }
 .difference-icon {
   font-size: 2em;
@@ -98,27 +112,45 @@ p.different-text {
 img.testimonial-pic {
   border-radius: 100%;
   border: 1px solid black;
+  width: 100%;
+  max-width: 10em;
+  margin-top: 1em;
 }
 p.testimonial-name {
-    font-size: 0.8em;
-    font-weight: 400;
+  font-size: 0.8em;
+  font-weight: 400;
+  margin-bottom: 2em;
 }
-img.campus-pic {
-    margin-bottom: 2em;
+.campus-pic-box {
+  width: 100%;
+  margin-bottom: 1em;
+  max-width: 15em;
+  overflow: hidden;
 }
 p.campus-pic-title {
-  font-size: 2em;
+  font-size: 5em;
   font-weight: 900;
-  margin-bottom: 0;
-  color: white;
+  margin: 0;
+  color: rgba(255,255,255,0.5);
+}
+p.campus-pic-title:hover {
+  color: rgba(255,255,255,1);
 }
 .lp-sixth-section {
   background-color: #4F5252;
   color: white;
 }
+
+
+
+
 /* iPad view */
 
 @media screen and (min-width: 768px) {
+p.axon-is-easy {
+  font-size: 1.6em;
+  margin-bottom: -1em;
+}
 .school-selection {
   width: 50%;
   margin: 1em auto;
@@ -131,6 +163,10 @@ p.campus-pic-title {
   margin: 3em auto 1em;
 }
 }
+
+
+
+
 
 /* Full view */
 
@@ -167,12 +203,12 @@ p.campus-pic-title {
   margin: 0;
 }
 }
-
 </style>
+
 <div class="top-image-bg">
   <div class="row landing-page lp-first-section">
-    <h1 class="center white shadow top-padding">Meet your personal campus tutor</h1>
-    <h2 class="center blue-3 shadow bottom-margin">Choose your campus:</h2>
+    <h1 class="center white shadow top-padding headline">Meet your personal campus tutor</h1>
+    <h2 class="center blue-3 shadow bottom-margin headline">Choose your campus:</h2>
     <div class="school-selection-box">
       <p class="school-selection">University of Georgia</p>
       <p class="school-selection">Georgia State</p>
@@ -189,7 +225,7 @@ p.campus-pic-title {
 </div>
 <div class="landing-page lp-second-section">
   <div class="section-header">
-    <p>Axon is the easiest way to get through your toughest college classes</p>
+    <p class="axon-is-easy">Axon is the easiest way to get through your toughest college classes</p>
   </div>
   <div class="pic-box-trio">
     <div class="pic-box">
@@ -246,7 +282,7 @@ p.campus-pic-title {
 <div class="divider-line"><!-- THIS IS THE THIN BLUE LINE --></div>
 <div class="landing-page lp-fifth-section">
   <div class="section-header">
-    <p>Thousands of students are getting better grades</p>
+    <p>Thousands of students are getting better grades with Axon tutors</p>
     <p class="section-sub-header">What students are saying</p>
   </div>
   <div class="two-testimonial-boxes">
@@ -272,25 +308,20 @@ p.campus-pic-title {
 </div>
 <div class="landing-page lp-sixth-section">
   <div class="section-header">
-    <p class="white">Ready to start?</p>
-    <p class="section-sub-header white">Select your campus:</p>
+    <p class="white">Select your campus to get started</p>
   </div>
   <div class="campus-pic-boxes">
-    <div class="campus-pic-box">
+    <div class="campus-pic-box uga-box">
       <p class="campus-pic-title">UGA</p>
-      <%= image_tag('trekkie.jpg', class: 'campus-pic') %>
     </div>
-    <div class="campus-pic-box">
+    <div class="campus-pic-box gsu-box">
       <p class="campus-pic-title">GSU</p>
-      <%= image_tag('trekkie.jpg', class: 'campus-pic') %>
     </div>
-    <div class="campus-pic-box">
+    <div class="campus-pic-box ksu-box">
       <p class="campus-pic-title">KSU</p>
-      <%= image_tag('trekkie.jpg', class: 'campus-pic') %>
     </div>
-    <div class="campus-pic-box">
+    <div class="campus-pic-box app-box">
       <p class="campus-pic-title">APP</p>
-      <%= image_tag('trekkie.jpg', class: 'campus-pic') %>
     </div>
   </div>
 </div>
