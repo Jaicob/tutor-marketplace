@@ -1,0 +1,94 @@
+<style>
+
+/* for iPhone 5 */
+.nav-bar-wrapper {
+  position: absolute;
+  width: 100%;
+}
+
+.nav-logo-box.nav-link-box {
+  text-align: center;
+  width: 100%;
+}
+.nav-campus-box.nav-link-box {
+  display: none;
+}
+.nav-links-right-container.nav-link-box {
+  display: none;
+}
+.nav-logo {
+  height: 3em;
+  position: relative;
+  top: 1em;
+}
+a.become-a-tutor-button {
+    background-color: rgba(255,255,255,0.2);
+    padding: 0.5em 1em;
+}
+
+/* for iPad */
+
+@media screen and (min-width: 768px) {
+.nav-bar-wrapper {
+  display: block;
+  z-index: 1000000;
+}
+.nav-row {
+  display: block;
+  height: 3em;
+}
+.nav-logo {
+  position: static;
+}
+.nav-logo-box.nav-link-box {
+    text-align: center;
+    width: initial;
+    background-color: inherit;
+}
+.nav-campus-box.nav-link-box {
+  display: inline-block;
+}
+.nav-links-right-container.nav-link-box {
+  display: inline-block;
+}
+.nav-links-right-container {
+  float: right;
+}
+.nav-link-box {
+  display: inline-block;
+  line-height: 3em;
+  vertical-align: top;
+  font-weight: 500;
+}
+.nav-link-box a {
+  color: white;
+  font-weight: 400;
+}
+.nav-links-right {
+  display: inline-block;
+  padding: 0 1em;
+}
+}
+
+/* Full view */
+
+@media screen and (min-width: 1200px) {
+
+}
+
+
+</style>
+<nav>
+  <div class="nav-bar-wrapper">
+    <div class="row nav-row">
+      <div class="nav-logo-box nav-link-box">
+        <%= link_to '/' do %>
+          <%= image_tag('logo_white.png', class: 'nav-logo') %>
+        <% end %>
+      </div>
+      <div class="nav-links-right-container nav-link-box">
+        <%= render 'layouts/partials/navigation_links' %>
+      </div>
+    </div>
+  </div>
+</nav>

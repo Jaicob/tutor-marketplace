@@ -6,9 +6,6 @@ $blue2: #2BC2DE;
 $blue3: #0095AC;
 $green: #58AA4D;
 
-.nav-campus-box.nav-link-box, .nav-links-right-container.nav-link-box {
-  display: none !important;
-}
 .tutor-form {
   display: inline-block;
   width: 49%;
@@ -324,16 +321,22 @@ p.sign-up-title {
   margin: 0.3em 0 1em;
   font-weight: 100;
 }
+.half-form-row {
+  display: inline-block;
+  width: 49%;
+}
 input#user_first_name, input#user_last_name, input#user_email, input#user_password, input#user_tutor_phone_number, input#rate {
   height: 2em;
   margin-bottom: 0.3em;
   border-radius: 4px;
+  font-weight: 100;
 }
 select#school, select#subject, select#course {
   height: 2em;
   padding: 0 0.5em;
   margin-bottom: 0.3em;
   border-radius: 4px;
+  font-weight: 100;
 }
 .green {
   background-color: $green;

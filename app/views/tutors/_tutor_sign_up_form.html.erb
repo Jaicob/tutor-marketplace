@@ -4,7 +4,12 @@
   <p class="sign-up-title">Register to Tutor with Axon</p>
 
   <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :role => 'form'}) do |f| %>
-    <%= f.text_field :first_name, placeholder: 'First Name', required: true  %>
+    <div class="half-form-row">
+      <%= f.text_field :first_name, placeholder: 'First Name', required: true  %>
+    </div>
+    <div class="half-form-row">
+      <%= f.text_field :last_name, placeholder: 'Last Name', required: true  %>
+    </div>
     <%= f.email_field :email, placeholder: 'Email', required: true %>
     <%= f.password_field :password, placeholder: 'Password', required: true  %>
     <%= f.fields_for :tutor do |tt| %>
