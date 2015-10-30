@@ -191,13 +191,16 @@ Rails.application.routes.draw do
   # home_page
   root                         'single_views#home'
 
-  # single_view_pages
+  # landing pages
+  get '/get-started'          => 'single_views#student_landing'
+  get '/become-a-tutor'       => 'single_views#tutor_landing'
+
+  # other single_view pages
   get '/search'               => 'single_views#tutor_search'
   get '/restricted-access'    => 'single_views#restricted_access'
   get '/about'                => 'single_views#about'
   get '/faqs'                 => 'single_views#faqs'
   get '/partners'             => 'single_views#partners'
-  get '/become-a-tutor'       => 'single_views#tutor_landing'
   get '/contact'              => 'single_views#contact'
   get '/privacy-policy'       => 'single_views#privacy_policy'
   get '/terms-and-conditions' => 'single_views#terms_and_conditions'

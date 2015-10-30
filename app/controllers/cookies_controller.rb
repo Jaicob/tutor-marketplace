@@ -6,7 +6,7 @@ class CookiesController < ApplicationController
     if current_user
       current_user.update(school_id: school_id)
     end
-    redirect_to :back
+    redirect_to root_path
   end
 
 end

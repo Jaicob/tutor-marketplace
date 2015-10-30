@@ -1,0 +1,341 @@
+$serif: 'Roboto Slab';
+$san-serif: 'Lato';
+$shadow: 1px 1px 1px black;
+$blue1: #BBE5EE;
+$blue2: #2BC2DE;
+$blue3: #0095AC;
+$green: #58AA4D;
+
+.lp-first-section {
+  .headline {
+    display: inline-block;
+    width: 50%;
+    vertical-align: top;
+    text-align: left;
+    h1 {
+      color: white;
+      text-shadow: $shadow;
+    }
+  }
+  .tutor-form {
+    display: inline-block;
+    width: 49%;
+  }
+}
+
+/* iPhone 5 view */
+.center {
+  text-align: center;
+}
+.white {
+  color: white;
+}
+.blue-3 {
+  color: #0095AC;
+}
+.shadow {
+  text-shadow: 1px 1px 1px black;
+}
+.bottom-margin {
+  margin-bottom: 1em;
+}
+.headline {
+  font-family: 'Lato';
+}
+.school-selection-box {
+  margin: auto;
+  max-width: 25em;
+}
+select#visitor_school_id {
+  display: inline-block;
+  width: 73%;
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+}
+input.visitor-set-school-button {
+  display: inline-block;
+  width: 25%;
+  height: 2.9em;
+  font-size: 0.8em;
+  border: none;
+  margin-top: -1em;
+  background-color: #0095AC;
+  color: white;
+  font-weight: 100;
+  margin-left: -0.3em;
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
+}
+.school-selection {
+  display: block;
+  width: 100%;
+  text-align: center;
+  background-color: #0095AC;
+  border: 2px solid white;
+  border-radius: 4px;
+  color: white;
+  font-size: 0.8em;
+  padding: 1em;
+}
+.book-two-mins {
+  margin-bottom: 4em;
+}
+.numbers-banner-box {
+  display: block;
+  background-color: rgba(0,0,0,0.8);
+  margin-top: 5em;
+}
+.number-banner {
+  display: block;
+  text-align: center;
+  border-top: 1px solid white;
+  color: white;
+  margin-bottom: 0;
+  padding: 0.5em;
+  border-bottom: 0;
+  font-family: 'Lato';
+}
+.big-numbers {
+  font-size: 1.5em;
+  color: white;
+}
+.top-banner {
+  border-top: none;
+}
+.top-padding {
+  padding-top: 1.5em;
+}
+.landing-page {
+  padding: 1em;
+  text-align: center;
+}
+.landing-page p {
+  text-align: center;
+  max-width: 20em;
+  width: 100%;
+  margin: 1em auto;
+}
+.section-header p {
+  font-family: 'Roboto Slab';
+  font-size: 1.2em;
+  font-weight: 100;
+  max-width: 20em;
+}
+p.axon-is-easy {
+  max-width: 20em;
+  margin: 0 auto 1em;
+}
+p.section-sub-header {
+  font-family: 'Lato';
+  font-size: 1.2em;
+  margin-top: 0;
+}
+p.pic-caption {
+  font-size: 1.3em;
+  color: #2BC2DE;
+  margin-bottom: 0;
+}
+.pic-box-trio {
+  max-width: 50em;
+  margin: auto;
+}
+.trio-pic {
+  width: 100%;
+  border: 1px solid #2BC2DE;
+  max-width: 25em;
+  margin: auto;
+}
+.divider-line {
+  display: block;
+  height: 1px;
+  border-bottom: 1px solid #0095AC;
+  width: 60%;
+  margin: auto;
+}
+p.difference-text {
+  padding-bottom: 2em;
+}
+.difference-icon {
+  font-size: 2em;
+  color: #0095AC;
+}
+img.testimonial-pic {
+  border-radius: 100%;
+  border: 1px solid black;
+  width: 100%;
+  max-width: 10em;
+  margin-top: 1em;
+}
+p.testimonial-name {
+  font-size: 0.8em;
+  font-weight: 400;
+  margin-bottom: 2em;
+}
+a.faqs-link:hover {
+  padding: 1em 5em;
+  background-color: #0095AC;
+  color: white;
+  border-radius: 4px;
+}
+.campus-pic-boxes {
+  margin-bottom: 3em;
+}
+.campus-pic-box {
+  width: 100%;
+  margin: 1em auto;
+  max-width: 15em;
+  overflow: hidden;
+}
+p.campus-pic-title {
+  font-size: 5em;
+  font-weight: 900;
+  margin: 0;
+  color: rgba(255,255,255,0.5);
+}
+p.campus-pic-title:hover {
+  color: rgba(255,255,255,1);
+}
+.lp-campus-pics-section {
+  background-color: #4F5252;
+  color: white;
+  padding-top: 0;
+}
+p.select-campus-pic {
+  margin: auto;
+  padding: 2em;
+  color: white;
+}
+
+
+
+
+/* iPad view */
+
+@media screen and (min-width: 768px) {
+p.axon-is-easy {
+  font-size: 1.6em;
+  margin-bottom: -1em;
+}
+.school-selection {
+  width: 50%;
+  margin: 1em auto;
+}
+.section-header {
+  padding: 1em;
+}
+.pic-box {
+  width: 50%;
+  margin: 3em auto 1em;
+}
+.campus-pic-boxes {
+  margin-bottom: 5em;
+}
+.campus-pic-box {
+  margin: auto;
+  display: inline-block;
+  padding: 1em;
+}
+}
+
+
+
+
+
+/* Full view */
+
+@media (min-width: 1000px) {
+.school-selection-box {
+  width: 40%;
+  margin: auto;
+}
+.school-selection {
+  display: inline-block;
+  width: 49%;
+  text-align: center;
+  background-color: #0095AC;
+  border: 2px solid white;
+  border-radius: 4px;
+  color: white;
+  font-size: 0.8em;
+}
+.number-banner {
+  display: inline-block;
+  width: 33%;
+  border: none;
+  vertical-align: top;
+}
+.pic-box {
+  width: 33%;
+  display: inline-block;
+  padding: 2em;
+  vertical-align: top;
+  margin: 0;
+}
+.four-differences-boxes {
+  width: 80%;
+  margin: auto;
+}
+.difference-box {
+  display: inline-block;
+  vertical-align: top;
+  width: 49%;
+  padding: 0 1em;
+}
+.testimonial-box {
+  display: inline-block;
+  width: 49%;
+  padding: 0 1em;
+  vertical-align: top;
+}
+p.difference-text {
+  padding-bottom: 2em;
+  max-width: 20em;
+}
+}
+
+/* Tutor sign-up form */
+
+.sign-up-form-box {
+  display: inline-block;
+  padding: 1em;
+  border-radius: 4px;
+  background-color: #0095AC;
+  width: 16em;
+  p {
+    color: white;
+    font-size: 0.7em;
+    margin: 1em 0 0.5em;
+  }
+}
+form#new_user {
+  padding: 0 1.2em;
+}
+p.sign-up-title {
+  font-size: 1.1em;
+  margin: 0.3em 0 1em;
+  font-weight: 100;
+}
+input#user_first_name, input#user_last_name, input#user_email, input#user_password, input#user_tutor_phone_number, input#rate {
+  height: 2em;
+  margin-bottom: 0.3em;
+  border-radius: 4px;
+}
+select#school, select#subject, select#course {
+  height: 2em;
+  padding: 0 0.5em;
+  margin-bottom: 0.3em;
+  border-radius: 4px;
+}
+.green {
+  background-color: $green;
+}
+.landing-page.lp-first-section {
+  padding-top: 4em;
+}
+
+.nav-campus-box.nav-link-box {
+  display: none;
+}
+.nav-links-right {
+  display: none;
+}
