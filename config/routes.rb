@@ -243,6 +243,8 @@ Rails.application.routes.draw do
         get  '/account'               => 'dashboard/student/settings#account'
         get  '/payment_info'          => 'dashboard/student/settings#payment_info'
         post '/payment_info'          => 'dashboard/student/settings#save_payment_info'
+        get  '/edit_payment_info'     => 'dashboard/student/settings#edit_payment_info'
+        post 'edit_payment_info'      => 'dashboard/student/settings#save_payment_info'
         get  '/appointment_history'   => 'dashboard/student/settings#appointment_history'
       end
     end
