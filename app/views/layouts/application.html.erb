@@ -14,10 +14,13 @@
   <body>
     <header>
       <div class="row full-width">
-        <%= render 'layouts/partials/navigation' %>
+        <%= render 'layouts/partials/navigation' unless content_for? (:partial_nav) %>
+        <%= yield(:partial_nav) if content_for? (:partial_nav) %>
       </div>
     </header>
       <div class="row full-width" role="main">
+        <%= yield(:admin_panel) if content_for? (:admin_panel) %>
+        <%= yield(:dashboard_nav) if content_for? (:dashboard_nav) %> 
         <span class="notice"><%= notice %></span>
         <span class="alert"><%= alert %></span>
         <%= yield %>

@@ -6,21 +6,30 @@ $blue2: #2BC2DE;
 $blue3: #0095AC;
 $green: #58AA4D;
 
-.lp-first-section {
-  .headline {
-    display: inline-block;
-    width: 50%;
-    vertical-align: top;
-    text-align: left;
-    h1 {
-      color: white;
-      text-shadow: $shadow;
-    }
-  }
-  .tutor-form {
-    display: inline-block;
-    width: 49%;
-  }
+.nav-campus-box.nav-link-box, .nav-links-right-container.nav-link-box {
+  display: none !important;
+}
+.tutor-form {
+  display: inline-block;
+  width: 49%;
+  margin-top: -2em;
+  margin-bottom: 1em;
+}
+.tutor-headline {
+  display: inline-block;
+  width: 50%;
+  vertical-align: top;
+}
+.tutor-headline h1 {
+  color: white;
+  text-shadow: $shadow;
+  text-align: center;
+  width: 10em;
+  margin-top: 0.5em;
+}
+.landing-page.lp-bottom-sign-up-form {
+  background-color: #4F5252;
+  padding: 3em;
 }
 
 /* iPhone 5 view */
