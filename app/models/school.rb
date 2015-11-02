@@ -43,5 +43,18 @@ class School < ActiveRecord::Base
     end
   end
 
+  def top_subjects
+    # This is a short-term solution only. We can manually set the top 4 subjects for each campus while we have a small number of campuses. Eventually we will want to replace the manual lists with a method that determines the most popular subjects by appointments booked or tutor courses, etc.
+    case self.name
+    when 'University of North Carolina'
+      ['Math', 'Biology', 'Chemistry', 'Accounting']
+    when 'University of Georgia'
+      ['Math', 'Biology', 'Chemistry', 'Accounting']
+    when 'Duke University'
+      ['Math', 'Biology', 'Chemistry', 'Accounting']
+    when 'Clemson University'
+      ['Math', 'Biology', 'Chemistry', 'Accounting']
+    end
+  end
 
 end
