@@ -206,6 +206,7 @@ Rails.application.routes.draw do
   get '/privacy-policy'       => 'single_views#privacy_policy'
   get '/terms-and-conditions' => 'single_views#terms_and_conditions'
   post '/set-school'          => 'cookies#set_school_id_cookie'
+  post '/change-school'       => 'cookies#change_school_id_cookie'
 
   # custom_devise_routes
   devise_for :users, controllers: { registrations: "tutor_registration" }

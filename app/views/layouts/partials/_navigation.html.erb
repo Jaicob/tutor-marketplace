@@ -73,6 +73,13 @@ a.become-a-tutor-button {
 /* Full view */
 
 @media screen and (min-width: 1200px) {
+.f-dropdown li {
+  cursor: pointer;
+  font-size: 0.875rem;
+  line-height: 1.125rem;
+  margin: 0;
+  padding: 1em;
+}
 
 }
 
@@ -87,10 +94,12 @@ a.become-a-tutor-button {
         <% end %>
       </div>
       <div class="nav-campus-box nav-link-box">
-        <a data-dropdown="campus-dropdown" aria-controls="campus-dropdown" aria-expanded="false">Campus</a>
+        <a data-dropdown="campus-dropdown" aria-controls="campus-dropdown" aria-expanded="false">
+          <%= @school.name %>
+        </a>
         <ul id="campus-dropdown" class="f-dropdown" data-dropdown-content aria-hidden="true" tabindex="-1">
           <% School.all.each do |school| %>
-            <%= link_to(set_school_path(school_id: school.id), method: :post)  do %>
+            <%= link_to(change_school_path(school_id: school.id), method: :post) do %>
               <li><%= school.name %></li>
             <% end %>
           <% end %>
