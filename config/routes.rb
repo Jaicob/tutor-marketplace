@@ -196,7 +196,8 @@ Rails.application.routes.draw do
   get '/become-a-tutor'       => 'single_views#tutor_landing'
 
   # other single_view pages
-  get '/search'               => 'single_views#tutor_search'
+  get '/search'               => 'single_views#search'
+  post '/search'              => 'search#search_from_home', as: 'search_from_home'
   get '/restricted-access'    => 'single_views#restricted_access'
   get '/about'                => 'single_views#about'
   get '/faqs'                 => 'single_views#faqs'

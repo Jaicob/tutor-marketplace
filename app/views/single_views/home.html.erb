@@ -1,0 +1,126 @@
+<style>
+.home-search-box {
+  display: block;
+  width: 40%;
+  margin: auto;
+}
+.home-search-field {
+  display: inline-block;
+  width: 40%;
+}
+.home-search-button {
+  display: inline-block;
+  width: 15%;
+  background-color: #0095AC;
+}
+
+</style>
+<%= javascript_include_tag "single_views/search" %>
+
+<div class="landing-page lp-first-section">
+  <h1 class="center white shadow top-padding headline">Meet your personal campus tutor</h1>
+  <h3 class="center white shadow bottom-margin headline">Choose your course</h3>
+
+  <div class="home-search-box">
+    <%= form_for :search, url: search_from_home_path, method: :post do |f| %>
+      <div class="home-search-field">
+        <%= render '/course_selector/subject' %>
+      </div>
+      <div class="home-search-field">
+        <%= render '/course_selector/course' %>
+      </div>
+      <%= f.submit 'Search', class: 'home-search-button' %>
+    <% end %>
+  </div>
+
+  <p class="center white shadow book-two-mins">Book your in-person & on-campus tutor in just two minutes</p>
+  <div class="numbers-banner-box">
+    <div class="number-banner top-banner">Join over <span class="big-numbers">2,000+</span> students on Axon</div>
+    <div class="number-banner">Over <span class="big-numbers">6,000+</span> tutoring sessions</div>
+    <div class="number-banner">Featured in: The Odyssey | Red & Black</div>
+  </div>
+</div>
+<div class="landing-page lp-3-steps-section">
+  <div class="section-header">
+    <p class="axon-is-easy">Axon is the easiest way to get through your toughest college classes</p>
+  </div>
+  <div class="pic-box-trio">
+    <div class="pic-box">
+      <%= image_tag('panda.png', class: 'trio-pic') %>
+      <p class="pic-caption">1. Select your class</p>
+      <p class="pic-details">Find the class you are struggling with on your specific campus</p>
+    </div>
+    <div class="pic-box">
+      <%= image_tag('panda.png', class: 'trio-pic') %>
+      <p class="pic-caption">2. Choose a tutor & time</p>
+      <p class="pic-details">Browse through vetted tutors and then select a time that works for you</p>
+    </div>
+    <div class="pic-box">
+      <%= image_tag('panda.png', class: 'trio-pic') %>
+      <p class="pic-caption">3. Meet right on campus</p>
+      <p class="pic-details">Meet with your personal tutor on campus at an arranged location</p>
+    </div>
+  </div>
+</div>
+<div class="divider-line"><!-- THIS IS THE THIN BLUE LINE --></div>
+<div class="landing-page lp-differences-section">
+  <div class="section-header">
+    <p>What makes Axon different?</p>
+  </div>
+  <div class="four-differences-boxes">
+    <div class="difference-box">
+      <i class="fi-marker difference-icon"></i>
+      <p class="section-sub-header">Tutors meet you on-campus & in-person</p>
+      <p class="difference-text">We believe that learning is a social activity. So when you book through Axon, your tutor meets you in-person on your campus.</p>
+    </div>
+    <div class="difference-box">
+      <i class="fi-zoom-in difference-icon"></i>
+      <p class="section-sub-header">Get help for your specific class</p>
+      <p class="difference-text">In college, every class is different. Every professor's teaching style is different. With Axon, get a local tutor who understands your specific environment.</p>
+    </div>
+    <div class="difference-box">
+      <i class="fi-checkbox difference-icon"></i>
+      <p class="section-sub-header">Every booking is confirmed</p>
+      <p class="difference-text">When you need a tutor, you need one fast. Within minutes of selecting your class and tutor, you will have a confirmed booking notification in your email.</p>
+    </div>
+    <div class="difference-box">
+      <i class="fi-price-tag difference-icon"></i>
+      <p class="section-sub-header">Pricing is simple</p>
+      <p class="difference-text">Pricing is simple with Axon. Tutors set their own rates (the average is $23/hr.) and we charge a standard convenience fee to students for using our service.</p>
+    </div>
+  </div>
+</div>
+<div class="divider-line"><!-- THIS IS THE THIN BLUE LINE --></div>
+<div class="landing-page lp-testimonial-section">
+  <div class="section-header">
+    <p>Thousands of students are getting better grades with Axon tutors</p>
+    <p class="section-sub-header">What students are saying</p>
+  </div>
+  <div class="two-testimonial-boxes">
+    <div class="testimonial-box">
+      <div class="testimonial-pic">
+        <%= image_tag('doge.png', class: 'testimonial-pic') %>
+      </div>
+      <div class="testimonial-text">
+        <p>"I've used Axon for the past two years and don't know how I would have gotten through my clases without them. I feel much more prepared before each test I take and the tutoring is very personalized to every student's learning style."</p>
+        <p class="testimonial-name">Amy Beres, '18</p>
+      </div>
+    </div>
+    <div class="testimonial-box">
+      <div class="testimonial-pic">
+        <%= image_tag('doge.png', class: 'testimonial-pic') %>
+      </div>
+      <div class="testimonial-text">
+        <p>"Axon is my go-to whenever I need a little extra help with whatever subject I'm struggling in. The tutors are always well-informed and capable of answering my questions. Axon tutoring is a great study tool because I can have one-on-one attention that fits into my own schedule."</p>
+        <p class="testimonial-name">Chandler Johnson, '18</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="divider-line"><!-- THIS IS THE THIN BLUE LINE --></div>
+<div class="landing-page lp-faqs-section">
+  <div class="section-header">
+    <p>Still have questions?</p>
+    <%= link_to 'Check out our FAQs', faqs_path, class: 'faqs-link' %>
+  </div>
+</div>

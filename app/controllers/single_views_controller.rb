@@ -15,7 +15,7 @@ class SingleViewsController < ApplicationController
   def tutor_landing
   end
 
-  def tutor_search
+  def search
   end
 
   def about_us

@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
 
   before_filter :configure_permitted_parameters, if: :devise_controller?
-  # before_action :set_school_selection
+  before_action :set_school_selection
 
   protected
 
@@ -99,8 +99,8 @@ class ApplicationController < ActionController::Base
     def set_school_selection
       if current_user
         @school = current_user.school
-      elsif cookies[:school_id]
-        @school = School.find(cookies[:school_id])
+      elsif !cookies[:school_id].blank?
+        @school = School.find(cookies[:school_id].to_i)
       else
         @school = nil
       end

@@ -1,12 +1,12 @@
 <!-- Place immediately inside of parent div with correct grid sizing -->
 
-<% if current_user && current_user.school %>
+<% if @school %>
   <!-- Only displays a user's set school in search when a user is logged in -->
   <div class="dropdown--school">
     <div class="select-wrapper">
       <select name="course[school_id]" id="school" class="select-menu" required="true">
-        <option selected="true" value="<%= current_user.school.id %>">
-          <%= current_user.school.name %>
+        <option selected="true" value="<%= @school.id %>">
+          <%= @school.name %>
         </option>
       </select>
     </div>
