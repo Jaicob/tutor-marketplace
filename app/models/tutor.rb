@@ -18,7 +18,7 @@
 #  profile_pic        :string
 #  transcript         :string
 #  appt_notes         :text
-#  approved_courses   :boolean          default(FALSE)
+#  courses_approved   :boolean          default(FALSE)
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  last_4_acct        :string

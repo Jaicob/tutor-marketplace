@@ -2,16 +2,19 @@
 #
 #                                Prefix Verb     URI Pattern                                                        Controller#Action
 #                                  root GET      /                                                                  single_views#home
-#                                search GET      /search(.:format)                                                  single_views#tutor_search
+#                           get_started GET      /get-started(.:format)                                             single_views#student_landing
+#                        become_a_tutor GET      /become-a-tutor(.:format)                                          single_views#tutor_landing
+#                                search GET      /search(.:format)                                                  single_views#search
+#                      search_from_home POST     /search(.:format)                                                  search#search_from_home
 #                     restricted_access GET      /restricted-access(.:format)                                       single_views#restricted_access
 #                                 about GET      /about(.:format)                                                   single_views#about
 #                                  faqs GET      /faqs(.:format)                                                    single_views#faqs
 #                              partners GET      /partners(.:format)                                                single_views#partners
-#                        become_a_tutor GET      /become-a-tutor(.:format)                                          single_views#tutor_landing
 #                               contact GET      /contact(.:format)                                                 single_views#contact
 #                        privacy_policy GET      /privacy-policy(.:format)                                          single_views#privacy_policy
 #                  terms_and_conditions GET      /terms-and-conditions(.:format)                                    single_views#terms_and_conditions
 #                            set_school POST     /set-school(.:format)                                              cookies#set_school_id_cookie
+#                         change_school POST     /change-school(.:format)                                           cookies#change_school_id_cookie
 #                      new_user_session GET      /users/sign_in(.:format)                                           devise/sessions#new
 #                          user_session POST     /users/sign_in(.:format)                                           devise/sessions#create
 #                  destroy_user_session DELETE   /users/sign_out(.:format)                                          devise/sessions#destroy

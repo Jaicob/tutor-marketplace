@@ -1,4 +1,14 @@
 <style>
+
+.lp-first-section {
+  background: url("<%= @school.campus_pic_url %>") no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  z-index: -1;
+}
+
 /* iPhone 5 view */
 .home-search-box {
   display: block;
@@ -137,8 +147,11 @@ input.home-search-button {
   width: 40%;
   margin: auto;
 }*/
-.home-search-field {
-  width: 80%;
+.home-search-box {
+  width: 40%;
+}
+.top-subject {
+  margin: 0;
 }
 /*select#subject, select#course {
   height: 2.3em;
@@ -174,7 +187,11 @@ input.home-search-button {
   position: relative;
   top: -1px;
 }*/
-
+/*style="background: url('https://rails-axon-uploads.s3.amazonaws.com/uploads/school/campus_pic/1/recycle_info.jpeg') no-repeat center center fixed;   -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  z-index: -1;"*/
 }
 
 </style>
@@ -183,7 +200,7 @@ input.home-search-button {
   <%= render 'layouts/partials/special_navs/home_nav' %>
 <% end %>
 
-<div class="landing-page lp-first-section">
+<div class="landing-page lp-first-section" >
   <h1 class="center white shadow top-padding headline">Meet your personal campus tutor</h1>
   <h3 class="center white shadow bottom-margin headline">Choose your course</h3>
 

@@ -1,0 +1,8 @@
+.lp-first-section {
+  background: url("https://rails-axon-uploads.s3.amazonaws.com/uploads/school/campus_pic/1/recycle_info.jpeg") no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  z-index: -1;
+}
