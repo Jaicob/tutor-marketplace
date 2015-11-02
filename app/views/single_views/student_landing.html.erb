@@ -1,9 +1,9 @@
-<% content_for (:partial_nav) do %>
-  <%= render 'layouts/partials/student_landing_nav' %>
+<% content_for (:special_nav) do %>
+  <%= render 'layouts/partials/special_navs/student_landing_nav' %>
 <% end %>
 <div class="landing-page lp-first-section">
   <h1 class="center white shadow top-padding headline">Meet your personal campus tutor</h1>
-  <h2 class="center blue-3 shadow bottom-margin headline">Choose your campus:</h2>
+  <h3 class="center white shadow bottom-margin headline">Choose your campus:</h3>
   <div class="school-selection-box">
     <%= form_for 'visitor', url: set_school_path do |f| %>
       <%= f.collection_select(:school_id, School.all, :id, :name, {prompt: 'Select School'}, {required: true}) %>

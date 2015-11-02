@@ -24,6 +24,8 @@ class School < ActiveRecord::Base
   extend FriendlyId
   friendly_id :name, use: :slugged
 
+  mount_uploader :campus_pic, CampusPicUploader
+
   # This method is necessary for populating the drop-down menu of subjects in the course selector form
   def subjects
     self.courses.map { |course|

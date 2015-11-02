@@ -2,9 +2,8 @@
 
 /* for iPhone 5 */
 .nav-bar-wrapper {
+  position: absolute;
   width: 100%;
-  border-bottom: 1px solid #CFCECE;
-  box-shadow: 1px 1px 1px #CFCECE;
 }
 
 .nav-logo-box.nav-link-box {
@@ -23,8 +22,8 @@
   top: 1em;
 }
 a.become-a-tutor-button {
-  background-color: rgba(255,255,255,0.2);
-  padding: 0.5em 1em;
+    background-color: rgba(255,255,255,0.2);
+    padding: 0.5em 1em;
 }
 
 /* for iPad */
@@ -42,9 +41,9 @@ a.become-a-tutor-button {
   position: static;
 }
 .nav-logo-box.nav-link-box {
-  text-align: center;
-  width: initial;
-  background-color: inherit;
+    text-align: center;
+    width: initial;
+    background-color: inherit;
 }
 .nav-campus-box.nav-link-box {
   display: inline-block;
@@ -62,7 +61,7 @@ a.become-a-tutor-button {
   font-weight: 500;
 }
 .nav-link-box a {
-  color: #0095AC;
+  color: white;
   font-weight: 400;
 }
 .nav-links-right {
@@ -81,6 +80,7 @@ a.become-a-tutor-button {
   margin: 0;
   padding: 1em;
 }
+
 }
 
 
@@ -88,9 +88,9 @@ a.become-a-tutor-button {
 <nav>
   <div class="nav-bar-wrapper">
     <div class="row nav-row">
-      <div class="nav-logo-box nav-link-box white">
+      <div class="nav-logo-box nav-link-box">
         <%= link_to '/' do %>
-          <%= image_tag('axon_logo_color.png', class: 'nav-logo') %>
+          <%= image_tag('logo_white.png', class: 'nav-logo') %>
         <% end %>
       </div>
       <div class="nav-campus-box nav-link-box">
@@ -105,7 +105,7 @@ a.become-a-tutor-button {
           <% end %>
         </ul>
       </div>
-      <div class="nav-links-right-container nav-link-box white">
+      <div class="nav-links-right-container nav-link-box">
         <%= render 'layouts/partials/navigation_links' %>
       </div>
     </div>
