@@ -1,36 +1,126 @@
-<footer class="footer" role="contentinfo">
-  <div class="wrapper">
-    <div class="footer-logo">
-      <%= image_tag('logo_white.png', class: 'footer-logo') %>
-    </div>
-    <ul class="nav-footer">
-      <li><%= link_to 'Home', root_path %></li>
-      <li><%= link_to 'Find a Tutor',search_path %></li>
-      <li><%= link_to 'About', about_path %></li>
-      <li><%= link_to 'FAQ', faqs_path %></li>
-      <% if !current_user %>
-        <li><%= link_to 'Become a Tutor', become_a_tutor_path %></li>
+<style>
+
+/* iPhone 5 view */
+
+.footer-bg {
+  background-color: #0095AC;
+  height: 100%;
+}
+.footer-logo {
+  margin: 2em auto;
+  width: 10em;
+  display: block;
+}
+.footer-link {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 1em;
+}
+a.footer-link:hover {
+    color: #bbe5ee;
+}
+.footer-link-social-icon {
+  width: 2em;
+  display: block;
+  margin: 2em auto;
+}
+
+/* iPad view */
+
+@media screen and (min-width: 768px) {
+.footer-bg {
+  padding: 1em;
+}
+.footer-logo {
+  display: inline-block;
+}
+.footer-left {
+  display: inline-block;
+  width: 50%;
+}
+.footer-right {
+  display: inline-block;
+  width: 48%;
+  vertical-align: bottom;
+}
+.footer-left .footer-link {
+  text-align: left;
+  padding: 0.5em 1em;
+}
+.footer-right .footer-link {
+  text-align: right;
+}
+.footer-link-social-icon {
+  display: inline-block;
+  margin: 1em;
+}
+.social-icons-box {
+    text-align: right;
+}
+}
+
+/* Full view */
+
+@media screen and (min-width: 1200px) {
+.footer-bg {
+  padding: 0;
+}
+.footer-logo {
+  width: 5em;
+  margin: 1em;
+  padding: 2em 0;
+}
+.footer-left {
+  width: 65%;
+}
+.footer-right {
+  width: 30%;
+  vertical-align: middle;
+}
+.footer-left .footer-link {
+  display: inline-block;
+  font-size: 0.7em;
+}
+.footer-right .footer-link {
+  display: inline-block;
+  font-size: 0.7em;
+}
+.social-icons-box {
+  display: inline-block;
+}
+.footer-link-social-icon {
+  margin: 0;
+  width: 1em;
+}
+}
+
+</style>
+<div class="row footer-bg">
+  <div class="footer-left">
+    <%= image_tag('logo_white.png', class: 'footer-logo') %>
+    <%= link_to 'Home', root_path, class: 'footer-link' %>
+    <%= link_to 'Find a Tutor',search_path, class: 'footer-link' %>
+    <%= link_to 'About', about_path, class: 'footer-link' %>
+    <%= link_to 'FAQ', faqs_path, class: 'footer-link' %>
+    <% if !current_user %>
+      <%= link_to 'Become a Tutor', become_a_tutor_path, class: 'footer-link' %>
+    <% end %>
+    <%= link_to 'Contact', contact_path, class: 'footer-link' %>
+    <%= link_to 'Partners', partners_path, class: 'footer-link' %>
+  </div>
+
+  <div class="footer-right">
+    <%= link_to 'Terms and Conditions', terms_and_conditions_path, class: 'footer-link' %>
+    <%= link_to 'Privacy Policy', privacy_policy_path, class: 'footer-link' %>
+
+    <div class="social-icons-box">
+      <%= link_to('https://www.facebook.com/axontutors', target: '_blank') do %>
+        <img src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/facebook-logo-circle.png" alt="Facebook" class='footer-link-social-icon'>
       <% end %>
-      <li><%= link_to 'Contact', contact_path %></li>
-      <li><%= link_to 'Partners', partners_path %></li>
-    </ul>     
-    <div class="footer-secondary-links">
-      <ul>
-        <li><%= link_to 'Terms and Conditions', terms_and_conditions_path %></li>
-        <li><%= link_to 'Privacy Policy', privacy_policy_path %></li>
-      </ul>
-      <ul class="social-nav">
-        <li>
-          <%= link_to('https://www.facebook.com/axontutors', target: '_blank') do %>
-            <img src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/facebook-logo-circle.png" alt="Facebook">
-          <% end %>
-        </li>
-        <li>
-          <%= link_to('https://twitter.com/axontutors', target: '_blank') do %>
-            <img src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/twitter-logo-circle.png" alt="Twitter">
-          <% end %>
-        </li>
-      </ul>     
+      <%= link_to('https://twitter.com/axontutors', target: '_blank') do %>
+        <img src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/twitter-logo-circle.png" alt="Twitter" class='footer-link-social-icon'>
+      <% end %>
     </div>
   </div>
-</footer>
+</div>

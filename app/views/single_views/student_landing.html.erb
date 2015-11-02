@@ -1,32 +1,40 @@
 <% content_for (:partial_nav) do %>
-  <%= render 'layouts/partials/tutor_landing_nav' %>
+  <%= render 'layouts/partials/student_landing_nav' %>
 <% end %>
 <div class="landing-page lp-first-section">
-  <div class="tutor-headline">
-    <h1>Axon gives you the tools to build your own tutoring business</h1>
+  <h1 class="center white shadow top-padding headline">Meet your personal campus tutor</h1>
+  <h2 class="center blue-3 shadow bottom-margin headline">Choose your campus:</h2>
+  <div class="school-selection-box">
+    <%= form_for 'visitor', url: set_school_path do |f| %>
+      <%= f.collection_select(:school_id, School.all, :id, :name, {prompt: 'Select School'}, {required: true}) %>
+      <%= f.submit 'Go', class: 'visitor-set-school-button' %>
+    <% end %>
   </div>
-  <div class="tutor-form">
-    <%= render 'tutors/tutor_sign_up_form' %>
+  <p class="center white shadow book-two-mins">Book your in-person & on-campus tutor in just two minutes</p>
+  <div class="numbers-banner-box">
+    <div class="number-banner top-banner">Join over <span class="big-numbers">2,000+</span> students on Axon</div>
+    <div class="number-banner">Over <span class="big-numbers">6,000+</span> tutoring sessions</div>
+    <div class="number-banner">Featured in: The Odyssey | Red & Black</div>
   </div>
 </div>
 <div class="landing-page lp-3-steps-section">
   <div class="section-header">
-    <p>Join Axon and get booked by college students for appointments on campus</p>
+    <p class="axon-is-easy">Axon is the easiest way to get through your toughest college classes</p>
   </div>
   <div class="pic-box-trio">
     <div class="pic-box">
       <%= image_tag('panda.png', class: 'trio-pic') %>
-      <p class="pic-caption">1. Register and create a profile</p>
+      <p class="pic-caption">1. Select your class</p>
       <p class="pic-details">Find the class you are struggling with on your specific campus</p>
     </div>
     <div class="pic-box">
       <%= image_tag('panda.png', class: 'trio-pic') %>
-      <p class="pic-caption">2. Select classes you want to tutor</p>
+      <p class="pic-caption">2. Choose a tutor & time</p>
       <p class="pic-details">Browse through vetted tutors and then select a time that works for you</p>
     </div>
     <div class="pic-box">
       <%= image_tag('panda.png', class: 'trio-pic') %>
-      <p class="pic-caption">3. Set your availabilty and get booked</p>
+      <p class="pic-caption">3. Meet right on campus</p>
       <p class="pic-details">Meet with your personal tutor on campus at an arranged location</p>
     </div>
   </div>
@@ -39,12 +47,12 @@
   <div class="four-differences-boxes">
     <div class="difference-box">
       <i class="fi-marker difference-icon"></i>
-      <p class="section-sub-header">You set your own rate and keep 100% of your fee</p>
+      <p class="section-sub-header">Tutors meet you on-campus & in-person</p>
       <p class="difference-text">We believe that learning is a social activity. So when you book through Axon, your tutor meets you in-person on your campus.</p>
     </div>
     <div class="difference-box">
       <i class="fi-zoom-in difference-icon"></i>
-      <p class="section-sub-header">Be your own boss and set your own hours</p>
+      <p class="section-sub-header">Get help for your specific class</p>
       <p class="difference-text">In college, every class is different. Every professor's teaching style is different. With Axon, get a local tutor who understands your specific environment.</p>
     </div>
     <div class="difference-box">
@@ -73,8 +81,6 @@
       <div class="testimonial-text">
         <p>"I've used Axon for the past two years and don't know how I would have gotten through my clases without them. I feel much more prepared before each test I take and the tutoring is very personalized to every student's learning style."</p>
         <p class="testimonial-name">Amy Beres, '18</p>
-        <p>Joined: Aug 2014</p>
-        <p>Earned: $7,000</p>
       </div>
     </div>
     <div class="testimonial-box">
@@ -84,8 +90,6 @@
       <div class="testimonial-text">
         <p>"Axon is my go-to whenever I need a little extra help with whatever subject I'm struggling in. The tutors are always well-informed and capable of answering my questions. Axon tutoring is a great study tool because I can have one-on-one attention that fits into my own schedule."</p>
         <p class="testimonial-name">Chandler Johnson, '18</p>
-        <p>Joined: Aug 2014</p>
-        <p>Earned: $7,000</p>
       </div>
     </div>
   </div>
@@ -97,6 +101,20 @@
     <%= link_to 'Check out our FAQs', faqs_path, class: 'faqs-link' %>
   </div>
 </div>
-<div class="landing-page lp-bottom-sign-up-form">
-  <%= render 'tutors/tutor_sign_up_form' %>
+<div class="landing-page lp-campus-pics-section">
+  <p class="select-campus-pic">Select your campus & get started</p>
+  <div class="campus-pic-boxes">
+    <div class="campus-pic-box uga-box">
+      <p class="campus-pic-title">UGA</p>
+    </div>
+    <div class="campus-pic-box gsu-box">
+      <p class="campus-pic-title">GSU</p>
+    </div>
+    <div class="campus-pic-box ksu-box">
+      <p class="campus-pic-title">KSU</p>
+    </div>
+    <div class="campus-pic-box app-box">
+      <p class="campus-pic-title">APP</p>
+    </div>
+  </div>
 </div>

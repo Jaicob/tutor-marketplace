@@ -1,0 +1,31 @@
+<style>
+.new-tutor-partial {
+  height: 20em;
+  padding: 0 4em;
+}
+.new-tutor-partial-wrapper {
+  height: 100%;
+}
+.welcome-container {
+  display: inline-block;
+  width: 60%;
+  height: 100%;
+  vertical-align: top;
+}
+.checklist-container{
+  display: inline-block;
+  width: 38%;
+  height: 100%;
+  vertical-align: top;
+}
+</style>
+<div class="new-tutor-partial">
+  <div class="wrapper new-tutor-partial-wrapper">
+    <div class="welcome-container">
+      <%= render 'layouts/partials/tutors/new_tutor_welcome' %>
+    </div>
+    <div class="checklist-container">
+      <%= render 'layouts/partials/tutors/new_tutor_checklist' %>
+    </div>
+  </div>
+</div>

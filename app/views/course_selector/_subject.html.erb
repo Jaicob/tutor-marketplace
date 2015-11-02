@@ -1,10 +1,10 @@
 <!-- Place immediately inside of parent div with correct grid sizing -->
 
-<% if current_user && current_user.school %>
+<% if @school %>
   <!-- Sets the school for the course_selector with a hidden field so that the school dropdown can be ommited in some views (i.e. when the school is already set for a logged-in tutor or student) -->
   <div style="display: none;">
     <select name="course[school_id]" id="school" required="true">
-      <option selected="true" value="<%= current_user.school.id %>">School</option>
+      <option selected="true" value="<%= @school.id %>">School</option>
     </select>
   </div>
   <!-- Beginning of actual subject select that is shown, in the context of no school select (because it's already set) -->
@@ -12,7 +12,7 @@
     <div class="select-wrapper">
       <select name="course[subject_id]" id="subject" class="select-menu" required="true">
         <option disabled="true" selected="true" value="">Subject</option>
-        <% current_user.school.subjects.each do |subject| %>
+        <% @school.subjects.each do |subject| %>
           <option value="<%= subject[:id] %>"><%= subject[:name] %></option>
         <% end %>
       </select>

@@ -8,13 +8,16 @@ class CreateTutors < ActiveRecord::Migration
       t.integer     :rating
       t.integer     :degree, default: 0
       t.string      :major
-      t.string      :extra_info
+      t.string      :extra_info_1
+      t.string      :extra_info_2
+      t.string      :extra_info_3
       t.string      :graduation_year
       t.string      :phone_number
       t.date        :birthdate
       t.string      :profile_pic
       t.string      :transcript
       t.text        :appt_notes
+      t.boolean     :courses_approved, default: false
 
       t.timestamps null: false
     end

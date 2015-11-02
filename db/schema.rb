@@ -146,15 +146,18 @@ ActiveRecord::Schema.define(version: 20150930154059) do
     t.integer  "rating"
     t.integer  "degree",             default: 0
     t.string   "major"
-    t.string   "extra_info"
+    t.string   "extra_info_1"
+    t.string   "extra_info_2"
+    t.string   "extra_info_3"
     t.string   "graduation_year"
     t.string   "phone_number"
     t.date     "birthdate"
     t.string   "profile_pic"
     t.string   "transcript"
     t.text     "appt_notes"
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
+    t.boolean  "courses_approved",   default: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
     t.string   "last_4_acct"
     t.string   "line1"
     t.string   "line2"

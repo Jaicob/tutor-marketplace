@@ -1,5 +1,57 @@
-@import "style";
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * vendor/assets/stylesheets, or vendor/assets/bower_components of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ *= require Jcrop/css/Jcrop.min
+ *= require sweetalert
+ *= require fullcalendar
+ *= require qTip2/jquery.qtip.min.css
+ *= require framework_and_overrides
+ */
 
-p.alert, p.notice {
-  position: absolute;
-}
+  *, p, h3, h4, h5, h6 {
+    font-family: 'Lato';
+    color: #4F5252;
+   }
+
+  p {
+    font-weight: 100;
+  }
+
+  h1, h2 {
+    font-family: 'Roboto Slab';
+  }
+
+  .nav-wrapper {
+    display: block;
+    width: 100%;
+  }
+
+  main {
+    padding: 0;
+    background: inherit;
+  }
+
+  .footer-bg {
+    background-color: #0095AC;
+  }
+
+  .row{
+    &.full-width{
+      max-width: 100% !important;
+      .row{
+        margin: 0 auto;
+        max-width: 62.5rem;
+      }
+    }
+  }

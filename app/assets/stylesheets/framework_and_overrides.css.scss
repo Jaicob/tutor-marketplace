@@ -1,6 +1,7 @@
 // import the CSS framework
 @import "foundation";
 @import 'foundation-icons';
+@import "foundation_and_overrides";
 
 // override for the 'Home' navigation link
 .top-bar .name {
@@ -100,4 +101,3 @@ section {
    margin-right: auto;
    max-width: initial;
 }
-

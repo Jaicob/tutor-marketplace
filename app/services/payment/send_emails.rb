@@ -9,4 +9,5 @@ class SendEmails
       ApptReminderWorker.perform_at(@appt.appt_reminder_email_date, @appt.id)
     end
   end
+  
 end

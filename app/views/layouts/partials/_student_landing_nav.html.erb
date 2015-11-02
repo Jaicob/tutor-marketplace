@@ -86,16 +86,6 @@ a.become-a-tutor-button {
           <%= image_tag('logo_white.png', class: 'nav-logo') %>
         <% end %>
       </div>
-      <div class="nav-campus-box nav-link-box">
-        <a data-dropdown="campus-dropdown" aria-controls="campus-dropdown" aria-expanded="false">Campus</a>
-        <ul id="campus-dropdown" class="f-dropdown" data-dropdown-content aria-hidden="true" tabindex="-1">
-          <% School.all.each do |school| %>
-            <%= link_to(set_school_path(school_id: school.id), method: :post)  do %>
-              <li><%= school.name %></li>
-            <% end %>
-          <% end %>
-        </ul>
-      </div>
       <div class="nav-links-right-container nav-link-box">
         <%= render 'layouts/partials/navigation_links' %>
       </div>

@@ -1,4 +1,11 @@
 <% content_for (:dashboard_nav) do %>
   <%= generate_dashboard_nav_links and render 'layouts/partials/dashboard_nav' %>
 <% end %>
+
+<% if !@tutor.onboarding_complete? %>
+  <% content_for (:new_tutor_checklist) do %>
+    <%= render 'layouts/partials/tutors/new_tutor_main' %>
+  <% end %>
+<% end %>
+
 <%= render template: "layouts/application" %>

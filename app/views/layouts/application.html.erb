@@ -4,29 +4,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= content_for?(:title) ? yield(:title) : "Axon Tutors" %></title>
     <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Axon Tutors" %>">
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,700,900,300|Roboto+Slab:400,700,300' rel='stylesheet' type='text/css'>
     <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= javascript_include_tag 'vendor/modernizr' %>
     <%= javascript_include_tag 'application' %>
     <%= csrf_meta_tags %>
     <%= yield(:header) %>
   </head>
-  <body class="body">
-    <div class="page" id="page">
-      <header class="header cf" role="banner">
-        <div class="wrapper">
-          <%= render 'layouts/partials/navigation' %>
-        </div>
-      </header>
-      <!-- Secondary banners/headers below until <main> -->
-      <%= yield(:admin_panel) if content_for? (:admin_panel) %>
-      <%= yield(:dashboard_nav) if content_for? (:dashboard_nav) %> 
-      <main role="main">     
-        <p class="notice"><%= notice %></p>
-        <p class="alert"><%= alert %></p>
+  <body>
+    <header>
+      <div class="row full-width">
+        <%= render 'layouts/partials/navigation' unless content_for? (:partial_nav) %>
+        <%= yield(:partial_nav) if content_for? (:partial_nav) %>
+      </div>
+    </header>
+      <div class="row full-width" role="main">
+        <%= yield(:admin_panel) if content_for? (:admin_panel) %>
+        <%= yield(:dashboard_nav) if content_for? (:dashboard_nav) %> 
+        <span class="notice"><%= notice %></span>
+        <span class="alert"><%= alert %></span>
         <%= yield %>
-      </main>
-      <footer>
+      </div>
+    <footer>
+      <div class="row full-width footer-bg">
         <%= render 'layouts/partials/footer' %>
-      </footer>
-    </div>
+      </div>
+    </footer>
   </body>
 </html>

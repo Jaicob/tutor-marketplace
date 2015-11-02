@@ -90,7 +90,7 @@ class ApplicationController < ActionController::Base
         redirect_to home_student_path(current_user)
       end
       # redirects to dashboard home for signed-in tutors
-      if current_user.role == 'student'
+      if current_user.role == 'tutor'
         redirect_to home_tutor_path(current_user)
       end
     end
@@ -99,8 +99,8 @@ class ApplicationController < ActionController::Base
     def set_school_selection
       if current_user
         @school = current_user.school
-      elsif cookies[:school_id]
-        @school = School.find(cookies[:school_id])
+      elsif !cookies[:school_id].blank?
+        @school = School.find(cookies[:school_id].to_i)
       else
         @school = nil
       end

@@ -1,0 +1,47 @@
+<style>
+.background-wrapper {
+  background-color: #BBE5EE;
+  padding: 2em;
+  padding-top: 4em;
+}
+.submission-box {
+  display: block;
+  padding:3em;
+  border-radius: 2px;
+  background-color: #0095AC;
+  width: 30em;
+  margin: 2em auto;
+}
+.submission-title {
+  margin: 0;
+  color: white;
+  text-align: center;
+  font-size: 2em;
+  font-weight: bold;
+}
+.submission-text {
+  color: white;
+  text-align: center;
+}
+button.btn.email-button {
+  width: 100%;
+  padding: 1em;
+  margin-top: 1em;
+  line-height: 1.5em;
+}
+.email-icon{
+  font-size: 1.5em;
+  float: left;
+}
+</style>
+<div class="background-wrapper">
+
+  <div class="submission-box">
+    <h2 class="submission-title">Thanks for submitting your application!</h2>
+    <h4 class="submission-text">Your complete application is now being reviewed by the Axon tutor management team. You will recieve a reply in the next 48 hours. If you have any questions or concerns, please contact us with the link below:</h4>
+    <%= mail_to 'help@axontutors.com' do %>
+      <button class="btn email-button"><i class="fi-mail email-icon"></i>Tutor Registration Help</button>
+    <% end %>
+  </div>  
+
+</div>

@@ -71,7 +71,9 @@ User.all.each do |user|
     birthdate: '1990-01-01',
     degree: 0,
     major: 'Marine Biology',
-    extra_info: Faker::Lorem.sentence,
+    extra_info_1: Faker::Lorem.sentence,
+    extra_info_2: Faker::Lorem.sentence,
+    extra_info_3: Faker::Lorem.sentence,
     graduation_year: '2018',
     phone_number: Faker::Number.number(10),
     )
