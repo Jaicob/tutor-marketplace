@@ -1,7 +1,7 @@
 <style>
 
 .lp-first-section {
-  background: url("<%= @school.campus_pic_url %>") no-repeat center center fixed; 
+  background: url("<%= if @school then @school.campus_pic_url else 'assets/unicorn.jpg' end %>") no-repeat center center fixed; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;

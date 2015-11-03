@@ -1,3 +1,14 @@
+<style>
+.lp-first-section {
+  background: url("<%= if @school then @school.campus_pic_url else 'assets/unicorn.jpg' end %>") no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  z-index: -1;
+}
+</style>
+
 <% content_for (:special_nav) do %>
   <%= render 'layouts/partials/special_navs/student_landing_nav' %>
 <% end %>
