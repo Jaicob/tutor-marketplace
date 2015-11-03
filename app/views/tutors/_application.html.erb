@@ -60,13 +60,14 @@ input.submit-button {
 }
 .file-input-box {
   width: 100%;
+  height: 3em;
   position: relative;
   overflow: hidden;
   margin: 1em 0;   
 }
 input.file-input {
   width: 100%;
-  height: 3em;
+  height: 100%;
   position: absolute;
   right: 0;
   top: 0;
@@ -154,7 +155,7 @@ button.file-input-button {
       <%= f.file_field :profile_pic, class: 'file-input', required: true  %>
     </div>
 
-    <%= f.submit 'Submit Application', class: 'submit-button' %>
+    <%= f.submit 'Submit Application', class: 'button success expand large' %>
 
   <% end %>
 </div>
