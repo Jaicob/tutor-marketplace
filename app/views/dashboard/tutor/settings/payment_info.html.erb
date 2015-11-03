@@ -1,16 +1,38 @@
-<section class="dashboard tutor">
-  <div class="wrapper">
-    <div class="wrapper__text">
-      <h2 class="title">Setttings Manager</h2>
-    </div>
-    <div class="g g-3up">
-      <div class="gi">
-        <%= render 'vertical_sub_menu' %>
-      </div>
-      <div class="gi">
-        <%= render 'account_status', tutor: @tutor %>    
-      </div>
-      <div class="gi"></div>
-    </div>
+<style>
+.settings-section-title {
+  padding: 1em 0 0.5em;
+}
+.sub-menu {
+  padding-left: 0;
+}
+.sub-menu a {
+  color: #4F5252;
+  font-weight: 100;
+  padding-left: 0.4em;
+}
+.sub-menu a:hover {
+  font-weight: 400;
+}
+a.payment-settings-link {
+  color: white;
+  font-weight: 100;
+  background-color: #0095AC;
+  border: 1px solid black;
+  padding: 0.4em 1em;
+  border-radius: 5px;
+}
+a.payment-settings-link:hover {
+  font-weight: 100;
+}
+</style>
+<div class="row">
+  <h2 class="settings-section-title">Setttings Manager</h2>
+</div>
+<div class="row">
+  <div class="medium-3 columns sub-menu">
+    <%= render 'vertical_sub_menu' %>
   </div>
-</section>
+  <div class="medium-4 columns end">
+    <%= render 'account_status', tutor: @tutor %>    
+  </div>
+</div>

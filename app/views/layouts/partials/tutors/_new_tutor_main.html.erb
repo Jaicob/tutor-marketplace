@@ -1,38 +1,56 @@
 <style>
-.new-tutor-partial-wrapper {
-  width: 100%;
-  background-color: #FAFAFA;
+
+/* for iPad (no mobile for Tutor only views) */
+/*.new-tutor-partial-wrapper {
+  background-color: #EFF1F3;
   border-bottom: 1px solid #4F5252;
-}
-.new-tutor-partial {
+  box-shadow: 0px 2px 2px #4F5252, 0px -2px 2px #4F5252;
+}*/
+.new-tutor-partial-wrapper {
+  background-color: #EFF1F3;
+  border-radius: 4px;
+  border: 1px solid #2BC2DE;
+  padding: 2em;
   display: block;
-  height: 100%;
-  padding-top: 1.5em;
-  width: 44em;
-  margin: auto;
+  margin-top: 1em;
 }
 .container {
   display: inline-block;
+  width: 33%;
   vertical-align: top;
   text-align: center;
 }
-.welcome-container {
-  width: 20em;
+/*.welcome-container {
+  width: 50%;
+  min-width: 16em;
+  max-width: 20em;
   text-align: left;
 }
 .checklist-container {
-  width: 15em;
+  width: 48%;
+  min-width: 11em;
+  max-width: 15em;
   padding-top: 1em;
   float: right;
 }
+*/
+
+/* Full view */
+
+@media (min-width: 1000px) {
+.new-tutor-partial {
+}
+}
+
 </style>
-<div class="new-tutor-partial-wrapper">
-  <div class="new-tutor-partial">
-    <div class="container welcome-container">
-      <%= render 'layouts/partials/tutors/new_tutor_welcome' %>
-    </div>
-    <div class="container checklist-container">
-      <%= render 'layouts/partials/tutors/new_tutor_checklist' %>
-    </div>
+<div class="row new-tutor-partial-wrapper">
+  <div class="container welcome-container">
+    <%= render 'layouts/partials/tutors/new_tutor_welcome' %>
+  </div>
+  <div class="container icons-container">
+    <%= render 'layouts/partials/tutors/new_tutor_icons' %>
+  </div>
+  <div class="container checklist-container">
+    <%= render 'layouts/partials/tutors/new_tutor_checklist' %>
   </div>
 </div>

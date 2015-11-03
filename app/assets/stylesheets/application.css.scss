@@ -19,7 +19,7 @@
  *= require framework_and_overrides
  */
 
-  *, p, h3, h4, h5, h6 {
+  *, p, h1, h2, h3, h4, h5, h6 {
     font-family: 'Lato';
     color: #4F5252;
    }
@@ -42,16 +42,16 @@
     background: inherit;
   }
 
-  .footer-bg {
-    background-color: #0095AC;
-  }
-
   .row{
     &.full-width{
       max-width: 100% !important;
+      background-color: #FAFAFA;
       .row{
         margin: 0 auto;
         max-width: 62.5rem;
+      }
+      &.footer-bg {
+        background-color: #0095AC;
       }
     }
   }

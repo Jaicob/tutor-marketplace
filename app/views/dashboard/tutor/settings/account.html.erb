@@ -1,3 +1,18 @@
+<style>
+a.account-settings-link {
+  color: white;
+  font-weight: 100;
+  background-color: #0095AC;
+  border: 1px solid black;
+  padding: 0.4em 1em;
+  border-radius: 5px;
+}
+a.account-settings-link:hover {
+  font-weight: 100;
+}
+</style>
+
+
 <section class="dashboard tutor">
   <div class="wrapper">
     <div class="wrapper__text">
@@ -40,3 +55,44 @@
     </div>
   </div>
 </section>
+
+<div class="row">
+  <h2>Setttings Manager</h2>
+</div>
+<div class="row">
+  <div class="medium-3 columns">
+    <%= render 'vertical_sub_menu' %>
+  </div>
+  <div class="medium-6 columns">
+    <p>All information on this page is private and only accesible to Axon administrators.</p>
+
+    <%= form_for @tutor do |f| %>
+      <h3>Personal Information</h3>
+
+      <%= f.label :birthdate %>
+      <%= f.date_field :birthdate %>
+
+      <%= f.label :phone_number %>
+      <%= f.telephone_field :phone_number %>
+
+      <%= f.submit 'Save', class: 'button tiny expand success' %>
+    <% end %>
+
+    <%= form_for @tutor do |f| %>
+      <h3 id="transcript">Transcript</h3>
+
+      <p>Current Transcript: 
+        <% if @tutor.transcript.url.nil? %>
+          None
+        <% else %>
+          <%= link_to File.basename(@tutor.transcript.path), @tutor.transcript.url, target: '_blank' %>
+        <% end %>
+      </p>
+
+      <%= f.label :transcript %>
+      <%= f.file_field :transcript %>
+
+      <%= f.submit 'Save', class: 'button tiny expand success' %>
+    <% end %>
+  </div>
+</div>

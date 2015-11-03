@@ -1,3 +1,17 @@
+<style>
+a.profile-settings-link {
+  color: white;
+  font-weight: 100;
+  background-color: #0095AC;
+  border: 1px solid black;
+  padding: 0.4em 1em;
+  border-radius: 5px;
+}
+a.profile-settings-link:hover {
+  font-weight: 100;
+}
+</style>
+
 <section class="dashboard tutor">
   <div class="wrapper">
     <div class="wrapper__text">
@@ -46,8 +60,8 @@
           <%= f.label :graduation_year %>
           <%= f.number_field :graduation_year %>
 
-          <%= f.label :extra_info, 'Extra Information' %>
-          <%= f.text_area :extra_info, row: 3 %>
+          <%= f.label :extra_info_1, 'Extra Information' %>
+          <%= f.text_area :extra_info_1, row: 3 %>
 
           <%= f.submit 'Save', class: 'button tiny expand success'%>
 
