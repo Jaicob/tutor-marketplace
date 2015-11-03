@@ -50,7 +50,7 @@ class Admin::SchoolsController < AdminController
     end
 
     def school_params
-      params.require(:school).permit(:name, :location, :transaction_percentage)
+      params.require(:school).permit(:name, :location, :transaction_percentage, :campus_pic)
     end
 
 end

@@ -1,27 +1,32 @@
-<% content_for (:admin_panel) do %>
+<style>
+.admin-header {
+  background-color: #0095AC;
+}
+</style>
 
-  <section class="secondary-nav">
-    <nav class="wrapper nav--secondary">
+<% content_for (:admin_panel) do %>
+  <div class="admin-header">
+    <div class="row">
       <p class="admin-title"><%= @school.blank? ? 'Super-Admin Panel' : 'Campus Manager Panel' %></p>
       <h3 class="school-name"><%= @school.blank? ? 'All Schools' : "#{@school.name}" %></h3>
-    </nav>
-  </section>
-
-  
-  <section class="secondary-nav">
-    <nav class="wrapper nav--secondary">
-      <ul class="breadcrumbs">
-        <li><%= link_to 'Tutors', admin_tutors_path %></li>
-        <li><%= link_to 'Students', admin_students_path %></li>
-        <li><%= link_to 'Appointments', admin_appointments_path %></li>
-        <li><%= link_to 'Slots', admin_slots_path %></li>
-        <li><%= link_to 'Courses', admin_courses_path %></li>
-        <li><%= link_to 'Promotions', admin_promotions_path %></li>
-        <% if current_user.role == 'super_admin' %>
-          <li><%= link_to 'Schools', admin_schools_path %></li>
-        <% end %>
-      </ul>     
-    </nav>
-  </section>
-
+    </div>
+  </div>
+    <section class="admin-nav">
+      <nav>
+        <div class="row">
+          <ul class="breadcrumbs">
+            <li><%= link_to 'Tutors', admin_tutors_path %></li>
+            <li><%= link_to 'Students', admin_students_path %></li>
+            <li><%= link_to 'Appointments', admin_appointments_path %></li>
+            <li><%= link_to 'Slots', admin_slots_path %></li>
+            <li><%= link_to 'Courses', admin_courses_path %></li>
+            <li><%= link_to 'Promotions', admin_promotions_path %></li>
+            <% if current_user.role == 'super_admin' %>
+              <li><%= link_to 'Schools', admin_schools_path %></li>
+            <% end %>
+          </ul>
+        </div>     
+      </nav>
+    </section>
+  </div>
 <% end %>

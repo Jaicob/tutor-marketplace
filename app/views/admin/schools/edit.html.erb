@@ -6,22 +6,27 @@
 
 <div class="row">
   <%= form_for @school, url: "/admin/schools/#{@school.id}" do |f| %>
-    <div class="small-5 columns">
+    <div class="small-12 medium-6 medium-centered columns">
       <%= f.label :name %>
       <%= f.text_field :name %>
     </div>
 
-    <div class="small-5 columns">
+    <div class="small-12 medium-6 medium-centered columns">
       <%= f.label :location %>
       <%= f.text_field :location %>
     </div>
 
-    <div class="small-5 columns">
+    <div class="small-12 medium-6 medium-centered columns">
       <%= f.label :transaction_percentage %>
       <%= f.text_field :transaction_percentage %>
     </div>
 
-    <div class="small-2 columns">
+    <div class="small-12 medium-6 medium-centered columns">
+      <%= f.label :campus_pic %>
+      <%= f.file_field :campus_pic %>
+    </div>
+
+    <div class="small-12 medium-6 medium-centered columns">
       <%= f.submit 'Update School', class: 'button success ' %>
     </div>
 
