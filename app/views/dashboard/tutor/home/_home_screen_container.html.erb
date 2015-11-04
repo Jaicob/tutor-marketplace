@@ -1,7 +1,7 @@
+<!-- Partials of all the various info boxes/widgets for the home screen can be placed here -->
 <style>
 .dashboard-title {
   padding: 0.5em 0;
-  margin: 0;
 }
 .sub-menu {
   padding-left: 0;
@@ -14,14 +14,14 @@
 .sub-menu a:hover {
   font-weight: 400;
 }
-a.appt-settings-link {
+a.payment-settings-link {
   color: white;
   font-weight: 100;
   background-color: #0095AC;
   padding: 0.4em 1em;
   border-radius: 5px;
 }
-a.appt-settings-link:hover {
+a.payment-settings-link:hover {
   font-weight: 100;
 }
 </style>
@@ -30,18 +30,11 @@ a.appt-settings-link:hover {
     <h2 class="dashboard-title">Setttings Manager</h2>
   </div>
   <div class="row">
-    <div class="small-5 large-3 columns sub-menu">
+    <div class="medium-3 columns sub-menu">
       <%= render 'vertical_sub_menu' %>
     </div>
-    <div class="small-7 large-4 large-offset-1 columns end">
-      <%= form_for @tutor do |f| %>
-        <h3>Appointment Settings</h3>
-
-        <%= f.label :appt_notes, 'Personal Note to Students' %>
-        <%= f.text_area :appt_notes, rows: 10 %>
-
-        <%= f.submit 'Save', class: 'button tiny expand success' %>
-      <% end %>
+    <div class="medium-4 columns end">
+      <%= render 'account_status', tutor: @tutor %>    
     </div>
   </div>
 </section>

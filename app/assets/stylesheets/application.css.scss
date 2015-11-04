@@ -28,10 +28,6 @@
     font-weight: 100;
   }
 
-  h1, h2 {
-    font-family: 'Roboto Slab';
-  }
-
   .nav-wrapper {
     display: block;
     width: 100%;
@@ -53,8 +49,29 @@
           margin: 1em auto;
         }
       }
+      .dashboard-content {
+        width: 90%;
+        max-width: 62.5rem;
+        margin: auto;
+        min-height: 30em;
+        &.new-tutor-partial {
+          min-height: 0;
+        }
+      }
       &.footer-bg {
         background-color: #0095AC;
       }
     }
+  }
+
+  .custom-button {
+    background-color: #58AA4D;
+    padding: 0.5em 2em;
+    font-weight: 100;
+    font-size: 0.8em;
+    font-family: 'Lato';
+    border-radius: 4px !important;
+    border: none;
+    color: white;
+    margin-bottom: 1em;
   }

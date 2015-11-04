@@ -1,7 +1,5 @@
 <style>
-.push-right {
-  text-align: left;
-}
+
 .checklist-box {
   display: block;
   font-weight: bold;
@@ -28,29 +26,27 @@
   color: #a8a8a8;
 }
 </style>
-<div class="push-right">
-  <div class="checklist-title-box">
-    <h4 class="centered checklist-title">Account Setup Checklist</h4>
-  </div>
-  <div class="checklist-box">
-    <%= link_to anchor: 'application' do %>
-      <p class="checklist-item <%= @tutor.application_status == 'Complete' ? 'strikeout-text' : nil %>">Complete your application</p>
-    <% end %>
-    <%= link_to home_tutor_path(@tutor.slug) do %>
-      <p class="checklist-item <%= @tutor.application_status == 'Approved' ? 'strikeout-text' : nil %>">
-      Receive application approval</p>
-    <% end %>
-    <%= link_to tutor_courses_path(@tutor.slug) do %>
-      <p class="checklist-item <%= @tutor.courses_approved? ? 'strikeout-text' : nil %>">
-      Approve courses and rates</p>
-    <% end %>
-    <%= link_to schedule_tutor_path(@tutor.slug) do %>
-      <p class="checklist-item <%= @tutor.application_status == 'Complete' ? 'strikeout-text' : nil %>">
-      Set your availability</p>
-    <% end %>
-    <%= link_to payment_info_tutor_path(@tutor.slug) do %>  
-      <p class="checklist-item <%= !@tutor.acct_id.nil? ? 'strikeout-text' : nil %>">
-      Link your bank account</p>
-    <% end %>
-  </div>
+<div class="checklist-title-box">
+  <h4 class="centered checklist-title">Account Setup Checklist</h4>
+</div>
+<div class="checklist-box">
+  <%= link_to anchor: 'application' do %>
+    <p class="checklist-item <%= @tutor.application_status == 'Complete' ? 'strikeout-text' : nil %>">Complete your application</p>
+  <% end %>
+  <%= link_to home_tutor_path(@tutor.slug) do %>
+    <p class="checklist-item <%= @tutor.application_status == 'Approved' ? 'strikeout-text' : nil %>">
+    Receive application approval</p>
+  <% end %>
+  <%= link_to tutor_courses_path(@tutor.slug) do %>
+    <p class="checklist-item <%= @tutor.courses_approved? ? 'strikeout-text' : nil %>">
+    Approve courses and rates</p>
+  <% end %>
+  <%= link_to schedule_tutor_path(@tutor.slug) do %>
+    <p class="checklist-item <%= @tutor.application_status == 'Complete' ? 'strikeout-text' : nil %>">
+    Set your availability</p>
+  <% end %>
+  <%= link_to payment_info_tutor_path(@tutor.slug) do %>  
+    <p class="checklist-item <%= !@tutor.acct_id.nil? ? 'strikeout-text' : nil %>">
+    Link your bank account</p>
+  <% end %>
 </div>

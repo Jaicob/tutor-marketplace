@@ -1,9 +1,23 @@
 <style>
+.dashboard-title {
+  padding: 0.5em 0;
+  margin: 0;
+}
+.sub-menu {
+  padding-left: 0;
+}
+.sub-menu a {
+  color: #4F5252;
+  font-weight: 100;
+  padding-left: 0.4em;
+}
+.sub-menu a:hover {
+  font-weight: 400;
+}
 a.appt-history-link {
   color: white;
   font-weight: 100;
   background-color: #0095AC;
-  border: 1px solid black;
   padding: 0.4em 1em;
   border-radius: 5px;
 }
@@ -11,20 +25,16 @@ a.appt-history-link:hover {
   font-weight: 100;
 }
 </style>
-
-<section class="dashboard tutor">
-  <div class="wrapper">
-    <div class="wrapper__text">
-      <h2 class="title">Setttings Manager</h2>
+<section class="dashboard-content">
+  <div class="row">
+    <h2 class="dashboard-title">Setttings Manager</h2>
+  </div>
+  <div class="row">
+    <div class="small-5 large-3 columns sub-menu">
+      <%= render 'vertical_sub_menu' %>
     </div>
-    <div class="g g-3up">
-      <div class="gi">
-        <%= render 'vertical_sub_menu' %>
-      </div>
-      <div class="gi">
-        <p>Appointment history can go here...</p>
-      </div>
-      <div class="gi"></div>
+    <div class="small-7 large-4 large-offset-1 columns end">
+      <p>Appointment history can go here...</p>
     </div>
   </div>
 </section>
