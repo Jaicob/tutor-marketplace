@@ -44,11 +44,14 @@
 
   .row{
     &.full-width{
-      max-width: 100% !important;
+      max-width: 100%;
       background-color: #FAFAFA;
       .row{
         margin: 0 auto;
         max-width: 62.5rem;
+        &.new-tutor-partial-wrapper {
+          margin: 1em auto;
+        }
       }
       &.footer-bg {
         background-color: #0095AC;

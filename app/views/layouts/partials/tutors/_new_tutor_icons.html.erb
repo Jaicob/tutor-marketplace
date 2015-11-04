@@ -1,30 +1,77 @@
 <style>
-.icon-box {
+.icon-row {
   display: block;
+  text-align: left;
+  margin-left: 1em;
+  padding: 0 1em;
+}
+.container.icons-container {
+  margin-top: 1.2em;
+}
+.icon-box, .caption-box {
+  display: inline-block;
+}
+.icon-box {
+  width: 20%;
+  text-align: center;
+}
+.caption-box {
+  width: 78%;
 }
 .big-welcome-fi {
-  display: inline-block;
-  font-size: 2em;
+  font-size: 1.7em;
+  position: relative;
+  top: 7px;
 }
-.icon-text {
-  display: inline-block;
+.caption-box p, .icon-row-header {
+  margin: 0;
+  font-size: 0.9em;
 }
 </style>
 
-<div class="icon-box">
-  <i class="fi-torsos big-welcome-fi"></i>
-  <p class="icon-text">Manage Your Profile</p>
-</div>
-<div class="icon-box">
-  <i class="fi-calendar big-welcome-fi"></i>
-  <p class="icon-text">Create Your Schedule</p>
-</div>
-<div class="icon-box">
-  <i class="fi-list-bullet big-welcome-fi"></i>
-  <p class="icon-text">Set Courses & Rates</p>
-</div>
-<div class="icon-box">
-  <i class="fi-credit-card big-welcome-fi"></i>
-  <p class="icon-text">Accept Payments</p>
+<p class="icon-row-header">From your dashboard, you can:</p>
+
+<div class="icon-row">
+  <div class="icon-box">
+    <i class="fi-torsos big-welcome-fi"></i>
+  </div>
+  <div class="caption-box">
+    <p>Manage Your Profile</p>
+  </div>
 </div>
 
+<div class="icon-row">
+  <div class="icon-box">
+    <i class="fi-calendar big-welcome-fi"></i>
+  </div>
+  <div class="caption-box">
+    <p>Create Your Schedule</p>
+  </div>
+</div>
+
+<div class="icon-row">
+  <div class="icon-box">
+    <i class="fi-list-bullet big-welcome-fi"></i>
+  </div>
+  <div class="caption-box">
+    <p>Set Courses & Rates</p>
+  </div>
+</div>
+
+<div class="icon-row">
+  <div class="icon-box">
+    <i class="fi-comments big-welcome-fi"></i>
+  </div>
+  <div class="caption-box">
+    <p>Contact Students</p>
+  </div>
+</div>
+
+<div class="icon-row">
+  <div class="icon-box">
+    <i class="fi-credit-card big-welcome-fi"></i>
+  </div>
+  <div class="caption-box">
+    <p>Accept Payments</p>
+  </div>
+</div>
