@@ -1,40 +1,65 @@
 <style>
 
+/* Mobile view only shows message asking Tutor to wait and apply on iPad or Desktop */
+.mobile-error-message {
+  display: inline-block;
+}
+.new-tutor-partial-wrapper {
+  display: none;
+}
+
 /* for iPad (no mobile for Tutor only views) */
+@media (min-width: 768px) {
+.mobile-error-message {
+  display: none;
+}
 .new-tutor-partial-wrapper {
   background-color: #EFF1F3;
   border-radius: 4px;
   border: 1px solid #2BC2DE;
   display: block;
-}
-.row.new-tutor-partial-wrapper {
   width: 90%;
   margin: 1em auto;
 }
 .container {
+  display: block;
+  margin: auto;
+  width: 16em;
+  text-align: center;
+  padding: 1em;
+}
+.checklist-container {
+  width: 17em;
+}
+
+/* Full view */
+@media (min-width: 1000px) {
+.new-tutor-partial-wrapper {
+  width: 52em;
+  padding: 0 1em 1em;
+}
+.container {
   display: inline-block;
-  width: 33%;
   vertical-align: top;
   text-align: center;
   padding: 1em;
 }
-
-/* Full view */
-
-@media (min-width: 1000px) {
-.new-tutor-partial {
-}
 }
 
 </style>
-<div class="row new-tutor-partial-wrapper">
-  <div class="container welcome-container">
-    <%= render 'layouts/partials/tutors/new_tutor_welcome' %>
+<div class="row">
+  <div class="mobile-error-message">
+    <p>Please use your tablet, laptop or desktop computer to complete your Tutor application and manage your account. A mobile app is in the pipeline, but in the mean-time we can only provide the best experience for you on larger screens. Thanks for bearing with us while we grow!</p>
   </div>
-  <div class="container icons-container">
-    <%= render 'layouts/partials/tutors/new_tutor_icons' %>
-  </div>
-  <div class="container checklist-container">
-    <%= render 'layouts/partials/tutors/new_tutor_checklist' %>
+  <div class="new-tutor-partial-wrapper">
+    <div class="container welcome-container">
+      <%= render 'layouts/partials/tutors/new_tutor_welcome' %>
+    </div>
+    <div class="container icons-container">
+      <%= render 'layouts/partials/tutors/new_tutor_icons' %>
+    </div>
+    <div class="container checklist-container">
+      <%= render 'layouts/partials/tutors/new_tutor_checklist' %>
+    </div>
   </div>
 </div>
