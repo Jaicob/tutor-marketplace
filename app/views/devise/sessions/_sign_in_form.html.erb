@@ -1,19 +1,37 @@
+<style>
+form#new_user {
+  padding: 0;
+}
+.pwd-label {
+  display: inline-block;
+}
+.forgot-pwd {
+  font-size: 0.7em;
+  float: right;
+  margin-top: 0.5em;
+  color: #4F5252;
+}
+input#user_remember_me {
+  margin-right: 0.5em;
+}
+label.remember-me {
+  font-size: 0.8em;
+  padding-top: 0.5em;
+}
+</style>
 <%= devise_error_messages! %>
-<%= form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: 'registration form-group', role: 'form'}) do |f| %>
+<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
   <div class="form-group">
     <%= f.label :email %>
     <%= f.email_field :email, class: 'form-control', required: true %>
   </div>
   <div class="form-group">
-    <%= f.label :password %>
+    <%= f.label :password, class: 'pwd-label' %>
+    <%= link_to "Forgot password?", new_password_path(resource_name), class: 'forgot-pwd' %>
     <%= f.password_field :password, class: 'form-control', required: true%>
   </div>
-  <%= f.submit 'Login', class: 'btn--login' %>
   <div class="checkbox" style="width:150px">
-    <label>
-      <%= f.check_box :remember_me %> Remember me
-    </label>
+    <label class="remember-me"><%= f.check_box :remember_me %>Remember me</label>
   </div>
+  <%= f.submit 'Login', class: 'custom-button' %>
 <% end %>
-<p><%= link_to 'Sign up', new_registration_path(resource_name) %></p>
-<p><%= link_to "Forgot password?", new_password_path(resource_name) %></p>

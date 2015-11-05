@@ -33,9 +33,13 @@
     width: 100%;
   }
 
-  main {
+  section.main {
     padding: 0;
-    background: inherit;
+    min-height: 35em;
+  }
+
+  body {
+    background-color: #FAFAFA;
   }
 
   .row{
