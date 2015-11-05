@@ -1,42 +1,62 @@
-<section class="dashboard tutor">
-  <div class="wrapper">
-    <div class="wrapper__text">
-      <h2 class="title">Setttings Manager</h2>
+<style>
+/* Do not remove! This must be in the view for it to only highlight the correct selected link in the settings vertical sub-menu */
+a.account-settings-link {
+  color: white;
+  font-weight: 100;
+  background-color: #0095AC;
+  padding: 0.4em 1em;
+  border-radius: 5px;
+}
+a.account-settings-link:hover {
+  font-weight: 100;
+}
+</style>
+<section class="dashboard-content">
+  <div class="row">
+    <h2 class="dashboard-title">Setttings Manager</h2>
+  </div>
+  <div class="row">
+    <div class="small-5 large-3 columns sub-menu">
+      <%= render 'vertical_sub_menu' %>
     </div>
-    <div class="g g-3up">
-      <div class="gi">
-        <%= render 'vertical_sub_menu' %>
-      </div>
-      <div class="gi">
-        <%= form_for @user do |f| %>
-          <h3>User Account Settings</h3>
+    <div class="small-7 large-4 large-offset-1 columns end">
+      <%= form_for @user do |f| %>
 
-          <%= f.label :first_name %>
-          <%= f.text_field :first_name %>
+        <%= f.label :first_name %>
+        <%= f.text_field :first_name %>
 
-          <%= f.label :last_name %>
-          <%= f.text_field :last_name %>
+        <%= f.label :last_name %>
+        <%= f.text_field :last_name %>
 
-          <%= f.label :email %>
-          <%= f.email_field :email %>
+        <%= f.label :email %>
+        <%= f.email_field :email %>
 
-          <label for="user_school_id">School</label>
-          <div class="select-wrapper">
-          <select name="user[school_id]" id="user_school_id" class="select-menu" required="true">
-            <% School.all.each do |school| %>
-              <% if school == current_user.school %>
-                <option selected="selected" value="<%= school.id %>"><%= school.name %></option>
-              <% else %>
-                <option value="<%= school.id %>"><%= school.name %></option>
-              <% end %>
+        <label for="user_school_id">School</label>
+        <div class="select-wrapper">
+        <select name="user[school_id]" id="user_school_id" class="select-menu" required="true">
+          <% School.all.each do |school| %>
+            <% if school == current_user.school %>
+              <option selected="selected" value="<%= school.id %>"><%= school.name %></option>
+            <% else %>
+              <option value="<%= school.id %>"><%= school.name %></option>
             <% end %>
-          </select>
-          </div>
+          <% end %>
+        </select>
+        </div>
 
-          <%= f.submit 'Save', class: 'button tiny expand success' %>
-        <% end %>
-      </div>
-      <div class="gi"></div>
+        <%= f.submit 'Save', class: 'custom-button' %>
+      <% end %>
+
+      <%= form_for @tutor do |f| %>
+
+        <%= f.label :birthdate %>
+        <%= f.date_field :birthdate %>
+
+        <%= f.label :phone_number %>
+        <%= f.telephone_field :phone_number %>
+
+        <%= f.submit 'Save', class: 'custom-button' %>
+      <% end %>
     </div>
   </div>
 </section>

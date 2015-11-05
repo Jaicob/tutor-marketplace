@@ -1,9 +1,12 @@
-<section class="dashboard tutor">
-  <div class="wrapper">
-    <div class="wrapper__text">
-      <h1 class="title">My Courses</h1>
-      <%= render 'dashboard/tutor/courses/add_course_form' %>
-      <%= render 'dashboard/tutor/courses/show_courses' %>
-    </div>
+<section class="dashboard-content">
+  <div class="row">
+    <h2 class="dashboard-title">My Courses</h2>
+  </div>
+  <div class="row">
+    <% if !@tutor.courses_approved? %>
+      <%= render 'dashboard/tutor/courses/courses_welcome' %>
+    <% end %>
+    <%= render 'dashboard/tutor/courses/add_course_form' %>
+    <%= render 'dashboard/tutor/courses/show_courses' %>
   </div>
 </section>

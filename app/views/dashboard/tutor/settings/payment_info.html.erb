@@ -1,16 +1,31 @@
-<section class="dashboard tutor">
-  <div class="wrapper">
-    <div class="wrapper__text">
-      <h2 class="title">Setttings Manager</h2>
+<style>
+/* Do not remove! This must be in the view for it to only highlight the correct selected link in the settings vertical sub-menu */
+a.payment-settings-link {
+  color: white;
+  font-weight: 100;
+  background-color: #0095AC;
+  padding: 0.4em 1em;
+  border-radius: 5px;
+}
+a.payment-settings-link:hover {
+  font-weight: 100;
+}
+</style>
+<section class="dashboard-content">
+  <div class="row">
+    <h2 class="dashboard-title">Setttings Manager</h2>
+  </div>
+  <div class="row">
+    <div class="small-5 large-3 columns sub-menu">
+      <%= render 'vertical_sub_menu' %>
     </div>
-    <div class="g g-3up">
-      <div class="gi">
-        <%= render 'vertical_sub_menu' %>
-      </div>
-      <div class="gi">
-        <%= render 'account_status', tutor: @tutor %>    
-      </div>
-      <div class="gi"></div>
+    <div class="small-7 large-4 large-offset-1 columns end">
+      <% if @tutor.acct_id.nil? %>
+        <div class="row payment-welcome">
+          <p>You will be paid for all of your tutoring sessions via direct deposit. We use Stripe to securely deposit money into your bank account after each session is complete. Click the link below to link your bank account.</p>
+        </div>
+      <% end %>
+      <%= render 'account_status', tutor: @tutor %>    
     </div>
   </div>
 </section>

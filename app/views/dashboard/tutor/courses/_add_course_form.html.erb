@@ -1,23 +1,18 @@
-<div class="row">
+<div class="row add-course-form">
   <%= form_for @tutor_course, html: {class: 'search-criteria'} do |f| %>
 
-    <div class="field-container">
-      <label for="select">Select</label>
+    <div class="small-12 medium-3 columns">
       <%= render '/course_selector/subject' %>
     </div>          
-    <div class="field-container">
-      <label for="select">Select</label>
+    <div class="small-12 medium-3 columns">
       <%= render '/course_selector/tutor_course' %>
     </div>
-    <div class="field-container">
-      <label for="select">Select</label>
+    <div class="small-12 medium-3 columns">
       <%= render '/course_selector/rate' %>
     </div>
-
-    <%= f.hidden_field(:tutor_id, value: @tutor.id) %>
-
-    <div class="field-container">            
-      <%= f.submit 'Add course', class: 'btn btn--search', id: 'add_course_button' %>
+    <div class="small-12 medium-3 columns">      
+      <%= f.hidden_field(:tutor_id, value: @tutor.id) %>
+      <%= f.submit 'Add course', class: 'custom-button full-width no-margin blue', id: 'add_course_button' %>
     </div>
   
   <% end %>
