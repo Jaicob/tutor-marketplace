@@ -123,13 +123,12 @@
       border-bottom: 1px solid #CFCECE;
       box-shadow: 1px 1px 1px #CFCECE;
       &.clear-nav {
-        background-color: none;
+        background: none;
         border-bottom: 0;
         box-shadow: none;
       }
     }
-
-
+    
     .nav-logo-box.nav-link-box {
       text-align: center;
       width: 100%;
