@@ -1,15 +1,34 @@
-<table>
+<style>
+table.tutor-db-courses {
+  border: 1px solid #BBE5EE;
+  border-radius: 4px;
+  background-color: #FAFAFA;
+  width: 100%;
+  font-family: 'Lato';
+  font-weight: 100;
+  margin: 1em 0 5em;
+  color: #4F5252;
+}
+table.tutor-db-courses thead tr th {
+  font-weight: 400;
+  background-color: #eff1f3;
+  color: #4F5252;
+}
+</style>
+<table class="tutor-db-courses">
   <thead>
     <tr>
       <th>Subject</th>
-      <th>Call Number</th>
-      <th>Course Name</th>
+      <th>Number</th>
+      <th>Name</th>
       <th>My Rate</th>
       <th>Full Price</th>
+      <th>Students</th>
+      <th>Bookings</th>
+      <th>Revenue</th>
       <th>Actions</th>
     </tr>
   </thead>
-
   <tbody>
     <% @tutor.tutor_courses.each do |tutor_course| %>
     <tr>
@@ -18,6 +37,9 @@
       <td><%= tutor_course.course.friendly_name %></td>
       <td>$<%= tutor_course.rate %></td>
       <td>$<%= tutor_course.full_price %></td>
+      <td></td>
+      <td></td>
+      <td></td>
       <td><%= link_to 'Edit', tutor_course_path(@tutor.slug, tutor_course) %></td>
     </tr>
     <% end %>

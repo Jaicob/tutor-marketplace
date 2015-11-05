@@ -78,4 +78,13 @@
     border: none;
     color: white;
     margin-bottom: 1em;
+    &.full-width {
+      width: 100%;
+    }
+    &.no-margin {
+      margin: 0;
+    }
+    &.blue {
+      background-color: #0095AC;
+    }
   }

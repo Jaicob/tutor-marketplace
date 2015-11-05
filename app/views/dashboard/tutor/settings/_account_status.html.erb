@@ -10,7 +10,7 @@
   <p><%= link_to "Change bank account", tutor_payment_info_form_tutor_path(@tutor), class: 'custom-button', remote: true %></p>
 <% else %>
   <p>You do not currently have a bank account linked to recieve your payments.</p>
-  <%= link_to 'Link Your Bank Account', tutor_payment_info_form_tutor_path(@tutor), class: 'btn', remote: true %></p>
+  <%= link_to 'Link Your Bank Account', tutor_payment_info_form_tutor_path(@tutor), class: 'custom-button', remote: true %></p>
 <% end %>
 
 <div id="payment">

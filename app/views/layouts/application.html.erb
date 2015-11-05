@@ -19,14 +19,14 @@
         <!-- The :special_nav can be 1 of 3 different nav styles used for the home page, the student landing page and the tutor landing page. These are under layouts/partials/special_navs -->
       </div>
     </header>
-    <section class="main">
-      <div class="row full-width">
+    <div class="row full-width">
+      <section class="main">
         <%= yield(:admin_panel) if content_for? (:admin_panel) %>
         <%= yield(:dashboard_nav) if content_for? (:dashboard_nav) %>
         <%= yield(:new_tutor_checklist) if content_for? (:new_tutor_checklist) %>
         <%= yield %>
-      </div>
-    </section>
+      </section>
+    </div>
     <footer>
       <div class="row full-width footer-bg">
         <%= render 'layouts/partials/footer' %>

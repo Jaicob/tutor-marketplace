@@ -11,7 +11,7 @@
   padding: 0.5em;
 }
 .checklist-title-box {
-  background-color: #58AA4D;
+  background-color: #0095AC;
   border-radius: 4px;
 }
 .checklist-item {
@@ -33,20 +33,20 @@
   <%= link_to anchor: 'application' do %>
     <p class="checklist-item <%= @tutor.application_status == 'Complete' ? 'strikeout-text' : nil %>">Complete your application</p>
   <% end %>
-  <%= link_to home_tutor_path(@tutor.slug) do %>
-    <p class="checklist-item <%= @tutor.application_status == 'Approved' ? 'strikeout-text' : nil %>">
-    Receive application approval</p>
-  <% end %>
   <%= link_to tutor_courses_path(@tutor.slug) do %>
     <p class="checklist-item <%= @tutor.courses_approved? ? 'strikeout-text' : nil %>">
     Approve courses and rates</p>
   <% end %>
   <%= link_to schedule_tutor_path(@tutor.slug) do %>
-    <p class="checklist-item <%= @tutor.application_status == 'Complete' ? 'strikeout-text' : nil %>">
+    <p class="checklist-item <%= @tutor.slots.count > 0 ? 'strikeout-text' : nil %>">
     Set your availability</p>
   <% end %>
   <%= link_to payment_info_tutor_path(@tutor.slug) do %>  
     <p class="checklist-item <%= !@tutor.acct_id.nil? ? 'strikeout-text' : nil %>">
     Link your bank account</p>
+  <% end %>
+  <%= link_to home_tutor_path(@tutor.slug) do %>
+    <p class="checklist-item <%= @tutor.application_status == 'Approved' ? 'strikeout-text' : nil %>">
+    Receive application approval</p>
   <% end %>
 </div>
