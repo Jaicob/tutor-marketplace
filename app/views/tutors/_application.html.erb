@@ -1,129 +1,64 @@
-<style>
-.select-wrapper {
-  border: #a8a8a8;
-}
-.select-menu {
-  width: 100%;
-  color: #a8a8a8;
-}
-.one-half {
-  display: inline-block;
-  width: 49%;
-}
-input.submit-button {
-  width: 100%;
-  margin-top: 2em;
-}
-.tiny-text {
-  font-size: 0.8em;
-}
-.tiny-text.example {
-  margin-bottom: 0.1em;
-}
-.top-section-title {
-  margin-top: 0;
-  padding-top: 2em;
-}
-.statement-instructions {
-}
-.statement-field {
-  margin-bottom: 2em;
-}
-.file-input-box {
-  width: 40%;
-  height: 1.6em;
-  margin: auto;
-  position: relative;
-  overflow: hidden;
-  margin: 1em 0; 
-  border-radius: 4px;  
-}
-input.file-input {
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  right: 0;
-  top: 0;
-  opacity: 0;
-}
-div.file-input-button {
-  height: 100%;
-  width: 100%;
-  float: right;
-  background-color: #2BC2DE;
-  color: white;
-  font-weight: 100;
-  text-align: center;
-  line-height: 2em;
-  font-size: 0.8em;
-}
-.margin-bottom {
-  margin-bottom: 4em;
-}
-</style>
-  <a name="application"></a>
+<a name="application"></a>
+<div class="small-12 medium-5 columns">
+  <h4>Complete Your Application</h4>
 
-  <div class="small-12 medium-5 columns">
-    <h4>Complete Your Application</h4>
+  <%= form_for @tutor, url: submit_application_tutor_path do |f| %>
 
-    <%= form_for @tutor, url: submit_application_tutor_path do |f| %>
+    <h6>Tell us about your education</h6>
 
-      <h6>Tell us about your education</h6>
+    <%= f.text_field :major, placeholder: 'Major', required: true %>
 
-      <%= f.text_field :major, placeholder: 'Major', required: true %>
-
-      <div class="one-half">
-        <div class="select-wrapper">
-          <%= f.select(:degree, options_for_select(["Degree", "Bachelor's", "Master's", "PhD"], selected: 'Degree', disabled: 'Degree'), {required: true} , {class: 'select-menu'}) %>
-        </div>
+    <div class="one-half">
+      <div class="select-wrapper">
+        <%= f.select(:degree, options_for_select(["Degree", "Bachelor's", "Master's", "PhD"], selected: 'Degree', disabled: 'Degree'), {required: true} , {class: 'select-menu'}) %>
       </div>
+    </div>
 
-      <div class="one-half">
-        <%= f.text_field :graduation_year, placeholder: 'Graduation Year', required: true %>
+    <div class="one-half">
+      <%= f.text_field :graduation_year, placeholder: 'Graduation Year', required: true %>
+    </div>
+
+    <p class="tiny-text">If you have not graduated yet, select your expected degree type and graduation year</p>
+
+
+    <h6>Tell us a little about yourself with three short statements</h6>
+
+    <p class="tiny-text statement-instructions">A preview of each statement will appear in search results for students. The entire statements will be visible on your profile. We suggest that two of your statements explain why you're a great tutor and one of them shows your personality in a fun, friendly way.</p>
+    <p class="tiny-text example">Ex. 1: "Two years of tutoring experience for the Math department."</p>
+    <div class="input statement-field">
+      <%= f.text_area :extra_info_1, placeholder: 'Statement #1', required: true %>
+    </div>
+    <p class="tiny-text example">Ex. 2: "Honor Roll student for 3 semesters."</p>
+    <div class="input statement-field">
+      <%= f.text_area :extra_info_2, placeholder: 'Statement #2', required: true %>
+    </div>
+
+    <p class="tiny-text example">Ex. 3: "Hiked the Appalachian trail for 3 weeks last summer."</p>
+    <div class="input statement-field">
+      <%= f.text_area :extra_info_3, placeholder: 'Statement #3', required: true %>
+    </div>
+
+    <h6>Upload your unofficial transcript or resume</h6>
+
+    <div class="file-input-box">
+      <div class="file-input-button">
+        Transcript or Resume
       </div>
+      <%= f.file_field :transcript, class: 'file-input', required: true %>
+    </div>
 
-      <p class="tiny-text">If you have not graduated yet, select your expected degree type and graduation year</p>
+    <h6>Upload a profile picture</h6>
 
-
-      <h6>Tell us a little about yourself with three short statements</h6>
-
-      <p class="tiny-text statement-instructions">A preview of each statement will appear in search results for students. The entire statements will be visible on your profile. We suggest that two of your statements explain why you're a great tutor and one of them shows your personality in a fun, friendly way.</p>
-      <p class="tiny-text example">Ex. 1: "Two years of tutoring experience for the Math department."</p>
-      <div class="input statement-field">
-        <%= f.text_area :extra_info_1, placeholder: 'Statement #1', required: true %>
+    <div class="file-input-box">
+      <div class="file-input-button">
+        Profile Picture
       </div>
-      <p class="tiny-text example">Ex. 2: "Honor Roll student for 3 semesters."</p>
-      <div class="input statement-field">
-        <%= f.text_area :extra_info_2, placeholder: 'Statement #2', required: true %>
-      </div>
+      <%= f.file_field :profile_pic, class: 'file-input', required: true  %>
+    </div>
 
-      <p class="tiny-text example">Ex. 3: "Hiked the Appalachian trail for 3 weeks last summer."</p>
-      <div class="input statement-field">
-        <%= f.text_area :extra_info_3, placeholder: 'Statement #3', required: true %>
-      </div>
+    <p class="tiny-text">That's it! Review your application and then submit it for a decision from the Axon Tutor management team within 48 hours. Go ahead and finish the rest of the checklist to make sure you're ready to start tutoring as quickly as possible.</p>
 
-      <h6>Upload your unofficial transcript or resume</h6>
+    <%= f.submit 'Submit Application', class: 'custom-button margin-bottom' %>
 
-      <div class="file-input-box">
-        <div class="file-input-button">
-          Transcript or Resume
-        </div>
-        <%= f.file_field :transcript, class: 'file-input', required: true %>
-      </div>
-
-      <h6>Upload a profile picture</h6>
-
-      <div class="file-input-box">
-        <div class="file-input-button">
-          Profile Picture
-        </div>
-        <%= f.file_field :profile_pic, class: 'file-input', required: true  %>
-      </div>
-
-      <p class="tiny-text">That's it! Review your application and then submit it for a decision from the Axon Tutor management team within 48 hours. Go ahead and finish the rest of the checklist to make sure you're ready to start tutoring as quickly as possible.</p>
-
-      <%= f.submit 'Submit Application', class: 'custom-button margin-bottom' %>
-
-    <% end %>
-  </div>
+  <% end %>
 </div>
