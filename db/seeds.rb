@@ -65,15 +65,17 @@ n = 0
 }
 
 # Create a Tutor profile for each User
+info = "Short loin pork loin pancetta, meatloaf beef pork belly tenderloin doner. Beef frankfurter tongue spare ribs, cupim sausage ground round short ribs kevin t-bone. Jerky cupim boudin chicken. Tri-tip frankfurter leberkas, t-bone ham hock shoulder tongue meatball jowl doner tail. Pork belly beef turducken filet mignon, cupim kielbasa frankfurter hamburger turkey alcatra. Spare ribs hamburger brisket capicola beef ribs tongue venison alcatra."
+
 User.all.each do |user|
   user.create_tutor(
     rating: 5,
     birthdate: '1990-01-01',
     degree: 0,
     major: 'Marine Biology',
-    extra_info_1: Faker::Lorem.sentence,
-    extra_info_2: Faker::Lorem.sentence,
-    extra_info_3: Faker::Lorem.sentence,
+    extra_info_1: info,
+    extra_info_2: info,
+    extra_info_3: info,
     graduation_year: '2018',
     phone_number: Faker::Number.number(10),
     )

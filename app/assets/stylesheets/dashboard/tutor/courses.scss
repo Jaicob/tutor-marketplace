@@ -4,11 +4,18 @@
 
 /* Styling for _add_courses partial */
 
-.row.add-course-form {
+@mixin name {
   border: 1px solid #BBE5EE;
   padding: 1em;
   border-radius: 4px;
-  background-color: #eff1f3;
+  background-color: #eff1f3; 
+  @include media($small) {
+    
+  }
+}
+
+.row.add-course-form {
+
 }
 
 /* Styling for _courses_welcome partial */
