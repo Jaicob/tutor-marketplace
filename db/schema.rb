@@ -90,6 +90,7 @@ ActiveRecord::Schema.define(version: 20150930154059) do
   create_table "schools", force: :cascade do |t|
     t.string   "name"
     t.string   "location"
+    t.string   "campus_pic"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.string   "slug"

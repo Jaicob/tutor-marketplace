@@ -1,32 +1,11 @@
-<style>
-nav.dashboard-nav {
-  width: 100%;
-  background-color: #0095AC;
-}
-ul.dashboard-nav {
-  height: 3em;
-  max-width: 64em;
-  margin: auto;
-}
-li.dashboard-nav-block {
-  display: inline-block;
-  width: 16%;
-}
-li.dashboard-nav-block:hover {
-  background-color: #2BC2DE;
-}
-a.dashboard-nav-link {
-  color: white;
-  line-height: 3.6em;
-  font-weight: bold;
-  font-size: 0.8em;
-}
-</style>
-
 <nav role="navigation" class="dashboard-nav">
   <ul class="dashboard-nav">
     <% @dashboard_links.each do |name, link| %>
-      <li class="dashboard-nav-block"><%= link_to "#{name.upcase}", link, class: 'dashboard-nav-link'%></li>
+      <% if @current == name %>
+        <li class="dashboard-nav-block"><%= link_to "#{name.upcase}", link, class: 'dashboard-nav-link selected'%></li>
+      <% else %>
+        <li class="dashboard-nav-block"><%= link_to "#{name.upcase}", link, class: 'dashboard-nav-link'%></li>
+      <% end %>
     <% end %>
   </ul>
 </nav>

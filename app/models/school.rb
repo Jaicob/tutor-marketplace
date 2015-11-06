@@ -5,6 +5,7 @@
 #  id                     :integer          not null, primary key
 #  name                   :string
 #  location               :string
+#  campus_pic             :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  slug                   :string
@@ -24,6 +25,8 @@ class School < ActiveRecord::Base
   extend FriendlyId
   friendly_id :name, use: :slugged
 
+  mount_uploader :campus_pic, CampusPicUploader
+
   # This method is necessary for populating the drop-down menu of subjects in the course selector form
   def subjects
     self.courses.map { |course|
@@ -41,5 +44,18 @@ class School < ActiveRecord::Base
     end
   end
 
+  def top_subjects
+    # This is a short-term solution only. We can manually set the top 4 subjects for each campus while we have a small number of campuses. Eventually we will want to replace the manual lists with a method that determines the most popular subjects by appointments booked or tutor courses, etc.
+    case self.name
+    when 'University of North Carolina'
+      ['Math', 'Biology', 'Chemistry', 'Accounting']
+    when 'University of Georgia'
+      ['Math', 'Biology', 'Chemistry', 'Accounting']
+    when 'Duke University'
+      ['Math', 'Biology', 'Chemistry', 'Accounting']
+    when 'Clemson University'
+      ['Math', 'Biology', 'Chemistry', 'Accounting']
+    end
+  end
 
 end

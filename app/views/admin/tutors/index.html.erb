@@ -1,13 +1,8 @@
-<section class="secondary-content main" role="main">
-    <div class="wrapper">
-
-<div class="g g-3up">
-  <div class="gi">
+<div class="row">
+  <div class="medium-6 columns">
     <h3>Tutors</h3>
   </div>
-  <div class="gi">
-  </div>
-  <div class="gi">
+  <div class="medium-6 columns">
     <% if Tutor.applications_awaiting_approval(current_user).count > 0 %>
       <%= search_form_for @q, url: search_admin_tutors_path, html: { method: :post } do |f| %> 
         <%= f.hidden_field :active_status_eq, value: '0' %>
@@ -17,24 +12,6 @@
     <% end %>
   </div>
 </div>
-
-<div class="g g-3up">
-  <%= search_form_for @q, url: search_admin_tutors_path, html: { method: :post } do |f| %>
-    <div class="gi">
-      <%= f.label :id_eq, 'ID' %>
-      <%= f.search_field :id_eq %>
-    </div>
-    <div class="gi">
-      <%= f.label :user_first_name_or_user_last_name_matches, 'Name' %>
-      <%= f.search_field :user_first_name_or_user_last_name_matches %>
-    </div>
-    <div class="gi">
-      <%= f.label :user_email_matches, 'Email' %>
-      <%= f.search_field :user_email_matches %>
-    </div>
-  </div>
-<% end %>
-
 <div class="row">
   <div class="medium-12 columns">
   <%= search_form_for @q, url: search_admin_tutors_path, html: { method: :post } do |f| %>
@@ -52,6 +29,9 @@
         </div>
         
         <div class="medium-4 columns">   
+          <%= f.label :user_email_matches, 'Email' %>
+          <%= f.search_field :user_email_matches %>
+        </div>
       </div>
 
       <div class="row">
@@ -131,7 +111,6 @@
           <th class="name">Name</th>
           <th class="email">Email</th>
           <th class="school">School</th>
-          <th class="courses">Courses</th>
           <th class="appointments">Appts</th>
           <th class="availability">Availabilty Booked</th>
           <th class="application-status">Application Status</th>
@@ -146,7 +125,6 @@
           <td><%= tutor.user.full_name %></td>
           <td><%= tutor.user.email %></td>
           <td><%= tutor.school.name %></td>
-          <td><%= tutor.formatted_courses %></td>
           <td><%= tutor.appointments.count %></td>
           <td></td>
           <td><%= tutor.application_status %></td>
@@ -156,7 +134,4 @@
       </tbody>
     </table>
   </div>
-</div>
-
-</section>
 </div>

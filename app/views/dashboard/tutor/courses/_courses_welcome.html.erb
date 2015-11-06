@@ -1,0 +1,18 @@
+<div class="row courses-welcome">
+  <div class="small-12 large-4 columns">
+    <p class="courses-welcome-title">This is where you manage the courses that you want to tutor.</b> 
+    <p class="courses-welcome-instructions">Use the select dropdowns to pick a subject and course and then enter the hourly rate you would like to charge for that particular course.</p>
+    <p class="courses-welcome-instructions">You can enter different rates for different courses.</p>
+  </div>
+  <div class="small-12 large-4 columns">
+    <p class="courses-welcome-instructions"> After adding a course, you can edit the hourly rate for that course or delete it entirely from your course list.</p>
+    <p class="courses-welcome-instructions">You currently have only the one course you entered on the initial sign-up form in your course list. If you'd like to add more courses, you can do that now or come back later.</p>
+  </div>
+  <div class="small-12 large-4 columns">
+    <p class="courses-welcome-instructions">Whether you want to start with one course or add more, click the "Approve Courses" button when you're finished adding your initial courses and are ready to start tutoring.</p>
+    <%= form_for @tutor do |f| %>
+      <%= f.hidden_field :courses_approved, value: true %>
+      <%= f.submit "Approve Courses", class: 'custom-button approve-courses' %>
+    <% end %>
+  </div>
+</div>

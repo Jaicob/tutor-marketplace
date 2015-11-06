@@ -18,7 +18,7 @@
 #  profile_pic        :string
 #  transcript         :string
 #  appt_notes         :text
-#  approved_courses   :boolean          default(FALSE)
+#  courses_approved   :boolean          default(FALSE)
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  last_4_acct        :string
@@ -136,6 +136,8 @@ class Tutor < ActiveRecord::Base
       "/tutors/#{self.user.slug}/settings/appointment_settings"
     elsif tutor_params[:line1] || tutor_params[:city] || tutor_params[:state] || tutor_params [:postal_code]
       "/tutors/#{self.user.slug}/settings/payment_info"
+    elsif tutor_params[:courses_approved]
+      "/tutors/#{self.user.slug}/courses"
     else
       "/tutors/#{self.user.slug}/settings/edit_profile"
     end

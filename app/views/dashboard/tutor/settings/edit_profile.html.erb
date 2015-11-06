@@ -1,71 +1,57 @@
-<section class="dashboard tutor">
-  <div class="wrapper">
-    <div class="wrapper__text">
-      <h2 class="title">Setttings Manager</h2>
+<style>
+/* Do not remove! This must be in the view for it to only highlight the correct selected link in the settings vertical sub-menu */
+a.profile-settings-link {
+  color: white;
+  font-weight: 100;
+  background-color: #0095AC;
+  padding: 0.4em 1em;
+  border-radius: 5px;
+}
+a.profile-settings-link:hover {
+  font-weight: 100;
+}
+</style>
+<section class="dashboard-content">
+  <div class="row">
+    <h2 class="dashboard-title">Setttings Manager</h2>
+  </div>
+  <div class="row">
+    <div class="small-5 large-3 columns sub-menu">
+      <%= render 'vertical_sub_menu' %>
     </div>
-    <div class="g g-3up">
-      <div class="gi">
-        <%= render 'vertical_sub_menu' %>
-      </div>
-      <div class="gi">
-        <h3>Profile Picture</h3>
-        <%= image_tag(@tutor.profile_pic_url(:thumb), class: 'profile-pic-preview') %>
-      </div>
-      <div class="gi">
-      </div>
-    </div>
+    <div class="small-7 large-4 large-offset-1 columns end">
+      
+      <h3>Profile Picture</h3>
+      <%= image_tag(@tutor.profile_pic_url(:thumb), class: 'profile-pic-preview') %>
+      
+      <a href="#" data-reveal-id="newPhotoModal" class="button tiny expand secondary">
+        <i class="fi-page-add icon-margin-right"></i>Upload New Photo
+      </a>
+      <a href="#" data-reveal-id="cropCurrentPhotoModal" class="button tiny expand secondary">
+        <i class="fi-page-edit icon-margin-right"></i>Crop Current Photo
+      </a>
 
-    <div class="row">
-      <div class="medium-6 columns">
-        <div class="row">
-          <div class="small-12 columns">
-            <a href="#" data-reveal-id="newPhotoModal" class="button tiny expand secondary">
-              <i class="fi-page-add icon-margin-right"></i>Upload New Photo
-            </a>
-          </div>
-        </div>
-        <div class="row">
-          <div class="small-12 columns">
-            <a href="#" data-reveal-id="cropCurrentPhotoModal" class="button tiny expand secondary">
-              <i class="fi-page-edit icon-margin-right"></i>Crop Current Photo
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
+      <%= form_for @tutor do |f| %>
+        <h3 class="header-top-margin" id="profile-fields">Profile Info</h3>
 
-        <%= form_for @tutor do |f| %>
-          <h3 class="header-top-margin" id="profile-fields">Profile Info</h3>
+        <%= f.label :degree %>
+        <%= f.select(:degree, options_for_select(["Bachelor's", "Master's", "PhD"],["#{@tutor.degree}"]), include_blank: true) %>
+        
+        <%= f.label :major %>
+        <%= f.text_field :major %>
 
-          <%= f.label :degree %>
-          <%= f.select(:degree, options_for_select(["Bachelor's", "Master's", "PhD"],["#{@tutor.degree}"]), include_blank: true) %>
-          
-          <%= f.label :major %>
-          <%= f.text_field :major %>
+        <%= f.label :graduation_year %>
+        <%= f.number_field :graduation_year %>
 
-          <%= f.label :graduation_year %>
-          <%= f.number_field :graduation_year %>
+        <%= f.label :extra_info_1, 'Extra Information' %>
+        <%= f.text_area :extra_info_1, row: 3 %>
 
-          <%= f.label :extra_info, 'Extra Information' %>
-          <%= f.text_area :extra_info, row: 3 %>
+        <%= f.submit 'Save', class: 'button tiny expand success'%>
 
-          <%= f.submit 'Save', class: 'button tiny expand success'%>
-
-        <% end %>
-
-      </div>
-      <div class="gi"></div>
+      <% end %>
     </div>
   </div>
 </section>
-
-
-
-
-
-
-
-
 
 
 
@@ -160,3 +146,4 @@
 
   <a class="close-reveal-modal" aria-label="Close">&#215;</a>
 </div>
+

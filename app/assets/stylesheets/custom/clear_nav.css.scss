@@ -1,18 +1,28 @@
-<style>
-
 /* for iPhone 5 */
-.nav-bar-wrapper {
+.nav-bar-wrapper.clear-nav {
   position: absolute;
   width: 100%;
+  .row.nav-row {
+    .nav-campus-box.nav-link-box {
+      a {
+        color: white;
+      }
+    }
+    .nav-links-right-container.nav-link-box {
+      .nav-links-right {
+        a {
+          color: white
+        }
+      }
+    }
+  }
 }
 
 .nav-logo-box.nav-link-box {
   text-align: center;
   width: 100%;
 }
-.nav-campus-box.nav-link-box {
-  display: none;
-}
+
 .nav-links-right-container.nav-link-box {
   display: none;
 }
@@ -22,8 +32,8 @@
   top: 1em;
 }
 a.become-a-tutor-button {
-    background-color: rgba(255,255,255,0.2);
-    padding: 0.5em 1em;
+  background-color: rgba(255,255,255,0.2);
+  padding: 0.5em 1em;
 }
 
 /* for iPad */
@@ -70,15 +80,15 @@ a.become-a-tutor-button {
 }
 }
 
-</style>
-<nav>
-  <div class="nav-bar-wrapper">
-    <div class="row nav-row">
-      <div class="nav-logo-box nav-link-box">
-        <%= link_to '/' do %>
-          <%= image_tag('logo_white.png', class: 'nav-logo') %>
-        <% end %>
-      </div>
-    </div>
-  </div>
-</nav>
+/* Full view */
+
+@media screen and (min-width: 1200px) {
+.f-dropdown li {
+  cursor: pointer;
+  font-size: 0.875rem;
+  line-height: 1.125rem;
+  margin: 0;
+  padding: 1em;
+}
+
+}
