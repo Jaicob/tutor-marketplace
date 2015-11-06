@@ -4,6 +4,7 @@ class CreateSchools < ActiveRecord::Migration
       
       t.string :name
       t.string :location
+      t.string :campus_pic
 
       t.timestamps null: false
     end

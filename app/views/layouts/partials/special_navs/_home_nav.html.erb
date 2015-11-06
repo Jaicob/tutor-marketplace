@@ -1,9 +1,9 @@
 <nav>
-  <div class="nav-bar-wrapper">
+  <div class="nav-bar-wrapper clear-nav">
     <div class="row nav-row">
-      <div class="nav-logo-box nav-link-box white">
+      <div class="nav-logo-box nav-link-box">
         <%= link_to '/' do %>
-          <%= image_tag('axon_logo_color.png', class: 'nav-logo') %>
+          <%= image_tag('logo_white.png', class: 'nav-logo') %>
         <% end %>
       </div>
       <div class="nav-campus-box nav-link-box">
@@ -18,7 +18,7 @@
           <% end %>
         </ul>
       </div>
-      <div class="nav-links-right-container nav-link-box white">
+      <div class="nav-links-right-container nav-link-box">
         <%= render 'layouts/partials/navigation_links' %>
       </div>
     </div>

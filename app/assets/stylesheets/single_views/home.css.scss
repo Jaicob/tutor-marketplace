@@ -1,10 +1,7 @@
-.lp-first-section {
-  background: image-url("tutor-pointing.jpg") no-repeat center center fixed; 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  z-index: -1;
+.nav-bar-wrapper.clear-nav {
+  background: none;
+  border-bottom: 0;
+  box-shadow: none;
 }
 
 .landing-page-first-section {
@@ -45,4 +42,128 @@
   -o-background-size: cover;
   background-size: cover;
   z-index: -1;
+}
+
+/* iPhone 5 view */
+.home-search-box {
+  display: block;
+  width: 90%;
+  margin: auto;
+}
+.home-search-field {
+  display: block;
+}
+.home-search-field {
+  select#subject, select#course {
+    height: 2.3em;
+    padding: 0 0.5em;
+    margin-bottom: 0.3em;
+    border-radius: 4px;
+    font-weight: 100;
+  }
+}
+input.home-search-button {
+  display: inline-block;
+  height: 2.6em;
+  font-size: 0.8em;
+  border: none;
+  background-color: #0095AC;
+  color: white;
+  font-weight: 100;
+  border-radius: 4px;
+  width: 100%;
+}
+.lp-top-subjects-section {
+  width: 100%;
+  background-color: #0095AC;
+  padding: 0.5em;
+}
+.top-subjects-box {
+  display: block;
+  width: 80%;
+  margin: auto;
+  overflow: hidden;
+}
+.top-subject {
+  display: block;
+  padding: 0.3em;
+  text-align: center;
+  border-radius: 2px;
+  font-weight: 100;
+  background-color: #CDCDCD;
+  margin: 1em 0;
+  border: 1px solid #4F5252;
+}
+p.center.white.shadow.book-two-mins {
+  margin-bottom: 5em;
+}
+
+
+/* iPad view */
+
+@media screen and (min-width: 768px) {
+  .top-subject {
+    display: inline-block;
+    width: 24%;
+  }
+  .home-search-box {
+    display: block;
+    width: 80%;
+    margin: auto;
+  }
+  .home-search-field {
+    display: inline-block;
+    width: 40%;
+  }
+
+  .home-search-field {
+    select#subject, select#course {
+      height: 2.3em;
+      padding: 0 0.5em;
+      margin-bottom: 0.3em;
+      border-radius: 4px;
+      font-weight: 100;
+    }
+    select#subject {
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      position: relative;
+      left: 4px;
+    }
+    select#course {
+      border-radius: 0;
+    }
+  }
+  input.home-search-button {
+    display: inline-block;
+    width: 18%;
+    height: 2.6em;
+    font-size: 0.8em;
+    border: none;
+    margin-top: -1em;
+    background-color: #0095AC;
+    color: white;
+    font-weight: 100;
+    margin-left: -0.3em;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    position: relative;
+    top: -1px;
+  }
+}
+
+
+/* Full view */
+
+@media (min-width: 1000px) {
+  .home-search-box {
+    width: 40%;
+  }
+  .top-subject {
+    margin: 0;
+  }
 }

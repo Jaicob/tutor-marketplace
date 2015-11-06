@@ -5,6 +5,7 @@
 #  id                     :integer          not null, primary key
 #  name                   :string
 #  location               :string
+#  campus_pic             :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  slug                   :string

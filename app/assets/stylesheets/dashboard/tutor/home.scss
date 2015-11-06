@@ -1,3 +1,225 @@
 // Place all the styles related to the dashboard/tutor/home controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+/* Styling for new tutor partial */
+
+  /* Mobile view only shows message asking Tutor to wait and apply on iPad or Desktop */
+  .mobile-error-message {
+    display: inline-block;
+  }
+  .new-tutor-partial-wrapper {
+    display: none;
+  }
+
+  /* for iPad (no mobile for Tutor only views) */
+  @media (min-width: 768px) {
+  .mobile-error-message {
+    display: none;
+  }
+  .new-tutor-partial-wrapper {
+    background-color: #EFF1F3;
+    border-radius: 4px;
+    border: 1px solid #BBE5EE;
+    display: block;
+    margin: 1em auto;
+  }
+  .container {
+    text-align: center;
+    padding: 1em 0;
+    max-width: 18em;
+    margin: auto;
+  }
+  .icons-container {
+    width: 283px;
+    margin-top: 1em;
+  }
+  .container-col {
+    display: inline-block;
+  }
+  .container.checklist-container {
+    font-size: 0.8em;
+  }
+  }
+
+  /* Full view */
+  @media (min-width: 1100px) {
+  .container-col {
+    display: inline-block;
+  }
+  .container.checklist-container {
+    font-size: 1em;
+  }
+  }
+
+    /* Styling for checklist-col in new tutor partial */ 
+
+    .checklist-box {
+      display: block;
+      font-weight: bold;
+    }
+    .checklist-title {
+      text-align: center;
+      color: white;
+      font-size: 1em;
+      padding: 0.5em;
+    }
+    .checklist-title-box {
+      background-color: #0095AC;
+      border-radius: 4px;
+    }
+    .checklist-item {
+      text-align: center;
+      margin: 0.8em;
+    }
+    .checklist-item:hover {
+      font-weight: 400;
+    }
+    .checklist-item.strikeout-text {
+      text-decoration: line-through;
+      color: #a8a8a8;
+    }
+
+    /* Styling for icon-col in new tutor partial */ 
+
+    .icon-row {
+      display: block;
+      text-align: left;
+      margin-left: 1em;
+    }
+    .icon-box, .caption-box {
+      display: inline-block;
+    }
+    .icon-box {
+      width: 20%;
+      text-align: center;
+    }
+    .caption-box {
+      width: 78%;
+    }
+    .big-welcome-fi {
+      font-size: 1.7em;
+      position: relative;
+      top: 7px;
+    }
+    .caption-box p, .icon-row-header {
+      margin: 0;
+      font-size: 0.9em;
+    }
+
+    /* Full view */
+
+    @media (min-width: 1000px) {
+    .container.icons-container {
+      margin-top: 1em;
+    }
+    }
+
+    /* Styling for welcome-col in new tutor partial */ 
+
+    .welcome-text {
+      font-size: 0.9em;
+      margin: 0 auto 0.6em;
+      max-width: 16em;
+    }
+
+/* End of styling for new tutor partial container and partials */
+
+
+/* Styling for tutor application */
+    
+  .select-wrapper {
+    border: #a8a8a8;
+  }
+  .select-menu {
+    width: 100%;
+    color: #a8a8a8;
+  }
+  .one-half {
+    display: inline-block;
+    width: 49%;
+  }
+  input.submit-button {
+    width: 100%;
+    margin-top: 2em;
+  }
+  .tiny-text {
+    font-size: 0.8em;
+  }
+  .tiny-text.example {
+    margin-bottom: 0.1em;
+  }
+  .top-section-title {
+    margin-top: 0;
+    padding-top: 2em;
+  }
+  .statement-instructions {
+  }
+  .statement-field {
+    margin-bottom: 2em;
+  }
+  .file-input-box {
+    width: 40%;
+    height: 1.6em;
+    margin: auto;
+    position: relative;
+    overflow: hidden;
+    margin: 1em 0; 
+    border-radius: 4px;  
+  }
+  input.file-input {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    opacity: 0;
+  }
+  div.file-input-button {
+    height: 100%;
+    width: 100%;
+    float: right;
+    background-color: #2BC2DE;
+    color: white;
+    font-weight: 100;
+    text-align: center;
+    line-height: 2em;
+    font-size: 0.8em;
+  }
+  .margin-bottom {
+    margin-bottom: 4em;
+  }
+
+/* Styling for awaiting_approval message */
+
+  .submission-box {
+    display: block;
+    padding:3em;
+    border-radius: 2px;
+    background-color: #0095AC;
+    width: 30em;
+    margin: 2em auto;
+  }
+  .submission-title {
+    color: white;
+    text-align: center;
+    font-size: 2em;
+    margin: 0 0 1em;
+  }
+  .submission-text {
+    color: white;
+    text-align: center;
+  }
+  button.email-button {
+    width: 100%;
+    padding: 1em;
+    margin-top: 1em;
+    line-height: 1.5em;
+    background-color: #58AA4D;
+  }
+  .email-icon{
+    font-size: 1.5em;
+    float: left;
+    color: white;
+  }

@@ -1,23 +1,20 @@
 <style>
-.home-search-box {
-  display: block;
-  width: 40%;
-  margin: auto;
+/* Do NOT remove this CSS! It must be in the view to dynamically select the correct campus picture to use as the background image */
+.lp-first-section {
+  background: url("<%= if @school then @school.campus_pic_url else 'assets/unicorn.jpg' end %>") no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  z-index: -1;
 }
-.home-search-field {
-  display: inline-block;
-  width: 40%;
-}
-.home-search-button {
-  display: inline-block;
-  width: 15%;
-  background-color: #0095AC;
-}
-
 </style>
 <%= javascript_include_tag "single_views/search" %>
+<% content_for (:special_nav) do %>
+  <%= render 'layouts/partials/special_navs/home_nav' %>
+<% end %>
 
-<div class="landing-page lp-first-section">
+<div class="landing-page lp-first-section" >
   <h1 class="center white shadow top-padding headline">Meet your personal campus tutor</h1>
   <h3 class="center white shadow bottom-margin headline">Choose your course</h3>
 
@@ -34,10 +31,12 @@
   </div>
 
   <p class="center white shadow book-two-mins">Book your in-person & on-campus tutor in just two minutes</p>
-  <div class="numbers-banner-box">
-    <div class="number-banner top-banner">Join over <span class="big-numbers">2,000+</span> students on Axon</div>
-    <div class="number-banner">Over <span class="big-numbers">6,000+</span> tutoring sessions</div>
-    <div class="number-banner">Featured in: The Odyssey | Red & Black</div>
+</div>
+<div class="landing-page lp-top-subjects-section">
+  <div class="top-subjects-box">
+    <% @school.top_subjects.each do |subj| %>
+      <div class="top-subject"><%= subj %></div>
+    <% end %>
   </div>
 </div>
 <div class="landing-page lp-3-steps-section">

@@ -1,15 +1,16 @@
-<h3>Payment Settings</h3>
 <% if @tutor.acct_id %>
-  <h4>Address</h4>
+  <p class="settings-title">Your Billing Address</p>
   <p><%= @tutor.line1 %><br>
      <%= @tutor.line2 %><br>
      <%= @tutor.city %>, <%= @tutor.state %> <%= @tutor.postal_code %>
   </p>
+  <p class="settings-title">Your Linked Bank Account</p>
   <p>Active account: ******<%= @tutor.last_4_acct %></p>
-  <p><%= link_to "Change address", edit_address_tutor_path(current_user), class: 'btn' %></p>
-  <p><%= link_to "Change bank account", tutor_payment_info_form_tutor_path(@tutor), class: 'btn', remote: true %></p>
+  <p><%= link_to "Change address", edit_address_tutor_path(current_user), class: 'custom-button' %></p>
+  <p><%= link_to "Change bank account", tutor_payment_info_form_tutor_path(@tutor), class: 'custom-button', remote: true %></p>
 <% else %>
-  <%= link_to 'Set up Stripe account', tutor_payment_info_form_tutor_path(@tutor), class: 'btn', remote: true %></p>
+  <p>You do not currently have a bank account linked to recieve your payments.</p>
+  <%= link_to 'Link Your Bank Account', tutor_payment_info_form_tutor_path(@tutor), class: 'custom-button', remote: true %></p>
 <% end %>
 
 <div id="payment">
