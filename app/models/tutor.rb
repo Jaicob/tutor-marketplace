@@ -9,6 +9,7 @@
 #  rating             :integer
 #  degree             :integer          default(0)
 #  major              :string
+#  additional_degrees :string
 #  extra_info_1       :text
 #  extra_info_2       :text
 #  extra_info_3       :text
@@ -44,7 +45,7 @@ class Tutor < ActiveRecord::Base
 
   enum application_status: ['Incomplete', 'Complete', 'Approved']
   enum active_status: ['Inactive', 'Active']
-  enum degree: ["B.A.", "B.S.", "M.B.A", "M.P.A.", "M.S.", "M.Ed.", "PhD", "MD", "J.D.", "F.U."]
+  enum degree: ["B.A.", "B.S.", "M.B.A", "M.P.A.", "M.S.", "M.Ed.", "PhD", "MD", "J.D."]
 
   # Carrierwave setup for uploading files
   mount_uploader :profile_pic, ProfilePicUploader

@@ -9,6 +9,7 @@
 #  rating             :integer
 #  degree             :integer          default(0)
 #  major              :string
+#  additional_degrees :string
 #  extra_info_1       :text
 #  extra_info_2       :text
 #  extra_info_3       :text

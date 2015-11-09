@@ -66,10 +66,16 @@ n = 0
 
 # Create a Tutor profile for each User
 ## Arrays for calling the sample method on below to have nice mock tutor cards
-extra_info = ['This is a short extra info example.', 'This is a medium extra info example for showing different possibilities.', "This is a really long extra info example for showing the possiblity of having a long enough statement that some is hidden and must be viewed on the actual profile."]
+extra_info = ['This is a short extra info example for showing different possibilities.', "This is a long extra info example for showing the possiblity of having a long enough statement that some is hidden and must be viewed on the actual profile."]
 degree = [0,1,2,3,4,5]
 major = ['Chemistry', 'Biology', 'Business', 'English', 'Micro-Biology', 'Computer Science', 'Accounting']
 graduation_year = [2015, 2016, 2017, 2018, 2019]
+additional_degrees = [
+  'B.A. Accounting, B.S. Finance',
+  'M.F.A English, B.S. Spanish',
+  'B.S. Biology, B.A. Marine Biology',
+  'B.S. Chemistry, B.S. Micro-Biology'
+]
 
 User.all.each do |user|
   user.create_tutor(
@@ -77,13 +83,21 @@ User.all.each do |user|
     birthdate: '1990-01-01',
     degree: degree.sample,
     major: major.sample,
-    major_2: major.sample,
+    additional_degrees: additional_degrees.sample,
     extra_info_1: extra_info.sample,
     extra_info_2: extra_info.sample,
     extra_info_3: extra_info.sample,
     graduation_year: graduation_year.sample,
     phone_number: Faker::Number.number(10)
     )
+end
+
+# Remove additional degrees from half of tutors
+Tutor.all.each do |tutor|
+  if tutor.id % 2 == 0 || tutor.id % 3 == 0
+    tutor.additional_degrees = nil
+    tutor.save
+  end
 end
 
 # Create 3 TutorCourses for each Tutor
