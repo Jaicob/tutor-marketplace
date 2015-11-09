@@ -77,6 +77,7 @@ User.all.each do |user|
     birthdate: '1990-01-01',
     degree: degree.sample,
     major: major.sample,
+    major_2: major.sample,
     extra_info_1: extra_info.sample,
     extra_info_2: extra_info.sample,
     extra_info_3: extra_info.sample,

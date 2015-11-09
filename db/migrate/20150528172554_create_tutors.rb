@@ -7,7 +7,11 @@ class CreateTutors < ActiveRecord::Migration
       t.integer     :application_status, default: 0
       t.integer     :rating
       t.integer     :degree, default: 0
+      t.integer     :degree_2
+      t.integer     :degree_3 
       t.string      :major
+      t.string      :major_2
+      t.string      :major_3
       t.text        :extra_info_1
       t.text        :extra_info_2
       t.text        :extra_info_3
