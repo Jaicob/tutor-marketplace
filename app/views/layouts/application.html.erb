@@ -18,7 +18,7 @@
         <%= yield(:special_nav) if content_for? (:special_nav) %>
       </div>
     </header>
-    <div class="row full-width">
+    <div class="row full-width main-content">
       <%= yield(:admin_panel) if content_for? (:admin_panel) %>
       <%= yield(:dashboard_nav) if content_for? (:dashboard_nav) %>
       <%= yield(:new_tutor_checklist) if content_for? (:new_tutor_checklist) %>

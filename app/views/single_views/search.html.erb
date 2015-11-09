@@ -2,27 +2,27 @@
 <%= javascript_include_tag "single_views/search" %>
 <div class="row">
   <div class="small-12 columns">
-    <h1 class="center">Book your tutor</h1>
-    <form class="search-criteria">
-      <div class="small-12 medium-3 columns">
-        <%= render '/course_selector/school' %>
-      </div>
-      <div class="small-12 medium-3 columns">
-        <%= render '/course_selector/subject' %>
-      </div>
-      <div class="small-12 medium-3 columns">
-        <%= render '/course_selector/course' %>
-      </div>
-      <div class="small-12 medium-3 columns">
-        <input id="tutorSearchButton" type="button" class="custom-button full-width" value="Search"></input>
-      </div>
-    </form>
+    <h1 class>Book Your Tutor</h1>
   </div>
+</div>
+<div class="row search-box">
+  <form class="search-criteria">
+    <div class="small-12 medium-3 columns">
+      <%= render '/course_selector/subject' %>
+    </div>
+    <div class="small-12 medium-3 columns">
+      <%= render '/course_selector/course' %>
+    </div>
+    <div class="small-12 medium-3 columns">
+      <input id="tutorSearchButton" type="button" class="custom-button full-width" value="Search"></input>
+    </div>
+  </form>
 </div>
 <div class="row">
   <div class="small-12 columns">
     <div id="tutorCardContainer" class="cards">
-      <p>Welcome</p>
+      <p>Find your local <%= @school.name %> tutor.</p>
+      <p>Select a subject and course to begin.</p>
     </div>
   </div>
 </div>
