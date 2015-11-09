@@ -1,0 +1,356 @@
+/* iPhone 5 view */
+/* line 3, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+.center {
+  text-align: center;
+}
+
+/* line 6, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+.white {
+  color: white;
+}
+
+/* line 9, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+.blue-3 {
+  color: #0095AC;
+}
+
+/* line 12, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+.shadow {
+  text-shadow: 1px 1px 1px black;
+}
+
+/* line 15, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+.bottom-margin {
+  margin-bottom: 1em;
+}
+
+/* line 18, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+.headline {
+  font-family: 'Lato';
+}
+
+/* line 21, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+.school-selection-box {
+  margin: auto;
+  max-width: 25em;
+}
+
+/* line 25, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+select#visitor_school_id {
+  display: inline-block;
+  width: 73%;
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+}
+
+/* line 31, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+input.visitor-set-school-button {
+  display: inline-block;
+  width: 25%;
+  height: 2.9em;
+  font-size: 0.8em;
+  border: none;
+  margin-top: -1em;
+  background-color: #0095AC;
+  color: white;
+  font-weight: 100;
+  margin-left: -0.3em;
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+/* line 45, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+.school-selection {
+  display: block;
+  width: 100%;
+  text-align: center;
+  background-color: #0095AC;
+  border: 2px solid white;
+  border-radius: 4px;
+  color: white;
+  font-size: 0.8em;
+  padding: 1em;
+}
+
+/* line 56, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+.book-two-mins {
+  margin-bottom: 4em;
+}
+
+/* line 59, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+.numbers-banner-box {
+  display: block;
+  background-color: rgba(0, 0, 0, 0.8);
+  margin-top: 5em;
+}
+
+/* line 64, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+.number-banner {
+  display: block;
+  text-align: center;
+  border-top: 1px solid white;
+  color: white;
+  margin-bottom: 0;
+  padding: 0.5em;
+  border-bottom: 0;
+  font-family: 'Lato';
+}
+
+/* line 74, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+.big-numbers {
+  font-size: 1.5em;
+  color: white;
+}
+
+/* line 78, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+.top-banner {
+  border-top: none;
+}
+
+/* line 81, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+.top-padding {
+  padding-top: 1.5em;
+}
+
+/* line 84, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+.landing-page {
+  padding: 1em;
+  text-align: center;
+}
+
+/* line 88, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+.landing-page p {
+  text-align: center;
+  max-width: 20em;
+  width: 100%;
+  margin: 1em auto;
+}
+
+/* line 94, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+.section-header p {
+  font-family: 'Roboto Slab';
+  font-size: 1.2em;
+  font-weight: 100;
+  max-width: 20em;
+}
+
+/* line 100, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+p.axon-is-easy {
+  max-width: 20em;
+  margin: 0 auto 1em;
+}
+
+/* line 104, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+p.section-sub-header {
+  font-family: 'Lato';
+  font-size: 1.2em;
+  margin-top: 0;
+}
+
+/* line 109, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+p.pic-caption {
+  font-size: 1.3em;
+  color: #2BC2DE;
+  margin-bottom: 0;
+}
+
+/* line 114, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+.pic-box-trio {
+  max-width: 50em;
+  margin: auto;
+}
+
+/* line 118, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+.trio-pic {
+  width: 100%;
+  border: 1px solid #2BC2DE;
+  max-width: 25em;
+  margin: auto;
+}
+
+/* line 124, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+.divider-line {
+  display: block;
+  height: 1px;
+  border-bottom: 1px solid #0095AC;
+  width: 60%;
+  margin: auto;
+}
+
+/* line 131, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+p.difference-text {
+  padding-bottom: 2em;
+}
+
+/* line 134, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+.difference-icon {
+  font-size: 2em;
+  color: #0095AC;
+}
+
+/* line 138, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+img.testimonial-pic {
+  border-radius: 100%;
+  border: 1px solid black;
+  width: 100%;
+  max-width: 10em;
+  margin-top: 1em;
+}
+
+/* line 145, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+p.testimonial-name {
+  font-size: 0.8em;
+  font-weight: 400;
+  margin-bottom: 2em;
+}
+
+/* line 150, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+a.faqs-link:hover {
+  padding: 1em 5em;
+  background-color: #0095AC;
+  color: white;
+  border-radius: 4px;
+}
+
+/* line 156, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+.campus-pic-boxes {
+  margin-bottom: 3em;
+}
+
+/* line 159, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+.campus-pic-box {
+  width: 100%;
+  margin: 1em auto;
+  max-width: 15em;
+  overflow: hidden;
+}
+
+/* line 165, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+p.campus-pic-title {
+  font-size: 5em;
+  font-weight: 900;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* line 171, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+p.campus-pic-title:hover {
+  color: white;
+}
+
+/* line 174, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+.lp-campus-pics-section {
+  background-color: #4F5252;
+  color: white;
+  padding-top: 0;
+}
+
+/* line 179, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+p.select-campus-pic {
+  margin: auto;
+  padding: 2em;
+  color: white;
+}
+
+/* iPad view */
+@media screen and (min-width: 768px) {
+  /* line 191, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+  p.axon-is-easy {
+    font-size: 1.6em;
+    margin-bottom: -1em;
+  }
+
+  /* line 195, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+  .school-selection {
+    width: 50%;
+    margin: 1em auto;
+  }
+
+  /* line 199, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+  .section-header {
+    padding: 1em;
+  }
+
+  /* line 202, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+  .pic-box {
+    width: 50%;
+    margin: 3em auto 1em;
+  }
+
+  /* line 206, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+  .campus-pic-boxes {
+    margin-bottom: 5em;
+  }
+
+  /* line 209, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+  .campus-pic-box {
+    margin: auto;
+    display: inline-block;
+    padding: 1em;
+  }
+}
+/* Full view */
+@media (min-width: 1000px) {
+  /* line 223, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+  .school-selection-box {
+    width: 40%;
+    margin: auto;
+  }
+
+  /* line 227, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+  .school-selection {
+    display: inline-block;
+    width: 49%;
+    text-align: center;
+    background-color: #0095AC;
+    border: 2px solid white;
+    border-radius: 4px;
+    color: white;
+    font-size: 0.8em;
+  }
+
+  /* line 237, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+  .number-banner {
+    display: inline-block;
+    width: 33%;
+    border: none;
+    vertical-align: top;
+  }
+
+  /* line 243, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+  .pic-box {
+    width: 33%;
+    display: inline-block;
+    padding: 2em;
+    vertical-align: top;
+    margin: 0;
+  }
+
+  /* line 250, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+  .four-differences-boxes {
+    width: 80%;
+    margin: auto;
+  }
+
+  /* line 254, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+  .difference-box {
+    display: inline-block;
+    vertical-align: top;
+    width: 49%;
+    padding: 0 1em;
+  }
+
+  /* line 260, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+  .testimonial-box {
+    display: inline-block;
+    width: 49%;
+    padding: 0 1em;
+    vertical-align: top;
+  }
+
+  /* line 266, /home/rails/my-app/app/assets/stylesheets/single_views/student_landing.css.scss */
+  p.difference-text {
+    padding-bottom: 2em;
+    max-width: 20em;
+  }
+}

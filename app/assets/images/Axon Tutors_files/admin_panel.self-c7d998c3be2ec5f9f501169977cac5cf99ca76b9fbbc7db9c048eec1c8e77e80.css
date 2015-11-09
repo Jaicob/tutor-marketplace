@@ -1,0 +1,96 @@
+/*
+========================================
+Appointments Main Menu
+========================================
+*/
+/* line 8, /home/rails/my-app/app/assets/stylesheets/custom/admin_panel.css.scss */
+.dropdown.button {
+  margin: 0;
+}
+
+/* line 12, /home/rails/my-app/app/assets/stylesheets/custom/admin_panel.css.scss */
+.header-block {
+  display: block;
+}
+
+/* line 16, /home/rails/my-app/app/assets/stylesheets/custom/admin_panel.css.scss */
+.admin-row {
+  background-color: #00BFB3;
+}
+
+/* line 20, /home/rails/my-app/app/assets/stylesheets/custom/admin_panel.css.scss */
+.admin-title {
+  padding: 0.7em;
+  text-align: center;
+  font-size: 1.5em;
+  color: #fff;
+  font-weight: 800;
+  margin-bottom: 0;
+}
+
+/* line 29, /home/rails/my-app/app/assets/stylesheets/custom/admin_panel.css.scss */
+.school-name {
+  text-align: center;
+  color: #fff;
+  padding-bottom: 1em;
+  margin-bottom: 0;
+}
+
+/* line 36, /home/rails/my-app/app/assets/stylesheets/custom/admin_panel.css.scss */
+.school-select {
+  display: inline-block;
+  float: right;
+}
+
+/* line 41, /home/rails/my-app/app/assets/stylesheets/custom/admin_panel.css.scss */
+button.button.dropdown.school-select-dropdown {
+  margin-top: -6em;
+  margin-right: 1em;
+  background-color: #00bfb3;
+  border: 1px solid white;
+}
+
+/* line 48, /home/rails/my-app/app/assets/stylesheets/custom/admin_panel.css.scss */
+a.button.small.full-width.admin-new-appt-button {
+  margin-bottom: 0;
+  border: 1px solid #d3d3d3;
+  background-color: #eeeeee;
+  color: #4d4d4d;
+  margin-top: 1em;
+}
+
+/* line 56, /home/rails/my-app/app/assets/stylesheets/custom/admin_panel.css.scss */
+a.button.info.tiny.full-width.reset-search-button {
+  background-color: #eeeeee;
+  border: 1px solid #d3d3d3;
+}
+
+/*
+========================================
+Appointments Edit Menu
+========================================
+*/
+/* line 67, /home/rails/my-app/app/assets/stylesheets/custom/admin_panel.css.scss */
+select#appointment_start_time_1i {
+  width: 18%;
+}
+
+/* line 70, /home/rails/my-app/app/assets/stylesheets/custom/admin_panel.css.scss */
+select#appointment_start_time_2i {
+  width: 27%;
+}
+
+/* line 73, /home/rails/my-app/app/assets/stylesheets/custom/admin_panel.css.scss */
+select#appointment_start_time_3i {
+  width: 13%;
+}
+
+/* line 76, /home/rails/my-app/app/assets/stylesheets/custom/admin_panel.css.scss */
+select#appointment_start_time_4i {
+  width: 13%;
+}
+
+/* line 79, /home/rails/my-app/app/assets/stylesheets/custom/admin_panel.css.scss */
+select#appointment_start_time_5i {
+  width: 13%;
+}

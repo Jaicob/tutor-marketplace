@@ -1,0 +1,111 @@
+/* for iPhone 5 */
+/* line 3, /home/rails/my-app/app/assets/stylesheets/custom/clear_nav.css.scss */
+.nav-bar-wrapper.clear-nav {
+  position: absolute;
+  width: 100%;
+}
+/* line 8, /home/rails/my-app/app/assets/stylesheets/custom/clear_nav.css.scss */
+.nav-bar-wrapper.clear-nav .row.nav-row .nav-campus-box.nav-link-box a {
+  color: white;
+}
+/* line 14, /home/rails/my-app/app/assets/stylesheets/custom/clear_nav.css.scss */
+.nav-bar-wrapper.clear-nav .row.nav-row .nav-links-right-container.nav-link-box .nav-links-right a {
+  color: white;
+}
+
+/* line 22, /home/rails/my-app/app/assets/stylesheets/custom/clear_nav.css.scss */
+.nav-logo-box.nav-link-box {
+  text-align: center;
+  width: 100%;
+}
+
+/* line 27, /home/rails/my-app/app/assets/stylesheets/custom/clear_nav.css.scss */
+.nav-links-right-container.nav-link-box {
+  display: none;
+}
+
+/* line 30, /home/rails/my-app/app/assets/stylesheets/custom/clear_nav.css.scss */
+.nav-logo {
+  height: 3em;
+  position: relative;
+  top: 1em;
+}
+
+/* line 35, /home/rails/my-app/app/assets/stylesheets/custom/clear_nav.css.scss */
+a.become-a-tutor-button {
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 0.5em 1em;
+}
+
+/* for iPad */
+@media screen and (min-width: 768px) {
+  /* line 43, /home/rails/my-app/app/assets/stylesheets/custom/clear_nav.css.scss */
+  .nav-bar-wrapper {
+    display: block;
+    z-index: 1000000;
+  }
+
+  /* line 47, /home/rails/my-app/app/assets/stylesheets/custom/clear_nav.css.scss */
+  .nav-row {
+    display: block;
+    height: 3em;
+  }
+
+  /* line 51, /home/rails/my-app/app/assets/stylesheets/custom/clear_nav.css.scss */
+  .nav-logo {
+    position: static;
+  }
+
+  /* line 54, /home/rails/my-app/app/assets/stylesheets/custom/clear_nav.css.scss */
+  .nav-logo-box.nav-link-box {
+    text-align: center;
+    width: initial;
+    background-color: inherit;
+  }
+
+  /* line 59, /home/rails/my-app/app/assets/stylesheets/custom/clear_nav.css.scss */
+  .nav-campus-box.nav-link-box {
+    display: inline-block;
+  }
+
+  /* line 62, /home/rails/my-app/app/assets/stylesheets/custom/clear_nav.css.scss */
+  .nav-links-right-container.nav-link-box {
+    display: inline-block;
+  }
+
+  /* line 65, /home/rails/my-app/app/assets/stylesheets/custom/clear_nav.css.scss */
+  .nav-links-right-container {
+    float: right;
+  }
+
+  /* line 68, /home/rails/my-app/app/assets/stylesheets/custom/clear_nav.css.scss */
+  .nav-link-box {
+    display: inline-block;
+    line-height: 3em;
+    vertical-align: top;
+    font-weight: 500;
+  }
+
+  /* line 74, /home/rails/my-app/app/assets/stylesheets/custom/clear_nav.css.scss */
+  .nav-link-box a {
+    color: white;
+    font-weight: 400;
+  }
+
+  /* line 78, /home/rails/my-app/app/assets/stylesheets/custom/clear_nav.css.scss */
+  .nav-links-right {
+    display: inline-block;
+    padding: 0 1em;
+  }
+}
+/* Full view */
+@media screen and (min-width: 1200px) {
+  /* line 87, /home/rails/my-app/app/assets/stylesheets/custom/clear_nav.css.scss */
+  .f-dropdown li {
+    cursor: pointer;
+    font-size: 0.875rem;
+    line-height: 1.125rem;
+    margin: 0;
+    padding: 1em;
+  }
+}

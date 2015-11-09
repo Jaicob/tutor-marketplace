@@ -53,7 +53,7 @@ end
 n = 0
 4.times{
   n += 1
-  5.times{
+  10.times{
     User.create!(
       school_id: n,
       first_name: Faker::Name.first_name,
@@ -65,28 +65,33 @@ n = 0
 }
 
 # Create a Tutor profile for each User
-info = "Short loin pork loin pancetta, meatloaf beef pork belly tenderloin doner. Beef frankfurter tongue spare ribs, cupim sausage ground round short ribs kevin t-bone. Jerky cupim boudin chicken. Tri-tip frankfurter leberkas, t-bone ham hock shoulder tongue meatball jowl doner tail. Pork belly beef turducken filet mignon, cupim kielbasa frankfurter hamburger turkey alcatra. Spare ribs hamburger brisket capicola beef ribs tongue venison alcatra."
+## Arrays for calling the sample method on below to have nice mock tutor cards
+extra_info = ['This is a short extra info example.', 'This is a medium extra info example for showing different possibilities.', "This is a really long extra info example for showing the possiblity of having a long enough statement that some is hidden and must be viewed on the actual profile."]
+degree = [0,1,2,3,4,5]
+major = ['Chemistry', 'Biology', 'Business', 'English', 'Micro-Biology', 'Computer Science', 'Accounting']
+graduation_year = [2015, 2016, 2017, 2018, 2019]
 
 User.all.each do |user|
   user.create_tutor(
     rating: 5,
     birthdate: '1990-01-01',
-    degree: 0,
-    major: 'Marine Biology',
-    extra_info_1: info,
-    extra_info_2: info,
-    extra_info_3: info,
-    graduation_year: '2018',
-    phone_number: Faker::Number.number(10),
+    degree: degree.sample,
+    major: major.sample,
+    extra_info_1: extra_info.sample,
+    extra_info_2: extra_info.sample,
+    extra_info_3: extra_info.sample,
+    graduation_year: graduation_year.sample,
+    phone_number: Faker::Number.number(10)
     )
 end
 
 # Create 3 TutorCourses for each Tutor
+rates =[15,18,20,22,25,26,30,31]
 Tutor.all.each do |tutor|
-  tutor.tutor_courses.create(course_id: tutor.school.courses.first.id, rate: 15)
-  tutor.tutor_courses.create(course_id: tutor.school.courses.second.id, rate: 20)
-  tutor.tutor_courses.create(course_id: tutor.school.courses.third.id, rate: 25)
-  tutor.tutor_courses.create(course_id: tutor.school.courses.fourth.id, rate: 30)
+  tutor.tutor_courses.create(course_id: tutor.school.courses.first.id, rate: rates.sample)
+  tutor.tutor_courses.create(course_id: tutor.school.courses.second.id, rate: rates.sample)
+  tutor.tutor_courses.create(course_id: tutor.school.courses.third.id, rate: rates.sample)
+  tutor.tutor_courses.create(course_id: tutor.school.courses.fourth.id, rate: rates.sample)
 end
 
 # Create Slots for each Tutor

@@ -1,0 +1,29 @@
+p.headline {
+  font-family: 'Roboto Slab';
+  font-size: 1.5em;
+  font-weight: 100;
+  text-align: center;
+  margin: 0.8em 0 0.2em;
+}
+p.subheader {
+  font-family: 'Roboto Slab';
+  font-size: 0.5em;
+  font-weight: 700;
+  text-align: center;
+}
+p.centered-for-icon {
+  text-align: center;
+  margin-bottom: 0;
+}
+.progress-icon {
+  font-size: 1.3em;
+}
+.check {
+  color: #2BC2DE;
+}
+.blank {
+  color: #58AA4D;
+}
+.row.progress-icon {
+  margin-bottom: 0.6em;
+}

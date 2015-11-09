@@ -1,0 +1,19 @@
+/* line 6, /home/rails/my-app/app/assets/stylesheets/admin/appointments.scss */
+select#q_start_time_gteq_1i, select#q_start_time_lteq_1i {
+  width: 27%;
+}
+
+/* line 10, /home/rails/my-app/app/assets/stylesheets/admin/appointments.scss */
+select#q_start_time_gteq_2i, select#q_start_time_lteq_2i {
+  width: 48%;
+}
+
+/* line 14, /home/rails/my-app/app/assets/stylesheets/admin/appointments.scss */
+select#q_start_time_gteq_3i, select#q_start_time_lteq_3i {
+  width: 20%;
+}
+
+/* line 18, /home/rails/my-app/app/assets/stylesheets/admin/appointments.scss */
+a.button.info.tiny.full-width {
+  width: 100%;
+}

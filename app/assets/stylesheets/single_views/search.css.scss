@@ -12,9 +12,11 @@
 
         .card {
             max-width: 14em;
-            border: 3px solid #2BC2DE;
-            border-radius: 4px;
             margin: 1em 0.5em;
+            background-color: #F3F3F3;
+            box-shadow: 1px 1px 3px #a8a8a8;
+            border-radius: 4px;
+            overflow: hidden;
             .profile-pic-box {
                 display: block;
                 .profile-pic {
@@ -27,7 +29,7 @@
                 width: 100%;
                 background-color: #2BC2DE;
                 color: white;
-                padding: 0.5em 0;
+                padding: 0.3em 0;
                 margin: 0;
                 .banner-row {
                     p {
@@ -39,7 +41,7 @@
                         }
                     }
                     p.name {
-                        font-size: 1.6em;
+                        font-size: 1.3em;
                         padding-left: 0.2em;
                     }
                     p.price {
@@ -47,9 +49,14 @@
                         padding: 0.4em;
                         border-radius: 100%;
                         float: right;
+                        position: relative;
+                        right: 0.3em;
                         span {
                             color: white;
                         }
+                    }
+                    p.degree {
+                        font-size: 0.8em;
                     }
                     i.fi-book-bookmark {
                         padding: 0 0.5em;
@@ -58,6 +65,9 @@
                 }
             }
             .statements-box {
+                .statement {
+                    height: 4.5em;
+                }
                 p {
                     font-size: 0.8em;
                     margin: 0;

@@ -1,0 +1,279 @@
+/* Styling for new tutor partial */
+/* Mobile view only shows message asking Tutor to wait and apply on iPad or Desktop */
+/* line 10, /home/rails/my-app/app/assets/stylesheets/dashboard/tutor/home.scss */
+.mobile-error-message {
+  display: inline-block;
+}
+
+/* line 13, /home/rails/my-app/app/assets/stylesheets/dashboard/tutor/home.scss */
+.new-tutor-partial-wrapper {
+  display: none;
+}
+
+/* for iPad (no mobile for Tutor only views) */
+@media (min-width: 768px) {
+  /* line 19, /home/rails/my-app/app/assets/stylesheets/dashboard/tutor/home.scss */
+  .mobile-error-message {
+    display: none;
+  }
+
+  /* line 22, /home/rails/my-app/app/assets/stylesheets/dashboard/tutor/home.scss */
+  .new-tutor-partial-wrapper {
+    background-color: #EFF1F3;
+    border-radius: 4px;
+    border: 1px solid #BBE5EE;
+    display: block;
+    margin: 1em auto;
+  }
+
+  /* line 29, /home/rails/my-app/app/assets/stylesheets/dashboard/tutor/home.scss */
+  .container {
+    text-align: center;
+    padding: 1em 0;
+    max-width: 18em;
+    margin: auto;
+  }
+
+  /* line 35, /home/rails/my-app/app/assets/stylesheets/dashboard/tutor/home.scss */
+  .icons-container {
+    width: 283px;
+    margin-top: 1em;
+  }
+
+  /* line 39, /home/rails/my-app/app/assets/stylesheets/dashboard/tutor/home.scss */
+  .container-col {
+    display: inline-block;
+  }
+
+  /* line 42, /home/rails/my-app/app/assets/stylesheets/dashboard/tutor/home.scss */
+  .container.checklist-container {
+    font-size: 0.8em;
+  }
+}
+/* Full view */
+@media (min-width: 1100px) {
+  /* line 49, /home/rails/my-app/app/assets/stylesheets/dashboard/tutor/home.scss */
+  .container-col {
+    display: inline-block;
+  }
+
+  /* line 52, /home/rails/my-app/app/assets/stylesheets/dashboard/tutor/home.scss */
+  .container.checklist-container {
+    font-size: 1em;
+  }
+}
+/* Styling for checklist-col in new tutor partial */
+/* line 59, /home/rails/my-app/app/assets/stylesheets/dashboard/tutor/home.scss */
+.checklist-box {
+  display: block;
+  font-weight: bold;
+}
+
+/* line 63, /home/rails/my-app/app/assets/stylesheets/dashboard/tutor/home.scss */
+.checklist-title {
+  text-align: center;
+  color: white;
+  font-size: 1em;
+  padding: 0.5em;
+}
+
+/* line 69, /home/rails/my-app/app/assets/stylesheets/dashboard/tutor/home.scss */
+.checklist-title-box {
+  background-color: #0095AC;
+  border-radius: 4px;
+}
+
+/* line 73, /home/rails/my-app/app/assets/stylesheets/dashboard/tutor/home.scss */
+.checklist-item {
+  text-align: center;
+  margin: 0.8em;
+}
+
+/* line 77, /home/rails/my-app/app/assets/stylesheets/dashboard/tutor/home.scss */
+.checklist-item:hover {
+  font-weight: 400;
+}
+
+/* line 80, /home/rails/my-app/app/assets/stylesheets/dashboard/tutor/home.scss */
+.checklist-item.strikeout-text {
+  text-decoration: line-through;
+  color: #a8a8a8;
+}
+
+/* Styling for icon-col in new tutor partial */
+/* line 87, /home/rails/my-app/app/assets/stylesheets/dashboard/tutor/home.scss */
+.icon-row {
+  display: block;
+  text-align: left;
+  margin-left: 1em;
+}
+
+/* line 92, /home/rails/my-app/app/assets/stylesheets/dashboard/tutor/home.scss */
+.icon-box, .caption-box {
+  display: inline-block;
+}
+
+/* line 95, /home/rails/my-app/app/assets/stylesheets/dashboard/tutor/home.scss */
+.icon-box {
+  width: 20%;
+  text-align: center;
+}
+
+/* line 99, /home/rails/my-app/app/assets/stylesheets/dashboard/tutor/home.scss */
+.caption-box {
+  width: 78%;
+}
+
+/* line 102, /home/rails/my-app/app/assets/stylesheets/dashboard/tutor/home.scss */
+.big-welcome-fi {
+  font-size: 1.7em;
+  position: relative;
+  top: 7px;
+}
+
+/* line 107, /home/rails/my-app/app/assets/stylesheets/dashboard/tutor/home.scss */
+.caption-box p, .icon-row-header {
+  margin: 0;
+  font-size: 0.9em;
+}
+
+/* Full view */
+@media (min-width: 1000px) {
+  /* line 115, /home/rails/my-app/app/assets/stylesheets/dashboard/tutor/home.scss */
+  .container.icons-container {
+    margin-top: 1em;
+  }
+}
+/* Styling for welcome-col in new tutor partial */
+/* line 122, /home/rails/my-app/app/assets/stylesheets/dashboard/tutor/home.scss */
+.welcome-text {
+  font-size: 0.9em;
+  margin: 0 auto 0.6em;
+  max-width: 16em;
+}
+
+/* End of styling for new tutor partial container and partials */
+/* Styling for tutor application */
+/* line 133, /home/rails/my-app/app/assets/stylesheets/dashboard/tutor/home.scss */
+.select-wrapper {
+  border: #a8a8a8;
+}
+
+/* line 136, /home/rails/my-app/app/assets/stylesheets/dashboard/tutor/home.scss */
+.select-menu {
+  width: 100%;
+  color: #a8a8a8;
+}
+
+/* line 140, /home/rails/my-app/app/assets/stylesheets/dashboard/tutor/home.scss */
+.one-half {
+  display: inline-block;
+  width: 49%;
+}
+
+/* line 144, /home/rails/my-app/app/assets/stylesheets/dashboard/tutor/home.scss */
+input.submit-button {
+  width: 100%;
+  margin-top: 2em;
+}
+
+/* line 148, /home/rails/my-app/app/assets/stylesheets/dashboard/tutor/home.scss */
+.tiny-text {
+  font-size: 0.8em;
+}
+
+/* line 151, /home/rails/my-app/app/assets/stylesheets/dashboard/tutor/home.scss */
+.tiny-text.example {
+  margin-bottom: 0.1em;
+}
+
+/* line 154, /home/rails/my-app/app/assets/stylesheets/dashboard/tutor/home.scss */
+.top-section-title {
+  margin-top: 0;
+  padding-top: 2em;
+}
+
+/* line 160, /home/rails/my-app/app/assets/stylesheets/dashboard/tutor/home.scss */
+.statement-field {
+  margin-bottom: 2em;
+}
+
+/* line 163, /home/rails/my-app/app/assets/stylesheets/dashboard/tutor/home.scss */
+.file-input-box {
+  width: 40%;
+  height: 1.6em;
+  margin: auto;
+  position: relative;
+  overflow: hidden;
+  margin: 1em 0;
+  border-radius: 4px;
+}
+
+/* line 172, /home/rails/my-app/app/assets/stylesheets/dashboard/tutor/home.scss */
+input.file-input {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  opacity: 0;
+}
+
+/* line 180, /home/rails/my-app/app/assets/stylesheets/dashboard/tutor/home.scss */
+div.file-input-button {
+  height: 100%;
+  width: 100%;
+  float: right;
+  background-color: #2BC2DE;
+  color: white;
+  font-weight: 100;
+  text-align: center;
+  line-height: 2em;
+  font-size: 0.8em;
+}
+
+/* line 191, /home/rails/my-app/app/assets/stylesheets/dashboard/tutor/home.scss */
+.margin-bottom {
+  margin-bottom: 4em;
+}
+
+/* Styling for awaiting_approval message */
+/* line 197, /home/rails/my-app/app/assets/stylesheets/dashboard/tutor/home.scss */
+.submission-box {
+  display: block;
+  padding: 3em;
+  border-radius: 2px;
+  background-color: #0095AC;
+  width: 30em;
+  margin: 2em auto;
+}
+
+/* line 205, /home/rails/my-app/app/assets/stylesheets/dashboard/tutor/home.scss */
+.submission-title {
+  color: white;
+  text-align: center;
+  font-size: 2em;
+  margin: 0 0 1em;
+}
+
+/* line 211, /home/rails/my-app/app/assets/stylesheets/dashboard/tutor/home.scss */
+.submission-text {
+  color: white;
+  text-align: center;
+}
+
+/* line 215, /home/rails/my-app/app/assets/stylesheets/dashboard/tutor/home.scss */
+button.email-button {
+  width: 100%;
+  padding: 1em;
+  margin-top: 1em;
+  line-height: 1.5em;
+  background-color: #58AA4D;
+}
+
+/* line 222, /home/rails/my-app/app/assets/stylesheets/dashboard/tutor/home.scss */
+.email-icon {
+  font-size: 1.5em;
+  float: left;
+  color: white;
+}

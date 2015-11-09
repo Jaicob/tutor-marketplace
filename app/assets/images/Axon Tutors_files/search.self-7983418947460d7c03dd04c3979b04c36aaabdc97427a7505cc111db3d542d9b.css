@@ -1,0 +1,93 @@
+/* line 2, /home/rails/my-app/app/assets/stylesheets/single_views/search.css.scss */
+#tutorCardContainer.cards .cards {
+  padding: 0;
+  margin: 0;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-flow: row wrap;
+  justify-content: center;
+}
+/* line 13, /home/rails/my-app/app/assets/stylesheets/single_views/search.css.scss */
+#tutorCardContainer.cards .cards .card {
+  max-width: 14em;
+  border: 3px solid #2BC2DE;
+  border-radius: 4px;
+  margin: 1em 0.5em;
+}
+/* line 18, /home/rails/my-app/app/assets/stylesheets/single_views/search.css.scss */
+#tutorCardContainer.cards .cards .card .profile-pic-box {
+  display: block;
+}
+/* line 20, /home/rails/my-app/app/assets/stylesheets/single_views/search.css.scss */
+#tutorCardContainer.cards .cards .card .profile-pic-box .profile-pic {
+  height: 100%;
+  width: 100%;
+}
+/* line 25, /home/rails/my-app/app/assets/stylesheets/single_views/search.css.scss */
+#tutorCardContainer.cards .cards .card .banner-box {
+  display: block;
+  width: 100%;
+  background-color: #2BC2DE;
+  color: white;
+  padding: 0.5em 0;
+  margin: 0;
+}
+/* line 33, /home/rails/my-app/app/assets/stylesheets/single_views/search.css.scss */
+#tutorCardContainer.cards .cards .card .banner-box .banner-row p {
+  display: inline-block;
+  color: white;
+  margin: 0;
+}
+/* line 37, /home/rails/my-app/app/assets/stylesheets/single_views/search.css.scss */
+#tutorCardContainer.cards .cards .card .banner-box .banner-row p span {
+  color: white;
+}
+/* line 41, /home/rails/my-app/app/assets/stylesheets/single_views/search.css.scss */
+#tutorCardContainer.cards .cards .card .banner-box .banner-row p.name {
+  font-size: 1.6em;
+  padding-left: 0.2em;
+}
+/* line 45, /home/rails/my-app/app/assets/stylesheets/single_views/search.css.scss */
+#tutorCardContainer.cards .cards .card .banner-box .banner-row p.price {
+  background-color: #0095AC;
+  padding: 0.4em;
+  border-radius: 100%;
+  float: right;
+}
+/* line 50, /home/rails/my-app/app/assets/stylesheets/single_views/search.css.scss */
+#tutorCardContainer.cards .cards .card .banner-box .banner-row p.price span {
+  color: white;
+}
+/* line 54, /home/rails/my-app/app/assets/stylesheets/single_views/search.css.scss */
+#tutorCardContainer.cards .cards .card .banner-box .banner-row i.fi-book-bookmark {
+  padding: 0 0.5em;
+  color: white;
+}
+/* line 60, /home/rails/my-app/app/assets/stylesheets/single_views/search.css.scss */
+#tutorCardContainer.cards .cards .card .statements-box {
+  height: 14em;
+}
+/* line 62, /home/rails/my-app/app/assets/stylesheets/single_views/search.css.scss */
+#tutorCardContainer.cards .cards .card .statements-box .statement {
+  border-bottom: 1px solid #2BC2DE;
+  height: 4.5em;
+}
+/* line 66, /home/rails/my-app/app/assets/stylesheets/single_views/search.css.scss */
+#tutorCardContainer.cards .cards .card .statements-box p {
+  font-size: 0.8em;
+  margin: 0;
+  padding: 0.5em;
+}
+/* line 70, /home/rails/my-app/app/assets/stylesheets/single_views/search.css.scss */
+#tutorCardContainer.cards .cards .card .statements-box p a.see-more {
+  font-size: 0.8em;
+  margin-left: 0.5em;
+}
+/* line 76, /home/rails/my-app/app/assets/stylesheets/single_views/search.css.scss */
+#tutorCardContainer.cards .cards .card .custom-button.full-width {
+  width: 87%;
+  margin-top: 0.5em;
+}

@@ -1,0 +1,59 @@
+/* line 1, /home/rails/my-app/app/assets/stylesheets/custom/calendar.css.scss */
+#scheduling-container {
+  text-align: center;
+  font-size: 14px;
+  font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+  margin-top: 20px;
+}
+
+/* line 8, /home/rails/my-app/app/assets/stylesheets/custom/calendar.css.scss */
+#external-events {
+  float: left;
+  width: 100%;
+  height: 300px;
+  padding: 0 10px;
+  border: 1px solid #ccc;
+  background: #eee;
+  text-align: center;
+}
+
+/* line 18, /home/rails/my-app/app/assets/stylesheets/custom/calendar.css.scss */
+#external-events h4 {
+  font-size: 16px;
+  margin-top: 0;
+  padding-top: 1em;
+  text-align: center;
+}
+
+/* line 25, /home/rails/my-app/app/assets/stylesheets/custom/calendar.css.scss */
+#external-events .fc-event {
+  margin: 10px 0;
+  cursor: pointer;
+  height: 50px;
+  max-width: 130px;
+  margin: 15px auto;
+}
+
+/* line 33, /home/rails/my-app/app/assets/stylesheets/custom/calendar.css.scss */
+#external-events p {
+  margin: 1.5em 0;
+  font-size: 11px;
+  color: #666;
+}
+
+/* line 39, /home/rails/my-app/app/assets/stylesheets/custom/calendar.css.scss */
+#external-events p input {
+  margin: 0;
+  vertical-align: middle;
+}
+
+/* line 44, /home/rails/my-app/app/assets/stylesheets/custom/calendar.css.scss */
+#calendar {
+  width: 100%;
+}
+
+/* line 48, /home/rails/my-app/app/assets/stylesheets/custom/calendar.css.scss */
+#cal-spacer {
+  height: 29.306px;
+  margin-bottom: 1em;
+}

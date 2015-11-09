@@ -1,0 +1,14 @@
+/* line 1, /home/rails/my-app/app/assets/stylesheets/custom/base.css.scss */
+main[role="main"] {
+  min-height: 90vh;
+}
+
+/* line 5, /home/rails/my-app/app/assets/stylesheets/custom/base.css.scss */
+.top-buffer {
+  margin-top: 20px;
+}
+
+/* line 9, /home/rails/my-app/app/assets/stylesheets/custom/base.css.scss */
+.footer-logo {
+  width: 10em;
+}

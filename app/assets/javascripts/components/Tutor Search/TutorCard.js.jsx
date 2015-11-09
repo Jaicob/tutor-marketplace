@@ -8,18 +8,20 @@ var TutorCard = React.createClass({
     var profile_pic_url = "http://d1nt4a7y8dwdsx.cloudfront.net/wp-content/uploads/2015/04/Bernie-Sanders-AP77174442780.jpg";  
     // change to tutor.profile_pic.url 
     var desc = function (extra_info) {
-      if(extra_info.length > 110){
+      if(extra_info.length > 100){
         return (
-          <p>
-            {extra_info.slice(0, 110) + "..."}
+          <p>&#8226; 
+            {extra_info.slice(0, 100) + "..."}
             <a href={"/tutors/" + tutor.user.slug} className="see-more">See More</a>
           </p>
           )
       }
       else {
-          return <p>{extra_info}</p>
+          return <p>&#8226; {extra_info}</p>
       }
     }
+    <span data-tooltip aria-haspopup="true" class="has-tip" title="Tooltips are awesome, you should totally use them!">extended information</span>
+
 		return (
         <div className="card">
           <div className="profile-pic-box">
@@ -32,7 +34,7 @@ var TutorCard = React.createClass({
             </div>
             <div className="banner-row">
               <i className="fi-book-bookmark"></i>
-              <p className="degree">{tutor.degree + ', ' + tutor.major + ' ' + tutor.graduation_year}</p>
+              <p className="degree">{tutor.degree + ', ' + tutor.major + " '" + String(tutor.graduation_year).substr(tutor.graduation_year.length - 2) + "X" }</p>
             </div>
           </div>
           <div className="statements-box">

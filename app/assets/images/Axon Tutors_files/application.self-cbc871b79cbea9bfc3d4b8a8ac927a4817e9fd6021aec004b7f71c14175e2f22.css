@@ -1,0 +1,386 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * vendor/assets/stylesheets, or vendor/assets/bower_components of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+
+
+
+
+
+
+
+ */
+/* line 23, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+*, p, h1, h2, h3, h4, h5, h6 {
+  font-family: 'Lato';
+  color: #4F5252;
+}
+
+/* line 28, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+p {
+  font-weight: 100;
+}
+
+/* line 32, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+.nav-wrapper {
+  display: block;
+  width: 100%;
+}
+
+/* line 37, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+section.main {
+  padding: 0;
+  min-height: 35em;
+}
+
+/* line 42, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+body {
+  background-color: #FAFAFA;
+}
+
+/* line 47, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+.row.full-width {
+  max-width: 100%;
+  background-color: #FAFAFA;
+}
+/* line 50, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+.row.full-width .row {
+  margin: 0 auto;
+  max-width: 62.5rem;
+}
+/* line 53, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+.row.full-width .row.new-tutor-partial-wrapper {
+  margin: 1em auto;
+}
+/* line 57, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+.row.full-width .dashboard-content {
+  width: 90%;
+  max-width: 62.5rem;
+  margin: auto;
+  min-height: 30em;
+}
+/* line 62, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+.row.full-width .dashboard-content.new-tutor-partial {
+  min-height: 0;
+}
+/* line 66, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+.row.full-width.footer-bg {
+  background-color: #0095AC;
+}
+
+/* line 72, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+.custom-button {
+  background-color: #58AA4D;
+  padding: 0.5em 2em;
+  font-weight: 100;
+  font-size: 0.8em;
+  font-family: 'Lato';
+  border-radius: 4px !important;
+  border: none;
+  color: white;
+  margin-bottom: 1em;
+  text-align: center;
+}
+/* line 83, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+.custom-button.full-width {
+  width: 100%;
+}
+/* line 86, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+.custom-button.no-margin {
+  margin: 0;
+}
+/* line 89, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+.custom-button.blue {
+  background-color: #0095AC;
+}
+
+/* Styling for the Devise login form page */
+/* line 96, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+form#new_user {
+  padding: 0;
+}
+
+/* line 99, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+.pwd-label {
+  display: inline-block;
+}
+
+/* line 102, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+.forgot-pwd {
+  font-size: 0.7em;
+  float: right;
+  margin-top: 0.5em;
+  color: #4F5252;
+}
+
+/* line 108, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+input#user_remember_me {
+  margin-right: 0.5em;
+}
+
+/* line 111, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+label.remember-me {
+  font-size: 0.8em;
+  padding-top: 0.5em;
+}
+
+/* line 115, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+h3.sign-in {
+  margin-top: 2em;
+}
+
+/* Styling for the main Nav bar */
+/* for iPhone 5 */
+/* line 122, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+.nav-bar-wrapper {
+  width: 100%;
+  background-color: #FAFAFA;
+  border-bottom: 1px solid #CFCECE;
+  box-shadow: 1px 1px 1px #CFCECE;
+}
+/* line 127, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+.nav-bar-wrapper.clear-nav {
+  background: none;
+  border-bottom: 0;
+  box-shadow: none;
+}
+
+/* line 134, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+.nav-logo-box.nav-link-box {
+  text-align: center;
+  width: 100%;
+}
+
+/* line 138, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+.nav-campus-box.nav-link-box {
+  display: none;
+}
+
+/* line 141, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+.nav-links-right-container.nav-link-box {
+  display: none;
+}
+
+/* line 144, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+.nav-logo {
+  height: 3em;
+  position: relative;
+  top: 1em;
+}
+
+/* line 149, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+a.become-a-tutor-button {
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 0.5em 1em;
+}
+
+/* for iPad */
+@media screen and (min-width: 768px) {
+  /* line 157, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+  .nav-bar-wrapper {
+    display: block;
+    z-index: 1000000;
+    padding: 0.2em 0 0.4em;
+  }
+
+  /* line 162, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+  .nav-row {
+    display: block;
+    height: 3em;
+  }
+
+  /* line 166, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+  .nav-logo {
+    position: static;
+  }
+
+  /* line 169, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+  .nav-logo-box.nav-link-box {
+    text-align: center;
+    width: initial;
+    background-color: inherit;
+  }
+
+  /* line 174, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+  .nav-campus-box.nav-link-box {
+    display: inline-block;
+  }
+
+  /* line 177, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+  .nav-links-right-container.nav-link-box {
+    display: inline-block;
+  }
+
+  /* line 180, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+  .nav-links-right-container {
+    float: right;
+  }
+
+  /* line 183, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+  .nav-link-box {
+    display: inline-block;
+    line-height: 3em;
+    vertical-align: top;
+    font-weight: 500;
+  }
+
+  /* line 189, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+  .nav-link-box a {
+    color: #0095AC;
+    font-weight: 400;
+  }
+
+  /* line 193, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+  .nav-links-right {
+    display: inline-block;
+    padding: 0 1em;
+  }
+}
+/* Full view */
+@media screen and (min-width: 1200px) {
+  /* line 202, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+  .f-dropdown li {
+    cursor: pointer;
+    font-size: 0.875rem;
+    line-height: 1.125rem;
+    margin: 0;
+    padding: 1em;
+  }
+}
+/* Footer styling */
+/* iPhone 5 view */
+/* line 215, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+.footer-bg {
+  background-color: #0095AC;
+}
+
+/* line 218, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+.footer-logo {
+  margin: 2em auto;
+  width: 10em;
+  display: block;
+}
+
+/* line 223, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+.footer-link {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 1em;
+}
+
+/* line 229, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+a.footer-link:hover {
+  color: #bbe5ee;
+}
+
+/* line 232, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+.footer-link-social-icon {
+  width: 2em;
+  display: block;
+  margin: 2em auto;
+}
+
+/* iPad view */
+@media screen and (min-width: 768px) {
+  /* line 241, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+  .footer-bg {
+    padding: 1em;
+  }
+
+  /* line 244, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+  .footer-logo {
+    display: inline-block;
+  }
+
+  /* line 247, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+  .footer-left {
+    display: inline-block;
+    width: 50%;
+  }
+
+  /* line 251, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+  .footer-right {
+    display: inline-block;
+    width: 48%;
+    vertical-align: bottom;
+  }
+
+  /* line 256, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+  .footer-left .footer-link {
+    text-align: left;
+    padding: 0.5em 1em;
+  }
+
+  /* line 260, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+  .footer-right .footer-link {
+    text-align: right;
+  }
+
+  /* line 263, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+  .footer-link-social-icon {
+    display: inline-block;
+    margin: 1em;
+  }
+
+  /* line 267, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+  .social-icons-box {
+    text-align: right;
+  }
+}
+/* Full view */
+@media screen and (min-width: 1200px) {
+  /* line 275, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+  .footer-bg {
+    padding: 0;
+  }
+
+  /* line 278, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+  .footer-logo {
+    width: 5em;
+    margin: 1em;
+    padding: 2em 0;
+  }
+
+  /* line 283, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+  .footer-left {
+    width: 65%;
+  }
+
+  /* line 286, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+  .footer-right {
+    width: 30%;
+    vertical-align: middle;
+  }
+
+  /* line 290, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+  .footer-left .footer-link {
+    display: inline-block;
+    font-size: 0.7em;
+  }
+
+  /* line 294, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+  .footer-right .footer-link {
+    display: inline-block;
+    font-size: 0.7em;
+  }
+
+  /* line 298, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+  .social-icons-box {
+    display: inline-block;
+  }
+
+  /* line 301, /home/rails/my-app/app/assets/stylesheets/application.css.scss */
+  .footer-link-social-icon {
+    margin: 0;
+    width: 1em;
+  }
+}

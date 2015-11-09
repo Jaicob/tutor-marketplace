@@ -1,0 +1,94 @@
+/* line 1, /home/rails/my-app/app/assets/stylesheets/custom/schedule.sass */
+#scheduling-container {
+  text-align: center;
+  font-size: 14px;
+  font-family: "Lucida Grande", Helvetica, Arial, Verdana, Sans-Serif;
+  margin-top: 20px;
+}
+
+/* line 6, /home/rails/my-app/app/assets/stylesheets/custom/schedule.sass */
+#calendar {
+  width: 100%;
+}
+
+/* line 8, /home/rails/my-app/app/assets/stylesheets/custom/schedule.sass */
+#availability-slots-section {
+  float: left;
+  width: 100%;
+  height: 300px;
+  padding: 0 10px;
+  border: 1px solid #ccc;
+  background: #eee;
+  text-align: center;
+}
+/* line 16, /home/rails/my-app/app/assets/stylesheets/custom/schedule.sass */
+#availability-slots-section h4 {
+  font-size: 16px;
+  margin-top: 0;
+  padding-top: 1em;
+  text-align: center;
+}
+/* line 21, /home/rails/my-app/app/assets/stylesheets/custom/schedule.sass */
+#availability-slots-section p {
+  margin: 1.5em 0;
+  font-size: 11px;
+  color: #666;
+}
+/* line 25, /home/rails/my-app/app/assets/stylesheets/custom/schedule.sass */
+#availability-slots-section p input {
+  margin: 0;
+  vertical-align: middle;
+}
+/* line 29, /home/rails/my-app/app/assets/stylesheets/custom/schedule.sass */
+#availability-slots-section #repeating-options:first-child span {
+  border-bottom-left-radius: 4px;
+}
+/* line 31, /home/rails/my-app/app/assets/stylesheets/custom/schedule.sass */
+#availability-slots-section #repeating-options:last-child span {
+  border-bottom-right-radius: 4px;
+}
+/* line 33, /home/rails/my-app/app/assets/stylesheets/custom/schedule.sass */
+#availability-slots-section:first-child {
+  margin-top: 0;
+}
+/* line 35, /home/rails/my-app/app/assets/stylesheets/custom/schedule.sass */
+#availability-slots-section .fc-event {
+  position: relative;
+  height: 50px;
+  width: 100%;
+  margin-top: 20px;
+  padding: 15px;
+}
+/* line 41, /home/rails/my-app/app/assets/stylesheets/custom/schedule.sass */
+#availability-slots-section .fc-event.ui-draggable {
+  cursor: -webkit-grab;
+}
+/* line 43, /home/rails/my-app/app/assets/stylesheets/custom/schedule.sass */
+#availability-slots-section .fc-event.ui-draggable-dragging {
+  cursor: -webkit-grabbing;
+}
+/* line 46, /home/rails/my-app/app/assets/stylesheets/custom/schedule.sass */
+#availability-slots-section .fc-event.regular-availability.expanded {
+  margin-bottom: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+/* line 51, /home/rails/my-app/app/assets/stylesheets/custom/schedule.sass */
+#availability-slots-section .fc-event i.fi-widget {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  padding: 2px 5px 2px 5px;
+  font-size: 16px;
+  color: white;
+  background: #3A87AD;
+  border: 1px solid white;
+  border-radius: 20px;
+  cursor: pointer;
+}
+/* line 64, /home/rails/my-app/app/assets/stylesheets/custom/schedule.sass */
+#availability-slots-section .fc-event i.fi-widget:hover {
+  color: #3A87AD;
+  background: white;
+  border: 1px solid #3A87AD;
+}
