@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150930154059) do
+ActiveRecord::Schema.define(version: 20151110183833) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,6 +31,17 @@ ActiveRecord::Schema.define(version: 20150930154059) do
   add_index "appointments", ["course_id"], name: "index_appointments_on_course_id", using: :btree
   add_index "appointments", ["slot_id"], name: "index_appointments_on_slot_id", using: :btree
   add_index "appointments", ["student_id"], name: "index_appointments_on_student_id", using: :btree
+
+  create_table "campus_managers", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "profile_pic"
+    t.string   "phone_number"
+    t.integer  "status"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "campus_managers", ["user_id"], name: "index_campus_managers_on_user_id", using: :btree
 
   create_table "charges", force: :cascade do |t|
     t.integer  "amount"
@@ -95,8 +106,10 @@ ActiveRecord::Schema.define(version: 20150930154059) do
     t.datetime "updated_at",             null: false
     t.string   "slug"
     t.float    "transaction_percentage"
+    t.integer  "campus_manager_id"
   end
 
+  add_index "schools", ["campus_manager_id"], name: "index_schools_on_campus_manager_id", using: :btree
   add_index "schools", ["slug"], name: "index_schools_on_slug", unique: true, using: :btree
 
   create_table "slots", force: :cascade do |t|
@@ -114,6 +127,7 @@ ActiveRecord::Schema.define(version: 20150930154059) do
 
   create_table "students", force: :cascade do |t|
     t.integer  "user_id"
+    t.string   "phone_number"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.string   "customer_id"
@@ -217,9 +231,11 @@ ActiveRecord::Schema.define(version: 20150930154059) do
   add_foreign_key "appointments", "courses"
   add_foreign_key "appointments", "slots"
   add_foreign_key "appointments", "students"
+  add_foreign_key "campus_managers", "users"
   add_foreign_key "charges", "tutors"
   add_foreign_key "courses", "schools"
   add_foreign_key "courses", "subjects"
+  add_foreign_key "schools", "campus_managers"
   add_foreign_key "slots", "tutors"
   add_foreign_key "students", "users"
   add_foreign_key "tutor_courses", "courses"

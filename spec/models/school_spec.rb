@@ -10,6 +10,7 @@
 #  updated_at             :datetime         not null
 #  slug                   :string
 #  transaction_percentage :float
+#  campus_manager_id      :integer
 #
 
 require 'rails_helper'
