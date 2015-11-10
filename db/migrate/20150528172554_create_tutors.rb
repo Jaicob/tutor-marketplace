@@ -15,7 +15,6 @@ class CreateTutors < ActiveRecord::Migration
       t.text        :extra_info_3
       t.string      :graduation_year
       t.string      :phone_number
-      t.date        :birthdate
       t.string      :profile_pic
       t.string      :transcript
       t.text        :appt_notes
