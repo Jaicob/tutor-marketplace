@@ -1,3 +1,86 @@
-<section class="dashboard-content">
+<section class="dashboard-content tutor-home-page">
   <!-- Partials of all the various info boxes/widgets for the home screen can be placed here -->
+  <div class="row">
+    <div class="small-12 columns">
+      <div class="upcoming-appts">
+        <h4>Upcoming Appointments</h4>
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Subject</th>
+              <th>Student</th>
+              <th>Contact</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @tutor.appointments.each do |appt| %>
+              <% student = Student.find(appt.student_id) %>
+            <tr>
+              <td><%= appt.start_time.strftime("%b %-d") %></td>
+              <td><%= appt.start_time.strftime("%l:%M%P") %></td>
+              <td><%= Course.find(appt.course_id).formatted_name %></td>
+              <td><%= student.full_name %></td>
+              <td><%= student.email %></td>
+              <td>Actions</td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="small-12 medium-6 columns">
+      <div class="metrics">
+        <h4>Metrics</h4>
+        <div class="box tutor-home-small-box">
+            <h3 class="center">$<%= @tutor.total_income %></h3>
+            <p class="center">Total Revenue</p>
+          </div>
+          <div class="half">
+            <h3 class="center"><%= @tutor.appointments.count %></h3>
+            <p class="center">Total Appointments</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="small-12 medium-6 columns">
+      <div class="campus-manager">
+        <h4>Your Campus Manager</h4>
+        <div class="box">
+          <p>Stuff goes here...</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
+
+
+<!--   {
+    "id": 725,
+    "tutor_id": 41,
+    "status": "Open",
+    "start_time": "2015-11-14T05:30:00.000Z",
+    "duration": 3600,
+    "reservation_min": null,
+    "reservation_max": null,
+    "created_at": "2015-11-10T16:08:00.160Z",
+    "updated_at": "2015-11-10T16:08:00.160Z"
+  }, -->
+
+
+<!--   {
+        slot_id: 725,
+        course_id: 7,
+        start_time: '2015-11-14 5:30',
+        student_id: 6
+} -->
+
+
+<!-- slot_id: 725, course_id: 7, start_time: '2015-11-14 5:30', student_id: 6 -->
+<!-- slot_id: 722, course_id: 7, start_time: '2015-11-18 1:30', student_id: 6 -->
+<!-- slot_id: 723, course_id: 7, start_time: '2015-11-13 1:30', student_id: 6 -->
+<!-- slot_id: 724, course_id: 7, start_time: '2015-11-12 2:00', student_id: 6 -->

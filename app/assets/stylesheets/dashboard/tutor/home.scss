@@ -223,3 +223,57 @@
     float: left;
     color: white;
   }
+
+
+/* NORMAL HOME SCREEN STYLES BELOW */
+
+.dashboard-content.tutor-home-page {
+  h4 {
+    text-align: center;
+  }
+  .upcoming-appts {
+    table {
+      width: 100%;
+    }
+  }
+  .metrics {
+  }
+  .campus-manager {
+  }
+}
+
+
+// <div class="row">
+//     <div class="small-12 medium-6 columns">
+//       <div class="metrics">
+//         <h4>Metrics</h4>
+//         <div class="box tutor-home-small-box">
+//           <div class="half top-half">
+//             <p>Revenue: $<%= @tutor.total_income %></p>
+//           </div>
+//           <div class="half">
+//             <p>Appointments: <%= @tutor.appointments.count %></p>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//     <div class="small-12 medium-6 columns">
+//       <div class="campus-manager">
+//         <h4>Your Campus Manager</h4>
+//         <div class="box">
+//           <p>Stuff goes here...</p>
+//         </div>
+//       </div>
+//     </div>
+//   </div>
+
+// <section class="dashboard-content tutor-home-page">
+//   <div class="row">
+//     <div class="small-12 columns">
+//       <div class="upcoming-appts">
+//   <div class="row">
+//     <div class="small-12 medium-6 columns">
+//       <div class="metrics">
+//     <div class="small-12 medium-6 columns">
+//       <div class="campus-manager">
+
