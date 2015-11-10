@@ -63,7 +63,9 @@ class User < ActiveRecord::Base
   end
 
   def create_student_account(user, params)
-    user.create_student!
+    user.create_student!(
+      school_id: params[:course][:school_id]
+    )
     # TODO: send welcome email to student?
   end
 

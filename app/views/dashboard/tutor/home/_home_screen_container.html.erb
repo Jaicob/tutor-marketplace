@@ -36,14 +36,11 @@
     <div class="small-12 medium-6 columns">
       <div class="metrics">
         <h4>Metrics</h4>
-        <div class="box tutor-home-small-box">
-            <h3 class="center">$<%= @tutor.total_income %></h3>
-            <p class="center">Total Revenue</p>
-          </div>
-          <div class="half">
-            <h3 class="center"><%= @tutor.appointments.count %></h3>
-            <p class="center">Total Appointments</p>
-          </div>
+        <div class="box">
+          <h3 class="center">$<%= @tutor.total_income %></h3>
+          <p class="center">Total Revenue</p>
+          <h3 class="center"><%= @tutor.appointments.count %></h3>
+          <p class="center">Total Appointments</p>
         </div>
       </div>
     </div>

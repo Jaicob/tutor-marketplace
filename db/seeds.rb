@@ -77,7 +77,6 @@ User.all.each do |user|
   user.create_tutor!(
     school_id: n,
     rating: 5,
-    birthdate: '1990-01-01',
     degree: degree.sample,
     major: major.sample,
     additional_degrees: additional_degrees.sample,

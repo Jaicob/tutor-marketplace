@@ -67,13 +67,6 @@ class ApplicationController < ActionController::Base
     end
 
     # Before_action for admin-area
-    def set_school_for_campus_manager
-      if current_user.role == 'campus_manager'
-        @school = current_user.school
-      end
-    end
-
-    # Before_action for admin-area
     def authorized_for_admin_area?
       # redirects to root for non-signed in users/visitors
       if !current_user
@@ -97,6 +90,8 @@ class ApplicationController < ActionController::Base
           @school = current_user.tutor.school
         elsif current_user.student
           @school = current_user.student.school
+        elsif current_user.campus_manager
+          @school = current_user.campus_manager.school
         end
       elsif !cookies[:school_id].blank?
         @school = School.find(cookies[:school_id].to_i)
