@@ -5,7 +5,7 @@
   <% elsif @tutor.application_status == 'Complete' %>
     <!-- only awaiting approval message shows until submitted application is approved -->
     <%= render 'tutors/awaiting_approval' %>
-  <% elsif @tutor.application_status == 'Approved' %> %>
+  <% elsif @tutor.application_status == 'Approved' %>
     <!-- normal home screen once application is completed and approved-->
     <%= render 'home_screen_container' %>
   <% end %>
