@@ -4,31 +4,42 @@
     <div class="small-12 columns">
       <div class="upcoming-appts">
         <h4>Upcoming Appointments</h4>
-        <table>
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Time</th>
-              <th>Subject</th>
-              <th>Student</th>
-              <th>Contact</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @tutor.appointments.each do |appt| %>
+        <% if @tutor.appointments.where(status: 'Scheduled').count == 0 %>
+          <div class="box no-appts">
+            <h5 class="no-appts-message">You currently have no scheduled appointments</h5>
+            <p class="list-title">To recieve more bookings, try:</p>
+            <p class="list-item">&#8226; Sharing your profile page link:</p>
+            <p class="list-item profile-link">www.axontutors.com/tutors/<%= @tutor.slug %></p>
+            <p class="list-item">&#8226; Increasing your availability in your Schedule</p>
+            <p class="list-item">&#8226; Adding more courses in your Courses</p>
+          </div>
+        <% else %>
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Subject</th>
+                <th>Student</th>
+                <th>Contact</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @tutor.appointments.each do |appt| %>
               <% student = Student.find(appt.student_id) %>
-            <tr>
-              <td><%= appt.start_time.strftime("%b %-d") %></td>
-              <td><%= appt.start_time.strftime("%l:%M%P") %></td>
-              <td><%= Course.find(appt.course_id).formatted_name %></td>
-              <td><%= student.full_name %></td>
-              <td><%= student.email %></td>
-              <td>Actions</td>
-            </tr>
-            <% end %>
-          </tbody>
-        </table>
+                <tr>
+                  <td><%= appt.start_time.strftime("%b %-d") %></td>
+                  <td><%= appt.start_time.strftime("%l:%M%P") %></td>
+                  <td><%= Course.find(appt.course_id).formatted_name %></td>
+                  <td><%= student.full_name %></td>
+                  <td><%= student.email %></td>
+                  <td>Actions</td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% end %>
       </div>
     </div>
   </div>
@@ -48,13 +59,15 @@
       <div class="campus-manager">
         <h4>Your Campus Manager</h4>
         <div class="box">
-          <p>Stuff goes here...</p>
+          <%= image_tag(@school.campus_manager.profile_pic_url, class: 'campus_manager_pic') %>
+          <p><%= @school.campus_manager.full_name %></p>
+          <p><%= @school.campus_manager.email %></p>
+          <p><%= @school.campus_manager.phone_number %></p>
         </div>
       </div>
     </div>
   </div>
 </section>
-
 
 <!--   {
     "id": 725,

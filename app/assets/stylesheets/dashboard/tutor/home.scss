@@ -235,6 +235,19 @@
     table {
       width: 100%;
     }
+    .box.no-appts {
+      .no-appts-message {
+        text-align: center;
+        margin-top: 2em;
+      }
+      .list-title, .list-item {
+        text-align: center;
+        margin: auto;
+      }
+      .list-item {
+
+      }
+    }
   }
   .metrics {
   }
