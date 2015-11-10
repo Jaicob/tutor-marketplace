@@ -1,1 +1,2 @@
+<%= link_to 'Back to Results', search_path(:course_id => request.fullpath.to_s.split('=').second, :indirect_search => true) %>
 <%= render '/dashboard/tutor/profile/tutor_profile' %>

@@ -47,12 +47,16 @@ var TutorCard = React.createClass({
       }
     }
 
+
+
 		return (
         <div className="card">
           <div className="card-content">
-            <div className="profile-pic-box">
-              <img src={profile_pic_url} alt="Profile Picture"></img>
-            </div>
+            <a href={"/tutors/" + tutor.user.slug + search}>
+              <div className="profile-pic-box">
+                <img src={profile_pic_url} alt="Profile Picture"></img>
+              </div>
+            </a>
             <div className="banner-box">
               <div className="banner-row">
                 <p className="name">{tutor.user.first_name + " " + tutor.user.last_name[0] + "."}</p>
@@ -74,7 +78,7 @@ var TutorCard = React.createClass({
                 {desc(tutor, tutor.extra_info_2)}
               </div>
             </div>
-            </div>
+          </div>
           <div className="custom-button full-width adust-position{adjustButtonPosition}">Book Now
           </div>
         </div>

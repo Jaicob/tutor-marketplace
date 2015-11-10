@@ -14,7 +14,7 @@ Rails.application.config.assets.precompile += %w(
 	dashboard/courses.js
 	dashboard/schedule.js
 	single_views/search.js
-  single_views/search_from_home.js
+  single_views/indirect_search.js
   custom/admin_panel.css.scss
   custom/dashboard_nav.css.scss
   vendor/modernizr.js
