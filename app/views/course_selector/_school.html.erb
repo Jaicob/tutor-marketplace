@@ -1,5 +1,5 @@
 <!-- Place immediately inside of parent div with correct grid sizing -->
-<% if @school %>
+<% if @school && !request.fullpath.start_with?(become_a_tutor_path) %>
   <!-- Only displays a user's set school in search when a user is logged in -->
   <select name="course[school_id]" id="school" class="select-menu" required="true">
     <option selected="true" value="<%= @school.id %>">
@@ -9,9 +9,11 @@
 <% else %>
   <!-- Displays all schools in form for student sign-up and search for visitors -->
   <select name="course[school_id]" id="school" class="select-menu" required="true">
-    <option disabled="true" selected="true" value="">School</option>
+    <option selected="true" value="<%= @school.id %>"><%= @school.name %></option>
     <% School.all.each do |school| %>
-      <option value="<%= school.id %>"><%= school.name %></option>
+      <% if school.id != @school.id %>
+        <option value="<%= school.id %>"><%= school.name %></option>
+      <% end %>
     <% end %>
   </select>
 <% end %>
