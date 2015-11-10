@@ -4,6 +4,7 @@
 #
 #  id           :integer          not null, primary key
 #  user_id      :integer
+#  school_id    :integer
 #  profile_pic  :string
 #  phone_number :string
 #  status       :integer
@@ -12,4 +13,6 @@
 #
 
 class CampusManager < ActiveRecord::Base
+  belongs_to :user
+  belongs_to :school
 end

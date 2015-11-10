@@ -4,6 +4,7 @@
 #
 #  id                 :integer          not null, primary key
 #  user_id            :integer
+#  school_id          :integer
 #  active_status      :integer          default(0)
 #  application_status :integer          default(0)
 #  rating             :integer
@@ -34,6 +35,7 @@
 
 class Tutor < ActiveRecord::Base
   belongs_to :user
+  belongs_to :school
   has_many :tutor_courses, dependent: :destroy
   has_many :courses, through: :tutor_courses, dependent: :destroy
   has_many :slots, dependent: :destroy
@@ -41,7 +43,7 @@ class Tutor < ActiveRecord::Base
   has_many :charges, dependent: :destroy
   has_many :promotions
 
-  delegate :school, :first_name, :last_name, :full_name, :sign_in_ip, :email, :password, :slug, to: :user
+  delegate :first_name, :last_name, :full_name, :sign_in_ip, :email, :password, :slug, to: :user
 
   enum application_status: ['Incomplete', 'Complete', 'Approved']
   enum active_status: ['Inactive', 'Active']

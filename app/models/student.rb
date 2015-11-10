@@ -4,6 +4,7 @@
 #
 #  id            :integer          not null, primary key
 #  user_id       :integer
+#  school_id     :integer
 #  phone_number  :string
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
@@ -14,9 +15,10 @@
 
 class Student < ActiveRecord::Base
   belongs_to :user
+  belongs_to :school
   has_many :appointments, dependent: :destroy
 
-  delegate :school, :full_name, :email, :password, :slug, to: :user
+  delegate :full_name, :email, :password, :slug, to: :user
 
   def subjects
     # returns subjects that a student makes appointments for, only used in Admin section for analytics

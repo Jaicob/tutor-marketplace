@@ -15,7 +15,6 @@ class Devise::RegistrationsController < DeviseController
     build_resource(sign_up_params)
     resource.sign_in_ip = request.env['REMOTE_ADDR']
     resource.save
-    resource.set_school(resource, params)
     if params[:user][:tutor] != nil
       resource.create_tutor_account(resource, params)
     else

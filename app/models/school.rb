@@ -10,16 +10,16 @@
 #  updated_at             :datetime         not null
 #  slug                   :string
 #  transaction_percentage :float
-#  campus_manager_id      :integer
 #
 
 class School < ActiveRecord::Base
   has_many :courses
   has_many :users
-  has_many :tutors, through: :users
-  has_many :students, through: :users
+  has_many :tutors
+  has_many :students
   has_many :appointments, through: :courses, dependent: :destroy
   has_many :slots, through: :tutors, dependent: :destroy
+  has_one  :campus_manager
 
   validates :name, :location, :transaction_percentage, presence: true
 

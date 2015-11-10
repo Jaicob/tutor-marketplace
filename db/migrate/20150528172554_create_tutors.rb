@@ -3,6 +3,7 @@ class CreateTutors < ActiveRecord::Migration
     create_table :tutors do |t|
       
       t.belongs_to  :user, index: true, foreign_key: true
+      t.belongs_to  :school, index: true, foreign_key: true
       t.integer     :active_status, default: 0
       t.integer     :application_status, default: 0
       t.integer     :rating
