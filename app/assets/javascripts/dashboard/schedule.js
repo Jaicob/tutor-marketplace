@@ -77,7 +77,7 @@ $(document).ready(function() {
       function(isConfirm) {
         if (isConfirm) {
           $.ajax({
-            type: "PUT",
+            type: "POST",
             url: API.endpoints.tutor_slots.update({
               tutor_id: tutor_id
             }),
@@ -98,7 +98,7 @@ $(document).ready(function() {
           });
         } else {
           $.ajax({
-            type: "PUT",
+            type: "POST",
             url: API.endpoints.tutor_slots.update({
               tutor_id: tutor_id
             }) + '/' + event.slot_id,
@@ -136,7 +136,7 @@ $(document).ready(function() {
       function(isConfirm) {
         if (isConfirm) {
           $.ajax({
-            type: "PUT",
+            type: "POST",
             url: API.endpoints.tutor_slots.update({
               tutor_id: tutor_id
             }),
@@ -157,7 +157,7 @@ $(document).ready(function() {
           });
         } else {
           $.ajax({
-            type: "PUT",
+            type: "POST",
             url: API.endpoints.tutor_slots.update({
               tutor_id: tutor_id
             }) + '/' + event.slot_id,
@@ -394,15 +394,10 @@ $(document).ready(function() {
     eventOverlap: function(stillEvent, movingEvent) { return stillEvent.allDay && movingEvent.allDay },
     allDaySlot: false,
     forceEventDuration: true,
-    minTime: "0:00:00",
+    minTime: "6:00:00",
     maxTime: "24:00:00",
     defaultTimedEventDuration: "1:00:00",
     height: "auto",
-    businessHours: {
-      start: '10:00', // a start time (10am in this example)
-      end: '10:00', // an end time (6pm in this example)
-      dow: [0, 1, 2, 3, 4, 5, 6] // days of week. an array of zero-based day of week integers (0=Sunday)
-    },
     header: {
       left: 'prev,next today',
       right: 'month,agendaWeek,agendaDay'

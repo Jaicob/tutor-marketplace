@@ -1,7 +1,7 @@
 class API::V1::SlotsController < API::V1::Defaults
   before_action :set_tutor
   before_action :restrict_to_resource_owner, except: [:index]
-  before_action :set_slot, only: [:show, :update, :destroy]
+  before_action :set_slot, only: [:show, :destroy]
 
   def index
     @slots = @tutor.slots
@@ -24,9 +24,6 @@ class API::V1::SlotsController < API::V1::Defaults
 
   def update_slots
     slot_manager = SlotManager.new(safe_params)
-    # slots = slot_manager.get_slots_for_range
-    # render json: slots
-
     @slots = slot_manager.update_slots    
     if @slots
       render json: @slots, status: 200
