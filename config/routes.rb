@@ -302,7 +302,7 @@ Rails.application.routes.draw do
       end
       resources :tutors, only: [] do
         resources :slots, only: [:index, :show, :create, :destroy]
-        post '/slots/update' => 'slots#update_slots'
+        post '/slots/update' => 'slots#update_slots' # changed to POST from PUT because this endpoint sometimes updates multiple slots and we don't want a slot_id in those cases
         get '/courses' => 'tutor_courses#index'
         resources :appointments, only: [:index, :show], controller: 'tutor_appointments' do
           member do
