@@ -3,20 +3,8 @@ class SearchController < ApplicationController
 
   def search_from_home
     search_hash = {}
-    search_hash[:from_home] = true 
-
-    if params[:course][:school_id]
-      search_hash[:school_id] = params[:course][:school_id]
-    end
-    if params[:course][:subject_id]
-      search_hash[:subject_id] = params[:course][:subject_id]
-    end
-    if params[:course][:course_id]
-      search_hash[:course_id] = params[:course][:course_id]
-    end
-    
-    puts "SEARCH HASH = #{search_hash}"
-
+    search_hash[:indirect_search] = true # this means a search that was not initiated from the main search page (i.e. from the Home page or the back button on a tutor's profile reached from search results)
+    search_hash[:course_id] = params[:course][:course_id]
     redirect_to search_path(search_hash)
   end
 

@@ -3,16 +3,12 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 /* Styling for _add_courses partial */
-
-@mixin name {
-  border: 1px solid #BBE5EE;
-  padding: 1em;
-  border-radius: 4px;
-  background-color: #eff1f3; 
-  @include media($small) {
-    
+  @mixin border-box {
+    border: 1px solid #BBE5EE;
+    padding: 1em;
+    border-radius: 4px;
+    background-color: #eff1f3; 
   }
-}
 
 .row.add-course-form {
 
@@ -21,10 +17,7 @@
 /* Styling for _courses_welcome partial */
 
 .row.courses-welcome {
-  border: 1px solid #BBE5EE;
-  padding: 1em;
-  border-radius: 4px;
-  background-color: #eff1f3;
+  @include border-box;
   margin-bottom: 1em !important;
 }
 .courses-welcome-title {
