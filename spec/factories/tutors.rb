@@ -4,14 +4,16 @@
 #
 #  id                 :integer          not null, primary key
 #  user_id            :integer
+#  school_id          :integer
 #  active_status      :integer          default(0)
 #  application_status :integer          default(0)
 #  rating             :integer
 #  degree             :integer          default(0)
 #  major              :string
-#  extra_info_1       :string
-#  extra_info_2       :string
-#  extra_info_3       :string
+#  additional_degrees :string
+#  extra_info_1       :text
+#  extra_info_2       :text
+#  extra_info_3       :text
 #  graduation_year    :string
 #  phone_number       :string
 #  birthdate          :date

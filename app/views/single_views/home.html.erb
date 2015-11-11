@@ -1,7 +1,7 @@
 <style>
 /* Do NOT remove this CSS! It must be in the view to dynamically select the correct campus picture to use as the background image */
 .lp-first-section {
-  background: url("<%= if @school then @school.campus_pic_url else 'assets/unicorn.jpg' end %>") no-repeat center center fixed; 
+  background: url("<%= (@school && @school.campus_pic_url) ? @school.campus_pic_url : 'assets/unicorn.jpg' %>") no-repeat center center fixed; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;

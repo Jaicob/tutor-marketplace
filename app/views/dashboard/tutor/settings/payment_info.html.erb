@@ -13,7 +13,7 @@ a.payment-settings-link:hover {
 </style>
 <section class="dashboard-content">
   <div class="row">
-    <h2 class="dashboard-title">Setttings Manager</h2>
+    <h2 class="dashboard-title">Settings Manager</h2>
   </div>
   <div class="row">
     <div class="small-5 large-3 columns sub-menu">
@@ -22,7 +22,7 @@ a.payment-settings-link:hover {
     <div class="small-7 large-4 large-offset-1 columns end">
       <% if @tutor.acct_id.nil? %>
         <div class="row payment-welcome">
-          <p>You will be paid for all of your tutoring sessions via direct deposit. We use Stripe to securely deposit money into your bank account after each session is complete. Click the link below to link your bank account.</p>
+          <p>You will be paid for all of your tutoring sessions via direct deposit. We use <%= link_to 'Stripe', "https://stripe.com/about" %> to securely deposit money into your bank account after each session is complete. Click the button below to link your bank account.</p>
         </div>
       <% end %>
       <%= render 'account_status', tutor: @tutor %>    

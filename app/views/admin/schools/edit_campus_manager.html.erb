@@ -1,0 +1,25 @@
+<div class="row">
+  <div class="large-12 columns">
+    <h3>Campus Manager Details</h3>
+    <h4><%= @working_school.name %></h3>
+  </div>
+</div>
+
+<div class="row">
+  <div class="medium-4 medium-centered columns">
+    <%= form_for @campus_manager, url: campus_manager_admin_school_path(@working_school), method: :post do |f| %>
+
+      <%= f.label :user_id %>
+      <%= f.number_field :user_id %>
+
+      <%= f.label :phone_number %>
+      <%= f.text_field :phone_number %>
+
+      <%= f.label :profile_pic %>
+      <%= f.file_field :profile_pic %>
+
+      <%= f.submit 'Update', class: 'custom-button' %>
+
+    <% end %>
+  </div>
+</div>

@@ -15,10 +15,11 @@
 class School < ActiveRecord::Base
   has_many :courses
   has_many :users
-  has_many :tutors, through: :users
-  has_many :students, through: :users
+  has_many :tutors
+  has_many :students
   has_many :appointments, through: :courses, dependent: :destroy
   has_many :slots, through: :tutors, dependent: :destroy
+  has_one  :campus_manager
 
   validates :name, :location, :transaction_percentage, presence: true
 
@@ -48,13 +49,13 @@ class School < ActiveRecord::Base
     # This is a short-term solution only. We can manually set the top 4 subjects for each campus while we have a small number of campuses. Eventually we will want to replace the manual lists with a method that determines the most popular subjects by appointments booked or tutor courses, etc.
     case self.name
     when 'University of North Carolina'
-      ['Math', 'Biology', 'Chemistry', 'Accounting']
+      ['Math 101', 'Biology 101', 'Chemistry 101', 'Accounting 101']
     when 'University of Georgia'
-      ['Math', 'Biology', 'Chemistry', 'Accounting']
+      ['Math 101', 'Biology 101', 'Chemistry 101', 'Accounting 101']
     when 'Duke University'
-      ['Math', 'Biology', 'Chemistry', 'Accounting']
+      ['Math 101', 'Biology 101', 'Chemistry 101', 'Accounting 101']
     when 'Clemson University'
-      ['Math', 'Biology', 'Chemistry', 'Accounting']
+      ['Math 101', 'Biology 101', 'Chemistry 101', 'Accounting 101']
     end
   end
 

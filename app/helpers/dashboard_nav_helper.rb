@@ -27,8 +27,10 @@ module DashboardNavHelper
     end
 
     @dashboard_links.each do |name, link|
-      @current = name if request.fullpath.start_with? link
+      @current = name if 
+        (request.fullpath.start_with? link) ||
+        (request.fullpath.to_s.split('/').include? name.downcase)
     end
+    @dashboard_links
   end
-
 end

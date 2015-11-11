@@ -211,8 +211,37 @@ p.select-campus-pic {
   padding: 2em;
   color: white;
 }
-
-
+button.custom-button.bottom-register-button {
+  padding: 1em 5em;
+}
+.rate-container {
+  background-color: #E4E4E4;
+  border-radius: 4px;
+  height: 1.8em;
+  margin-bottom: 0.3em;
+  font-weight: 100;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #cccccc;
+  overflow: hidden;
+}
+form#new_user.new_user {
+  .rate-container {
+    input#rate.rate-input {
+      border-radius: 0;
+      height: 2.1em;
+      text-align: center;
+      box-shadow: none;
+      position: relative;
+      top: -1px;
+    }
+  }
+}
+input#rate, .dollar-sign, .per-hour {
+  display: inline-block;
+  width: 32%;
+  color: #A6A6A6;
+}
 
 
 /* iPad view */
