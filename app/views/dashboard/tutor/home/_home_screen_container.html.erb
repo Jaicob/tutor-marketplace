@@ -34,7 +34,7 @@
                   <td><%= Course.find(appt.course_id).formatted_name %></td>
                   <td><%= student.full_name %></td>
                   <td><%= student.email %></td>
-                  <td><a href="#" data-reveal-id="confirm-cancel-appt-<%= appt.id %>" class="custom-button">Cancel</a>
+                  <td><a href="#" data-reveal-id="confirm-cancel-appt-<%= appt.id %>" class="custom-button blue">Cancel</a>
                   </td>
                 </tr>
               <% end %>
@@ -76,6 +76,27 @@
 <% @tutor.appointments.where(status: 'Scheduled').each do |appt| %>
   <div id="confirm-cancel-appt-<%= appt.id %>" class="reveal-modal medium" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
     <h6 id="modalTitle">Are you sure you want to cancel this appointment?</h6>
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Subject</th>
+                <th>Student</th>
+                <th>Contact</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% student = Student.find(appt.student_id) %>
+              <tr>
+                <td><%= appt.start_time.strftime("%b %-d") %></td>
+                <td><%= appt.start_time.strftime("%l:%M%P") %></td>
+                <td><%= Course.find(appt.course_id).formatted_name %></td>
+                <td><%= student.full_name %></td>
+                <td><%= student.email %></td>
+              </tr>
+            </tbody>
+          </table>
     <p class="lead">As soon as you cancel, the student will be notified and refunded.</p>
     <a class="close-reveal-modal custom-button override-foundation" aria-label="Close">No, don't cancel</a>
     <%= form_for appt, url: cancel_appt_tutor_path(@tutor.slug, appt.id), class: 'cancel-appt-form-button', method: :put do |f| %>

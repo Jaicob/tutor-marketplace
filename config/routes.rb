@@ -234,8 +234,8 @@ Rails.application.routes.draw do
   resources :tutors, only: [:update, :destroy] do
     member do
       get  '/home'                    => 'dashboard/tutor/home#index'
+      put  '/cancel_appt/:appt_id'    => 'dashboard/tutor/home#cancel_appt', as: 'cancel_appt'
       get  '/schedule'                => 'dashboard/tutor/schedule#index'
-      put  '/cancel_appt/:appt_id'    => 'dashboard/tutor/schedule#cancel_appt', as: 'cancel_appt'
       get  '/profile'                 => 'dashboard/tutor/profile#index'
       scope 'settings' do 
         get  '/account'                 => 'dashboard/tutor/settings#account'
@@ -255,6 +255,7 @@ Rails.application.routes.draw do
   resources :students, only: [:update, :destroy] do 
     member do 
       get  '/home'                 => 'dashboard/student/home#index'
+      put  '/cancel_appt/:appt_id' => 'dashboard/student/home#cancel_appt', as: 'cancel_appt'
       get  '/search'               => 'single_views#tutor_search'      
       scope 'settings' do
         get  '/account'               => 'dashboard/student/settings#account'
