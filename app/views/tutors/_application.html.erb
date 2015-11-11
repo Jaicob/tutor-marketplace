@@ -8,18 +8,19 @@
 
     <%= f.text_field :major, placeholder: 'Major', required: true %>
 
+    <p class="tiny-text">If you have not graduated yet, select your expected degree type and graduation year</p>
+
     <div class="one-half">
-      <div class="select-wrapper">
-        <%= f.select(:degree, options_for_select(["Degree", "Bachelor's", "Master's", "PhD"], selected: 'Degree', disabled: 'Degree'), {required: true} , {class: 'select-menu'}) %>
-      </div>
+      <%= f.select(:degree, options_for_select(["Degree", "Bachelor's", "Master's", "PhD"], selected: 'Degree', disabled: 'Degree'), {required: true} , {class: 'select-menu'}) %>
     </div>
 
     <div class="one-half">
       <%= f.text_field :graduation_year, placeholder: 'Graduation Year', required: true %>
     </div>
 
-    <p class="tiny-text">If you have not graduated yet, select your expected degree type and graduation year</p>
+    <p class="tiny-text"><b>Additional degrees summary (optional):</b> if you have multiple degrees, please highlight your highest degree in the fields above and list your other degrees in this field. Do not include your graduation year for these extra degrees.</p>
 
+    <%= f.text_field :additional_degrees, placeholder: 'B.A. Biology, B.S. Micro-Biology' %>
 
     <h6>Tell us a little about yourself with three short statements</h6>
 
