@@ -26,6 +26,7 @@
 
   p {
     font-weight: 100;
+    max-width: 40em;
   }
 
   .nav-wrapper {
@@ -33,13 +34,12 @@
     width: 100%;
   }
 
-  section.main {
-    padding: 0;
-    min-height: 35em;
-  }
-
   body {
     background-color: #FAFAFA;
+  }
+
+  .row.full-width.main-content {
+      min-height: 100%;
   }
 
   .row{
@@ -78,6 +78,7 @@
     border: none;
     color: white;
     margin-bottom: 1em;
+    text-align: center;
     &.full-width {
       width: 100%;
     }
@@ -87,6 +88,13 @@
     &.blue {
       background-color: #0095AC;
     }
+  }
+
+  @mixin border-box {
+    border: 1px solid #BBE5EE;
+    padding: 1em;
+    border-radius: 4px;
+    background-color: #eff1f3; 
   }
 
 /* Styling for the Devise login form page */

@@ -16,6 +16,8 @@ class SingleViewsController < ApplicationController
   end
 
   def search
+    @course = Course.find(params[:course_id])
+    @subject = @course.subject
   end
 
   def about_us
