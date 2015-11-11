@@ -1,3 +1,15 @@
+<script>
+$(document).ready(function()
+  {
+    $('#transcript-input').change(function () {
+        $('#transcript-name-target').html($('#transcript-input').val().split("\\").pop()); 
+    });
+    $('#picture-input').change(function () {
+        $('#picture-name-target').html($('#picture-input').val().split("\\").pop()); 
+    });
+});
+</script>
+
 <a name="application"></a>
 <div class="row">
   <div class="small-12 medium-5 columns">
@@ -46,8 +58,9 @@
         <div class="file-input-button">
           Transcript or Resume
         </div>
-        <%= f.file_field :transcript, class: 'file-input', required: true %>
+        <%= f.file_field :transcript, id: 'transcript-input', class: 'file-input', required: true %>
       </div>
+      <p id="transcript-name-target"></p>
 
       <h6>Upload a profile picture</h6>
 
@@ -55,8 +68,9 @@
         <div class="file-input-button">
           Profile Picture
         </div>
-        <%= f.file_field :profile_pic, class: 'file-input', required: true  %>
+        <%= f.file_field :profile_pic, id: 'picture-input', class: 'file-input', required: true  %>
       </div>
+      <p id="picture-name-target"></p>
 
       <p class="tiny-text">That's it! Review your application and then submit it for a decision from the Axon Tutor management team within 48 hours. Go ahead and finish the rest of the checklist to make sure you're ready to start tutoring as quickly as possible.</p>
 
