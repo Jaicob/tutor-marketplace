@@ -4,6 +4,7 @@
 #
 #  id                 :integer          not null, primary key
 #  user_id            :integer
+#  school_id          :integer
 #  active_status      :integer          default(0)
 #  application_status :integer          default(0)
 #  rating             :integer
@@ -34,6 +35,7 @@
 
 class Tutor < ActiveRecord::Base
   belongs_to :user
+  belongs_to :school
   has_many :tutor_courses, dependent: :destroy
   has_many :courses, through: :tutor_courses, dependent: :destroy
   has_many :slots, dependent: :destroy
@@ -41,11 +43,11 @@ class Tutor < ActiveRecord::Base
   has_many :charges, dependent: :destroy
   has_many :promotions
 
-  delegate :school, :first_name, :last_name, :full_name, :sign_in_ip, :email, :password, :slug, to: :user
+  delegate :first_name, :last_name, :full_name, :sign_in_ip, :email, :password, :slug, to: :user
 
   enum application_status: ['Incomplete', 'Complete', 'Approved']
   enum active_status: ['Inactive', 'Active']
-  enum degree: ["B.A.", "B.S.", "M.B.A", "M.P.A.", "M.S.", "M.Ed.", "PhD", "MD", "J.D."]
+  enum degree: ["B.A.", "B.S.", "M.B.A", "M.S.", "M.Ed.", "PhD."]
 
   # Carrierwave setup for uploading files
   mount_uploader :profile_pic, ProfilePicUploader
@@ -56,6 +58,11 @@ class Tutor < ActiveRecord::Base
 
   after_create :change_user_role_to_tutor
   after_commit :update_application_status
+
+  def self.degree_collection
+    # [["B.A.",0],["B.S.",1],["M.B.A.",2],["M.S.",3],["M.Ed",4],["PhD.",5]]
+    ["B.A.","B.S.","M.B.A.","M.S.","M.Ed.","PhD."]
+  end
 
   def crop_profile_pic(tutor_params)
     profile_pic.recreate_versions! if tutor_params[:crop_x]
@@ -132,7 +139,7 @@ class Tutor < ActiveRecord::Base
 
   def update_action_redirect_path(tutor_params)
     if tutor_params[:birthdate] || tutor_params[:phone_number] || tutor_params[:transcript]
-      "/tutors/#{self.user.slug}/settings/private_info"
+      "/tutors/#{self.user.slug}/settings/account"
     elsif tutor_params[:appt_notes]
       "/tutors/#{self.user.slug}/settings/appointment_settings"
     elsif tutor_params[:line1] || tutor_params[:city] || tutor_params[:state] || tutor_params [:postal_code]

@@ -1,5 +1,5 @@
 <!-- Place immediately inside of parent div with correct grid sizing -->
-<% if @school %>
+<% if @school && !request.fullpath.start_with?(become_a_tutor_path) %>
   <!-- Sets the school for the course_selector with a hidden field so that the school dropdown can be ommited in some views (i.e. when @school is already set) -->
   <div style="display: none;">
     <select name="course[school_id]" id="school" required="true">

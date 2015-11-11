@@ -3,6 +3,7 @@ class CreateTutors < ActiveRecord::Migration
     create_table :tutors do |t|
       
       t.belongs_to  :user, index: true, foreign_key: true
+      t.belongs_to  :school, index: true, foreign_key: true
       t.integer     :active_status, default: 0
       t.integer     :application_status, default: 0
       t.integer     :rating
@@ -14,7 +15,6 @@ class CreateTutors < ActiveRecord::Migration
       t.text        :extra_info_3
       t.string      :graduation_year
       t.string      :phone_number
-      t.date        :birthdate
       t.string      :profile_pic
       t.string      :transcript
       t.text        :appt_notes

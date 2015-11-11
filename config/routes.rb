@@ -150,6 +150,8 @@
 #                                       PUT      /admin/slots/:id(.:format)                                         admin/slots#update
 #                                       DELETE   /admin/slots/:id(.:format)                                         admin/slots#destroy
 #                  search_admin_schools GET|POST /admin/schools/search(.:format)                                    admin/schools#search
+#           campus_manager_admin_school GET      /admin/schools/:id/campus_manager(.:format)                        admin/schools#edit_campus_manager
+#                                       POST     /admin/schools/:id/campus_manager(.:format)                        admin/schools#update_campus_manager
 #                         admin_schools GET      /admin/schools(.:format)                                           admin/schools#index
 #                                       POST     /admin/schools(.:format)                                           admin/schools#create
 #                      new_admin_school GET      /admin/schools/new(.:format)                                       admin/schools#new
@@ -232,6 +234,7 @@ Rails.application.routes.draw do
   resources :tutors, only: [:update, :destroy] do
     member do
       get  '/home'                    => 'dashboard/tutor/home#index'
+      put  '/cancel_appt/:appt_id'    => 'dashboard/tutor/home#cancel_appt', as: 'cancel_appt'
       get  '/schedule'                => 'dashboard/tutor/schedule#index'
       get  '/profile'                 => 'dashboard/tutor/profile#index'
       scope 'settings' do 
@@ -252,13 +255,14 @@ Rails.application.routes.draw do
   resources :students, only: [:update, :destroy] do 
     member do 
       get  '/home'                 => 'dashboard/student/home#index'
+      put  '/cancel_appt/:appt_id' => 'dashboard/student/home#cancel_appt', as: 'cancel_appt'
       get  '/search'               => 'single_views#tutor_search'      
       scope 'settings' do
         get  '/account'               => 'dashboard/student/settings#account'
         get  '/payment_info'          => 'dashboard/student/settings#payment_info'
         post '/payment_info'          => 'dashboard/student/settings#save_payment_info'
         get  '/edit_payment_info'     => 'dashboard/student/settings#edit_payment_info'
-        post 'edit_payment_info'      => 'dashboard/student/settings#save_payment_info'
+        post '/edit_payment_info'      => 'dashboard/student/settings#save_payment_info'
         get  '/appointment_history'   => 'dashboard/student/settings#appointment_history'
       end
     end
@@ -278,7 +282,13 @@ Rails.application.routes.draw do
     resources :students do collection { match 'search' => 'students#search', via: [:get, :post], as: :search } end
     resources :appointments do collection { match 'search' => 'appointments#search', via: [:get, :post], as: :search } end
     resources :slots do collection { match 'search' => 'slots#search', via: [:get, :post], as: :search } end
-    resources :schools do collection { match 'search' => 'schools#search', via: [:get, :post], as: :search } end
+    resources :schools do 
+      collection { match 'search' => 'schools#search', via: [:get, :post], as: :search } 
+      member do 
+        get   'campus_manager' => 'schools#edit_campus_manager'
+        post  'campus_manager' => 'schools#update_campus_manager'
+      end
+    end
     resources :promotions do collection { match 'search' => 'promotions#search', via: [:get, :post], as: :search } end
   end
 

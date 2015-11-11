@@ -1,3 +1,9 @@
+<style>
+.campus_manager_pic {
+  width: 10em;
+}
+</style>
+
 <div class="row">
   <div class="large-12 columns">
     <h1>School Details</h1>
@@ -22,20 +28,38 @@
       </thead>
       <tbody>
         <tr>
-          <td><%= @school.id %>
-          <td><%= @school.name %></td>
-          <td><%= @school.location %></td>
+          <td><%= @working_school.id %>
+          <td><%= @working_school.name %></td>
+          <td><%= @working_school.location %></td>
           <td></td>
           <td></td>
           <td></td>
-          <td><%= @school.transaction_percentage %>%</td>
-          <td><%= link_to 'Edit', edit_admin_school_path(@school) %>
+          <td><%= @working_school.transaction_percentage %>%</td>
+          <td><%= link_to 'Edit', edit_admin_school_path(@working_school) %>
           <td><a href="#" data-reveal-id="confirmDeleteSchool">Delete</a></td>
         </tr>
       </tbody>
     </table>
   </div>
 </div>
+
+<div class="row">
+  <div class="large-12 columns">
+    <h3>Campus Manager</h3>
+  </div>
+</div>
+
+<div class="row">
+  <div class="large-12 columns">
+    <%= link_to 'Edit Campus Manager Info', campus_manager_admin_school_path(@working_school) %>
+    <h4><%= @working_school.campus_manager.full_name %></h4>
+    <p>Email: <%= @working_school.campus_manager.email %></p>
+    <p>Phone: <%= @working_school.campus_manager.phone_number %></p>
+    <%= image_tag(@working_school.campus_manager.profile_pic_url, class: 'campus_manager_pic') %>
+  </div>
+</div>
+
+
 
   <!-- Modal for deleting course -->
   <div id="confirmDeleteSchool" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">

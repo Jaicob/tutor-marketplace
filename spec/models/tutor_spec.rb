@@ -4,6 +4,7 @@
 #
 #  id                 :integer          not null, primary key
 #  user_id            :integer
+#  school_id          :integer
 #  active_status      :integer          default(0)
 #  application_status :integer          default(0)
 #  rating             :integer

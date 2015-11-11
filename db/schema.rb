@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150930154059) do
+ActiveRecord::Schema.define(version: 20151110183833) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,6 +31,19 @@ ActiveRecord::Schema.define(version: 20150930154059) do
   add_index "appointments", ["course_id"], name: "index_appointments_on_course_id", using: :btree
   add_index "appointments", ["slot_id"], name: "index_appointments_on_slot_id", using: :btree
   add_index "appointments", ["student_id"], name: "index_appointments_on_student_id", using: :btree
+
+  create_table "campus_managers", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "school_id"
+    t.string   "profile_pic"
+    t.string   "phone_number"
+    t.integer  "status"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "campus_managers", ["school_id"], name: "index_campus_managers_on_school_id", using: :btree
+  add_index "campus_managers", ["user_id"], name: "index_campus_managers_on_user_id", using: :btree
 
   create_table "charges", force: :cascade do |t|
     t.integer  "amount"
@@ -114,6 +127,8 @@ ActiveRecord::Schema.define(version: 20150930154059) do
 
   create_table "students", force: :cascade do |t|
     t.integer  "user_id"
+    t.integer  "school_id"
+    t.string   "phone_number"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.string   "customer_id"
@@ -121,6 +136,7 @@ ActiveRecord::Schema.define(version: 20150930154059) do
     t.string   "card_brand"
   end
 
+  add_index "students", ["school_id"], name: "index_students_on_school_id", using: :btree
   add_index "students", ["user_id"], name: "index_students_on_user_id", using: :btree
 
   create_table "subjects", force: :cascade do |t|
@@ -142,6 +158,7 @@ ActiveRecord::Schema.define(version: 20150930154059) do
 
   create_table "tutors", force: :cascade do |t|
     t.integer  "user_id"
+    t.integer  "school_id"
     t.integer  "active_status",      default: 0
     t.integer  "application_status", default: 0
     t.integer  "rating"
@@ -153,7 +170,6 @@ ActiveRecord::Schema.define(version: 20150930154059) do
     t.text     "extra_info_3"
     t.string   "graduation_year"
     t.string   "phone_number"
-    t.date     "birthdate"
     t.string   "profile_pic"
     t.string   "transcript"
     t.text     "appt_notes"
@@ -170,6 +186,7 @@ ActiveRecord::Schema.define(version: 20150930154059) do
     t.string   "acct_id"
   end
 
+  add_index "tutors", ["school_id"], name: "index_tutors_on_school_id", using: :btree
   add_index "tutors", ["user_id"], name: "index_tutors_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
@@ -201,7 +218,6 @@ ActiveRecord::Schema.define(version: 20150930154059) do
     t.string   "invited_by_type"
     t.integer  "invitations_count",      default: 0
     t.string   "slug"
-    t.integer  "school_id"
     t.string   "sign_in_ip"
   end
 
@@ -210,20 +226,22 @@ ActiveRecord::Schema.define(version: 20150930154059) do
   add_index "users", ["invitations_count"], name: "index_users_on_invitations_count", using: :btree
   add_index "users", ["invited_by_id"], name: "index_users_on_invited_by_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
-  add_index "users", ["school_id"], name: "index_users_on_school_id", using: :btree
   add_index "users", ["slug"], name: "index_users_on_slug", unique: true, using: :btree
 
   add_foreign_key "appointments", "charges"
   add_foreign_key "appointments", "courses"
   add_foreign_key "appointments", "slots"
   add_foreign_key "appointments", "students"
+  add_foreign_key "campus_managers", "schools"
+  add_foreign_key "campus_managers", "users"
   add_foreign_key "charges", "tutors"
   add_foreign_key "courses", "schools"
   add_foreign_key "courses", "subjects"
   add_foreign_key "slots", "tutors"
+  add_foreign_key "students", "schools"
   add_foreign_key "students", "users"
   add_foreign_key "tutor_courses", "courses"
   add_foreign_key "tutor_courses", "tutors"
+  add_foreign_key "tutors", "schools"
   add_foreign_key "tutors", "users"
-  add_foreign_key "users", "schools"
 end
