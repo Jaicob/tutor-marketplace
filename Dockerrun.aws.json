@@ -1,8 +1,52 @@
 {
-  "AWSEBDockerrunVersion": "1",
-  "Ports": [
-    {
-      "ContainerPort": "80"
-    }
-  ]
+	"AWSEBDockerrunVersion" :"2",
+	"authentication": {
+		"bucket" : "elasticbeanstalk-us-east-1-163603999016",
+		"key": ".dockercfg"
+	},
+	"containerDefinitions" : [
+		{
+			"name":"redis",
+			"image" : "redis",
+			"essential": true,
+			"memory": 128,
+			"portMappings" : [
+				{
+					"hostPort": 6379,
+					"containerPort": 6379
+				}
+			]
+		},
+		{
+			"name":"sidekiq",
+			"image" : "jaicob/mailer",
+			"essential": true,
+			"memory": 128,
+			"links" : [
+				"redis"
+			]	
+		},
+		{
+			"name":"web",
+			"image" : "jaicob/web-app",
+			"essential": true,
+			"memory": 256,
+			"portMappings" : [
+				{
+					"hostPort": 80,
+					"containerPort": 80
+				}
+			],
+			"links" : [
+				"redis",
+				"sidekiq"
+			],
+			"mountPoints":[
+				{
+					"sourceVolume" :"awseb-logs-web",
+					"containerPath":"/home/rails/my-app/log"
+				}
+			]
+		}
+	]
 }
