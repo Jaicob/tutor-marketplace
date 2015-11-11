@@ -10,8 +10,8 @@
             <p class="list-title">To recieve more bookings, try:</p>
             <p class="list-item">&#8226; Sharing your profile page link:</p>
             <p class="list-item profile-link">www.axontutors.com/tutors/<%= @tutor.slug %></p>
-            <p class="list-item">&#8226; Increasing your availability in your Schedule</p>
-            <p class="list-item">&#8226; Adding more courses in your Courses</p>
+            <p class="list-item">&#8226; Increasing your availability in your <%= link_to 'Schedule', schedule_tutor_path(@tutor.slug) %></p>
+            <p class="list-item">&#8226; Adding more courses in your <%= link_to 'Courses', tutor_courses_path(@tutor.slug) %></p>
           </div>
         <% else %>
           <table>

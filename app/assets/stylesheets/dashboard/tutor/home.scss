@@ -236,22 +236,36 @@
       width: 100%;
     }
     .box.no-appts {
+      padding: 2em;
+      text-align: center;
       .no-appts-message {
-        text-align: center;
-        margin-top: 2em;
       }
       .list-title, .list-item {
-        text-align: center;
         margin: auto;
       }
+      .list-title {
+        padding: 1em;
+        font-weight: 400;
+        font-size: 0.9em;
+      }
       .list-item {
-
+        padding: 0.2em;
+      }
+      .list-item.profile-link {
+        text-decoration: underline;
+        color: #0095AC;
+        padding-top: 0;
       }
     }
   }
-  .metrics {
+  .metrics, .campus-manager{
+    text-align: center;
+    padding: 1em;
   }
-  .campus-manager {
+  .campus-manager{
+    .box p {
+      margin: 0;
+    }
   }
 }
 
