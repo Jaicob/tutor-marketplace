@@ -9,7 +9,7 @@ class CookiesController < ApplicationController
     elsif
       current_user.student.update(school_id: school_id)
     end
-    redirect_to :back
+    redirect_to root_path
   end
 
   def change_school_id_cookie
