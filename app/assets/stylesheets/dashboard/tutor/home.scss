@@ -266,7 +266,24 @@
     .box p {
       margin: 0;
     }
+    .name {
+      margin: 1em 0 0;
+    }
+    img.campus_manager_pic {
+      width: 50%;
+      border-radius: 4px;
+    }
   }
+}
+
+a.close-reveal-modal.custom-button.override-foundation {
+  position: static;
+  font-size: 0.8em;
+  font-weight: 100;
+  color: white;
+}
+form.edit_appointment {
+  display: inline-block;
 }
 
 

@@ -26,7 +26,7 @@
               </tr>
             </thead>
             <tbody>
-              <% @tutor.appointments.each do |appt| %>
+              <% @tutor.appointments.where(status: 'Scheduled').each do |appt| %>
               <% student = Student.find(appt.student_id) %>
                 <tr>
                   <td><%= appt.start_time.strftime("%b %-d") %></td>
@@ -34,7 +34,8 @@
                   <td><%= Course.find(appt.course_id).formatted_name %></td>
                   <td><%= student.full_name %></td>
                   <td><%= student.email %></td>
-                  <td>Actions</td>
+                  <td><a href="#" data-reveal-id="confirm-cancel-appt-<%= appt.id %>" class="custom-button">Cancel</a>
+                  </td>
                 </tr>
               <% end %>
             </tbody>
@@ -60,7 +61,7 @@
         <h4>Your Campus Manager</h4>
         <div class="box">
           <%= image_tag(@school.campus_manager.profile_pic_url, class: 'campus_manager_pic') %>
-          <p><%= @school.campus_manager.full_name %></p>
+          <h6 class="name"><%= @school.campus_manager.full_name %></h6>
           <p><%= @school.campus_manager.email %></p>
           <p><%= @school.campus_manager.phone_number %></p>
         </div>
@@ -68,6 +69,22 @@
     </div>
   </div>
 </section>
+
+
+<!-- Reveal modals for confirming Appointment cancellation -->
+
+<% @tutor.appointments.where(status: 'Scheduled').each do |appt| %>
+  <div id="confirm-cancel-appt-<%= appt.id %>" class="reveal-modal medium" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+    <h6 id="modalTitle">Are you sure you want to cancel this appointment?</h6>
+    <p class="lead">As soon as you cancel, the student will be notified and refunded.</p>
+    <a class="close-reveal-modal custom-button override-foundation" aria-label="Close">No, don't cancel</a>
+    <%= form_for appt, url: cancel_appt_tutor_path(@tutor.slug, appt.id), class: 'cancel-appt-form-button', method: :put do |f| %>
+      <%= f.hidden_field :status, value: 'Cancelled' %>
+      <%= f.submit 'Yes, cancel', class: 'custom-button blue' %>
+    <% end %>
+  </div>
+<% end %>
+
 
 <!--   {
     "id": 725,
@@ -90,7 +107,7 @@
 } -->
 
 
-<!-- slot_id: 725, course_id: 7, start_time: '2015-11-14 5:30', student_id: 6 -->
-<!-- slot_id: 722, course_id: 7, start_time: '2015-11-18 1:30', student_id: 6 -->
-<!-- slot_id: 723, course_id: 7, start_time: '2015-11-13 1:30', student_id: 6 -->
-<!-- slot_id: 724, course_id: 7, start_time: '2015-11-12 2:00', student_id: 6 -->
+<!-- slot_id: 1811, course_id: 7, start_time: '2015-11-19 1:00', student_id: 51 -->
+<!-- slot_id: 1810, course_id: 7, start_time: '2015-11-12 1:00', student_id: 51 -->
+
+

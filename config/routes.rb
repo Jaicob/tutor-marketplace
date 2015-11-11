@@ -235,6 +235,7 @@ Rails.application.routes.draw do
     member do
       get  '/home'                    => 'dashboard/tutor/home#index'
       get  '/schedule'                => 'dashboard/tutor/schedule#index'
+      put  '/cancel_appt/:appt_id'    => 'dashboard/tutor/schedule#cancel_appt', as: 'cancel_appt'
       get  '/profile'                 => 'dashboard/tutor/profile#index'
       scope 'settings' do 
         get  '/account'                 => 'dashboard/tutor/settings#account'
