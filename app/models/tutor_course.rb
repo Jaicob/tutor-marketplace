@@ -16,6 +16,7 @@ class TutorCourse < ActiveRecord::Base
 
   validates :tutor_id, presence: true
   validates :course_id, presence: true
+  validates :course_id, uniqueness: { scope: :tutor_id }
   validates :rate, presence: true
   validate  :course_and_tutor_at_same_school
 

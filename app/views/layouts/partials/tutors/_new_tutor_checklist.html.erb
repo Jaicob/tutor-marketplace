@@ -1,7 +1,7 @@
 <div class="checklist-title-box">
   <h4 class="centered checklist-title">Account Setup Checklist</h4>
 </div>
-<div class="checklist-box">
+<div class="checklist-box" id="firstStop">
   <%= link_to anchor: 'application' do %>
     <p class="checklist-item <%= @tutor.application_status == 'Complete' ? 'strikeout-text' : nil %>">Complete your application</p>
   <% end %>

@@ -22,3 +22,12 @@ button, .custom-button {
     background-color: #DE6328;
   }
 }
+
+.custom-button:hover, .custom-button:active {
+  background-color: #0095AC;
+  color: white;
+  &.blue {
+    background-color: #2BC2DE;
+    color: white;
+  }
+}
