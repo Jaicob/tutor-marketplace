@@ -5,28 +5,83 @@ var TutorCard = React.createClass({
       var search = "?course=" + this.props.search.course;
     }
 		var tutor = this.props.tutor;
-    var profile_pic_url = "/public/uploads/" + tutor.profile_pic_url;
+    var profile_pic_url = "http://d1nt4a7y8dwdsx.cloudfront.net/wp-content/uploads/2015/04/Bernie-Sanders-AP77174442780.jpg";  
+    // change to tutor.profile_pic.url 
+    var desc = function (tutor, extra_info) {
+      if(tutor.additional_degrees) {
+        if(extra_info.length > 100){
+          return (
+            <p>&#8226; 
+              {extra_info.slice(0, 100) + "..."}
+              <a href={"/tutors/" + tutor.user.slug} className="see-more">See More</a>
+            </p>
+            )
+        }
+        else {
+            return <p>&#8226; {extra_info}</p>
+        }
+      }
+      else {
+        if(extra_info.length > 130){
+          return (
+            <p>&#8226; 
+              {extra_info.slice(0, 130) + "..."}
+              <a href={"/tutors/" + tutor.user.slug} className="see-more">See More</a>
+            </p>
+            )
+        }
+        else {
+            return <p>&#8226; {extra_info}</p>
+        }
+      }
+    }
+    var additional_degrees = function (tutor) {
+      if(tutor.additional_degrees){
+        var adjustButtonPosition = true;
+        return (
+            <p>
+              <i className="fi-plus"></i>
+              {tutor.additional_degrees}
+            </p>
+        )
+      }
+    }
+
+
+
 		return (
-      <div className="card">
-        <a href={"/tutors/" + tutor.user.slug}>
-          <div className="card-image">
-            <img src={profile_pic_url} alt="Profile Picture"></img>
+        <div className="card">
+          <div className="card-content">
+            <a href={"/tutors/" + tutor.user.slug + search}>
+              <div className="profile-pic-box">
+                <img src={profile_pic_url} alt="Profile Picture"></img>
+              </div>
+            </a>
+            <div className="banner-box">
+              <div className="banner-row">
+                <p className="name">{tutor.user.first_name + " " + tutor.user.last_name[0] + "."}</p>
+                <p className="price">${tutor.rate}</p>
+              </div>
+              <div className="banner-row">
+                <i className="fi-book-bookmark"></i>
+                <p className="degree">{tutor.degree + ', ' + tutor.major + " '" + String(tutor.graduation_year).substr(tutor.graduation_year.length - 2)}</p>
+              </div>
+            </div>
+            <div className="additional_degrees">
+                {additional_degrees(tutor)}
+              </div>
+            <div className="statements-box">
+              <div className="statement">
+                {desc(tutor, tutor.extra_info_1)}
+              </div>
+              <div className="statement">
+                {desc(tutor, tutor.extra_info_2)}
+              </div>
+            </div>
           </div>
-        </a>
-        <div className="card-header">
-          <h3 className="title">{tutor.user.first_name + " " + tutor.user.last_name}</h3>
+          <div className="custom-button full-width adust-position{adjustButtonPosition}">Book Now
+          </div>
         </div>
-        <div className="card-copy">
-          <ul className="tutor-qualifications">
-            <li>{tutor.degree + ', ' + tutor.major + ' ' + tutor.graduation_year}</li>
-            <li>{tutor.extra_info}</li>
-          </ul>
-          <a href={"/tutors/" + tutor.user.slug + search + "#book"} className="btn">Book Now</a>
-        </div>
-        <div className="cost">
-          <p>${tutor.rate}</p>
-        </div>
-      </div>
 		);
 	}
 });

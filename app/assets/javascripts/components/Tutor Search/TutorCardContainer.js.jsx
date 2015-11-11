@@ -6,7 +6,6 @@ var TutorCardContainer = React.createClass({
 		this.setState({ loaded: false });
 
 		var endpoint = API.endpoints.tutor.all({
-			school_id: nextProps["school"],
 			course_id: nextProps["course"]
 		});
 
@@ -34,7 +33,7 @@ var TutorCardContainer = React.createClass({
 	},
 	showTutorCards: function() {
 		return this.state.tutors.map(function(tutor){
-			return <TutorCard search={this.props} tutor={tutor} />;
+			return <TutorCard search={this.props} tutor={tutor}/>;
 		}.bind(this));
 	},
 	showLoadingScreen: function(){

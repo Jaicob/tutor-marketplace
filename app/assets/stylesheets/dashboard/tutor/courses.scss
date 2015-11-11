@@ -3,21 +3,21 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 /* Styling for _add_courses partial */
+  @mixin border-box {
+    border: 1px solid #BBE5EE;
+    padding: 1em;
+    border-radius: 4px;
+    background-color: #eff1f3; 
+  }
 
 .row.add-course-form {
-  border: 1px solid #BBE5EE;
-  padding: 1em;
-  border-radius: 4px;
-  background-color: #eff1f3;
+
 }
 
 /* Styling for _courses_welcome partial */
 
 .row.courses-welcome {
-  border: 1px solid #BBE5EE;
-  padding: 1em;
-  border-radius: 4px;
-  background-color: #eff1f3;
+  @include border-box;
   margin-bottom: 1em !important;
 }
 .courses-welcome-title {
@@ -35,24 +35,6 @@
   margin-top: 3em;
 }
 
-
-/* Styling for _show_courses partial */
-
-table.tutor-db-courses {
-  border: 1px solid #BBE5EE;
-  border-radius: 4px;
-  background-color: #FAFAFA;
-  width: 100%;
-  font-family: 'Lato';
-  font-weight: 100;
-  margin: 1em 0 5em;
-  color: #4F5252;
-}
-table.tutor-db-courses thead tr th {
-  font-weight: 400;
-  background-color: #eff1f3;
-  color: #4F5252;
-}
 
 /* Styling for index view */
 

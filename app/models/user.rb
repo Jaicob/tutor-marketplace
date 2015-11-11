@@ -31,14 +31,13 @@
 #  invited_by_type        :string
 #  invitations_count      :integer          default(0)
 #  slug                   :string
-#  school_id              :integer
 #  sign_in_ip             :string
 #
 
 class User < ActiveRecord::Base
   has_one :tutor, dependent: :destroy
   has_one :student, dependent: :destroy
-  belongs_to :school
+  has_one :campus_manager, dependent: :destroy
 
   validates :first_name, presence: true
   validates :last_name, presence: true
@@ -54,8 +53,9 @@ class User < ActiveRecord::Base
   def create_tutor_account(user, params)
     # used in Devise::RegistrationsController to create a Tutor while creating a User
     user.create_tutor!(
-      phone_number: params[:user][:tutor][:phone_number]
-      )
+      phone_number: params[:user][:tutor][:phone_number],
+      school_id: params[:course][:school_id]
+    )
     # creates the tutor's first tutor_course
     user.tutor.tutor_courses.create(course_id: params[:course][:course_id], rate: params[:tutor_course][:rate])
     # send welcome email
@@ -63,16 +63,18 @@ class User < ActiveRecord::Base
   end
 
   def create_student_account(user, params)
-    user.create_student!
+    user.create_student!(
+      school_id: params[:course][:school_id]
+    )
     # TODO: send welcome email to student?
   end
 
-  def set_school(user, params)
-    # used in Devise::RegistrationsController to set school during sign-up
-    if params[:course][:school_id]
-      user.update(school_id: params[:course][:school_id])
-    end
-  end
+  # def set_school(user, params)
+  #   # used in Devise::RegistrationsController to set school during sign-up
+  #   if params[:course][:school_id]
+  #     user.update(school_id: params[:course][:school_id])
+  #   end
+  # end
 
   def slug_candidates
     # variations of a user's name to create unique slugs in case of duplicate names

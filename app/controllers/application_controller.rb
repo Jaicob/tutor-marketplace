@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
 
   before_filter :configure_permitted_parameters, if: :devise_controller?
-  before_action :set_school_selection
+  before_action :set_school
 
   protected
 
@@ -66,18 +66,6 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    # Before_action for multiple controllers
-    def set_school
-      @school = current_user.school
-    end
-
-    # Before_action for admin-area
-    def set_school_for_campus_manager
-      if current_user.role == 'campus_manager'
-        @school = current_user.school
-      end
-    end
-
     # Before_action for admin-area
     def authorized_for_admin_area?
       # redirects to root for non-signed in users/visitors
@@ -96,9 +84,15 @@ class ApplicationController < ActionController::Base
     end
 
     # Before_action to set school selection
-    def set_school_selection
+    def set_school
       if current_user
-        @school = current_user.school
+        if current_user.tutor
+          @school = current_user.tutor.school
+        elsif current_user.student
+          @school = current_user.student.school
+        elsif current_user.campus_manager
+          @school = current_user.campus_manager.school
+        end
       elsif !cookies[:school_id].blank?
         @school = School.find(cookies[:school_id].to_i)
       else

@@ -223,3 +223,101 @@
     float: left;
     color: white;
   }
+
+
+/* NORMAL HOME SCREEN STYLES BELOW */
+
+.dashboard-content.tutor-home-page {
+  h4 {
+    text-align: center;
+  }
+  .upcoming-appts {
+    table {
+      width: 100%;
+    }
+    .box.no-appts {
+      padding: 2em;
+      text-align: center;
+      .no-appts-message {
+      }
+      .list-title, .list-item {
+        margin: auto;
+      }
+      .list-title {
+        padding: 1em;
+        font-weight: 400;
+        font-size: 0.9em;
+      }
+      .list-item {
+        padding: 0.2em;
+      }
+      .list-item.profile-link {
+        text-decoration: underline;
+        color: #0095AC;
+        padding-top: 0;
+      }
+    }
+  }
+  .metrics, .campus-manager{
+    text-align: center;
+    padding: 1em;
+  }
+  .campus-manager{
+    .box p {
+      margin: 0;
+    }
+    .name {
+      margin: 1em 0 0;
+    }
+    img.campus_manager_pic {
+      width: 50%;
+      border-radius: 4px;
+    }
+  }
+}
+
+a.close-reveal-modal.custom-button.override-foundation {
+  position: static;
+  font-size: 0.8em;
+  font-weight: 100;
+  color: white;
+}
+form.edit_appointment {
+  display: inline-block;
+}
+
+
+// <div class="row">
+//     <div class="small-12 medium-6 columns">
+//       <div class="metrics">
+//         <h4>Metrics</h4>
+//         <div class="box tutor-home-small-box">
+//           <div class="half top-half">
+//             <p>Revenue: $<%= @tutor.total_income %></p>
+//           </div>
+//           <div class="half">
+//             <p>Appointments: <%= @tutor.appointments.count %></p>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//     <div class="small-12 medium-6 columns">
+//       <div class="campus-manager">
+//         <h4>Your Campus Manager</h4>
+//         <div class="box">
+//           <p>Stuff goes here...</p>
+//         </div>
+//       </div>
+//     </div>
+//   </div>
+
+// <section class="dashboard-content tutor-home-page">
+//   <div class="row">
+//     <div class="small-12 columns">
+//       <div class="upcoming-appts">
+//   <div class="row">
+//     <div class="small-12 medium-6 columns">
+//       <div class="metrics">
+//     <div class="small-12 medium-6 columns">
+//       <div class="campus-manager">
+

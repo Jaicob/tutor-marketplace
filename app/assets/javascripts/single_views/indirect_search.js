@@ -6,17 +6,16 @@ $(document).ready(function(){
         results = regex.exec(location.search);
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
   }
-  var requestFromHome = getParameterByName('from_home');
+  var indirectSearch = getParameterByName('indirect_search');
   
-  if (requestFromHome == 'true') {
-    var schoolId = parseInt(getParameterByName('school_id'));
+  if (indirectSearch == 'true') {
     var courseId = parseInt(getParameterByName('course_id'));
     React.render(
       React.createElement(TutorCardContainer, {
-        school: schoolId,
         course: courseId
       }),
       document.querySelector('#tutorCardContainer')
     );
   }  
+
 });

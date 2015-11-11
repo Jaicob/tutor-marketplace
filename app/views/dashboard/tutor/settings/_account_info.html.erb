@@ -16,7 +16,7 @@
   <%= text_field_tag :routing_number %>
   <%= hidden_field_tag :last_4_acct %>
   <%= pf.input :ssn_last_4, label: 'Last 4 of SSN' %>
-  <%= pf.button :submit %>
+  <%= pf.button :submit, 'Update Account', class: 'custom-button' %>
 <% end %>
 <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 <script type="text/javascript">
