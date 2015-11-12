@@ -4,9 +4,9 @@ class CookiesController < ApplicationController
     # this sets the school from the form on the student_landing page
     school_id = params[:visitor][:school_id]
     cookies[:school_id] = { value: school_id, expires: 2.months.from_now }
-    if current_user.tutor
+    if current_user && current_user.tutor
       current_user.tutor.update(school_id: school_id)
-    elsif
+    elsif current_user && current_user.student
       current_user.student.update(school_id: school_id)
     end
     redirect_to root_path
@@ -18,7 +18,7 @@ class CookiesController < ApplicationController
     cookies[:school_id] = { value: school_id, expires: 2.months.from_now }
     if current_user.tutor
       current_user.tutor.update(school_id: school_id)
-    elsif
+    elsif current_user && current_user.student
       current_user.student.update(school_id: school_id)
     end
     redirect_to :back
