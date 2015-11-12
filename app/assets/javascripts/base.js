@@ -42,11 +42,20 @@ var API = {
             get: function (data) { // { tutor_id }
                 return API_LOCATION + "/tutors/" + data["tutor_id"] + "/slots"
             },
-            update: function (data) { // { tutor_id }
-                return API_LOCATION + "/tutors/" + data["tutor_id"] + "/slots"
-            },
             create: function (data) { // { tutor_id }
                 return API_LOCATION + "/tutors/" + data["tutor_id"] + "/slots"
+            },
+            update: function (data) { // { tutor_id, slot_id }
+                return API_LOCATION + "/tutors/" + data["tutor_id"] + "/slots/" + data["slot_id"]
+            },
+            update_slot_group: function (data) { // { tutor_id }
+                return API_LOCATION + "/tutors/" + data["tutor_id"] + "/slots/update_group"
+            },
+            destroy: function (data) { // { tutor_id }
+                return API_LOCATION + "/tutors/" + data["tutor_id"] + "/slots"
+            },
+            destroy_slot_group: function (data) { // { tutor_id }
+                return API_LOCATION + "/tutors/" + data["tutor_id"] + "/slots/delete_group"
             }
         },
         tutor: {

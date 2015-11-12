@@ -301,8 +301,9 @@ Rails.application.routes.draw do
         end
       end
       resources :tutors, only: [] do
-        resources :slots, only: [:index, :show, :create, :destroy]
-        post '/slots/update' => 'slots#update_slots'
+        resources :slots, only: [:index, :show, :create, :update, :destroy]
+        post '/slots/update_group' => 'slots#update_slot_group' # POST bc carrying data for multiple slots
+        post '/slots/delete_group' => 'slots#destroy_slot_group' # POST bc carrying data for multiple slots
         get '/courses' => 'tutor_courses#index'
         resources :appointments, only: [:index, :show], controller: 'tutor_appointments' do
           member do

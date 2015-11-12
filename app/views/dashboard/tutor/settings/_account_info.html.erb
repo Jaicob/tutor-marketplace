@@ -7,8 +7,8 @@
   <%= label_tag 'State' %>
   <%= pf.select :state, options_for_select(us_states), default: @tutor.state %>
   <%= pf.input :postal_code, label: 'Zip Code' %>
-  <h5>Bank info</h5>
-  <h1 class="bank-errors"></h1>
+  <h5>Bank Information</h5>
+  <h5 class="bank-errors"></h5>
   <p>Note: Your bank account information will not be stored on our servers, it will only be used to create an account with our secure merchant service.</p>
   <%= label_tag :account_number %>
   <%= text_field_tag :account_number %>
