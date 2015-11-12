@@ -1,27 +1,38 @@
-<section class="dashboard tutor">
-  <div class="wrapper">
-    <section class="main profile" role="main">
-      <div class="wrapper">
-        <article class="tutor-profile">
-          <div class="tutor-image">
-            <h1 class="title"><%= @tutor.full_name %></h1>
-            <%= image_tag(@tutor.profile_pic_url(:thumb), class: 'profile-pic') %>
-          </div>
-          <div class="tutor-qualifications">
-            <h2 class="title">Qualifications</h2>
-            <div class="text">
-              <ul class="default-ul">
-                <li> Degree: <%= @tutor.degree || "None specified." %> </li>
-                <li> Major: <%= @tutor.major || "None specified." %> </li>
-                <li> Extra Info: <%= @tutor.extra_info || "None specified." %> </li>
-                <li> Graduation Year: <%= @tutor.graduation_year || "None specified." %> </li>
-              </ul>
-            </div>
-          </div>
-        </article>
+<section class="tutor-profile">
+  <div class="row">
+    <div class="medium-12 columns">
+      <h1 class="title"><%= @tutor.full_name %></h1>
+    </div>
+    <div class="tutor-image medium-4 columns">
+      <%= image_tag(@tutor.profile_pic_url(:thumb), class: 'profile-pic') %>
+      <div class="where-i-tutor medium-12 columns">
+        I tutor at<br><br>
+        <b><%= @tutor.school && @tutor.school.name %></b>
       </div>
-    </section>
+    </div>
+    <div class="tutor-qualifications medium-8 columns">
+      <div class="tutor-profile-formal-education">
+        <p class="ed-item">
+          <i class="fi-star"></i>&nbsp;
+          <%= @tutor.degree || "None" %>, <%= @tutor.graduation_year || "None" %>
+        </p>
+        <p class="ed-item">
+          <i class="fi-star"></i>&nbsp;
+          <%= @tutor.major || "None" %>
+        </p>
+      </div>
+      <div class="tutor-profile-description">
+        <%= @tutor.extra_info_1 %></li>
+        <hr>
+        <%= @tutor.extra_info_2 %></li>
+        <hr>
+        <%= @tutor.extra_info_3 %></li>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+    <%= react_component('AppointmentSelector', tutor: @tutor.id) %>
   </div>
 </section>
-<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-<%= react_component('AppointmentSelector', tutor: @tutor.id) %>

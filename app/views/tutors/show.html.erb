@@ -1,2 +1,6 @@
-<%= link_to 'Back to Results', search_path(:course_id => request.fullpath.to_s.split('=').second, :indirect_search => true) %>
+<% if request.fullpath.to_s.split('=').count > 1 %>
+  <div class="row top-buffer bottom-buffer">
+  <%= link_to 'Back to Results', search_path(:course_id => request.fullpath.to_s.split('=').second, :indirect_search => true), class: 'custom-button' %>
+  </div>
+<% end %>
 <%= render '/dashboard/tutor/profile/tutor_profile' %>

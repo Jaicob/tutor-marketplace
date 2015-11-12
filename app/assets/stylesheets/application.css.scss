@@ -84,13 +84,18 @@
     &.blue {
       background-color: #0095AC;
     }
+
+    &:hover,
+    &:active {
+      color: white;
+    }
   }
 
   @mixin border-box {
     border: 1px solid #BBE5EE;
     padding: 1em;
     border-radius: 4px;
-    background-color: #eff1f3; 
+    background-color: #eff1f3;
   }
 
 /* Styling for the Devise login form page */
@@ -132,7 +137,7 @@
         box-shadow: none;
       }
     }
-    
+
     .nav-logo-box.nav-link-box {
       text-align: center;
       width: 100%;
