@@ -7,7 +7,7 @@ button, .custom-button {
   border-radius: 4px !important;
   border: none;
   color: white;
-  margin-bottom: 1em;
+  margin-bottom: 2em;
   text-align: center;
   &.full-width {
     width: 100%;
@@ -20,6 +20,12 @@ button, .custom-button {
   }
   &.danger {
     background-color: #DE6328;
+  }
+  &.hover-light-blue:hover {
+    background-color: #2BC2DE;
+  }
+  &.no-margin {
+    margin: 0;
   }
 }
 

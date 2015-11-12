@@ -68,35 +68,6 @@
     }
   }
 
-  .custom-button {
-    background-color: #58AA4D;
-    padding: 0.5em 2em;
-    font-weight: 100;
-    font-size: 0.8em;
-    font-family: 'Lato';
-    border-radius: 4px !important;
-    border: none;
-    color: white;
-    margin-bottom: 1em;
-    text-align: center;
-    &.full-width {
-      width: 100%;
-    }
-    &.no-margin {
-      margin: 0;
-    }
-    &.blue {
-      background-color: #0095AC;
-    }
-  }
-
-  @mixin border-box {
-    border: 1px solid #BBE5EE;
-    padding: 1em;
-    border-radius: 4px;
-    background-color: #eff1f3; 
-  }
-
 /* Styling for the Devise login form page */
 
   form#new_user {
