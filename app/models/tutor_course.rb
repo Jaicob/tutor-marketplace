@@ -26,7 +26,8 @@ class TutorCourse < ActiveRecord::Base
 
   def full_price
     transaction_fee = ((self.course.school.transaction_percentage / 100) + 1)
-    full_price = (transaction_fee * self.rate).round(2)
+    full_price = (transaction_fee * self.rate).round(2) # rounds to two decimal places
+    sprintf('%.2f', full_price) # makes sure that 2 decimal places are always present (22.50 vs. 22.5)
   end
 
   # custom validation
