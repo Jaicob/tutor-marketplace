@@ -30,7 +30,7 @@
 			"name":"web",
 			"image" : "jaicob/web-app",
 			"essential": true,
-			"memory": 256,
+			"memory": 1024,
 			"portMappings" : [
 				{
 					"hostPort": 80,

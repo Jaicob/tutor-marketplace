@@ -19,7 +19,7 @@ COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 #sidekiq startup script
 # COPY sidekiq.sh /usr/local/bin/sidekiq.sh
-COPY sidekiq.sh /etc/init.d/sidekick
+#COPY sidekiq.sh /etc/init.d/sidekick
 
 COPY unicorn_init.sh /etc/init.d/unicorn
 
