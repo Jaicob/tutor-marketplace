@@ -45,8 +45,8 @@ var API = {
             create: function (data) { // { tutor_id }
                 return API_LOCATION + "/tutors/" + data["tutor_id"] + "/slots"
             },
-            update: function (data) { // { tutor_id }
-                return API_LOCATION + "/tutors/" + data["tutor_id"] + "/slots"
+            update: function (data) { // { tutor_id, slot_id }
+                return API_LOCATION + "/tutors/" + data["tutor_id"] + "/slots/" + data["slot_id"]
             },
             update_slot_group: function (data) { // { tutor_id }
                 return API_LOCATION + "/tutors/" + data["tutor_id"] + "/slots/update_group"
