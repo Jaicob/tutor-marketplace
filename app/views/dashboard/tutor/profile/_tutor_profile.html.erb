@@ -1,3 +1,9 @@
+<style type="text/css">
+.main-content{
+  background: #2BC2DE !important;
+}
+</style>
+
 <section class="tutor-profile">
   <div class="row">
     <div class="medium-12 columns">
@@ -6,7 +12,7 @@
     <div class="tutor-image medium-4 columns">
       <%= image_tag(@tutor.profile_pic_url(:thumb), class: 'profile-pic') %>
       <div class="where-i-tutor medium-12 columns">
-        I tutor at<br><br>
+        I tutor at<br>
         <b><%= @tutor.school && @tutor.school.name %></b>
       </div>
     </div>
