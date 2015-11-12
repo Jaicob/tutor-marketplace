@@ -10,6 +10,9 @@ class SingleViewsController < ApplicationController
   end
 
   def student_landing
+    if current_user 
+      redirect_to root_path
+    end
   end
 
   def tutor_landing

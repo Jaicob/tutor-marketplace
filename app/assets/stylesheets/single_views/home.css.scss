@@ -86,14 +86,13 @@ input.home-search-button {
   overflow: hidden;
 }
 .top-subject {
-  display: block;
   padding: 0.3em;
   text-align: center;
-  border-radius: 2px;
+  border-radius: 4px;
   font-weight: 100;
-  background-color: #CDCDCD;
-  margin: 1em 0;
-  border: 1px solid #4F5252;
+  background-color: #2BC2DE;
+  margin: 0 0.2em;
+  color: white;
 }
 p.center.white.shadow.book-two-mins {
   margin-bottom: 5em;
@@ -163,8 +162,5 @@ p.center.white.shadow.book-two-mins {
 @media (min-width: 1000px) {
   .home-search-box {
     width: 40%;
-  }
-  .top-subject {
-    margin: 0;
   }
 }

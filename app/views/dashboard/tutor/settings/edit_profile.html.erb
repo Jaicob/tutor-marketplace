@@ -1,4 +1,41 @@
 <style>
+
+  .profile-pic-input-box {
+    margin: auto;
+    position: relative;
+    overflow: hidden;
+    margin: 1em 0;
+    border-radius: 4px;
+    font-size: 1.5em;
+  }
+  input#profile-pic-input {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    opacity: 0;
+    max-width: none;
+  }
+  .profile-pic-input-button {
+    height: 100%;
+    width: 100%;
+    float: right;
+    background-color: #2BC2DE;
+    color: white;
+    font-weight: 100;
+    text-align: center;
+    line-height: 2em;
+    font-size: 0.8em;
+  }
+
+  p.file-types {
+    font-size: 0.8em;
+    text-align: center;
+  }
+
+
+
 /* Do not remove! This must be in the view for it to only highlight the correct selected link in the settings vertical sub-menu */
 a.profile-settings-link {
   color: white;
@@ -21,15 +58,10 @@ a.profile-settings-link {
     </div>
     <div class="small-7 medium-4 medium-offset-1 columns end">
       
-      <h3>Profile Picture</h3>
+      <h5>Profile Picture</h5>
       <%= image_tag(@tutor.profile_pic_url(:thumb), class: 'profile-pic-preview') %>
-      
-      <a href="#" data-reveal-id="newPhotoModal" class="button tiny expand secondary">
-        <i class="fi-page-add icon-margin-right"></i>Upload New Photo
-      </a>
-      <a href="#" data-reveal-id="cropCurrentPhotoModal" class="button tiny expand secondary">
-        <i class="fi-page-edit icon-margin-right"></i>Crop Current Photo
-      </a>
+      <a href="#" data-reveal-id="newPhotoModal" class="custom-button">Upload New Photo</a>
+      <a href="#" data-reveal-id="cropCurrentPhotoModal" class="custom-button">Crop Current Photo</a>
 
       <%= form_for @tutor do |f| %>
         <h3 class="header-top-margin" id="profile-fields">Profile Info</h3>
@@ -46,7 +78,7 @@ a.profile-settings-link {
         <%= f.label :extra_info_1, 'Extra Information' %>
         <%= f.text_area :extra_info_1, row: 3 %>
 
-        <%= f.submit 'Save', class: 'button tiny expand success'%>
+        <%= f.submit 'Save', class: 'custom-button' %>
 
       <% end %>
     </div>
@@ -61,35 +93,38 @@ a.profile-settings-link {
   <h4 id="secondModalTitle" class="text-center">Upload a new profile picture</h4>
 
     <script type="text/javascript">
-    $(document).ready(
-    function(){
-      $('#upload-pic').attr('disabled',true);
-      $('input:file').change(
-        function(){
-          if ($(this).val()){
-            $('input:submit').removeAttr('disabled'); 
-          }
-          else {
-            $('input:submit').attr('disabled',true);
-          }
-        });
+      $(document).ready(function()
+        {
+          $('#profile-pic-input').change(function () {
+              $('#profile-pic-name-target').html($('#profile-pic-input').val().split("\\").pop());
+              $('#upload-pic-btn').removeClass('disabled');
+              $('#upload-pic-btn').removeAttr('disabled');
+          });
       });
     </script>
 
+
     <div class="row">
       <div class="small-8 small-centered columns">
-        <div class="text-center">
-          <%= form_for @tutor do |f| %>
-            <%= f.file_field :profile_pic %>
-            <%= f.submit 'Update Profile Picture', class: 'button radius', id: 'upload-pic' %>
-          <% end %>
-        </div>
+        <%= form_for @tutor do |f| %>
+
+          <p class='file-types'>Acceptable file types: .jpg, .jpeg, .png</p>
+
+          <div class="profile-pic-input-box">
+            <div class="profile-pic-input-button">
+              Select Picture
+            </div>
+            <%= f.file_field :profile_pic, id: 'profile-pic-input' %>
+          </div>
+
+          <p id="profile-pic-name-target"></p>
+          
+
+          <%= f.submit 'Save', class: 'custom-button full-width disabled', id: 'upload-pic-btn', disabled: true %>
+        <% end %>
       </div>
     </div>
 
-    <a href="#" data-reveal-id="myModal">
-      <i class="fi-arrow-left"></i>&nbsp;Back
-    </a>
 
   <a class="close-reveal-modal" aria-label="Close">&#215;</a>
 </div>
@@ -139,10 +174,6 @@ a.profile-settings-link {
         </div>
       </div>
     </div>
-
-    <a href="#" data-reveal-id="myModal">
-      <i class="fi-arrow-left"></i>&nbsp;Back
-    </a>
 
   <a class="close-reveal-modal" aria-label="Close">&#215;</a>
 </div>
