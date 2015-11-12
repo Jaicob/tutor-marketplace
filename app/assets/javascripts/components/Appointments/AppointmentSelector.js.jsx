@@ -5,6 +5,7 @@ var AppointmentSelector = React.createClass({
           selectedSubject: this.props.subject || {},
           disabledSlots: [],
           currentStep: 1,
+          forceSubject: false,
           forceFetch: false,
           student: {},
           token: "",
@@ -15,7 +16,11 @@ var AppointmentSelector = React.createClass({
     this.fetchStudent();
   },
   handleSubject: function (newSubject) {
-    this.setState({ selectedSubject: newSubject });
+    this.setState({
+      selectedSubject: newSubject,
+      currentStep: this.state.currentStep + 1,
+      forceSubject: true
+    });
   },
   handleSlots: function (newSlots) {
     newSlots.unique((slot) => slot.start_time);
@@ -47,14 +52,17 @@ var AppointmentSelector = React.createClass({
     };
   },
   canGoBack: function () {
+    if (this.delegates().canGoBack != null) {return this.delegates().canGoBack};
     switch(this.state.currentStep) {
       case 1: return false
       default: return true
     }
   },
   canGoForward: function () {
+    if (this.delegates().canGoForward != null) {return this.delegates().canGoForward};
     switch(this.state.currentStep) {
-      case 1: return this.state.selectedSlots.length > 0
+      case 1: return true
+      case 2: return this.state.selectedSlots.length > 0
       default: return true
     }
   },
@@ -73,17 +81,32 @@ var AppointmentSelector = React.createClass({
       this.setState({customer_id: customer_id})
     };
   },
-  renderSubjectSelector: function () {
-    if (this.state.currentStep == 1) {
-      return <SubjectSelector tutor={this.props.tutor}
-                              selectedSubject={this.state.selectedSubject}
-                              handleSubject={this.handleSubject}
-                              />
-    };
+  delegates: function () {
+    var component = this;
+    var state = this.state;
+    return {
+      backButtonText: state.backButtonText || "",
+      backButtonClick: state.backButtonClick || null,
+      canGoBack: state.canGoBack || null,
+      forwardButtonText: state.forwardButtonText || "",
+      forwardButtonClick: state.forwardButtonClick || null,
+      canGoForward: state.canGoForward || null,
+      extra_buttons: state.extra_buttons || [],
+      send: function () {
+        this.setState(this.delegates);
+      }.bind(component)
+    }
   },
   renderMainView: function () {
     switch(this.state.currentStep){
       case 1:
+              return <SubjectSelector tutor={this.props.tutor}
+                                      selectedSubject={this.state.selectedSubject}
+                                      handleSubject={this.handleSubject}
+                                      forceSubject={this.state.forceSubject}
+                                      delegates={this.delegates()}
+                                       />
+      case 2:
               return <SlotSelector tutor={this.props.tutor}
                                    selectedSlots={this.state.selectedSlots}
                                    handleSlots={this.handleSlots}
@@ -91,9 +114,9 @@ var AppointmentSelector = React.createClass({
                                    handleDisabledSlots={this.handleDisabledSlots}
                                    forceFetch={this.state.forceFetch}
                                    />
-      case 2: return <PaymentForm {...this.props} currentStudent={this.state.student} onChange={this.handleCard} />
-      case 3: return <ConfirmationScreen {...this.props} />
-      case 4: return <Summary {...this.props} />
+      case 3: return <PaymentForm {...this.props} currentStudent={this.state.student} onChange={this.handleCard} />
+      case 4: return <ConfirmationScreen {...this.props} />
+      case 5: return <Summary {...this.props} />
       default: break
     };
   },
@@ -101,31 +124,33 @@ var AppointmentSelector = React.createClass({
     // <div className="column selected-class-output">
     // </div>
     return (
-      <section className="availability" id="book">
-        <div className="wrapper">
-          <article className="availability-calendar">
-            <header className="row">
-              <h3 className="title">Availability</h3>
-                {this.renderSubjectSelector()}
-            </header>
-            {this.renderMainView()}
-          </article>
-          <footer className="row">
-                <div className="column submit">
-                  { this.canGoBack() &&
-                  <a className="btn" onClick={this.handleBackStep}>
-                    <span className="fi-arrow-left"></span> Go back
+      <div className="appointment-selector" id="book">
+        <article className="availability-calendar">
+          <div className="header row">Book Me Now</div>
+          {this.renderMainView()}
+        </article>
+        <div className="footer row">
+            { this.canGoBack() &&
+            <a className="back btn" onClick={this.handleBackStep}>
+              {this.delegates().backButtonText || "Go Back"}
+            </a>
+            }
+            { this.canGoForward() &&
+            <a className="forward btn" onClick={this.handleNextStep}>
+              {this.delegates().forwardButtonText || "Next"}
+            </a>
+            }
+            {
+              this.delegates().extra_buttons.map(function(extra) {
+                return(
+                  <a className={extra.classes || "btn"} onClick={extra.action}>
+                    {extra.text}
                   </a>
-                  }
-                  { this.canGoForward() &&
-                  <a className="btn" onClick={this.handleNextStep}>
-                    Next <span className="fi-arrow-right"></span>
-                  </a>
-                  }
-                </div>
-              </footer>
+                );
+              })
+            }
         </div>
-      </section>
+      </div>
     );
   }
 });

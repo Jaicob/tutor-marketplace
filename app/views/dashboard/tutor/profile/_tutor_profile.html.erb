@@ -1,3 +1,5 @@
+<%# [ ] TODO (AJ) Refactor this into a profile.scss %>
+<%# Currently, we still need controller-specific stylesheets. %>
 <style type="text/css">
 .main-content{
   background: #2BC2DE !important;
@@ -19,6 +21,7 @@
     <div class="tutor-qualifications medium-8 columns">
       <div class="tutor-profile-formal-education">
         <p class="ed-item">
+          <%# [ ] TODO (AJ) Make these bullets into icons from Eugene %>
           <i class="fi-star"></i>&nbsp;
           <%= @tutor.degree || "None" %>, <%= @tutor.graduation_year || "None" %>
         </p>
@@ -39,6 +42,13 @@
 
   <div class="row">
     <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-    <%= react_component('AppointmentSelector', tutor: @tutor.id) %>
+    <%# [ ] TODO (AJ) Refactor NOT to use request.fullpath.to_s.split('=').second %>
+    <%= react_component('AppointmentSelector', {
+        tutor: @tutor.id,
+        course: request.fullpath.to_s.split('=').second
+      },
+      {
+        class: "medium-12 columns"
+      }) %>
   </div>
 </section>

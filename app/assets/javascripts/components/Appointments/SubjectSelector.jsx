@@ -1,6 +1,11 @@
 var SubjectSelector = React.createClass({
   componentDidMount: function () {
       this.fetchSubjects()
+      delegates = this.props.delegates
+      delegates.backButtonText = null;
+      delegates.forwardButtonText = "Continue";
+      delegates.canGoForward = false;
+      delegates.send();
   },
   getInitialState: function () {
     return {
@@ -20,33 +25,48 @@ var SubjectSelector = React.createClass({
         var passedInSubject = this.state.availableSubjects.find(
           (subject) => subject.course_id == getSearchQueryVariable("course")
         );
-        if (this.props.selectedSubject || passedInSubject) {
-          this.props.handleSubject(this.props.selectedSubject || passedInSubject);
+
+        console.log(passedInSubject);
+
+        if (!this.props.forceSubject && passedInSubject) {
+          this.props.handleSubject(passedInSubject);
         }
       }.bind(this)
     );
   },
   handleClick: function (subject) {
     newSubject = this.state.availableSubjects.find(
-      (potentialSubject) => potentialSubject.id == subject.target.value
+      (potentialSubject) => potentialSubject.id == subject.id
     );
-    this.props.handleSubject(newSubject);
+    if (newSubject) {
+      this.props.handleSubject(newSubject);
+    } else {
+      console.error("No subject found for ID = " + subject.id);
+    }
+  },
+  getBackground: function (subject) {
+    var background = ["subject-item"];
+    if(this.props.selectedSubject.id == subject.id) {
+      background.push("active");
+    } else {
+      background.push("neutral");
+    }
+    return background.join(" ");
   },
   render: function () {
     return (
-      <div className="dropdown--subject">
-        <label for="select-subject">Course:</label>
-        <div className="select-wrapper">
-          <select id="select-subject" className="select-menu" onChange={this.handleClick}>
-            <optgroup label="Available Courses">
-              {
-                this.state.availableSubjects.map(function(subject){
-                  return <Subject subject={subject} selectedSubject={this.props.selectedSubject} />
-                }.bind(this))
-              }
-            </optgroup>
-          </select>
-        </div>
+      <div className="main-view">
+        <div className="prompt">Select a course below.</div>
+        <div className="subject-selector">{
+            this.state.availableSubjects.map(function(subject){
+              return (
+                <div className={this.getBackground(subject)} onClick={this.handleClick.bind(this, subject)}>
+                  <span className="name">{subject.course_name}</span>
+                  <span className="rate">${subject.rate}/hr</span>
+                </div>
+              );
+            }.bind(this))
+          }</div>
       </div>
     );
   }
