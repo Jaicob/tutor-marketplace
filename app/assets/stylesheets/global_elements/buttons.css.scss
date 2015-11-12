@@ -34,6 +34,9 @@ button, .custom-button {
   color: white;
   &.blue {
     background-color: #2BC2DE;
-    color: white;
   }
 }
+
+ .custom-button:visited, .custom-button:link  {
+  color: white;
+ }
