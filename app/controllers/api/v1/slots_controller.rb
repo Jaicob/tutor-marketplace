@@ -49,13 +49,16 @@ class API::V1::SlotsController < API::V1::Defaults
   end
 
   def destroy_slot_group # multiple slots - uses SlotManager
+    # # hacky way of checking successful deletion
+    # x = Slot.count
     slot_manager = SlotManager.new(safe_params)
-    @slots = slot_manager.destroy_slots   
-    if @slot_ids # IDs of deleted slots
-      render json: @slot_ids, status: 200
-    else
-      render json: @slots.errors.full_messages
-    end
+    @slots = slot_manager.destroy_slots
+    # y = Slot.count
+    # if x > y
+    #   render json: "SUCCESS" 
+    # else
+    #   render json: "FUCKIN SHIT DIDNT WORK"
+    # end  
   end
 
   private

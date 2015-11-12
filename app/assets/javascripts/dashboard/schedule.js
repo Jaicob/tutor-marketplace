@@ -246,8 +246,8 @@ $(document).ready(function() {
   var removeSlots = function(event) {
     var duration = moment.duration(event.data.end.diff(event.data.start)).asSeconds();
     $.ajax({
-      type: "DELETE",
-      url: API.endpoints.tutor_slots.destroy({
+      type: "POST",
+      url: API.endpoints.tutor_slots.destroy_slot_group({
         tutor_id: tutor_id
       }),
       data: {
