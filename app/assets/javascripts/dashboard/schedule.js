@@ -137,7 +137,7 @@ $(document).ready(function() {
         if (isConfirm) {
           $.ajax({
             type: "POST",
-            url: API.endpoints.tutor_slots.update({
+            url: API.endpoints.tutor_slots.update_slot_group({
               tutor_id: tutor_id
             }),
             data: {
@@ -241,24 +241,22 @@ $(document).ready(function() {
       });
   }
 
-  var removeSlots = function(callingEvent) {
-    var duration = moment.duration(callingEvent.data.end.diff(callingEvent.data.start)).asSeconds();
+  var removeSlots = function(event) {
+    var duration = moment.duration(event.data.end.diff(event.data.start)).asSeconds();
     $.ajax({
       type: "DELETE",
-      url: API.endpoints.tutor_slots.update({
+      url: API.endpoints.tutor_slots.destroy({
         tutor_id: tutor_id
       }),
       data: {
-        original_start_time: callingEvent.data.start.format('YYYY-MM-DD HH:mm:ss'),
-        original_duration: duration,
-        new_start_time: callingEvent.data.start.format('YYYY-MM-DD HH:mm:ss'),
-        new_duration: 1
+        original_start_time: event.data.start.format('YYYY-MM-DD HH:mm:ss'),
+        original_duration: duration
       },
       dataType: "json",
       success: function(data) {
         $('#calendar').fullCalendar('removeEvents', function(event) {
-          var isStartMatch = (event.start.format('DD HH:mm:ss') === callingEvent.data.start.format('DD HH:mm:ss'));
-          var isEndMatch = (event.end.format('DD HH:mm:ss') === callingEvent.data.end.format('DD HH:mm:ss'));
+          var isStartMatch = (event.start.format('DD HH:mm:ss') === event.data.start.format('DD HH:mm:ss'));
+          var isEndMatch = (event.end.format('DD HH:mm:ss') === event.data.end.format('DD HH:mm:ss'));
           return (isStartMatch && isEndMatch) ? true : false;
         });
       },
