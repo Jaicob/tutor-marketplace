@@ -78,7 +78,7 @@ $(document).ready(function() {
         if (isConfirm) {
           $.ajax({
             type: "POST",
-            url: API.endpoints.tutor_slots.update({
+            url: API.endpoints.tutor_slots.update_slot_group({
               tutor_id: tutor_id
             }),
             data: {
@@ -98,10 +98,11 @@ $(document).ready(function() {
           });
         } else {
           $.ajax({
-            type: "POST",
+            type: "PUT",
             url: API.endpoints.tutor_slots.update({
-              tutor_id: tutor_id
-            }) + '/' + event.slot_id,
+              tutor_id: tutor_id,
+              slot_id: event.slot_id
+            }),
             data: {
               start_time: event.start.format('YYYY-MM-DD HH:mm:ss'),
               duration: originalDuration
