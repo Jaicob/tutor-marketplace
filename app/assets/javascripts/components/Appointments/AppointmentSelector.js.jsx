@@ -1,3 +1,31 @@
+var Delegate = function () {
+  this.backButtonText = null;
+  this.backButtonClick = null;
+  this.canGoBack = null;
+  this.canShowBackButton = null;
+
+  this.forwardButtonText = null;
+  this.forwardButtonClick = null;
+  this.canGoForward = null;
+  this.canShowForwardButton = null;
+
+  this.extra_buttons = null;
+
+  this.refresh = function () {
+    this.backButtonText = null;
+    this.backButtonClick = null;
+    this.canGoBack = null;
+    this.canShowBackButton = null;
+
+    this.forwardButtonText = null;
+    this.forwardButtonClick = null;
+    this.canGoForward = null;
+    this.canShowForwardButton = null;
+
+    this.extra_buttons = null;
+  }.bind(this);
+}
+
 var AppointmentSelector = React.createClass({
   getInitialState: function () {
       return {
@@ -12,15 +40,35 @@ var AppointmentSelector = React.createClass({
           customer_id: ""
       };
   },
+  UINavigationBarDelegate: new Delegate(),
+  // function () {
+  //   var component = this;
+  //   var state = this.state;
+  //   var UINavigationBarDelegate = Delegate();
+  //   var del = {
+  //     backButtonText: state.backButtonText || "",
+  //     backButtonClick: state.backButtonClick || null,
+  //     canGoBack: state.canGoBack || null,
+  //     forwardButtonText: state.forwardButtonText || "",
+  //     forwardButtonClick: state.forwardButtonClick || null,
+  //     canGoForward: state.canGoForward || null,
+  //     extra_buttons: state.extra_buttons || []
+  //   }
+  //   return {
+  //     send: function () {
+  //       this.setState(del);
+  //     }.bind(component)
+  //   }
+  // },
   componentDidMount: function() {
     this.fetchStudent();
   },
   handleSubject: function (newSubject) {
     this.setState({
       selectedSubject: newSubject,
-      currentStep: this.state.currentStep + 1,
       forceSubject: true
     });
+    this.handleNextStep();
   },
   handleSlots: function (newSlots) {
     newSlots.unique((slot) => slot.start_time);
@@ -37,7 +85,8 @@ var AppointmentSelector = React.createClass({
     this.setState({ disabledSlots: newDisabledSlots })
   },
   handleBackStep: function () {
-    if (this.state.currentStep > 1) {
+    if (this.canGoBack()) {
+      this.UINavigationBarDelegate.refresh();
       this.setState({
         currentStep: this.state.currentStep - 1,
         forceFetch: true
@@ -45,26 +94,35 @@ var AppointmentSelector = React.createClass({
     }
   },
   handleNextStep: function () {
-    if (this.state.selectedSlots.length > 0) {
+    if (this.canGoForward()) {
+      this.UINavigationBarDelegate.refresh();
       this.setState({
         currentStep: this.state.currentStep + 1
-      })
-    };
+      });
+    }
   },
   canGoBack: function () {
-    if (this.delegates().canGoBack != null) {return this.delegates().canGoBack};
+    if (this.UINavigationBarDelegate.canGoBack != null) {return this.UINavigationBarDelegate.canGoBack};
     switch(this.state.currentStep) {
       case 1: return false
       default: return true
     }
   },
   canGoForward: function () {
-    if (this.delegates().canGoForward != null) {return this.delegates().canGoForward};
+    if (this.UINavigationBarDelegate.canGoForward != null) {return this.UINavigationBarDelegate.canGoForward};
     switch(this.state.currentStep) {
       case 1: return true
       case 2: return this.state.selectedSlots.length > 0
       default: return true
     }
+  },
+  canShowBackButton: function () {
+    if (this.UINavigationBarDelegate.canShowBackButton != null) { return this.UINavigationBarDelegate.canShowBackButton };
+    return this.canGoBack();
+  },
+  canShowForwardButton: function () {
+    if (this.UINavigationBarDelegate.canShowForwardButton != null) { return this.UINavigationBarDelegate.canShowForwardButton };
+    return this.canGoForward();
   },
   fetchStudent: function () {
     var endpoint = API.endpoints.students();
@@ -81,22 +139,6 @@ var AppointmentSelector = React.createClass({
       this.setState({customer_id: customer_id})
     };
   },
-  delegates: function () {
-    var component = this;
-    var state = this.state;
-    return {
-      backButtonText: state.backButtonText || "",
-      backButtonClick: state.backButtonClick || null,
-      canGoBack: state.canGoBack || null,
-      forwardButtonText: state.forwardButtonText || "",
-      forwardButtonClick: state.forwardButtonClick || null,
-      canGoForward: state.canGoForward || null,
-      extra_buttons: state.extra_buttons || [],
-      send: function () {
-        this.setState(this.delegates);
-      }.bind(component)
-    }
-  },
   renderMainView: function () {
     switch(this.state.currentStep){
       case 1:
@@ -104,7 +146,7 @@ var AppointmentSelector = React.createClass({
                                       selectedSubject={this.state.selectedSubject}
                                       handleSubject={this.handleSubject}
                                       forceSubject={this.state.forceSubject}
-                                      delegates={this.delegates()}
+                                      UINavigationBarDelegate={this.UINavigationBarDelegate}
                                        />
       case 2:
               return <SlotSelector tutor={this.props.tutor}
@@ -130,18 +172,18 @@ var AppointmentSelector = React.createClass({
           {this.renderMainView()}
         </article>
         <div className="footer row">
-            { this.canGoBack() &&
+            { this.canShowBackButton() &&
             <a className="back btn" onClick={this.handleBackStep}>
-              {this.delegates().backButtonText || "Go Back"}
+              {this.UINavigationBarDelegate.backButtonText || "Go Back"}
             </a>
             }
-            { this.canGoForward() &&
+            { this.canShowForwardButton() &&
             <a className="forward btn" onClick={this.handleNextStep}>
-              {this.delegates().forwardButtonText || "Next"}
+              {this.UINavigationBarDelegate.forwardButtonText || "Next"}
             </a>
             }
             {
-              this.delegates().extra_buttons.map(function(extra) {
+              this.UINavigationBarDelegate.extra_buttons && this.UINavigationBarDelegate.extra_buttons.map(function(extra) {
                 return(
                   <a className={extra.classes || "btn"} onClick={extra.action}>
                     {extra.text}

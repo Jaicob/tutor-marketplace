@@ -1,11 +1,10 @@
 var SubjectSelector = React.createClass({
   componentDidMount: function () {
       this.fetchSubjects()
-      delegates = this.props.delegates
-      delegates.backButtonText = null;
-      delegates.forwardButtonText = "Continue";
-      delegates.canGoForward = false;
-      delegates.send();
+      navBar = this.props.UINavigationBarDelegate;
+      navBar.canGoForward = true;
+      navBar.canShowForwardButton = false;
+      navBar.canGoBack = false;
   },
   getInitialState: function () {
     return {
@@ -25,8 +24,6 @@ var SubjectSelector = React.createClass({
         var passedInSubject = this.state.availableSubjects.find(
           (subject) => subject.course_id == getSearchQueryVariable("course")
         );
-
-        console.log(passedInSubject);
 
         if (!this.props.forceSubject && passedInSubject) {
           this.props.handleSubject(passedInSubject);
