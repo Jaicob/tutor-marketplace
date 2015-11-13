@@ -8,6 +8,27 @@ var SlotSelector = React.createClass({
         endRange:   moment().add(2 + this.rangeDistance, this.rangeUnit)
     };
   },
+  setDelegates: function (newLength) {
+    if (newLength == undefined) {
+      newLength = this.props.selectedSlots.length;
+    };
+    navBar = this.props.UINavigationBarDelegate;
+    navBar.forwardButtonText = "Proceed to Checkout";
+    navBar.backButtonText = "Change subject";
+
+    // if(newLength == 1) {
+    //   navBar.description = newLength + " session selected.";
+    // } else if (newLength < 1) {
+    //   navBar.description = null;
+    // } else {
+    //   navBar.description = newLength + " sessions selected.";
+    // }
+
+    this.props.updateDelegate(navBar);
+  },
+  componentWillMount: function () {
+    this.setDelegates();
+  },
   componentDidMount: function () {
     this.componentWillReceiveProps(this.props);
   },
@@ -15,6 +36,8 @@ var SlotSelector = React.createClass({
     if((nextProps.disabledSlots.length == 0 && nextProps.selectedSlots.length == 0) || nextProps.forceFetch) {
       this.fetchSlots(nextProps.tutor);
     }
+
+    if (this.props.selectedSlots.length != nextProps.selectedSlots.length) this.setDelegates();
   },
   fetchSlots: function (tutor) {
     var endpoint = API.endpoints.tutor_slots.get({
@@ -22,20 +45,6 @@ var SlotSelector = React.createClass({
     });
 
     var request = $.getJSON(endpoint);
-
-    // var data = [
-    //             {
-    //               created_at: "2015-08-15T19:19:41.440Z",
-    //               duration: 3600,
-    //               id: 372,
-    //               reservation_max: null,
-    //               reservation_min: null,
-    //               start_time: "2015-08-17T01:30:00.000Z",
-    //               status: "Open",
-    //               tutor_id: 21,
-    //               updated_at: "2015-08-15T19:19:41.440Z"
-    //             }
-    //           ];
 
     request.success(function(data){
       if ((this.props.disabledSlots.length == 0 && this.props.selectedSlots.length == 0) || this.props.forceFetch) {
@@ -49,20 +58,6 @@ var SlotSelector = React.createClass({
         };
       }
     }.bind(this));
-
-
-    // var endpoint = API.endpoints.slots({
-    //   tutor_id: tutor,
-    //   start_range: this.state.startRange.format("YYYY-MM-DD"),
-    //   end_range: this.state.endRange.format("YYYY-MM-DD")
-    // })
-
-    // var request = $.getJSON(endpoint)
-    // request.success = function (data) {
-    //   this.setState({
-    //     allSlots: data
-    //   });
-    // }.bind(this)
   },
   parseData: function (data) {
     appointmentCandidates = this.getAppointmentCandidates(data);
@@ -204,6 +199,8 @@ var SlotSelector = React.createClass({
 
       var disabledSlots = this.getDisabledSlots(newSelectedSlots);
       this.props.handleDisabledSlots(disabledSlots);
+
+      this.setDelegates(newSelectedSlots.length);
     } else {
       // user selects a slot
       newSelectedSlots.push(slot);
@@ -211,6 +208,8 @@ var SlotSelector = React.createClass({
 
       var disabledSlots = this.getDisabledSlots(newSelectedSlots);
       this.props.handleDisabledSlots(disabledSlots);
+
+      this.setDelegates(newSelectedSlots.length);
     }
   },
   renderSlotDays: function () {
@@ -223,15 +222,17 @@ var SlotSelector = React.createClass({
   },
   render: function () {
     return (
-      <div>
-        <SlotRangeControls handleNextRange={this.handleNextRange}
-                           handlePreviousRange={this.handlePreviousRange}
-                           />
-       <ul className="schedule weekly-schedule">
-        {
-          this.renderSlotDays()
-        }
-        </ul>
+      <div className="main-view">
+        <div className="slot-selector">
+          <SlotRangeControls handleNextRange={this.handleNextRange}
+                             handlePreviousRange={this.handlePreviousRange}
+                             />
+         <ul className="schedule weekly-schedule">
+          {
+            this.renderSlotDays()
+          }
+          </ul>
+        </div>
       </div>
     );
   }
