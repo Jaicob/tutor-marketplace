@@ -279,13 +279,15 @@ $(document).ready(function() {
   }
 
   var blockSlot = function(event) {
-    var toggledStatus = event.data.status === 'Open' ? 1 : 0;
+    var toggledStatus = event.data.status === 'Open' ? 'Blocked' : 'Open';
+    console.log(toggledStatus);
 
     $.ajax({
       type: "PUT",
       url: API.endpoints.tutor_slots.update({
-        tutor_id: tutor_id
-      }) + '/' + event.data.slot_id,
+        tutor_id: tutor_id,
+        slot_id: event.data.slot_id
+      }),
       data: {
         status: toggledStatus //Blocked TODO: make an enumeration in js for this?
       },
