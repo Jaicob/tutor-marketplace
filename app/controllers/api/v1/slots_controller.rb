@@ -40,18 +40,9 @@ class API::V1::SlotsController < API::V1::Defaults
     end
   end
 
-  # def destroy # one slot only - does NOT use SlotManager
-  #   if @slot.destroy
-  #     render nothing: true, status: 200
-  #   else
-  #     render json: @slots.errors.full_messages
-  #   end
-  # end
-
   def destroy_slot_group # multiple slots - uses SlotManager
     slot_manager = SlotManager.new(safe_params)
     @slot_ids = slot_manager.destroy_slots
-    puts "HEYYYYYYYYYY!!!!!!!!!!! = #{@slot_ids.as_json}"
     render json: @slot_ids
   end
 
