@@ -1,15 +1,21 @@
 var SubjectSelector = React.createClass({
+  componentWillMount: function () {
+    this.setDelegates();
+  },
   componentDidMount: function () {
-      this.fetchSubjects()
-      navBar = this.props.UINavigationBarDelegate;
-      navBar.canGoForward = true;
-      navBar.canShowForwardButton = false;
-      navBar.canGoBack = false;
+    this.fetchSubjects();
   },
   getInitialState: function () {
     return {
       availableSubjects: []
     };
+  },
+  setDelegates: function () {
+    navBar = this.props.UINavigationBarDelegate;
+    navBar.canGoForward = true;
+    navBar.canShowForwardButton = false;
+    navBar.canGoBack = false;
+    this.props.updateDelegate(navBar);
   },
   fetchSubjects: function () {
     var endpoint = API.endpoints.tutor.courses({

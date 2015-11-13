@@ -93,6 +93,11 @@
     border: 1px solid #ccc;
     border-width: 0 1px 1px 1px;
     background: #eee;
+    .spacer {
+      height: 45px;
+      width: 210px;
+      float: right;
+    }
     .btn {
       background: $secondary_medium;
       padding: 10px 20px;
@@ -101,6 +106,13 @@
         background: $secondary_dark;
         color: white;
       }
+    }
+
+    .description {
+      padding: 10px;
+      max-width: none;
+      text-align: center;
+      margin: auto;
     }
 
     .back {
@@ -132,6 +144,8 @@
     border: 1px solid #ccc;
     border-width: 0 1px 0 1px;
   }
+
+  // [ ] TODO (AJ): Make this responsive, along with footer and header
 
   .subject-selector {
     padding: 20px;
@@ -171,6 +185,106 @@
 
       &.neutral {
         background: #eee;
+      }
+    }
+  }
+
+  .slot-selector {
+    height: 100%;
+
+    nav.calendar-nav {
+      ul {
+        margin: 0 0 0 0;
+        display: block;
+        width: 100%;
+        li {
+          .date-range-paginate {
+            display: inline-block;
+            background: $secondary_medium;
+            padding: 10px 20px;
+            color: white;
+            &:hover, &:active {
+              background: $secondary_dark;
+              color: white;
+            }
+          }
+
+          &.previous {
+            float: left;
+            display: inline-block;
+          }
+
+          &.next {
+            float: right;
+            display: inline-block;
+          }
+          &.instructions {
+            display: inherit;
+            text-align: center;
+            padding: 10px;
+            margin: auto;
+            font-family: Lato;
+            float: none;
+          }
+        }
+      }
+    }
+
+    ul.schedule {
+      list-style-type: none;
+      display: flex;
+      margin: 0;
+      li.day {
+        width: 100%;
+        text-align: center;
+        height: 355px;
+        overflow: scroll;
+
+        &:nth-child(odd) {
+          background: #eee;
+        }
+
+        input[type="radio"] {
+          position: absolute;
+          top: -999em;
+          left: -999em;
+        }
+
+        label {
+          margin-bottom: 20px;
+          padding-top: 10px;
+          padding-bottom: 10px;
+          background: white;
+        }
+
+        ul.available-times {
+          padding: 10px;
+          text-align: center;
+          list-style-type: none;
+          display: block;
+          width: 100%;
+          margin: 0;
+
+          li a {
+            display: block;
+            margin-bottom: 10px;
+            padding: 5px;
+            border: 1px solid $secondary_dark;
+            color: $secondary_dark;
+            background: white;
+
+            &:hover, &.active {
+              color: white;
+              background: $secondary_medium;
+            }
+
+            &.active {
+              &:before {
+                content: "✓ ";
+              }
+            }
+          }
+        }
       }
     }
   }
