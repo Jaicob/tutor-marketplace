@@ -60,7 +60,8 @@ class School < ActiveRecord::Base
   end
 
   def active_tutors
-    self.tutors.where(active_status: 1)
+    # self.tutors.where(active_status: 1)
+    self.tutors
   end
 
 end
