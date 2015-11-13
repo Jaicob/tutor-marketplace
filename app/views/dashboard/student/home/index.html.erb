@@ -2,27 +2,39 @@
   <!-- Partials of all the various info boxes/widgets for the home screen can be placed here -->
   <div class="row">
     <div class="small-12 columns">
-      <div class="upcoming-appts center">
+      <div class="center">        
+        <h4>Find Your Tutor</h4>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="small-12 columns">
+      <div class="box no-padding">
+        <div class="small-12 medium-8 medium-centered columns padding-2em">
+          <%= form_for :search, url: search_from_home_path, method: :post do |f| %>
+            <div class="home-search-field-container">
+              <div class="home-search-field">
+                <%= render '/course_selector/subject' %>
+              </div>
+              <div class="home-search-field">
+                <%= render '/course_selector/course' %>
+              </div>
+              <%= f.submit 'Search', class: 'home-search-button' %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="small-12 columns">
+      <div class="upcoming-appts center margin-top-2em">
         <h4>Upcoming Appointments</h4>
         <% if @student.appointments.where(status: 'Scheduled').count == 0 %>
           <div class="box no-appts">
             <h5 class="no-appts-message">You currently have no scheduled appointments</h5>
-            <p>Find a tutor to help you in your hardest course here:</p>
-            
-            <div class="row">
-              <div class="small-12 medium-8 medium-centered columns padding-2em">
-                <%= form_for :search, url: search_from_home_path, method: :post do |f| %>
-                  <div class="home-search-field">
-                    <%= render '/course_selector/subject' %>
-                  </div>
-                  <div class="home-search-field">
-                    <%= render '/course_selector/course' %>
-                  </div>
-                  <%= f.submit 'Search', class: 'home-search-button' %>
-                <% end %>
-              </div>
-            </div>
-
           </div>
         <% else %>
           <table>
@@ -31,7 +43,7 @@
                 <th>Date</th>
                 <th>Time</th>
                 <th>Subject</th>
-                <th>Student</th>
+                <th>Tutor</th>
                 <th>Contact</th>
                 <th>Actions</th>
               </tr>
@@ -70,10 +82,11 @@
     <div class="small-12 medium-8 columns">
       <div class="margin-top-2em center">
         <h4>Appointment History</h4>
-        <div class="box height-22em">
         <% if @student.appointments.where(status: 'Completed').count == 0 %>
-          <div class="no-appts">
-            <h5 class="no-appts-message no-appt-history-message">You currently have no appointment history.</h5>
+          <div class="box height-22em">
+            <div class="no-appts">
+              <h5 class="no-appts-message no-appt-history-message">You currently have no appointment history.</h5>
+            </div>
           </div>
         <% else %>
           <table>
@@ -82,9 +95,7 @@
                 <th>Date</th>
                 <th>Time</th>
                 <th>Subject</th>
-                <th>Student</th>
-                <th>Contact</th>
-                <th>Actions</th>
+                <th>Tutor</th>
               </tr>
             </thead>
             <tbody>
@@ -93,24 +104,16 @@
                   <td><%= appt.start_time.strftime("%b %-d") %></td>
                   <td><%= appt.start_time.strftime("%l:%M%P") %></td>
                   <td><%= Course.find(appt.course_id).formatted_name %></td>
-                  <td><%= appt.tutor.full_name %></td>
-                  <td><%= appt.tutor.email %></td>
-                  <td><a href="#" data-reveal-id="confirm-cancel-appt-<%= appt.id %>" class="custom-button blue">Cancel</a>
+                  <td><%= link_to appt.tutor.full_name, tutor_path(appt.tutor.slug) %></td>
                   </td>
                 </tr>
               <% end %>
             </tbody>
           </table>
         <% end %>
-        </div>
       </div>
     </div>
   </div>
-
-
-
-
-
 </section>
 
 
@@ -118,15 +121,14 @@
 
 <% @student.appointments.where(status: 'Scheduled').each do |appt| %>
   <div id="confirm-cancel-appt-<%= appt.id %>" class="reveal-modal medium" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
-    <h6 id="modalTitle">Are you sure you want to cancel this appointment?</h6>
+    <h3 id="modalTitle">Are you sure you want to cancel this appointment?</h6>
     <table>
       <thead>
         <tr>
           <th>Date</th>
           <th>Time</th>
           <th>Subject</th>
-          <th>Student</th>
-          <th>Contact</th>
+          <th>Tutor</th>
         </tr>
       </thead>
       <tbody>
@@ -135,12 +137,11 @@
           <td><%= appt.start_time.strftime("%l:%M%P") %></td>
           <td><%= Course.find(appt.course_id).formatted_name %></td>
           <td><%= appt.tutor.full_name %></td>
-          <td><%= appt.tutor.email %></td>
         </tr>
       </tbody>
     </table>
-    <p class="lead">As soon as you cancel, the tutor will be notified.</p>
-    <p>Cancellations within 24 hours of the scheduled appointment, will not recieve refunds</p>
+    <p>As soon as you cancel, the tutor will be notified.</p>
+    <p>Cancellations within 24 hours of the scheduled appointment, will not recieve refunds.</p>
     <a class="close-reveal-modal custom-button override-foundation" aria-label="Close">No, don't cancel</a>
     <%= form_for appt, url: cancel_appt_student_path(@student.id, appt.id), class: 'cancel-appt-form-button', method: :put do |f| %>
       <%= f.hidden_field :status, value: 'Cancelled' %>

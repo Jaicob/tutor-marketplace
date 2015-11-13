@@ -79,8 +79,10 @@ var TutorCard = React.createClass({
               </div>
             </div>
           </div>
-          <div className="custom-button full-width adust-position{adjustButtonPosition}">Book Now
-          </div>
+          <a href={"/tutors/" + tutor.user.slug + search} data={"from-search"}>
+            <div className="custom-button full-width adust-position{adjustButtonPosition}">Book Now
+            </div>
+          </a>
         </div>
 		);
 	}

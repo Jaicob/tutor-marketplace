@@ -2,11 +2,19 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 .box {
-    &.no-appts {
+  &.no-appts {
     padding: 4em;
+  }
+  &.no-padding {
+    padding: 0;
   }
 }
 
 .no-appt-history-message {
   line-height: 15em;
+}
+
+.home-search-field-container {
+  overflow: hidden;
+  height: 2em;
 }

@@ -21,8 +21,8 @@ module DashboardNavHelper
     else
       @dashboard_links = {
         'Home'          => home_student_path(current_user.slug),
-        'Settings'      => account_student_path(current_user.slug),
         'Find a Tutor'  => search_path,
+        'Settings'      => account_student_path(current_user.slug)
       }
     end
 
