@@ -7,22 +7,17 @@ $blue3: #0095AC;
 $green: #58AA4D;
 
 .tutor-form {
-  display: inline-block;
-  width: 49%;
   margin-top: -2em;
   margin-bottom: 1em;
 }
 .tutor-headline {
-  display: inline-block;
-  width: 50%;
-  vertical-align: top;
-}
-.tutor-headline h1 {
-  color: white;
-  text-shadow: $shadow;
-  text-align: center;
-  width: 10em;
-  margin-top: 0.5em;
+  h1 {
+    color: white;
+    text-shadow: $shadow;
+    text-align: center;
+    width: 10em;
+    margin-top: 0.5em;
+  }
 }
 .landing-page.lp-bottom-sign-up-form {
   background-color: #4F5252;
@@ -332,7 +327,7 @@ p.difference-text {
 
 .sign-up-form-box {
   display: inline-block;
-  padding: 1em;
+  padding: 0 1.8em 1.5em;
   border-radius: 4px;
   background-color: #0095AC;
   width: 16em;
@@ -344,28 +339,28 @@ p.difference-text {
 }
 form#new_user {
   padding: 0 1.2em;
+  input#user_first_name, input#user_last_name, input#user_email, input#user_password, input#user_tutor_phone_number, input#rate {
+    height: 2em;
+    margin-bottom: 0.3em;
+    border-radius: 4px;
+    font-weight: 100;
+  }
+  select#school, select#subject, select#course {
+    height: 2em;
+    padding: 0 0.5em;
+    margin-bottom: 0.3em;
+    border-radius: 4px;
+    font-weight: 100;
+  }
 }
 p.sign-up-title {
-  font-size: 1.1em;
-  margin: 0.3em 0 1em;
-  font-weight: 100;
+  font-size: 1em;
+  margin: 1em 0;
+  font-weight: 400;
 }
 .half-form-row {
   display: inline-block;
   width: 49%;
-}
-input#user_first_name, input#user_last_name, input#user_email, input#user_password, input#user_tutor_phone_number, input#rate {
-  height: 2em;
-  margin-bottom: 0.3em;
-  border-radius: 4px;
-  font-weight: 100;
-}
-select#school, select#subject, select#course {
-  height: 2em;
-  padding: 0 0.5em;
-  margin-bottom: 0.3em;
-  border-radius: 4px;
-  font-weight: 100;
 }
 .green {
   background-color: $green;
@@ -380,3 +375,6 @@ select#school, select#subject, select#course {
 .nav-links-right {
   display: none;
 }
+
+
+

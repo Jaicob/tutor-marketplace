@@ -1,4 +1,4 @@
 .bank-errors {
-  border: 4px solid #DE6328;
-  padding: 0.5em;
+  color: #DE6328;
+  font-weight: 900;
 }

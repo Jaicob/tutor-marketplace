@@ -4,22 +4,22 @@ a.payment-settings-link {
   color: white;
   font-weight: 100;
   background-color: #0095AC;
-  padding: 0.4em 1em;
-  border-radius: 5px;
-}
-a.payment-settings-link:hover {
-  font-weight: 100;
+  padding: 0.5em 1em;
+  border-radius: 4px;
+  border: 1px solid #0095AC;
 }
 </style>
 <section class="dashboard-content">
   <div class="row">
-    <h2 class="dashboard-title">Settings Manager</h2>
+    <div class="small-12 columns">
+      <h2 class="dashboard-title">Settings Manager</h2>
+    </div>
   </div>
   <div class="row">
-    <div class="small-5 large-3 columns sub-menu">
+    <div class="small-5 medium-3 columns sub-menu">
       <%= render 'vertical_sub_menu' %>
     </div>
-    <div class="small-7 large-4 large-offset-1 columns end"> 
+    <div class="small-7 medium-4 medium-offset-1 columns end"> 
       <%= form_for @tutor do |f| %>
         
         <%= f.label :line1, 'Address Line 1' %>
