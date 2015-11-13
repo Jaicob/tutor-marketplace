@@ -76,41 +76,6 @@
       color: #a8a8a8;
     }
 
-    /* Styling for icon-col in new tutor partial */ 
-
-    .icon-row {
-      display: block;
-      text-align: left;
-      margin-left: 1em;
-    }
-    .icon-box, .caption-box {
-      display: inline-block;
-    }
-    .icon-box {
-      width: 20%;
-      text-align: center;
-    }
-    .caption-box {
-      width: 78%;
-    }
-    .big-welcome-fi {
-      font-size: 1.7em;
-      position: relative;
-      top: 7px;
-    }
-    .caption-box p, .icon-row-header {
-      margin: 0;
-      font-size: 0.9em;
-    }
-
-    /* Full view */
-
-    @media (min-width: 1000px) {
-    .container.icons-container {
-      margin-top: 1em;
-    }
-    }
-
     /* Styling for welcome-col in new tutor partial */ 
 
     .welcome-text {
@@ -225,6 +190,11 @@
   h4 {
     text-align: center;
   }
+  .metrics {
+    text-align: center;
+    padding: 0;
+    margin: 0
+  }
   .upcoming-appts {
     table {
       width: 100%;
@@ -252,10 +222,6 @@
       }
     }
   }
-  .metrics, .campus-manager{
-    text-align: center;
-    padding: 1em;
-  }
   .campus-manager{
     .box p {
       margin: 0;
@@ -280,38 +246,20 @@ form.edit_appointment {
   display: inline-block;
 }
 
+.dash-home-top-row {
+  margin-top: 2em;
+}
 
-// <div class="row">
-//     <div class="small-12 medium-6 columns">
-//       <div class="metrics">
-//         <h4>Metrics</h4>
-//         <div class="box tutor-home-small-box">
-//           <div class="half top-half">
-//             <p>Revenue: $<%= @tutor.total_income %></p>
-//           </div>
-//           <div class="half">
-//             <p>Appointments: <%= @tutor.appointments.count %></p>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//     <div class="small-12 medium-6 columns">
-//       <div class="campus-manager">
-//         <h4>Your Campus Manager</h4>
-//         <div class="box">
-//           <p>Stuff goes here...</p>
-//         </div>
-//       </div>
-//     </div>
-//   </div>
-
-// <section class="dashboard-content tutor-home-page">
-//   <div class="row">
-//     <div class="small-12 columns">
-//       <div class="upcoming-appts">
-//   <div class="row">
-//     <div class="small-12 medium-6 columns">
-//       <div class="metrics">
-//     <div class="small-12 medium-6 columns">
-//       <div class="campus-manager">
-
+.dash-home-header {
+  border: 1px solid #2BC2DE;
+  border-bottom: 0;
+  margin-bottom: 0;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  color: white;
+  background-color: #0095AC;
+  padding: 0.3em;
+  text-align: center;
+  max-width: none;
+  width: 100%;
+}

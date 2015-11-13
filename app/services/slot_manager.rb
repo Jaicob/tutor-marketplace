@@ -20,9 +20,6 @@ class SlotManager
 
     @original_start_time = params[:original_start_time].to_datetime
     @original_duration = params[:original_duration]
-    puts "@original_start_time = #{@original_start_time}"
-    puts "@original_duration = #{@original_duration}"
-
 
     @new_start_time = params[:new_start_time].to_datetime if params[:new_start_time]
     @new_duration = params[:new_duration] if params[:new_duration]
@@ -38,19 +35,13 @@ class SlotManager
   # should probably use find_each here too
   def get_slots_for_range
     @slots = []
-    puts "@tutor.slots = #{@tutor.slots}"
     @tutor.slots.each do |slot|
-      puts "slot = #{slot}"
       @slot_start_DOW_time = slot.start_time.strftime('%a %T')
       @slot_duration = slot.duration
-
-      puts "111 = @slot_start_DOW_time == @original_start_DOW_time = #{@slot_start_DOW_time == @original_start_DOW_time}"
-      puts "222 = @slot_duration == @original_duration.to_i = #{@slot_duration == @original_duration.to_i}"
       if @slot_start_DOW_time == @original_start_DOW_time && @slot_duration == @original_duration.to_i
         @slots << slot
       end
     end
-    puts "aaaaa - @SLOTS!!!!!!!!!!!!!!!! = #{@slots}"
     return @slots
   end
 
@@ -70,7 +61,6 @@ class SlotManager
   def destroy_slots
     @slots = get_slots_for_range
     @slot_ids = []
-    # slot_info = @slots.first.clone # necessary to return copy of deleted slots to FullCalendar
     @slots.each do |slot|
       @slot_ids << slot
       slot.destroy

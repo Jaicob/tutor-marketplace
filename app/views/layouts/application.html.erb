@@ -22,15 +22,9 @@
       <%= yield(:admin_panel) if content_for? (:admin_panel) %>
       <%= yield(:dashboard_nav) if content_for? (:dashboard_nav) %>
       <%= yield(:new_tutor_checklist) if content_for? (:new_tutor_checklist) %>
-      <div class="row">
-        <div class="small-12 columns">
-          <p class="flash-message">
-            <span class="notice"><%= notice %></span>
-            <span class="alert"><%= alert %></span>
-          </p>
-        </div>
-      </div>
+      <%= yield(:flash_messages) if content_for? (:flash_messages) %>
       <%= yield %>
+      
     </div>
     <footer>
       <div class="row full-width footer-bg">

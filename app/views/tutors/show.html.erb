@@ -1,4 +1,5 @@
-<% if request.fullpath.to_s.split('=').count > 1 %>
+<% if @from_search == true %>
+  <%= link_to 'Back to Results', search_path(:course_id => request.fullpath.to_s.split('=').second, :indirect_search => true) %>
   <div class="row top-buffer bottom-buffer">
   <!-- [ ] TODO (AJ) Refactor NOT to use request.fullpath.to_s.split('=').second -->
   <%= link_to '← Back to Results', search_path(:course_id => request.fullpath.to_s.split('=').second, :indirect_search => true), class: 'custom-button' %>

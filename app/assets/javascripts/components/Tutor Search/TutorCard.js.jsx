@@ -51,7 +51,7 @@ var TutorCard = React.createClass({
 		return (
         <div className="card">
           <div className="card-content">
-            <a href={"/tutors/" + tutor.user.slug + search}>
+            <a href={"/tutors/" + tutor.user.slug + search} data={"from-search"}>
               <div className="profile-pic-box">
                 <img src={profile_pic_url} alt="Profile Picture"></img>
               </div>
@@ -78,8 +78,10 @@ var TutorCard = React.createClass({
               </div>
             </div>
           </div>
-          <div className="custom-button full-width adust-position{adjustButtonPosition}">Book Now
-          </div>
+          <a href={"/tutors/" + tutor.user.slug + search} data={"from-search"}>
+            <div className="custom-button full-width adust-position{adjustButtonPosition}">Book Now
+            </div>
+          </a>
         </div>
 		);
 	}
