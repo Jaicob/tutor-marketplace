@@ -1,3 +1,12 @@
 // Place all the styles related to the dashboard/student/home controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.box {
+    &.no-appts {
+    padding: 4em;
+  }
+}
+
+.no-appt-history-message {
+  line-height: 15em;
+}

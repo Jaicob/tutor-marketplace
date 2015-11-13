@@ -1,11 +1,12 @@
 class TutorsController < ApplicationController
   before_action :set_user, only: [:edit, :update, :destroy]
   before_action :set_tutor, only: [:show, :edit, :update, :destroy, :submit_application]
+  before_action :set_tutor_for_profile_viewer, only: [:show]
 
   # TUTOR CREATION IS HANDLED THROUGH THE DEVISE REGISTRATION CONTROLLER - ONE FORM CREATES USER AND TUTOR
 
   def show
-    if request.referer && request.referer.split('/').last == 'search'
+    if request.referer && request.referer.split(/[^[:alpha:]]+/).include?('search')
       @from_search = true
     end
   end
@@ -67,6 +68,10 @@ class TutorsController < ApplicationController
   end
 
   private
+
+    def set_tutor_for_profile_viewer
+      @tutor = User.find(params[:id]).tutor
+    end
 
     def tutor_params
       params.require(:tutor).permit(:school_id, :additional_degrees, :courses_approved, :rating, :application_status, :appt_notes, :birthdate, :degree, :major, :extra_info_1, :extra_info_2, :extra_info_3, :graduation_year, :phone_number, :profile_pic, :transcript, :active_status, :crop_x, :crop_y, :crop_w, :crop_h, :line1, :line2, :city, :state, :postal_code, :ssn_last_4, course: [:course_id], tutor_course: [:rate], user_attributes: [:first_name, :last_name, :email, :phone_number, :password, :password_confirmation])

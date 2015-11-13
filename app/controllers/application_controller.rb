@@ -52,8 +52,6 @@ class ApplicationController < ActionController::Base
     def set_tutor
       if current_user && current_user.tutor
         @tutor = current_user.tutor
-      else
-        @tutor = User.find(params[:id]).tutor # This sets @tutor for the show action when a user is not logged in which is necessary for visitors to see a tutor's profile
       end
     end
 
@@ -61,8 +59,6 @@ class ApplicationController < ActionController::Base
     def set_student
       if current_user && current_user.student
         @student = current_user.student
-      else
-        @student = nil
       end
     end
 
