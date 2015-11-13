@@ -4,21 +4,18 @@
   </div>
   <div class="new-tutor-partial-wrapper">
     <div class="row">
-      <div class="small-12 medium-4 columns container-col">
-        <div class="container welcome-container">
-          <%= render 'layouts/partials/tutors/new_tutor_welcome' %>
-        </div>
+      <div class="small-12 medium-8 columns">
+        <%= render 'layouts/partials/tutors/new_tutor_welcome' %>
       </div>
       <div class="small-12 medium-4 columns">
-        <div class="container icons-container">
-          <%= render 'layouts/partials/tutors/new_tutor_icons' %>
-        </div>
-      </div>
-      <div class="small-12 medium-4 columns">
-        <div class="container checklist-container">
-          <%= render 'layouts/partials/tutors/new_tutor_checklist' %>
-        </div>
+        <%= render 'layouts/partials/tutors/new_tutor_checklist' %>
       </div>
     </div>
   </div>
 </div>
+<!-- Joyride with one-stop -- explains that Checklist is made up of links to be clicked -->
+<ol class="joyride-list" data-joyride>
+  <li data-id="firstStop" data-text="Next" data-options="tip_location: top; prev_button: false">
+    <p>Click through this list to finish your account activation.</p>
+  </li>
+</ol>

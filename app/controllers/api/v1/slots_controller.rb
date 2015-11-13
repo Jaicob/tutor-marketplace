@@ -22,11 +22,16 @@ class API::V1::SlotsController < API::V1::Defaults
     end
   end
 
-  def update_slots
-    slot_manager = SlotManager.new(safe_params)
-    # slots = slot_manager.get_slots_for_range
-    # render json: slots
+  def update # one slot only - does NOT use SlotManager
+    if @slot.update(safe_params)
+      render json: @slot, status: 200
+    else
+      render json: @slot.errors.full_messages
+    end
+  end
 
+  def update_slot_group # multiple slots - uses SlotManager
+    slot_manager = SlotManager.new(safe_params)
     @slots = slot_manager.update_slots    
     if @slots
       render json: @slots, status: 200
@@ -35,12 +40,25 @@ class API::V1::SlotsController < API::V1::Defaults
     end
   end
 
-  def destroy
+  def destroy # one slot only - does NOT use SlotManager
     if @slot.destroy
       render nothing: true, status: 200
     else
       render json: @slots.errors.full_messages
     end
+  end
+
+  def destroy_slot_group # multiple slots - uses SlotManager
+    # # hacky way of checking successful deletion
+    # x = Slot.count
+    slot_manager = SlotManager.new(safe_params)
+    @slots = slot_manager.destroy_slots
+    # y = Slot.count
+    # if x > y
+    #   render json: "SUCCESS" 
+    # else
+    #   render json: "FUCKIN SHIT DIDNT WORK"
+    # end  
   end
 
   private

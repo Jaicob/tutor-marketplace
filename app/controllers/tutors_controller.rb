@@ -8,13 +8,22 @@ class TutorsController < ApplicationController
   end
 
   def update
+    if tutor_params[:school_id]
+      if !@tutor.school_change_allowed?
+        redirect_to :back
+        flash[:alert] = "You cannot switch your campus with active course listings at your current campus."
+        return
+      else
+        cookies[:school_id] = { value: tutor_params[:school_id], expires: 2.months.from_now }
+      end
+    end
     @tutor.update(tutor_params)
     @tutor.crop_profile_pic(tutor_params)
     if @tutor.save
       redirect_to @tutor.update_action_redirect_path(tutor_params) # redirects back to current page in settings
     else
-      flash[:notice] = "Tutor was not updated: #{@tutor.errors.full_messages}"
       redirect_to :back
+      flash[:alert] = "Tutor was not updated: #{@tutor.errors.full_messages}"
     end
   end
 

@@ -59,8 +59,12 @@ class Tutor < ActiveRecord::Base
   after_create :change_user_role_to_tutor
   after_commit :update_application_status
 
+  # custom validation - prevents a tutor from changing school if tutor has courses at one school
+  def school_change_allowed?
+    self.courses.count > 0 ? false : true
+  end
+
   def self.degree_collection
-    # [["B.A.",0],["B.S.",1],["M.B.A.",2],["M.S.",3],["M.Ed",4],["PhD.",5]]
     ["B.A.","B.S.","M.B.A.","M.S.","M.Ed.","PhD."]
   end
 
