@@ -23,3 +23,12 @@ center {
 .height-22em {
   height: 22em;
 }
+
+.no-top-margin {
+  margin-top: 0;
+}
+
+.no-top-border-radius {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}

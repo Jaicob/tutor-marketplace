@@ -1,9 +1,9 @@
 <section class="dashboard-content tutor-home-page">
-  <!-- Partials of all the various info boxes/widgets for the home screen can be placed here -->
+
   <div class="row">
     <div class="small-12 columns">
       <div class="upcoming-appts">
-        <h4>Upcoming Appointments</h4>
+        <p class="dash-home-header dash-home-top-row">UPCOMING APPOINTMENTS</p>
         <% if @tutor.appointments.where(status: 'Scheduled').count == 0 %>
           <div class="box no-appts">
             <h5 class="no-appts-message">You currently have no scheduled appointments</h5>
@@ -14,7 +14,7 @@
             <p class="list-item">&#8226; Adding more courses in your <%= link_to 'Courses', tutor_courses_path(@tutor.slug) %></p>
           </div>
         <% else %>
-          <table>
+          <table class="no-top-margin no-top-border-radius">
             <thead>
               <tr>
                 <th>Date</th>
@@ -44,22 +44,44 @@
       </div>
     </div>
   </div>
+
   <div class="row">
-    <div class="small-12 medium-6 columns">
-      <div class="metrics">
-        <h4>Metrics</h4>
-        <div class="box">
-          <h3 class="center">$<%= @tutor.total_income %></h3>
-          <p class="center">Total Revenue</p>
-          <h3 class="center"><%= @tutor.appointments.count %></h3>
-          <p class="center">Total Appointments</p>
+    <div class="small-12 columns">
+      <p class="dash-home-header">METRICS</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="small-12 columns">
+      <div class="box">
+        <div class="row">
+          <div class="small-12 medium-3 columns">
+            <h3 class="metrics">$<%= @tutor.total_income %></h3>
+            <p class="metrics">Total Revenue</p>
+          </div>
+          <div class="small-12 medium-3 columns">
+            <h3 class="metrics"><%= @tutor.appointments.count %></h3>
+            <p class="metrics">Total Appointments</p>
+          </div>
+          <div class="small-12 medium-3 columns">
+            <h3 class="metrics">0</h3>
+            <p class="metrics">Fucks Given</p>
+          </div>
+          <div class="small-12 medium-3 columns">
+            <h3 class="metrics">3</h3>
+            <p class="metrics">Felony Convictions</p>
+          </div>
         </div>
       </div>
     </div>
-    <div class="small-12 medium-6 columns">
-      <div class="campus-manager">
-        <h4>Your Campus Manager</h4>
-        <div class="box">
+  </div>
+
+
+  <div class="row">
+    <div class="small-12 medium-4 columns">
+      <div class="margin-top-2em center">
+        <p class="dash-home-header">YOUR CAMPUS MANAGER</p>
+        <div class="box height-22em">
           <%= image_tag(@school.campus_manager.profile_pic_url, class: 'campus_manager_pic') %>
           <h6 class="name"><%= @school.campus_manager.full_name %></h6>
           <p><%= @school.campus_manager.email %></p>
@@ -67,7 +89,47 @@
         </div>
       </div>
     </div>
+
+    <div class="small-12 medium-8 columns">
+      <div class="margin-top-2em center">
+        <p class="dash-home-header">APPOINTMENT HISTORY</p>
+        <% if @tutor.appointments.count == 0 %>
+          <div class="box height-22em">
+            <div class="no-appts">
+              <h5 class="no-appts-message no-appt-history-message">You currently have no appointment history.</h5>
+            </div>
+          </div>
+        <% else %>
+          <table class="no-top-margin no-top-border-radius">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Subject</th>
+                <th>Status</th>
+                <th>Student</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @tutor.appointments.each do |appt| %>
+                <tr>
+                  <td><%= appt.start_time.strftime("%b %-d") %></td>
+                  <td><%= appt.start_time.strftime("%l:%M%P") %></td>
+                  <td><%= Course.find(appt.course_id).formatted_name %></td>
+                  <td><%= appt.status %></td>
+                  <td><%= appt.student.full_name %></td>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% end %>
+      </div>
+    </div>
   </div>
+
+
+
 </section>
 
 
