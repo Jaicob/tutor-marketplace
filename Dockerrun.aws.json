@@ -6,25 +6,20 @@
 	},
 	"containerDefinitions" : [
 		{
-			"name":"redis",
-			"image" : "redis",
-			"essential": true,
-			"memory": 128,
-			"portMappings" : [
-				{
-					"hostPort": 6379,
-					"containerPort": 6379
-				}
-			]
-		},
-		{
 			"name":"sidekiq",
 			"image" : "jaicob/mailer",
 			"essential": true,
 			"memory": 128,
-			"links" : [
-				"redis"
-			]	
+			"environment": [
+       			{
+        			"name": "REDIS_PRODUCTION_ADDR",
+          			"value": "axon-prod.he9z8n.0001.use1.cache.amazonaws.com"
+        		},
+        		{
+        			"name": "REDIS_PRODUCTION_PORT",
+          			"value": "6379"
+        		}
+     		 ]
 		},
 		{
 			"name":"web",
@@ -38,9 +33,18 @@
 				}
 			],
 			"links" : [
-				"redis",
 				"sidekiq"
 			],
+			"environment": [
+       			{
+        			"name": "REDIS_PRODUCTION_ADDR",
+          			"value": "axon-prod.he9z8n.0001.use1.cache.amazonaws.com"
+        		},
+        		{
+        			"name": "REDIS_PRODUCTION_PORT",
+          			"value": "6379"
+        		}
+     		],
 			"mountPoints":[
 				{
 					"sourceVolume" :"awseb-logs-web",
