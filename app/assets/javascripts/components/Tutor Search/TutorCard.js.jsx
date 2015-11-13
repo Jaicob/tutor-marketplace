@@ -52,7 +52,7 @@ var TutorCard = React.createClass({
 		return (
         <div className="card">
           <div className="card-content">
-            <a href={"/tutors/" + tutor.user.slug + search}>
+            <a href={"/tutors/" + tutor.user.slug + search} data={"from-search"}>
               <div className="profile-pic-box">
                 <img src={profile_pic_url} alt="Profile Picture"></img>
               </div>

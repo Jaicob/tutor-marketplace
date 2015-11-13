@@ -5,6 +5,9 @@ class TutorsController < ApplicationController
   # TUTOR CREATION IS HANDLED THROUGH THE DEVISE REGISTRATION CONTROLLER - ONE FORM CREATES USER AND TUTOR
 
   def show
+    if request.referer && request.referer.split('/').last == 'search'
+      @from_search = true
+    end
   end
 
   def update
