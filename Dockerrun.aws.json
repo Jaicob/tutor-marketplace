@@ -9,7 +9,7 @@
 			"name":"sidekiq",
 			"image" : "jaicob/mailer",
 			"essential": true,
-			"memory": 128,
+			"memory": 256,
 			"environment": [
        			{
         			"name": "REDIS_PRODUCTION_ADDR",
