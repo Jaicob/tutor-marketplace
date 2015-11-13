@@ -49,7 +49,6 @@ class Course < ActiveRecord::Base
 
   def active_tutors
     self.tutors.where(active_status: 1)
-    # self.tutors
   end
 
 end
