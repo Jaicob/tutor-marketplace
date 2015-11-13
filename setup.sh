@@ -1,5 +1,5 @@
 RAILS_ENV=$RAILS_ENV
-: ${RAILS_ENV:="development"}
+: ${RAILS_ENV:="production"}
 export RAILS_ENV
 
 SECRET_KEY_BASE=$SECRET_KEY_BASE
@@ -40,7 +40,7 @@ RAILS_ENV=production bundle exec rake assets:precompile --trace
 
 
 echo "Setting up database"
-rake db:create db:migrate
+rake db:create db:migrate 
 
 # echo "Running unicorn"
 
