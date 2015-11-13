@@ -1,41 +1,4 @@
 <style>
-
-  .profile-pic-input-box {
-    margin: auto;
-    position: relative;
-    overflow: hidden;
-    margin: 1em 0;
-    border-radius: 4px;
-    font-size: 1.5em;
-  }
-  input#profile-pic-input {
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    right: 0;
-    top: 0;
-    opacity: 0;
-    max-width: none;
-  }
-  .profile-pic-input-button {
-    height: 100%;
-    width: 100%;
-    float: right;
-    background-color: #2BC2DE;
-    color: white;
-    font-weight: 100;
-    text-align: center;
-    line-height: 2em;
-    font-size: 0.8em;
-  }
-
-  p.file-types {
-    font-size: 0.8em;
-    text-align: center;
-  }
-
-
-
 /* Do not remove! This must be in the view for it to only highlight the correct selected link in the settings vertical sub-menu */
 a.profile-settings-link {
   color: white;
@@ -64,19 +27,25 @@ a.profile-settings-link {
       <a href="#" data-reveal-id="cropCurrentPhotoModal" class="custom-button">Crop Current Photo</a>
 
       <%= form_for @tutor do |f| %>
-        <h3 class="header-top-margin" id="profile-fields">Profile Info</h3>
+        <h5 class="header-top-margin" id="profile-fields">Profile Info</h5>
 
         <%= f.label :degree %>
-        <%= f.select(:degree, options_for_select(["Bachelor's", "Master's", "PhD"],["#{@tutor.degree}"]), include_blank: true) %>
+        <%= f.select(:degree, options_for_select(Tutor.degree_collection, ["#{@tutor.degree}"])) %>
         
         <%= f.label :major %>
         <%= f.text_field :major %>
 
-        <%= f.label :graduation_year %>
+        <%= f.label :graduation_year, 'Graduation Year' %>
         <%= f.number_field :graduation_year %>
 
-        <%= f.label :extra_info_1, 'Extra Information' %>
-        <%= f.text_area :extra_info_1, row: 3 %>
+        <%= f.label :extra_info_1, 'Profile Info 1' %>
+        <%= f.text_area :extra_info_1 %>
+
+        <%= f.label :extra_info_1, 'Profile Info 2' %>
+        <%= f.text_area :extra_info_1 %>
+        
+        <%= f.label :extra_info_1, 'Profile Info 3' %>
+        <%= f.text_area :extra_info_1 %>
 
         <%= f.submit 'Save', class: 'custom-button' %>
 
@@ -168,7 +137,7 @@ a.profile-settings-link {
               <%= f.hidden_field "crop_#{attribute}" %>
             <% end %>
             <div class="actions">
-              <%= f.submit "Crop", class: 'button radius expand' %>
+              <%= f.submit "Crop", class: 'custom-button' %>
             </div>
           <% end %>
         </div>
@@ -177,4 +146,3 @@ a.profile-settings-link {
 
   <a class="close-reveal-modal" aria-label="Close">&#215;</a>
 </div>
-
