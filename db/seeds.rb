@@ -115,6 +115,11 @@ Tutor.all.each do |tutor|
   slot_creator.create_slots
 end
 
+# Activate tutors
+Tutor.all.each do |tutor|
+  tutor.update(active_status: 1)
+end
+
 # Create 200 Users to become Students, 5 for each school
 200.times{
   User.create!(

@@ -33,9 +33,13 @@
   <p class="center white shadow book-two-mins">Book your in-person & on-campus tutor in just two minutes</p>
 </div>
 <div class="landing-page lp-top-subjects-section">
-  <div class="top-subjects-box">
+  <div class="row">
     <% @school.top_subjects.each do |subj| %>
-      <div class="top-subject"><%= subj %></div>
+      <div class="small-12 medium-3 columns">
+        <div class="top-subject">
+          <%= subj %>
+        </div>
+      </div>
     <% end %>
   </div>
 </div>

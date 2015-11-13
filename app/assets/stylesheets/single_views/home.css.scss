@@ -79,19 +79,12 @@ input.home-search-button {
   background-color: #0095AC;
   padding: 0.5em;
 }
-.top-subjects-box {
-  display: block;
-  width: 80%;
-  margin: auto;
-  overflow: hidden;
-}
 .top-subject {
   padding: 0.3em;
   text-align: center;
   border-radius: 4px;
   font-weight: 100;
   background-color: #2BC2DE;
-  margin: 0 0.2em;
   color: white;
 }
 p.center.white.shadow.book-two-mins {
@@ -102,10 +95,6 @@ p.center.white.shadow.book-two-mins {
 /* iPad view */
 
 @media screen and (min-width: 768px) {
-  .top-subject {
-    display: inline-block;
-    width: 24%;
-  }
   .home-search-box {
     display: block;
     width: 80%;

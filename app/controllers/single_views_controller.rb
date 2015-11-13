@@ -19,8 +19,10 @@ class SingleViewsController < ApplicationController
   end
 
   def search
-    @course = Course.find(params[:course_id])
-    @subject = @course.subject
+    if params[:course_id]
+      @course = Course.find(params[:course_id])
+      @subject = @course.subject
+    end
   end
 
   def about_us

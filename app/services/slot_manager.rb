@@ -70,9 +70,9 @@ class SlotManager
   def destroy_slots
     @slots = get_slots_for_range
     @slot_ids = []
-    puts "@SLOTS!!!!!!!!!!!!!!!! = #{@slots}"
+    # slot_info = @slots.first.clone # necessary to return copy of deleted slots to FullCalendar
     @slots.each do |slot|
-      @slot_ids << slot.id
+      @slot_ids << slot
       slot.destroy
     end
     @slot_ids

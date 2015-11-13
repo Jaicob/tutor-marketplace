@@ -256,9 +256,10 @@ $(document).ready(function() {
       },
       dataType: "json",
       success: function(data) {
+        console.log(data);
         $('#calendar').fullCalendar('removeEvents', function(event) {
-          var isStartMatch = (event.start.format('DD HH:mm:ss') === event.data.start.format('DD HH:mm:ss'));
-          var isEndMatch = (event.end.format('DD HH:mm:ss') === event.data.end.format('DD HH:mm:ss'));
+          var isStartMatch = (event.start.format('DD HH:mm:ss') === data[0].start.format('DD HH:mm:ss'));
+          var isEndMatch = (event.end.format('DD HH:mm:ss') === data[0].end.format('DD HH:mm:ss'));
           return (isStartMatch && isEndMatch) ? true : false;
         });
       },
