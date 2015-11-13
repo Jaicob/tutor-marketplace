@@ -19,7 +19,7 @@
  *= require framework_and_overrides
  */
 
-  *, p, h1, h2, h3, h4, h5, h6 {
+  p, h1, h2, h3, h4, h5, h6 {
     font-family: 'Lato';
     color: #4F5252;
    }
@@ -85,6 +85,40 @@
     }
   }
 
+  .custom-button {
+    background-color: #58AA4D;
+    padding: 0.5em 2em;
+    font-weight: 100;
+    font-size: 0.8em;
+    font-family: 'Lato';
+    border-radius: 4px !important;
+    border: none;
+    color: white;
+    margin-bottom: 1em;
+    text-align: center;
+    &.full-width {
+      width: 100%;
+    }
+    &.no-margin {
+      margin: 0;
+    }
+    &.blue {
+      background-color: #0095AC;
+    }
+
+    &:hover,
+    &:active {
+      color: white;
+    }
+  }
+
+  @mixin border-box {
+    border: 1px solid #BBE5EE;
+    padding: 1em;
+    border-radius: 4px;
+    background-color: #eff1f3;
+  }
+
 /* Styling for the Devise login form page */
 
   form#new_user {
@@ -124,7 +158,7 @@
         box-shadow: none;
       }
     }
-    
+
     .nav-logo-box.nav-link-box {
       text-align: center;
       width: 100%;
