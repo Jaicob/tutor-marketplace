@@ -8,7 +8,6 @@ source 'https://rubygems.org' do
     gem 'rubocop', '~> 0.32'
     gem 'rspec-rails', '~> 3.3'
     gem 'factory_girl_rails', '~> 4.5'
-    gem 'faker', '~> 1.4'
     gem 'capybara'
     gem 'capybara-webkit'
   end
@@ -56,6 +55,7 @@ source 'https://rubygems.org' do
   gem 'fog'
   gem 'fog-aws'
   gem 'brakeman'
+  gem 'faker', '~> 1.4'
 
   # Payments through Stripe
   gem 'stripe'
