@@ -32,7 +32,7 @@
     <div class="small-12 columns">
       <div class="upcoming-appts center margin-top-2em">
         <h4>Upcoming Appointments</h4>
-        <% if @student.appointments.where(status: 'Scheduled').count == 0 %>
+        <% if @student.appointments.where(status: 0).count == 0 %>
           <div class="box no-appts">
             <h5 class="no-appts-message">You currently have no scheduled appointments</h5>
           </div>
@@ -49,7 +49,7 @@
               </tr>
             </thead>
             <tbody>
-              <% @student.appointments.where(status: 'Scheduled').each do |appt| %>
+              <% @student.appointments.where(status: 0).each do |appt| %>
                 <tr>
                   <td><%= appt.start_time.strftime("%b %-d") %></td>
                   <td><%= appt.start_time.strftime("%l:%M%P") %></td>
@@ -82,7 +82,7 @@
     <div class="small-12 medium-8 columns">
       <div class="margin-top-2em center">
         <h4>Appointment History</h4>
-        <% if @student.appointments.where(status: 'Completed').count == 0 %>
+        <% if @student.appointments.count == 0 %>
           <div class="box height-22em">
             <div class="no-appts">
               <h5 class="no-appts-message no-appt-history-message">You currently have no appointment history.</h5>
@@ -95,15 +95,17 @@
                 <th>Date</th>
                 <th>Time</th>
                 <th>Subject</th>
+                <th>Status</th>
                 <th>Tutor</th>
               </tr>
             </thead>
             <tbody>
-              <% @student.appointments.where(status: 'Completed').each do |appt| %>
+              <% @student.appointments.each do |appt| %>
                 <tr>
                   <td><%= appt.start_time.strftime("%b %-d") %></td>
                   <td><%= appt.start_time.strftime("%l:%M%P") %></td>
                   <td><%= Course.find(appt.course_id).formatted_name %></td>
+                  <td><%= appt.status %></td>
                   <td><%= link_to appt.tutor.full_name, tutor_path(appt.tutor.slug) %></td>
                   </td>
                 </tr>

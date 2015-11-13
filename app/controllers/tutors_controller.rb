@@ -40,8 +40,13 @@ class TutorsController < ApplicationController
   end
 
   def submit_application
-    @tutor.update(tutor_params)
-    redirect_to home_tutor_path(@tutor.slug)
+    if @tutor.update(tutor_params)
+      redirect_to home_tutor_path(@tutor.slug)
+    else
+      redirect_to :back
+      flash[:alert] = "Application was not submitted: #{@tutor.errors.full_messages.first}"
+      puts "Application was not submitted: #{@tutor.errors.full_messages}"
+    end
   end
 
   def tutor_payment_info_form

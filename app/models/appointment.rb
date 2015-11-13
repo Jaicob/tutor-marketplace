@@ -59,7 +59,7 @@ class Appointment < ActiveRecord::Base
     student = Student.find(student_id)
     course = Course.find(course_id)
     if !(tutor.school.name == course.school.name && student.school.name == course.school.name)
-      errors.add(:course_id, "is not the same for tutor, student and course: \ntutor and course = #{student.school.name == course.school.name}\nstudent and course = #{tutor.school.name == course.school.name}")
+      errors.add(:school_id, "is not the same for tutor, student and course: \ntutor and course = #{student.school.name == course.school.name}\nstudent and course = #{tutor.school.name == course.school.name}")
     end
   end
 

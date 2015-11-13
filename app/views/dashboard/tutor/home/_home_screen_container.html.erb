@@ -97,7 +97,7 @@
               </tr>
             </tbody>
           </table>
-    <p class="lead">As soon as you cancel, the student will be notified and refunded.</p>
+    <p>As soon as you cancel, the student will be notified and refunded.</p>
     <a class="close-reveal-modal custom-button override-foundation" aria-label="Close">No, don't cancel</a>
     <%= form_for appt, url: cancel_appt_tutor_path(@tutor.slug, appt.id), class: 'cancel-appt-form-button', method: :put do |f| %>
       <%= f.hidden_field :status, value: 'Cancelled' %>
@@ -105,30 +105,3 @@
     <% end %>
   </div>
 <% end %>
-
-
-<!--   {
-    "id": 725,
-    "tutor_id": 41,
-    "status": "Open",
-    "start_time": "2015-11-14T05:30:00.000Z",
-    "duration": 3600,
-    "reservation_min": null,
-    "reservation_max": null,
-    "created_at": "2015-11-10T16:08:00.160Z",
-    "updated_at": "2015-11-10T16:08:00.160Z"
-  }, -->
-
-
-<!--   {
-        slot_id: 725,
-        course_id: 7,
-        start_time: '2015-11-14 5:30',
-        student_id: 6
-} -->
-
-
-<!-- slot_id: 1811, course_id: 7, start_time: '2015-11-19 1:00', student_id: 51 -->
-<!-- slot_id: 1810, course_id: 7, start_time: '2015-11-12 1:00', student_id: 51 -->
-
-

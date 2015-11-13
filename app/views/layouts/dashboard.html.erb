@@ -8,4 +8,15 @@
   <% end %>
 <% end %>
 
+<% content_for (:flash_messages) do %>
+  <div class="row">
+    <div class="small-12 columns">
+      <p class="flash-message">
+        <span class="notice"><%= notice %></span>
+        <span class="alert"><%= alert %></span>
+      </p>
+    </div>
+  </div>
+<% end %>
+
 <%= render template: "layouts/application" %>
