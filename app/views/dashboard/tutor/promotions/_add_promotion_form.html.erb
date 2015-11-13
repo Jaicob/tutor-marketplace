@@ -1,54 +1,74 @@
-<section class="secondary-content main" role="main">
-  <div class="wrapper">
-
-    <div class="g g-3up">
-      <div class="gi">
-        <h3>Create a New Promotion</h3>
-      </div>
-      <div class="gi">
-      </div>
-      <div class="gi">
-        <%= link_to 'All Promotions', new_admin_promotion_path, class: 'btn' %>
+<div class="box">
+  <div class="row">
+    <div class="small-12 medium-6 rows">
+      <div class="row"> <!-- Added extra row and cols to make content align with nested rows/cols below -->
+        <div class="small-12 columns">
+          <h3>Create a New Promotion</h3>
+        </div>
       </div>
     </div>
+  </div>
 
-    <div class="g g-1up">
-      <div class="gi">
-        <%= form_for :promotion, url: tutor_promotions_path do |f| %>
+  <div class="row">
+    <div class="small-12 columns">
+      <%= form_for :promotion, url: tutor_promotions_path do |f| %>
+      <div class="row">
+        <div class="small-3 columns">
           <%= f.label :category %>
           <%= f.select(:category,
             options_for_select([
-              ['Free', :free_from_tutor], 
-              ['Percent Off', :percent_off_from_tutor],
-              ['Dollar Amount Off', :dollar_amount_off_from_tutor],
-              ['Repeating Percent Off', :repeating_percent_off_from_tutor], 
-              ['Repeating Dollar Amount Off', :repeating_dollar_amount_off_from_tutor]
-            ]), include_blank: true)  %>
+            ['Free', :free_from_tutor], 
+            ['Percent Off', :percent_off_from_tutor],
+            ['Dollar Amount Off', :dollar_amount_off_from_tutor],
+            ['Repeating Percent Off', :repeating_percent_off_from_tutor], 
+            ['Repeating Dollar Amount Off', :repeating_dollar_amount_off_from_tutor]
+            ]), include_blank: true)  
+          %>
+        </div>
 
-          <%= f.label :amount %>
-          <%= f.number_field :amount %>
+        <div class="small-3 columns">
+          <%= f.label :amount, 'Amount (Tooltip needed!)' %>
+          <%= f.number_field :amount, class: 'border-radius' %>
+        </div>
 
+        <div class="small-3 columns">        
           <%= f.label :valid_from %>
-          <%= f.date_select :valid_from %>
+          <%= f.date_field :valid_from, class: 'border-radius' %>
+        </div>
 
+        <div class="small-3 columns">
           <%= f.label :valid_until %>
-          <%= f.date_select :valid_until %>
-
-          <%= f.label :redemption_limit %>
-          <%= f.number_field :redemption_limit %>
-
-          <%= f.label :course_id %>
-          <%= f.select(:course_id, options_for_select(@course_collection)) %>
-
-          <%= f.label :description %>
-          <%= f.text_area :description %>
-
-          <%= f.hidden_field :tutor_id, value: @tutor.id %>
-          
-          <%= f.submit 'Create Promotion' %>
-        <% end %>
+          <%= f.date_field :valid_until, class: 'border-radius' %>
+        </div>
       </div>
     </div>
-
   </div>
-</section>
+
+  <div class="row">
+    <div class="small-12 columns">
+      <div class="row">
+        <div class="small-3 columns">
+          <%= f.label :redemption_limit %>
+          <%= f.number_field :redemption_limit, class: 'border-radius' %>
+        </div>
+
+        <div class="small-3 columns">
+          <%= f.label :course_id %>
+          <%= f.select(:course_id, options_for_select(@course_collection), class: 'border-radius') %>
+        </div>
+
+        <div class="small-3 columns">
+          <%= f.label :description, 'Note' %>
+          <%= f.text_field :description, class: 'border-radius' %>
+        </div>
+
+        <div class="small-3 columns">
+          <%= f.hidden_field :tutor_id, value: @tutor.id %>
+          <%= f.label :hacky_filler, class: 'display-none' %>
+          <%= f.submit 'Create Promotion', class: 'custom-button full-width height-3em' %>
+        </div>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>

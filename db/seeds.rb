@@ -170,5 +170,6 @@ n = 1
     password_confirmation: 'password'
   )
   x.create_campus_manager(school_id: n)
+  x.update(role: 2) # sets user.role to campus_manager
   n += 1
 end

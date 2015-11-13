@@ -1,7 +1,7 @@
 class SingleViewsController < ApplicationController
 
   def home
-    if cookies[:school_id].nil?
+    if cookies[:school_id].blank? && !@school
       redirect_to get_started_path
     else
       @sign_up_path = new_tutor_path

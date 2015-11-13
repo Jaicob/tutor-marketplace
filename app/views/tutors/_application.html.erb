@@ -19,7 +19,7 @@ $(document).ready(function()
 
       <h6>Tell us about your education</h6>
 
-      <%= f.text_field :major, placeholder: 'Major', required: true %>
+      <%= f.text_field :major, placeholder: 'Major', class: 'border-radius', required: true %>
 
       <p class="tiny-text">If you have not graduated yet, select your expected degree type and graduation year</p>
 
@@ -28,12 +28,12 @@ $(document).ready(function()
       </div>
 
       <div class="one-half">
-        <%= f.text_field :graduation_year, placeholder: 'Graduation Year', required: true %>
+        <%= f.text_field :graduation_year, placeholder: 'Graduation Year', class: 'border-radius', required: true %>
       </div>
 
       <p class="tiny-text"><b>Additional degrees summary (optional):</b> if you have multiple degrees, please highlight your highest degree in the fields above and list your other degrees in this field. Do not include your graduation year for these extra degrees.</p>
 
-      <%= f.text_field :additional_degrees, placeholder: 'B.A. Biology, B.S. Micro-Biology' %>
+      <%= f.text_field :additional_degrees, placeholder: 'B.A. Biology, B.S. Micro-Biology', class: 'border-radius' %>
 
       <h6>Tell us a little about yourself with three short statements</h6>
 

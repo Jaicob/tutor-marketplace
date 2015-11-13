@@ -59,7 +59,7 @@ class ApplicationController < ActionController::Base
 
     # Before_action for multiple controllers
     def set_student
-      if current_user.student
+      if current_user && current_user.student
         @student = current_user.student
       else
         @student = nil
@@ -86,13 +86,7 @@ class ApplicationController < ActionController::Base
     # Before_action to set school selection
     def set_school
       if current_user
-        if current_user.tutor
-          @school = current_user.tutor.school
-        elsif current_user.student
-          @school = current_user.student.school
-        elsif current_user.campus_manager
-          @school = current_user.campus_manager.school
-        end
+        @school = current_user.school
       elsif !cookies[:school_id].blank?
         @school = School.find(cookies[:school_id].to_i)
       else

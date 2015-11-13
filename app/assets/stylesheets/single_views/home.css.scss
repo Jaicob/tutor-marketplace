@@ -1,3 +1,7 @@
+ p.flash-message {
+  display: none;
+ }
+
 .nav-bar-wrapper.clear-nav {
   background: none;
   border-bottom: 0;
@@ -27,7 +31,7 @@
 }
 
 .ksu-box {
-  background: image-url("city.jpg") no-repeat center center fixed; 
+  background: image-url("trekkie.jpg") no-repeat center center fixed; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
