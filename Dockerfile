@@ -18,8 +18,7 @@ COPY config/unicorn.rb /etc/my-app/config/unicorn.rb
 COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 #sidekiq startup script
-# COPY sidekiq.sh /usr/local/bin/sidekiq.sh
-#COPY sidekiq.sh /etc/init.d/sidekick
+COPY sidekiq.sh /usr/local/bin/sidekiq
 
 COPY unicorn_init.sh /etc/init.d/unicorn
 

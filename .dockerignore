@@ -3,3 +3,4 @@ tmp/*
 tmp/pids/*
 !tmp/cache
 supervisord.log
+log/*
