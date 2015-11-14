@@ -1,14 +1,18 @@
 select {
   border-radius: 4px;
-  // max-width: 20em;
 }
 
-select#school, select#subject, select#course {
+input#user_first_name, input#user_last_name, input#user_email, input#user_password, input#user_tutor_phone_number, input#rate, select#school, select#subject, select#course {
   height: 2em;
-  padding: 0 0.5em;
   margin-bottom: 0.3em;
   border-radius: 4px;
+  font-size: 1em;
+  font-family: 'Lato';
+  color: #4F5252;
   font-weight: 100;
+}
+select#school, select#subject, select#course {
+  padding: 0 0.5em;
 }
 
 // // Not actually a select, but always used alongside school, subject and course selects, thus similar style to select needed
@@ -24,30 +28,21 @@ select#school, select#subject, select#course {
     overflow: hidden;
     text-align: center;
   }
-  input#rate, .dollar-sign, .per-hour {
-    display: inline-block;
-    width: 32%;
-    color: #A6A6A6;
-    height: 100%;
-    border-top: 0;
-    border-bottom: 0;
+  .rate-input-third {
+    padding: 0;
+    font-weight: 100;
+    font-family: 'Lato';
     text-align: center;
+  }
+  input#rate {
+    text-align: center;
+    border-radius: 0;
+    border: 0;
+    position: relative;
+    top: -3px;
   }
 
 // Selects need to be smaller for Tutor sign-up form to prevent the entire form from being too large
   form#new_user {
     padding: 0 1.2em;
-    input#user_first_name, input#user_last_name, input#user_email, input#user_password, input#user_tutor_phone_number, input#rate {
-      height: 2em;
-      margin-bottom: 0.3em;
-      border-radius: 4px;
-      font-weight: 100;
-    }  
-    select#school, select#subject, select#course {
-      height: 2em;
-      padding: 0 0.5em;
-      margin-bottom: 0.3em;
-      border-radius: 4px;
-      font-weight: 100;
-    }
   }

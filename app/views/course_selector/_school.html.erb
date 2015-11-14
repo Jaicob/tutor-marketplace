@@ -1,6 +1,6 @@
 <!-- Place immediately inside of parent div with correct grid sizing -->
-<select name="course[school_id]" id="school" class="select-menu" required="true">
-  <option selected="true" disabled="true" value="">School</option>
+<select name="course[school_id]" id="school" required="true">
+  <option selected="true" disabled="true" value="">Select Campus</option>
   <% School.all.each do |school| %>
     <option value="<%= school.id %>"><%= school.name %></option>
   <% end %>

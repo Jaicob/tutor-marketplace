@@ -51,29 +51,33 @@
     /* Styling for checklist-col in new tutor partial */ 
 
     .checklist-box {
-      display: block;
-      font-weight: bold;
+      border: 1px solid #58AA4D;
+      background-color: #F7F7F7;
+      border-radius: 4px;
+      width: 21em;
     }
     .checklist-title {
       text-align: center;
       color: white;
-      font-size: 1em;
       padding: 0.5em;
-    }
-    .checklist-title-box {
       background-color: #58AA4D;
-      border-radius: 4px;
+      margin: 0;
+      font-size: 1.3em;
     }
     .checklist-item {
       text-align: center;
       margin: 0.8em;
-    }
-    .checklist-item:hover {
-      font-weight: 400;
+      font-size: 1.2em;
     }
     .checklist-item.strikeout-text {
       text-decoration: line-through;
       color: #a8a8a8;
+    }
+    .checklist-item.gray-text {
+      color: #a8a8a8;
+    }
+    .checklist-item.bold {
+      font-weight: 400;
     }
 
     /* Styling for welcome-col in new tutor partial */ 

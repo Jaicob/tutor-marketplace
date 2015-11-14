@@ -207,4 +207,13 @@ class Tutor < ActiveRecord::Base
     end
   end
 
+  def onboarding_step 
+    step_number = 1
+    self.application_status == 'Complete' ? (step_number += 1) : (return step_number)
+    self.courses_approved? ? (step_number += 1) : (return step_number)
+    self.slots.count > 0 ? (step_number += 1) : (return step_number)
+    !self.acct_id.nil? ? (step_number += 1) : (return step_number)
+    step_number
+  end
+
 end
