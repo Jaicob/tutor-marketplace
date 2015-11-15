@@ -226,7 +226,7 @@ Rails.application.routes.draw do
   resources :users, only: [:update, :destroy]
 
   # all dashboard routes for signed-in tutors
-  resources :tutors, only: [:update, :destroy] do
+  resources :tutors, only: [:show, :update, :destroy] do
     member do
       get  '/home'                    => 'dashboard/tutor/home#index'
       put  '/cancel_appt/:appt_id'    => 'dashboard/tutor/home#cancel_appt', as: 'cancel_appt'
