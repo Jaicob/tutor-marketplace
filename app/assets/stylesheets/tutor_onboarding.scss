@@ -2,10 +2,8 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-
-.progress-bar-container {
-  height: 7em;
-  overflow: hidden;
+.row.medium-collapse.progress-bar-container {
+    margin: 1em auto !important;
 
   .progress-step, .progress-next-button {
     text-align: center;
@@ -29,22 +27,23 @@
       color: #4F5252;
       font-weight: 700;
     }
+    i.fi-check {
+      color: #58AA4D;
+    }
     &.completed-step {
-      background-color: #CFCECE;
-      p {
-        color: #808384;
-      }
       p.number {
-        background-color: #E8E8E8;
+        border: 1px solid #58AA4D;
+        background: none;
       }
     }
     &.current-step {
       background-color: #0095AC;
+      border-radius: 4px;
       p {
         color: #FAFAFA;
       }
       p.number {
-        color: #4F5252;
+        background: #BBE5EE;
       }
     }
   }

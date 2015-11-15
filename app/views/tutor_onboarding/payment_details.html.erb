@@ -1,1 +1,44 @@
-banking_step.html.erb
+<!-- should be refactored into partial with completed and current step styles set dynamically -->
+<div class="row medium-collapse progress-bar-container">
+  <div class="small-12 medium-3 columns">
+    <div class="progress-step completed-step">
+      <p class="number"><i class="fi-check"></i></p>
+      <p>Complete your application</p>
+    </div>
+  </div>
+  <div class="small-12 medium-3 columns">
+    <div class="progress-step completed-step">
+      <p class="number"><i class="fi-check"></i></p>
+      <p>Set your courses & rates</p>
+    </div>
+  </div>
+  <div class="small-12 medium-3 columns">
+    <div class="progress-step current-step">
+      <p class="number">3</p>
+      <p>Set your available hours</p>
+    </div>
+  </div>
+  <div class="small-12 medium-3 columns">
+    <div class="progress-step">
+      <p class="number">4</p>
+      <p>Link your bank account</p>
+    </div>
+  </div>
+</div>
+<div class="row box">
+  <div class="small-12 medium-8 columns">
+    <h1>Welcome, <%= @tutor.first_name %></h1>
+    <p class="welcome-text">Congratulations on signing up to become an Axon tutor!</p>
+    <p class="welcome-text">Follow the Get Started checklist. Click the Next Step button at the bottom of each</p>
+    <p class="welcome-text">You'll need: your unofficial transcript or resume, your profile picture and your bank account's routing and account numbers to recieve payments.</p>
+  </div>
+</div>
+<div class="row">
+  <div class="small-12 medium-5 medium-centered columns">
+  </div>
+</div>
+<div class="row">
+  <div class="small-12 medium-3 medium-offset-9 columns next-button">
+    <p>Next</p>
+  </div>
+</div>
