@@ -4,12 +4,15 @@
   </div>
   <div class="new-tutor-partial-wrapper">
     <div class="row">
-      <div class="small-12 medium-7 columns">
-        <%= render 'layouts/partials/tutors/new_tutor_welcome' %>
-      </div>
-      <div class="small-12 medium-5 columns">
-        <%= render 'layouts/partials/tutors/new_tutor_checklist' %>
-      </div>
+      <% if @tutor.onboarding_status == 'Step 1' %>
+        <%= render 'layouts/partials/tutor_onboarding/instruction_step_screens/application.html.erb' %>
+      <% elsif @tutor.onboarding_status == 'Step 2' %>
+        <%= render 'layouts/partials/tutor_onboarding/instruction_step_screens/courses.html.erb' %>
+      <% elsif @tutor.onboarding_status == 'Step 3' %>
+        <%= render 'layouts/partials/tutor_onboarding/instruction_step_screens/schedule.html.erb' %>
+      <% elsif @tutor.onboarding_status == 'Step 4' %>
+        <%= render 'layouts/partials/tutor_onboarding/instruction_step_screens/banking_info.html.erb' %>
+      <% end %>
     </div>
   </div>
 </div>
