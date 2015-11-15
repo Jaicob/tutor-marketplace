@@ -9,17 +9,7 @@
 			"name":"sidekiq",
 			"image" : "jaicob/mailer",
 			"essential": true,
-			"memory": 256,
-			"environment": [
-       			{
-        			"name": "REDIS_PRODUCTION_ADDR",
-          			"value": "axon-prod.he9z8n.0001.use1.cache.amazonaws.com"
-        		},
-        		{
-        			"name": "REDIS_PRODUCTION_PORT",
-          			"value": "6379"
-        		}
-     		 ]
+			"memory": 512
 		},
 		{
 			"name":"web",
