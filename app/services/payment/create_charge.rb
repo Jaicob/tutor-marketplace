@@ -2,7 +2,7 @@ class CreateCharge
   include Interactor
 
   # Call with: tutor: instance_of Tutor
-  #            appointments: array of Appointment
+  #            appointments: array of Appointments
   #            customer_id: student.customer_id
   #            rates: array of TutorCourse.rate in dollars
   #            transaction_percentage: School.transaction_percentage

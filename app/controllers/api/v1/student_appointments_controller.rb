@@ -20,6 +20,14 @@ class API::V1::StudentAppointmentsController < API::V1::Defaults
     end
   end
 
+  def visitor_create # creates appt without student_id, but adds it in next step when visitor must sign up
+    if Appointment.visitor_create_appts_from_array(params)
+      render json: @appts
+    else
+      render json: @appts.errors.full_messages
+    end
+  end
+
   def reschedule
     if @appt.update(safe_params)
       AppointmentMailer.delay.appointment_rescheduled_for_tutor(@appt.id)               

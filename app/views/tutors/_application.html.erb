@@ -24,7 +24,7 @@ $(document).ready(function()
       <p class="tiny-text">If you have not graduated yet, select your expected degree type and graduation year</p>
 
       <div class="one-half">
-        <%= f.select(:degree, options_for_select(Tutor.degree_collection, selected: 'Degree', disabled: 'Degree'), {required: true} , {class: 'select-menu'}) %>
+        <%= f.select(:degree, options_for_select(Tutor.degree_collection, selected: 'Degree', disabled: 'Degree'), {required: true}) %>
       </div>
 
       <div class="one-half">
@@ -61,7 +61,7 @@ $(document).ready(function()
         </div>
         <%= f.file_field :transcript, id: 'transcript-input', class: 'file-input', required: true %>
       </div>
-      <p id="transcript-name-target"></p>
+      <p id="transcript-name-target file-name"></p>
 
       <h6>Upload a profile picture</h6>
       <p class="tiny-text">Acceptable file types: .jpg, .jpeg, .png</p>
@@ -72,10 +72,11 @@ $(document).ready(function()
         </div>
         <%= f.file_field :profile_pic, id: 'picture-input', class: 'file-input', required: true  %>
       </div>
-      <p id="picture-name-target"></p>
+      <p id="picture-name-target file-name"></p>
 
-      <p>That's it for the first step! Review your application and submit it for a decision from the Axon Tutor management team.
-      <br />Go ahead and finish the rest of the Activation Checklist to make sure you're ready to start tutoring as quickly as possible.</p>
+      <p>That's it for the first step!</p>
+
+      <%= f.hidden_field :onboarding_status, value: 'Step 2' %>
 
       <%= f.submit 'Submit Application', class: 'custom-button margin-bottom' %>
 

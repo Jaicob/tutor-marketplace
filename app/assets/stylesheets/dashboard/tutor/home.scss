@@ -26,54 +26,39 @@
     margin: 1em auto;
     padding: 1em;
   }
-  .container {
-    text-align: center;
-    padding: 1em 0;
-    max-width: 18em;
-    margin: auto;
-  }
-  .icons-container {
-    width: 283px;
-    margin-top: 1em;
-  }
-  .container.checklist-container {
-    font-size: 0.8em;
-  }
   }
 
   /* Full view */
-  @media (min-width: 1100px) {
-  .container.checklist-container {
-    font-size: 1em;
-  }
-  }
 
     /* Styling for checklist-col in new tutor partial */ 
 
     .checklist-box {
-      display: block;
-      font-weight: bold;
+      border: 1px solid #0095AC;
+      background-color: #FAFAFA;
+      width: 20em;
     }
     .checklist-title {
       text-align: center;
       color: white;
-      font-size: 1em;
       padding: 0.5em;
-    }
-    .checklist-title-box {
-      background-color: #58AA4D;
-      border-radius: 4px;
+      background-color: #0095AC;
+      margin: 0;
+      font-size: 1.3em;
     }
     .checklist-item {
       text-align: center;
       margin: 0.8em;
-    }
-    .checklist-item:hover {
-      font-weight: 400;
+      font-size: 1.2em;
     }
     .checklist-item.strikeout-text {
       text-decoration: line-through;
       color: #a8a8a8;
+    }
+    .checklist-item.gray-text {
+      color: #a8a8a8;
+    }
+    .checklist-item.bold {
+      font-weight: 400;
     }
 
     /* Styling for welcome-col in new tutor partial */ 
@@ -144,6 +129,10 @@
     font-weight: 100;
     text-align: center;
     line-height: 2em;
+    font-size: 0.8em;
+  }
+  .file-name {
+    font-weight: 400;
     font-size: 0.8em;
   }
   .margin-bottom {
