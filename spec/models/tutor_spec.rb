@@ -16,7 +16,6 @@
 #  extra_info_3       :text
 #  graduation_year    :string
 #  phone_number       :string
-#  birthdate          :date
 #  profile_pic        :string
 #  transcript         :string
 #  appt_notes         :text

@@ -65,7 +65,7 @@ var SubjectSelector = React.createClass({
               return (
                 <div className={this.getBackground(subject)} onClick={this.handleClick.bind(this, subject)}>
                   <span className="name">{subject.course_name}</span>
-                  <span className="rate">${subject.rate}/hr</span>
+                  <span className="rate">${(subject.rate * (1 + this.props.margin/100)).toFixed(2)}/hr</span>
                 </div>
               );
             }.bind(this))

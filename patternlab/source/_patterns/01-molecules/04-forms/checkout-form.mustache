@@ -1,0 +1,16 @@
+  <form class="stripe checkout-form" novalidate autocomplete="on" method="POST">
+    <div class="form-group">
+      <label for="cc-number" class="control-label">Card Number</label>
+      <input id="cc-number" type="tel" class="input-lg form-control cc-number" autocomplete="cc-number" placeholder="•••• •••• •••• ••••" required>
+    </div>
+    <div class="form-group">
+      <label for="cc-exp" class="control-label">Expiration</label>
+      <input id="cc-exp" type="tel" class="input-lg form-control cc-exp" autocomplete="cc-exp" placeholder="•• / ••" required>
+    </div>
+    <div class="form-group">
+      <label for="cc-cvc" class="control-label">CVC</label>
+      <input id="cc-cvc" type="tel" class="input-lg form-control cc-cvc" autocomplete="off" placeholder="•••" required>
+    </div>
+    <button type="submit" class="btn" name="submit">Continue</button>
+    <p class="validation"></p>
+  </form>

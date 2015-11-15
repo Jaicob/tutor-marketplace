@@ -1,0 +1,50 @@
+// Import plugins & extras
+@import "sweetalert";
+@import "fullcalendar";
+@import "icon-fonts";
+@import "earnings";
+
+// Import themed globals
+@import "wrappers";
+@import "alerts";
+@import "grid";
+@import "blocks";
+@import "tables";
+@import "lists";
+@import "media";
+
+// Import themed menu styles
+@import "nav";
+
+// Import some layout particulars
+@import "cards";
+@import "forms";
+@import "buttons";
+@import "dropdowns";
+
+// Import themed page components
+@import "sections";
+@import "header";
+@import "hero";
+@import "footer";
+@import "iframes";
+
+// Import app specific styles
+@import "profile";
+@import "profile-calendar";
+@import "dashboard";
+
+// Other themed elements can go below -->>
+.title {
+  text-transform: capitalize;
+  margin-top: ( $base-spacing / 3 );
+}
+
+.title--alt,
+.subtitle {
+  text-transform: uppercase;
+}
+
+.timestamp {
+  @extend .small;
+}

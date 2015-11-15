@@ -1,0 +1,21 @@
+    <form>
+      <div class="dropdown--subject">
+         <label for="select-subject">Subject</label>
+         <div class="select-wrapper">
+           <select id="select-subject" class="select-menu">
+            <optgroup label="Available Subjects">
+                <option>BIO 1101</option>
+                <option selected>CHEM 1202</option>
+                <option>CS 1303</option>
+            </optgroup>
+          </select>
+        </div>
+      </div>
+      <ul>
+        <li><label for="radio1"><input id="radio1" name="radio" type="radio" class="radio" checked="checked"> Regularly Available</label></li>
+        <li><label for="radio2"><input id="radio2" name="radio" type="radio" class="radio"> One Time Availability</label></li>
+      </ul>
+      <div class="recurring-value">
+        <label for="in">Repeats for</label> <input type="number" id="in" min="0" max="52" value="5"> <span>weeks</span>
+      </div>
+    </form>

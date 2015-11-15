@@ -13,8 +13,8 @@ var SlotSelector = React.createClass({
       newLength = this.props.selectedSlots.length;
     };
     navBar = this.props.UINavigationBarDelegate;
-    navBar.forwardButtonText = "Proceed to Checkout";
-    navBar.backButtonText = "Change subject";
+    navBar.forwardButtonText = "Set Location";
+    navBar.backButtonText = "Change Subject";
 
     // if(newLength == 1) {
     //   navBar.description = newLength + " session selected.";

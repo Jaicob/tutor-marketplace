@@ -22,6 +22,7 @@ var AppointmentSelector = React.createClass({
       return {
           selectedSlots: [],
           selectedSubject: this.props.subject || {},
+          selectedLocation: "",
           disabledSlots: [],
           currentStep: 1,
           forceSubject: false,
@@ -52,6 +53,11 @@ var AppointmentSelector = React.createClass({
     this.setState({
       selectedSlots: newSlots,
       forceFetch: false
+    });
+  },
+  handleLocation: function (newLocation) {
+    this.setState({
+      selectedLocation: newLocation
     });
   },
   handleSteps: function (newStep) {
@@ -146,6 +152,7 @@ var AppointmentSelector = React.createClass({
                                       forceSubject={this.state.forceSubject}
                                       UINavigationBarDelegate={this.state.UINavigationBarDelegate}
                                       updateDelegate={this.updateDelegate}
+                                      margin={this.props.margin}
                                        />
       case 2:
               return <SlotSelector tutor={this.props.tutor}
@@ -156,10 +163,18 @@ var AppointmentSelector = React.createClass({
                                    forceFetch={this.state.forceFetch}
                                    UINavigationBarDelegate={this.state.UINavigationBarDelegate}
                                    updateDelegate={this.updateDelegate}
+                                   margin={this.props.margin}
                                    />
-      case 3: return <PaymentForm {...this.props} currentStudent={this.state.student} onChange={this.handleCard} />
-      case 4: return <ConfirmationScreen {...this.props} />
-      case 5: return <Summary {...this.props} />
+      case 3: return <LocationSelector selectedLocation={this.state.selectedLocation}
+                                       handleLocation={this.handleLocation}
+                                       UINavigationBarDelegate={this.state.UINavigationBarDelegate}
+                                       updateDelegate={this.updateDelegate}
+                                       {...this.props}
+                                       />
+      case 4: return <Checkout {...this.props} selectedSlots={this.state.selectedSlots} selectedSubject={this.state.selectedSubject} UINavigationBarDelegate={this.state.UINavigationBarDelegate} updateDelegate={this.updateDelegate} currentStudent={this.state.student} onChange={this.handleCard} />
+      case 5: return <PaymentForm {...this.props} currentStudent={this.state.student} onChange={this.handleCard} />
+      case 6: return <ConfirmationScreen {...this.props} />
+      case 7: return <Summary {...this.props} />
       default: break
     };
   },

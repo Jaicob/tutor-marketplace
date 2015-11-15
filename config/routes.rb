@@ -62,6 +62,7 @@
 #                                       PUT      /tutors/:id(.:format)                                              tutors#update
 #                                       DELETE   /tutors/:id(.:format)                                              tutors#destroy
 #                            home_tutor GET      /tutors/:id/home(.:format)                                         dashboard/tutor/home#index
+#                     cancel_appt_tutor PUT      /tutors/:id/cancel_appt/:appt_id(.:format)                         dashboard/tutor/home#cancel_appt
 #                        schedule_tutor GET      /tutors/:id/schedule(.:format)                                     dashboard/tutor/schedule#index
 #                         profile_tutor GET      /tutors/:id/profile(.:format)                                      dashboard/tutor/profile#index
 #                         account_tutor GET      /tutors/:id/settings/account(.:format)                             dashboard/tutor/settings#account
@@ -91,6 +92,7 @@
 #                                       PUT      /tutors/:id(.:format)                                              tutors#update
 #                                       DELETE   /tutors/:id(.:format)                                              tutors#destroy
 #                          home_student GET      /students/:id/home(.:format)                                       dashboard/student/home#index
+#                   cancel_appt_student PUT      /students/:id/cancel_appt/:appt_id(.:format)                       dashboard/student/home#cancel_appt
 #                        search_student GET      /students/:id/search(.:format)                                     single_views#tutor_search
 #                       account_student GET      /students/:id/settings/account(.:format)                           dashboard/student/settings#account
 #                  payment_info_student GET      /students/:id/settings/payment_info(.:format)                      dashboard/student/settings#payment_info
@@ -174,8 +176,11 @@
 #                    api_v1_tutor_slots GET      /api/v1/tutors/:tutor_id/slots(.:format)                           api/v1/slots#index {:format=>:json}
 #                                       POST     /api/v1/tutors/:tutor_id/slots(.:format)                           api/v1/slots#create {:format=>:json}
 #                     api_v1_tutor_slot GET      /api/v1/tutors/:tutor_id/slots/:id(.:format)                       api/v1/slots#show {:format=>:json}
+#                                       PATCH    /api/v1/tutors/:tutor_id/slots/:id(.:format)                       api/v1/slots#update {:format=>:json}
+#                                       PUT      /api/v1/tutors/:tutor_id/slots/:id(.:format)                       api/v1/slots#update {:format=>:json}
 #                                       DELETE   /api/v1/tutors/:tutor_id/slots/:id(.:format)                       api/v1/slots#destroy {:format=>:json}
-#             api_v1_tutor_slots_update POST     /api/v1/tutors/:tutor_id/slots/update(.:format)                    api/v1/slots#update_slots {:format=>:json}
+#       api_v1_tutor_slots_update_group POST     /api/v1/tutors/:tutor_id/slots/update_group(.:format)              api/v1/slots#update_slot_group {:format=>:json}
+#       api_v1_tutor_slots_delete_group POST     /api/v1/tutors/:tutor_id/slots/delete_group(.:format)              api/v1/slots#destroy_slot_group {:format=>:json}
 #                  api_v1_tutor_courses GET      /api/v1/tutors/:tutor_id/courses(.:format)                         api/v1/tutor_courses#index {:format=>:json}
 #       cancel_api_v1_tutor_appointment PUT      /api/v1/tutors/:tutor_id/appointments/:id/cancel(.:format)         api/v1/tutor_appointments#cancel {:format=>:json}
 #             api_v1_tutor_appointments GET      /api/v1/tutors/:tutor_id/appointments(.:format)                    api/v1/tutor_appointments#index {:format=>:json}

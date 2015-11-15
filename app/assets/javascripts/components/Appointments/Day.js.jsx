@@ -2,7 +2,7 @@ var Day = React.createClass({
   render: function () {
     return (
       <li className={"day " + this.props.day.format("dddd").toLowerCase()}>
-        <label htmlFor={this.props.day.format("dddd").toLowerCase()}>{this.props.day.format("M/DD")}</label>
+        <label htmlFor={this.props.day.format("dddd").toLowerCase()}>{this.props.day.format("ddd M/DD")}</label>
         <input id={this.props.day.format("dddd").toLowerCase()} name="radio" type="radio" className="radio"></input>
         <ul className="available-times">
           {

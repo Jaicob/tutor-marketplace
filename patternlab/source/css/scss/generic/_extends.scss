@@ -1,0 +1,163 @@
+/* Flexbox */
+$flex-box-gutter: 0.4em !default;
+
+%flex__wrapper {
+  @include clearfix;
+  @include display(flex);
+  @include flex-wrap(wrap);
+}
+
+%flex__box {
+  @include flex-grow(1);
+  @include flex-basis(100%);
+}
+
+%flex__box--half {
+  @extend %flex__box;
+
+  @include media($large-screen) {
+    @include flex-basis(50%);
+  }
+}
+
+%flex__box--third {
+  @extend %flex__box;
+
+  @include media($medium-screen) {
+    @include flex-basis(50%);
+    padding-right: 1em;
+  }
+
+  @include media($large-screen) {
+    @include flex-basis(33.3333%);
+  }
+}
+
+/* RWD Tables */
+%responive-tables {
+  @include rwd-first;
+
+  @include media($large-screen) { 
+    @include rwd-second;  
+  }
+}
+
+%responive-tables-large {
+  @include rwd-first;
+
+  @include media($large-screen) { 
+    @include rwd-second; 
+  }
+}
+
+/* button variations */
+%button {
+  width: 100%;
+  
+  @include media($medium-screen) {
+    width: auto;
+  }
+}
+
+%button--hollow {
+  @extend %button;
+  background-color: transparent;
+  border: solid 1px $base-button-color;
+  color: $base-button-color;
+
+  &:hover,
+  &:focus {
+    background-color: inherit;
+    color: lighten($base-button-color, 5);
+    opacity: 0.75;
+    @include transition(opacity 1.0s ease-in 0s, width 2.0s ease-in 2s);
+  }
+}
+
+%button--large {
+  padding: 0.7em 1.25em;
+  font-size: em(20);
+}
+
+/* Callout Blocks */
+%callout {
+  font-size: 18px;
+  margin: 0 auto;
+  padding: $pad-half;
+  text-align: center;
+}
+
+%callout--background {
+  @extend %callout;
+  margin: $pad-half auto;
+  background-color: rgba($gray, 0.95);
+}
+
+%callout--hollow {
+  @extend %callout;
+  border: solid 1px desaturate($darkPrimaryColor, 0.2);
+  width: 100%;
+  font-size: 14px;
+}
+
+/* Block with Thumbnail Images */
+%block-with-thumb {
+  position: relative;
+  border-collapse: collapse;
+  margin-bottom: $base-spacing;
+}
+
+%bwt-wrapper {
+  display: table-row;
+  vertical-align: top;
+  overflow: hidden;
+
+  .title {
+    margin-top: 0;
+  }
+}
+
+%bwt-thumb {
+  max-width: em(280);
+  margin: 0 auto ($base-spacing / 2);
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+  }
+
+  @include media($medium-screen) {
+    display: table-cell;
+    vertical-align: top;  
+    width: 15%;
+  }
+}
+
+%bwt-inner-text {
+  @include media($medium-screen) {
+    display: table-cell;
+    width: 70%;
+    padding: 0 $pad;
+  }
+}
+
+/* Flexible Media */
+%flexible-media {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Full Sizes BG Images w/out CSS Backgrounds */
+%img-bg-large {
+  position: absolute;
+  top: 0; bottom: 0; right: 0; left: 0;
+
+  img {
+    z-index: 0;
+    height: 100%;
+    width: 100%;
+  }
+}
