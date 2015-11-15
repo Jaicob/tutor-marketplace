@@ -21,6 +21,7 @@ class Promotion < ActiveRecord::Base
   validates :redemption_limit, presence: true
   validates :valid_from, presence: true
   validates :valid_until, presence: true
+  validates :category, presence: true
 
   after_create :generate_secure_code
 
@@ -57,6 +58,17 @@ class Promotion < ActiveRecord::Base
     end
     self.code = prefix + SecureRandom.hex(6)
     self.save
+  end
+
+  def is_valid?(tutor_id)
+    if self.category.humanize.split().include?('tutor') # true if tutor-issued promo code
+      if (tutor_id == nil) || (self.tutor_id != tutor_id)
+        return false
+      end
+    end
+    (self.redemption_count < self.redemption_limit) &&
+    (self.valid_from.to_date <= Date.today && Date.today <= self.valid_until.to_date ) ?
+    true : false
   end
 
 end

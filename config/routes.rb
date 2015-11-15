@@ -331,6 +331,11 @@ Rails.application.routes.draw do
       end
       get '/search/tutors' => 'search#tutors'
       get '/payments/current_student' => 'payments#current_student'
+      ## special routes for checkout
+      # retrieves promo code info for checkout preview
+      post '/check_promo_code' => 'promotions#check_promo_code'
+      # creates an appointment without a student_id for a visitor (before student_id is created and attached to appt in the next step of checkout)
+      post  '/visitor/create_appointment' => '/api/v1/student_appointments#visitor_create'
     end
   end
 

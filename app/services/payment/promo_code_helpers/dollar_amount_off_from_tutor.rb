@@ -30,7 +30,7 @@ module PromoCodeHelpers
     def is_redemption_valid?(promotion, tutor)
       (promotion.redemption_count < promotion.redemption_limit) && 
       (promotion.valid_from.to_date <= Date.today && Date.today <= promotion.valid_until.to_date ) && 
-      (promotion.tutor_id == @tutor.id) ? 
+      (promotion.tutor_id == tutor.id) ? 
       true : false
     end
 
