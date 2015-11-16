@@ -5,6 +5,9 @@ $(document).ready(function() {
     $(".regular-availability").toggleClass("expanded");
   })
 
+  // var testDateUtc = moment.utc("2015-01-30 10:00:00");
+  // var localDate = moment(testDateUtc).local();
+  // moment.tz.setDefault("America/New_York");
   // Setup up qTip2 api for
 
   var tooltip = $('#calendar').qtip({
@@ -41,16 +44,19 @@ $(document).ready(function() {
   var originalDuration;
 
   var formatDataAsEvent = function(eventData) {
-    end_time = moment(eventData.start_time);
-    end_time = end_time + moment.duration(eventData.duration, 'seconds');
-    return {
+    console.log("PRE-Format",eventData);
+    end_time = moment(eventData.start_time, moment.ISO_8601);
+    end_time = end_time.add(eventData.duration, 'seconds');
+    var postFormat = {
       title: "Availability",
-      start: eventData.start_time,
+      start: moment(eventData.start_time, moment.ISO_8601),
       end: end_time,
       slot_id: eventData.id,
       status: eventData.status
-    }
+    };
+    return postFormat;
   }
+
   var eventSource = {
     url: API.endpoints.tutor_slots.get({
       tutor_id: tutor_id
@@ -59,7 +65,7 @@ $(document).ready(function() {
   }
 
   var beginSlotUpdate = function(event, jsEvent, ui, view) {
-    originalStartTime = event.start.format('YYYY-MM-DD HH:mm:ss');
+    originalStartTime = event.start.toISOString();
     originalDuration = moment.duration(event.end.diff(event.start)).asSeconds();
     tooltip.hide();
   }
@@ -84,7 +90,7 @@ $(document).ready(function() {
             data: {
               original_start_time: originalStartTime,
               original_duration: originalDuration,
-              new_start_time: event.start.format('YYYY-MM-DD HH:mm:ss'),
+              new_start_time: event.start.toISOString(),
               new_duration: originalDuration
             },
             dataType: "json",
@@ -104,7 +110,7 @@ $(document).ready(function() {
               slot_id: event.slot_id
             }),
             data: {
-              start_time: event.start.format('YYYY-MM-DD HH:mm:ss'),
+              start_time: event.start.toISOString(),
               duration: originalDuration
             },
             dataType: "json",
@@ -144,11 +150,12 @@ $(document).ready(function() {
             data: {
               original_start_time: originalStartTime,
               original_duration: originalDuration,
-              new_start_time: event.start.format('YYYY-MM-DD HH:mm:ss'),
+              new_start_time: event.start.toISOString(),
               new_duration: newDuration
             },
             dataType: "json",
             success: function(data) {
+              console.log("Updated Slots",data);
               $('#calendar').fullCalendar('updateEvent', event);
             },
             error: function(data, status) {
@@ -164,7 +171,7 @@ $(document).ready(function() {
               slot_id: event.slot_id
             }),
             data: {
-              start_time: event.start.format('YYYY-MM-DD HH:mm:ss'),
+              start_time: event.start.toISOString(),
               duration: newDuration
             },
             dataType: "json",
@@ -172,7 +179,6 @@ $(document).ready(function() {
               $('#calendar').fullCalendar('updateEvent', event);
             },
             error: function(data, status) {
-              console.log("failure,", data, status);
               alert('failure', data, status);
               revertFunc();
             }
@@ -183,20 +189,23 @@ $(document).ready(function() {
   }
 
   var addSlot = function(event, jsEvent, ui) {
+    //event.start = moment(event.start);
+    event.end = moment(event.end);
     var duration = moment.duration(event.end.diff(event.start));
     var seconds = duration.asSeconds();
     var endpoint = API.endpoints.tutor_slots.create({
       tutor_id: tutor_id
     });
 
-    request = $.post(endpoint, {
-      start_time: event.start.format('YYYY-MM-DD HH:mm:ss'),
+    // console.log("START",event.start);
+    request = $.post(endpoint, { //DateTime.iso8601('2001-02-03T04:05:06+07:00')
+      start_time: event.start.toISOString(), //end_time.add(eventData.duration, 'seconds');
       duration: seconds,
       weeks_to_repeat: event.weeksToRepeat(),
     })
 
     request.success(function(data) {
-      console.log("DATA", data);
+      // console.log("DATAADDED", data);
       event.slot_id = data[0].id;
       event.status = data[0].status;
       $('#calendar').fullCalendar('updateEvent', event);
@@ -251,15 +260,19 @@ $(document).ready(function() {
         tutor_id: tutor_id
       }),
       data: {
-        original_start_time: event.data.start.format('YYYY-MM-DD HH:mm:ss'),
+        original_start_time: event.data.start.toISOString(),
         original_duration: duration
       },
       dataType: "json",
       success: function(data) {
         console.log(data);
+
         $('#calendar').fullCalendar('removeEvents', function(event) {
-          var isStartMatch = (event.start.format('DD HH:mm:ss') === data[0].start.format('DD HH:mm:ss'));
-          var isEndMatch = (event.end.format('DD HH:mm:ss') === data[0].end.format('DD HH:mm:ss'));
+          console.log("EVENT", event);
+          var target = formatDataAsEvent(data[0]);
+          console.log("TARGET",target);
+          var isStartMatch = (event.start.format('DD HH:mm:ss') === target.start.format('DD HH:mm:ss'));
+          var isEndMatch = (event.end.format('DD HH:mm:ss') === target.end.format('DD HH:mm:ss'));
           return (isStartMatch && isEndMatch) ? true : false;
         });
       },
@@ -307,11 +320,9 @@ $(document).ready(function() {
   var eventRender = function(event, element, view) {
     switch (event.status) {
       case "Open":
-        console.log('non-blocked');
         element.css('background-color', '#3a87ad');
         break;
       case "Blocked":
-        console.log('blocked');
         element.css('background-color', 'lightgrey');
         break;
     }
@@ -391,13 +402,14 @@ $(document).ready(function() {
   /*
    * Initialize the calendar
    */
-  $('#calendar').fullCalendar({
+  fcalendar =  $('#calendar').fullCalendar({
     eventSources: [eventSource],
+    timezone: 'local',
     slotEventOverlap: false,
     eventOverlap: function(stillEvent, movingEvent) { return stillEvent.allDay && movingEvent.allDay },
     allDaySlot: false,
     forceEventDuration: true,
-    minTime: "6:00:00",
+    minTime: "0:00:00",
     maxTime: "24:00:00",
     defaultTimedEventDuration: "1:00:00",
     height: "auto",
@@ -422,5 +434,6 @@ $(document).ready(function() {
       tooltip.hide()
     },
   });
+
 
 });
