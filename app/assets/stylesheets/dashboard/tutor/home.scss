@@ -10,7 +10,7 @@
     max-width: none;
   }
   p.list-item {
-    margin: 0.5em;
+    margin: 0.3em;
   }
   .box.metrics-box {
     margin-bottom: 1em;
@@ -56,4 +56,16 @@ form.edit_appointment {
 
 .dash-home-header {
   margin: 0.5em 0;
+}
+
+
+// Styling for _awaiting_approval_screen partial
+.awaiting-approval {
+  h3, p {
+    text-align: center;
+    margin: 0.5em auto;
+  }
+  h3 {
+    margin-bottom: 0.5em;
+  }
 }

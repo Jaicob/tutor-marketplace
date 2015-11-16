@@ -2,4 +2,10 @@
   <%= generate_dashboard_nav_links and render 'layouts/partials/dashboard_nav' %>
 <% end %>
 
+<% if @tutor.application_status != 'Approved' %>
+  <% content_for (:awaiting_approval_screen) do %>
+    <%= render 'layouts/partials/awaiting_approval_screen' %>
+  <% end %>
+<% end %>
+
 <%= render template: "layouts/application" %>
