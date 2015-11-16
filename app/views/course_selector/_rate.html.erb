@@ -1,6 +1,10 @@
 <!-- Place immediately inside of parent div with correct grid sizing -->
 <div class="rate-container">
-  <div class="dollar-sign">$</div>
-  <input name="tutor_course[rate]" id="rate" class="rate-input" type="text" required="true" min="1" step="1" pattern="\d*" placeholder="25">
-  <div class="per-hour">/hr.</div>
+  <div class="row">
+    <div class="small-4 columns rate-input-third">$</div>
+    <div class="small-4 columns rate-input-third">
+      <input name="tutor_course[rate]" id="rate" type="text" required="true" min="1" step="1" pattern="\d*" placeholder="25">
+    </div>
+    <div class="small-4 columns rate-input-third">/hr.</div>
+  </div>
 </div>

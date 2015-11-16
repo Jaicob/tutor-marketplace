@@ -1,11 +1,11 @@
 var SlotSelector = React.createClass({
-  rangeDistance: 4,
+  rangeDistance: 7,
   rangeUnit: 'days',
   getInitialState: function () {
     return {
         allSlots: [],
         startRange: moment(),
-        endRange:   moment().add(2 + this.rangeDistance, this.rangeUnit)
+        endRange:   moment().add(this.rangeDistance - 1, this.rangeUnit)
     };
   },
   setDelegates: function (newLength) {
@@ -13,6 +13,7 @@ var SlotSelector = React.createClass({
       newLength = this.props.selectedSlots.length;
     };
     navBar = this.props.UINavigationBarDelegate;
+    navBar.titleBarText = "Book " + this.props.tutor_name + " for " + this.props.selectedSubject.course_number;
     navBar.forwardButtonText = "Set Location";
     navBar.backButtonText = "Change Subject";
 
@@ -116,14 +117,14 @@ var SlotSelector = React.createClass({
   },
   handleNextRange: function () {
     this.setState({
-      startRange: this.state.startRange.add(1 + this.rangeDistance, this.rangeUnit),
-      endRange:   this.state.endRange.add(1 + this.rangeDistance, this.rangeUnit)
+      startRange: this.state.startRange.add(this.rangeDistance, this.rangeUnit),
+      endRange:   this.state.endRange.add(this.rangeDistance, this.rangeUnit)
     });
   },
   handlePreviousRange: function () {
     var today = moment();
-    var proposedStartRange = this.state.startRange.subtract(1 + this.rangeDistance, this.rangeUnit);
-    var proposedEndRange   = this.state.endRange.subtract(1 + this.rangeDistance, this.rangeUnit);
+    var proposedStartRange = this.state.startRange.subtract(this.rangeDistance, this.rangeUnit);
+    var proposedEndRange   = this.state.endRange.subtract(this.rangeDistance, this.rangeUnit);
 
     var isValidRange = !proposedStartRange.isBefore(today, 'day');
     if (isValidRange) {
@@ -134,7 +135,7 @@ var SlotSelector = React.createClass({
     } else {
       this.setState({
         startRange: moment(),
-        endRange:   moment().add(2 + this.rangeDistance, this.rangeUnit)
+        endRange:   moment().add(this.rangeDistance - 1, this.rangeUnit)
       })
     };
   },

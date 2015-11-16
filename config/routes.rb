@@ -50,28 +50,26 @@
 #                                  user PATCH    /users/:id(.:format)                                               users#update
 #                                       PUT      /users/:id(.:format)                                               users#update
 #                                       DELETE   /users/:id(.:format)                                               users#destroy
-#         tutor_payment_info_form_tutor GET      /tutors/:id/tutor_payment_info_form(.:format)                      tutors#tutor_payment_info_form
-#       update_tutor_payment_info_tutor PATCH    /tutors/:id/update_tutor_payment_info(.:format)                    tutors#update_tutor_payment_info
-#              submit_application_tutor PATCH    /tutors/:id/submit_application(.:format)                           tutors#submit_application
-#                                tutors GET      /tutors(.:format)                                                  tutors#index
-#                                       POST     /tutors(.:format)                                                  tutors#create
-#                             new_tutor GET      /tutors/new(.:format)                                              tutors#new
-#                            edit_tutor GET      /tutors/:id/edit(.:format)                                         tutors#edit
-#                                 tutor GET      /tutors/:id(.:format)                                              tutors#show
-#                                       PATCH    /tutors/:id(.:format)                                              tutors#update
-#                                       PUT      /tutors/:id(.:format)                                              tutors#update
-#                                       DELETE   /tutors/:id(.:format)                                              tutors#destroy
 #                            home_tutor GET      /tutors/:id/home(.:format)                                         dashboard/tutor/home#index
 #                     cancel_appt_tutor PUT      /tutors/:id/cancel_appt/:appt_id(.:format)                         dashboard/tutor/home#cancel_appt
 #                        schedule_tutor GET      /tutors/:id/schedule(.:format)                                     dashboard/tutor/schedule#index
 #                         profile_tutor GET      /tutors/:id/profile(.:format)                                      dashboard/tutor/profile#index
 #                         account_tutor GET      /tutors/:id/settings/account(.:format)                             dashboard/tutor/settings#account
-#                    private_info_tutor GET      /tutors/:id/settings/private_info(.:format)                        dashboard/tutor/settings#private_info
 #                    edit_profile_tutor GET      /tutors/:id/settings/edit_profile(.:format)                        dashboard/tutor/settings#edit_profile
 #            appointment_settings_tutor GET      /tutors/:id/settings/appointment_settings(.:format)                dashboard/tutor/settings#appointment_settings
 #                    payment_info_tutor GET      /tutors/:id/settings/payment_info(.:format)                        dashboard/tutor/settings#payment_info
 #                    edit_address_tutor GET      /tutors/:id/settings/edit_address(.:format)                        dashboard/tutor/settings#edit_address
 #             appointment_history_tutor GET      /tutors/:id/settings/appointment_history(.:format)                 dashboard/tutor/settings#appointment_history
+#         tutor_payment_info_form_tutor GET      /tutors/:id/tutor_payment_info_form(.:format)                      tutors#tutor_payment_info_form
+#       update_tutor_payment_info_tutor PATCH    /tutors/:id/update_tutor_payment_info(.:format)                    tutors#update_tutor_payment_info
+#          onboarding_application_tutor GET      /tutors/:id/onboarding/application(.:format)                       tutor_onboarding#application
+#              onboarding_courses_tutor GET      /tutors/:id/onboarding/courses(.:format)                           tutor_onboarding#courses
+#             onboarding_schedule_tutor GET      /tutors/:id/onboarding/schedule(.:format)                          tutor_onboarding#schedule
+#      onboarding_payment_details_tutor GET      /tutors/:id/onboarding/payment_details(.:format)                   tutor_onboarding#payment_details
+#              submit_application_tutor PUT      /tutors/:id/onboarding/application(.:format)                       tutor_onboarding#submit_application
+#                  submit_courses_tutor PUT      /tutors/:id/onboarding/application(.:format)                       tutor_onboarding#submit_courses
+#                 submit_schedule_tutor PUT      /tutors/:id/onboarding/application(.:format)                       tutor_onboarding#submit_schedule
+#          submit_payment_details_tutor PUT      /tutors/:id/onboarding/application(.:format)                       tutor_onboarding#submit_payment_details
 #                         tutor_courses GET      /tutors/:tutor_id/courses(.:format)                                dashboard/tutor/courses#index
 #                                       POST     /tutors/:tutor_id/courses(.:format)                                dashboard/tutor/courses#create
 #                      new_tutor_course GET      /tutors/:tutor_id/courses/new(.:format)                            dashboard/tutor/courses#new
@@ -88,7 +86,7 @@
 #                                       PATCH    /tutors/:tutor_id/promotions/:id(.:format)                         dashboard/tutor/promotions#update
 #                                       PUT      /tutors/:tutor_id/promotions/:id(.:format)                         dashboard/tutor/promotions#update
 #                                       DELETE   /tutors/:tutor_id/promotions/:id(.:format)                         dashboard/tutor/promotions#destroy
-#                                       PATCH    /tutors/:id(.:format)                                              tutors#update
+#                                 tutor PATCH    /tutors/:id(.:format)                                              tutors#update
 #                                       PUT      /tutors/:id(.:format)                                              tutors#update
 #                                       DELETE   /tutors/:id(.:format)                                              tutors#destroy
 #                          home_student GET      /students/:id/home(.:format)                                       dashboard/student/home#index
@@ -224,44 +222,51 @@ Rails.application.routes.draw do
   # standard resources for slots
   resources :slots
 
-  # user endpoints for update and destroy 
+  # user endpoints for update and destroy
   resources :users, only: [:update, :destroy]
 
-  resources :tutors do
-    member do
-      get 'tutor_payment_info_form' => 'tutors#tutor_payment_info_form', as: 'tutor_payment_info_form'
-      patch 'update_tutor_payment_info' => 'tutors#update_tutor_payment_info', as: 'update_tutor_payment_info'
-      patch 'submit_application' => 'tutors#submit_application'
-    end
-  end
-
   # all dashboard routes for signed-in tutors
-  resources :tutors, only: [:update, :destroy] do
+  resources :tutors, only: [:show, :update, :destroy] do
     member do
       get  '/home'                    => 'dashboard/tutor/home#index'
       put  '/cancel_appt/:appt_id'    => 'dashboard/tutor/home#cancel_appt', as: 'cancel_appt'
       get  '/schedule'                => 'dashboard/tutor/schedule#index'
       get  '/profile'                 => 'dashboard/tutor/profile#index'
-      scope 'settings' do 
+      scope 'settings' do
         get  '/account'                 => 'dashboard/tutor/settings#account'
-        get  '/private_info'            => 'dashboard/tutor/settings#private_info'
         get  '/edit_profile'            => 'dashboard/tutor/settings#edit_profile'
-        get  '/appointment_settings'    => 'dashboard/tutor/settings#appointment_settings' 
+        get  '/appointment_settings'    => 'dashboard/tutor/settings#appointment_settings'
         get  '/payment_info'            => 'dashboard/tutor/settings#payment_info'
         get  '/edit_address'            => 'dashboard/tutor/settings#edit_address'
         get  '/appointment_history'     => 'dashboard/tutor/settings#appointment_history'
       end
+      # end of standard dashboard routes
+
+      # stripe account setup routes
+      get 'tutor_payment_info_form'     => 'tutors#tutor_payment_info_form', as: 'tutor_payment_info_form'
+      patch 'update_tutor_payment_info' => 'tutors#update_tutor_payment_info', as: 'update_tutor_payment_info'
+
+      # new tutor onboarding routes (for loading step-by-step instruction wizard)
+      get '/onboarding/application'     => 'tutor_onboarding#application'
+      get '/onboarding/courses'         => 'tutor_onboarding#courses'
+      get '/onboarding/schedule'        => 'tutor_onboarding#schedule'
+      get '/onboarding/payment_details' => 'tutor_onboarding#payment_details'
+      put '/onboarding/application'     => 'tutor_onboarding#submit_application', as: 'submit_application'
+      put '/onboarding/application'     => 'tutor_onboarding#submit_courses', as: 'submit_courses'
+      put '/onboarding/application'     => 'tutor_onboarding#submit_schedule', as: 'submit_schedule'
+      put '/onboarding/application'     => 'tutor_onboarding#submit_payment_details', as: 'submit_payment_details'
     end
     resources :courses, controller: 'dashboard/tutor/courses'
     resources :promotions, controller: 'dashboard/tutor/promotions'
   end
 
+
   # all dashboard routes for signed-in students
-  resources :students, only: [:update, :destroy] do 
-    member do 
+  resources :students, only: [:update, :destroy] do
+    member do
       get  '/home'                 => 'dashboard/student/home#index'
       put  '/cancel_appt/:appt_id' => 'dashboard/student/home#cancel_appt', as: 'cancel_appt'
-      get  '/search'               => 'single_views#tutor_search'      
+      get  '/search'               => 'single_views#tutor_search'
       scope 'settings' do
         get  '/account'               => 'dashboard/student/settings#account'
         get  '/payment_info'          => 'dashboard/student/settings#payment_info'
@@ -287,9 +292,9 @@ Rails.application.routes.draw do
     resources :students do collection { match 'search' => 'students#search', via: [:get, :post], as: :search } end
     resources :appointments do collection { match 'search' => 'appointments#search', via: [:get, :post], as: :search } end
     resources :slots do collection { match 'search' => 'slots#search', via: [:get, :post], as: :search } end
-    resources :schools do 
-      collection { match 'search' => 'schools#search', via: [:get, :post], as: :search } 
-      member do 
+    resources :schools do
+      collection { match 'search' => 'schools#search', via: [:get, :post], as: :search }
+      member do
         get   'campus_manager' => 'schools#edit_campus_manager'
         post  'campus_manager' => 'schools#update_campus_manager'
       end
@@ -326,6 +331,11 @@ Rails.application.routes.draw do
       end
       get '/search/tutors' => 'search#tutors'
       get '/payments/current_student' => 'payments#current_student'
+      ## special routes for checkout
+      # retrieves promo code info for checkout preview
+      post '/check_promo_code' => 'promotions#check_promo_code'
+      # creates an appointment without a student_id for a visitor (before student_id is created and attached to appt in the next step of checkout)
+      post  '/visitor/create_appointment' => '/api/v1/student_appointments#visitor_create'
     end
   end
 

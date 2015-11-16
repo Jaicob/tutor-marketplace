@@ -1,9 +1,7 @@
 button, .custom-button {
   // display: block;
-  background-color: #58AA4D;
-  padding: 0.5em 2em;
+  background-color: #58AA4D;  
   font-weight: 100;
-  font-size: 0.8em;
   font-family: 'Lato';
   border-radius: 4px !important;
   border: none;
@@ -31,6 +29,17 @@ button, .custom-button {
   &.disabled, &.disabled:hover {
     background-color: #D2CECE;
   }
+  &.small {
+    font-size: 0.8em;
+    padding: 0.5em 2em;
+  }
+  &.medium {
+
+  }
+  &.large {
+
+  }
+
 }
 
 .custom-button:hover, .custom-button:active {

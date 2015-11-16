@@ -234,10 +234,12 @@
       list-style-type: none;
       display: flex;
       margin: 0;
+      width: 100%;
+
       li.day {
         width: 100%;
         text-align: center;
-        height: 355px;
+        height: 350px;
         overflow: scroll;
 
         &:nth-child(odd) {
@@ -328,7 +330,7 @@
 
       li.cart-item {
         display: block;
-        padding: 5px;
+        padding: 10px;
 
         &:nth-child(odd) {
           background-color: #eee;
@@ -353,7 +355,7 @@
     .total {
       border-top: 1px solid #ccc;
       margin-top: 10px;
-      padding: 10px 5px;
+      padding: 10px;
 
       .rate {
         float: right;
@@ -368,6 +370,13 @@
         padding: 20px;
         border: 1px solid #ccc;
       }
+    }
+  }
+
+  .receipt {
+    .header {
+      padding-bottom: 20px;
+      border-bottom: 1px solid #ccc;
     }
   }
 }

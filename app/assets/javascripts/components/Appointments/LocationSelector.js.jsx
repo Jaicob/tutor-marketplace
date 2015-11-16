@@ -9,16 +9,19 @@ var LocationSelector = React.createClass({
   },
   setDelegates: function () {
     navBar = this.props.UINavigationBarDelegate;
+    navBar.titleBarText = "Suggest a Location";
     navBar.backButtonText = "Change times"
     navBar.forwardButtonText = "Proceed to checkout"
 
     navBar.forwardButtonClick = function(update){
-      console.log("backButtonClick from LocationSelector.js.jsx");
       this.props.handleLocation(this.state.location);
-      update();
+      this.props.makeAppointment(update);
     }.bind(this);
 
-    navBar.backButtonClick = navBar.forwardButtonClick;
+    navBar.backButtonClick = function(update){
+      this.props.handleLocation(this.state.location);
+      update();
+    }.bind(this);;
 
     this.props.updateDelegate(navBar);
   },

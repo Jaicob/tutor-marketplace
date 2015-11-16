@@ -4,30 +4,35 @@ var Checkout = React.createClass({
   },
   getInitialState: function () {
     return {
-      "promo": null
+      "promo": null,
+      "error": false
     }
   },
   setDelegates: function () {
     navBar = this.props.UINavigationBarDelegate;
     navBar.canGoForward = true;
     navBar.canGoBack = true;
-    navBar.backButtonText = "Change location"
-    navBar.forwardButtonText = "Proceed to Payment"
+    navBar.titleBarText = "Checkout";
+    navBar.backButtonText = "Change location";
+    navBar.forwardButtonText = "Proceed to Payment";
     this.props.updateDelegate(navBar);
   },
-  fetchPromoCode: function () {
-    // $.get()
-  },
   applyPromoCode: function () {
-    this.setState({
-      "promo": {
-        "code": this.promoInput.value,
-        "name": "UNC Promotion",
-        "value": "10",
-        "type": "percentage"
-      }
+    var endpoint = API.endpoints.promo({
+      code: this.promoInput.value
     });
-    console.log("promo code applied:", this.state.promo);
+
+    $.getJSON(endpoints, function(promo){
+      if (promo.valid) {
+        modified_promo = promo;
+        this.setState({
+          promo: modified_promo
+        });
+      } else {
+        console.log("Promo not valid", promo.description);
+        this.promoInput.value = "Promo not valid.";
+      }
+    }.bind(this));
   },
   removePromoCode: function () {
     this.setState({

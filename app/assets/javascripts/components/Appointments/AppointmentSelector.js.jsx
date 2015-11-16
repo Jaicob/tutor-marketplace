@@ -10,6 +10,7 @@ var Delegate = function () {
     this.canGoForward = null;
     this.canShowForwardButton = null;
 
+    this.titleBarText = null;
     this.description = null;
     this.extra_buttons = null;
   }.bind(this);
@@ -25,13 +26,22 @@ var AppointmentSelector = React.createClass({
           selectedLocation: "",
           disabledSlots: [],
           currentStep: 1,
+          totalCharge: 0,
           forceSubject: false,
           forceFetch: false,
           student: {},
           token: "",
           customer_id: "",
+          appointments: [],
           UINavigationBarDelegate: new Delegate()
       };
+  },
+  componentWillMount: function () {
+    var self = this;
+    this.delegation = {
+      UINavigationBarDelegate: self.state.UINavigationBarDelegate,
+      updateDelegate: self.updateDelegate
+    }
   },
   componentDidMount: function() {
     this.fetchStudent();
@@ -143,55 +153,101 @@ var AppointmentSelector = React.createClass({
       this.setState({customer_id: customer_id})
     };
   },
+  handleTotal: function (newTotal) {
+    this.setState({
+      totalCharge: newTotal
+    });
+  },
+  makeAppointment: function (update) {
+    if (Object.keys(this.state.student).length > 0) {
+      var endpoint = API.endpoints.appointment.create({ "student_id": this.state.student.id });
+    } else {
+      var endpoint = API.endpoints.appointment.create_visitor();
+    }
+
+    var appointments = this.state.selectedSlots.map(function(slot){
+      return {
+        slot_id: slot.id,
+        course_id: this.state.selectedSubject.course_id,
+        start_time: slot.start_time
+      };
+    }.bind(this));
+
+    var callback = function (data) {
+      this.setState({ appointments: data });
+      update();
+    }.bind(this);
+
+    $.post(endpoint, { data: appointments }, callback);
+  },
   renderMainView: function () {
     switch(this.state.currentStep){
       case 1:
-              return <SubjectSelector tutor={this.props.tutor}
-                                      selectedSubject={this.state.selectedSubject}
-                                      handleSubject={this.handleSubject}
-                                      forceSubject={this.state.forceSubject}
-                                      UINavigationBarDelegate={this.state.UINavigationBarDelegate}
-                                      updateDelegate={this.updateDelegate}
-                                      margin={this.props.margin}
-                                       />
+              return <SubjectSelector
+                      {...this.props}
+                      {...this.delegation}
+                      selectedSubject={this.state.selectedSubject}
+                      handleSubject={this.handleSubject}
+                      forceSubject={this.state.forceSubject}
+                     />
       case 2:
-              return <SlotSelector tutor={this.props.tutor}
-                                   selectedSlots={this.state.selectedSlots}
-                                   handleSlots={this.handleSlots}
-                                   disabledSlots={this.state.disabledSlots}
-                                   handleDisabledSlots={this.handleDisabledSlots}
-                                   forceFetch={this.state.forceFetch}
-                                   UINavigationBarDelegate={this.state.UINavigationBarDelegate}
-                                   updateDelegate={this.updateDelegate}
-                                   margin={this.props.margin}
-                                   />
-      case 3: return <LocationSelector selectedLocation={this.state.selectedLocation}
-                                       handleLocation={this.handleLocation}
-                                       UINavigationBarDelegate={this.state.UINavigationBarDelegate}
-                                       updateDelegate={this.updateDelegate}
-                                       {...this.props}
-                                       />
-      case 4: return <Checkout {...this.props} selectedSlots={this.state.selectedSlots} selectedSubject={this.state.selectedSubject} UINavigationBarDelegate={this.state.UINavigationBarDelegate} updateDelegate={this.updateDelegate} currentStudent={this.state.student} onChange={this.handleCard} />
-      case 5: return <PaymentForm {...this.props} currentStudent={this.state.student} onChange={this.handleCard} />
-      case 6: return <ConfirmationScreen {...this.props} />
-      case 7: return <Summary {...this.props} />
+              return <SlotSelector
+                        {...this.props}
+                        {...this.delegation}
+                        selectedSubject={this.state.selectedSubject}
+                        selectedSlots={this.state.selectedSlots}
+                        disabledSlots={this.state.disabledSlots}
+                        forceFetch={this.state.forceFetch}
+                        handleSlots={this.handleSlots}
+                        handleDisabledSlots={this.handleDisabledSlots}
+                      />
+      case 3: return <LocationSelector
+                       {...this.props}
+                       {...this.delegation}
+                       selectedLocation={this.state.selectedLocation}
+                       handleLocation={this.handleLocation}
+                       makeAppointment={this.makeAppointment}
+                     />
+      case 4: return <Checkout
+                        {...this.props}
+                        {...this.delegation}
+                        selectedSlots={this.state.selectedSlots}
+                        selectedSubject={this.state.selectedSubject}
+                        currentStudent={this.state.student}
+                        total={this.state.totalCharge}
+                        handleTotal={this.handleTotal}
+                        onChange={this.handleCard}
+                     />
+      case 5: return <PaymentForm
+                        {...this.props}
+                        {...this.delegation}
+                        currentStudent={this.state.student}
+                        total={this.state.totalCharge}
+                        onChange={this.handleCard}
+                      />
+      case 6: return <Receipt
+                      {...this.props}
+                      {...this.state}
+                      {...this.delegation}
+                      total={this.state.totalCharge}
+                     />
       default: break
     };
   },
   render: function(){
-    // <div className="column selected-class-output">
-    // </div>
     return (
       <div className="appointment-selector" id="book">
         <article className="availability-calendar">
-          <div className="header row">Book Me Now</div>
+          <div className="header row">{
+            this.state.UINavigationBarDelegate.titleBarText || "Book " + this.props.tutor_name
+          }</div>
           {this.renderMainView()}
         </article>
         <div className="footer row">
             { this.canShowBackButton() &&
-            <a className="back btn" onClick={this.handleBackStep}>
-              {this.state.UINavigationBarDelegate.backButtonText || "Go Back"}
-            </a>
+              <a className="back btn" onClick={this.handleBackStep}>
+                {this.state.UINavigationBarDelegate.backButtonText || "Go Back"}
+              </a>
             }
             {
               (

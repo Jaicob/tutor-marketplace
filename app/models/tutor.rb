@@ -46,7 +46,8 @@ class Tutor < ActiveRecord::Base
 
   enum application_status: ['Incomplete', 'Complete', 'Approved']
   enum active_status: ['Inactive', 'Active']
-  enum degree: ["B.A.", "B.S.", "M.B.A", "M.S.", "M.Ed.", "PhD."]
+  enum degree: ["B.A.","B.S.","M.B.A.","M.S.","M.Ed.","PhD."]
+  enum onboarding_status: ['Step 1', 'Step 2', 'Step 3', 'Step 4', 'Finished']
 
   # Carrierwave setup for uploading files
   mount_uploader :profile_pic, ProfilePicUploader
@@ -112,19 +113,19 @@ class Tutor < ActiveRecord::Base
   end
 
   def zero_availability_set?
-    self.incomplete_profile? == false && 
-    self.awaiting_approval? == false && 
-    self.slots.count == 0 ? 
+    self.incomplete_profile? == false &&
+    self.awaiting_approval? == false &&
+    self.slots.count == 0 ?
     true : false
   end
 
   def onboarding_complete?
-    self.complete_application? && 
-    self.application_status == 'Approved' && 
+    self.complete_application? &&
+    self.application_status == 'Approved' &&
     self.courses_approved? &&
     self.slots.count > 0 &&
-    self.acct_id ? 
-    true : false 
+    self.acct_id ?
+    true : false
   end
 
   def send_active_status_change_email(tutor_params)
@@ -200,10 +201,20 @@ class Tutor < ActiveRecord::Base
       tutor_course_info = {}
       tutor_course_info[:id] = tc.id
       tutor_course_info[:course_id] = tc.course.id
+      tutor_course_info[:course_number] = tc.course.subject.name + " " + tc.course.call_number
       tutor_course_info[:course_name] = tc.course.friendly_name
       tutor_course_info[:rate] = tc.rate
       tutor_course_info
     end
   end
+
+  # def onboarding_step
+  #   step_number = 1
+  #   self.application_status == 'Complete' ? (step_number += 1) : (return step_number)
+  #   self.courses_approved? ? (step_number += 1) : (return step_number)
+  #   self.slots.count > 0 ? (step_number += 1) : (return step_number)
+  #   !self.acct_id.nil? ? (step_number += 1) : (return step_number)
+  #   step_number
+  # end
 
 end
