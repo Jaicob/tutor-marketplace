@@ -325,7 +325,7 @@
     ul.cart-list {
       list-style-type: none;
       margin: 0;
-      max-height: 150px;
+      max-height: 130px;
       overflow: scroll;
 
       li.cart-item {
@@ -338,7 +338,7 @@
 
         .rate {
           float: right;
-          width: 70px;
+          width: 75px;
           padding-left: 10px;
           border-left: 1px solid #bbb;
         }
@@ -359,7 +359,7 @@
 
       .rate {
         float: right;
-        width: 70px;
+        width: 75px;
         padding-left: 10px;
         border-left: 1px solid #bbb;
       }
@@ -369,6 +369,16 @@
       .wrapper {
         padding: 20px;
         border: 1px solid #ccc;
+
+        .remove {
+          background: $alert_medium;
+          margin: auto;
+          display: block;
+
+          &:hover {
+            background: $alert_dark;
+          }
+        }
       }
     }
   }

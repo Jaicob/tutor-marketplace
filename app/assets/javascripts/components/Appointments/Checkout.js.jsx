@@ -88,9 +88,9 @@ var Checkout = React.createClass({
                         (function(){
                           // [ ] TODO (AJ): Refactor/dry this later
                           if (promo.type.indexOf("percent") > -1) {
-                            return "-" + promo.value + "%";
+                            return promo.value + "% off";
                           } else if (promo.type.indexOf("free") > -1) {
-                            return "-100%";
+                            return "100% off";
                           } else if (promo.type.indexOf("dollar") > -1) {
                             return "-$" + promo.value.toFixed(2);
                           }
