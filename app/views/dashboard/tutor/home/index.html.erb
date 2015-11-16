@@ -123,11 +123,10 @@
       <h2 class="dash-home-header">Support</h2>
       <div class="box height-24em">
         <h5>Your Campus Manager</h5>
-        <div class="campus-manager-pic-container">
-          <%= image_tag(@school.campus_manager.profile_pic_url, class: 'campus_manager_pic') %>
-        </div>
-        <h6 class="name"><%= @school.campus_manager.full_name %></h6>
-        <p><%= @school.campus_manager.email %></p>
+        <% if @school.campus_manager %>
+          <h6 class="name"><%= @school.campus_manager.full_name %></h6>
+          <p><%= @school.campus_manager.email %></p>
+        <% end %>
         <h5>Axon Headquarters</h5>
         <p>(762) 585-4850</p>
         <p><%= mail_to 'info@axontutors.com' %></p>
