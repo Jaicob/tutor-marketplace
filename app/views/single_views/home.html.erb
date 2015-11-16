@@ -4,7 +4,7 @@
 }
 /* Do NOT remove this CSS! It must be in the view to dynamically select the correct campus picture to use as the background image */
 .lp-first-section {
-  background: url("<%= (@school && @school.campus_pic_url) ? @school.campus_pic_url : 'assets/unicorn.jpg' %>") no-repeat center center fixed; 
+  background: url("<%= (@school && @school.campus_pic_url) ? @school.campus_pic_url : 'https://s3-us-west-2.amazonaws.com/rails-axon-uploads/miscellaneous/default-campus.jpg' %>") no-repeat center center fixed; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -36,7 +36,7 @@
               <%= render '/course_selector/course' %>
           </div>
           <div class="small-12 medium-2 columns">
-              <%= f.submit 'Search', class: 'custom-button full-width manual-line-height' %>
+              <%= f.submit 'Search', class: 'custom-button full-width manual-line-height', id: 'submit-search-home-page' %>
             <% end %>
           </div>
         </div>

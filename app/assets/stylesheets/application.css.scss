@@ -335,3 +335,18 @@
     width: 1em;
   }
   }
+
+
+  // QUICK FIXES FOR SELECT ON MAIN PAGES
+
+  select#subject, select#course, #submit-search-home-page {
+    border-radius: 0 !important;
+  }
+  input#student-landing-search-button {
+    height: 2.9em;
+    border-radius: 0 !important;
+  }
+  select#student-landing-school-select {
+    border-radius: 0 !important;
+  }
+
