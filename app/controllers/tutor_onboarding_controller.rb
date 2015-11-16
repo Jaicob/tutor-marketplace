@@ -67,10 +67,17 @@ class TutorOnboardingController < ApplicationController
   end
 
   def submit_payment_details
-    if @tutor.update(onboarding_status: 4)
-      redirect_to home_tutor_path(@tutor.slug)
+    if @tutor.update_attributes(tutor_params)
+      @tutor.update_attributes(last_4_acct: params[:last_4_acct], onboarding_status: 'Finished')
+      UpdateTutorAccount.call(tutor: @tutor, token: params[:stripeToken])
+      respond_to do |format|
+        format.js { render :payment_settings_updated }
+        format.html { redirect_to home_tutor_path(@tutor.slug) }
+      end
     else
-      redirect_to :back
+      respond_to do |format|
+        format.js { render :load_payment_form }
+      end
     end
   end
 
