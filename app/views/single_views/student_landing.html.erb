@@ -13,19 +13,35 @@
   <%= render 'layouts/partials/special_navs/student_landing_nav' %>
 <% end %>
 <div class="landing-page lp-first-section">
-  <h1 class="center white shadow top-padding headline">Meet your personal campus tutor</h1>
-  <h3 class="center white shadow bottom-margin headline">Choose your campus:</h3>
-  <div class="school-selection-box">
-    <%= form_for 'visitor', url: set_school_path do |f| %>
-      <%= f.collection_select(:school_id, School.all, :id, :name, {prompt: 'Select School'}, {required: true}) %>
-      <%= f.submit 'Go', class: 'visitor-set-school-button' %>
-    <% end %>
+  <div class="row">
+    <div class="small-12 columns">
+      <h1 class="center white shadow top-padding headline">Meet your personal campus tutor</h1>
+      <h3 class="center white shadow bottom-margin headline">Choose your campus:</h3>
+    </div>
   </div>
-  <p class="center white shadow book-two-mins">Book your in-person & on-campus tutor in just two minutes</p>
-  <div class="numbers-banner-box">
-    <div class="number-banner top-banner">Join over <span class="big-numbers">2,000+</span> students on Axon</div>
-    <div class="number-banner">Over <span class="big-numbers">6,000+</span> tutoring sessions</div>
-    <div class="number-banner">Featured in: The Odyssey | Red & Black</div>
+  <div class="row">
+    <div class="small-12 medium-6 medium-centered columns">
+      <div class="row">
+        <div class="small-12 medium-9 columns">
+          <%= form_for 'visitor', url: set_school_path do |f| %>
+            <%= f.collection_select(:school_id, School.all, :id, :name, {prompt: 'Select School'}, {required: true}) %>
+        </div>
+        <div class="small-12 medium-3 columns">
+            <%= f.submit 'Go', class: 'custom-button full-width' %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="small-12 columns">
+      <p class="center white shadow book-two-mins">Book your in-person & on-campus tutor in just two minutes</p>
+      <div class="numbers-banner-box">
+        <div class="number-banner top-banner">Join over <span class="big-numbers">2,000+</span> students on Axon</div>
+        <div class="number-banner">Over <span class="big-numbers">6,000+</span> tutoring sessions</div>
+        <div class="number-banner">Featured in: The Odyssey | Red & Black</div>
+      </div>
+    </div>
   </div>
 </div>
 <%= render '/single_views/home_and_get_started_landing' %>
