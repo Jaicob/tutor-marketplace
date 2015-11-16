@@ -19,10 +19,10 @@
  *= require framework_and_overrides
  */
 
-  p, h1, h2, h3, h4, h5, h6, td, li, a {
-    font-family: 'Lato';
+  p, h1, h2, h3, h4, h5, h6, td, li, a, input, select, textarea {
+    font-family: 'Lato' !important;
     color: #4F5252;
-   }
+  }
 
   p {
     font-weight: 100;

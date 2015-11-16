@@ -6,7 +6,7 @@ class TutorOnboardingController < ApplicationController
 
   def submit_application
     if @tutor.update(tutor_params)
-      redirect_to onboarding_courses_path(@tutor.slug)
+      redirect_to onboarding_courses_tutor_path(@tutor.slug)
     else
       redirect_to :back
       # flash[:alert] = "Application was not submitted: #{@tutor.errors.full_messages.first}"
@@ -19,7 +19,7 @@ class TutorOnboardingController < ApplicationController
 
   def submit_courses
     if @tutor.update(tutor_params)
-      redirect_to onboarding_schedule_path(@tutor.slug)
+      redirect_to onboarding_schedule_tutor_path(@tutor.slug)
     else
       redirect_to :back
       # flash[:alert] = "Application was not submitted: #{@tutor.errors.full_messages.first}"

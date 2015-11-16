@@ -65,6 +65,10 @@
 // STYLING FOR INSTRUCTIONS SCREENS
 .big-text {
   font-size: 1.2em;
+  span {
+    font-weight: 400;
+    font-family: 'Lato'
+  }
 }
 
 
@@ -105,6 +109,10 @@ i.fi-arrow-right {
   #tutor_graduation_year {
     border-top-left-radius: 0 !important;
     border-bottom-left-radius: 0 !important;
+  }
+  .fine-print {
+    font-size: 0.8em;
+    text-align: left;
   }
   .file-input-box {
     height: 3em;
@@ -153,6 +161,103 @@ i.fi-arrow-right {
   }
   .thats-it {
     text-align: center;
-    margin-top: 2em;
+    margin: 2em auto;
   }
 }
+
+
+// STYLING FOR MODEL TUTOR CARD
+.model-tutor-card-container {
+  .card {
+      &.model-card {
+        margin: 2em auto 7em;
+      }
+      max-width: 14em;
+      margin: 1em 0.5em;
+      background-color: #F3F3F3;
+      box-shadow: 1px 1px 3px #a8a8a8;
+      border-radius: 4px;
+      overflow: hidden;
+      .card-content {
+          height: 30em;
+          .profile-pic-box {
+              display: block;
+              .profile-pic {
+                  height: 100%;
+                  width: 100%;
+              }
+          }
+          .banner-box {
+              display: block;
+              width: 100%;
+              background-color: #2BC2DE;
+              color: white;
+              padding: 0.3em 0;
+              margin: 0;
+              .banner-row {
+                  p {
+                      display: inline-block;
+                      color: white;
+                      margin: 0;
+                      span {
+                          color: white;
+                      }
+                  }
+                  p.name {
+                      font-size: 1.3em;
+                      padding-left: 0.2em;
+                  }
+                  p.price {
+                      background-color: #0095AC;
+                      padding: 0.4em;
+                      border-radius: 100%;
+                      float: right;
+                      position: relative;
+                      right: 0.3em;
+                      span {
+                          color: white;
+                      }
+                  }
+                  p.degree {
+                      font-size: 0.8em;
+                  }
+                  i.fi-book-bookmark {
+                      padding: 0 0.5em;
+                      color: white;
+                  }
+              }
+          }
+          .additional_degrees {
+              background-color: #D4D3D3;
+              text-align: center;
+              p {
+                  font-size: 0.7em;
+                  padding: 0.5em 0;
+                  margin-bottom: 0;
+                  i.fi-plus {
+                      font-weight: 100;
+                      position: relative;
+                      right: 1em;
+                  }
+              }
+          }
+          .statements-box {
+              p {
+                  font-size: 0.8em;
+                  margin: 0 auto;
+                  width: 95%;
+                  padding-top: 0.5em;
+                  a.see-more {
+                      font-size: 0.8em;
+                      margin-left: 0.5em;
+                  }
+              }
+          }
+      }
+      .custom-button.full-width {
+          width: 87%;
+          margin-top: 0.5em;
+      }
+  }
+}
+    
