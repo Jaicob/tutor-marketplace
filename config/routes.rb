@@ -329,8 +329,9 @@ Rails.application.routes.draw do
           end
         end
       end
+
       get '/search/tutors' => 'search#tutors'
-      get '/payments/current_student' => 'payments#current_student'
+      get '/payments/student/:student_id' => 'payments#check_student_for_customer_id'
       ## special routes for checkout
       # retrieves promo code info for checkout preview
       get '/check_promo_code/:tutor_id/:promo_code' => 'promotions#check_promo_code'
