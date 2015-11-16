@@ -2,6 +2,10 @@ center {
   text-align: center;
 }
 
+.white {
+  color: #FAFAFA;
+}
+
 .border-radius {
   border-radius: 4px !important;
 }
@@ -15,6 +19,10 @@ center {
 
 .margin-top-2em {
   margin-top: 2em;
+}
+
+.margin-1em {
+  margin: 1em;
 }
 
 .padding-2em {
@@ -44,4 +52,11 @@ center {
 
 .bold {
   font-weight: 700;
+}
+
+.blue-link {
+  color: #2BC2DE;
+}
+.blue-link:hover {
+  color: #0095AC;
 }

@@ -152,13 +152,6 @@ p.pic-caption {
   width: 60%;
   margin: auto;
 }
-p.difference-text {
-  padding-bottom: 2em;
-}
-.difference-icon {
-  font-size: 2em;
-  color: #0095AC;
-}
 img.testimonial-pic {
   border-radius: 100%;
   border: 1px solid black;
@@ -171,7 +164,7 @@ p.testimonial-name {
   font-weight: 400;
   margin-bottom: 2em;
 }
-a.faqs-link:hover {
+a.faqs-link {
   padding: 1em 5em;
   background-color: #0095AC;
   color: white;
@@ -271,26 +264,6 @@ p.axon-is-easy {
   vertical-align: top;
   margin: 0;
 }
-.four-differences-boxes {
-  width: 80%;
-  margin: auto;
-}
-.difference-box {
-  display: inline-block;
-  vertical-align: top;
-  width: 49%;
-  padding: 0 1em;
-}
-.testimonial-box {
-  display: inline-block;
-  width: 49%;
-  padding: 0 1em;
-  vertical-align: top;
-}
-p.difference-text {
-  padding-bottom: 2em;
-  max-width: 20em;
-}
 }
 
 /* Tutor sign-up form */
@@ -308,6 +281,8 @@ p.difference-text {
       .sign-up-title {
         color: white;
         padding: 0.8em 0 0.4em;
+        font-size: 2em;
+        margin: 1em -1em 0.5em;
       }
       p {
         color: white;
@@ -338,4 +313,95 @@ p.difference-text {
 }
 
 
+.landing-page.lp-banner {
+  background-color: #0095AC;
+  .banner {
+    color: #fafafa;
+    padding: 0.5em;
+  }
+}
 
+.landing-page.lp-banner {
+  background-color: #0095AC;
+  .banner {
+    color: #fafafa;
+    padding: 0.5em;
+  }
+}
+
+.landing-page.lp-3-steps-section {
+  background-color: #E4E4E4;
+  padding: 3em;
+  p.number {
+    margin: 1em 0;
+    display: inline-block;
+    padding: 0.45em;
+    border-radius: 100%;
+    height: 2.5em;
+    width: 2.5em;
+    background-color: #2BC2DE;
+    color: white;
+    font-weight: 700;
+    font-size: 1.4em;
+  }
+}
+
+.tutor-headline h1 {
+  color: white;
+  text-shadow: 1px 1px 1px black;
+  text-align: center;
+  margin-top: 2em;
+  font-size: 3.5em;
+}
+
+.difference-box{
+  i {
+    color: #58AA4D;
+    font-size: 3em;
+  }
+  h5 {
+    max-width: 12em;
+    margin: auto;
+  }
+}
+
+.landing-page.lp-testimonial-section {
+  background-color: #E4E4E4;
+  padding: 2em;
+  img.tutor-pic {
+    height: 10em;
+    border-radius: 100%;
+  }
+  p.money {
+    font-weight: 400;
+    font-size: 1.2em;
+  }
+}
+
+.landing-page.lp-newspaper-section {
+  background-color: #4F5252;
+  padding: 4em;
+  p.newspaper-quote {
+    color: #FAFAFA;
+    font-family: 'EB Garamond', serif !important;
+    margin: 0;
+    font-size: 1.3em;
+    &.red-n-black-quote {
+      margin-top: -0.5em;
+    }
+  }
+  img.odyssey-logo {
+    padding: 0;
+    margin-top: 1em;
+  }
+  img.red-black-logo {
+    height: 3em;
+  }
+}
+
+.section-header {
+  text-align: center;
+  font-size: 1.8em;
+  font-weight: 100;
+  margin: 1em auto 2em;
+}
