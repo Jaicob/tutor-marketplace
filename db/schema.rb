@@ -173,9 +173,9 @@ ActiveRecord::Schema.define(version: 20151110183833) do
     t.string   "profile_pic"
     t.string   "transcript"
     t.text     "appt_notes"
-    t.integer  "onboarding_status",  default: 0
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
+    t.boolean  "courses_approved",   default: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
     t.string   "last_4_acct"
     t.string   "line1"
     t.string   "line2"

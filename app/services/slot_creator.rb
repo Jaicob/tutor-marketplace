@@ -14,7 +14,7 @@ class SlotCreator
      #    weeks_to_repeat:  1
      # )
     @tutor = Tutor.find(params[:tutor_id])
-    @start_time = params[:start_time].to_datetime
+    @start_time = DateTime.iso8601(params[:start_time]) #params[:start_time].to_datetime
     @duration = params[:duration]
     @weeks_to_repeat = (params[:weeks_to_repeat] || 1).to_i
 
