@@ -43,11 +43,6 @@ $(document).ready(function() {
   var originalStartTime;
   var originalDuration;
 
-// > moment("2014-04-25T01:32:21.196Z");  // iso string, utc timezone
-// > moment("2014-04-25T01:32:21.196+0600");  // iso string with timezone
-// > moment("2014 04 25", "YYYY MM DD"); // string with format
-// DateTime.iso8601('2001-02-03T04:05:06+07:00')  #=> #<DateTime: 2001-02-03T04:05:06+07:00 ...>
-
   var formatDataAsEvent = function(eventData) {
     console.log("PRE-Format",eventData);
     end_time = moment(eventData.start_time, moment.ISO_8601);
@@ -59,8 +54,6 @@ $(document).ready(function() {
       slot_id: eventData.id,
       status: eventData.status
     };
-
-    console.log("POST-Format", postFormat);
     return postFormat;
   }
 
@@ -72,7 +65,7 @@ $(document).ready(function() {
   }
 
   var beginSlotUpdate = function(event, jsEvent, ui, view) {
-    originalStartTime = event.start.format('YYYY-MM-DD HH:mm:ss');
+    originalStartTime = event.start.toISOString();
     originalDuration = moment.duration(event.end.diff(event.start)).asSeconds();
     tooltip.hide();
   }
@@ -186,7 +179,6 @@ $(document).ready(function() {
               $('#calendar').fullCalendar('updateEvent', event);
             },
             error: function(data, status) {
-              console.log("failure,", data, status);
               alert('failure', data, status);
               revertFunc();
             }
@@ -194,11 +186,6 @@ $(document).ready(function() {
         }
         swal.close();
       });
-  }
-
-  var droppedEvent = function(date, jsEvent, ui ) {
-    console.log("DROPED EVENT A!!!!!!", date);
-    date.d
   }
 
   var addSlot = function(event, jsEvent, ui) {
@@ -273,7 +260,7 @@ $(document).ready(function() {
         tutor_id: tutor_id
       }),
       data: {
-        original_start_time: event.data.start.format('YYYY-MM-DD HH:mm:ss'),
+        original_start_time: event.data.start.toISOString(),
         original_duration: duration
       },
       dataType: "json",
@@ -282,8 +269,8 @@ $(document).ready(function() {
 
         $('#calendar').fullCalendar('removeEvents', function(event) {
           console.log("EVENT", event);
-          //var target = formatDataAsEvent(data[0]);
-          //console.log("TARGET",target);
+          var target = formatDataAsEvent(data[0]);
+          console.log("TARGET",target);
           var isStartMatch = (event.start.format('DD HH:mm:ss') === target.start.format('DD HH:mm:ss'));
           var isEndMatch = (event.end.format('DD HH:mm:ss') === target.end.format('DD HH:mm:ss'));
           return (isStartMatch && isEndMatch) ? true : false;
@@ -433,7 +420,6 @@ $(document).ready(function() {
     defaultView: 'agendaWeek',
     editable: true,
     droppable: true,
-    drop: droppedEvent,
     eventReceive: addSlot,
     eventResizeStart: beginSlotUpdate,
     eventResize: updateSlotDurationResize,
