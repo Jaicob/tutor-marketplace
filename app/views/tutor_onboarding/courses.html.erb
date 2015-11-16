@@ -3,7 +3,9 @@
   <div class="small-12 medium-3 columns">
     <div class="progress-step completed-step">
       <p class="number"><i class="fi-check"></i></p>
-      <p>Complete your application</p>
+      <%= link_to onboarding_application_tutor_path(@tutor.slug) do %>
+        <p>Complete your application</p>
+      <% end %>
     </div>
   </div>
   <div class="small-12 medium-3 columns">

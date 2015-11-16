@@ -3,18 +3,22 @@
   <div class="small-12 medium-3 columns">
     <div class="progress-step completed-step">
       <p class="number"><i class="fi-check"></i></p>
-      <p>Complete your application</p>
+      <%= link_to onboarding_application_tutor_path(@tutor.slug) do %>
+        <p>Complete your application</p>
+      <% end %>
     </div>
   </div>
   <div class="small-12 medium-3 columns">
     <div class="progress-step completed-step">
       <p class="number"><i class="fi-check"></i></p>
-      <p>Set your courses & rates</p>
+      <%= link_to onboarding_courses_tutor_path(@tutor.slug) do %>
+        <p>Set your courses & rates</p>
+      <% end %>
     </div>
   </div>
   <div class="small-12 medium-3 columns">
     <div class="progress-step current-step">
-      <p class="number"><i class="fi-check"></i></p>
+      <p class="number">3</i></p>
       <p>Set your available hours</p>
     </div>
   </div>
@@ -37,7 +41,7 @@
   </div>
 </div>
 <div class="row medium-collapse">
-  <h1>CONTENT</h1>
+  <%= render '/dashboard/tutor/schedule/main' %>
 </div>
 <div class="row">
   <div class="small-12 medium-8 columns box next-step-instructions">
