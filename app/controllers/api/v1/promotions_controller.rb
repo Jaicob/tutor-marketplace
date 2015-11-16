@@ -8,14 +8,16 @@ def check_promo_code
   if @promotion
     tutor_id = safe_params
     promo_info = {
-      type: @promotion.category, 
-      value: @promotion.amount, 
-      is_valid: @promotion.is_valid?(@tutor_id), 
-      description: @promotion.description 
+      type: @promotion.category,
+      value: @promotion.amount,
+      is_valid: @promotion.is_valid?(@tutor_id),
+      description: @promotion.description
     }
     render json: promo_info
   else
-    render json: 'Promotion code was not found'
+    render json: {
+      is_valid: false
+    }
   end
 
 end

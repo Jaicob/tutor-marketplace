@@ -45,6 +45,7 @@
     <%# [ ] TODO (AJ) Refactor NOT to use request.fullpath.to_s.split('=').second %>
     <%= react_component('AppointmentSelector', {
         tutor: @tutor.id,
+        tutor_school: @tutor.school.name,
         course: request.fullpath.to_s.split('=').second,
         tutor_name: @tutor.user.first_name,
         margin: @tutor.school.transaction_percentage

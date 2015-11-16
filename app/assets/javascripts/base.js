@@ -70,7 +70,7 @@ var API = {
             create: (data) => API_LOCATION + "/students/" + data["student_id"] + "/appointments/",
             create_visitor: (data) => API_LOCATION + "/visitor/create_appointment"
         },
-        promo: (data) => API_LOCATION + "/check_promo_code/",
+        promo: (data) => API_LOCATION + "/check_promo_code/" + data["tutor_id"] + "/" + data["promo_code"],
         students: function(data) {
             return API_LOCATION + "/payments/current_student/"
         }

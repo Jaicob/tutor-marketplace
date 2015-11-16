@@ -26,13 +26,13 @@ class Promotion < ActiveRecord::Base
   after_create :generate_secure_code
 
   enum category: [
-    :free_from_axon, 
-    :free_from_tutor, 
-    :percent_off_from_axon, 
-    :percent_off_from_tutor, 
-    :dollar_amount_off_from_axon, 
-    :dollar_amount_off_from_tutor, 
-    :repeating_percent_off_from_tutor, 
+    :free_from_axon,
+    :free_from_tutor,
+    :percent_off_from_axon,
+    :percent_off_from_tutor,
+    :dollar_amount_off_from_axon,
+    :dollar_amount_off_from_tutor,
+    :repeating_percent_off_from_tutor,
     :repeating_dollar_amount_off_from_tutor]
 
   def generate_secure_code
@@ -62,13 +62,15 @@ class Promotion < ActiveRecord::Base
 
   def is_valid?(tutor_id)
     if self.category.humanize.split().include?('tutor') # true if tutor-issued promo code
-      if (tutor_id == nil) || (self.tutor_id != tutor_id)
+      if (tutor_id == nil) || (self.tutor_id != tutor_id.to_i)
         return false
       end
     end
-    (self.redemption_count < self.redemption_limit) &&
-    (self.valid_from.to_date <= Date.today && Date.today <= self.valid_until.to_date ) ?
-    true : false
+
+
+    return self.redemption_count < self.redemption_limit &&
+           self.valid_from.to_date <= Date.today &&
+           Date.today <= self.valid_until.to_date
   end
 
 end
