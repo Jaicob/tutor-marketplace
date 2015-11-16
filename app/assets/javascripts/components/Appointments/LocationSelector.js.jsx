@@ -34,7 +34,7 @@ var LocationSelector = React.createClass({
         <div className="location-selector">
           <div className="row center">
             <div className="medium-12 columns">
-              All of our tutors and students meet right on or just around campus. Your tutor's campus is on" + this.props.tutor_school + " . Some popular meeting locations are:
+              All of our tutors and students meet right on or just around campus. Your tutor's campus is {this.props.tutor_school}. Some popular meeting locations are:
             </div>
           </div>
           <div className="row top-buffer bottom-buffer center">
