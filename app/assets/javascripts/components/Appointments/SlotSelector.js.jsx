@@ -176,8 +176,8 @@ var SlotSelector = React.createClass({
       }.bind(this))
     }.bind(this));
 
-    // merge with existing disabled slots and make unique
-    // disabledSlots = disabledSlots.concat(this.props.disabledSlots)
+    // make sure disabled slots are unique
+    // [ ] TODO (AJ) Make sure this acutally makes things unique
     disabledSlots = disabledSlots.filter(
       (item, pos) => disabledSlots.indexOf(item) == pos
     );
@@ -187,15 +187,14 @@ var SlotSelector = React.createClass({
   handleSlotClick: function (slot, active) {
     var newSelectedSlots = this.props.selectedSlots;
 
-    // checks if slot exists in selectedSlots
-    // var exists = newSelectedSlots.filter(
-    //   (item) => (item.id === slot.id) && (item.start_time === slot.start_time)
-    // ).length > 0;
-
     // toggle slot from selected/unselected states
     if (active) {
       // user un-selects a slot
-      newSelectedSlots = newSelectedSlots.filter((targetSlot) => slot.start_time != targetSlot.start_time);
+
+      // selectedSlots are now all slots that don't have the same id and start time
+      newSelectedSlots = newSelectedSlots.filter(
+        (targetSlot) => (slot.start_time != targetSlot.start_time && slot.id != targetSlot.id)
+      );
       this.props.handleSlots(newSelectedSlots);
 
       var disabledSlots = this.getDisabledSlots(newSelectedSlots);

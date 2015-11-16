@@ -10,10 +10,10 @@ var Day = React.createClass({
               if (this.props.disabledSlots.indexOf(slot) > -1) {
                 return;
               } else {
-                var isSelected = this.props.selectedSlots.filter(
-                  (item) => (item.id === slot.id) && (item.start_time === slot.start_time)
-                ).length > 0;
-                return <Slot slot={slot} selected={isSelected} handleSlotClick={this.props.handleSlotClick} />;
+                var isSelected = this.props.selectedSlots.find(function(element, index, array){
+                  return element.id == slot.id && element.start_time === slot.start_time;
+                }) != undefined;
+                return <Slot key={MD5(slot.id + slot.start_time)} slot={slot} selected={isSelected} handleSlotClick={this.props.handleSlotClick} />;
               }
             }.bind(this))
           }
