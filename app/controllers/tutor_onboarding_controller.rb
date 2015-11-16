@@ -9,12 +9,11 @@ class TutorOnboardingController < ApplicationController
       redirect_to onboarding_courses_tutor_path(@tutor.slug)
     else
       redirect_to :back
-      # flash[:alert] = "Application was not submitted: #{@tutor.errors.full_messages.first}"
-      # puts "Application was not submitted: #{@tutor.errors.full_messages}"
     end
   end
 
   def courses
+    @tutor_course = TutorCourse.new
   end
 
   def submit_courses
