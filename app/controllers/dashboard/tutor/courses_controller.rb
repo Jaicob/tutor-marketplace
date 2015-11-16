@@ -8,9 +8,12 @@ class Dashboard::Tutor::CoursesController < DashboardController
   def create
     @tutor_course = TutorCourse.create(tutor_course_params)
     if @tutor_course.save
-      redirect_to tutor_courses_path(@tutor.slug)
+      if request.referer.split('/').include?('onboarding')
+        redirect_to onboarding_courses_tutor_path(@tutor.slug)
+      else
+        redirect_to tutor_courses_path(@tutor.slug)
+      end
     else
-      flash[:alert] = "Course was not created: #{@tutor_course.errors.full_messages.first}"
       redirect_to :back
     end
   end

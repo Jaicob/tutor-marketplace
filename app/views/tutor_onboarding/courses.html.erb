@@ -35,8 +35,8 @@
     <h2 class="onboarding-page-title">Step 2: Set Your Courses</h2>
   </div>
 </div>
-<div class="row add-course-form">
-  <%= form_for @tutor_course, url: submit_courses_tutor_path(@tutor) do |f| %>
+<div class="row medium-collapse">
+  <%= form_for @tutor_course, url: new_tutor_course_path(@tutor) do |f| %>
     <div class="small-12 medium-3 columns">
       <%= render '/course_selector/subject' %>
     </div>          
@@ -59,7 +59,10 @@
   <div class="small-12 medium-8 columns box next-step-instructions">
     <p>Finished setting your intial courses? Click 'Next Step' to set your available hours<i class="fi-arrow-right"></i></p>
   </div>
-  <div class="small-12 medium-4 columns">   
-    <button class='custom-button margin-bottom large full-width bold'>Next Step</button>
+  <div class="small-12 medium-4 columns">
+    <%= form_for @tutor, url: submit_courses_tutor_path(@tutor.slug) do |f| %>
+      <%= f.hidden_field :onboarding_status, value: 'Step 3' %>
+      <%= f.submit "Approve Courses", class: 'custom-button margin-bottom large full-width bold' %>
+    <% end %>   
   </div>
 </div>
