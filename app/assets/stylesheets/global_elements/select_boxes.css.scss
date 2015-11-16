@@ -1,0 +1,48 @@
+select {
+  border-radius: 4px;
+}
+
+input#user_first_name, input#user_last_name, input#user_email, input#user_password, input#user_tutor_phone_number, input#rate, select#school, select#subject, select#course {
+  height: 2em;
+  margin-bottom: 0.3em;
+  border-radius: 4px;
+  font-size: 1em;
+  font-family: 'Lato';
+  color: #4F5252;
+  font-weight: 100;
+}
+select#school, select#subject, select#course {
+  padding: 0 0.5em;
+}
+
+// // Not actually a select, but always used alongside school, subject and course selects, thus similar style to select needed
+  .rate-container {
+    background-color: #E4E4E4;
+    border-radius: 4px;
+    height: 1.8em;
+    margin-bottom: 0.3em;
+    font-weight: 100;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #cccccc;
+    overflow: hidden;
+    text-align: center;
+  }
+  .rate-input-third {
+    padding: 0;
+    font-weight: 100;
+    font-family: 'Lato';
+    text-align: center;
+  }
+  input#rate {
+    text-align: center;
+    border-radius: 0;
+    border: 0;
+    position: relative;
+    top: -3px;
+  }
+
+// Selects need to be smaller for Tutor sign-up form to prevent the entire form from being too large
+  form#new_user {
+    padding: 0 1.2em;
+  }

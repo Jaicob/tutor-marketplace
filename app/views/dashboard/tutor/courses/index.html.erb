@@ -1,9 +1,11 @@
 <section class="dashboard-content">
   <div class="row">
-    <h2 class="dashboard-title">My Courses</h2>
+    <div class="small-12 columns">
+      <h2 class="dashboard-title">My Courses</h2>
+    </div>
   </div>
   <div class="row">
-    <% if !@tutor.courses_approved? %>
+    <% if @tutor.onboarding_status == 'Step 2' %>
       <%= render 'dashboard/tutor/courses/courses_welcome' %>
     <% end %>
     <%= render 'dashboard/tutor/courses/add_course_form' %>

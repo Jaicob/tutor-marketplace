@@ -4,14 +4,15 @@ var TutorCard = React.createClass({
     if (this.props.search && this.props.search.course != -1) {
       var search = "?course=" + this.props.search.course;
     }
+
 		var tutor = this.props.tutor;
-    var profile_pic_url = "http://d1nt4a7y8dwdsx.cloudfront.net/wp-content/uploads/2015/04/Bernie-Sanders-AP77174442780.jpg";  
-    // change to tutor.profile_pic.url 
+    var profile_pic_url = "http://d1nt4a7y8dwdsx.cloudfront.net/wp-content/uploads/2015/04/Bernie-Sanders-AP77174442780.jpg";
+    // change to tutor.profile_pic.url
     var desc = function (tutor, extra_info) {
       if(tutor.additional_degrees) {
         if(extra_info.length > 100){
           return (
-            <p>&#8226; 
+            <p>&#8226;
               {extra_info.slice(0, 100) + "..."}
               <a href={"/tutors/" + tutor.user.slug} className="see-more">See More</a>
             </p>
@@ -24,7 +25,7 @@ var TutorCard = React.createClass({
       else {
         if(extra_info.length > 130){
           return (
-            <p>&#8226; 
+            <p>&#8226;
               {extra_info.slice(0, 130) + "..."}
               <a href={"/tutors/" + tutor.user.slug} className="see-more">See More</a>
             </p>
@@ -47,12 +48,10 @@ var TutorCard = React.createClass({
       }
     }
 
-
-
 		return (
         <div className="card">
           <div className="card-content">
-            <a href={"/tutors/" + tutor.user.slug + search}>
+            <a href={"/tutors/" + tutor.user.slug + search} data={"from-search"}>
               <div className="profile-pic-box">
                 <img src={profile_pic_url} alt="Profile Picture"></img>
               </div>
@@ -79,8 +78,10 @@ var TutorCard = React.createClass({
               </div>
             </div>
           </div>
-          <div className="custom-button full-width adust-position{adjustButtonPosition}">Book Now
-          </div>
+          <a href={"/tutors/" + tutor.user.slug + search} data={"from-search"}>
+            <div className="custom-button full-width adust-position{adjustButtonPosition}">Book Now
+            </div>
+          </a>
         </div>
 		);
 	}

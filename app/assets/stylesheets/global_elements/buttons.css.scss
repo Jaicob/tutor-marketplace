@@ -1,13 +1,12 @@
 button, .custom-button {
-  background-color: #58AA4D;
-  padding: 0.5em 2em;
+  // display: block;
+  background-color: #58AA4D;  
   font-weight: 100;
-  font-size: 0.8em;
   font-family: 'Lato';
   border-radius: 4px !important;
   border: none;
   color: white;
-  margin-bottom: 1em;
+  margin-bottom: 2em;
   text-align: center;
   &.full-width {
     width: 100%;
@@ -21,4 +20,36 @@ button, .custom-button {
   &.danger {
     background-color: #DE6328;
   }
+  &.hover-light-blue:hover {
+    background-color: #2BC2DE;
+  }
+  &.no-margin {
+    margin: 0;
+  }
+  &.disabled, &.disabled:hover {
+    background-color: #D2CECE;
+  }
+  &.small {
+    font-size: 0.8em;
+    padding: 0.5em 2em;
+  }
+  &.medium {
+
+  }
+  &.large {
+
+  }
+
 }
+
+.custom-button:hover, .custom-button:active {
+  background-color: #0095AC;
+  color: white;
+  &.blue {
+    background-color: #2BC2DE;
+  }
+}
+
+ .custom-button:visited, .custom-button:link  {
+  color: white;
+ }

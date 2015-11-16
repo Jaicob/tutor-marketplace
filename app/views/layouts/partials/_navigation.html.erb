@@ -8,7 +8,7 @@
       </div>
       <div class="nav-campus-box nav-link-box">
         <a data-dropdown="campus-dropdown" aria-controls="campus-dropdown" aria-expanded="false">
-          <%= @school.name %>
+          <%= @school ? @school.name : nil %>
         </a>
         <ul id="campus-dropdown" class="f-dropdown" data-dropdown-content aria-hidden="true" tabindex="-1">
           <% School.all.each do |school| %>

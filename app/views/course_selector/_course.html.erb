@@ -1,6 +1,6 @@
 <!-- Place immediately inside of parent div with correct grid sizing -->
 <% if @course %>
-  <select name="course[course_id]" id="course" class="select-menu" required="true">
+  <select name="course[course_id]" id="course" required="true">
     <% @school.courses_for_subject(@subject.id).each do |course| %>
       <% if course[:id] == @course.id %>
         <option selected="true" value="<%= @course.id %>"><%= @course.friendly_name %></option>
@@ -10,7 +10,7 @@
     <% end %>
   </select>
 <% else %>
-  <select name="course[course_id]" id="course" class="select-menu" required="true">
-    <option disabled="true" selected="true" value="">Course</option>
+  <select name="course[course_id]" id="course" required="true">
+    <option disabled="true" selected="true" value="">Select Course</option>
   </select>
 <% end %>

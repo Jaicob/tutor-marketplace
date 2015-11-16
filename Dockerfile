@@ -12,13 +12,23 @@ RUN yes | sudo apt-get install xvfb
 RUN yes | sudo apt-get install dbus --fix-missing
 
 # Place custom unicorn configs here
-ADD config/unicorn.rb /etc/my-app/config/unicorn.rb
+COPY config/unicorn.rb /etc/my-app/config/unicorn.rb
 
-# ADD unicorn_init.sh /etc/init.d/unicorn
+# Configure supervisor
+COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+#sidekiq startup script
+# COPY sidekiq.sh /usr/local/bin/sidekiq
+
+COPY unicorn_init.sh /etc/init.d/unicorn
 
 # Place custom nginx configs here
-# COPY nginx-app-site.conf /etc/nginx/sites-enabled/default
-# COPY nginx.conf /etc/nginx/nginx.conf
+COPY config/nginx-app-site.conf /etc/nginx/sites-enabled/default
+COPY config/nginx.conf /etc/nginx/nginx.conf
+
+#SSl Certs
+COPY config/certs/ssl/ssl-bundle.crt /etc/ssl/ssl-bundle.crt
+COPY config/certs/ssl/privatekey.pem /etc/ssl/privatekey.pem
 
 # Add custom setup script here TODO change name to setup.sh
 COPY setup.sh /etc/my-app/setup.sh
@@ -26,9 +36,11 @@ COPY setup.sh /etc/my-app/setup.sh
 # Run setup script. This sets up the tmp folder and symlinks it to shared
 # as well as sets up the database if necessary
 RUN /etc/my-app/setup.sh
+RUN gem install bundler
 
 # Expose port 80
 EXPOSE 80
+EXPOSE 443
 
 # Set environment
 ENV RAILS_ENV production

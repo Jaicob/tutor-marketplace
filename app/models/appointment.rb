@@ -52,16 +52,16 @@ class Appointment < ActiveRecord::Base
     end
   end
 
-  # custom validation
-  def tutor_and_student_at_same_school
-    tutor_id = Slot.find(slot_id).tutor.id
-    tutor = Tutor.find(tutor_id)
-    student = Student.find(student_id)
-    course = Course.find(course_id)
-    if !(tutor.school.name == course.school.name && student.school.name == course.school.name)
-      errors.add(:course_id, "is not the same for tutor, student and course: \ntutor and course = #{student.school.name == course.school.name}\nstudent and course = #{tutor.school.name == course.school.name}")
-    end
-  end
+  # # custom validation
+  # def tutor_and_student_at_same_school
+  #   tutor_id = Slot.find(slot_id).tutor.id
+  #   tutor = Tutor.find(tutor_id)
+  #   student = Student.find(student_id)
+  #   course = Course.find(course_id)
+  #   if !(tutor.school.name == course.school.name && student.school.name == course.school.name)
+  #     errors.add(:school_id, "is not the same for tutor, student and course: \ntutor and course = #{student.school.name == course.school.name}\nstudent and course = #{tutor.school.name == course.school.name}")
+  #   end
+  # end
 
   # This sets the delivery time for reminder emails as 12 hours before the appointment, except in the case where the appointment is tomorrow and no reminder is needed
   def appt_reminder_email_date
@@ -111,4 +111,18 @@ class Appointment < ActiveRecord::Base
       n += 1
     end
   end
+
+  def self.visitor_create_appts_from_array(params)
+    appts_count = params[:data].count
+    n = 0
+    appts_count.times do
+      Appointment.create(
+        slot_id: params[:data][n][:slot_id],
+        course_id: params[:data][n][:course_id],
+        start_time: params[:data][n][:start_time]
+      )
+      n += 1
+    end
+  end
+
 end

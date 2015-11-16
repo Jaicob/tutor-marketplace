@@ -1,3 +1,291 @@
 // Place all the styles related to the dashboard/tutor/profile controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+// [ ] TODO (AJ): Refactor assets to not need to do this
+@import "../../global_elements/colors.scss";
+
+// [X] TODO (AJ): Make colors palette (colors.scss)
+
+.tutor-profile{
+
+  margin-top: 20px !important;
+
+  &>.row {
+    background: white !important;
+    padding: 20px;
+    border-radius: 4px;
+    margin-bottom: 50px !important;
+  }
+
+  .profile-pic {
+    border: 1px solid $primary_dark;
+    margin-bottom: 10px;
+    margin-top: 20px;
+  }
+
+  .where-i-tutor {
+    padding: 20px;
+    border: 1px solid $primary_dark;
+    text-align: center;
+  }
+
+  &-formal-education{
+    margin-top: 20px;
+    padding: 20px;
+    padding-bottom: 0;
+
+    border: 1px solid $primary_dark;
+    border-radius: 4px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    background: $primary_medium;
+
+    color: white;
+
+    .ed-item {
+      display: block;
+      color: white;
+      font-size: 1.5em;
+      font-weight: 300;
+
+      i {
+        color: white;
+      }
+    }
+  }
+
+  &-description{
+    padding: 20px;
+
+    border: 1px solid $primary_dark;
+    border-top-width: 0;
+    border-radius: 4px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    background: white;
+  }
+
+}
+
+// [ ] TODO (AJ) Fix thiss
+// .main-content{
+//   background: $primary_medium !important;
+// }
+
+
+//
+// SUBJECT SELECTOR
+//
+
+.appointment-selector {
+
+  .header.row {
+    background: $primary_dark;
+    color: white;
+    text-align: center;
+    padding: 5px;
+    font-size: 1.8em;
+    border: 1px solid $primary_dark;
+  }
+
+  .footer.row {
+    border: 1px solid #ccc;
+    border-width: 0 1px 1px 1px;
+    background: #eee;
+    .spacer {
+      height: 45px;
+      width: 210px;
+      float: right;
+    }
+    .btn {
+      background: $secondary_medium;
+      padding: 10px 20px;
+      color: white;
+      &:hover, &:active {
+        background: $secondary_dark;
+        color: white;
+      }
+    }
+
+    .description {
+      padding: 10px;
+      max-width: none;
+      text-align: center;
+      margin: auto;
+    }
+
+    .back {
+      float: left;
+      &:before {
+        content: "← ";
+      }
+    }
+
+    .forward {
+      float: right;
+      &:after {
+        content: " →";
+      }
+    }
+  }
+
+  .prompt {
+    padding: 10px;
+    text-align: center;
+    background: #eee;
+    color: #aaa;
+  }
+
+  .main-view {
+    height: 400px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    border: 1px solid #ccc;
+    border-width: 0 1px 0 1px;
+  }
+
+  // [ ] TODO (AJ): Make this responsive, along with footer and header
+
+  .subject-selector {
+    padding: 20px;
+
+    .subject-item {
+      padding: 10px;
+      text-align: left;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      cursor: pointer;
+
+      .rate {
+        float: right;
+        padding-left: 10px;
+
+        border-left: 2px solid #aaa;
+      }
+
+      &:hover {
+        background: $primary_medium;
+      }
+
+      &.active, &.active:hover {
+        background: $primary_dark;
+        color: white;
+
+        .name {
+          &:before {
+            content: "✓ "
+          }
+        }
+
+        .rate {
+          border-left-color: white;
+        }
+      }
+
+      &.neutral {
+        background: #eee;
+      }
+    }
+  }
+
+  .slot-selector {
+    height: 100%;
+
+    nav.calendar-nav {
+      ul {
+        margin: 0 0 0 0;
+        display: block;
+        width: 100%;
+        li {
+          .date-range-paginate {
+            display: inline-block;
+            background: $secondary_medium;
+            padding: 10px 20px;
+            color: white;
+            &:hover, &:active {
+              background: $secondary_dark;
+              color: white;
+            }
+          }
+
+          &.previous {
+            float: left;
+            display: inline-block;
+          }
+
+          &.next {
+            float: right;
+            display: inline-block;
+          }
+          &.instructions {
+            display: inherit;
+            text-align: center;
+            padding: 10px;
+            margin: auto;
+            font-family: Lato;
+            float: none;
+          }
+        }
+      }
+    }
+
+    ul.schedule {
+      list-style-type: none;
+      display: flex;
+      margin: 0;
+      li.day {
+        width: 100%;
+        text-align: center;
+        height: 355px;
+        overflow: scroll;
+
+        &:nth-child(odd) {
+          background: #eee;
+        }
+
+        input[type="radio"] {
+          position: absolute;
+          top: -999em;
+          left: -999em;
+        }
+
+        label {
+          margin-bottom: 20px;
+          padding-top: 10px;
+          padding-bottom: 10px;
+          background: white;
+        }
+
+        ul.available-times {
+          padding: 10px;
+          text-align: center;
+          list-style-type: none;
+          display: block;
+          width: 100%;
+          margin: 0;
+
+          li a {
+            display: block;
+            margin-bottom: 10px;
+            padding: 5px;
+            border: 1px solid $secondary_dark;
+            color: $secondary_dark;
+            background: white;
+
+            &:hover, &.active {
+              color: white;
+              background: $secondary_medium;
+            }
+
+            &.active {
+              &:before {
+                content: "✓ ";
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

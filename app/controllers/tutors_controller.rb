@@ -1,20 +1,33 @@
 class TutorsController < ApplicationController
   before_action :set_user, only: [:edit, :update, :destroy]
   before_action :set_tutor, only: [:show, :edit, :update, :destroy, :submit_application]
+  before_action :set_tutor_for_profile_viewer, only: [:show]
 
   # TUTOR CREATION IS HANDLED THROUGH THE DEVISE REGISTRATION CONTROLLER - ONE FORM CREATES USER AND TUTOR
 
   def show
+    if request.referer && request.referer.split(/[^[:alpha:]]+/).include?('search')
+      @from_search = true
+    end
   end
 
   def update
+    if tutor_params[:school_id]
+      if !@tutor.school_change_allowed?
+        redirect_to :back
+        flash[:alert] = "You cannot switch your campus with active course listings at your current campus."
+        return
+      else
+        cookies[:school_id] = { value: tutor_params[:school_id], expires: 2.months.from_now }
+      end
+    end
     @tutor.update(tutor_params)
     @tutor.crop_profile_pic(tutor_params)
     if @tutor.save
       redirect_to @tutor.update_action_redirect_path(tutor_params) # redirects back to current page in settings
     else
-      flash[:notice] = "Tutor was not updated: #{@tutor.errors.full_messages}"
       redirect_to :back
+      flash[:alert] = "Tutor was not updated: #{@tutor.errors.full_messages}"
     end
   end
 
@@ -24,11 +37,6 @@ class TutorsController < ApplicationController
     else
       redirect_to :back
     end
-  end
-
-  def submit_application
-    @tutor.update(tutor_params)
-    redirect_to home_tutor_path(@tutor.slug)
   end
 
   def tutor_payment_info_form
@@ -55,6 +63,10 @@ class TutorsController < ApplicationController
   end
 
   private
+
+    def set_tutor_for_profile_viewer
+      @tutor = User.find(params[:id]).tutor
+    end
 
     def tutor_params
       params.require(:tutor).permit(:school_id, :additional_degrees, :courses_approved, :rating, :application_status, :appt_notes, :birthdate, :degree, :major, :extra_info_1, :extra_info_2, :extra_info_3, :graduation_year, :phone_number, :profile_pic, :transcript, :active_status, :crop_x, :crop_y, :crop_w, :crop_h, :line1, :line2, :city, :state, :postal_code, :ssn_last_4, course: [:course_id], tutor_course: [:rate], user_attributes: [:first_name, :last_name, :email, :phone_number, :password, :password_confirmation])

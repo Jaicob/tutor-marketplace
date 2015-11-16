@@ -16,7 +16,7 @@ redis:
 
 web:
   build: .
-  command: ./start_app.sh
+  command: bundle exec rails s -b 0.0.0.0 -p 3000
   volumes:
     - .:/home/rails/my-app
   ports:
@@ -24,9 +24,21 @@ web:
   links:
     - db
     - redis
+    - sidekiq
   environment:
     - RACK_ENV=development
     - RAILS_ENV=development
+
+sidekiq:
+  build: .
+  command: bundle exec sidekiq -e development -c 25
+  environment:
+    SECRET_KEY_BASE: abcdefg
+    RAILS_ENV: development
+  links:
+    - db
+    - redis
+
 
 
 

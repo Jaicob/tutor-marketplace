@@ -1,3 +1,43 @@
 center {
   text-align: center;
 }
+
+.border-radius {
+  border-radius: 4px !important;
+}
+.display-none { // only used for a hacky space filler on Promotions page to hold the submit btn down in line with the other inputs - can removed once that's fixed in a better way
+  color: #eff1f3;
+}
+
+.height-3em {
+  height: 3em;
+}
+
+.margin-top-2em {
+  margin-top: 2em;
+}
+
+.padding-2em {
+  padding: 2em;
+}
+
+.height-22em {
+  height: 22em;
+}
+
+.no-top-margin {
+  margin-top: 0;
+}
+
+.no-top-border-radius {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.top-buffer {
+  margin-top: 20px !important;
+}
+
+.bottom-buffer {
+  margin-bottom: 20px !important;
+}

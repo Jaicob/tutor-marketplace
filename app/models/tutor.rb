@@ -47,7 +47,8 @@ class Tutor < ActiveRecord::Base
 
   enum application_status: ['Incomplete', 'Complete', 'Approved']
   enum active_status: ['Inactive', 'Active']
-  enum degree: ["B.A.", "B.S.", "M.B.A", "M.S.", "M.Ed.", "PhD."]
+  enum degree: ["B.A.","B.S.","M.B.A.","M.S.","M.Ed.","PhD."]
+  enum onboarding_status: ['Step 1', 'Step 2', 'Step 3', 'Step 4', 'Finished']
 
   # Carrierwave setup for uploading files
   mount_uploader :profile_pic, ProfilePicUploader
@@ -59,8 +60,12 @@ class Tutor < ActiveRecord::Base
   after_create :change_user_role_to_tutor
   after_commit :update_application_status
 
+  # custom validation - prevents a tutor from changing school if tutor has courses at one school
+  def school_change_allowed?
+    self.courses.count > 0 ? false : true
+  end
+
   def self.degree_collection
-    # [["B.A.",0],["B.S.",1],["M.B.A.",2],["M.S.",3],["M.Ed",4],["PhD.",5]]
     ["B.A.","B.S.","M.B.A.","M.S.","M.Ed.","PhD."]
   end
 
@@ -202,5 +207,14 @@ class Tutor < ActiveRecord::Base
       tutor_course_info
     end
   end
+
+  # def onboarding_step 
+  #   step_number = 1
+  #   self.application_status == 'Complete' ? (step_number += 1) : (return step_number)
+  #   self.courses_approved? ? (step_number += 1) : (return step_number)
+  #   self.slots.count > 0 ? (step_number += 1) : (return step_number)
+  #   !self.acct_id.nil? ? (step_number += 1) : (return step_number)
+  #   step_number
+  # end
 
 end

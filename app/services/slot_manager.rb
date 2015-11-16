@@ -21,11 +21,13 @@ class SlotManager
     @original_start_time = params[:original_start_time].to_datetime
     @original_duration = params[:original_duration]
 
-    @new_start_time = params[:new_start_time].to_datetime
-    @new_duration = params[:new_duration]
+    @new_start_time = params[:new_start_time].to_datetime if params[:new_start_time]
+    @new_duration = params[:new_duration] if params[:new_duration]
 
     # Calculated
-    @start_adjustment = @new_start_time.to_time - @original_start_time.to_time # result is in seconds
+    if @new_start_time
+      @start_adjustment = @new_start_time.to_time - @original_start_time.to_time # result is in seconds
+    end
     @original_start_DOW_time = @original_start_time.strftime('%a %T') # Used for finding slots by weekday and time
   end
 
@@ -36,7 +38,6 @@ class SlotManager
     @tutor.slots.each do |slot|
       @slot_start_DOW_time = slot.start_time.strftime('%a %T')
       @slot_duration = slot.duration
-
       if @slot_start_DOW_time == @original_start_DOW_time && @slot_duration == @original_duration.to_i
         @slots << slot
       end
@@ -58,10 +59,10 @@ class SlotManager
 
   # Destroy all slots that match the range
   def destroy_slots
-    get_slots_for_range
+    @slots = get_slots_for_range
     @slot_ids = []
     @slots.each do |slot|
-      @slot_ids << slot.id
+      @slot_ids << slot
       slot.destroy
     end
     @slot_ids

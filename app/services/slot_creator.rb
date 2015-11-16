@@ -13,7 +13,6 @@ class SlotCreator
      #    duration:         3600,
      #    weeks_to_repeat:  1
      # )
-
     @tutor = Tutor.find(params[:tutor_id])
     @start_time = params[:start_time].to_datetime
     @duration = params[:duration]

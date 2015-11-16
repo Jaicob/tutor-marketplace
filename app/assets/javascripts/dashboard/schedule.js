@@ -77,8 +77,8 @@ $(document).ready(function() {
       function(isConfirm) {
         if (isConfirm) {
           $.ajax({
-            type: "PUT",
-            url: API.endpoints.tutor_slots.update({
+            type: "POST",
+            url: API.endpoints.tutor_slots.update_slot_group({
               tutor_id: tutor_id
             }),
             data: {
@@ -100,8 +100,9 @@ $(document).ready(function() {
           $.ajax({
             type: "PUT",
             url: API.endpoints.tutor_slots.update({
-              tutor_id: tutor_id
-            }) + '/' + event.slot_id,
+              tutor_id: tutor_id,
+              slot_id: event.slot_id
+            }),
             data: {
               start_time: event.start.format('YYYY-MM-DD HH:mm:ss'),
               duration: originalDuration
@@ -136,8 +137,8 @@ $(document).ready(function() {
       function(isConfirm) {
         if (isConfirm) {
           $.ajax({
-            type: "PUT",
-            url: API.endpoints.tutor_slots.update({
+            type: "POST",
+            url: API.endpoints.tutor_slots.update_slot_group({
               tutor_id: tutor_id
             }),
             data: {
@@ -159,8 +160,9 @@ $(document).ready(function() {
           $.ajax({
             type: "PUT",
             url: API.endpoints.tutor_slots.update({
-              tutor_id: tutor_id
-            }) + '/' + event.slot_id,
+              tutor_id: tutor_id,
+              slot_id: event.slot_id
+            }),
             data: {
               start_time: event.start.format('YYYY-MM-DD HH:mm:ss'),
               duration: newDuration
@@ -241,24 +243,23 @@ $(document).ready(function() {
       });
   }
 
-  var removeSlots = function(callingEvent) {
-    var duration = moment.duration(callingEvent.data.end.diff(callingEvent.data.start)).asSeconds();
+  var removeSlots = function(event) {
+    var duration = moment.duration(event.data.end.diff(event.data.start)).asSeconds();
     $.ajax({
-      type: "DELETE",
-      url: API.endpoints.tutor_slots.update({
+      type: "POST",
+      url: API.endpoints.tutor_slots.destroy_slot_group({
         tutor_id: tutor_id
       }),
       data: {
-        original_start_time: callingEvent.data.start.format('YYYY-MM-DD HH:mm:ss'),
-        original_duration: duration,
-        new_start_time: callingEvent.data.start.format('YYYY-MM-DD HH:mm:ss'),
-        new_duration: 1
+        original_start_time: event.data.start.format('YYYY-MM-DD HH:mm:ss'),
+        original_duration: duration
       },
       dataType: "json",
       success: function(data) {
+        console.log(data);
         $('#calendar').fullCalendar('removeEvents', function(event) {
-          var isStartMatch = (event.start.format('DD HH:mm:ss') === callingEvent.data.start.format('DD HH:mm:ss'));
-          var isEndMatch = (event.end.format('DD HH:mm:ss') === callingEvent.data.end.format('DD HH:mm:ss'));
+          var isStartMatch = (event.start.format('DD HH:mm:ss') === data[0].start.format('DD HH:mm:ss'));
+          var isEndMatch = (event.end.format('DD HH:mm:ss') === data[0].end.format('DD HH:mm:ss'));
           return (isStartMatch && isEndMatch) ? true : false;
         });
       },
@@ -279,13 +280,15 @@ $(document).ready(function() {
   }
 
   var blockSlot = function(event) {
-    var toggledStatus = event.data.status === 'Open' ? 1 : 0;
+    var toggledStatus = event.data.status === 'Open' ? 'Blocked' : 'Open';
+    console.log(toggledStatus);
 
     $.ajax({
       type: "PUT",
       url: API.endpoints.tutor_slots.update({
-        tutor_id: tutor_id
-      }) + '/' + event.data.slot_id,
+        tutor_id: tutor_id,
+        slot_id: event.data.slot_id
+      }),
       data: {
         status: toggledStatus //Blocked TODO: make an enumeration in js for this?
       },
@@ -394,15 +397,10 @@ $(document).ready(function() {
     eventOverlap: function(stillEvent, movingEvent) { return stillEvent.allDay && movingEvent.allDay },
     allDaySlot: false,
     forceEventDuration: true,
-    minTime: "0:00:00",
+    minTime: "6:00:00",
     maxTime: "24:00:00",
     defaultTimedEventDuration: "1:00:00",
     height: "auto",
-    businessHours: {
-      start: '10:00', // a start time (10am in this example)
-      end: '10:00', // an end time (6pm in this example)
-      dow: [0, 1, 2, 3, 4, 5, 6] // days of week. an array of zero-based day of week integers (0=Sunday)
-    },
     header: {
       left: 'prev,next today',
       right: 'month,agendaWeek,agendaDay'

@@ -16,6 +16,7 @@ class TutorCourse < ActiveRecord::Base
 
   validates :tutor_id, presence: true
   validates :course_id, presence: true
+  validates :course_id, uniqueness: { scope: :tutor_id }
   validates :rate, presence: true
   validate  :course_and_tutor_at_same_school
 
@@ -25,7 +26,8 @@ class TutorCourse < ActiveRecord::Base
 
   def full_price
     transaction_fee = ((self.course.school.transaction_percentage / 100) + 1)
-    full_price = (transaction_fee * self.rate).round(2)
+    full_price = (transaction_fee * self.rate).round(2) # rounds to two decimal places
+    sprintf('%.2f', full_price) # always display 2 decimals - even if 2nd is 0 ('$22.50' vs. '$22.5')
   end
 
   # custom validation

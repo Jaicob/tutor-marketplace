@@ -10,8 +10,8 @@
   </div>
   <div class="small-12 large-4 columns">
     <p class="courses-welcome-instructions">Whether you want to start with one course or add more, click the "Approve Courses" button when you're finished adding your initial courses and are ready to start tutoring.</p>
-    <%= form_for @tutor do |f| %>
-      <%= f.hidden_field :courses_approved, value: true %>
+    <%= form_for @tutor, url: submit_courses_tutor_path(@tutor.slug) do |f| %>
+      <%= f.hidden_field :onboarding_status, value: 'Step 3' %>
       <%= f.submit "Approve Courses", class: 'custom-button approve-courses' %>
     <% end %>
   </div>

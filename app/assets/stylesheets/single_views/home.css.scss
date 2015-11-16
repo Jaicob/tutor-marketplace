@@ -27,7 +27,7 @@
 }
 
 .ksu-box {
-  background: image-url("city.jpg") no-repeat center center fixed; 
+  background: image-url("trekkie.jpg") no-repeat center center fixed; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -79,21 +79,13 @@ input.home-search-button {
   background-color: #0095AC;
   padding: 0.5em;
 }
-.top-subjects-box {
-  display: block;
-  width: 80%;
-  margin: auto;
-  overflow: hidden;
-}
 .top-subject {
-  display: block;
   padding: 0.3em;
   text-align: center;
-  border-radius: 2px;
+  border-radius: 4px;
   font-weight: 100;
-  background-color: #CDCDCD;
-  margin: 1em 0;
-  border: 1px solid #4F5252;
+  background-color: #2BC2DE;
+  color: white;
 }
 p.center.white.shadow.book-two-mins {
   margin-bottom: 5em;
@@ -103,10 +95,6 @@ p.center.white.shadow.book-two-mins {
 /* iPad view */
 
 @media screen and (min-width: 768px) {
-  .top-subject {
-    display: inline-block;
-    width: 24%;
-  }
   .home-search-box {
     display: block;
     width: 80%;
@@ -163,8 +151,5 @@ p.center.white.shadow.book-two-mins {
 @media (min-width: 1000px) {
   .home-search-box {
     width: 40%;
-  }
-  .top-subject {
-    margin: 0;
   }
 }

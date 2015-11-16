@@ -3,10 +3,10 @@
 
 # Info for 4 schools
 school_list = [
-  [ "University of North Carolina", "Chapel Hill, NC", 17.5 ],
-  [ "University of Georgia", "Athens, GA", 17.5 ],
-  [ "Duke University", "Durham, NC", 17.5 ],
-  [ "Clemson University", "Clemson, SC", 17.5 ]
+  [ "University of North Carolina", "Chapel Hill, NC", 15 ],
+  [ "University of Georgia", "Athens, GA", 15 ],
+  [ "Duke University", "Durham, NC", 15 ],
+  [ "Clemson University", "Clemson, SC", 15 ]
 ]
 
 # Create Schools out of the school_list
@@ -115,6 +115,11 @@ Tutor.all.each do |tutor|
   slot_creator.create_slots
 end
 
+# Activate tutors
+Tutor.all.each do |tutor|
+  tutor.update(active_status: 1)
+end
+
 # Create 200 Users to become Students, 5 for each school
 200.times{
   User.create!(
@@ -165,5 +170,6 @@ n = 1
     password_confirmation: 'password'
   )
   x.create_campus_manager(school_id: n)
+  x.update(role: 2) # sets user.role to campus_manager
   n += 1
 end

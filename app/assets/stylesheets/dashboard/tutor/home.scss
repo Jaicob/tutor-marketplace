@@ -24,104 +24,48 @@
     border: 1px solid #BBE5EE;
     display: block;
     margin: 1em auto;
-  }
-  .container {
-    text-align: center;
-    padding: 1em 0;
-    max-width: 18em;
-    margin: auto;
-  }
-  .icons-container {
-    width: 283px;
-    margin-top: 1em;
-  }
-  .container-col {
-    display: inline-block;
-  }
-  .container.checklist-container {
-    font-size: 0.8em;
+    padding: 1em;
   }
   }
 
   /* Full view */
-  @media (min-width: 1100px) {
-  .container-col {
-    display: inline-block;
-  }
-  .container.checklist-container {
-    font-size: 1em;
-  }
-  }
 
     /* Styling for checklist-col in new tutor partial */ 
 
     .checklist-box {
-      display: block;
-      font-weight: bold;
+      border: 1px solid #0095AC;
+      background-color: #FAFAFA;
+      width: 20em;
     }
     .checklist-title {
       text-align: center;
       color: white;
-      font-size: 1em;
       padding: 0.5em;
-    }
-    .checklist-title-box {
       background-color: #0095AC;
-      border-radius: 4px;
+      margin: 0;
+      font-size: 1.3em;
     }
     .checklist-item {
       text-align: center;
       margin: 0.8em;
-    }
-    .checklist-item:hover {
-      font-weight: 400;
+      font-size: 1.2em;
     }
     .checklist-item.strikeout-text {
       text-decoration: line-through;
       color: #a8a8a8;
     }
-
-    /* Styling for icon-col in new tutor partial */ 
-
-    .icon-row {
-      display: block;
-      text-align: left;
-      margin-left: 1em;
+    .checklist-item.gray-text {
+      color: #a8a8a8;
     }
-    .icon-box, .caption-box {
-      display: inline-block;
-    }
-    .icon-box {
-      width: 20%;
-      text-align: center;
-    }
-    .caption-box {
-      width: 78%;
-    }
-    .big-welcome-fi {
-      font-size: 1.7em;
-      position: relative;
-      top: 7px;
-    }
-    .caption-box p, .icon-row-header {
-      margin: 0;
-      font-size: 0.9em;
-    }
-
-    /* Full view */
-
-    @media (min-width: 1000px) {
-    .container.icons-container {
-      margin-top: 1em;
-    }
+    .checklist-item.bold {
+      font-weight: 400;
     }
 
     /* Styling for welcome-col in new tutor partial */ 
 
     .welcome-text {
-      font-size: 0.9em;
-      margin: 0 auto 0.6em;
-      max-width: 16em;
+      padding: 0;
+      margin: 0.8em 0;
     }
 
 /* End of styling for new tutor partial container and partials */
@@ -187,6 +131,10 @@
     line-height: 2em;
     font-size: 0.8em;
   }
+  .file-name {
+    font-weight: 400;
+    font-size: 0.8em;
+  }
   .margin-bottom {
     margin-bottom: 4em;
   }
@@ -231,6 +179,11 @@
   h4 {
     text-align: center;
   }
+  .metrics {
+    text-align: center;
+    padding: 0;
+    margin: 0
+  }
   .upcoming-appts {
     table {
       width: 100%;
@@ -258,10 +211,6 @@
       }
     }
   }
-  .metrics, .campus-manager{
-    text-align: center;
-    padding: 1em;
-  }
   .campus-manager{
     .box p {
       margin: 0;
@@ -286,38 +235,20 @@ form.edit_appointment {
   display: inline-block;
 }
 
+.dash-home-top-row {
+  margin-top: 2em;
+}
 
-// <div class="row">
-//     <div class="small-12 medium-6 columns">
-//       <div class="metrics">
-//         <h4>Metrics</h4>
-//         <div class="box tutor-home-small-box">
-//           <div class="half top-half">
-//             <p>Revenue: $<%= @tutor.total_income %></p>
-//           </div>
-//           <div class="half">
-//             <p>Appointments: <%= @tutor.appointments.count %></p>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//     <div class="small-12 medium-6 columns">
-//       <div class="campus-manager">
-//         <h4>Your Campus Manager</h4>
-//         <div class="box">
-//           <p>Stuff goes here...</p>
-//         </div>
-//       </div>
-//     </div>
-//   </div>
-
-// <section class="dashboard-content tutor-home-page">
-//   <div class="row">
-//     <div class="small-12 columns">
-//       <div class="upcoming-appts">
-//   <div class="row">
-//     <div class="small-12 medium-6 columns">
-//       <div class="metrics">
-//     <div class="small-12 medium-6 columns">
-//       <div class="campus-manager">
-
+.dash-home-header {
+  border: 1px solid #2BC2DE;
+  border-bottom: 0;
+  margin-bottom: 0;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  color: white;
+  background-color: #0095AC;
+  padding: 0.3em;
+  text-align: center;
+  max-width: none;
+  width: 100%;
+}

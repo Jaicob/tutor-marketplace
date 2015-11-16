@@ -1,30 +1,34 @@
-<table class="tutor-db-courses">
-  <thead>
-    <tr>
-      <th>Subject</th>
-      <th>Number</th>
-      <th>Name</th>
-      <th>My Rate</th>
-      <th>Full Price</th>
-      <th>Students</th>
-      <th>Bookings</th>
-      <th>Revenue</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @tutor.tutor_courses.each do |tutor_course| %>
-    <tr>
-      <td><%= tutor_course.course.subject.name %></td>
-      <td><%= tutor_course.course.call_number %></td>
-      <td><%= tutor_course.course.friendly_name %></td>
-      <td>$<%= tutor_course.rate %></td>
-      <td>$<%= tutor_course.full_price %></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td><%= link_to 'Edit', tutor_course_path(@tutor.slug, tutor_course) %></td>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="row">
+  <div class="small-12 columns">
+    <table class="tutor-db-courses">
+      <thead>
+        <tr>
+          <th>Subject</th>
+          <th>Number</th>
+          <th>Name</th>
+          <th>My Rate</th>
+          <th>Full Price</th>
+          <th>Students</th>
+          <th>Bookings</th>
+          <th>Revenue</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @tutor.tutor_courses.each do |tutor_course| %>
+        <tr>
+          <td><%= tutor_course.course.subject.name %></td>
+          <td><%= tutor_course.course.call_number %></td>
+          <td><%= tutor_course.course.friendly_name %></td>
+          <td>$<%= tutor_course.rate %></td>
+          <td>$<%= tutor_course.full_price %></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td><%= link_to 'Edit', tutor_course_path(@tutor.slug, tutor_course) %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

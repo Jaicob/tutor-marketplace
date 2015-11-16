@@ -19,21 +19,21 @@ $(document).ready(function()
 
       <h6>Tell us about your education</h6>
 
-      <%= f.text_field :major, placeholder: 'Major', required: true %>
+      <%= f.text_field :major, placeholder: 'Major', class: 'border-radius', required: true %>
 
       <p class="tiny-text">If you have not graduated yet, select your expected degree type and graduation year</p>
 
       <div class="one-half">
-        <%= f.select(:degree, options_for_select(Tutor.degree_collection, selected: 'Degree', disabled: 'Degree'), {required: true} , {class: 'select-menu'}) %>
+        <%= f.select(:degree, options_for_select(Tutor.degree_collection, selected: 'Degree', disabled: 'Degree'), {required: true}) %>
       </div>
 
       <div class="one-half">
-        <%= f.text_field :graduation_year, placeholder: 'Graduation Year', required: true %>
+        <%= f.text_field :graduation_year, placeholder: 'Graduation Year', class: 'border-radius', required: true %>
       </div>
 
       <p class="tiny-text"><b>Additional degrees summary (optional):</b> if you have multiple degrees, please highlight your highest degree in the fields above and list your other degrees in this field. Do not include your graduation year for these extra degrees.</p>
 
-      <%= f.text_field :additional_degrees, placeholder: 'B.A. Biology, B.S. Micro-Biology' %>
+      <%= f.text_field :additional_degrees, placeholder: 'B.A. Biology, B.S. Micro-Biology', class: 'border-radius' %>
 
       <h6>Tell us a little about yourself with three short statements</h6>
 
@@ -53,6 +53,7 @@ $(document).ready(function()
       </div>
 
       <h6>Upload your unofficial transcript or resume</h6>
+      <p class="tiny-text">Acceptable file types: .jpg, .jpeg, .png, .txt, .rtf, .doc, .docx, .pdf</p>
 
       <div class="file-input-box">
         <div class="file-input-button">
@@ -60,9 +61,10 @@ $(document).ready(function()
         </div>
         <%= f.file_field :transcript, id: 'transcript-input', class: 'file-input', required: true %>
       </div>
-      <p id="transcript-name-target"></p>
+      <p id="transcript-name-target file-name"></p>
 
       <h6>Upload a profile picture</h6>
+      <p class="tiny-text">Acceptable file types: .jpg, .jpeg, .png</p>
 
       <div class="file-input-box">
         <div class="file-input-button">
@@ -70,9 +72,11 @@ $(document).ready(function()
         </div>
         <%= f.file_field :profile_pic, id: 'picture-input', class: 'file-input', required: true  %>
       </div>
-      <p id="picture-name-target"></p>
+      <p id="picture-name-target file-name"></p>
 
-      <p class="tiny-text">That's it! Review your application and then submit it for a decision from the Axon Tutor management team within 48 hours. Go ahead and finish the rest of the checklist to make sure you're ready to start tutoring as quickly as possible.</p>
+      <p>That's it for the first step!</p>
+
+      <%= f.hidden_field :onboarding_status, value: 'Step 2' %>
 
       <%= f.submit 'Submit Application', class: 'custom-button margin-bottom' %>
 

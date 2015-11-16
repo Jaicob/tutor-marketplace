@@ -98,4 +98,17 @@ class User < ActiveRecord::Base
     end
   end
 
+  def school
+    case self.role.to_sym
+    when :student
+      return self.student.school
+    when :tutor
+      return self.tutor.school
+    when :campus_manager
+      return self.campus_manager.school
+    when :super_admin
+      return self.super_admin.school
+    end
+  end
+
 end
