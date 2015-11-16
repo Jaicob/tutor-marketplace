@@ -25,6 +25,7 @@
     </div>
   </div>
 </div>
+<!--  ABOVE should be refactored into partial with completed and current step styles that are set dynamically -->
 <div class="row box">
   <div class="small-12 medium-12 columns">
     <h1>Instructions</h1>
@@ -36,7 +37,7 @@
   </div>
 </div>
 <div class="row medium-collapse">
-  <%= form_for @tutor_course, url: new_tutor_course_path(@tutor) do |f| %>
+  <%= form_for @tutor_course, url: create_course_during_onboarding_tutor_path(@tutor) do |f| %>
     <div class="small-12 medium-3 columns">
       <%= render '/course_selector/subject' %>
     </div>          
@@ -57,12 +58,12 @@
 </div>
 <div class="row">
   <div class="small-12 medium-8 columns box next-step-instructions">
-    <p>Finished setting your intial courses? Click 'Next Step' to set your available hours<i class="fi-arrow-right"></i></p>
+    <p>Finished setting your intial courses? Click 'Next Step' to set your Schedule<i class="fi-arrow-right"></i></p>
   </div>
   <div class="small-12 medium-4 columns">
     <%= form_for @tutor, url: submit_courses_tutor_path(@tutor.slug) do |f| %>
       <%= f.hidden_field :onboarding_status, value: 'Step 3' %>
-      <%= f.submit "Approve Courses", class: 'custom-button margin-bottom large full-width bold' %>
+      <%= f.submit "Next Step", class: 'custom-button margin-bottom large full-width bold' %>
     <% end %>   
   </div>
 </div>

@@ -136,8 +136,6 @@ $(document).ready(function()
         <p id="picture-name-target" class="file-name"></p>
 
         <h4 class="thats-it">That's it for the first step!</h4>
-
-        <%= f.hidden_field :onboarding_status, value: 'Step 2' %>
     </div>
   </div>
   <div class="small-12 medium-7 columns">
@@ -206,9 +204,10 @@ $(document).ready(function()
 </div>
 <div class="row">
   <div class="small-12 medium-8 columns box next-step-instructions">
-    <p>Finished with your application? Review it then click 'Next Step' to set your courses! <i class="fi-arrow-right"></i></p>
+    <p>Finished with your application? Review it then click 'Next Step' to set your Courses! <i class="fi-arrow-right"></i></p>
   </div>
   <div class="small-12 medium-4 columns">   
+    <%= f.hidden_field :onboarding_status, value: 'Step 2' %>
     <%= f.submit 'Next Step', class: 'custom-button margin-bottom large full-width bold' %>
     <% end %>
   </div>

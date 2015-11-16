@@ -8,11 +8,7 @@ class Dashboard::Tutor::CoursesController < DashboardController
   def create
     @tutor_course = TutorCourse.create(tutor_course_params)
     if @tutor_course.save
-      if request.referer.split('/').include?('onboarding')
-        redirect_to onboarding_courses_tutor_path(@tutor.slug)
-      else
-        redirect_to tutor_courses_path(@tutor.slug)
-      end
+      redirect_to tutor_courses_path(@tutor.slug)
     else
       redirect_to :back
     end
