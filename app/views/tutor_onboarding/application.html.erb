@@ -1,3 +1,29 @@
+<script>
+$(document).ready(function()
+  {
+    $('#transcript-input').change(function () {
+        acceptable_filetypes = ["jpg", "jpeg", "png", "txt", "rtf", "doc", "docx", "pdf"]
+        if (acceptable_filetypes.indexOf($('#transcript-input').val().split(".").pop()) > -1) {
+          $('#transcript-name-target').html($('#transcript-input').val().split("\\").pop()); 
+          $('#transcript-name-target').removeClass("invalid-file-type"); 
+        } else {
+          $('#transcript-name-target').html("Invalid file type! Please upload a file with one of the following extensions: .jpg, .jpeg, .png, .txt, .rtf, .doc, .docx, .pdf");
+          $('#transcript-name-target').addClass("invalid-file-type"); 
+        }
+    });
+    $('#picture-input').change(function () {
+        acceptable_filetypes = ["jpg", "jpeg", "png"]
+        if (acceptable_filetypes.indexOf($('#picture-input').val().split(".").pop()) > -1) {
+          $('#picture-name-target').html($('#picture-input').val().split("\\").pop()); 
+          $('#picture-name-target').removeClass("invalid-file-type"); 
+        } else {
+          $('#picture-name-target').html("Invalid file type! Please upload a file with one of the following extensions: .jpg, .jpeg, .png");
+          $('#picture-name-target').addClass("invalid-file-type"); 
+        }
+    });
+});
+</script>
+
 <!-- should be refactored into partial with completed and current step styles set dynamically -->
 <div class="row medium-collapse progress-bar-container">
   <div class="small-12 medium-3 columns">
@@ -26,19 +52,112 @@
   </div>
 </div>
 <div class="row box">
-  <div class="small-12 medium-8 columns">
+  <div class="small-12 medium-7 columns">
     <h1>Welcome, <%= @tutor.first_name %></h1>
-    <p class="welcome-text">Congratulations on signing up to become an Axon tutor!</p>
-    <p class="welcome-text">Follow the Get Started checklist. Click the Next Step button at the bottom of each</p>
-    <p class="welcome-text">You'll need: your unofficial transcript or resume, your profile picture and your bank account's routing and account numbers to recieve payments.</p>
+    <p class="big-text">Congratulations on signing up to become an Axon tutor!</p>
+    <p class="big-text">You're only 4 steps away from having a complete profile.</p>
+  </div>
+  <div class="small-12 medium-5 columns">
+    <p class="big-text">To finish setting up your account, you'll need:</p>
+    <ul>
+      <li class="big-text">Your resume or unofficial school transcript</li>
+      <li class="big-text">A picture for your profile page</li>
+      <li class="big-text">Your banking information to recieve payments</li>
+    </ul>
   </div>
 </div>
 <div class="row">
-  <div class="small-12 medium-5 medium-centered columns">
+  <div class="small-12 columns">
+    <h2 class="onboarding-page-title">Step 1: Complete Your Application</h2>
   </div>
 </div>
 <div class="row">
-  <div class="small-12 medium-3 medium-offset-9 columns next-button">
-    <p>Next</p>
+  <div class="small-12 medium-5 columns">
+    <a name="application"></a>
+    <div class="application">
+
+      <%= form_for @tutor, url: submit_application_tutor_path do |f| %>
+
+        <h4 class="first-subheader">1. Education</h4>
+
+        <p class="prompt">What is your degree type, major and graduation year?</p>
+        <div class="row medium-collapse">
+          <div class="small-12 medium-2 columns">
+            <%= f.select(:degree, options_for_select(Tutor.degree_collection, selected: 'Degree', disabled: 'Degree'), {required: true}) %>
+          </div>
+          <div class="small-12 medium-6 columns">
+            <%= f.text_field :major, placeholder: 'Major', required: true %>
+          </div>
+          <div class="small-12 medium-4 columns">
+            <%= f.text_field :graduation_year, placeholder: 'Graduation Year', required: true %>
+          </div>
+        </div>
+        <p>If you have not graduated yet, select your expected degree type and graduation year.</p>
+
+
+        <p class="prompt">Do you have a second major or any additional degrees?</p>
+        <p>If so, please summarize this information in 35 characters</p>
+        <%= f.text_field :additional_degrees, placeholder: 'B.A. Biology, B.S. Micro-Biology', class: 'border-radius' %>
+
+        <h4>2. Personal Statements</h4>
+
+        <p class="prompt">Share three facts about yourself that you want students to see.</p>
+        <p class="example">Ex. 1: "Two years of tutoring experience for the Math department."</p>
+        <div class="input statement-field">
+          <%= f.text_area :extra_info_1, placeholder: 'Statement #1', required: true %>
+        </div>
+        <p class="example">Ex. 2: "Honor Roll student for 3 semesters."</p>
+        <div class="input statement-field">
+          <%= f.text_area :extra_info_2, placeholder: 'Statement #2', required: true %>
+        </div>
+
+        <p class="example">Ex. 3: "Hiked the Appalachian trail for 3 weeks last summer."</p>
+        <div class="input statement-field">
+          <%= f.text_area :extra_info_3, placeholder: 'Statement #3', required: true %>
+        </div>
+
+        <h4>3. File Uploads</h4>
+
+        <h6>Upload your unofficial transcript or resume</h6>
+        <p>Acceptable file types: .jpg, .jpeg, .png, .txt, .rtf, .doc, .docx, .pdf</p>
+
+        <div class="file-input-box">
+          <div class="file-input-button">
+            <p>Transcript or Resume</p>
+          </div>
+          <%= f.file_field :transcript, id: 'transcript-input', class: 'file-input', required: true %>
+        </div>
+        <p id="transcript-name-target" class="file-name"></p>
+
+        <h6>Upload a profile picture</h6>
+        <p>Acceptable file types: .jpg, .jpeg, .png</p>
+
+        <div class="file-input-box">
+          <div class="file-input-button">
+            <p>Profile Picture</p>
+          </div>
+          <%= f.file_field :profile_pic, id: 'picture-input', class: 'file-input', required: true  %>
+        </div>
+        <p id="picture-name-target" class="file-name"></p>
+
+        <h4 class="thats-it">That's it for the first step!</h4>
+
+        <%= f.hidden_field :onboarding_status, value: 'Step 2' %>
+    </div>
+  </div>
+  <div class="small-12 medium-7 columns">
+  </div>
+</div>
+
+
+
+
+<div class="row">
+  <div class="small-12 medium-8 columns box next-step-instructions">
+    <p>Finished with your application? Click here to go to Step 2 <i class="fi-arrow-right"></i></p>
+  </div>
+  <div class="small-12 medium-4 columns">   
+    <%= f.submit 'Next Step', class: 'custom-button margin-bottom large' %>
+    <% end %>
   </div>
 </div>

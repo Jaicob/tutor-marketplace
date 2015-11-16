@@ -2,6 +2,8 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+// STYLING FOR PROGRESS BAR
+
 .row.medium-collapse.progress-bar-container {
     margin: 1em auto !important;
 
@@ -44,6 +46,7 @@
       }
       p.number {
         background: #BBE5EE;
+        color: #4F5252;
       }
     }
   }
@@ -56,5 +59,100 @@
       font-weight: 400;
       line-height: 4.5em;
     }
+  }
+}
+
+// STYLING FOR INSTRUCTIONS SCREENS
+.big-text {
+  font-size: 1.2em;
+}
+
+
+// STYLING FOR PAGE TITLES
+.onboarding-page-title {
+  margin: 1em auto;
+}
+
+// STYLING FOR BOTTOM ROW WITH CLICK NEXT INSTRUCTIONS & BUTTON
+.next-step-instructions p {
+  margin: 0;
+  text-align: center;
+}
+i.fi-arrow-right {
+  float: right;
+  margin-right: 1em;
+}
+
+/* STYLING FOR TUTOR APPLICATION */
+    
+.application {
+  h4 {
+    margin-top: 3em;
+    &.first-subheader {
+      margin-top: 0;
+    }
+  }
+  .prompt {
+    font-weight: 400;
+  }
+  #tutor_degree {
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+  }
+  #tutor_major {
+    border-radius: 0 !important;
+  }
+  #tutor_graduation_year {
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+  }
+  .file-input-box {
+    height: 3em;
+    position: relative;
+    overflow: hidden;
+    margin: 1em 0; 
+    border-radius: 4px;  
+  }
+  input.file-input {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    opacity: 0;
+  }
+  div.file-input-button {
+    height: 100%;
+    width: 100%;
+    float: right;
+    background-color: #2BC2DE;
+    color: #FAFAFA;
+    font-weight: 100;
+    text-align: center;
+    line-height: 2em;
+    font-size: 0.8em;
+    p {
+      line-height: 3em;
+      color: white;
+      font-weight: 400;
+    }
+  }
+  .file-name, .invalid-file-type {
+    font-weight: 400;
+    font-size: 1em;
+  }
+  .file-name {
+    text-align: right;
+  }
+  .invalid-file-type {
+    color: #DE6328;
+    text-align: left;
+  }
+  .margin-bottom {
+    margin-bottom: 4em;
+  }
+  .thats-it {
+    text-align: center;
+    margin-top: 2em;
   }
 }
