@@ -105,3 +105,6 @@ Z-notes.rb
 *.sublime-*
 node_modules
 npm-debug.*
+
+# Certs
+/config/certs/ssl/*

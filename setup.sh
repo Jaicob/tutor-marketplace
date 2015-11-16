@@ -39,8 +39,8 @@ rake bower:install
 RAILS_ENV=production bundle exec rake assets:precompile --trace
 
 
-echo "Setting up database"
-rake db:create db:migrate 
+# echo "Setting up database"
+# rake db:create db:migrate 
 
 # echo "Running unicorn"
 

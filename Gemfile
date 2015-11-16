@@ -2,14 +2,14 @@ source 'https://rubygems.org' do
   ruby '2.2.0'
 
   group :development, :test do
-    gem 'byebug', '~> 5.0'
-    gem 'web-console', '~> 2.1'
-    gem 'spring', '~> 1.3'
-    gem 'rubocop', '~> 0.32'
-    gem 'rspec-rails', '~> 3.3'
-    gem 'factory_girl_rails', '~> 4.5'
-    gem 'capybara'
-    gem 'capybara-webkit'
+    # gem 'byebug', '~> 5.0'
+    # gem 'web-console', '~> 2.1'
+    # gem 'spring', '~> 1.3'
+    # gem 'rubocop', '~> 0.32'
+    # gem 'rspec-rails', '~> 3.3'
+    # gem 'factory_girl_rails', '~> 4.5'
+    # gem 'capybara'
+    # gem 'capybara-webkit'
   end
 
   group :development do
