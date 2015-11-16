@@ -1,11 +1,3 @@
-$serif: 'Roboto Slab';
-$san-serif: 'Lato';
-$shadow: 1px 1px 1px black;
-$blue1: #BBE5EE;
-$blue2: #2BC2DE;
-$blue3: #0095AC;
-$green: #58AA4D;
-
 .tutor-form {
   margin-top: -2em;
   margin-bottom: 1em;
@@ -115,46 +107,12 @@ input.visitor-set-school-button {
   width: 100%;
   margin: 1em auto;
 }
-.section-header p {
-  font-family: 'Roboto Slab';
-  font-size: 1.2em;
-  font-weight: 100;
-  max-width: 20em;
-}
 p.axon-is-easy {
   max-width: 20em;
   margin: 0 auto 1em;
 }
-p.section-sub-header {
-  font-family: 'Lato';
-  font-size: 1.2em;
-  margin-top: 0;
-}
-p.pic-caption {
-  font-size: 1.3em;
-  color: #2BC2DE;
-  margin-bottom: 0;
-}
-.pic-box-trio {
-  max-width: 50em;
-  margin: auto;
-}
-.trio-pic {
-  width: 100%;
-  border: 1px solid #2BC2DE;
-  max-width: 25em;
-  margin: auto;
-}
-.divider-line {
-  display: block;
-  height: 1px;
-  border-bottom: 1px solid #0095AC;
-  width: 60%;
-  margin: auto;
-}
 img.testimonial-pic {
   border-radius: 100%;
-  border: 1px solid black;
   width: 100%;
   max-width: 10em;
   margin-top: 1em;
@@ -200,34 +158,6 @@ p.select-campus-pic {
 }
 button.custom-button.bottom-register-button {
   padding: 1em 5em;
-}
-
-/* iPad view */
-
-@media screen and (min-width: 768px) {
-p.axon-is-easy {
-  font-size: 1.6em;
-  margin-bottom: -1em;
-}
-.school-selection {
-  width: 50%;
-  margin: 1em auto;
-}
-.section-header {
-  padding: 1em;
-}
-.pic-box {
-  width: 50%;
-  margin: 3em auto 1em;
-}
-.campus-pic-boxes {
-  margin-bottom: 5em;
-}
-.campus-pic-box {
-  margin: auto;
-  display: inline-block;
-  padding: 1em;
-}
 }
 
 
@@ -315,17 +245,11 @@ p.axon-is-easy {
 
 .landing-page.lp-banner {
   background-color: #0095AC;
+  padding: 0.2em;
   .banner {
     color: #fafafa;
     padding: 0.5em;
-  }
-}
-
-.landing-page.lp-banner {
-  background-color: #0095AC;
-  .banner {
-    color: #fafafa;
-    padding: 0.5em;
+    font-weight: 100;
   }
 }
 
@@ -376,6 +300,14 @@ p.axon-is-easy {
     font-weight: 400;
     font-size: 1.2em;
   }
+  span {
+    font-family: 'Lato';
+    font-weight: 400;
+    font-size: 0.9em;
+    text-align: right;
+    position: relative;
+    left: 1em;
+  }
 }
 
 .landing-page.lp-newspaper-section {
@@ -403,5 +335,12 @@ p.axon-is-easy {
   text-align: center;
   font-size: 1.8em;
   font-weight: 100;
-  margin: 1em auto 2em;
+  margin: 0 auto 1em;
+  &.extra-big {
+    font-size: 2.6em;
+  }
+}
+
+.landing-page {
+  padding: 2em;
 }
