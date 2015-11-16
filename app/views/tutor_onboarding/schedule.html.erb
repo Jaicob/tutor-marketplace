@@ -1,1 +1,56 @@
-schedule_step.html.erb
+<!-- should be refactored into partial with completed and current step styles set dynamically -->
+<div class="row medium-collapse progress-bar-container">
+  <div class="small-12 medium-3 columns">
+    <div class="progress-step completed-step">
+      <p class="number"><i class="fi-check"></i></p>
+      <%= link_to onboarding_application_tutor_path(@tutor.slug) do %>
+        <p>Complete your application</p>
+      <% end %>
+    </div>
+  </div>
+  <div class="small-12 medium-3 columns">
+    <div class="progress-step completed-step">
+      <p class="number"><i class="fi-check"></i></p>
+      <%= link_to onboarding_courses_tutor_path(@tutor.slug) do %>
+        <p>Set your courses & rates</p>
+      <% end %>
+    </div>
+  </div>
+  <div class="small-12 medium-3 columns">
+    <div class="progress-step current-step">
+      <p class="number">3</i></p>
+      <p>Set your available hours</p>
+    </div>
+  </div>
+  <div class="small-12 medium-3 columns">
+    <div class="progress-step">
+      <p class="number">4</p>
+      <p>Set up direct deposit</p>
+    </div>
+  </div>
+</div>
+<!--  ABOVE should be refactored into partial with completed and current step styles that are set dynamically -->
+<div class="row box">
+  <div class="small-12 medium-12 columns">
+    <h1>Instructions</h1>
+  </div>
+</div>
+<div class="row">
+  <div class="small-12 columns">
+    <h2 class="onboarding-page-title">Step 3: Set Your Schedule</h2>
+  </div>
+</div>
+<div class="row medium-collapse">
+  <%= render '/dashboard/tutor/schedule/main' %>
+</div>
+<div class="row">
+  <div class="small-12 medium-8 columns box next-step-instructions">
+    <p>Finished setting your intial courses? Click 'Next Step' to set your Available Hours<i class="fi-arrow-right"></i></p>
+  </div>
+  <div class="small-12 medium-4 columns">
+    <%= form_for @tutor, url: submit_schedule_tutor_path(@tutor.slug) do |f| %>
+      <%= f.hidden_field :onboarding_status, value: 'Step 4' %>
+      <%= f.submit "Next Step", class: 'custom-button margin-bottom large full-width bold' %>
+    <% end %>   
+  </div>
+</div>

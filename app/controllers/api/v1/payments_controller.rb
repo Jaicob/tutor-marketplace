@@ -1,17 +1,19 @@
 class API::V1::PaymentsController < API::V1::Defaults
   before_action :set_student
 
-  def current_student
-    respond_with(@student)
-  end
-
-  private
-
-  def set_student
-    if current_user
-      @student = current_user.student
+  def check_student_for_customer_id
+    @student = Student.find(params[:student_id])
+    if @student.customer_id
+      info = {
+        full_name: @student.full_name,
+        card: @student.card_brand + "****" + @student.last_4_digits,
+        customer: @student.customer_id,
+        success: true
+      }
+      render json: info
     else
-      @student = Student.new
+      info = {success: false}
+      render json: info
     end
   end
 

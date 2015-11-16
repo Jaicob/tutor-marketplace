@@ -10,7 +10,6 @@ class Dashboard::Tutor::CoursesController < DashboardController
     if @tutor_course.save
       redirect_to tutor_courses_path(@tutor.slug)
     else
-      flash[:alert] = "Course was not created: #{@tutor_course.errors.full_messages.first}"
       redirect_to :back
     end
   end

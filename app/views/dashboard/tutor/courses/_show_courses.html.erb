@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row small-collapse">
   <div class="small-12 columns">
     <table class="tutor-db-courses">
       <thead>
@@ -22,10 +22,10 @@
           <td><%= tutor_course.course.friendly_name %></td>
           <td>$<%= tutor_course.rate %></td>
           <td>$<%= tutor_course.full_price %></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td><%= link_to 'Edit', tutor_course_path(@tutor.slug, tutor_course) %></td>
+          <td>--</td>
+          <td>--</td>
+          <td>--</td>
+          <td><%= link_to 'Edit', tutor_course_path(@tutor.slug, tutor_course), class: 'custom-button full-width blue' %></td>
         </tr>
         <% end %>
       </tbody>
