@@ -8,7 +8,6 @@
           <th class="name">Name</th>
           <th class="email">Email</th>
           <th class="phone">Phone</th>
-          <th>Birthdate</th>
           <th class="school">School</th>
           <th class="application-status">Rating</th>
         </tr>
@@ -20,7 +19,6 @@
           <td><%= @tutor.user.full_name %></td>
           <td><%= @tutor.user.email %></td>
           <td><%= @tutor.phone_number %></td>
-          <td><%= @tutor.birthdate.strftime('%-m-%d-%y') if @tutor.birthdate %></td>
           <td><%= @tutor.school.name %></td>
           <td></td>
         </tr>
@@ -107,7 +105,7 @@
   <div class="large-12 columns">
     <fieldset>
       <legend class="admin-panel">Profile</legend>
-      <%= render '/dashboard/profile/tutor_profile' %>
+      <%= render '/dashboard/tutor/profile/tutor_profile' %>
     </fieldset>
   </div>
 </div>
@@ -130,7 +128,6 @@
     </fieldset>
   </div>
 </div>
-
 
 <!-- Confirmation model for destroying a Tutor account -->
 

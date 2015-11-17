@@ -92,12 +92,6 @@ input.visitor-set-school-button {
   width: 100%;
   margin: 1em auto;
 }
-.section-header p {
-  font-family: 'Roboto Slab';
-  font-size: 1.2em;
-  font-weight: 100;
-  max-width: 20em;
-}
 p.axon-is-easy {
   max-width: 20em;
   margin: 0 auto 1em;
@@ -119,7 +113,6 @@ p.pic-caption {
 .trio-pic {
   width: 100%;
   border: 1px solid #2BC2DE;
-  max-width: 25em;
   margin: auto;
 }
 .divider-line {
@@ -138,7 +131,6 @@ p.difference-text {
 }
 img.testimonial-pic {
   border-radius: 100%;
-  border: 1px solid black;
   width: 100%;
   max-width: 10em;
   margin-top: 1em;
@@ -153,9 +145,6 @@ a.faqs-link:hover {
   background-color: #0095AC;
   color: white;
   border-radius: 4px;
-}
-.campus-pic-boxes {
-  margin-bottom: 3em;
 }
 .campus-pic-box {
   width: 100%;
@@ -181,91 +170,4 @@ p.select-campus-pic {
   margin: auto;
   padding: 2em;
   color: white;
-}
-
-
-
-
-/* iPad view */
-
-@media screen and (min-width: 768px) {
-p.axon-is-easy {
-  font-size: 1.6em;
-  margin-bottom: -1em;
-}
-.school-selection {
-  width: 50%;
-  margin: 1em auto;
-}
-.section-header {
-  padding: 1em;
-}
-.pic-box {
-  width: 50%;
-  margin: 3em auto 1em;
-}
-.campus-pic-boxes {
-  margin-bottom: 5em;
-}
-.campus-pic-box {
-  margin: auto;
-  display: inline-block;
-  padding: 1em;
-}
-}
-
-
-
-
-
-/* Full view */
-
-@media (min-width: 1000px) {
-.school-selection-box {
-  width: 40%;
-  margin: auto;
-}
-.school-selection {
-  display: inline-block;
-  width: 49%;
-  text-align: center;
-  background-color: #0095AC;
-  border: 2px solid white;
-  border-radius: 4px;
-  color: white;
-  font-size: 0.8em;
-}
-.number-banner {
-  display: inline-block;
-  width: 33%;
-  border: none;
-  vertical-align: top;
-}
-.pic-box {
-  width: 33%;
-  display: inline-block;
-  padding: 2em;
-  vertical-align: top;
-  margin: 0;
-}
-.four-differences-boxes {
-  width: 80%;
-  margin: auto;
-}
-.difference-box {
-  display: inline-block;
-  vertical-align: top;
-  width: 49%;
-  padding: 0 1em;
-}
-.testimonial-box {
-  display: inline-block;
-  width: 49%;
-  padding: 0 1em;
-  vertical-align: top;
-}
-p.difference-text {
-  padding-bottom: 2em;
-  max-width: 20em;
-}
 }

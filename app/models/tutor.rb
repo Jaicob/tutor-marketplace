@@ -16,11 +16,10 @@
 #  extra_info_3       :text
 #  graduation_year    :string
 #  phone_number       :string
-#  birthdate          :date
 #  profile_pic        :string
 #  transcript         :string
 #  appt_notes         :text
-#  courses_approved   :boolean          default(FALSE)
+#  onboarding_status  :integer          default(0)
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  last_4_acct        :string
@@ -207,14 +206,5 @@ class Tutor < ActiveRecord::Base
       tutor_course_info
     end
   end
-
-  # def onboarding_step 
-  #   step_number = 1
-  #   self.application_status == 'Complete' ? (step_number += 1) : (return step_number)
-  #   self.courses_approved? ? (step_number += 1) : (return step_number)
-  #   self.slots.count > 0 ? (step_number += 1) : (return step_number)
-  #   !self.acct_id.nil? ? (step_number += 1) : (return step_number)
-  #   step_number
-  # end
 
 end

@@ -5,9 +5,6 @@
     </div>
   </div>
   <div class="row">
-    <% if @tutor.onboarding_status == 'Step 2' %>
-      <%= render 'dashboard/tutor/courses/courses_welcome' %>
-    <% end %>
     <%= render 'dashboard/tutor/courses/add_course_form' %>
     <%= render 'dashboard/tutor/courses/show_courses' %>
   </div>
