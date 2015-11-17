@@ -34,20 +34,20 @@ var LocationSelector = React.createClass({
         <div className="location-selector">
           <div className="row center">
             <div className="medium-12 columns">
-              All of our tutors and students meet right on or just around campus. Your tutor's campus is {this.props.tutor_school}. Some popular meeting locations are:
+              All of our tutors and students meet right on or just around campus. Your tutor{"'"}s campus is {this.props.tutor_school}. Some popular meeting locations are:
             </div>
           </div>
           <div className="row top-buffer bottom-buffer center">
             <div className="medium-4 columns">
-              <img className="th bottom-buffer" src="http://placehold.it/100x100"></img><br></br>
+              <img className="bottom-buffer" src="<%= asset_url('booking/School Libraries.png') %>"></img><br></br>
               School Libraries
             </div>
             <div className="medium-4 columns">
-              <img className="th bottom-buffer" src="http://placehold.it/100x100"></img><br></br>
+              <img className="bottom-buffer" src="<%= asset_url('booking/Coffee Shops.png') %>"></img><br></br>
               Coffee Shops
             </div>
             <div className="medium-4 columns">
-              <img className="th bottom-buffer" src="http://placehold.it/100x100"></img><br></br>
+              <img className="bottom-buffer" src="<%= asset_url('booking/Student Centers.png') %>"></img><br></br>
               Student Centers
             </div>
           </div>
