@@ -39,21 +39,21 @@ class Promotion < ActiveRecord::Base
     puts "CATEGORY = #{self.category}"
     promo_category = self.category
     case self.category
-    when 'free_from_axon'
+    when 'free_from_axon' # 0
       prefix = 'AXONFREE'
-    when 'free_from_tutor'
+    when 'free_from_tutor' # 1
       prefix = 'TUTORFREE'
-    when 'percent_off_from_axon'
+    when 'percent_off_from_axon' # 2
       prefix = 'AXONPER'
-    when 'percent_off_from_tutor'
+    when 'percent_off_from_tutor' # 3
       prefix = 'TUTORPER'
-    when 'dollar_amount_off_from_axon'
+    when 'dollar_amount_off_from_axon' # 4
       prefix = 'AXONDLR'
-    when 'dollar_amount_off_from_tutor'
+    when 'dollar_amount_off_from_tutor' # 5
       prefix = 'TUTORDLR'
-    when 'repeating_percent_off_from_tutor'
+    when 'repeating_percent_off_from_tutor' # 6
       prefix = 'TUTORPKPER'
-    when 'repeating_dollar_amount_off_from_tutor'
+    when 'repeating_dollar_amount_off_from_tutor' # 7
       prefix = 'TUTORPKDLR'
     end
     self.code = prefix + SecureRandom.hex(6)

@@ -30,8 +30,9 @@ var AppointmentSelector = React.createClass({
           forceSubject: false,
           forceFetch: false,
           student: {},
+          promo: null,
           token: "",
-          customer_id: "",
+          customer: "",
           appointments: [],
           UINavigationBarDelegate: new Delegate()
       };
@@ -76,6 +77,9 @@ var AppointmentSelector = React.createClass({
   handleDisabledSlots: function (newDisabledSlots) {
     newDisabledSlots.unique((slot) => slot.start_time);
     this.setState({ disabledSlots: newDisabledSlots })
+  },
+  handlePromo: function (newPromo) {
+    this.setState({promo: newPromo});
   },
   handleBackStep: function () {
     if (this.canGoBack()) {
@@ -139,18 +143,23 @@ var AppointmentSelector = React.createClass({
     return false;
   },
   fetchStudent: function () {
-    var endpoint = API.endpoints.students();
+    var endpoint = API.endpoints.students({
+      student_id: this.props.student
+    });
     $.getJSON(endpoint, function (data) {
-      this.setState({
-        student: data
-      });
+      if (data.success) {
+        data['id'] = this.props.student;
+        this.setState({
+          student: data
+        });
+      };
     }.bind(this));
   },
-  handleCard: function(customer_id, token) {
-    if (customer_id == null) {
+  handleCard: function(customer, token) {
+    if (customer == null) {
       this.setState({token: token})
     } else {
-      this.setState({customer_id: customer_id})
+      this.setState({customer: customer})
     };
   },
   handleTotal: function (newTotal) {
@@ -215,6 +224,8 @@ var AppointmentSelector = React.createClass({
                         selectedSubject={this.state.selectedSubject}
                         currentStudent={this.state.student}
                         total={this.state.totalCharge}
+                        promo={this.state.promo}
+                        handlePromo={this.handlePromo}
                         handleTotal={this.handleTotal}
                         onChange={this.handleCard}
                      />

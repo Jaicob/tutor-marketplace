@@ -7,7 +7,7 @@ var DefaultCard = React.createClass({
 
   handleUseDefault: function(event) {
     this.setState({checked: !this.state.checked});
-    this.props.onCardSelect(this.props.currentStudent.customer_id);
+    this.props.onCardSelect(this.props.currentStudent.customer);
   },
 
   render: function() {

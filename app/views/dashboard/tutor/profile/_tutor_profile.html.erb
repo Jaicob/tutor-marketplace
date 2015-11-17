@@ -39,15 +39,15 @@
       </div>
     </div>
   </div>
-
   <div class="row">
     <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
     <%# [ ] TODO (AJ) Refactor NOT to use request.fullpath.to_s.split('=').second %>
     <%= react_component('AppointmentSelector', {
         tutor: @tutor.id,
         tutor_school: @tutor.school.name,
-        course: request.fullpath.to_s.split('=').second,
         tutor_name: @tutor.user.first_name,
+        student: (if @student then @student.id else nil end),
+        course: request.fullpath.to_s.split('=').second,
         margin: @tutor.school.transaction_percentage
       },
       {

@@ -4,8 +4,7 @@ var Checkout = React.createClass({
   },
   getInitialState: function () {
     return {
-      "promo": null,
-      "error": false
+      "promo": this.props.promo || null
     }
   },
   setDelegates: function () {
@@ -15,6 +14,14 @@ var Checkout = React.createClass({
     navBar.titleBarText = "Checkout";
     navBar.backButtonText = "Change location";
     navBar.forwardButtonText = "Proceed to Payment";
+    navBar.backButtonClick = function (update) {
+      this.props.handlePromo(this.state.promo);
+      update();
+    };
+    navBar.forwardButtonClick = function (update) {
+      this.props.handlePromo(this.state.promo);
+      update();
+    };
     this.props.updateDelegate(navBar);
   },
   applyPromoCode: function () {

@@ -42,7 +42,7 @@ var API = {
         },
         promo: (data) => API_LOCATION + "/check_promo_code/" + data["tutor_id"] + "/" + data["promo_code"],
         students: function(data) {
-            return API_LOCATION + "/payments/current_student/"
+            return API_LOCATION + "/payments/student/" + data["student_id"]
         }
     }
 };

@@ -40,6 +40,7 @@ var SlotSelector = React.createClass({
 
     if (this.props.selectedSlots.length != nextProps.selectedSlots.length) this.setDelegates();
   },
+  // [ ] TODO (AJ) Refactor this later
   fetchSlots: function (tutor) {
     var endpoint = API.endpoints.tutor_slots.get({
       tutor_id: tutor
