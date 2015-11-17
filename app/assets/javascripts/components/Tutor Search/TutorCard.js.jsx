@@ -6,8 +6,8 @@ var TutorCard = React.createClass({
     }
 
 		var tutor = this.props.tutor;
-    var profile_pic_url = "http://d1nt4a7y8dwdsx.cloudfront.net/wp-content/uploads/2015/04/Bernie-Sanders-AP77174442780.jpg";
-    // change to tutor.profile_pic.url
+    var profile_pic_url = tutor.profile_pic_url;
+
     var desc = function (tutor, extra_info) {
       if(tutor.additional_degrees) {
         if(extra_info.length > 100){

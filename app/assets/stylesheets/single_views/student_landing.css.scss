@@ -60,7 +60,7 @@ input.visitor-set-school-button {
 
 .row.number-banner {
   background-color: rgba(0,0,0,0.8);
-  margin-top: 5em;
+  border-radius: 4px;
   p {
     color: white;
   }
@@ -74,7 +74,14 @@ input.visitor-set-school-button {
       margin-top: 0;
     }
     &.logos {
+      margin: 0.2em auto;
     }
+  }
+  img.odyssey-logo {
+    margin-top: 0.8em;
+  }
+  img.red-black-logo {
+    max-height: 2.5em;
   }
 }
 
