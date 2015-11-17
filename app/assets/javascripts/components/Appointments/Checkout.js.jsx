@@ -17,11 +17,11 @@ var Checkout = React.createClass({
     navBar.backButtonClick = function (update) {
       this.props.handlePromo(this.state.promo);
       update();
-    };
+    }.bind(this);
     navBar.forwardButtonClick = function (update) {
       this.props.handlePromo(this.state.promo);
       update();
-    };
+    }.bind(this);
     this.props.updateDelegate(navBar);
   },
   applyPromoCode: function () {

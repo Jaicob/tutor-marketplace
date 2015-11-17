@@ -99,21 +99,19 @@ class Appointment < ActiveRecord::Base
   end
 
   def self.create_appts_from_array(params)
-    appts_count = params[:data].count
-    n = 0
-    appts_count.times do
+    params[:data].map do |data|
+      data = data[1]
       Appointment.create(
-        student_id: params[:data][n][:student_id],
-        slot_id: params[:data][n][:slot_id],
-        course_id: params[:data][n][:course_id],
-        start_time: params[:data][n][:start_time]
+        student_id: params[:student_id],
+        slot_id: data[:slot_id],
+        course_id: data[:course_id],
+        start_time: data[:start_time]
       )
-      n += 1
     end
   end
 
   def self.visitor_create_appts_from_array(params)
-    appts = params[:data].map do |data|
+    params[:data].map do |data|
       data = data[1]
       Appointment.create(
         slot_id: data[:slot_id],
@@ -121,8 +119,6 @@ class Appointment < ActiveRecord::Base
         start_time: data[:start_time]
       )
     end
-
-    return appts
   end
 
 end

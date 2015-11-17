@@ -13,10 +13,11 @@ class API::V1::StudentAppointmentsController < API::V1::Defaults
   end
 
   def create
-    if Appointment.create_appts_from_array(params)
-      render json: @appts
+    appts = Appointment.create_appts_from_array(params)
+    if appts
+      render json: appts
     else
-      render json: @appts.errors.full_messages
+      render json: appts.errors.full_messages
     end
   end
 
