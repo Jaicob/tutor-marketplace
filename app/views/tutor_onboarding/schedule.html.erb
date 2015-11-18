@@ -1,35 +1,4 @@
-<!-- should be refactored into partial with completed and current step styles set dynamically -->
-<div class="row medium-collapse progress-bar-container">
-  <div class="small-12 medium-3 columns">
-    <div class="progress-step completed-step">
-      <p class="number"><i class="fi-check"></i></p>
-      <%= link_to onboarding_application_tutor_path(@tutor.slug) do %>
-        <p>Complete your application</p>
-      <% end %>
-    </div>
-  </div>
-  <div class="small-12 medium-3 columns">
-    <div class="progress-step completed-step">
-      <p class="number"><i class="fi-check"></i></p>
-      <%= link_to onboarding_courses_tutor_path(@tutor.slug) do %>
-        <p>Set your courses & rates</p>
-      <% end %>
-    </div>
-  </div>
-  <div class="small-12 medium-3 columns">
-    <div class="progress-step current-step">
-      <p class="number">3</i></p>
-      <p>Set your available hours</p>
-    </div>
-  </div>
-  <div class="small-12 medium-3 columns">
-    <div class="progress-step">
-      <p class="number">4</p>
-      <p>Set up direct deposit</p>
-    </div>
-  </div>
-</div>
-<!--  ABOVE should be refactored into partial with completed and current step styles that are set dynamically -->
+<%= render '/tutor_onboarding/progress_bar' %>
 <div class="row box">
   <div class="small-12 medium-12 columns">
     <h1>Your Schedule</h1>
@@ -53,7 +22,7 @@
   </div>
   <div class="small-12 medium-4 columns">
     <%= form_for @tutor, url: submit_schedule_tutor_path(@tutor.slug) do |f| %>
-      <%= f.hidden_field :onboarding_status, value: 'Step 4' %>
+      <%= f.hidden_field :onboarding_status, value: 3 %>
       <%= f.submit "Next Step", class: 'custom-button margin-bottom large full-width bold' %>
     <% end %>   
   </div>
