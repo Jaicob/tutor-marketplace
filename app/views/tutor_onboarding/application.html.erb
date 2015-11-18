@@ -23,34 +23,7 @@ $(document).ready(function()
     });
 });
 </script>
-<!-- should be refactored into partial with completed and current step styles that are set dynamically -->
-  <div class="row medium-collapse progress-bar-container">
-    <div class="small-12 medium-3 columns">
-      <div class="progress-step current-step">
-        <p class="number">1</p>
-        <p>Complete your application</p>
-      </div>
-    </div>
-    <div class="small-12 medium-3 columns">
-      <div class="progress-step">
-        <p class="number">2</p>
-        <p>Set your courses & rates</p>
-      </div>
-    </div>
-    <div class="small-12 medium-3 columns">
-      <div class="progress-step">
-        <p class="number">3</p>
-        <p>Set your available hours</p>
-      </div>
-    </div>
-    <div class="small-12 medium-3 columns">
-      <div class="progress-step">
-        <p class="number">4</p>
-        <p>Set up direct deposit</p>
-      </div>
-    </div>
-  </div>
-<!--  ABOVE should be refactored into partial with completed and current step styles that are set dynamically -->
+<%= render '/tutor_onboarding/progress_bar' %>
 <div class="row box">
   <div class="small-12 columns">
     <h1>Welcome, <%= @tutor.first_name %></h1>
