@@ -3,7 +3,7 @@ $(document).ready(function()
   {
     $('#transcript-input').change(function () {
         acceptable_filetypes = ["jpg", "jpeg", "png", "txt", "rtf", "doc", "docx", "pdf"]
-        if (acceptable_filetypes.indexOf($('#transcript-input').val().split(".").pop()) > -1) {
+        if (acceptable_filetypes.indexOf($('#transcript-input').val().toLowerCase().split(".").pop()) > -1) {
           $('#transcript-name-target').html($('#transcript-input').val().split("\\").pop()); 
           $('#transcript-name-target').removeClass("invalid-file-type"); 
         } else {
@@ -13,7 +13,7 @@ $(document).ready(function()
     });
     $('#picture-input').change(function () {
         acceptable_filetypes = ["jpg", "jpeg", "png"]
-        if (acceptable_filetypes.indexOf($('#picture-input').val().split(".").pop()) > -1) {
+        if (acceptable_filetypes.indexOf($('#picture-input').val().toLowerCase().split(".").pop()) > -1) {
           $('#picture-name-target').html($('#picture-input').val().split("\\").pop()); 
           $('#picture-name-target').removeClass("invalid-file-type"); 
         } else {
