@@ -51,7 +51,7 @@ class TutorOnboardingController < ApplicationController
 
   def submit_schedule
     @tutor.update(tutor_params)
-    redirect_to onboarding_payment_details_path(@tutor.slug)
+    redirect_to onboarding_payment_details_tutor_path(@tutor.slug)
   end
 
   def payment_details
@@ -62,7 +62,7 @@ class TutorOnboardingController < ApplicationController
 
   def submit_payment_details
     if @tutor.update_attributes(tutor_params)
-      @tutor.update_attributes(last_4_acct: params[:last_4_acct], onboarding_status: 'Finished')
+      @tutor.update_attributes(last_4_acct: params[:last_4_acct], onboarding_status: 4)
       UpdateTutorAccount.call(tutor: @tutor, token: params[:stripeToken])
       respond_to do |format|
         format.js { render :payment_settings_updated }
