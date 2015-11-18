@@ -26,7 +26,7 @@
 
       // Disable the submit button to prevent repeated clicks
       $form.find('button').prop('disabled', true);
-      Stripe.setPublishableKey("<%= Rails.configuration.stripe[:publishable_key] %>");
+      Stripe.setPublishableKey("<%= ENV['stripe_public_key'] %>");
       Stripe.bankAccount.createToken({
         country: 'US',
         currency: 'usd',
