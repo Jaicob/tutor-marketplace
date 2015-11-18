@@ -90,7 +90,6 @@ pickle-email-*.html
 /config/application.yml
 .ruby-version
 
-
 # My personal notes & to-do list
 Z-notes.rb
 
