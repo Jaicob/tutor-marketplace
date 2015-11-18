@@ -4,12 +4,12 @@ module Processor
   class Stripe
 
     def initialize()
-      Stripe.api_key = ENV['stripe_secret_key']
+      ::Stripe.api_key = ENV['stripe_secret_key']
     end
 
     def update_managed_account(tutor, token)
       if tutor.acct_id.nil?
-        acct = Stripe::Account.create(
+        acct = ::Stripe::Account.create(
           managed: true,
           country: 'US',
           email: tutor.email,
@@ -34,13 +34,13 @@ module Processor
         )
         tutor.update_attributes(acct_id: acct[:id])
       else
-        acct = Stripe::Account.retrieve(tutor.acct_id)
+        acct = ::Stripe::Account.retrieve(tutor.acct_id)
       end
       acct.external_accounts.create({ :external_account => token })
     end
 
     def reconcile_coupon_difference(charge)
-      transfer = Stripe::Transfer.create(
+      transfer = ::Stripe::Transfer.create(
         amount: charge.amount,
         currency: 'usd',
         destination: charge.tutor.acct_id,
@@ -50,7 +50,7 @@ module Processor
 
     def send_charge(charge)
       if charge.customer_id.nil?
-        Stripe::Charge.create(
+        ::Stripe::Charge.create(
           amount: charge.amount,
           currency: 'usd',
           source: charge.token,
@@ -64,7 +64,7 @@ module Processor
         puts "charge.tutor_acct_id = #{charge.tutor.acct_id}"
         puts "charge.axon_fee = #{charge.axon_fee}"
         puts "charge.tutor_fee = #{charge.tutor_fee}"
-        Stripe::Charge.create(
+        ::Stripe::Charge.create(
           amount: charge.amount,
           currency: 'usd',
           customer: charge.customer_id,
@@ -76,7 +76,7 @@ module Processor
 
     def update_customer(student, token)
       if student.customer_id.nil?
-        cust = Stripe::Customer.create(
+        cust = ::Stripe::Customer.create(
           card: token,
           description: "#{student.full_name} - #{student.email}",
           email: student.email
@@ -91,7 +91,7 @@ module Processor
           )
         end
       else
-        cust = Stripe::Customer.retrieve(student.customer_id)
+        cust = ::Stripe::Customer.retrieve(student.customer_id)
         # delete old card
         cust.sources.first.delete()
         # save new card
@@ -111,7 +111,7 @@ module Processor
 
     def reconcile_coupon_difference(tutor, transfer_amount, promotion)
       # transfer_amount = amount that Axon owes tutor (represented by a negative Axon fee converted to positive integer)
-      transfer = Stripe::Transfer.create(
+      transfer = ::Stripe::Transfer.create(
         amount: transfer_amount,
         currency: 'usd',
         destination: tutor.acct_id,
