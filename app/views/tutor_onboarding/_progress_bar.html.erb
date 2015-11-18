@@ -1,28 +1,14 @@
-<!-- THIS FILE IS NOT CURRENTLY BE USED, BUT SHOULD BE SOON, USING THIS PARTIAL AND DYNAMIC STYLES SET WITH ERB, THE COMPLETED AND CURRENT STEPS CAN BE STYLED DYNAMICALLY, BUT ARENT BC RIGHT NOW IT'S FUCK-IT-SHIP-IT TIME -->
+<% create_step_blocks(@tutor) %>
 
-<!-- <div class="row medium-collapse progress-bar-container">
-  <div class="small-12 medium-3 columns">
-    <div class="progress-step completed-step">
-      <p class="number"><i class="fi-check"></i></p>
-      <p>Complete your application</p>
+<div class="row medium-collapse progress-bar-container">
+  <% @links.each do |info| %>
+    <div class="small-12 medium-3 columns">
+      <div class="progress-step <%= info[1][:classes] %>">
+        <%= link_to info[1][:path] do %>
+          <p class="number"><%= info[1][:circle].html_safe() %></p>
+          <p><%= info[1][:text] %></p>
+        <% end %>
+      </div>
     </div>
-  </div>
-  <div class="small-12 medium-3 columns">
-    <div class="progress-step completed-step">
-      <p class="number"><i class="fi-check"></i></p>
-      <p>Set your courses & rates</p>
-    </div>
-  </div>
-  <div class="small-12 medium-3 columns">
-    <div class="progress-step current-step">
-      <p class="number">3</p>
-      <p>Set your available hours</p>
-    </div>
-  </div>
-  <div class="small-12 medium-3 columns">
-    <div class="progress-step">
-      <p class="number">4</p>
-      <p>Link your bank account</p>
-    </div>
-  </div>
-</div> -->
+  <% end %>
+</div>

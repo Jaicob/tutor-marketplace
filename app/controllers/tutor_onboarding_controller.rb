@@ -3,6 +3,8 @@ class TutorOnboardingController < ApplicationController
   before_action :set_tutor
   before_action :set_tutor_course, only: [:update_course, :delete_course]
 
+  helper OnboardingLinksHelper
+
   def application
   end
 
@@ -15,12 +17,9 @@ class TutorOnboardingController < ApplicationController
   end
 
   def courses
-    # refactor into model method
-      step = @tutor.onboarding_status
-      if step == 'Step 1'
-        redirect_to onboarding_application_tutor_path(@tutor.slug)
-      end
-    # end of ship-it-fuck-it controller method
+    if @tutor.onboarding_status < 1
+      redirect_to onboarding_application_tutor_path(@tutor.slug)
+    end
     @tutor_course = TutorCourse.new
   end
 
@@ -40,37 +39,25 @@ class TutorOnboardingController < ApplicationController
   end
 
   def submit_courses
-    if @tutor.update(tutor_params)
-      redirect_to onboarding_schedule_tutor_path(@tutor.slug)
-    else
-      redirect_to :back
-      # flash[:alert] = "Application was not submitted: #{@tutor.errors.full_messages.first}"
-      # puts "Application was not submitted: #{@tutor.errors.full_messages}"
-    end
+    @tutor.update(tutor_params)
+    redirect_to onboarding_schedule_tutor_path(@tutor.slug)
   end
 
   def schedule
-    # refactor into model method
-      step = @tutor.onboarding_status
-      if (step == 'Step 1') || (step == 'Step 2')
-        redirect_to onboarding_courses_tutor_path(@tutor.slug)
-      end
-    # end of ship-it-fuck-it controller method
+    if @tutor.onboarding_status < 2
+      redirect_to onboarding_courses_tutor_path(@tutor.slug)
+    end
   end
 
   def submit_schedule
     @tutor.update(tutor_params)
-    redirect_to payment_info_tutor_path(@tutor.slug)
-    # success = redirect_to initial_banking_setup_path(@tutor.slug)
+    redirect_to onboarding_payment_details_path(@tutor.slug)
   end
 
   def payment_details
-    # refactor into model method
-      step = @tutor.onboarding_status
-      if (step == 'Step 1') || (step == 'Step 2') || (step == 'Step 3')
-        redirect_to onboarding_schedule_tutor_path(@tutor.slug)
-      end
-    # end of ship-it-fuck-it controller method
+    if @tutor.onboarding_status < 3
+      redirect_to onboarding_schedule_tutor_path(@tutor.slug)
+    end
   end
 
   def submit_payment_details
