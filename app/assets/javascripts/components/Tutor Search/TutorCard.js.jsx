@@ -6,7 +6,7 @@ var TutorCard = React.createClass({
     }
 
 		var tutor = this.props.tutor;
-    var profile_pic_url = tutor.profile_pic_url;
+    var profile_pic_url = tutor.profile_pic.url;
 
     var desc = function (tutor, extra_info) {
       if(tutor.additional_degrees) {
