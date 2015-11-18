@@ -31,7 +31,11 @@
 <div class="row box">
   <div class="small-12 medium-12 columns">
     <h1>Your Courses & Rates</h1>
-    <p>Here is how Axon’s pricing works: instead of taking a cut of your rate, Axon adds a convenience free to the student at checkout. You can see what the student pays by looking in the “Full Price” column. Still aren’t sure what to charge? Most of our tutors charge $15-30 per hour, but it’s completely up to you. Don’t forget that you can add or remove classes or change your rates at any time. If you don’t see a course listed that you would like to tutor, just send us an email at info@axontutors.com. </p>
+    <h3>Courses</h3>
+    <p class="big-text">With Axon, you <span>select specific courses</span> on your campus to tutor. Use the select menus to choose your courses. If you want to tutor a course that's not currently listed, send us an email at <a href="mailto:info@axontutors.com", class='blue-link'>info@axontutors.com</a>.</p>
+    <h3>Rates</h3>
+    <p class="big-text">Instead of taking a cut of your rate, Axon adds a <span>convenience fee</span> to the student at checkout. You can see what the student pays by looking in the <span>“Full Price”</span> column.Not sure what to charge? Most of our tutors charge <span>$15-30/hr.</span>, but your rate is completely up to you.</p>
+    <p class="big-text">You can change your courses and rates at any time. Your <span>first course was set</span> from your selection in the initial sign-up form.</p>
   </div>
 </div>
 <div class="row">
@@ -57,7 +61,41 @@
   <% end %>
 </div>
 <div class="show-courses-container">
-  <%= render 'dashboard/tutor/courses/show_courses' %>
+  <!-- would use _show_courses partial, but Edit link needs to be different in onboarding process (maybe change regular dashboard version to use a modal, rather than a show page, and then code be identical)-->
+  <div class="row small-collapse">
+    <div class="small-12 columns">
+      <table class="tutor-db-courses">
+        <thead>
+          <tr>
+            <th>Subject</th>
+            <th>Number</th>
+            <th>Name</th>
+            <th>My Rate</th>
+            <th>Full Price</th>
+            <th>Students</th>
+            <th>Bookings</th>
+            <th>Revenue</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @tutor.tutor_courses.each do |tutor_course| %>
+          <tr>
+            <td><%= tutor_course.course.subject.name %></td>
+            <td><%= tutor_course.course.call_number %></td>
+            <td><%= tutor_course.course.friendly_name %></td>
+            <td>$<%= tutor_course.rate %></td>
+            <td>$<%= tutor_course.full_price %></td>
+            <td>--</td>
+            <td>--</td>
+            <td>--</td>
+            <td><a href="#" data-reveal-id="myModal-<%= tutor_course.id %>" class="custom-button full-width gray">Edit / Delete</a></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
 <div class="row">
   <div class="small-12 medium-8 columns box next-step-instructions">
@@ -70,3 +108,52 @@
     <% end %>   
   </div>
 </div>
+
+<!-- Modals for editing a Tutor Course -->
+
+<% @tutor.tutor_courses.each do |tutor_course| %>
+
+  <div id="myModal-<%= tutor_course.id %>" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+    <h2 id="modalTitle">Edit Course</h2>
+    <div class="row">
+      <div class="small-12 columns">
+        <table>
+          <thead>
+            <tr>
+              <th>Subject</th>
+              <th>Call Number</th>
+              <th>Course Name</th>
+              <th>My Rate</th>
+              <th>Full Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><%= tutor_course.course.subject.name %></td>
+              <td><%= tutor_course.course.call_number %></td>
+              <td><%= tutor_course.course.friendly_name %></td>
+              <td>$<%= tutor_course.rate %></td>
+              <td>$<%= tutor_course.full_price %></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="small-12 medium-3 columns">
+        <h4>Change Rate</h4>
+        <%= form_for tutor_course, url: update_course_during_onboarding_tutor_path(@tutor, tutor_course), method: :put do |f| %>
+          <%= f.label :rate, 'Hourly Rate' %>
+          <%= f.text_field :rate, size: 5 %>
+          <%= hidden_field_tag(:from_onboarding_courses_page, value: 'true') %>
+          <%= f.submit 'Update Rate', class: 'custom-button' %>
+        <% end %>
+      </div>
+      <div class="small-12 medium-3 columns">
+        <h4>Delete Course</h4>
+        <%= button_to('Delete Course', "/tutors/#{@tutor.id}/onboarding/courses/#{tutor_course.id}/destroy", method: :delete, class: 'custom-button danger') %>
+      </div>
+    </div>
+  </div>
+
+<% end %>

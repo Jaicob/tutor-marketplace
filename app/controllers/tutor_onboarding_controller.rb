@@ -1,6 +1,7 @@
 class TutorOnboardingController < ApplicationController
   before_action :set_user
   before_action :set_tutor
+  before_action :set_tutor_course, only: [:update_course, :delete_course]
 
   def application
   end
@@ -25,11 +26,17 @@ class TutorOnboardingController < ApplicationController
 
   def create_course
     @tutor_course = TutorCourse.create(tutor_course_params)
-    if @tutor_course.save
-      redirect_to onboarding_courses_tutor_path(@tutor.slug)
-    else
-      redirect_to :back
-    end
+    redirect_to onboarding_courses_tutor_path(@tutor.slug)
+  end
+
+  def update_course
+    @tutor_course.update(tutor_course_params)
+    redirect_to onboarding_courses_tutor_path(@tutor.slug)
+  end
+
+  def delete_course
+    @tutor_course.destroy
+    redirect_to onboarding_courses_tutor_path(@tutor.slug)
   end
 
   def submit_courses
@@ -89,6 +96,10 @@ class TutorOnboardingController < ApplicationController
 
     def tutor_course_params
       params.require(:tutor_course).permit(:tutor_id, :course_id, :rate)
+    end
+
+    def set_tutor_course
+      @tutor_course = TutorCourse.find(params[:tutor_course_id])
     end
 
 end
