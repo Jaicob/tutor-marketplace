@@ -18,31 +18,29 @@
 <% end %>
 
 <div class="landing-page lp-first-section">
-  <div class="background-helper">
-    <div class="row">
-      <div class="small-12 columns">
-        <h1 class="center white shadow top-padding headline">Meet your personal campus tutor</h1>
-        <h3 class="center white shadow bottom-margin headline">Choose your course</h3>
-      </div>
+  <div class="row">
+    <div class="small-12 columns">
+      <h1 class="center white shadow top-padding headline">Meet your personal campus tutor</h1>
+      <h3 class="center white shadow bottom-margin headline">Choose your course</h3>
     </div>
-    <div class="row">
-      <div class="small-12 medium-8 medium-centered columns">
-        <div class="row medium-collapse">
-          <div class="small-12 medium-5 columns">
-            <%= form_for :search, url: search_from_home_path, method: :post do |f| %>
-              <%= render '/course_selector/subject' %>
-          </div>
-          <div class="small-12 medium-5 columns">
-              <%= render '/course_selector/course' %>
-          </div>
-          <div class="small-12 medium-2 columns">
-              <%= f.submit 'Search', class: 'custom-button full-width manual-line-height', id: 'submit-search-home-page' %>
-            <% end %>
-          </div>
+  </div>
+  <div class="row">
+    <div class="small-12 medium-8 medium-centered columns">
+      <div class="row medium-collapse home-search">
+        <div class="small-12 medium-5 columns">
+          <%= form_for :search, url: search_from_home_path, method: :post do |f| %>
+            <%= render '/course_selector/subject' %>
+        </div>
+        <div class="small-12 medium-5 columns">
+            <%= render '/course_selector/course' %>
+        </div>
+        <div class="small-12 medium-2 columns">
+            <%= f.submit 'Search', class: 'custom-button full-width', id: 'submit-search-home-page' %>
+          <% end %>
         </div>
       </div>
     </div>
-    <p class="center white shadow book-two-mins">Book your in-person & on-campus tutor in just two minutes</p>
   </div>
+  <p class="center white shadow margin-bottom-8em">Book your in-person & on-campus tutor in just two minutes</p>
 </div>
 <%= render '/single_views/home_and_get_started_landing' %>

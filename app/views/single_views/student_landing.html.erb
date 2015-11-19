@@ -21,10 +21,10 @@
   </div>
   <div class="row">
     <div class="small-12 medium-6 medium-centered columns">
-        <%= form_for 'visitor', url: set_school_path do |f| %>
-      <div class="row medium-collapse">
+      <%= form_for 'visitor', url: set_school_path do |f| %>
+      <div class="row medium-collapse student-landing-search">
         <div class="small-12 medium-9 columns">
-            <%= f.collection_select(:school_id, School.all, :id, :name, {prompt: 'Select School'}, {id: 'student-landing-school-select', required: true}) %>
+            <%= f.collection_select(:school_id, School.all, :id, :name, {prompt: 'Select School'}, {required: true}) %>
         </div>
         <div class="small-12 medium-3 columns">
             <%= f.submit 'Go', class: 'custom-button full-width', id: 'student-landing-search-button' %>

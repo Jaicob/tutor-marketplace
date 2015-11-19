@@ -9,6 +9,18 @@ $green: #58AA4D;
 .tutor-form {
   margin-top: -2em;
   margin-bottom: 1em;
+  input#user_first_name, input#user_last_name, input#user_email, input#user_password, input#user_tutor_phone_number, input#rate, select#school, select#subject, select#course, input#user_email, input#user_input {
+    height: 2em;
+    margin-bottom: 0.3em;
+    border-radius: 3px;
+    font-size: 1em;
+    font-family: 'Lato';
+    color: #4F5252;
+    font-weight: 100;
+  }
+  select#school, select#subject, select#course {
+    padding: 0 0.5em;
+  }
 }
 .tutor-headline {
   h1 {
@@ -18,18 +30,7 @@ $green: #58AA4D;
     margin-top: 0.5em;
   }
 }
-.landing-page.lp-bottom-sign-up-form {
-  background-color: #4F5252;
-  padding: 3em;
-}
 
-/* iPhone 5 view */
-.center {
-  text-align: center;
-}
-.white {
-  color: white;
-}
 .blue-3 {
   color: #0095AC;
 }
@@ -45,26 +46,6 @@ $green: #58AA4D;
 .school-selection-box {
   margin: auto;
   max-width: 25em;
-}
-select#visitor_school_id {
-  display: inline-block;
-  width: 73%;
-  border-bottom-left-radius: 5px;
-  border-top-left-radius: 5px;
-}
-input.visitor-set-school-button {
-  display: inline-block;
-  width: 25%;
-  height: 2.9em;
-  font-size: 0.8em;
-  border: none;
-  margin-top: -1em;
-  background-color: #0095AC;
-  color: white;
-  font-weight: 100;
-  margin-left: -0.3em;
-  border-bottom-right-radius: 5px;
-  border-top-right-radius: 5px;
 }
 .school-selection {
   display: block;

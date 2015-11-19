@@ -1,62 +1,20 @@
-/* iPhone 5 view */
-.center {
-  text-align: center;
+div.student-landing-search {
+  select#visitor_school_id {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    font-size: 1em;
+    font-weight: 100;
+  }
+  #student-landing-search-button {
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    font-size: 1em;
+    height: 2.35em;
+    padding: 0;
+  }
 }
-.white {
-  color: white;
-}
-.blue-3 {
-  color: #0095AC;
-}
-.shadow {
-  text-shadow: 1px 1px 1px black;
-}
-.bottom-margin {
-  margin-bottom: 1em;
-}
-.headline {
-  font-family: 'Lato';
-}
-.school-selection-box {
-  margin: auto;
-  max-width: 25em;
-}
-select#visitor_school_id {
-  display: inline-block;
-  width: 73%;
-  border-radius: 0;
-  border-bottom-left-radius: 5px;
-  border-top-left-radius: 5px;
-}
-input.visitor-set-school-button {
-  display: inline-block;
-  width: 25%;
-  height: 2.9em;
-  font-size: 0.8em;
-  border: none;
-  margin-top: -1em;
-  background-color: #0095AC;
-  color: white;
-  font-weight: 100;
-  margin-left: -0.3em;
-  border-bottom-right-radius: 5px;
-  border-top-right-radius: 5px;
-  // .landing-page.lp-first-section.school-selection-box form select#visitor_school_id
-}
-.school-selection {
-  display: block;
-  width: 100%;
-  text-align: center;
-  background-color: #0095AC;
-  border: 2px solid white;
-  border-radius: 4px;
-  color: white;
-  font-size: 0.8em;
-  padding: 1em;
-}
-.book-two-mins {
-  margin-bottom: 4em;
-}
+
+
 
 .row.number-banner {
   background-color: rgba(0,0,0,0.8);
@@ -115,22 +73,6 @@ p.pic-caption {
   color: #2BC2DE;
   margin-bottom: 0;
 }
-.pic-box-trio {
-  max-width: 50em;
-  margin: auto;
-}
-.trio-pic {
-  width: 100%;
-  border: 1px solid #2BC2DE;
-  margin: auto;
-}
-.divider-line {
-  display: block;
-  height: 1px;
-  border-bottom: 1px solid #0095AC;
-  width: 60%;
-  margin: auto;
-}
 p.difference-text {
   padding-bottom: 2em;
 }
@@ -148,35 +90,4 @@ p.testimonial-name {
   font-size: 0.8em;
   font-weight: 400;
   margin-bottom: 2em;
-}
-a.faqs-link:hover {
-  padding: 1em 5em;
-  background-color: #0095AC;
-  color: white;
-  border-radius: 4px;
-}
-.campus-pic-box {
-  width: 100%;
-  margin: 1em auto;
-  max-width: 15em;
-  overflow: hidden;
-}
-p.campus-pic-title {
-  font-size: 5em;
-  font-weight: 900;
-  margin: 0;
-  color: rgba(255,255,255,0.5);
-}
-p.campus-pic-title:hover {
-  color: rgba(255,255,255,1);
-}
-.lp-campus-pics-section {
-  background-color: #4F5252;
-  color: white;
-  padding-top: 0;
-}
-p.select-campus-pic {
-  margin: auto;
-  padding: 2em;
-  color: white;
 }

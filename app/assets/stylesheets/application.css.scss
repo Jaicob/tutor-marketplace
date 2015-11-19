@@ -300,49 +300,34 @@
   /* Full view */
 
   @media screen and (min-width: 1200px) {
-  .footer-bg {
-    padding: 0;
+    .footer-bg {
+      padding: 0;
+    }
+    .footer-logo {
+      width: 5em;
+      margin: 1em;
+      padding: 2em 0;
+    }
+    .footer-left {
+      width: 65%;
+    }
+    .footer-right {
+      width: 30%;
+      vertical-align: middle;
+    }
+    .footer-left .footer-link {
+      display: inline-block;
+      font-size: 0.7em;
+    }
+    .footer-right .footer-link {
+      display: inline-block;
+      font-size: 0.7em;
+    }
+    .social-icons-box {
+      display: inline-block;
+    }
+    .footer-link-social-icon {
+      margin: 0;
+      width: 1em;
+    }
   }
-  .footer-logo {
-    width: 5em;
-    margin: 1em;
-    padding: 2em 0;
-  }
-  .footer-left {
-    width: 65%;
-  }
-  .footer-right {
-    width: 30%;
-    vertical-align: middle;
-  }
-  .footer-left .footer-link {
-    display: inline-block;
-    font-size: 0.7em;
-  }
-  .footer-right .footer-link {
-    display: inline-block;
-    font-size: 0.7em;
-  }
-  .social-icons-box {
-    display: inline-block;
-  }
-  .footer-link-social-icon {
-    margin: 0;
-    width: 1em;
-  }
-  }
-
-
-  // QUICK FIXES FOR SELECT ON MAIN PAGES
-
-  select#subject, select#course, #submit-search-home-page {
-    border-radius: 0 !important;
-  }
-  input#student-landing-search-button {
-    height: 2.9em;
-    border-radius: 0 !important;
-  }
-  select#student-landing-school-select {
-    border-radius: 0 !important;
-  }
-

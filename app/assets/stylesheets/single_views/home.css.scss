@@ -1,155 +1,19 @@
-.nav-bar-wrapper.clear-nav {
-  background: none;
-  border-bottom: 0;
-  box-shadow: none;
-}
-
-.landing-page-first-section {
-  padding-top: 3em;
-}
-
-.uga-box {
-  background: image-url("trekkie.jpg") no-repeat center center fixed; 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  z-index: -1;
-}
-
-.gsu-box {
-  background: image-url("unicorn.jpg") no-repeat center center fixed; 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  z-index: -1;
-}
-
-.ksu-box {
-  background: image-url("trekkie.jpg") no-repeat center center fixed; 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  z-index: -1;
-}
-
-.app-box {
-  background: image-url("tutor-pointing.jpg") no-repeat center center fixed; 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  z-index: -1;
-}
-
-/* iPhone 5 view */
-.home-search-box {
-  display: block;
-  width: 90%;
-  margin: auto;
-  overflow: hidden;
-}
-.home-search-field {
-  display: block;
-}
-.home-search-field {
-  select#subject, select#course {
-    height: 2.3em;
-    padding: 0 0.5em;
-    margin-bottom: 0.3em;
-    border-radius: 4px;
+div.home-search {
+  select#subject {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  select#course {
+    border-radius: 0;
+  }
+  #submit-search-home-page {
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    height: 2.36em;
+    padding: 0;
+  }
+  select#subject, select#course, #submit-search-home-page {
+    font-size: 1em;
     font-weight: 100;
-  }
-}
-input.home-search-button {
-  display: inline-block;
-  height: 2.6em;
-  font-size: 0.8em;
-  border: none;
-  background-color: #0095AC;
-  color: white;
-  font-weight: 100;
-  border-radius: 4px;
-  width: 100%;
-}
-.lp-top-subjects-section {
-  width: 100%;
-  background-color: #0095AC;
-  padding: 0.5em;
-}
-.top-subject {
-  padding: 0.3em;
-  text-align: center;
-  border-radius: 4px;
-  font-weight: 100;
-  background-color: #2BC2DE;
-  color: white;
-}
-p.center.white.shadow.book-two-mins {
-  margin-bottom: 5em;
-}
-
-
-/* iPad view */
-
-@media screen and (min-width: 768px) {
-  .home-search-box {
-    display: block;
-    width: 80%;
-    margin: auto;
-  }
-  .home-search-field {
-    display: inline-block;
-    width: 40%;
-  }
-
-  .home-search-field {
-    select#subject, select#course {
-      height: 2.3em;
-      padding: 0 0.5em;
-      margin-bottom: 0.3em;
-      border-radius: 4px;
-      font-weight: 100;
-    }
-    select#subject {
-      border-top-left-radius: 5px;
-      border-bottom-left-radius: 5px;
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
-      position: relative;
-      left: 4px;
-    }
-    select#course {
-      border-radius: 0;
-    }
-  }
-  input.home-search-button {
-    display: inline-block;
-    width: 18%;
-    height: 2.6em;
-    font-size: 0.8em;
-    border: none;
-    margin-top: -1em;
-    background-color: #0095AC;
-    color: white;
-    font-weight: 100;
-    margin-left: -0.3em;
-    border-bottom-right-radius: 5px;
-    border-top-right-radius: 5px;
-    border-bottom-left-radius: 0;
-    border-top-left-radius: 0;
-    position: relative;
-    top: -1px;
-  }
-}
-
-
-/* Full view */
-
-@media (min-width: 1000px) {
-  .home-search-box {
-    width: 40%;
   }
 }

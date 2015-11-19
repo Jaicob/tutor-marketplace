@@ -1,68 +1,102 @@
+/*
+
+  SECTIONS
+
+  1. Text Styles
+  2. Borders & Border Radiuses
+  3. Positioning
+  4. Links
+  5. Display Properties
+
+*/
+
+
+
+//  1. Text Styles
 center {
   text-align: center;
 }
-
 .white {
   color: #FAFAFA;
 }
+.bold {
+  font-weight: 700;
+}
 
+
+
+//  2.  Borders & Border Radiuses
 .border-radius {
-  border-radius: 4px !important;
+  border-radius: 3px !important;
 }
-.display-none { // only used for a hacky space filler on Promotions page to hold the submit btn down in line with the other inputs - can removed once that's fixed in a better way
-  color: #eff1f3;
+.border-radus-left {
+  border-top-left-radius: 3px !important;
+  border-bottom-left-radius: 3px !important;
+}
+.border-radius-right {
+  border-top-right-radius: 3px !important;
+  border-bottom-right-radius: 3px !important;
+}
+.no-border-radius {
+  border-radius: 0 !important;
+}
+.no-top-border-radius {
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
 }
 
+
+
+//  3. Positioning
 .height-3em {
   height: 3em;
+}
+.height-24em {
+  height: 24em;
 }
 
 .margin-top-2em {
   margin-top: 2em;
 }
-
 .margin-1em {
   margin: 1em;
 }
-
 .padding-2em {
   padding: 2em;
 }
-
-.height-24em {
-  height: 24em;
-}
-
 .no-top-margin {
   margin-top: 0;
 }
-
-.no-top-border-radius {
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
+.margin-bottom-8em {
+  margin-bottom: 8em !important;
 }
 
 .top-buffer {
   margin-top: 20px !important;
 }
-
 .bottom-buffer {
   margin-bottom: 20px !important;
 }
 
-.bold {
-  font-weight: 700;
-}
 
+
+//  4. Links
 .blue-link {
   color: #0095AC !important;
 }
 .blue-link:hover {
   color: #2BC2DE !important;
 }
+
+
+
+//  5. Display Properties
 .no-show {
   display: none;
 }
 .show {
   display: inline-block;
+}
+.display-none { // only used for a hacky space filler on Promotions page to hold the submit btn down in line with the other inputs - can removed once that's fixed in a better way
+  color: #eff1f3;
 }

@@ -3,7 +3,7 @@
   <!-- Sets the school for the course_selector with a hidden field so that the school dropdown can be ommited in some views (i.e. when @school is already set) -->
   <div style="display: none;">
     <select name="course[school_id]" id="school" required="true">
-      <option selected="true" value="<%= @school.id %>">School</option>
+      <option selected="true" value="<%= @school.id %>"><%= @school %></option>
     </select>
   </div>
 
@@ -14,6 +14,7 @@
         <% if subject[:id] == @subject.id %>
           <option selected="true" value="<%= subject[:id] %>"><%= subject[:name] %></option>
         <% else %>
+          <option disabled="true" selected="true" value="">Select Subject</option>
           <option value="<%= subject[:id] %>"><%= subject[:name] %></option>
         <% end %>
       <% end %>
@@ -21,7 +22,7 @@
   <% else %>
   <!-- When subject select is shown without school select (b/c @school is set) and no previous search has been made from another page -->
     <select name="course[subject_id]" id="subject" required="true">
-      <option disabled="true" selected="true" value="">Subject</option>
+      <option disabled="true" selected="true" value="">Select Subject</option>
       <% @school.subjects.each do |subject| %>
         <option value="<%= subject[:id] %>"><%= subject[:name] %></option>
       <% end %>
