@@ -1,5 +1,17 @@
 <%= javascript_include_tag "dashboard/courses" %>
-
+<script>
+$(document).ready(function()
+  {
+    $('#user_input').change(function () {  
+      var input = document.getElementById('user_input').value;
+      if (input.length < 8){
+        $('#input-error').removeClass("no-show").addClass("show");
+      } else {
+        $('#input-error').removeClass("show").addClass("no-show");
+      }
+    });
+});
+</script>
 <div class="sign-up-form-box">
   <h3 class="sign-up-title">Sign Up with Axon</h3>
   <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :role => 'form'}) do |f| %>
@@ -12,8 +24,8 @@
       </div>
     </div>
     <%= f.email_field :email, placeholder: 'Email', required: true %>
-    <%= f.password_field :password, placeholder: 'Password', required: true, id: 'input' %>
-    <p id="input-error"></p>
+    <%= f.password_field :password, placeholder: 'Password', required: true, id: 'user_input' %>
+    <p id="input-error" class="no-show">Password must be at least 8 characters</p>
     <%= f.fields_for :tutor do |tt| %>
       <%= tt.text_field :phone_number, placeholder: 'Phone Number', required: true %>
     <% end %>
