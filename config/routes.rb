@@ -346,6 +346,7 @@ Rails.application.routes.draw do
       get '/check_promo_code/:tutor_id/:promo_code' => 'promotions#check_promo_code'
       # creates an appointment without a student_id for a visitor (before student_id is created and attached to appt in the next step of checkout)
       post  '/visitor/create_appointment' => '/api/v1/student_appointments#visitor_create'
+      post  '/payments/process_payment' => 'payments#process_payment'
     end
   end
 
