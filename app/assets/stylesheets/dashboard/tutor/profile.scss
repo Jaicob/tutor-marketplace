@@ -388,6 +388,15 @@
     }
   }
 
+  .payment{
+    padding: 20px;
+
+    .card {
+      min-height: 360px;
+      padding: 20px;
+    }
+  }
+
   .receipt {
     .header {
       padding-bottom: 20px;

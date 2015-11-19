@@ -33,10 +33,20 @@ var NewCard = React.createClass({
   },
 
   stripeResponseHandler: function(status, response) {
-    var token = response.id;
-    console.log(token);
-    this.props.onTokenChange(token);
-    this.setState({cardNumber: "", exp: "", cvc: "", success: true})
+    if (!response.error) {
+      var token = response.id;
+      console.log(token);
+      this.props.onTokenChange(token);
+      this.setState({cardNumber: "", exp: "", cvc: "", success: true})
+    } else {
+      swal({
+        title: "Invalid Payment Credentials",
+        text: "Please double check and try again.",
+        type: "error",
+        timer: 1500,
+        showConfirmButton: false
+      });
+    }
   },
 
   render: function() {
@@ -51,7 +61,7 @@ var NewCard = React.createClass({
             <input id="exp" type="text" value={this.state.exp} onChange={this.handleExpDate}/>
             <label htmlFor="cvc">CVC</label>
             <input id="cvc" type="text" value={this.state.cvc} onChange={this.handleCVC}/>
-            <a  onClick={this.handleStripe} className="btn">Use Card</a>
+            <a onClick={this.handleStripe} className="btn">Use Card</a>
           </div>
         </div>
       );

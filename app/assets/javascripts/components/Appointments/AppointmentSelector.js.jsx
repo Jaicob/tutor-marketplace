@@ -51,6 +51,7 @@ var AppointmentSelector = React.createClass({
     this.setState({
       UINavigationBarDelegate: del
     });
+    this.forceUpdate();
   },
   handleSubject: function (newSubject) {
     this.setState({
@@ -155,11 +156,15 @@ var AppointmentSelector = React.createClass({
       };
     }.bind(this));
   },
-  handleCard: function(customer, token) {
+  handleCard: function(customer, token, callback) {
     if (customer == null) {
       this.setState({token: token})
     } else {
       this.setState({customer: customer})
+    };
+
+    if (callback) {
+      callback();
     };
   },
   handleTotal: function (newTotal) {
@@ -234,6 +239,8 @@ var AppointmentSelector = React.createClass({
                         {...this.delegation}
                         currentStudent={this.state.student}
                         total={this.state.totalCharge}
+                        token={this.state.token}
+                        customer={this.state.customer}
                         onChange={this.handleCard}
                       />
       case 6: return <Receipt

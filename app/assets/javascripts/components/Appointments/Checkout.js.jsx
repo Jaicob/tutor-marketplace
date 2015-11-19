@@ -2,6 +2,14 @@ var Checkout = React.createClass({
   componentWillMount: function () {
     this.setDelegates();
   },
+  componentDidMount: function () {
+    $('#promoInput').keypress(function (e) {
+      if (e.which == 13) {
+        this.applyPromoCode();
+        return false;
+      }
+    }.bind(this));
+  },
   getInitialState: function () {
     return {
       "promo": this.props.promo || null
@@ -25,21 +33,48 @@ var Checkout = React.createClass({
     this.props.updateDelegate(navBar);
   },
   applyPromoCode: function () {
-    var endpoint = API.endpoints.promo({
-      promo_code: $("#promoInput").val(),
-      tutor_id: this.props.tutor
-    });
+    var promoValue = $("#promoInput").val();
+    $(".apply.custom-button").val("Validating...");
 
-    $.getJSON(endpoint, function(promo){
-      if (promo.is_valid) {
-        this.setState({
-          promo: promo
-        });
-      } else {
-        console.log("Promo not valid", promo.description);
-        $("#promoInput").val("Promo not valid.");
-      }
-    }.bind(this));
+    if (promoValue.match(/^[a-z0-9]+$/i) == null) {
+      swal({
+        title: "Invalid Promo Code",
+        text: "Please double check and try again.",
+        type: "error",
+        timer: 1500,
+        showConfirmButton: false
+      });
+      $(".apply.custom-button").val("Apply");
+    } else {
+      var endpoint = API.endpoints.promo({
+        promo_code: promoValue,
+        tutor_id: this.props.tutor
+      });
+
+      $.getJSON(endpoint, function(promo){
+        if (promo.is_valid) {
+          this.setState({
+            promo: promo
+          });
+          swal({
+            title: "Promo Code Applied",
+            type: "success",
+            timer: 1500,
+            showConfirmButton: false
+          });
+        } else {
+          swal({
+            title: "Invalid Promo Code",
+            text: "Please double check and try again.",
+            type: "error",
+            timer: 1500,
+            showConfirmButton: false
+          });
+          $(".apply.custom-button").val("Apply");
+        }
+      }.bind(this));
+    }
+
   },
   removePromoCode: function () {
     this.setState({
