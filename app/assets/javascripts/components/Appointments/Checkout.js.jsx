@@ -3,12 +3,6 @@ var Checkout = React.createClass({
     this.setDelegates();
   },
   componentDidMount: function () {
-    $('#promoInput').keypress(function (e) {
-      if (e.which == 13) {
-        this.applyPromoCode();
-        return false;
-      }
-    }.bind(this));
   },
   getInitialState: function () {
     return {
@@ -147,7 +141,14 @@ var Checkout = React.createClass({
           <div className="promo-code medium-6 columns">
             <div className="wrapper">
               <h4>Promo Codes</h4>
-                {promo == null && <input type="text" id="promoInput"></input>}
+                {promo == null && <input type="text" id="promoInput" onKeyPress={
+                  function(e){
+                    if (e.which == 13) {
+                      this.applyPromoCode();
+                      return false;
+                    }
+                  }.bind(this)
+                }></input>}
                 {promo == null && <input type="button" className="apply custom-button"  value="Apply"  onClick={this.applyPromoCode}></input>}
                 {promo != null && <input type="button" className="remove custom-button" value="Remove" onClick={this.removePromoCode}></input>}
               </div>
