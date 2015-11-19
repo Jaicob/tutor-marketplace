@@ -1,4 +1,14 @@
 var Receipt = React.createClass({
+  setDelegates: function () {
+    var navBar = this.props.UINavigationBarDelegate;
+    navBar.canShowBackButton = false;
+    navBar.canShowForwardButton = false;
+    this.props.updateDelegate(navBar);
+  },
+
+  componentWillMount: function () {
+    this.setDelegates();
+  },
 
   render: function() {
     return (

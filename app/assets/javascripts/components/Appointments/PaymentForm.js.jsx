@@ -6,8 +6,36 @@ var PaymentForm = React.createClass({
     navBar.backButtonText = "Review checkout";
     navBar.forwardButtonText = "Process payment";
     navBar.forwardButtonClick = function (update) {
-      update();
-    };
+      var endpoint = API.endpoints.process_payment();
+
+      customer_id = this.props.customer;
+      if (customer_id == "") {customer_id = null};
+
+      token = this.props.token;
+      if (token == "") {token = null};
+
+      promo = this.props.promo;
+      if (promo != null && promo.id) {promo = promo.id};
+
+      var data = {
+        tutor_id: this.props.tutor,
+        appt_ids: this.props.appointments.map((appt) => appt.id),
+        customer_id: customer_id,
+        token: token,
+        student_id: this.props.student,
+        transaction_percentage: this.props.margin,
+        promotion_id: promo
+      }
+
+      var request = $.post(endpoint, data, update);
+      request.error(function () {
+        swal({
+          title: "Connectivity Error",
+          text: "Please check your Internet connection and try again. If this problem persists, please contact info@axontutors.com",
+          type: "error"
+        });
+      });
+    }.bind(this);
     navBar.canShowForwardButton = (this.props.token != "" || this.props.customer != "");
 
     this.props.updateDelegate(navBar);

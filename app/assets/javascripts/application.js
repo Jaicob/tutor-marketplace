@@ -22,7 +22,6 @@
 //= require sweetalert
 //= require moment
 //= require moment-range
-//= require moment-timezone
 
 //= require ./base.js
 //= require ./dashboard/courses.js

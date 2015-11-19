@@ -239,6 +239,8 @@ var AppointmentSelector = React.createClass({
                         {...this.delegation}
                         currentStudent={this.state.student}
                         total={this.state.totalCharge}
+                        appointments={this.state.appointments}
+                        promo={this.state.promo}
                         token={this.state.token}
                         customer={this.state.customer}
                         onChange={this.handleCard}

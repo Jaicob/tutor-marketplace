@@ -43,7 +43,8 @@ var API = {
         promo: (data) => API_LOCATION + "/check_promo_code/" + data["tutor_id"] + "/" + data["promo_code"],
         students: function(data) {
             return API_LOCATION + "/payments/student/" + data["student_id"]
-        }
+        },
+        process_payment: (data) => API_LOCATION + "/payments/process_payment"
     }
 };
 
