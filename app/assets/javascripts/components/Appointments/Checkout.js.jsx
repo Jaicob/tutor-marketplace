@@ -47,9 +47,8 @@ var Checkout = React.createClass({
 
       $.getJSON(endpoint, function(promo){
         if (promo.is_valid) {
-          this.setState({
-            promo: promo
-          });
+          this.setState({ "promo": promo });
+          this.props.handlePromo(promo);
           swal({
             title: "Promo Code Applied",
             type: "success",
@@ -71,15 +70,12 @@ var Checkout = React.createClass({
 
   },
   removePromoCode: function () {
-    this.setState({
-      "promo": null
-    });
+    this.setState({ "promo": null });
+    this.props.handlePromo(null);
   },
   getTotal: function () {
     props = this.props;
-    console.log("props", props);
     total = props.selectedSubject.rate * (1 + props.margin/100) * props.selectedSlots.length;
-    console.log("total", total);
     var promo = this.state.promo;
     if (promo != null) {
       if (promo.type.indexOf("percent") > -1) {
