@@ -2,12 +2,10 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+// STYLING FOR PROGRESS BAR
 
-.progress-bar-container {
-  height: 7em;
-  overflow: hidden;
-  border-radius: 4px;
-  border: 1px solid #a8a8a8;
+.row.medium-collapse.progress-bar-container {
+    margin: 1em auto !important;
 
   .progress-step, .progress-next-button {
     text-align: center;
@@ -20,7 +18,7 @@
       margin: 0;
     }
     p.number {
-      margin: 1em 0 0;
+      margin: 1em 0 0.3em;
       display: inline-block;
       padding: 0.5em;
       border-radius: 100%;
@@ -31,16 +29,24 @@
       color: #4F5252;
       font-weight: 700;
     }
+    i.fi-check {
+      color: #58AA4D;
+    }
     &.completed-step {
-      background-color: #CFCECE;
-      p {
-        color: #808384;
+      p.number {
+        border: 1px solid #58AA4D;
+        background: none;
       }
     }
     &.current-step {
       background-color: #0095AC;
+      border-radius: 4px;
       p {
         color: #FAFAFA;
+      }
+      p.number {
+        background: #BBE5EE;
+        color: #4F5252;
       }
     }
   }
@@ -55,3 +61,210 @@
     }
   }
 }
+
+// STYLING FOR INSTRUCTIONS SCREENS
+.big-text {
+  font-size: 1.2em;
+  span {
+    font-weight: 400;
+    font-family: 'Lato'
+  }
+}
+
+
+// STYLING FOR PAGE TITLES
+.onboarding-page-title {
+  margin: 1em auto;
+}
+
+// STYLING FOR BOTTOM ROW WITH CLICK NEXT INSTRUCTIONS & BUTTON
+.next-step-instructions p {
+  margin: 0;
+  text-align: center;
+}
+i.fi-arrow-right {
+  float: right;
+  margin-right: 1em;
+}
+
+/* STYLING FOR TUTOR APPLICATION */
+    
+.application {
+  h4 {
+    margin-top: 3em;
+    &.first-subheader {
+      margin-top: 0;
+    }
+  }
+  .prompt {
+    font-weight: 400;
+  }
+  #tutor_degree {
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+  }
+  #tutor_major {
+    border-radius: 0 !important;
+  }
+  #tutor_graduation_year {
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+  }
+  .fine-print {
+    font-size: 0.8em;
+    text-align: left;
+  }
+  .file-input-box {
+    height: 3em;
+    position: relative;
+    overflow: hidden;
+    margin: 1em 0; 
+    border-radius: 4px;  
+  }
+  input.file-input {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    opacity: 0;
+  }
+  div.file-input-button {
+    height: 100%;
+    width: 100%;
+    float: right;
+    background-color: #2BC2DE;
+    color: #FAFAFA;
+    font-weight: 100;
+    text-align: center;
+    line-height: 2em;
+    font-size: 0.8em;
+    p {
+      line-height: 3em;
+      color: white;
+      font-weight: 400;
+    }
+  }
+  .file-name, .invalid-file-type {
+    font-weight: 400;
+    font-size: 1em;
+  }
+  .file-name {
+    text-align: right;
+  }
+  .invalid-file-type {
+    color: #DE6328;
+    text-align: left;
+  }
+  .margin-bottom {
+    margin-bottom: 4em;
+  }
+  .thats-it {
+    text-align: center;
+    margin: 2em auto;
+  }
+}
+
+
+// STYLING FOR MODEL TUTOR CARD
+.model-tutor-card-container {
+  .card {
+      &.model-card {
+        margin: 2em auto 7em;
+      }
+      max-width: 14em;
+      margin: 1em 0.5em;
+      background-color: #F3F3F3;
+      box-shadow: 1px 1px 3px #a8a8a8;
+      border-radius: 4px;
+      overflow: hidden;
+      .card-content {
+          height: 30em;
+          .profile-pic-box {
+              display: block;
+              .profile-pic {
+                  height: 100%;
+                  width: 100%;
+              }
+          }
+          .banner-box {
+              display: block;
+              width: 100%;
+              background-color: #2BC2DE;
+              color: white;
+              padding: 0.3em 0;
+              margin: 0;
+              .banner-row {
+                  p {
+                      display: inline-block;
+                      color: white;
+                      margin: 0;
+                      span {
+                          color: white;
+                      }
+                  }
+                  p.name {
+                      font-size: 1.3em;
+                      padding-left: 0.2em;
+                  }
+                  p.price {
+                      background-color: #0095AC;
+                      padding: 0.4em;
+                      border-radius: 100%;
+                      float: right;
+                      position: relative;
+                      right: 0.3em;
+                      span {
+                          color: white;
+                      }
+                  }
+                  p.degree {
+                      font-size: 0.8em;
+                  }
+                  i.fi-book-bookmark {
+                      padding: 0 0.5em;
+                      color: white;
+                  }
+              }
+          }
+          .additional_degrees {
+              background-color: #D4D3D3;
+              text-align: center;
+              p {
+                  font-size: 0.7em;
+                  padding: 0.5em 0;
+                  margin-bottom: 0;
+                  i.fi-plus {
+                      font-weight: 100;
+                      position: relative;
+                      right: 1em;
+                  }
+              }
+          }
+          .statements-box {
+              p {
+                  font-size: 0.8em;
+                  margin: 0 auto;
+                  width: 95%;
+                  padding-top: 0.5em;
+                  a.see-more {
+                      font-size: 0.8em;
+                      margin-left: 0.5em;
+                  }
+              }
+          }
+      }
+      .custom-button.full-width {
+          width: 87%;
+          margin-top: 0.5em;
+      }
+  }
+}
+
+.row.bank-info {
+  margin-bottom: 3em !important;
+  .check-image-container {
+    text-align: center;
+  }
+}
+    

@@ -1,7 +1,7 @@
 <style>
 /* Do NOT remove this CSS! It must be in the view to dynamically select the correct campus picture to use as the background image */
 .lp-first-section {
-  background: url("<%= 'assets/unicorn.jpg' %>") no-repeat center center fixed; 
+  background: url('https://s3-us-west-2.amazonaws.com/rails-axon-uploads/miscellaneous/default-campus.jpg') no-repeat center center fixed; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -14,6 +14,7 @@
   <%= render 'layouts/partials/special_navs/tutor_landing_nav' %>
 <% end %>
 <a name="sign-up-form"></a>
+
 <div class="landing-page lp-first-section">
   <div class="row">
     <div class="small-12 medium-6 columns">
@@ -28,94 +29,121 @@
     </div>
   </div>
 </div>
+
+<div class="landing-page lp-banner">
+  <div class="row">
+    <div class="small-12 columns">
+      <h4 class="banner">We make tutoring on college campuses easier than ever</h4>
+    </div>
+  </div>
+</div>
+
 <div class="landing-page lp-3-steps-section">
-  <div class="section-header">
-    <p>Join Axon and get booked by college students for appointments on campus</p>
+  <div class="row">
+    <div class="small-12 columns">
+      <h4 class="section-header">How Axon works</h4>
+    </div>
   </div>
-  <div class="pic-box-trio">
-    <div class="pic-box">
-      <%= image_tag('panda.png', class: 'trio-pic') %>
-      <p class="pic-caption">1. Register and create a profile</p>
-      <p class="pic-details">Find the class you are struggling with on your specific campus</p>
+  <div class="row">
+    <div class="small-12 medium-4 columns">
+      <p class="number">1</p>
+      <h5>Tell us which classes you want to tutor</h5>
+      <p>Select specific classes on your campus that you want to tutor. Choose just one or many more depending on your experience.<p>
     </div>
-    <div class="pic-box">
-      <%= image_tag('panda.png', class: 'trio-pic') %>
-      <p class="pic-caption">2. Select classes you want to tutor</p>
-      <p class="pic-details">Browse through vetted tutors and then select a time that works for you</p>
+    <div class="small-12 medium-4 columns">
+      <p class="number">2</p>
+      <h5>Choose your own rates and set your own schedule</h5>
+      <p>Decide what you want to get paid for a one-hour session. Select the hours that you want to work on your online calendar.<p>
     </div>
-    <div class="pic-box">
-      <%= image_tag('panda.png', class: 'trio-pic') %>
-      <p class="pic-caption">3. Set your availabilty and get booked</p>
-      <p class="pic-details">Meet with your personal tutor on campus at an arranged location</p>
+    <div class="small-12 medium-4 columns">
+      <p class="number">3</p>
+      <h5>Get booked quickly & easily online</h5>
+      <p>Once you are approved, students can view your profile, book you for an appointment and pay in under a minute.<p>
     </div>
   </div>
 </div>
-<div class="divider-line"><!-- THIS IS THE THIN BLUE LINE --></div>
+
 <div class="landing-page lp-differences-section">
-  <div class="section-header">
-    <p>What makes Axon different?</p>
+  <div class="row">
+    <div class="small-12 columns">
+      <h4 class="section-header">What makes Axon different?</h4>
+    </div>
   </div>
-  <div class="four-differences-boxes">
-    <div class="difference-box">
-      <i class="fi-marker difference-icon"></i>
-      <p class="section-sub-header">You set your own rate and keep 100% of your fee</p>
-      <p class="difference-text">We believe that learning is a social activity. So when you book through Axon, your tutor meets you in-person on your campus.</p>
+  <div class="row">
+    <div class="small-12 medium-6 columns difference-box">
+      <i class="fi-star"></i>
+      <h5>You decide what to charge and keep 100% of your rate</h5>
+      <p>Too many tutoring companies take unfair cuts when it comes to tutor pay. With Axon, we don't set prices - you do. That means you decide how much you want to charge and you get paid whatever rate you set.</p>
     </div>
-    <div class="difference-box">
-      <i class="fi-zoom-in difference-icon"></i>
-      <p class="section-sub-header">Be your own boss and set your own hours</p>
-      <p class="difference-text">In college, every class is different. Every professor's teaching style is different. With Axon, get a local tutor who understands your specific environment.</p>
+    <div class="small-12 medium-6 columns difference-box">
+      <i class="fi-crown"></i>
+      <h5>Be your own boss<br />Set your own hours</h5>
+      <p>With Axon's tools, you set your own hours and decide when and how often you want to tutor. Whether it's an hour a day, or a few hours each month, it's all up to you.</p>
     </div>
-    <div class="difference-box">
-      <i class="fi-checkbox difference-icon"></i>
-      <p class="section-sub-header">Every booking is confirmed</p>
-      <p class="difference-text">When you need a tutor, you need one fast. Within minutes of selecting your class and tutor, you will have a confirmed booking notification in your email.</p>
+  </div>
+  <div class="row">
+    <div class="small-12 medium-6 columns difference-box">
+      <i class="fi-checkbox"></i>
+      <h5>Every booking is confirmed</h5>
+      <p>Once a student books you, there is no need to message back and forth. Each booking is confirmed, simply show up and payments go straight into your bank account.</p>
     </div>
-    <div class="difference-box">
-      <i class="fi-price-tag difference-icon"></i>
-      <p class="section-sub-header">Pricing is simple</p>
-      <p class="difference-text">Pricing is simple with Axon. Tutors set their own rates (the average is $23/hr.) and we charge a standard convenience fee to students for using our service.</p>
+    <div class="small-12 medium-6 columns difference-box">
+      <i class="fi-credit-card"></i>
+      <h5>Get paid quickly</h5>
+      <p>As soon as you meet with a student, your payment begins processing and is deposited into your bank account within 48 hours. We also offer protections for tutors, so if a student doesn't show, you still get paid.</p>
     </div>
   </div>
 </div>
-<div class="divider-line"><!-- THIS IS THE THIN BLUE LINE --></div>
+
 <div class="landing-page lp-testimonial-section">
-  <div class="section-header">
-    <p>Thousands of students are getting better grades with Axon tutors</p>
-    <p class="section-sub-header">What students are saying</p>
-  </div>
-  <div class="two-testimonial-boxes">
-    <div class="testimonial-box">
-      <div class="testimonial-pic">
-        <%= image_tag('https://s3-us-west-2.amazonaws.com/rails-axon-uploads/landing_page_resources/tutor-testimonial-dibble.jpeg', class: 'testimonial-pic') %>
-      </div>
-      <div class="testimonial-text">
-        <p>"Axon gave me the pay that I deserved and the flexibility that my traditional university job didn't provide."</p>
-        <p class="testimonial-name">- Michael D., 1934-3009 A.D.</p>
-        <p>Joined: Aug 2014</p>
-        <p>Earned $3,452 in 4 months</p>
-      </div>
+  <div class="row">
+    <div class="small-12 columns">
+      <h4 class="section-header">Join hundreds of tutors working with Axon</h4>
     </div>
-    <div class="testimonial-box">
-      <div class="testimonial-pic">
-        <%= image_tag('https://s3-us-west-2.amazonaws.com/rails-axon-uploads/landing_page_resources/tutor-testimonial-mary.jpeg', class: 'testimonial-pic') %>
+  </div>
+  <div class="row">
+    <div class="small-12 medium-6 columns">
+      <div class="tutor-pic-container">
+        <%= image_tag('https://s3-us-west-2.amazonaws.com/rails-axon-uploads/tutor-student-pics/tutor-testimonial-dibble.jpeg', class: 'tutor-pic') %>
       </div>
-      <div class="testimonial-text">
-        <p>"I love the flexibility that Axon gives me to create my own schedule."</p>
-        <p class="testimonial-name">Mary L., 4 B.C. - 96 A.D.</p>
-        <p>Joined: Aug 2014</p>
-        <p>Earned $3,925 in 4 months</p>
+      <p class="money">Earned $3,452 in one semester</p>
+      <p>"Axon gave me the pay that I deserved and the flexibility that my traditional university job didn't provide." <span> - Michael D.</span></p>
+    </div>
+    <div class="small-12 medium-6 columns">
+      <div class="tutor-pic-container">
+        <%= image_tag('https://s3-us-west-2.amazonaws.com/rails-axon-uploads/tutor-student-pics/tutor-testimonial-mary.jpeg', class: 'tutor-pic') %>
       </div>
+      <p class="money">Earned $3,925 in one semester</p>
+      <p>"I love the flexibility that Axon gives me to create my own schedule." <span> - Mary L.</span></p>
     </div>
   </div>
 </div>
-<div class="divider-line"><!-- THIS IS THE THIN BLUE LINE --></div>
-<div class="landing-page lp-faqs-section">
-  <%= link_to anchor: 'sign-up-form' do %>
-    <button class="custom-button bottom-register-button">Register to Tutor</button>
-  <% end %>
-  <div class="section-header">
-    <p>Still have questions?</p>
-    <%= link_to 'Check out our FAQs', faqs_path, class: 'faqs-link' %>
+
+<div class="landing-page lp-newspaper-section">
+  <div class="row">
+    <div class="small-12 medium-6 columns">
+      <div class="row">
+        <div class="small-12 medium-6 columns">
+          <div class="news-logo-container">
+            <%= image_tag('https://s3-us-west-2.amazonaws.com/rails-axon-uploads/miscellaneous/odyssey.png', class: 'odyssey-logo') %>
+          </div>
+        </div>
+        <div class="small-12 medium-6 columns">
+          <p class="newspaper-quote">"Axon is changing the way tutors do business."</p>
+        </div>
+      </div>
+    </div>
+    <div class="small-12 medium-6 columns">
+      <div class="row">
+        <div class="small-12 medium-6 columns">
+          <div class="news-logo-container">
+            <%= image_tag('https://s3-us-west-2.amazonaws.com/rails-axon-uploads/miscellaneous/red-n-black.png', class: 'red-black-logo') %>
+          </div>
+        </div>
+        <div class="small-12 medium-6 columns">
+          <p class="newspaper-quote red-n-black-quote">"students getting better grades since Axon launched on campus."</p>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

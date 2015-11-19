@@ -1,1 +1,114 @@
-banking_step.html.erb
+<%= render '/tutor_onboarding/progress_bar' %>
+<div class="row box">
+  <div class="small-12 medium-12 columns">
+    <h1>Your Payment</h1>
+    <p class="big-text">Lastly, we need a way to pay you. We use <span>Stripe</span> to handle all of our credit card transactions and tutor payments.</p>
+    <p class="big-text">You will be paid <span>via direct deposit within 48 hours</span> after a session is completed. To set up direct deposit, fill in the information below.</p>
+    <p class="big-text">Note: Your bank account information will be stored on a secure PCI compliant server. It will only be used to create an account with our merchant service Stripe.</p>
+    <p class="big-text"><a href="https://stripe.com/" target="_blank" class="blue-link">Click here to learn more about Stripe.</a></p>
+  </div>
+</div>
+<div class="row">
+  <div class="small-12 columns">
+    <h2 class="onboarding-page-title">Step 4: Set Up Direct Deposit</h2>
+  </div>
+</div>
+<div class="row">
+  <div class="medium-4 columns">
+    <%= form_for(@tutor, url: submit_payment_details_tutor_path(@tutor), remote: true, html: {class: 'payment-form'}) do |f| %>
+      <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+      <h5>Address</h5>
+      <%= f.label :line_1, 'Line 1' %>
+      <%= f.text_field :line1, required: true %>
+
+      <%= f.label :line_2, 'Line 2' %>
+      <%= f.text_field :line2 %>
+      
+      <%= f.label :city, 'City' %>
+      <%= f.text_field :city, required: true %>
+      
+      <%= f.label :state, 'State' %>
+      <%= f.select :state, options_for_select(us_states), default: @tutor.state, required: true %>
+      
+      <%= f.label 'Zip Code' %>
+      <%= f.text_field :postal_code, required: true %>
+
+      <h5>Bank Information</h5>
+      <h5 class="bank-errors"></h5>
+  </div>
+</div>
+<div class="row bank-info">
+  <div class="medium-4 columns">
+      <p>Note: Your bank account information will be stored on a secure PCI compliant server. It will only be used to create an account with our merchant service Stripe.</p>
+      <p><a href="https://stripe.com/" target="_blank" class="blue-link">Click here to learn more about Stripe.</a></p>
+      <%= label_tag :account_number %>
+      <%= text_field_tag :account_number %>
+      <%= label_tag :routing_number, "Routing number (note: Use ACH routing number)" %>
+      <%= text_field_tag :routing_number %>
+      <%= hidden_field_tag :last_4_acct %>
+
+      <%= f.label :ssn_last_4, 'Last 4 of SSN' %>
+      <%= f.text_field :ssn_last_4, required: true %>
+  </div>
+  <div class="medium-8 columns">
+    <div class="check-image-container">
+      <%= image_tag('https://s3-us-west-2.amazonaws.com/rails-axon-uploads/miscellaneous/check-image-best.png', class: 'check-image') %>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="small-12 medium-8 columns box next-step-instructions">
+    <p>Finished setting up your Stripe account? Click here to complete Account Setup!<i class="fi-arrow-right"></i></p>
+  </div>
+  <div class="small-12 medium-4 columns">
+      <%= f.submit 'Finish', class: 'custom-button margin-bottom large full-width bold' %>
+    <% end %>   
+  </div>
+</div>
+
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+<script type="text/javascript">
+  jQuery(function($) {
+    $('.payment-form').submit(function(event) {
+      var $form = $(this);
+
+      // Disable the submit button to prevent repeated clicks
+      $form.find('button').prop('disabled', true);
+      Stripe.setPublishableKey("<%= ENV['stripe_public_key'] %>");
+      Stripe.bankAccount.createToken({
+        country: 'US',
+        currency: 'usd',
+        routing_number: $('#routing_number').val(),
+        account_number: $('#account_number').val()
+      }, stripeResponseHandler);
+
+      // Clear the bank account info so it's not sent through params
+      $('#routing_number').val("");
+      var acct_val = $('#account_number').val();
+      var new_val = acct_val.substring(acct_val.length - 4);
+      $('#last_4_acct').val(new_val);
+      $('#account_number').val("");
+
+      // Prevent the form from submitting with the default action
+      return false;
+    });
+  });
+
+
+  function stripeResponseHandler(status, response) {
+    var $form = $('.payment-form');
+
+    if (response.error) {
+      // Show the errors on the form
+      $form.find('.bank-errors').text(response.error.message);
+      $form.find('button').prop('disabled', false);
+    } else {
+      // response contains id and bank_account, which contains additional bank account details
+      var token = response.id;
+      // Insert the token into the form so it gets submitted to the server
+      $form.append($('<input type="hidden" name="stripeToken" />').val(token));
+      // and submit
+      $form.get(0).submit();
+    }
+  }
+</script>

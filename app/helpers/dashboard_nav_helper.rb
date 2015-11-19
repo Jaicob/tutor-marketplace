@@ -10,20 +10,14 @@ module DashboardNavHelper
     return false unless user_signed_in?
     
     if current_user.role.to_sym == :tutor
-      if @tutor.onboarding_status == 'Finished'
-        @dashboard_links = {
-          'Home'      => home_tutor_path(current_user.slug),
-          'Schedule'  => schedule_tutor_path(current_user.slug),
-          'Courses'   => tutor_courses_path(current_user.slug),
-          'Promotions' => tutor_promotions_path(current_user.slug),
-          'Profile'   => profile_tutor_path(current_user.slug),
-          'Settings'  => account_tutor_path(current_user.slug)
-        }
-      else
-        @dashboard_links = {
-          'Home'      => home_tutor_path(current_user.slug)
-        }
-      end
+      @dashboard_links = {
+        'Home'      => home_tutor_path(current_user.slug),
+        'Schedule'  => schedule_tutor_path(current_user.slug),
+        'Courses'   => tutor_courses_path(current_user.slug),
+        'Promotions' => tutor_promotions_path(current_user.slug),
+        'Profile'   => profile_tutor_path(current_user.slug),
+        'Settings'  => account_tutor_path(current_user.slug)
+      }
     else
       @dashboard_links = {
         'Home'          => home_student_path(current_user.slug),

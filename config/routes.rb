@@ -66,10 +66,13 @@
 #              onboarding_courses_tutor GET      /tutors/:id/onboarding/courses(.:format)                           tutor_onboarding#courses
 #             onboarding_schedule_tutor GET      /tutors/:id/onboarding/schedule(.:format)                          tutor_onboarding#schedule
 #      onboarding_payment_details_tutor GET      /tutors/:id/onboarding/payment_details(.:format)                   tutor_onboarding#payment_details
-#              submit_application_tutor PUT      /tutors/:id/onboarding/application(.:format)                       tutor_onboarding#submit_application
-#                  submit_courses_tutor PUT      /tutors/:id/onboarding/application(.:format)                       tutor_onboarding#submit_courses
-#                 submit_schedule_tutor PUT      /tutors/:id/onboarding/application(.:format)                       tutor_onboarding#submit_schedule
-#          submit_payment_details_tutor PUT      /tutors/:id/onboarding/application(.:format)                       tutor_onboarding#submit_payment_details
+#              submit_application_tutor PATCH    /tutors/:id/onboarding/application(.:format)                       tutor_onboarding#submit_application
+#                  submit_courses_tutor PATCH    /tutors/:id/onboarding/courses(.:format)                           tutor_onboarding#submit_courses
+#                 submit_schedule_tutor PATCH    /tutors/:id/onboarding/schedule(.:format)                          tutor_onboarding#submit_schedule
+#          submit_payment_details_tutor PATCH    /tutors/:id/onboarding/payment_details(.:format)                   tutor_onboarding#submit_payment_details
+# create_course_during_onboarding_tutor POST     /tutors/:id/onboarding/courses(.:format)                           tutor_onboarding#create_course
+# update_course_during_onboarding_tutor PUT      /tutors/:id/onboarding/courses/:tutor_course_id/update(.:format)   tutor_onboarding#update_course
+# delete_course_during_onboarding_tutor DELETE   /tutors/:id/onboarding/courses/:tutor_course_id/destroy(.:format)  tutor_onboarding#delete_course
 #                         tutor_courses GET      /tutors/:tutor_id/courses(.:format)                                dashboard/tutor/courses#index
 #                                       POST     /tutors/:tutor_id/courses(.:format)                                dashboard/tutor/courses#create
 #                      new_tutor_course GET      /tutors/:tutor_id/courses/new(.:format)                            dashboard/tutor/courses#new
@@ -86,7 +89,8 @@
 #                                       PATCH    /tutors/:tutor_id/promotions/:id(.:format)                         dashboard/tutor/promotions#update
 #                                       PUT      /tutors/:tutor_id/promotions/:id(.:format)                         dashboard/tutor/promotions#update
 #                                       DELETE   /tutors/:tutor_id/promotions/:id(.:format)                         dashboard/tutor/promotions#destroy
-#                                 tutor PATCH    /tutors/:id(.:format)                                              tutors#update
+#                                 tutor GET      /tutors/:id(.:format)                                              tutors#show
+#                                       PATCH    /tutors/:id(.:format)                                              tutors#update
 #                                       PUT      /tutors/:id(.:format)                                              tutors#update
 #                                       DELETE   /tutors/:id(.:format)                                              tutors#destroy
 #                          home_student GET      /students/:id/home(.:format)                                       dashboard/student/home#index
@@ -189,7 +193,9 @@
 #                                       POST     /api/v1/students/:student_id/appointments(.:format)                api/v1/student_appointments#create {:format=>:json}
 #            api_v1_student_appointment GET      /api/v1/students/:student_id/appointments/:id(.:format)            api/v1/student_appointments#show {:format=>:json}
 #                  api_v1_search_tutors GET      /api/v1/search/tutors(.:format)                                    api/v1/search#tutors {:format=>:json}
-#       api_v1_payments_current_student GET      /api/v1/payments/current_student(.:format)                         api/v1/payments#current_student {:format=>:json}
+#                                api_v1 GET      /api/v1/payments/student/:student_id(.:format)                     api/v1/payments#check_student_for_customer_id {:format=>:json}
+#               api_v1_check_promo_code POST     /api/v1/check_promo_code(.:format)                                 api/v1/promotions#check_promo_code {:format=>:json}
+#     api_v1_visitor_create_appointment POST     /api/v1/visitor/create_appointment(.:format)                       api/v1/student_appointments#visitor_create {:format=>:json}
 #                           sidekiq_web          /sidekiq                                                           Sidekiq::Web
 #
 
@@ -251,10 +257,13 @@ Rails.application.routes.draw do
       get '/onboarding/courses'         => 'tutor_onboarding#courses'
       get '/onboarding/schedule'        => 'tutor_onboarding#schedule'
       get '/onboarding/payment_details' => 'tutor_onboarding#payment_details'
-      put '/onboarding/application'     => 'tutor_onboarding#submit_application', as: 'submit_application'
-      put '/onboarding/application'     => 'tutor_onboarding#submit_courses', as: 'submit_courses'
-      put '/onboarding/application'     => 'tutor_onboarding#submit_schedule', as: 'submit_schedule'
-      put '/onboarding/application'     => 'tutor_onboarding#submit_payment_details', as: 'submit_payment_details'
+      patch '/onboarding/application'      => 'tutor_onboarding#submit_application', as: 'submit_application'
+      patch '/onboarding/courses'          => 'tutor_onboarding#submit_courses', as: 'submit_courses'
+      patch '/onboarding/schedule'         => 'tutor_onboarding#submit_schedule', as: 'submit_schedule'
+      patch '/onboarding/payment_details'  => 'tutor_onboarding#submit_payment_details', as: 'submit_payment_details'
+      post  '/onboarding/courses'          => 'tutor_onboarding#create_course', as: 'create_course_during_onboarding'
+      put '/onboarding/courses/:tutor_course_id/update' => 'tutor_onboarding#update_course', as: 'update_course_during_onboarding'
+      delete '/onboarding/courses/:tutor_course_id/destroy' => 'tutor_onboarding#delete_course', as: 'delete_course_during_onboarding'
     end
     resources :courses, controller: 'dashboard/tutor/courses'
     resources :promotions, controller: 'dashboard/tutor/promotions'

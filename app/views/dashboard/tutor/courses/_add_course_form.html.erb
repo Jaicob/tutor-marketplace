@@ -1,4 +1,4 @@
-<div class="row add-course-form">
+<div class="row add-course-form medium-collapse large-collapse">
   <%= form_for @tutor_course, html: {class: 'search-criteria'} do |f| %>
 
     <div class="small-12 medium-3 columns">
@@ -12,7 +12,7 @@
     </div>
     <div class="small-12 medium-3 columns">      
       <%= f.hidden_field(:tutor_id, value: @tutor.id) %>
-      <%= f.submit 'Add course', class: 'custom-button full-width no-margin blue', id: 'add_course_button' %>
+      <%= f.submit 'Add course', class: 'custom-button full-width no-margin', id: 'add_course_button' %>
     </div>
   
   <% end %>

@@ -19,7 +19,7 @@
 #  profile_pic        :string
 #  transcript         :string
 #  appt_notes         :text
-#  courses_approved   :boolean          default(FALSE)
+#  onboarding_status  :integer          default(0)
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  last_4_acct        :string
@@ -47,7 +47,7 @@ class Tutor < ActiveRecord::Base
   enum application_status: ['Incomplete', 'Complete', 'Approved']
   enum active_status: ['Inactive', 'Active']
   enum degree: ["B.A.","B.S.","M.B.A.","M.S.","M.Ed.","PhD."]
-  enum onboarding_status: ['Step 1', 'Step 2', 'Step 3', 'Step 4', 'Finished']
+  # onboarding_status key = 'Step 1', 'Step 2', 'Step 3', 'Step 4', 'Finished'
 
   # Carrierwave setup for uploading files
   mount_uploader :profile_pic, ProfilePicUploader
@@ -207,14 +207,5 @@ class Tutor < ActiveRecord::Base
       tutor_course_info
     end
   end
-
-  # def onboarding_step
-  #   step_number = 1
-  #   self.application_status == 'Complete' ? (step_number += 1) : (return step_number)
-  #   self.courses_approved? ? (step_number += 1) : (return step_number)
-  #   self.slots.count > 0 ? (step_number += 1) : (return step_number)
-  #   !self.acct_id.nil? ? (step_number += 1) : (return step_number)
-  #   step_number
-  # end
 
 end

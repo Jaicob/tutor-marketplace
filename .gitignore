@@ -90,7 +90,6 @@ pickle-email-*.html
 /config/application.yml
 .ruby-version
 
-
 # My personal notes & to-do list
 Z-notes.rb
 
@@ -105,3 +104,6 @@ Z-notes.rb
 *.sublime-*
 node_modules
 npm-debug.*
+
+# Certs
+/config/certs/ssl/*

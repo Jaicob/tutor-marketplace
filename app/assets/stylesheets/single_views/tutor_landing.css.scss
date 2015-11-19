@@ -80,25 +80,6 @@ input.visitor-set-school-button {
 .book-two-mins {
   margin-bottom: 4em;
 }
-.numbers-banner-box {
-  display: block;
-  background-color: rgba(0,0,0,0.8);
-  margin-top: 5em;
-}
-.number-banner {
-  display: block;
-  text-align: center;
-  border-top: 1px solid white;
-  color: white;
-  margin-bottom: 0;
-  padding: 0.5em;
-  border-bottom: 0;
-  font-family: 'Lato';
-}
-.big-numbers {
-  font-size: 1.5em;
-  color: white;
-}
 .top-banner {
   border-top: none;
 }
@@ -115,53 +96,12 @@ input.visitor-set-school-button {
   width: 100%;
   margin: 1em auto;
 }
-.section-header p {
-  font-family: 'Roboto Slab';
-  font-size: 1.2em;
-  font-weight: 100;
-  max-width: 20em;
-}
 p.axon-is-easy {
   max-width: 20em;
   margin: 0 auto 1em;
 }
-p.section-sub-header {
-  font-family: 'Lato';
-  font-size: 1.2em;
-  margin-top: 0;
-}
-p.pic-caption {
-  font-size: 1.3em;
-  color: #2BC2DE;
-  margin-bottom: 0;
-}
-.pic-box-trio {
-  max-width: 50em;
-  margin: auto;
-}
-.trio-pic {
-  width: 100%;
-  border: 1px solid #2BC2DE;
-  max-width: 25em;
-  margin: auto;
-}
-.divider-line {
-  display: block;
-  height: 1px;
-  border-bottom: 1px solid #0095AC;
-  width: 60%;
-  margin: auto;
-}
-p.difference-text {
-  padding-bottom: 2em;
-}
-.difference-icon {
-  font-size: 2em;
-  color: #0095AC;
-}
 img.testimonial-pic {
   border-radius: 100%;
-  border: 1px solid black;
   width: 100%;
   max-width: 10em;
   margin-top: 1em;
@@ -171,7 +111,7 @@ p.testimonial-name {
   font-weight: 400;
   margin-bottom: 2em;
 }
-a.faqs-link:hover {
+a.faqs-link {
   padding: 1em 5em;
   background-color: #0095AC;
   color: white;
@@ -209,34 +149,6 @@ button.custom-button.bottom-register-button {
   padding: 1em 5em;
 }
 
-/* iPad view */
-
-@media screen and (min-width: 768px) {
-p.axon-is-easy {
-  font-size: 1.6em;
-  margin-bottom: -1em;
-}
-.school-selection {
-  width: 50%;
-  margin: 1em auto;
-}
-.section-header {
-  padding: 1em;
-}
-.pic-box {
-  width: 50%;
-  margin: 3em auto 1em;
-}
-.campus-pic-boxes {
-  margin-bottom: 5em;
-}
-.campus-pic-box {
-  margin: auto;
-  display: inline-block;
-  padding: 1em;
-}
-}
-
 
 
 
@@ -271,26 +183,6 @@ p.axon-is-easy {
   vertical-align: top;
   margin: 0;
 }
-.four-differences-boxes {
-  width: 80%;
-  margin: auto;
-}
-.difference-box {
-  display: inline-block;
-  vertical-align: top;
-  width: 49%;
-  padding: 0 1em;
-}
-.testimonial-box {
-  display: inline-block;
-  width: 49%;
-  padding: 0 1em;
-  vertical-align: top;
-}
-p.difference-text {
-  padding-bottom: 2em;
-  max-width: 20em;
-}
 }
 
 /* Tutor sign-up form */
@@ -308,6 +200,8 @@ p.difference-text {
       .sign-up-title {
         color: white;
         padding: 0.8em 0 0.4em;
+        font-size: 2em;
+        margin: 1em -1em 0.5em;
       }
       p {
         color: white;
@@ -338,4 +232,104 @@ p.difference-text {
 }
 
 
+.landing-page.lp-banner {
+  background-color: #0095AC;
+  padding: 0.2em;
+  .banner {
+    color: #fafafa;
+    padding: 0.5em;
+    font-weight: 100;
+  }
+}
 
+.landing-page.lp-3-steps-section {
+  background-color: #E4E4E4;
+  padding: 3em;
+  p.number {
+    margin: 1em 0;
+    display: inline-block;
+    padding: 0.45em;
+    border-radius: 100%;
+    height: 2.5em;
+    width: 2.5em;
+    background-color: #2BC2DE;
+    color: white;
+    font-weight: 700;
+    font-size: 1.4em;
+  }
+}
+
+.tutor-headline h1 {
+  color: white;
+  text-shadow: 1px 1px 1px black;
+  text-align: center;
+  margin-top: 2em;
+  font-size: 3.5em;
+}
+
+.difference-box{
+  i {
+    color: #58AA4D;
+    font-size: 3em;
+  }
+  h5 {
+    max-width: 12em;
+    margin: auto;
+  }
+}
+
+.landing-page.lp-testimonial-section {
+  background-color: #E4E4E4;
+  padding: 2em;
+  img.tutor-pic {
+    height: 10em;
+    border-radius: 100%;
+  }
+  p.money {
+    font-weight: 400;
+    font-size: 1.2em;
+  }
+  span {
+    font-family: 'Lato';
+    font-weight: 400;
+    font-size: 0.9em;
+    text-align: right;
+    position: relative;
+    left: 1em;
+  }
+}
+
+.landing-page.lp-newspaper-section {
+  background-color: #4F5252;
+  padding: 4em;
+  p.newspaper-quote {
+    color: #FAFAFA;
+    font-family: 'EB Garamond', serif !important;
+    margin: 0;
+    font-size: 1.3em;
+    &.red-n-black-quote {
+      margin-top: -0.5em;
+    }
+  }
+  img.odyssey-logo {
+    padding: 0;
+    margin-top: 1em;
+  }
+  img.red-black-logo {
+    height: 3em;
+  }
+}
+
+.section-header {
+  text-align: center;
+  font-size: 1.8em;
+  font-weight: 100;
+  margin: 0 auto 1em;
+  &.extra-big {
+    font-size: 2.6em;
+  }
+}
+
+.landing-page {
+  padding: 2em;
+}

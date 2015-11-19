@@ -9,7 +9,7 @@
   <%= pf.input :postal_code, label: 'Zip Code' %>
   <h5>Bank Information</h5>
   <h5 class="bank-errors"></h5>
-  <p>Note: Your bank account information will not be stored on our servers, it will only be used to create an account with our secure merchant service.</p>
+  <p>Note: Your bank account information will not be stored on our servers, it will only be used to create an account with our secure merchant service, <%= link_to 'Stripe', url: 'https://stripe.com/' %>.</p>
   <%= label_tag :account_number %>
   <%= text_field_tag :account_number %>
   <%= label_tag :routing_number, "Routing number (note: Use ACH routing number)" %>
@@ -26,7 +26,7 @@
 
       // Disable the submit button to prevent repeated clicks
       $form.find('button').prop('disabled', true);
-      Stripe.setPublishableKey("<%= Rails.configuration.stripe[:publishable_key] %>");
+      Stripe.setPublishableKey("<%= ENV['stripe_public_key'] %>");
       Stripe.bankAccount.createToken({
         country: 'US',
         currency: 'usd',

@@ -8,8 +8,10 @@ button, .custom-button {
   color: white;
   margin-bottom: 2em;
   text-align: center;
+  padding: 1.3em 3em;
   &.full-width {
     width: 100%;
+    display: block;
   }
   &.no-margin {
     margin: 0;
@@ -19,6 +21,9 @@ button, .custom-button {
   }
   &.danger {
     background-color: #DE6328;
+  }
+  &.gray {
+    background-color: #A3A3A3;
   }
   &.hover-light-blue:hover {
     background-color: #2BC2DE;
@@ -37,7 +42,8 @@ button, .custom-button {
 
   }
   &.large {
-
+    padding: 1em 3em;
+    font-size: 1.2em;
   }
 
 }

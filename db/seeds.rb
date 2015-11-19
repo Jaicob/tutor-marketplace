@@ -3,10 +3,10 @@
 
 # Info for 4 schools
 school_list = [
-  [ "University of North Carolina", "Chapel Hill, NC", 17.5 ],
-  [ "University of Georgia", "Athens, GA", 17.5 ],
-  [ "Duke University", "Durham, NC", 17.5 ],
-  [ "Clemson University", "Clemson, SC", 17.5 ]
+  [ "University of North Carolina", "Chapel Hill, NC", 15 ],
+  [ "University of Georgia", "Athens, GA", 15 ],
+  [ "Duke University", "Durham, NC", 15 ],
+  [ "Clemson University", "Clemson, SC", 15 ]
 ]
 
 # Create Schools out of the school_list

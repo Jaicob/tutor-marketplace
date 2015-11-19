@@ -25,7 +25,7 @@ a.payment-settings-link {
           <p>You will be paid for all of your tutoring sessions via direct deposit. We use <%= link_to 'Stripe', "https://stripe.com/about" %> to securely deposit money into your bank account after each session is complete. Click the button below to link your bank account.</p>
         </div>
       <% end %>
-      <%= render 'account_status', tutor: @tutor %>    
+      <%= render '/dashboard/tutor/settings/account_status', tutor: @tutor %>    
     </div>
   </div>
 </section>

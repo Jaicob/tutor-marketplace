@@ -1,1 +1,29 @@
-schedule_step.html.erb
+<%= render '/tutor_onboarding/progress_bar' %>
+<div class="row box">
+  <div class="small-12 medium-12 columns">
+    <h1>Your Schedule</h1>
+    <p class="big-text">Create your schedule by <span>dragging the "Regular"</span> and <span>"One-Off" blocks</span> onto the calendar and placing them on times you would like to be booked. After placing a block on the correct day and hour, you can <span>strech the block</span> to span as many hours as you like.</p>
+    <p class="big-text">Appointments are always one-hour long, so a <span>three-hour availabilty</span> block would allow you to be booked for <span>three back-to-back appointments.</span></p>
+    <p class="big-text">Using a <span>"Regular"</span> block to set availability creates the same availability for every week, while a <span>"One-Off"</span> block sets availability for only the shown week.</p>
+    <p class="big-text">You can edit your availability as often as you like.</p>
+  </div>
+</div>
+<div class="row">
+  <div class="small-12 columns">
+    <h2 class="onboarding-page-title">Step 3: Set Your Schedule</h2>
+  </div>
+</div>
+<div class="row medium-collapse">
+  <%= render '/dashboard/tutor/schedule/main' %>
+</div>
+<div class="row">
+  <div class="small-12 medium-8 columns box next-step-instructions">
+    <p>Finished setting your intial courses? Click here to set your Available Hours<i class="fi-arrow-right"></i></p>
+  </div>
+  <div class="small-12 medium-4 columns">
+    <%= form_for @tutor, url: submit_schedule_tutor_path(@tutor.slug) do |f| %>
+      <%= f.hidden_field :onboarding_status, value: 3 %>
+      <%= f.submit "Next Step", class: 'custom-button margin-bottom large full-width bold' %>
+    <% end %>   
+  </div>
+</div>

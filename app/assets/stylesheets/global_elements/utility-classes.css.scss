@@ -2,6 +2,10 @@ center {
   text-align: center;
 }
 
+.white {
+  color: #FAFAFA;
+}
+
 .border-radius {
   border-radius: 4px !important;
 }
@@ -17,12 +21,16 @@ center {
   margin-top: 2em;
 }
 
+.margin-1em {
+  margin: 1em;
+}
+
 .padding-2em {
   padding: 2em;
 }
 
-.height-22em {
-  height: 22em;
+.height-24em {
+  height: 24em;
 }
 
 .no-top-margin {
@@ -40,4 +48,15 @@ center {
 
 .bottom-buffer {
   margin-bottom: 20px !important;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.blue-link {
+  color: #0095AC !important;
+}
+.blue-link:hover {
+  color: #2BC2DE !important;
 }
