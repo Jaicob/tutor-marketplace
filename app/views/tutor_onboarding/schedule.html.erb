@@ -1,38 +1,11 @@
-<!-- should be refactored into partial with completed and current step styles set dynamically -->
-<div class="row medium-collapse progress-bar-container">
-  <div class="small-12 medium-3 columns">
-    <div class="progress-step completed-step">
-      <p class="number"><i class="fi-check"></i></p>
-      <%= link_to onboarding_application_tutor_path(@tutor.slug) do %>
-        <p>Complete your application</p>
-      <% end %>
-    </div>
-  </div>
-  <div class="small-12 medium-3 columns">
-    <div class="progress-step completed-step">
-      <p class="number"><i class="fi-check"></i></p>
-      <%= link_to onboarding_courses_tutor_path(@tutor.slug) do %>
-        <p>Set your courses & rates</p>
-      <% end %>
-    </div>
-  </div>
-  <div class="small-12 medium-3 columns">
-    <div class="progress-step current-step">
-      <p class="number">3</i></p>
-      <p>Set your available hours</p>
-    </div>
-  </div>
-  <div class="small-12 medium-3 columns">
-    <div class="progress-step">
-      <p class="number">4</p>
-      <p>Set up direct deposit</p>
-    </div>
-  </div>
-</div>
-<!--  ABOVE should be refactored into partial with completed and current step styles that are set dynamically -->
+<%= render '/tutor_onboarding/progress_bar' %>
 <div class="row box">
   <div class="small-12 medium-12 columns">
-    <h1>Instructions</h1>
+    <h1>Your Schedule</h1>
+    <p class="big-text">Create your schedule by <span>dragging the "Regular"</span> and <span>"One-Off" blocks</span> onto the calendar and placing them on times you would like to be booked. After placing a block on the correct day and hour, you can <span>strech the block</span> to span as many hours as you like.</p>
+    <p class="big-text">Appointments are always one-hour long, so a <span>three-hour availabilty</span> block would allow you to be booked for <span>three back-to-back appointments.</span></p>
+    <p class="big-text">Using a <span>"Regular"</span> block to set availability creates the same availability for every week, while a <span>"One-Off"</span> block sets availability for only the shown week.</p>
+    <p class="big-text">You can edit your availability as often as you like.</p>
   </div>
 </div>
 <div class="row">
@@ -45,11 +18,11 @@
 </div>
 <div class="row">
   <div class="small-12 medium-8 columns box next-step-instructions">
-    <p>Finished setting your intial courses? Click 'Next Step' to set your Available Hours<i class="fi-arrow-right"></i></p>
+    <p>Finished setting your intial courses? Click here to set your Available Hours<i class="fi-arrow-right"></i></p>
   </div>
   <div class="small-12 medium-4 columns">
     <%= form_for @tutor, url: submit_schedule_tutor_path(@tutor.slug) do |f| %>
-      <%= f.hidden_field :onboarding_status, value: 'Step 4' %>
+      <%= f.hidden_field :onboarding_status, value: 3 %>
       <%= f.submit "Next Step", class: 'custom-button margin-bottom large full-width bold' %>
     <% end %>   
   </div>

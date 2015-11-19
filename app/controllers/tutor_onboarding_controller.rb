@@ -1,6 +1,9 @@
 class TutorOnboardingController < ApplicationController
   before_action :set_user
   before_action :set_tutor
+  before_action :set_tutor_course, only: [:update_course, :delete_course]
+
+  helper OnboardingLinksHelper
 
   def application
   end
@@ -14,61 +17,52 @@ class TutorOnboardingController < ApplicationController
   end
 
   def courses
-    # refactor into model method
-      step = @tutor.onboarding_status
-      if step == 'Step 1'
-        redirect_to onboarding_application_tutor_path(@tutor.slug)
-      end
-    # end of ship-it-fuck-it controller method
+    if @tutor.onboarding_status < 1
+      redirect_to onboarding_application_tutor_path(@tutor.slug)
+    end
     @tutor_course = TutorCourse.new
   end
 
   def create_course
     @tutor_course = TutorCourse.create(tutor_course_params)
-    if @tutor_course.save
-      redirect_to onboarding_courses_tutor_path(@tutor.slug)
-    else
-      redirect_to :back
-    end
+    redirect_to onboarding_courses_tutor_path(@tutor.slug)
+  end
+
+  def update_course
+    @tutor_course.update(tutor_course_params)
+    redirect_to onboarding_courses_tutor_path(@tutor.slug)
+  end
+
+  def delete_course
+    @tutor_course.destroy
+    redirect_to onboarding_courses_tutor_path(@tutor.slug)
   end
 
   def submit_courses
-    if @tutor.update(tutor_params)
-      redirect_to onboarding_schedule_tutor_path(@tutor.slug)
-    else
-      redirect_to :back
-      # flash[:alert] = "Application was not submitted: #{@tutor.errors.full_messages.first}"
-      # puts "Application was not submitted: #{@tutor.errors.full_messages}"
-    end
+    @tutor.update(tutor_params)
+    redirect_to onboarding_schedule_tutor_path(@tutor.slug)
   end
 
   def schedule
-    # refactor into model method
-      step = @tutor.onboarding_status
-      if (step == 'Step 1') || (step == 'Step 2')
-        redirect_to onboarding_courses_tutor_path(@tutor.slug)
-      end
-    # end of ship-it-fuck-it controller method
+    if @tutor.onboarding_status < 2
+      redirect_to onboarding_courses_tutor_path(@tutor.slug)
+    end
   end
 
   def submit_schedule
     @tutor.update(tutor_params)
-    redirect_to payment_info_tutor_path(@tutor.slug)
-    # success = redirect_to initial_banking_setup_path(@tutor.slug)
+    redirect_to onboarding_payment_details_tutor_path(@tutor.slug)
   end
 
   def payment_details
-    # refactor into model method
-      step = @tutor.onboarding_status
-      if (step == 'Step 1') || (step == 'Step 2') || (step == 'Step 3')
-        redirect_to onboarding_schedule_tutor_path(@tutor.slug)
-      end
-    # end of ship-it-fuck-it controller method
+    if @tutor.onboarding_status < 3
+      redirect_to onboarding_schedule_tutor_path(@tutor.slug)
+    end
   end
 
   def submit_payment_details
     if @tutor.update_attributes(tutor_params)
-      @tutor.update_attributes(last_4_acct: params[:last_4_acct], onboarding_status: 'Finished')
+      @tutor.update_attributes(last_4_acct: params[:last_4_acct], onboarding_status: 4)
       UpdateTutorAccount.call(tutor: @tutor, token: params[:stripeToken])
       respond_to do |format|
         format.js { render :payment_settings_updated }
@@ -89,6 +83,10 @@ class TutorOnboardingController < ApplicationController
 
     def tutor_course_params
       params.require(:tutor_course).permit(:tutor_id, :course_id, :rate)
+    end
+
+    def set_tutor_course
+      @tutor_course = TutorCourse.find(params[:tutor_course_id])
     end
 
 end

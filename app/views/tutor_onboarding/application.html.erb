@@ -3,7 +3,7 @@ $(document).ready(function()
   {
     $('#transcript-input').change(function () {
         acceptable_filetypes = ["jpg", "jpeg", "png", "txt", "rtf", "doc", "docx", "pdf"]
-        if (acceptable_filetypes.indexOf($('#transcript-input').val().split(".").pop()) > -1) {
+        if (acceptable_filetypes.indexOf($('#transcript-input').val().toLowerCase().split(".").pop()) > -1) {
           $('#transcript-name-target').html($('#transcript-input').val().split("\\").pop()); 
           $('#transcript-name-target').removeClass("invalid-file-type"); 
         } else {
@@ -13,7 +13,7 @@ $(document).ready(function()
     });
     $('#picture-input').change(function () {
         acceptable_filetypes = ["jpg", "jpeg", "png"]
-        if (acceptable_filetypes.indexOf($('#picture-input').val().split(".").pop()) > -1) {
+        if (acceptable_filetypes.indexOf($('#picture-input').val().toLowerCase().split(".").pop()) > -1) {
           $('#picture-name-target').html($('#picture-input').val().split("\\").pop()); 
           $('#picture-name-target').removeClass("invalid-file-type"); 
         } else {
@@ -23,39 +23,12 @@ $(document).ready(function()
     });
 });
 </script>
-<!-- should be refactored into partial with completed and current step styles that are set dynamically -->
-  <div class="row medium-collapse progress-bar-container">
-    <div class="small-12 medium-3 columns">
-      <div class="progress-step current-step">
-        <p class="number">1</p>
-        <p>Complete your application</p>
-      </div>
-    </div>
-    <div class="small-12 medium-3 columns">
-      <div class="progress-step">
-        <p class="number">2</p>
-        <p>Set your courses & rates</p>
-      </div>
-    </div>
-    <div class="small-12 medium-3 columns">
-      <div class="progress-step">
-        <p class="number">3</p>
-        <p>Set your available hours</p>
-      </div>
-    </div>
-    <div class="small-12 medium-3 columns">
-      <div class="progress-step">
-        <p class="number">4</p>
-        <p>Set up direct deposit</p>
-      </div>
-    </div>
-  </div>
-<!--  ABOVE should be refactored into partial with completed and current step styles that are set dynamically -->
+<%= render '/tutor_onboarding/progress_bar' %>
 <div class="row box">
   <div class="small-12 columns">
     <h1>Welcome, <%= @tutor.first_name %></h1>
     <p class="big-text">Congratulations on signing up to become an Axon tutor!</p>
-    <p class="big-text">You're only 4 steps away from setting up your account. After all steps are complete, the Axon tutor management team must review and accept your application before your profile is activated.</p>
+    <p class="big-text">You're only <span>4 steps away from setting up your account</span>. After all steps are complete, the Axon tutor management team must review and accept your application before your profile is activated.</p>
     <p class="big-text">To finish setting up your account, you'll need: your <span>resume or unofficial school transcript</span>, a <span>profile picture</span> for your home page, and your <span>banking information</span> to set up direct deposit for your payments.</p>
   </div>
 </div>
@@ -204,10 +177,10 @@ $(document).ready(function()
 </div>
 <div class="row">
   <div class="small-12 medium-8 columns box next-step-instructions">
-    <p>Finished with your application? Review it then click 'Next Step' to set your Courses! <i class="fi-arrow-right"></i></p>
+    <p>Finished with your application? Review it then click here to set your Courses! <i class="fi-arrow-right"></i></p>
   </div>
   <div class="small-12 medium-4 columns">   
-    <%= f.hidden_field :onboarding_status, value: 'Step 2' %>
+    <%= f.hidden_field :onboarding_status, value: 1 %>
     <%= f.submit 'Next Step', class: 'custom-button margin-bottom large full-width bold' %>
     <% end %>
   </div>

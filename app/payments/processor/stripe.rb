@@ -8,6 +8,8 @@ module Processor
     end
 
     def update_managed_account(tutor, token)
+      puts "tutor!!!!!!!! = #{tutor}"
+      puts "token!!!!!!!! = #{token}"
       if tutor.acct_id.nil?
         acct = ::Stripe::Account.create(
           managed: true,
@@ -36,7 +38,8 @@ module Processor
       else
         acct = ::Stripe::Account.retrieve(tutor.acct_id)
       end
-      acct.external_accounts.create({ :external_account => token })
+      puts "acct!!!!!!! = #{acct}"
+      acct.external_accounts.create(:external_account => token)
     end
 
     def reconcile_coupon_difference(charge)

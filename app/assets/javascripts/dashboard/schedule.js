@@ -409,7 +409,7 @@ $(document).ready(function() {
     eventOverlap: function(stillEvent, movingEvent) { return stillEvent.allDay && movingEvent.allDay },
     allDaySlot: false,
     forceEventDuration: true,
-    minTime: "0:00:00",
+    minTime: "6:00:00",
     maxTime: "24:00:00",
     defaultTimedEventDuration: "1:00:00",
     height: "auto",

@@ -23,6 +23,9 @@ class SingleViewsController < ApplicationController
       @course = Course.find(params[:course_id])
       @subject = @course.subject
     end
+    if @school.nil?
+      redirect_to get_started_path
+    end
   end
 
   def about_us
