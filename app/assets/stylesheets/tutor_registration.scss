@@ -1,3 +1,10 @@
 // Place all the styles related to the TutorRegistration controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+#input-error {
+  color: #fafafa;
+  background-color: #DE6328;
+  padding: 0.2em;
+  border-radius: 4px;
+  margin: 0.4em 0 0.8em;
+}
