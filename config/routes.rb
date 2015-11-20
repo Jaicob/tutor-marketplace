@@ -217,8 +217,7 @@ Rails.application.routes.draw do
   get '/faqs'                 => 'single_views#faqs'
   get '/partners'             => 'single_views#partners'
   get '/contact'              => 'single_views#contact'
-  get '/privacy-policy'       => 'single_views#privacy_policy'
-  get '/terms-and-conditions' => 'single_views#terms_and_conditions'
+  get '/privacy-and-terms'    => 'single_views#privacy_and_terms'
   post '/set-school'          => 'cookies#set_school_id_cookie'
   post '/change-school'       => 'cookies#change_school_id_cookie'
 

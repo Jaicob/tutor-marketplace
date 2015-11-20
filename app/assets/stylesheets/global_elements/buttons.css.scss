@@ -59,3 +59,12 @@ button, .custom-button {
  .custom-button:visited, .custom-button:link  {
   color: white;
  }
+
+ // For Contact Us page
+ .custom-button.contact-us {
+  padding: 1em;
+  display: block;
+  font-size: 1em;
+  max-width: 20em;
+  background-color: #2BC2DE;
+}
