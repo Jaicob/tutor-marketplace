@@ -54,9 +54,17 @@ center {
 .height-24em {
   height: 24em;
 }
-
+.vertical-margin-1em {
+  margin: 1em 0 !important;
+}
+.margin-top-1em {
+  margin-top: 1em;
+}
 .margin-top-2em {
   margin-top: 2em;
+}
+.margin-top-5em {
+  margin-top: 5em;
 }
 .margin-1em {
   margin: 1em;
@@ -70,12 +78,17 @@ center {
 .margin-bottom-8em {
   margin-bottom: 8em !important;
 }
-
+.margin-bottom-3em {
+  margin-bottom: 3em !important;
+}
 .top-buffer {
   margin-top: 20px !important;
 }
 .bottom-buffer {
   margin-bottom: 20px !important;
+}
+.left-margin-1em {
+  left-margin: 1em;
 }
 
 
