@@ -8,6 +8,7 @@ def check_promo_code
   if @promotion
     tutor_id = safe_params
     promo_info = {
+      id: @promotion.id,
       type: @promotion.category,
       value: @promotion.amount,
       is_valid: @promotion.is_valid?(@tutor_id),

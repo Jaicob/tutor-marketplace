@@ -15,7 +15,11 @@ var PaymentForm = React.createClass({
       if (token == "") {token = null};
 
       promo = this.props.promo;
-      if (promo != null && promo.id) {promo = promo.id};
+      if (promo != null && promo.id) {
+        promo = promo.id;
+      } else {
+        promo = null;
+      };
 
       var data = {
         tutor_id: this.props.tutor,
@@ -31,7 +35,7 @@ var PaymentForm = React.createClass({
       request.error(function () {
         swal({
           title: "Connectivity Error",
-          text: "Please check your Internet connection and try again. If this problem persists, please contact info@axontutors.com",
+          text: "Please check your Internet connection and try again. Your card has not been charged. If this problem persists, please contact info@axontutors.com",
           type: "error"
         });
       });

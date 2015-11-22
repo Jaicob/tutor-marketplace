@@ -34,6 +34,7 @@ var AppointmentSelector = React.createClass({
           token: "",
           customer: "",
           appointments: [],
+          charge: null,
           UINavigationBarDelegate: new Delegate()
       };
   },

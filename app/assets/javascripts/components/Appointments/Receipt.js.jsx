@@ -20,15 +20,19 @@ var Receipt = React.createClass({
             <hr></hr>
             <div className="notes">Tutor Notes: </div>
             <hr></hr>
-            <div className="student-side">
-              {this.props.student}
-            </div>
-            <div className="tutor-side">
-              {this.props.tutor_name} for {this.props.selectedSubject.course_name}
-              <ul>
-                {this.props.selectedSlots.map((slot) => <li>{moment.utc(slot.start_time).format("ddd, MM/DD/YYYY, h:mm A")} - {moment.utc(slot.start_time).add(1, 'h').format("h:mm A")}</li>)}
-              </ul>
-              <span>Total: ${this.props.total.toFixed(2)}</span>
+            <div className="row">
+              <div className="wrapper">
+                <div className="medium-6 columns student-side">
+                  {this.props.student}
+                </div>
+              </div>
+              <div className="medium-6 columns tutor-side">
+                {this.props.tutor_name} for {this.props.selectedSubject.course_name}
+                <ul>
+                  {this.props.selectedSlots.map((slot) => <li>{moment.utc(slot.start_time).format("ddd, MM/DD/YYYY, h:mm A")} - {moment.utc(slot.start_time).add(1, 'h').format("h:mm A")}</li>)}
+                </ul>
+                <span>Total: ${this.props.total.toFixed(2)}</span>
+              </div>
             </div>
           </div>
         </div>
