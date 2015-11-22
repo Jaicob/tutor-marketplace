@@ -24,6 +24,9 @@ var DefaultCard = React.createClass({
         <div className="default-card">
           <h3>Default Card</h3>
           <p>Your default card is: {this.props.currentStudent.card}</p>
+          <p>
+            You can change it in <a href={"/students/" + this.props.student.id + "/settings/payment_info"}>your account{"'"}s payment settings</a>.
+          </p>
           <p><input type="checkbox" checked={this.state.checked} onChange={this.handleUseDefault} /> Use this card</p>
         </div>
       )
@@ -31,7 +34,7 @@ var DefaultCard = React.createClass({
       return (
         <div className="default-card">
           <h3>Default Card</h3>
-          <p>You have no default card set.</p>
+          <p>You have no default card set.<br></br>You can set one in <a href={"/students/" + this.props.student.id + "/settings/payment_info"}>your account{"'"}s payment settings</a>.</p>
         </div>
       )
     }
