@@ -3,48 +3,56 @@ var API_LOCATION = "/api/v1"
 var API = {
     endpoints: {
         subjects: function (data) { // { school_id }
-            return API_LOCATION + "/schools/" + data["school_id"] + "/subjects/"
+            return API_LOCATION + "/schools/" + data["school_id"] + "/subjects/";
         },
         courses: function (data) { // { school_id, subject_id }
-            return API_LOCATION + "/schools/" + data["school_id"] + "/subjects/" + data["subject_id"] + "/courses/"
+            return API_LOCATION + "/schools/" + data["school_id"] + "/subjects/" + data["subject_id"] + "/courses/";
         },
         tutor_slots: {
             get: function (data) { // { tutor_id }
-                return API_LOCATION + "/tutors/" + data["tutor_id"] + "/slots"
+                return API_LOCATION + "/tutors/" + data["tutor_id"] + "/slots";
             },
             create: function (data) { // { tutor_id }
-                return API_LOCATION + "/tutors/" + data["tutor_id"] + "/slots"
+                return API_LOCATION + "/tutors/" + data["tutor_id"] + "/slots";
             },
             update: function (data) { // { tutor_id, slot_id }
-                return API_LOCATION + "/tutors/" + data["tutor_id"] + "/slots/" + data["slot_id"]
+                return API_LOCATION + "/tutors/" + data["tutor_id"] + "/slots/" + data["slot_id"];
             },
             update_slot_group: function (data) { // { tutor_id }
-                return API_LOCATION + "/tutors/" + data["tutor_id"] + "/slots/update_group"
+                return API_LOCATION + "/tutors/" + data["tutor_id"] + "/slots/update_group";
             },
             destroy: function (data) { // { tutor_id }
-                return API_LOCATION + "/tutors/" + data["tutor_id"] + "/slots"
+                return API_LOCATION + "/tutors/" + data["tutor_id"] + "/slots";
             },
             destroy_slot_group: function (data) { // { tutor_id }
-                return API_LOCATION + "/tutors/" + data["tutor_id"] + "/slots/delete_group"
+                return API_LOCATION + "/tutors/" + data["tutor_id"] + "/slots/delete_group";
             }
         },
         tutor: {
             all: function (data) { // { school_id[, course_id][, dow] }
-                return API_LOCATION + "/search/tutors?" + $.param(data)
+                return API_LOCATION + "/search/tutors?" + $.param(data);
             },
             courses: function(data) {
-                return API_LOCATION + "/tutors/" + data["tutor_id"] + "/courses/"
+                return API_LOCATION + "/tutors/" + data["tutor_id"] + "/courses/";
             }
         },
         appointment: {
-            create: (data) => API_LOCATION + "/students/" + data["student_id"] + "/appointments/",
-            create_visitor: (data) => API_LOCATION + "/visitor/create_appointment"
+          create: function (data) {
+            return API_LOCATION + "/students/" + data["student_id"] + "/appointments/";
+          },
+          create_visitor: function (data) {
+            return API_LOCATION + "/visitor/create_appointment";
+          }
         },
-        promo: (data) => API_LOCATION + "/check_promo_code/" + data["tutor_id"] + "/" + data["promo_code"],
+        promo: function (data) {
+          return API_LOCATION + "/check_promo_code/" + data["tutor_id"] + "/" + data["promo_code"];
+        },
         students: function(data) {
-            return API_LOCATION + "/payments/student/" + data["student_id"]
+          return API_LOCATION + "/payments/student/" + data["student_id"];
         },
-        process_payment: (data) => API_LOCATION + "/payments/process_payment"
+        process_payment: function (data) {
+          return API_LOCATION + "/payments/process_payment";
+        }
     }
 };
 
