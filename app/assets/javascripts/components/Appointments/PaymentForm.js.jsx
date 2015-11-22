@@ -31,7 +31,11 @@ var PaymentForm = React.createClass({
         promotion_id: promo
       }
 
-      var request = $.post(endpoint, data, update);
+      var request = $.post(endpoint, data, (res) => {
+        this.props.handleCharge(res);
+        update();
+      });
+
       request.error(function () {
         swal({
           title: "Connectivity Error",

@@ -397,15 +397,38 @@
     }
   }
 
-  .receipt {
+  .receipt-view {
+    padding: 20px;
+    overflow: scroll;
+
     .header {
       padding-bottom: 20px;
       border-bottom: 1px solid #ccc;
+      text-align: center;
     }
 
     .wrapper {
       padding: 20px;
       border-right: 1px solid #ccc;
+    }
+
+    ul {
+      list-style-type: none;
+      margin: 20px 0;
+
+      li {
+        display: block;
+        padding: 10px;
+
+        &:nth-child(odd) {
+          background: #eee;
+        }
+
+        .rate {
+          float: right;
+          padding: 5px;
+        }
+      }
     }
   }
 }

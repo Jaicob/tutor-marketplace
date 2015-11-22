@@ -173,6 +173,11 @@ var AppointmentSelector = React.createClass({
       totalCharge: newTotal
     });
   },
+  handleCharge: function (newCharge) {
+    this.setState({
+      charge: newCharge
+    });
+  },
   makeAppointment: function (update) {
     if (Object.keys(this.state.student).length > 0) {
       var endpoint = API.endpoints.appointment.create({ "student_id": this.state.student.id });
@@ -244,6 +249,7 @@ var AppointmentSelector = React.createClass({
                         promo={this.state.promo}
                         token={this.state.token}
                         customer={this.state.customer}
+                        handleCharge={this.handleCharge}
                         onChange={this.handleCard}
                       />
       case 6: return <Receipt

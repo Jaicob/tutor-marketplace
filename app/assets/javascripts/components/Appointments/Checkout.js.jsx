@@ -3,6 +3,7 @@ var Checkout = React.createClass({
     this.setDelegates();
   },
   componentDidMount: function () {
+    this.props.handleTotal(this.getTotal());
   },
   getInitialState: function () {
     return {
@@ -68,10 +69,13 @@ var Checkout = React.createClass({
       }.bind(this));
     }
 
+    this.props.handleTotal(this.getTotal());
   },
   removePromoCode: function () {
     this.setState({ "promo": null });
     this.props.handlePromo(null);
+
+    this.props.handleTotal(this.getTotal());
   },
   getTotal: function () {
     props = this.props;
