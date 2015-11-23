@@ -47,8 +47,8 @@ ActiveRecord::Schema.define(version: 20151123205659) do
 
   create_table "charges", force: :cascade do |t|
     t.float    "amount"
-    t.integer  "axon_fee"
-    t.integer  "tutor_fee"
+    t.float    "axon_fee"
+    t.float    "tutor_fee"
     t.string   "customer_id"
     t.integer  "tutor_id"
     t.string   "token"
