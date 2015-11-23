@@ -13,16 +13,10 @@ $(document).ready(function()
 });
 </script>
 <div class="sign-up-form-box">
-  <h3 class="sign-up-title">Sign Up with Axon</h3>
+  <h3 class="sign-up-title">Sign up with Axon</h3>
   <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :role => 'form'}) do |f| %>
-    <div class="row">
-      <div class="small-12 medium-6 columns no-padding">
-        <%= f.text_field :first_name, placeholder: 'First Name', required: true  %>
-      </div>
-      <div class="small-12 medium-6 columns no-padding">
-        <%= f.text_field :last_name, placeholder: 'Last Name', required: true  %>
-      </div>
-    </div>
+    <%= f.text_field :first_name, placeholder: 'First Name', required: true  %>
+    <%= f.text_field :last_name, placeholder: 'Last Name', required: true  %>
     <%= f.email_field :email, placeholder: 'Email', required: true %>
     <%= f.password_field :password, placeholder: 'Password', required: true, id: 'user_input' %>
     <p id="input-error" class="no-show">Password must be at least 8 characters</p>
@@ -30,13 +24,6 @@ $(document).ready(function()
       <%= tt.text_field :phone_number, placeholder: 'Phone Number', required: true %>
     <% end %>
     <%= render '/course_selector/school' %>
-    <!-- The section below creates a tutor's first tutor-course. The code for creating the TutorCourse is in 'user.rb' in the method 'create_tutor_account(user, params)' -->
-    <%= f.fields_for :tutor do |tt| %>
-      <p>Create your first course.<br /> The average rate is $23/hr.</p>
-      <%= render '/course_selector/subject' %>
-      <%= render '/course_selector/course' %>
-      <%= render '/course_selector/rate' %>
-    <% end %>
-    <%= f.submit "Get Started", class: 'custom-button full-width hover-light-blue no-margin' %>
+    <%= f.submit "Get Started", class: 'custom-button full-width light-blue no-margin' %>
   <% end %>
 </div>
