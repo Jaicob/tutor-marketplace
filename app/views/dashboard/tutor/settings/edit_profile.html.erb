@@ -22,9 +22,15 @@ a.profile-settings-link {
     <div class="small-7 medium-4 medium-offset-1 columns end">
       
       <h5>Profile Picture</h5>
-      <%= image_tag(@tutor.profile_pic_url(:thumb), class: 'profile-pic-preview') %>
-      <a href="#" data-reveal-id="newPhotoModal" class="custom-button">Upload New Photo</a>
-      <a href="#" data-reveal-id="cropCurrentPhotoModal" class="custom-button">Crop Current Photo</a>
+      <%= image_tag("#{@tutor.profile_pic_url(:thumb)}?refresh=#{SecureRandom.hex(3)}", class: 'profile-pic-preview') %>
+      <div class="row">
+        <div class="small-12 columns">
+          <a href="#" data-reveal-id="newPhotoModal" class="custom-button full-width">Upload New Photo</a>
+        </div>
+        <div class="small-12 columns">
+          <a href="#" data-reveal-id="cropCurrentPhotoModal" class="custom-button full-width">Crop Current Photo</a>
+        </div>
+      </div>
 
       <%= form_for @tutor do |f| %>
         <h5 class="header-top-margin" id="profile-fields">Profile Info</h5>
@@ -89,7 +95,7 @@ a.profile-settings-link {
           <p id="profile-pic-name-target"></p>
           
 
-          <%= f.submit 'Save', class: 'custom-button full-width disabled', id: 'upload-pic-btn', disabled: true %>
+          <%= f.submit 'Save', class: 'custom-button full-width disabled', id: 'upload-pic-btn', disabled: true, data: { disable_with: "Uploading, please wait..." } %>
         <% end %>
       </div>
     </div>
@@ -137,7 +143,7 @@ a.profile-settings-link {
               <%= f.hidden_field "crop_#{attribute}" %>
             <% end %>
             <div class="actions">
-              <%= f.submit "Crop", class: 'custom-button' %>
+              <%= f.submit "Crop", class: 'custom-button', data: { disable_with: "Cropping, please wait..." }    %>
             </div>
           <% end %>
         </div>
