@@ -1,6 +1,6 @@
 class API::V1::StudentAppointmentsController < API::V1::Defaults
-  before_action :set_student
-  before_action :restrict_to_resource_owner
+  before_action :set_student, except: [:visitor_create]
+  before_action :restrict_to_resource_owner, except: [:visitor_create]
   before_action :set_appt, only: [:show, :reschedule, :cancel]
 
   def index
@@ -13,24 +13,26 @@ class API::V1::StudentAppointmentsController < API::V1::Defaults
   end
 
   def create
-    if Appointment.create_appts_from_array(params)
-      render json: @appts
+    appts = Appointment.create_appts_from_array(params)
+    if appts
+      render json: appts
     else
-      render json: @appts.errors.full_messages
+      render json: appts.errors.full_messages
     end
   end
 
   def visitor_create # creates appt without student_id, but adds it in next step when visitor must sign up
-    if Appointment.visitor_create_appts_from_array(params)
-      render json: @appts
+    appts = Appointment.visitor_create_appts_from_array(params)
+    if appts
+      render json: appts
     else
-      render json: @appts.errors.full_messages
+      render json: appts.errors.full_messages
     end
   end
 
   def reschedule
     if @appt.update(safe_params)
-      AppointmentMailer.delay.appointment_rescheduled_for_tutor(@appt.id)               
+      AppointmentMailer.delay.appointment_rescheduled_for_tutor(@appt.id)
       AppointmentMailer.delay.appointment_rescheduled_for_student(@appt.id)
       render json: @appt
     else
@@ -40,7 +42,7 @@ class API::V1::StudentAppointmentsController < API::V1::Defaults
 
   def cancel
     if @appt.update(safe_params)
-      AppointmentMailer.delay.appointment_cancellation_for_tutor(@appt.id)               
+      AppointmentMailer.delay.appointment_cancellation_for_tutor(@appt.id)
       AppointmentMailer.delay.appointment_cancellation_for_student(@appt.id)
       render json: @appt
     else
@@ -62,7 +64,7 @@ class API::V1::StudentAppointmentsController < API::V1::Defaults
       if current_user.nil? || current_user.student != @student
         return redirect_to restricted_access_path, status: 401
       end
-    end  
+    end
 
     def safe_params
       hash = {}

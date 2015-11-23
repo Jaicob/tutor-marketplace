@@ -26,34 +26,34 @@ class Promotion < ActiveRecord::Base
   after_create :generate_secure_code
 
   enum category: [
-    :free_from_axon, 
-    :free_from_tutor, 
-    :percent_off_from_axon, 
-    :percent_off_from_tutor, 
-    :dollar_amount_off_from_axon, 
-    :dollar_amount_off_from_tutor, 
-    :repeating_percent_off_from_tutor, 
+    :free_from_axon,
+    :free_from_tutor,
+    :percent_off_from_axon,
+    :percent_off_from_tutor,
+    :dollar_amount_off_from_axon,
+    :dollar_amount_off_from_tutor,
+    :repeating_percent_off_from_tutor,
     :repeating_dollar_amount_off_from_tutor]
 
   def generate_secure_code
     puts "CATEGORY = #{self.category}"
     promo_category = self.category
     case self.category
-    when 'free_from_axon'
+    when 'free_from_axon' # 0
       prefix = 'AXONFREE'
-    when 'free_from_tutor'
+    when 'free_from_tutor' # 1
       prefix = 'TUTORFREE'
-    when 'percent_off_from_axon'
+    when 'percent_off_from_axon' # 2
       prefix = 'AXONPER'
-    when 'percent_off_from_tutor'
+    when 'percent_off_from_tutor' # 3
       prefix = 'TUTORPER'
-    when 'dollar_amount_off_from_axon'
+    when 'dollar_amount_off_from_axon' # 4
       prefix = 'AXONDLR'
-    when 'dollar_amount_off_from_tutor'
+    when 'dollar_amount_off_from_tutor' # 5
       prefix = 'TUTORDLR'
-    when 'repeating_percent_off_from_tutor'
+    when 'repeating_percent_off_from_tutor' # 6
       prefix = 'TUTORPKPER'
-    when 'repeating_dollar_amount_off_from_tutor'
+    when 'repeating_dollar_amount_off_from_tutor' # 7
       prefix = 'TUTORPKDLR'
     end
     self.code = prefix + SecureRandom.hex(6)
@@ -62,13 +62,15 @@ class Promotion < ActiveRecord::Base
 
   def is_valid?(tutor_id)
     if self.category.humanize.split().include?('tutor') # true if tutor-issued promo code
-      if (tutor_id == nil) || (self.tutor_id != tutor_id)
+      if (tutor_id == nil) || (self.tutor_id != tutor_id.to_i)
         return false
       end
     end
-    (self.redemption_count < self.redemption_limit) &&
-    (self.valid_from.to_date <= Date.today && Date.today <= self.valid_until.to_date ) ?
-    true : false
+
+
+    return self.redemption_count < self.redemption_limit &&
+           self.valid_from.to_date <= Date.today &&
+           Date.today <= self.valid_until.to_date
   end
 
 end

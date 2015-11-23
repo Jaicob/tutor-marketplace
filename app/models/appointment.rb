@@ -21,13 +21,13 @@ class Appointment < ActiveRecord::Base
   delegate :tutor, to: :slot
   delegate :school, to: :course
 
-  validates :student_id, presence: true
+  # validates :student_id, presence: true
   validates :slot_id, presence: true
   validates :course_id, presence: true
   validates :start_time, presence: true, uniqueness: { scope: :slot_id }
   validate :one_hour_appointment_buffer
   validate :inside_slot_availability
-  validate :tutor_and_student_at_same_school
+  # validate :tutor_and_student_at_same_school
 
   enum status: ['Scheduled', 'Cancelled', 'Completed']
 
@@ -99,29 +99,25 @@ class Appointment < ActiveRecord::Base
   end
 
   def self.create_appts_from_array(params)
-    appts_count = params[:data].count
-    n = 0
-    appts_count.times do
+    params[:data].map do |data|
+      data = data[1]
       Appointment.create(
-        student_id: params[:data][n][:student_id],
-        slot_id: params[:data][n][:slot_id],
-        course_id: params[:data][n][:course_id],
-        start_time: params[:data][n][:start_time]
+        student_id: params[:student_id],
+        slot_id: data[:slot_id],
+        course_id: data[:course_id],
+        start_time: data[:start_time]
       )
-      n += 1
     end
   end
 
   def self.visitor_create_appts_from_array(params)
-    appts_count = params[:data].count
-    n = 0
-    appts_count.times do
+    params[:data].map do |data|
+      data = data[1]
       Appointment.create(
-        slot_id: params[:data][n][:slot_id],
-        course_id: params[:data][n][:course_id],
-        start_time: params[:data][n][:start_time]
+        slot_id: data[:slot_id],
+        course_id: data[:course_id],
+        start_time: data[:start_time]
       )
-      n += 1
     end
   end
 
