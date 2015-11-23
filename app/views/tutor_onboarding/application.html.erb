@@ -181,7 +181,7 @@ $(document).ready(function()
   </div>
   <div class="small-12 medium-4 columns">   
     <%= f.hidden_field :onboarding_status, value: 1 %>
-    <%= f.submit 'Next Step', class: 'custom-button margin-bottom large full-width bold' %>
+    <%= f.submit 'Next Step', class: 'custom-button margin-bottom large full-width bold', data: { disable_with: "Uploading, please wait..." }  %>
     <% end %>
   </div>
 </div>

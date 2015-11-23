@@ -6,10 +6,10 @@ $(document).ready(function()
       var input = document.getElementById('user_input').value;
       if (input.length < 8){
         $('#input-error').removeClass("no-show").addClass("show");
-        $('#tutor-submit-btn').disabled = true;
+        $('#tutor-submit-btn').prop("disabled", true)
       } else {
         $('#input-error').removeClass("show").addClass("no-show");
-        $('#tutor-submit-btn').disabled = false;
+        $('#tutor-submit-btn').prop("disabled", false)
       }
     });
 });
@@ -26,6 +26,6 @@ $(document).ready(function()
       <%= tt.text_field :phone_number, placeholder: 'Phone Number', required: true %>
     <% end %>
     <%= render '/course_selector/school' %>
-    <%= f.submit "Get Started", class: 'custom-button full-width light-blue no-margin', id: 'tutor-submit-btn' %>
+    <%= f.submit "Get Started", class: 'custom-button full-width light-blue no-margin', id: 'tutor-submit-btn',disabled: true %>
   <% end %>
 </div>
