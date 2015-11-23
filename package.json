@@ -1,0 +1,28 @@
+{
+  "name": "axon",
+  "version": "1.0.0",
+  "description": "Web App  [![Build Status](https://api.shippable.com/projects/556f5e52edd7f2c05207296b/badge?branchName=master)](https://app.shippable.com/projects/556f5e52edd7f2c05207296b/builds/latest) ================",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "browserify": "^10.2.4",
+    "browserify-incremental": "^3.0.1",
+    "reactify": "^1.1.1",
+    "react": "^0.13.3"
+  },
+  "engines": {
+    "node": ">= 0.10"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/axon-dev/web-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/axon-dev/web-app/issues"
+  },
+  "homepage": "https://github.com/axon-dev/web-app#readme"
+}

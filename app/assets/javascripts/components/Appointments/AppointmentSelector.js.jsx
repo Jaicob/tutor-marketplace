@@ -10,6 +10,7 @@ var Delegate = function () {
     this.canGoForward = null;
     this.canShowForwardButton = null;
 
+    this.titleBarText = null;
     this.description = null;
     this.extra_buttons = null;
   }.bind(this);
@@ -22,15 +23,27 @@ var AppointmentSelector = React.createClass({
       return {
           selectedSlots: [],
           selectedSubject: this.props.subject || {},
+          selectedLocation: "",
           disabledSlots: [],
           currentStep: 1,
+          totalCharge: 0,
           forceSubject: false,
           forceFetch: false,
           student: {},
+          promo: null,
           token: "",
-          customer_id: "",
+          customer: "",
+          appointments: [],
+          charge: null,
           UINavigationBarDelegate: new Delegate()
       };
+  },
+  componentWillMount: function () {
+    var self = this;
+    this.delegation = {
+      UINavigationBarDelegate: self.state.UINavigationBarDelegate,
+      updateDelegate: self.updateDelegate
+    }
   },
   componentDidMount: function() {
     this.fetchStudent();
@@ -39,6 +52,7 @@ var AppointmentSelector = React.createClass({
     this.setState({
       UINavigationBarDelegate: del
     });
+    this.forceUpdate();
   },
   handleSubject: function (newSubject) {
     this.setState({
@@ -54,12 +68,20 @@ var AppointmentSelector = React.createClass({
       forceFetch: false
     });
   },
+  handleLocation: function (newLocation) {
+    this.setState({
+      selectedLocation: newLocation
+    });
+  },
   handleSteps: function (newStep) {
     this.setState({ currentStep: newStep });
   },
   handleDisabledSlots: function (newDisabledSlots) {
     newDisabledSlots.unique((slot) => slot.start_time);
     this.setState({ disabledSlots: newDisabledSlots })
+  },
+  handlePromo: function (newPromo) {
+    this.setState({promo: newPromo});
   },
   handleBackStep: function () {
     if (this.canGoBack()) {
@@ -123,60 +145,136 @@ var AppointmentSelector = React.createClass({
     return false;
   },
   fetchStudent: function () {
-    var endpoint = API.endpoints.students();
+    var endpoint = API.endpoints.students({
+      student_id: this.props.student
+    });
     $.getJSON(endpoint, function (data) {
-      this.setState({
-        student: data
-      });
+      if (data.success) {
+        data['id'] = this.props.student;
+        this.setState({
+          student: data
+        });
+      };
     }.bind(this));
   },
-  handleCard: function(customer_id, token) {
-    if (customer_id == null) {
+  handleCard: function(customer, token, callback) {
+    if (customer == null) {
       this.setState({token: token})
     } else {
-      this.setState({customer_id: customer_id})
+      this.setState({customer: customer})
     };
+
+    if (callback) {
+      callback();
+    };
+  },
+  handleTotal: function (newTotal) {
+    this.setState({
+      totalCharge: newTotal
+    });
+  },
+  handleCharge: function (newCharge) {
+    this.setState({
+      charge: newCharge
+    });
+  },
+  makeAppointment: function (update) {
+    if (Object.keys(this.state.student).length > 0) {
+      var endpoint = API.endpoints.appointment.create({ "student_id": this.state.student.id });
+    } else {
+      var endpoint = API.endpoints.appointment.create_visitor();
+    }
+
+    var appointments = this.state.selectedSlots.map(function(slot){
+      return {
+        slot_id: slot.id,
+        course_id: this.state.selectedSubject.course_id,
+        start_time: slot.start_time
+      };
+    }.bind(this));
+
+    var callback = function (data) {
+      this.setState({ appointments: data });
+      update();
+    }.bind(this);
+
+    $.post(endpoint, { data: appointments }, callback);
   },
   renderMainView: function () {
     switch(this.state.currentStep){
       case 1:
-              return <SubjectSelector tutor={this.props.tutor}
-                                      selectedSubject={this.state.selectedSubject}
-                                      handleSubject={this.handleSubject}
-                                      forceSubject={this.state.forceSubject}
-                                      UINavigationBarDelegate={this.state.UINavigationBarDelegate}
-                                      updateDelegate={this.updateDelegate}
-                                       />
+              return <SubjectSelector
+                      {...this.props}
+                      {...this.delegation}
+                      selectedSubject={this.state.selectedSubject}
+                      handleSubject={this.handleSubject}
+                      forceSubject={this.state.forceSubject}
+                     />
       case 2:
-              return <SlotSelector tutor={this.props.tutor}
-                                   selectedSlots={this.state.selectedSlots}
-                                   handleSlots={this.handleSlots}
-                                   disabledSlots={this.state.disabledSlots}
-                                   handleDisabledSlots={this.handleDisabledSlots}
-                                   forceFetch={this.state.forceFetch}
-                                   UINavigationBarDelegate={this.state.UINavigationBarDelegate}
-                                   updateDelegate={this.updateDelegate}
-                                   />
-      case 3: return <PaymentForm {...this.props} currentStudent={this.state.student} onChange={this.handleCard} />
-      case 4: return <ConfirmationScreen {...this.props} />
-      case 5: return <Summary {...this.props} />
+              return <SlotSelector
+                        {...this.props}
+                        {...this.delegation}
+                        selectedSubject={this.state.selectedSubject}
+                        selectedSlots={this.state.selectedSlots}
+                        disabledSlots={this.state.disabledSlots}
+                        forceFetch={this.state.forceFetch}
+                        handleSlots={this.handleSlots}
+                        handleDisabledSlots={this.handleDisabledSlots}
+                      />
+      case 3: return <LocationSelector
+                       {...this.props}
+                       {...this.delegation}
+                       selectedLocation={this.state.selectedLocation}
+                       handleLocation={this.handleLocation}
+                       makeAppointment={this.makeAppointment}
+                     />
+      case 4: return <Checkout
+                        {...this.props}
+                        {...this.delegation}
+                        selectedSlots={this.state.selectedSlots}
+                        selectedSubject={this.state.selectedSubject}
+                        currentStudent={this.state.student}
+                        total={this.state.totalCharge}
+                        promo={this.state.promo}
+                        handlePromo={this.handlePromo}
+                        handleTotal={this.handleTotal}
+                        onChange={this.handleCard}
+                     />
+      case 5: return <PaymentForm
+                        {...this.props}
+                        {...this.delegation}
+                        currentStudent={this.state.student}
+                        total={this.state.totalCharge}
+                        appointments={this.state.appointments}
+                        promo={this.state.promo}
+                        token={this.state.token}
+                        customer={this.state.customer}
+                        handleCharge={this.handleCharge}
+                        onChange={this.handleCard}
+                      />
+      case 6: return <Receipt
+                      {...this.props}
+                      {...this.state}
+                      {...this.delegation}
+                      total={this.state.totalCharge}
+                     />
       default: break
     };
   },
   render: function(){
-    // <div className="column selected-class-output">
-    // </div>
     return (
       <div className="appointment-selector" id="book">
         <article className="availability-calendar">
-          <div className="header row">Book Me Now</div>
+          <div className="header row">{
+            this.state.UINavigationBarDelegate.titleBarText || "Book " + this.props.tutor_name
+          }</div>
           {this.renderMainView()}
         </article>
         <div className="footer row">
             { this.canShowBackButton() &&
-            <a className="back btn" onClick={this.handleBackStep}>
-              {this.state.UINavigationBarDelegate.backButtonText || "Go Back"}
-            </a>
+              <a className="back btn" onClick={this.handleBackStep}>
+                {this.state.UINavigationBarDelegate.backButtonText || "Go Back"}
+              </a>
             }
             {
               (

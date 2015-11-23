@@ -113,19 +113,19 @@ class Tutor < ActiveRecord::Base
   end
 
   def zero_availability_set?
-    self.incomplete_profile? == false && 
-    self.awaiting_approval? == false && 
-    self.slots.count == 0 ? 
+    self.incomplete_profile? == false &&
+    self.awaiting_approval? == false &&
+    self.slots.count == 0 ?
     true : false
   end
 
   def onboarding_complete?
-    self.complete_application? && 
-    self.application_status == 'Approved' && 
+    self.complete_application? &&
+    self.application_status == 'Approved' &&
     self.courses_approved? &&
     self.slots.count > 0 &&
-    self.acct_id ? 
-    true : false 
+    self.acct_id ?
+    true : false
   end
 
   def send_active_status_change_email(tutor_params)
@@ -201,6 +201,7 @@ class Tutor < ActiveRecord::Base
       tutor_course_info = {}
       tutor_course_info[:id] = tc.id
       tutor_course_info[:course_id] = tc.course.id
+      tutor_course_info[:course_number] = tc.course.subject.name + " " + tc.course.call_number
       tutor_course_info[:course_name] = tc.course.friendly_name
       tutor_course_info[:rate] = tc.rate
       tutor_course_info
