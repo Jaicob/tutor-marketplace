@@ -89,12 +89,12 @@ var PaymentForm = React.createClass({
             } else {
               return (
                 <div className="payment row">
-                  <h3>You are not signed in. Please log in or sign up to continue.</h3>
+                  <h3 style={{"marginBottom": 30}}>You are not signed in. Please log in or sign up to continue.</h3>
                   <div className="small-6 columns">
-                    <h4><a href='/users/sign_in'>Log In</a></h4>
+                    <h4><a style={{"background": "#2BC2DE", "padding": 20, "color": "white"}} href='/users/sign_in'>Log In</a></h4>
                   </div>
                   <div className="small-6 columns">
-                    <h4><a href='/users/sign_up'>Sign Up</a></h4>
+                    <h4><a style={{"background": "#2BC2DE", "padding": 20, "color": "white"}} href='/users/sign_up'>Sign Up</a></h4>
                   </div>
                 </div>
               );
