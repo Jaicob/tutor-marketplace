@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151110183833) do
+ActiveRecord::Schema.define(version: 20151123205659) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,9 +46,9 @@ ActiveRecord::Schema.define(version: 20151110183833) do
   add_index "campus_managers", ["user_id"], name: "index_campus_managers_on_user_id", using: :btree
 
   create_table "charges", force: :cascade do |t|
-    t.integer  "amount"
-    t.integer  "axon_fee"
-    t.integer  "tutor_fee"
+    t.float    "amount"
+    t.float    "axon_fee"
+    t.float    "tutor_fee"
     t.string   "customer_id"
     t.integer  "tutor_id"
     t.string   "token"

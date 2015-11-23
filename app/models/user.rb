@@ -56,8 +56,6 @@ class User < ActiveRecord::Base
       phone_number: params[:user][:tutor][:phone_number],
       school_id: params[:course][:school_id]
     )
-    # creates the tutor's first tutor_course
-    user.tutor.tutor_courses.create(course_id: params[:course][:course_id], rate: params[:tutor_course][:rate])
     # send welcome email
     TutorManagementMailer.delay.welcome_email(user.id)
   end
@@ -68,13 +66,6 @@ class User < ActiveRecord::Base
     )
     # TODO: send welcome email to student?
   end
-
-  # def set_school(user, params)
-  #   # used in Devise::RegistrationsController to set school during sign-up
-  #   if params[:course][:school_id]
-  #     user.update(school_id: params[:course][:school_id])
-  #   end
-  # end
 
   def slug_candidates
     # variations of a user's name to create unique slugs in case of duplicate names
