@@ -23,6 +23,21 @@
       <%= yield(:dashboard_nav) if content_for? (:dashboard_nav) %>
       <%= yield(:awaiting_approval_screen) if content_for? (:awaiting_approval_screen) %>
       <%= yield %>
+      <script>
+        var info = "<%= flash[:info] %>";
+        var error = "<%= flash[:error] %>";
+        if (info.length > 0) {
+          swal({
+            title: info,
+            type: 'info'
+          });
+        } else if (error.length > 0) {
+          swal({
+            title: error,
+            type: 'error',
+          });
+        }
+      </script>
     </div>
     <footer>
       <div class="row full-width footer-bg">
