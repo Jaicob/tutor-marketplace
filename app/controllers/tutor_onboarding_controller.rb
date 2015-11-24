@@ -24,8 +24,14 @@ class TutorOnboardingController < ApplicationController
   end
 
   def create_course
-    @tutor_course = TutorCourse.create(tutor_course_params)
-    redirect_to onboarding_courses_tutor_path(@tutor.slug)
+    @tutor_course = TutorCourse.new(tutor_course_params)
+    if @tutor_course.save
+      redirect_to onboarding_courses_tutor_path(@tutor.slug)
+      flash[:success] = "#{@tutor_course.course.friendly_name} was added to your course list"
+    else
+      redirect_to :back
+      flash[:error] = "Course was not added to your course list!"
+    end
   end
 
   def update_course

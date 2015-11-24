@@ -21,13 +21,12 @@ class Appointment < ActiveRecord::Base
   delegate :tutor, to: :slot
   delegate :school, to: :course
 
-  # validates :student_id, presence: true
   validates :slot_id, presence: true
   validates :course_id, presence: true
   validates :start_time, presence: true, uniqueness: { scope: :slot_id }
   validate :one_hour_appointment_buffer
   validate :inside_slot_availability
-  # validate :tutor_and_student_at_same_school
+  validate :tutor_and_student_at_same_school
 
   enum status: ['Scheduled', 'Cancelled', 'Completed']
 
@@ -52,16 +51,18 @@ class Appointment < ActiveRecord::Base
     end
   end
 
-  # # custom validation
-  # def tutor_and_student_at_same_school
-  #   tutor_id = Slot.find(slot_id).tutor.id
-  #   tutor = Tutor.find(tutor_id)
-  #   student = Student.find(student_id)
-  #   course = Course.find(course_id)
-  #   if !(tutor.school.name == course.school.name && student.school.name == course.school.name)
-  #     errors.add(:school_id, "is not the same for tutor, student and course: \ntutor and course = #{student.school.name == course.school.name}\nstudent and course = #{tutor.school.name == course.school.name}")
-  #   end
-  # end
+  # custom validation
+  def tutor_and_student_at_same_school
+    if student_id != nil # allows for appt creation before student is logged in, but runs when student exists
+      tutor_id = Slot.find(slot_id).tutor.id
+      tutor = Tutor.find(tutor_id)
+      student = Student.find(student_id)
+      course = Course.find(course_id)
+      if !(tutor.school.name == course.school.name && student.school.name == course.school.name)
+        errors.add(:school_id, "is not the same for tutor, student and course: \ntutor and course = #{student.school.name == course.school.name}\nstudent and course = #{tutor.school.name == course.school.name}")
+      end
+    end
+  end
 
   # This sets the delivery time for reminder emails as 12 hours before the appointment, except in the case where the appointment is tomorrow and no reminder is needed
   def appt_reminder_email_date
