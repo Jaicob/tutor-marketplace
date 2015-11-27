@@ -42,7 +42,7 @@ class User < ActiveRecord::Base
   validates :first_name, presence: true
   validates :last_name, presence: true
 
-  enum role: [:student, :tutor, :campus_manager, :super_admin]
+  enum role: [:student, :tutor, :campus_manager, :admin]
 
   extend FriendlyId
   friendly_id :slug_candidates, use: :slugged

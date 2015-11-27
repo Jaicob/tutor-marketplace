@@ -32,16 +32,28 @@
     <!-- JS below passes flash messages to Sweet Alert -->
     <script>
       var info = "<%= flash[:info] %>";
+      var notice = "<%= flash[:notice] %>"
       var error = "<%= flash[:error] %>";
+      var alert = "<%= flash[:alert] %>";
       var success = "<%= flash[:success] %>";
       if (info.length > 0) {
         swal({
           title: info,
           type: 'info'
         });
+      } else if (notice.length > 0) {
+        swal({
+          title: notice,
+          type: 'info'
+        });
       } else if (error.length > 0) {
         swal({
           title: error,
+          type: 'error',
+        });
+      } else if (alert.length > 0) {
+        swal({
+          title: alert,
           type: 'error',
         });
       } else if (success.length > 0) {
