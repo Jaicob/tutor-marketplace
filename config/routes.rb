@@ -303,8 +303,8 @@ Rails.application.routes.draw do
     resources :schools do
       collection { match 'search' => 'schools#search', via: [:get, :post], as: :search }
       member do
-        get   'campus_manager' => 'schools#edit_campus_manager'
-        post  'campus_manager' => 'schools#update_campus_manager'
+        post  'campus_manager' => 'schools#create_campus_manager'
+        patch 'campus_manager' => 'schools#update_campus_manager'
       end
     end
     resources :promotions do collection { match 'search' => 'promotions#search', via: [:get, :post], as: :search } end

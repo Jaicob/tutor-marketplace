@@ -50,36 +50,33 @@
   </div>
 </div>
 
-<div class="row">
-  <div class="large-12 columns">
-    <h6><%= @working_school.campus_manager.full_name %></h6>
-    <p><%= @working_school.campus_manager.email %></p>
-    <p><%= @working_school.campus_manager.phone_number %></p>
-  </div>
-</div>
-
-
-
-
-<div class="row">
-  <% if @working_school.campus_manager %>
+<% if @working_school.campus_manager %>
+  <div class="row">
     <div class="large-12 columns">
-      <%= link_to 'Edit Campus Manager Info', campus_manager_admin_school_path(@working_school) %>
       <h4><%= @working_school.campus_manager.full_name %></h4>
       <p>Email: <%= @working_school.campus_manager.email %></p>
       <p>Phone: <%= @working_school.campus_manager.phone_number %></p>
       <%= image_tag(@working_school.campus_manager.profile_pic_url, class: 'campus_manager_pic') %>
     </div>
-  <% else %>
-    <div class="large-12 columns">
-      <p>Link should go here to add campus manager</p>
-    </div>
-  <% end %>
+  </div>
+<% end %>
+
+<div class="row margin-bottom-3em">
+  <div class="large-12 columns">
+    <a href="#" data-reveal-id="editCampusManager" class="custom-button">Edit Campus Manager</a>
+  </div>
 </div>
 
   <!-- Modal for editing school -->
   <div id="editSchool" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
       <%= render 'edit_school' %>
+    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+  </div>
+  <!-- End of modal -->
+
+  <!-- Modal for editing campus_manager -->
+  <div id="editCampusManager" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+      <%= render 'edit_campus_manager' %>
     <a class="close-reveal-modal" aria-label="Close">&#215;</a>
   </div>
   <!-- End of modal -->

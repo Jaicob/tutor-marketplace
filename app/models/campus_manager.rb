@@ -16,6 +16,8 @@ class CampusManager < ActiveRecord::Base
   belongs_to :user
   belongs_to :school
 
+  validates :user_id, presence: true
+
   mount_uploader :profile_pic, ProfilePicUploader
 
   # Dimensions for cropping profile pics
