@@ -280,13 +280,14 @@ Rails.application.routes.draw do
         get  '/payment_info'          => 'dashboard/student/settings#payment_info'
         post '/payment_info'          => 'dashboard/student/settings#save_payment_info'
         get  '/edit_payment_info'     => 'dashboard/student/settings#edit_payment_info'
-        post '/edit_payment_info'      => 'dashboard/student/settings#save_payment_info'
+        post '/edit_payment_info'     => 'dashboard/student/settings#save_payment_info'
         get  '/appointment_history'   => 'dashboard/student/settings#appointment_history'
       end
     end
   end
 
   # restricted admin-only area routes (the collections after the resources are for ransack search)
+scope module: 'dashboard' do
   namespace :admin do
     resources :courses do
       collection do
@@ -309,6 +310,7 @@ Rails.application.routes.draw do
     end
     resources :promotions do collection { match 'search' => 'promotions#search', via: [:get, :post], as: :search } end
   end
+end
 
   # API routes
   namespace :api, defaults: {format: :json} do

@@ -1,6 +1,6 @@
 <div class="row">
   <div class="large-6 columns">
-    <h1>Schools</h1>
+    <h1>School List</h1>
   </div>
   <div class="large-4 columns">
     <%= link_to 'Add New School', new_admin_school_path, class: 'custom-button full-width margin-top-1em' %>
@@ -19,7 +19,7 @@
           <th>Tutors</th>
           <th>Students</th>
           <th>Appts</th>
-          <th>Fee</th>
+          <th>Total Revenue</th>
           <th>Campus Manager</th>
         </tr>
       </thead>
@@ -33,7 +33,7 @@
           <td><%= school.tutors.count %></td>
           <td><%= school.students.count %></td>
           <td><%= school.appointments.count %></td>
-          <td><%= school.transaction_percentage %>%</td>
+          <td>--</td>
           <td><%= school.campus_manager.full_name unless !school.campus_manager %></td>
         </tr>
         <% end %>

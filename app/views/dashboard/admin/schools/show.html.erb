@@ -5,8 +5,12 @@
 </style>
 
 <div class="row">
-  <div class="large-6 columns">
-    <h1>School Details</h1>
+  <div class="large-8 columns">
+    <h3>School Details</h3>
+    <h2><%= @working_school.name %></h2>
+    <h6><%= @working_school.location %></h6>
+    <h6>Fee: <%= @working_school.transaction_percentage %>%</h6>
+    <a href="#" data-reveal-id="editSchool" class="custom-button">Edit</a>
   </div>
   <div class="large-4 columns">
     <%= link_to 'Back to All Schools', admin_schools_path, class: 'custom-button full-width margin-top-1em blue' %>
@@ -19,27 +23,29 @@
       <thead>
         <tr>
           <th>ID</th>
-          <th>Name</th>
-          <th>Location</th>
           <th>Courses</th>
           <th>Tutors</th>
           <th>Students</th>
           <th>Appts</th>
+          <th>Avg. Tutor Fee</th>
+          <th>Avg. Axon Fee</th>
+          <th>YTD Rev.</th>
+          <th>Total Rev.</th>
           <th>Fee</th>
-          <th>Edit</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td><%= @working_school.id %></td>
-          <td><%= @working_school.name %></td>
-          <td><%= @working_school.location %></td>
           <td><%= @working_school.courses.count %></td>
           <td><%= @working_school.tutors.count %></td>
           <td><%= @working_school.students.count %></td>
           <td><%= @working_school.appointments.count %></td>
+          <td>--</td>
+          <td>--</td>
+          <td>--</td>
+          <td>--</td>
           <td><%= @working_school.transaction_percentage %>%</td>
-          <td><a href="#" data-reveal-id="editSchool" class="custom-button full-width">Edit</a></td>
         </tr>
       </tbody>
     </table>
@@ -54,8 +60,10 @@
         <p>Current Image: <a href="<%= @working_school.campus_pic.url %>" target="_blank" class="blue-link">
           <%= @working_school.campus_pic.url.split("/").last %></a>
         </p>
+      <% else %>
+        <h6>None</p>
       <% end %>
-      <a href="#" data-reveal-id="uploadCampusPicture" class="custom-button">New Campus Picture</a>
+      <a href="#" data-reveal-id="uploadCampusPicture" class="custom-button">Edit</a>
     </div>
   </div>
 </div>
@@ -76,35 +84,31 @@
             <p><%= @working_school.campus_manager.phone_number %></p>
           </div>
         </div>
+      <% else %>
+        <h6>None</p>
       <% end %>
 
-      <a href="#" data-reveal-id="editCampusManager" class="custom-button">Edit Campus Manager</a>
+      <a href="#" data-reveal-id="editCampusManager" class="custom-button">Edit</a>
     </div>
   </div>
 </div>
 
   <!-- Modal for uploading campus_pic -->
-  <div id="uploadCampusPicture" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
-    <%= form_for @working_school, url: "/admin/schools/#{@working_school.id}" do |f| %>
-
-      <%= f.label :campus_pic, 'Campus Picture' %>
-      <%= f.file_field :campus_pic %>
-
-      <%= f.submit 'Upload Picture', class: 'custom-button' %>
-    <% end %>
+  <div id="uploadCampusPicture" class="reveal-modal small" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+      <%= render 'edit_campus_pic' %>
     <a class="close-reveal-modal" aria-label="Close">&#215;</a>
   </div>
   <!-- End of modal -->
 
   <!-- Modal for editing school -->
-  <div id="editSchool" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+  <div id="editSchool" class="reveal-modal small" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
       <%= render 'edit_school' %>
     <a class="close-reveal-modal" aria-label="Close">&#215;</a>
   </div>
   <!-- End of modal -->
 
   <!-- Modal for editing campus_manager -->
-  <div id="editCampusManager" class="reveal-modal tiny" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+  <div id="editCampusManager" class="reveal-modal small" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
       <%= render 'edit_campus_manager' %>
     <a class="close-reveal-modal" aria-label="Close">&#215;</a>
   </div>

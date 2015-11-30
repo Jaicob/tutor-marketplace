@@ -19,7 +19,7 @@
       </div>
     </header>
     <div class="row full-width main-content">
-      <%= yield(:admin_panel) if content_for? (:admin_panel) %>
+      <%= yield(:admin_nav) if content_for? (:admin_nav) %>
       <%= yield(:dashboard_nav) if content_for? (:dashboard_nav) %>
       <%= yield(:awaiting_approval_screen) if content_for? (:awaiting_approval_screen) %>
       <%= yield %>

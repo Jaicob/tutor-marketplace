@@ -1,8 +1,14 @@
-class AdminController < ApplicationController
-  before_action :authorized_for_admin_area?
-  before_action :set_user
-  before_action :set_school
+class AdminController < DashboardController
+  before_action :redirect_non_admin
 
-  # Add filters for restricting access to Admins only and setting current Admin user
+  def redirect_non_admin
+    if !current_user
+      redirect_to root_path && return
+    elsif current_user.role == 'student'
+      redirect_to home_student_path(current_user)
+    elsif current_user.role == 'tutor'
+      redirect_to home_tutor_path(current_user)
+    end
+  end
 
 end

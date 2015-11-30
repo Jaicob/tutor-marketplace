@@ -1,4 +1,4 @@
-class Admin::TutorsController < AdminController
+class Dashboard::Admin::TutorsController < AdminController
   before_action :set_tutor_admin_controller, only: [:show, :update, :destroy]
 
   def search
@@ -47,4 +47,5 @@ class Admin::TutorsController < AdminController
     def tutor_params
       params.require(:tutor).permit(:rating, :application_status, :birthdate, :degree, :major, :extra_info, :graduation_year, :phone_number, :profile_pic, :transcript, :active_status, :crop_x, :crop_y, :crop_w, :crop_h, course: [:course_id], tutor_course: [:rate])
     end
+
 end

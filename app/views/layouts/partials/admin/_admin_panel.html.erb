@@ -1,38 +1,36 @@
 <style>
-/*.admin-header {
+.admin-header {
   background-color: #FF69B4;
 }
 #flaming-text {
   margin: auto;
   display: block;
   padding: 2em 0 0;
-}*/
+}
 </style>
 
-<% content_for (:admin_panel) do %>
-  <div class="admin-header">
-<!--     <div class="row">
-      <img src="http://blog.flamingtext.com/blog/2015/11/30/flamingtext_com_1448890692_12094943.gif" id="flaming-text">
-    </div> -->
-    <div class="row">
-      <p class="admin-title"><%= @school.blank? ? 'Super-Admin Panel' : 'Campus Manager Panel' %></p>
-      <h3 class="school-name"><%= @school.blank? ? 'All Schools' : "#{@school.name}" %></h3>
-    </div>
+<div class="admin-header">
+  <div class="row">
+    <img src="http://blog.flamingtext.com/blog/2015/11/30/flamingtext_com_1448890692_12094943.gif" id="flaming-text">
   </div>
-  <section class="admin-nav">
-    <nav>
-      <div class="row">
-        <ul class="breadcrumbs">
-          <li><%= link_to 'Tutors', admin_tutors_path %></li>
-          <li><%= link_to 'Students', admin_students_path %></li>
-          <li><%= link_to 'Appointments', admin_appointments_path %></li>
-          <li><%= link_to 'Courses', admin_courses_path %></li>
-          <li><%= link_to 'Promotions', admin_promotions_path %></li>
-          <% if current_user.role == 'admin' %>
-            <li><%= link_to 'Schools', admin_schools_path %></li>
-          <% end %>
-        </ul>
-      </div>     
-    </nav>
-  </section>
-<% end %>
+  <div class="row">
+    <p class="admin-title"><%= @school.blank? ? 'Super-Admin Panel' : 'Campus Manager Panel' %></p>
+    <h3 class="school-name"><%= @school.blank? ? 'All Schools' : "#{@school.name}" %></h3>
+  </div>
+</div>
+<section class="admin-nav">
+  <nav>
+    <div class="row">
+      <ul class="breadcrumbs">
+        <li><%= link_to 'Tutors', admin_tutors_path %></li>
+        <li><%= link_to 'Students', admin_students_path %></li>
+        <li><%= link_to 'Appointments', admin_appointments_path %></li>
+        <li><%= link_to 'Courses', admin_courses_path %></li>
+        <li><%= link_to 'Promotions', admin_promotions_path %></li>
+        <% if current_user.role == 'admin' %>
+          <li><%= link_to 'Schools', admin_schools_path %></li>
+        <% end %>
+      </ul>
+    </div>     
+  </nav>
+</section>
