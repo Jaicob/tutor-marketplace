@@ -18,7 +18,7 @@ var Slot = React.createClass({
     }
   },
   render: function () {
-    var time = moment.utc(this.props.slot.start_time).format("hh:mm A");
+    var time = moment(this.props.slot.start_time).format("hh:mm A");
     return (
       <li onClick={this.handleClick}><a className={this.generateStyle()}>{time}</a></li>
     );

@@ -107,7 +107,7 @@ var SlotSelector = React.createClass({
   groupAppointmentCandidates: function (slots) {
     var newSlots = {}
     for (var slot = 0; slot < slots.length; slot++) {
-      var date = moment(slots[slot].start_time).utc().format("MM-DD-YYYY")
+      var date = moment(slots[slot].start_time).format("MM-DD-YYYY")
       if (newSlots[date]) {
         newSlots[date].push(slots[slot])
       } else {
