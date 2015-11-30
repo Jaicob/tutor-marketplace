@@ -3,7 +3,7 @@
     <h3>Campus Manager</h3>
   </div>
 
-  <%= form_for @campus_manager, url: campus_manager_admin_school_path(@working_school) do |f| %>
+  <%= form_for @campus_manager, url: campus_manager_admin_school_path(@working_school), method: :patch do |f| %>
     <div class="small-12 columns">
       <%= f.label :user_id, 'User ID' %>
       <%= f.number_field :user_id %>

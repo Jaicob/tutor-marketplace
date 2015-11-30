@@ -304,7 +304,6 @@ scope module: 'dashboard' do
     resources :schools do
       collection { match 'search' => 'schools#search', via: [:get, :post], as: :search }
       member do
-        post  'campus_manager' => 'schools#create_campus_manager'
         patch 'campus_manager' => 'schools#update_campus_manager'
       end
     end

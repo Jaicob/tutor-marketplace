@@ -44,32 +44,12 @@ class Dashboard::Admin::SchoolsController < AdminController
     end
   end
 
-  def save_campus_manager
-    if @working_school.campus_manager
-      if @campus_manager.update_attributes(campus_manager_params)
-        redirect_to admin_school_path(@working_school)
-      else
-        redirect_to :back
-        flash[:error] = "Campus manager was not updated."
-      end
-    else
-      if @working_school.create_campus_manager(campus_manager_params)
-        redirect_to admin_school_path(@working_school)
-      else
-        redirect_to :back
-        flash[:error] = "Campus manager was not created."
-      end
-    end
-  end
-
   def update_campus_manager
-    # puts "PARAMS = #{campus_manager_params}"
-    # sliced = campus_manager_params.except()
-    if @working_school.create_campus_manager(campus_manager_params)
+    if @campus_manager.update(campus_manager_params)
       redirect_to admin_school_path(@working_school)
     else
       redirect_to :back
-      flash[:error] = "Campus manager was not created."
+      flash[:error] = "Campus manager was not updated."
     end
   end
 
@@ -80,11 +60,7 @@ class Dashboard::Admin::SchoolsController < AdminController
     end
 
     def set_campus_manager
-      if @working_school.campus_manager
-        @campus_manager = @working_school.campus_manager 
-      else
-        @campus_manager = CampusManager.new
-      end
+      @campus_manager = @working_school.campus_manager 
     end
 
     def school_params
