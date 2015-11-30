@@ -38,6 +38,7 @@ class User < ActiveRecord::Base
   has_one :tutor, dependent: :destroy
   has_one :student, dependent: :destroy
   has_one :campus_manager, dependent: :destroy
+  has_one :admin, dependent: :destroy
 
   validates :first_name, presence: true
   validates :last_name, presence: true
@@ -97,8 +98,6 @@ class User < ActiveRecord::Base
       return self.tutor.school
     when :campus_manager
       return self.campus_manager.school
-    when :super_admin
-      return self.super_admin.school
     end
   end
 

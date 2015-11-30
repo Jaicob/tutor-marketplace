@@ -14,7 +14,7 @@ class Admin::SchoolsController < AdminController
     @working_school = School.create(school_params)
 
     if @working_school.save
-      redirect_to admin_school_path(@school)
+      redirect_to admin_school_path(@working_school)
     else
       flash[:error] = "School was not created: #{@school.errors.full_messages}"
       render :new

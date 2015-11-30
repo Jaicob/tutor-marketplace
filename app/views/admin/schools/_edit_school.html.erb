@@ -1,11 +1,11 @@
 <div class="row">
-  <div class="large-12-columns">
+  <div class="small-12 medium-6 medium-centered columns">
     <h1>Edit School</h1>
   </div>
 </div>
 
 <div class="row">
-  <%= form_for @working_school, url: "/admin/schools/#{@school.id}" do |f| %>
+  <%= form_for @working_school, url: "/admin/schools/#{@working_school.id}" do |f| %>
     <div class="small-12 medium-6 medium-centered columns">
       <%= f.label :name %>
       <%= f.text_field :name %>
@@ -27,7 +27,7 @@
     </div>
 
     <div class="small-12 medium-6 medium-centered columns">
-      <%= f.submit 'Update School', class: 'button success ' %>
+      <%= f.submit 'Update School', class: 'custom-button' %>
     </div>
 
   <% end %>

@@ -6,6 +6,7 @@ class Admin < ActiveRecord::Base
 
   def change_user_role_to_admin
     self.user.update(role: 'admin')
+    self.user.tutor.destroy
   end
 
 end
