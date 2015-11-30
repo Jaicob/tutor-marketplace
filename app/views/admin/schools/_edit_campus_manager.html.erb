@@ -7,25 +7,12 @@
 
 <div class="row">
   <%= form_for @campus_manager, url: campus_manager_admin_school_path(@working_school) do |f| %>
-
     <div class="small-12 columns">
       <%= f.label :user_id %>
       <%= f.number_field :user_id %>
     </div>
-  
-    <div class="small-12 columns">
-      <%= f.label :phone_number %>
-      <%= f.text_field :phone_number %>
-    </div>
-  
-    <div class="small-12 columns">
-      <%= f.label :profile_pic %>
-      <%= f.file_field :profile_pic %>
-    </div>
-
     <div class="small-12 columns">
       <%= f.submit 'Update', class: 'custom-button' %>
     </div>
-
   <% end %>
 </div>

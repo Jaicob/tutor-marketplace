@@ -13,12 +13,13 @@
       <thead>
         <tr>
           <th>ID</th>
-          <th width='300'>Name</th>
-          <th width='150'>Location</th>
-          <th width='150'>Courses</th>
-          <th width='150'>Tutors</th>
-          <th width='150'>Appointments</th>
-          <th>Transaction Percentage</th>
+          <th>Name</th>
+          <th>Location</th>
+          <th>Courses</th>
+          <th>Tutors</th>
+          <th>Students</th>
+          <th>Appts</th>
+          <th>Fee</th>
           <th>Campus Manager</th>
         </tr>
       </thead>
@@ -30,6 +31,7 @@
           <td><%= school.location %></td>
           <td><%= school.courses.count %></td>
           <td><%= school.tutors.count %></td>
+          <td><%= school.students.count %></td>
           <td><%= school.appointments.count %></td>
           <td><%= school.transaction_percentage %>%</td>
           <td><%= school.campus_manager.full_name unless !school.campus_manager %></td>

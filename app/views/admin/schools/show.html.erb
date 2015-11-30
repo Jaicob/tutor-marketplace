@@ -23,7 +23,8 @@
           <th>Location</th>
           <th>Courses</th>
           <th>Tutors</th>
-          <th>Appointments</th>
+          <th>Students</th>
+          <th>Appts</th>
           <th>Fee</th>
           <th>Edit</th>
         </tr>
@@ -35,6 +36,7 @@
           <td><%= @working_school.location %></td>
           <td><%= @working_school.courses.count %></td>
           <td><%= @working_school.tutors.count %></td>
+          <td><%= @working_school.students.count %></td>
           <td><%= @working_school.appointments.count %></td>
           <td><%= @working_school.transaction_percentage %>%</td>
           <td><a href="#" data-reveal-id="editSchool" class="custom-button full-width">Edit</a></td>
@@ -44,28 +46,55 @@
   </div>
 </div>
 
-<div class="row">
+<div class="row margin-bottom-3em">
   <div class="large-12 columns">
-    <h3>Campus Manager</h3>
-  </div>
-</div>
-
-<% if @working_school.campus_manager %>
-  <div class="row">
-    <div class="large-12 columns">
-      <h4><%= @working_school.campus_manager.full_name %></h4>
-      <p>Email: <%= @working_school.campus_manager.email %></p>
-      <p>Phone: <%= @working_school.campus_manager.phone_number %></p>
-      <%= image_tag(@working_school.campus_manager.profile_pic_url, class: 'campus_manager_pic') %>
+    <div class="box">
+      <h3>Background Image</h3>
+      <% if @working_school.campus_pic.url %>
+        <p>Current Image: <a href="<%= @working_school.campus_pic.url %>" target="_blank" class="blue-link">
+          <%= @working_school.campus_pic.url.split("/").last %></a>
+        </p>
+      <% end %>
+      <a href="#" data-reveal-id="uploadCampusPicture" class="custom-button">New Campus Picture</a>
     </div>
   </div>
-<% end %>
+</div>
 
 <div class="row margin-bottom-3em">
   <div class="large-12 columns">
-    <a href="#" data-reveal-id="editCampusManager" class="custom-button">Edit Campus Manager</a>
+    <div class="box">
+      <h3>Campus Manager</h3>
+
+      <% if @working_school.campus_manager %>
+        <div class="row">
+          <div class="small-12 medium-6 columns">
+            <%= image_tag(@working_school.campus_manager.profile_pic_url, class: 'campus_manager_pic') %>
+          </div>
+          <div class="small-12 medium-6 columns">
+            <h6><%= @working_school.campus_manager.full_name %></h6>
+            <p><%= @working_school.campus_manager.email %></p>
+            <p><%= @working_school.campus_manager.phone_number %></p>
+          </div>
+        </div>
+      <% end %>
+
+      <a href="#" data-reveal-id="editCampusManager" class="custom-button">Edit Campus Manager</a>
+    </div>
   </div>
 </div>
+
+  <!-- Modal for uploading campus_pic -->
+  <div id="uploadCampusPicture" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+    <%= form_for @working_school, url: "/admin/schools/#{@working_school.id}" do |f| %>
+
+      <%= f.label :campus_pic, 'Campus Picture' %>
+      <%= f.file_field :campus_pic %>
+
+      <%= f.submit 'Upload Picture', class: 'custom-button' %>
+    <% end %>
+    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+  </div>
+  <!-- End of modal -->
 
   <!-- Modal for editing school -->
   <div id="editSchool" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
@@ -75,7 +104,7 @@
   <!-- End of modal -->
 
   <!-- Modal for editing campus_manager -->
-  <div id="editCampusManager" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+  <div id="editCampusManager" class="reveal-modal tiny" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
       <%= render 'edit_campus_manager' %>
     <a class="close-reveal-modal" aria-label="Close">&#215;</a>
   </div>
