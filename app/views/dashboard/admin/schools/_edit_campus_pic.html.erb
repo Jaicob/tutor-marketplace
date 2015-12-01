@@ -1,0 +1,14 @@
+<div class="row">
+  <div class="small-12 columns">
+    <h3>Upload Campus Picture</h3>
+  </div>
+
+  <%= form_for @working_school, url: "/admin/schools/#{@working_school.id}" do |f| %>
+    <div class="small-12 columns">
+      <%= f.file_field :campus_pic %>
+    </div>
+    <div class="small-12 columns">
+      <%= f.submit 'Upload Picture', class: 'custom-button' %>
+    </div>
+  <% end %>
+</div>

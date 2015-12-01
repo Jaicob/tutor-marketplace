@@ -1,4 +1,4 @@
-class Admin::PromotionsController < AdminController
+class Dashboard::Admin::PromotionsController < AdminController
   before_action :set_promotion, only: [:show, :edit, :update, :destroy]
 
   def search

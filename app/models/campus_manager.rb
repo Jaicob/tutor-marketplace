@@ -23,4 +23,10 @@ class CampusManager < ActiveRecord::Base
 
   delegate :first_name, :last_name, :full_name, :email, to: :user
 
+  after_create :change_user_role_to_campus_manager
+
+  def change_user_role_to_campus_manager
+    self.user.update(role: 'campus_manager')
+  end
+
 end

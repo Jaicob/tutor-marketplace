@@ -10,7 +10,7 @@ describe 'Tutor Management mailers', type: 'request' do
   let(:appt) { create(:appointment) }
   let(:almost_complete_tutor) { create(:tutor_with_complete_application, degree: nil) }
   let(:school) { create(:school) }
-  let(:admin) { create(:user, :super_admin) }
+  let(:admin) { create(:user, :admin) }
 
   # logs in tutor/student to gain access to protected API endpoints
   def request_spec_login(user)

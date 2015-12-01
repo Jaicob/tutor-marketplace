@@ -1,16 +1,17 @@
 class SingleViewsController < ApplicationController
 
   def home
-    if cookies[:school_id].blank? && !@school
-      redirect_to get_started_path
-    # else
-    #   @sign_up_path = new_tutor_path
-    #   @search_path = search_path()
+    if cookies[:school_id].blank? && !@school # redirects to student_landing page if no school set
+      if current_user && current_user.admin
+        return # cancels redirect for signed-in admin, which are not supposed to have a school_id
+      else
+        redirect_to get_started_path
+      end
     end
   end
 
   def student_landing
-    if current_user 
+    if current_user # this page is only for new visitors, so redirect to home if session exists
       redirect_to root_path
     end
   end

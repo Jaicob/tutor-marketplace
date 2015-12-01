@@ -68,16 +68,19 @@
   </div>
 
   <div class="row">
-    <div class="small-12 medium-4 columns">
-      <div class="margin-top-2em center">
-        <h4>Your Campus Manager</h4>
-        <div class="box height-22em">
-          <%= image_tag(@school.campus_manager.profile_pic_url, class: 'campus_manager_pic') %>
-          <h6 class="name"><%= @school.campus_manager.full_name %></h6>
-          <p><%= @school.campus_manager.email %></p>
-          <p><%= @school.campus_manager.phone_number %></p>
-        </div>
-      </div>
+    <div class="small-4 columns">  
+    <h2 class="dash-home-header">Support</h2>
+    <div class="box height-24em">
+      <h5>Your Campus Manager</h5>
+      <% if @school.campus_manager %>
+        <h6 class="name"><%= @school.campus_manager.full_name %></h6>
+        <p><%= @school.campus_manager.email %></p>
+      <% end %>
+      <h5>Axon Headquarters</h5>
+      <p>(762) 585-4850</p>
+      <p><%= mail_to 'info@axontutors.com' %></p>
+    </div>
+  </div>
     </div>
     <div class="small-12 medium-8 columns">
       <div class="margin-top-2em center">

@@ -5,6 +5,9 @@ class API::V1::SlotsController < API::V1::Defaults
 
   def index
     @slots = @tutor.slots
+    @slots.map do |slot|
+      slot[:unavailable_times] = slot.appointments.map { |app| app.start_time }
+    end
     respond_with(@slots)
   end
 

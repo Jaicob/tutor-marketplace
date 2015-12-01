@@ -1,11 +1,13 @@
 <%= render '/tutor_onboarding/progress_bar' %>
-<div class="row box">
+<div class="row">
   <div class="small-12 medium-12 columns">
-    <h1>Your Payment</h1>
-    <p class="big-text">Lastly, we need a way to pay you. We use <span>Stripe</span> to handle all of our credit card transactions and tutor payments.</p>
-    <p class="big-text">You will be paid <span>via direct deposit within 48 hours</span> after a session is completed. To set up direct deposit, fill in the information below.</p>
-    <p class="big-text">Note: Your bank account information will be stored on a secure PCI compliant server. It will only be used to create an account with our merchant service Stripe.</p>
-    <p class="big-text"><a href="https://stripe.com/" target="_blank" class="blue-link">Click here to learn more about Stripe.</a></p>
+    <div class="box">
+      <h1>Your Payment</h1>
+      <p class="big-text">Lastly, we need a way to pay you. We use <span>Stripe</span> to handle all of our credit card transactions and tutor payments.</p>
+      <p class="big-text">You will be paid <span>via direct deposit within 48 hours</span> after a session is completed. To set up direct deposit, fill in the information below.</p>
+      <p class="big-text">Note: Your bank account information will be stored on a secure PCI compliant server. It will only be used to create an account with our merchant service Stripe.</p>
+      <p class="big-text"><a href="https://stripe.com/" target="_blank" class="blue-link">Click here to learn more about Stripe.</a></p>
+    </div>
   </div>
 </div>
 <div class="row">
@@ -57,11 +59,13 @@
   </div>
 </div>
 <div class="row">
-  <div class="small-12 medium-8 columns box next-step-instructions">
-    <p>Finished setting up your Stripe account? Click here to complete Account Setup!<i class="fi-arrow-right"></i></p>
+  <div class="small-12 medium-8 columns next-step-instructions">
+    <div class="box">
+      <p>Finished setting up your Stripe account? Click here to complete Account Setup!<i class="fi-arrow-right"></i></p>
+    </div>
   </div>
   <div class="small-12 medium-4 columns">
-      <%= f.submit 'Finish', class: 'custom-button margin-bottom large full-width bold' %>
+      <%= f.submit 'Finish Setup!', class: 'custom-button margin-bottom large full-width bold' %>
     <% end %>   
   </div>
 </div>

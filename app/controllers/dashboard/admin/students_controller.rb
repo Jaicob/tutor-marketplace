@@ -1,4 +1,4 @@
-class Admin::StudentsController < AdminController
+class Dashboard::Admin::StudentsController < AdminController
   before_action :set_student, only: [:show, :update, :destroy]
 
   def search
