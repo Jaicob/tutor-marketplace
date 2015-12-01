@@ -5,10 +5,14 @@ class API::V1::SlotsController < API::V1::Defaults
 
   def index
     @slots = @tutor.slots
+    @slots_array = []
     @slots.map do |slot|
-      slot[:unavailable_times] = slot.appointments.map { |app| app.start_time }
+      # can't add non-attribute 'unavailable_times' to object, so converting slot to hash of attributes instead
+      slot_hash = slot.attributes
+      slot_hash['unavailable_times'] = slot.appointments.map { |appt| appt.start_time }
+      @slots_array << slot_hash
     end
-    respond_with(@slots)
+    respond_with(@slots_array)
   end
 
   def show
@@ -43,7 +47,7 @@ class API::V1::SlotsController < API::V1::Defaults
     end
   end
 
-  def destroy_slot_group # multiple slots - uses SlotManager
+  def destroy_slot_group # one or multiple slots - uses SlotManager
     slot_manager = SlotManager.new(safe_params)
     @slot_ids = slot_manager.destroy_slots
     render json: @slot_ids
