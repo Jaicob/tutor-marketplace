@@ -1,6 +1,6 @@
-class Admin::SchoolsController < AdminController
-  before_action :set_working_school, only: [:show, :edit, :update, :destroy, :edit_campus_manager, :update_campus_manager]
-  before_action :set_campus_manager, only: [:show, :edit, :update, :destroy, :edit_campus_manager, :update_campus_manager]
+class Dashboard::Admin::SchoolsController < AdminController
+  before_action :set_working_school, only: [:show, :update, :destroy]
+  before_action :set_campus_manager, only: [:show, :update, :destroy]
 
   def index
     @schools = School.all
@@ -14,7 +14,7 @@ class Admin::SchoolsController < AdminController
     @working_school = School.create(school_params)
 
     if @working_school.save
-      redirect_to admin_school_path(@school)
+      redirect_to admin_school_path(@working_school)
     else
       flash[:error] = "School was not created: #{@school.errors.full_messages}"
       render :new
@@ -22,9 +22,6 @@ class Admin::SchoolsController < AdminController
   end
 
   def show
-  end
-
-  def edit
   end
 
   def update
@@ -44,14 +41,6 @@ class Admin::SchoolsController < AdminController
     end
   end
 
-  def edit_campus_manager
-  end
-
-  def update_campus_manager
-    @campus_manager.update(campus_manager_params)
-    redirect_to admin_school_path(@working_school)
-  end
-
   private
 
     def set_working_school
@@ -64,10 +53,6 @@ class Admin::SchoolsController < AdminController
 
     def school_params
       params.require(:school).permit(:name, :location, :transaction_percentage, :campus_pic)
-    end
-
-    def campus_manager_params
-      params.require(:campus_manager).permit(:user_id, :phone_number, :profile_pic)
     end
 
 end

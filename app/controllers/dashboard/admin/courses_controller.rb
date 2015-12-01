@@ -1,4 +1,4 @@
-class Admin::CoursesController < AdminController
+class Dashboard::Admin::CoursesController < AdminController
   before_action :set_course, only: [:show, :edit, :update, :destroy]
 
   def search

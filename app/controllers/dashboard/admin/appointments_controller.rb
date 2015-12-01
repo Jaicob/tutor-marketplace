@@ -1,4 +1,4 @@
-class Admin::AppointmentsController < AdminController
+class Dashboard::Admin::AppointmentsController < AdminController
   before_action :set_appt, only: [:show, :update, :destroy]
 
   def search
@@ -35,5 +35,4 @@ class Admin::AppointmentsController < AdminController
     def appt_params
       params.require(:appointment).permit(:student_id, :slot_id, :course_id, :start_time, :status)
     end
-  
 end

@@ -17,10 +17,15 @@ class ApplicationController < ActionController::Base
 
     # Devise modification
     def after_sign_in_path_for(resource)
-      if resource.tutor
-        home_tutor_path(resource)
-      else
+      case resource.role
+      when 'student'
         home_student_path(resource)
+      when 'tutor'
+        home_tutor_path(resource)
+      when 'campus_manager'
+        admin_school_path(resource.campus_manager.school)
+      when 'admin'
+        admin_schools_path
       end
     end
 
@@ -59,23 +64,6 @@ class ApplicationController < ActionController::Base
     def set_student
       if current_user && current_user.student
         @student = current_user.student
-      end
-    end
-
-    # Before_action for admin-area
-    def authorized_for_admin_area?
-      # redirects to root for non-signed in users/visitors
-      if !current_user
-        redirect_to root_path
-        return
-      end
-      # redirects to dashboard home for signed-in students
-      if current_user.role == 'student'
-        redirect_to home_student_path(current_user)
-      end
-      # redirects to dashboard home for signed-in tutors
-      if current_user.role == 'tutor'
-        redirect_to home_tutor_path(current_user)
       end
     end
 
