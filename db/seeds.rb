@@ -158,18 +158,3 @@ School.all.each do |school|
     )
   }
 end
-
-# Create a CampusManager for each school
-n = 1
-4.times do
-  x = User.create(
-    first_name: Faker::Name.first_name,
-    last_name: Faker::Name.last_name,
-    email: Faker::Internet.safe_email(SecureRandom.hex(8).to_s),
-    password: 'password',
-    password_confirmation: 'password'
-  )
-  x.create_campus_manager(school_id: n)
-  x.update(role: 2) # sets user.role to campus_manager
-  n += 1
-end
