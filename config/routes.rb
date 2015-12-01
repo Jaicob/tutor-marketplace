@@ -303,9 +303,6 @@ scope module: 'dashboard' do
     resources :slots do collection { match 'search' => 'slots#search', via: [:get, :post], as: :search } end
     resources :schools do
       collection { match 'search' => 'schools#search', via: [:get, :post], as: :search }
-      member do
-        patch 'campus_manager' => 'schools#update_campus_manager'
-      end
     end
     resources :promotions do collection { match 'search' => 'promotions#search', via: [:get, :post], as: :search } end
   end
