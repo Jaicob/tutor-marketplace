@@ -23,6 +23,8 @@ class School < ActiveRecord::Base
 
   validates :name, :location, :transaction_percentage, presence: true
 
+  after_create :make_campus_manager
+
   extend FriendlyId
   friendly_id :name, use: :slugged
 
@@ -61,6 +63,10 @@ class School < ActiveRecord::Base
 
   def active_tutors
     self.tutors.where(active_status: 1)
+  end
+
+  def make_campus_manager
+    self.create_campus_manager
   end
 
 end

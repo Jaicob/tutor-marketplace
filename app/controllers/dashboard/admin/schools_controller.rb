@@ -1,6 +1,6 @@
 class Dashboard::Admin::SchoolsController < AdminController
-  before_action :set_working_school, only: [:show, :edit, :update, :destroy, :save_campus_manager, :update_campus_manager]
-  before_action :set_campus_manager, only: [:show, :edit, :update, :destroy, :save_campus_manager, :update_campus_manager]
+  before_action :set_working_school, only: [:show, :update, :destroy]
+  before_action :set_campus_manager, only: [:show, :update, :destroy]
 
   def index
     @schools = School.all
@@ -24,9 +24,6 @@ class Dashboard::Admin::SchoolsController < AdminController
   def show
   end
 
-  def edit
-  end
-
   def update
     if @working_school.update(school_params)
       redirect_to admin_school_path(@working_school)
@@ -44,15 +41,6 @@ class Dashboard::Admin::SchoolsController < AdminController
     end
   end
 
-  def update_campus_manager
-    if @campus_manager.update(campus_manager_params)
-      redirect_to admin_school_path(@working_school)
-    else
-      redirect_to :back
-      flash[:error] = "Campus manager was not updated."
-    end
-  end
-
   private
 
     def set_working_school
@@ -65,10 +53,6 @@ class Dashboard::Admin::SchoolsController < AdminController
 
     def school_params
       params.require(:school).permit(:name, :location, :transaction_percentage, :campus_pic)
-    end
-
-    def campus_manager_params
-      params.require(:campus_manager).permit(:user_id, :phone_number, :profile_pic)
     end
 
 end
