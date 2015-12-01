@@ -28,6 +28,7 @@ class Appointment < ActiveRecord::Base
   validate :one_hour_appointment_buffer
   validate :inside_slot_availability
   # validate :tutor_and_student_at_same_school
+  validate :appt_time_available
 
   enum status: ['Scheduled', 'Cancelled', 'Completed']
 
@@ -62,6 +63,16 @@ class Appointment < ActiveRecord::Base
   #     errors.add(:school_id, "is not the same for tutor, student and course: \ntutor and course = #{student.school.name == course.school.name}\nstudent and course = #{tutor.school.name == course.school.name}")
   #   end
   # end
+
+  # custom validation
+  def appt_time_available
+    slot = Slot.find(slot_id)
+    if slot.appointments.each do |appt|
+      if start_time == appt.start_time
+        errors.add(:start_time, "is already taken by another appointment")
+      end
+    end
+  end
 
   # This sets the delivery time for reminder emails as 12 hours before the appointment, except in the case where the appointment is tomorrow and no reminder is needed
   def appt_reminder_email_date
