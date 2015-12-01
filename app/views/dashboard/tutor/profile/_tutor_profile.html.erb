@@ -2,7 +2,7 @@
 <%# Currently, we still need controller-specific stylesheets. %>
 <style type="text/css">
 .main-content{
-  background: #2BC2DE !important;
+  background: #eee !important;
 }
 </style>
 
@@ -21,12 +21,12 @@
     <div class="tutor-qualifications medium-8 columns">
       <div class="tutor-profile-formal-education">
         <p class="ed-item">
-          <%# [ ] TODO (AJ) Make these bullets into icons from Eugene %>
-          <i class="fi-star"></i>&nbsp;
+          <%# [X] TODO (AJ) Make these bullets into icons from Eugene %>
+          <%= image_tag('https://s3-us-west-2.amazonaws.com/axontutors/booking/Degree.png', class: "icon") %>
           <%= @tutor.degree || "None" %>, <%= @tutor.graduation_year || "None" %>
         </p>
         <p class="ed-item">
-          <i class="fi-star"></i>&nbsp;
+          <%= image_tag('https://s3-us-west-2.amazonaws.com/axontutors/booking/Graduation.png', class: "icon") %>
           <%= @tutor.major || "None" %>
         </p>
       </div>
@@ -39,13 +39,16 @@
       </div>
     </div>
   </div>
-
   <div class="row">
     <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
     <%# [ ] TODO (AJ) Refactor NOT to use request.fullpath.to_s.split('=').second %>
     <%= react_component('AppointmentSelector', {
         tutor: @tutor.id,
-        course: request.fullpath.to_s.split('=').second
+        tutor_school: @tutor.school.name,
+        tutor_name: @tutor.user.first_name,
+        student: (if @student then @student.id else nil end),
+        course: request.fullpath.to_s.split('=').second,
+        margin: @tutor.school.transaction_percentage
       },
       {
         class: "medium-12 columns"

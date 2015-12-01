@@ -1,12 +1,11 @@
 button, .custom-button {
-  // display: block;
+  display: inline-block;
   background-color: #58AA4D;  
   font-weight: 100;
   font-family: 'Lato';
   border-radius: 4px !important;
   border: none;
   color: white;
-  margin-bottom: 2em;
   text-align: center;
   padding: 1.3em 3em;
   &.full-width {
@@ -18,6 +17,9 @@ button, .custom-button {
   }
   &.blue {
     background-color: #0095AC;
+  }
+  &.light-blue {
+    background-color: #2BC2DE;
   }
   &.danger {
     background-color: #DE6328;
@@ -42,7 +44,7 @@ button, .custom-button {
 
   }
   &.large {
-    padding: 1em 3em;
+    height: 3em;
     font-size: 1.2em;
   }
 

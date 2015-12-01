@@ -52,13 +52,17 @@ FactoryGirl.define do
       role 0
     end
 
-    trait :campus_manager do 
+    trait :tutor do 
       role 1
+    end
+
+    trait :campus_manager do 
+      role 2
       association :school, factory: :school, name: "Campus Manager's University"
     end
     
-    trait :super_admin do
-      role 2
+    trait :admin do
+      role 3
     end
 
     factory :alternate_user do

@@ -1,11 +1,11 @@
 var SlotSelector = React.createClass({
-  rangeDistance: 4,
+  rangeDistance: 7,
   rangeUnit: 'days',
   getInitialState: function () {
     return {
         allSlots: [],
         startRange: moment(),
-        endRange:   moment().add(2 + this.rangeDistance, this.rangeUnit)
+        endRange:   moment().add(this.rangeDistance - 1, this.rangeUnit)
     };
   },
   setDelegates: function (newLength) {
@@ -13,8 +13,9 @@ var SlotSelector = React.createClass({
       newLength = this.props.selectedSlots.length;
     };
     navBar = this.props.UINavigationBarDelegate;
-    navBar.forwardButtonText = "Proceed to Checkout";
-    navBar.backButtonText = "Change subject";
+    navBar.titleBarText = "Book " + this.props.tutor_name + " for " + this.props.selectedSubject.course_number;
+    navBar.forwardButtonText = "Set Location";
+    navBar.backButtonText = "Change Subject";
 
     // if(newLength == 1) {
     //   navBar.description = newLength + " session selected.";
@@ -39,6 +40,7 @@ var SlotSelector = React.createClass({
 
     if (this.props.selectedSlots.length != nextProps.selectedSlots.length) this.setDelegates();
   },
+  // [ ] TODO (AJ) Refactor this later
   fetchSlots: function (tutor) {
     var endpoint = API.endpoints.tutor_slots.get({
       tutor_id: tutor
@@ -116,14 +118,14 @@ var SlotSelector = React.createClass({
   },
   handleNextRange: function () {
     this.setState({
-      startRange: this.state.startRange.add(1 + this.rangeDistance, this.rangeUnit),
-      endRange:   this.state.endRange.add(1 + this.rangeDistance, this.rangeUnit)
+      startRange: this.state.startRange.add(this.rangeDistance, this.rangeUnit),
+      endRange:   this.state.endRange.add(this.rangeDistance, this.rangeUnit)
     });
   },
   handlePreviousRange: function () {
     var today = moment();
-    var proposedStartRange = this.state.startRange.subtract(1 + this.rangeDistance, this.rangeUnit);
-    var proposedEndRange   = this.state.endRange.subtract(1 + this.rangeDistance, this.rangeUnit);
+    var proposedStartRange = this.state.startRange.subtract(this.rangeDistance, this.rangeUnit);
+    var proposedEndRange   = this.state.endRange.subtract(this.rangeDistance, this.rangeUnit);
 
     var isValidRange = !proposedStartRange.isBefore(today, 'day');
     if (isValidRange) {
@@ -134,7 +136,7 @@ var SlotSelector = React.createClass({
     } else {
       this.setState({
         startRange: moment(),
-        endRange:   moment().add(2 + this.rangeDistance, this.rangeUnit)
+        endRange:   moment().add(this.rangeDistance - 1, this.rangeUnit)
       })
     };
   },
@@ -175,8 +177,8 @@ var SlotSelector = React.createClass({
       }.bind(this))
     }.bind(this));
 
-    // merge with existing disabled slots and make unique
-    // disabledSlots = disabledSlots.concat(this.props.disabledSlots)
+    // make sure disabled slots are unique
+    // [ ] TODO (AJ) Make sure this acutally makes things unique
     disabledSlots = disabledSlots.filter(
       (item, pos) => disabledSlots.indexOf(item) == pos
     );
@@ -186,15 +188,14 @@ var SlotSelector = React.createClass({
   handleSlotClick: function (slot, active) {
     var newSelectedSlots = this.props.selectedSlots;
 
-    // checks if slot exists in selectedSlots
-    // var exists = newSelectedSlots.filter(
-    //   (item) => (item.id === slot.id) && (item.start_time === slot.start_time)
-    // ).length > 0;
-
     // toggle slot from selected/unselected states
     if (active) {
       // user un-selects a slot
-      newSelectedSlots = newSelectedSlots.filter((targetSlot) => slot.start_time != targetSlot.start_time);
+
+      // selectedSlots are now all slots that don't have the same id and start time
+      newSelectedSlots = newSelectedSlots.filter(
+        (targetSlot) => (slot.start_time != targetSlot.start_time && slot.id != targetSlot.id)
+      );
       this.props.handleSlots(newSelectedSlots);
 
       var disabledSlots = this.getDisabledSlots(newSelectedSlots);

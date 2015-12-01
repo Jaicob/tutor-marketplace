@@ -19,32 +19,18 @@
  *= require framework_and_overrides
  */
 
-  p, h1, h2, h3, h4, h5, h6, th, td, li, a, input, select, textarea, label, span {
+  p, h1, h2, h3, h4, h5, h6, th, td, li, a, input, select, textarea, label, span, button {
     font-family: 'Lato' !important;
     color: #4F5252;
     max-width: 40em;
   }
 
-  p {
-    font-weight: 100;
+  p, h1, h2, h3, h4, h5, h6 {
     max-width: 40em;
   }
 
-  p.flash-message {
-    margin: 0;
-  }
-
-  span.notice, span.alert {
-    font-weight: 400;
-    font-size: 0.9em;
-  }
-
-  span.notice {
-    color: #0095AC;
-  }
-
-  span.alert {
-    color: #DE6328;
+  p {
+    font-weight: 100;
   }
 
   .nav-wrapper {
@@ -80,6 +66,7 @@
         }
       }
       .dashboard-content {
+        margin-bottom: 3em !important;
         &.new-tutor-partial {
           min-height: 0;
         }

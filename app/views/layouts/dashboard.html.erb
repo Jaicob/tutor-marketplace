@@ -1,8 +1,17 @@
-<% content_for (:dashboard_nav) do %>
-  <%= generate_dashboard_nav_links and render 'layouts/partials/dashboard_nav' %>
+<% if current_user.campus_manager || current_user.admin %>
+<!-- Displays ADMIN NAVBAR for campus_managers and admin -->
+  <% content_for (:admin_nav) do %>
+    <%= render "layouts/partials/admin/admin_panel" %>
+  <% end %>
+<% else %>
+<!-- Displays NAVBAR for tutors and students -->
+  <% content_for (:dashboard_nav) do %>
+    <%= generate_dashboard_nav_links and render 'layouts/partials/dashboard_nav' %>
+  <% end %>
 <% end %>
 
-<% if @tutor.application_status != 'Approved' %>
+<!-- Displays welcome/awaiting-approval message for new Tutors -->
+<% if @tutor && @tutor.application_status != 'Approved' %>
   <% content_for (:awaiting_approval_screen) do %>
     <%= render 'layouts/partials/awaiting_approval_screen' %>
   <% end %>

@@ -2,6 +2,7 @@ class TutorsController < ApplicationController
   before_action :set_user, only: [:edit, :update, :destroy]
   before_action :set_tutor, only: [:show, :edit, :update, :destroy, :submit_application]
   before_action :set_tutor_for_profile_viewer, only: [:show]
+  before_action :set_student, only: [:show]
 
   # TUTOR CREATION IS HANDLED THROUGH THE DEVISE REGISTRATION CONTROLLER - ONE FORM CREATES USER AND TUTOR
 

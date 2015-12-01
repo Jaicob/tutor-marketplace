@@ -227,7 +227,7 @@ Rails.application.routes.draw do
   # standard resources for slots
   resources :slots
 
-  # user endpoints for update and destroy 
+  # user endpoints for update and destroy
   resources :users, only: [:update, :destroy]
 
   # all dashboard routes for signed-in tutors
@@ -237,20 +237,20 @@ Rails.application.routes.draw do
       put  '/cancel_appt/:appt_id'    => 'dashboard/tutor/home#cancel_appt', as: 'cancel_appt'
       get  '/schedule'                => 'dashboard/tutor/schedule#index'
       get  '/profile'                 => 'dashboard/tutor/profile#index'
-      scope 'settings' do 
+      scope 'settings' do
         get  '/account'                 => 'dashboard/tutor/settings#account'
         get  '/edit_profile'            => 'dashboard/tutor/settings#edit_profile'
-        get  '/appointment_settings'    => 'dashboard/tutor/settings#appointment_settings' 
+        get  '/appointment_settings'    => 'dashboard/tutor/settings#appointment_settings'
         get  '/payment_info'            => 'dashboard/tutor/settings#payment_info'
         get  '/edit_address'            => 'dashboard/tutor/settings#edit_address'
         get  '/appointment_history'     => 'dashboard/tutor/settings#appointment_history'
       end
       # end of standard dashboard routes
-      
+
       # stripe account setup routes
       get 'tutor_payment_info_form'     => 'tutors#tutor_payment_info_form', as: 'tutor_payment_info_form'
       patch 'update_tutor_payment_info' => 'tutors#update_tutor_payment_info', as: 'update_tutor_payment_info'
-      
+
       # new tutor onboarding routes (for loading step-by-step instruction wizard)
       get '/onboarding/application'     => 'tutor_onboarding#application'
       get '/onboarding/courses'         => 'tutor_onboarding#courses'
@@ -270,23 +270,24 @@ Rails.application.routes.draw do
 
 
   # all dashboard routes for signed-in students
-  resources :students, only: [:update, :destroy] do 
-    member do 
+  resources :students, only: [:update, :destroy] do
+    member do
       get  '/home'                 => 'dashboard/student/home#index'
       put  '/cancel_appt/:appt_id' => 'dashboard/student/home#cancel_appt', as: 'cancel_appt'
-      get  '/search'               => 'single_views#tutor_search'      
+      get  '/search'               => 'single_views#tutor_search'
       scope 'settings' do
         get  '/account'               => 'dashboard/student/settings#account'
         get  '/payment_info'          => 'dashboard/student/settings#payment_info'
         post '/payment_info'          => 'dashboard/student/settings#save_payment_info'
         get  '/edit_payment_info'     => 'dashboard/student/settings#edit_payment_info'
-        post '/edit_payment_info'      => 'dashboard/student/settings#save_payment_info'
+        post '/edit_payment_info'     => 'dashboard/student/settings#save_payment_info'
         get  '/appointment_history'   => 'dashboard/student/settings#appointment_history'
       end
     end
   end
 
   # restricted admin-only area routes (the collections after the resources are for ransack search)
+scope module: 'dashboard' do
   namespace :admin do
     resources :courses do
       collection do
@@ -300,15 +301,12 @@ Rails.application.routes.draw do
     resources :students do collection { match 'search' => 'students#search', via: [:get, :post], as: :search } end
     resources :appointments do collection { match 'search' => 'appointments#search', via: [:get, :post], as: :search } end
     resources :slots do collection { match 'search' => 'slots#search', via: [:get, :post], as: :search } end
-    resources :schools do 
-      collection { match 'search' => 'schools#search', via: [:get, :post], as: :search } 
-      member do 
-        get   'campus_manager' => 'schools#edit_campus_manager'
-        post  'campus_manager' => 'schools#update_campus_manager'
-      end
+    resources :schools do
+      collection { match 'search' => 'schools#search', via: [:get, :post], as: :search }
     end
     resources :promotions do collection { match 'search' => 'promotions#search', via: [:get, :post], as: :search } end
   end
+end
 
   # API routes
   namespace :api, defaults: {format: :json} do
@@ -337,11 +335,12 @@ Rails.application.routes.draw do
           end
         end
       end
+
       get '/search/tutors' => 'search#tutors'
       get '/payments/student/:student_id' => 'payments#check_student_for_customer_id'
       ## special routes for checkout
       # retrieves promo code info for checkout preview
-      post '/check_promo_code' => 'promotions#check_promo_code'
+      get '/check_promo_code/:tutor_id/:promo_code' => 'promotions#check_promo_code'
       # creates an appointment without a student_id for a visitor (before student_id is created and attached to appt in the next step of checkout)
       post  '/visitor/create_appointment' => '/api/v1/student_appointments#visitor_create'
       post  '/payments/process_payment' => 'payments#process_payment'
