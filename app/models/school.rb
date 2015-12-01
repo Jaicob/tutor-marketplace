@@ -19,7 +19,7 @@ class School < ActiveRecord::Base
   has_many :students
   has_many :appointments, through: :courses, dependent: :destroy
   has_many :slots, through: :tutors, dependent: :destroy
-  has_one  :campus_manager
+  has_one  :campus_manager, dependent: :destroy
 
   validates :name, :location, :transaction_percentage, presence: true
 
@@ -66,7 +66,9 @@ class School < ActiveRecord::Base
   end
 
   def make_campus_manager
-    self.create_campus_manager
+    email = self.slug + '-default@axontutors.com'
+    campus_manager = User.create(email: email, password: 'password', first_name: 'Default', last_name: 'Manager')
+    self.create_campus_manager(user: campus_manager)
   end
 
 end

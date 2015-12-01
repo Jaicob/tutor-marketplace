@@ -1,34 +1,22 @@
 <div class="row">
-  <div class="large-12-columns">
+  <div class="small-12 columns">
     <h1>New School</h1>
   </div>
 </div>
 
 <div class="row">
-  <%= form_for @working_school, url: '/admin/schools' do |f| %>
-    <div class="small-12 medium-6 medium-centered columns">
+  <div class="small-12 medium-4 columns">
+    <%= form_for @working_school, url: '/admin/schools' do |f| %>
       <%= f.label :name %>
       <%= f.text_field :name %>
-    </div>
 
-    <div class="small-12 medium-6 medium-centered columns">
       <%= f.label :location %>
       <%= f.text_field :location %>
-    </div>
 
-    <div class="small-12 medium-6 medium-centered columns">
-      <%= f.label :transaction_percentage %>
+      <%= f.label :transaction_percentage, "Transaction Percentage (as an integer)" %>
       <%= f.text_field :transaction_percentage %>
-    </div>
 
-    <div class="small-12 medium-6 medium-centered columns">
-      <%= f.label :campus_pic %>
-      <%= f.file_field :campus_pic %>
-    </div>
-
-    <div class="small-12 medium-6 medium-centered columns">
-      <%= f.submit 'Add School', class: 'button success ' %>
-    </div>
-
-  <% end %>
+      <%= f.submit 'Add School', class: 'custom-button full-width' %>
+    <% end %>
+  </div>
 </div>
