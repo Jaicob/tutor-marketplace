@@ -1,4 +1,4 @@
-div.home-search {
+div.course-search-box {
   select#subject {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
@@ -6,13 +6,13 @@ div.home-search {
   select#course {
     border-radius: 0;
   }
-  #submit-search-home-page {
+  #course-search-submit {
     border-top-left-radius: 0 !important;
     border-bottom-left-radius: 0 !important;
     height: 2.36em;
     padding: 0;
   }
-  select#subject, select#course, #submit-search-home-page {
+  select#subject, select#course, #course-search-submit {
     font-size: 1em;
     font-weight: 100;
   }
