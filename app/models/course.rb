@@ -22,6 +22,7 @@ class Course < ActiveRecord::Base
   validates :friendly_name, presence: :true
   validates :school_id, presence: :true
   validates :subject_id, presence: :true
+  validate :uniqueness_for_school_and_subject
 
   def formatted_name
     "#{self.subject.name} #{self.call_number}: #{self.friendly_name}"
@@ -51,5 +52,20 @@ class Course < ActiveRecord::Base
     self.tutors.where(active_status: 1)
   end
 
+  def uniqueness_for_school_and_subject
+    school = School.find(school_id)
+    school.courses.where(subject_id: subject_id).each do |course|
+      if (course.call_number == call_number)
+        errors.add(:course, 'course call number already exists')
+        return
+      elsif (course.friendly_name == friendly_name)
+        errors.add(:course, 'course friendly name already exists')
+        return
+      end
+    end
+  end
+
 end
+
+# x = Course.create(school_id: 1, subject_id: 1, call_number: 101, friendly_name: 'Intro')
 

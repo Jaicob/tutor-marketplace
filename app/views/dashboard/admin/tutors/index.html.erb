@@ -36,7 +36,8 @@
 
       <div class="row">
         <div class="medium-4 columns"> 
-          <p>School went here</p>
+          <%= f.label :school_id_eq, 'School' %>
+          <%= f.search_field :school_id_eq %>
         </div>
         <div class="medium-4 columns">   
           <%= f.label :active_status_eq, 'Active Status' %>
