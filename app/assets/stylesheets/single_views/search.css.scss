@@ -1,5 +1,12 @@
-.search-title {
-    padding: 0.5em 0;
+.search-header-bg {
+    background-color: #2BC2DE;
+    padding: 1em 0;
+    margin-bottom: 1em;
+    .search-title {
+        color: white;
+        font-weight: 400;
+        margin-bottom: 0.5em;
+    }
 }
 
 #tutorCardContainer.cards {

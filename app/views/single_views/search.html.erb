@@ -1,23 +1,29 @@
 <%= javascript_include_tag "single_views/indirect_search" %>
 <%= javascript_include_tag "single_views/search" %>
-<div class="row">
-  <div class="small-12 columns">
-    <h2 class="search-title">Find Your Tutor</h2>
-    <% console %>
+
+<div class="search-header-bg">
+  <div class="row">
+    <div class="small-12 columns">
+      <h2 class="search-title">Find Your Tutor</h2>
+    </div>
   </div>
-</div>
-<div class="row search-box">
-  <form class="search-criteria">
-    <div class="small-12 medium-3 columns">
-      <%= render '/course_selector/subject' %>
+  <div class="row">
+    <div class="small-12 medium-8 columns">
+      <div class="row medium-collapse home-search">
+        <div class="small-12 medium-5 columns">
+          <%= form_for :search, url: search_from_home_path, method: :post do |f| %>
+            <%= render '/course_selector/subject' %>
+        </div>
+        <div class="small-12 medium-5 columns">
+            <%= render '/course_selector/course' %>
+        </div>
+        <div class="small-12 medium-2 columns">
+            <%= f.submit 'Search', class: 'custom-button full-width', id: 'submit-search-home-page' %>
+          <% end %>
+        </div>
+      </div>
     </div>
-    <div class="small-12 medium-3 columns">
-      <%= render '/course_selector/course' %>
-    </div>
-    <div class="small-12 medium-3 columns">
-      <input id="tutorSearchButton" type="button" class="custom-button full-width" value="Search"></input>
-    </div>
-  </form>
+  </div>
 </div>
 <div class="row">
   <div class="small-12 columns">
