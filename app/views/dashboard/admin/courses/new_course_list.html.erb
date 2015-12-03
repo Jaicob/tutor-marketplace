@@ -14,12 +14,12 @@
             <%= f.fields_for ":course_#{n}" do |ff| %>
               <div class="large-3 columns">
                 <%= ff.label :call_number %>
-                <%= ff.number_field :call_number %>
+                <%= ff.number_field :call_number, required: true %>
               </div>
 
               <div class="large-9 columns">
                 <%= ff.label :friendly_name %>
-                <%= ff.text_field :friendly_name %>
+                <%= ff.text_field :friendly_name, required: true %>
               </div>
 
               <% n += 1 %>
