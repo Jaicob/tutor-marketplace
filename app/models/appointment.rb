@@ -32,6 +32,8 @@ class Appointment < ActiveRecord::Base
 
   attr_accessor :appt_reminder_email_date
 
+  after_create :initialize_timeout_destroyer
+
   # custom validation
   def one_hour_appointment_buffer
     Slot.find(slot_id).appointments.each do |appt|
@@ -69,6 +71,11 @@ class Appointment < ActiveRecord::Base
     if self.start_time.to_date > (self.created_at.to_date + 1)
       (self.start_time.to_time - 43200).to_datetime
     end
+  end
+
+  # This creates a Sidekiq worker for a new appointment that destroys it after 10 minutes if no charge_id is present
+  def initialize_timeout_destroyer
+    ApptDestroyOnTimeoutWorker.perform_at(15.minutes.from_now, id)
   end
 
   def formatted_start_time
