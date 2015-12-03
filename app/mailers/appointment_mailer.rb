@@ -1,4 +1,6 @@
 class AppointmentMailer < ApplicationMailer
+  default template_path: "mailers/#{self.name.underscore}"
+
   before_action :set_tutor_and_student
 
   # ==============================
