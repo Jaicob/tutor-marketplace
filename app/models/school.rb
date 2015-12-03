@@ -66,8 +66,8 @@ class School < ActiveRecord::Base
   end
 
   def make_campus_manager
-    email = self.slug + '-default@axontutors.com'
-    campus_manager = User.create(email: email, password: 'password', first_name: 'Default', last_name: 'Manager')
+    email = self.slug + '-no-email@axontutors.com'
+    campus_manager = User.create(email: email, password: 'password', first_name: 'No', last_name: 'Manager')
     self.create_campus_manager(user: campus_manager)
   end
 
