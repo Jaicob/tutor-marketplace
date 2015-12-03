@@ -9,7 +9,6 @@ class ApptDestroyOnTimeoutWorker
 
   def perform(appt_id)
     @appt = Appointment.find(appt_id)
-    @appt.reload
     if @appt.charge_id == nil
       @appt.destroy
     end
