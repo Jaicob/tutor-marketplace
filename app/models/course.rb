@@ -52,6 +52,7 @@ class Course < ActiveRecord::Base
     self.tutors.where(active_status: 1)
   end
 
+  # custom validation for preventing duplicate courses
   def uniqueness_for_school_and_subject
     school = School.find(school_id)
     school.courses.where(subject_id: subject_id).each do |course|
@@ -66,6 +67,3 @@ class Course < ActiveRecord::Base
   end
 
 end
-
-# x = Course.create(school_id: 1, subject_id: 1, call_number: 101, friendly_name: 'Intro')
-

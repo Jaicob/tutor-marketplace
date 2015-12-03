@@ -37,7 +37,7 @@
       <div class="row">
         <div class="medium-4 columns"> 
           <%= f.label :school_id_eq, 'School' %>
-          <%= f.search_field :school_id_eq %>
+          <%= f.collection_select(:school_id_eq, School.all, :id, :name, include_blank: true) %>
         </div>
         <div class="medium-4 columns">   
           <%= f.label :active_status_eq, 'Active Status' %>
