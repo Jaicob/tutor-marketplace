@@ -287,26 +287,26 @@ Rails.application.routes.draw do
   end
 
   # restricted admin-only area routes (the collections after the resources are for ransack search)
-scope module: 'dashboard' do
-  namespace :admin do
-    resources :courses do
-      collection do
-        match 'search' => 'courses#search', via: [:get, :post], as: :search
-        post 'new_course_list' => 'courses#new_course_list'
-        post 'review_new_course_list' => 'courses#review_new_course_list'
-        post 'create_new_course_list' => 'courses#create_new_course_list'
+  scope module: 'dashboard' do
+    namespace :admin do
+      resources :courses do
+        collection do
+          match 'search' => 'courses#search', via: [:get, :post], as: :search
+          post 'new_course_list' => 'courses#new_course_list'
+          post 'review_new_course_list' => 'courses#review_new_course_list'
+          post 'create_new_course_list' => 'courses#create_new_course_list'
+        end
       end
+      resources :tutors do collection { match 'search' => 'tutors#search', via: [:get, :post], as: :search } end
+      resources :students do collection { match 'search' => 'students#search', via: [:get, :post], as: :search } end
+      resources :appointments do collection { match 'search' => 'appointments#search', via: [:get, :post], as: :search } end
+      resources :slots do collection { match 'search' => 'slots#search', via: [:get, :post], as: :search } end
+      resources :schools do
+        collection { match 'search' => 'schools#search', via: [:get, :post], as: :search }
+      end
+      resources :promotions do collection { match 'search' => 'promotions#search', via: [:get, :post], as: :search } end
     end
-    resources :tutors do collection { match 'search' => 'tutors#search', via: [:get, :post], as: :search } end
-    resources :students do collection { match 'search' => 'students#search', via: [:get, :post], as: :search } end
-    resources :appointments do collection { match 'search' => 'appointments#search', via: [:get, :post], as: :search } end
-    resources :slots do collection { match 'search' => 'slots#search', via: [:get, :post], as: :search } end
-    resources :schools do
-      collection { match 'search' => 'schools#search', via: [:get, :post], as: :search }
-    end
-    resources :promotions do collection { match 'search' => 'promotions#search', via: [:get, :post], as: :search } end
   end
-end
 
   # API routes
   namespace :api, defaults: {format: :json} do
@@ -316,6 +316,7 @@ end
           resources :courses, only: [:index]
         end
       end
+
       resources :tutors, only: [] do
         resources :slots, only: [:index, :show, :create, :update, :destroy]
         post '/slots/update_group' => 'slots#update_slot_group' # POST bc carrying data for multiple slots
@@ -327,6 +328,7 @@ end
           end
         end
       end
+
       resources :students, only: [] do
         resources :appointments, only: [:index, :show, :create], controller: 'student_appointments' do
           member do
@@ -336,14 +338,13 @@ end
         end
       end
 
-      get '/search/tutors' => 'search#tutors'
-      get '/payments/student/:student_id' => 'payments#check_student_for_customer_id'
-      ## special routes for checkout
-      # retrieves promo code info for checkout preview
-      get '/check_promo_code/:tutor_id/:promo_code' => 'promotions#check_promo_code'
-      # creates an appointment without a student_id for a visitor (before student_id is created and attached to appt in the next step of checkout)
-      post  '/visitor/create_appointment' => '/api/v1/student_appointments#visitor_create'
-      post  '/payments/process_payment' => 'payments#process_payment'
+      get  '/search/tutors'  => 'search#tutors'
+      get  '/check_promo_code/:tutor_id/:promo_code' => 'promotions#check_promo_code',      as: 'check_promo_code'
+      post '/visitor/create_appointment'             => 'student_appointments#visitor_create'
+      post '/payments/process_payment'               => 'payments#process_payment',         as: 'process_payment'
+      get  '/payments/student/:student_id/customer'      => 'payments#get_customer',        as: 'get_customer'
+      post '/payments/student/:student_id/customer'      => 'payments#create_customer',     as: 'create_customer'
+      post '/payments/student/:student_id/default-card'  => 'payments#update_default_card', as: 'update_default_card'
     end
   end
 

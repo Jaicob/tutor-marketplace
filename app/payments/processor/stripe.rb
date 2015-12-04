@@ -8,8 +8,6 @@ module Processor
     end
 
     def update_managed_account(tutor, token)
-      puts "tutor!!!!!!!! = #{tutor}"
-      puts "token!!!!!!!! = #{token}"
       if tutor.acct_id.nil?
         acct = ::Stripe::Account.create(
           managed: true,
@@ -38,7 +36,6 @@ module Processor
       else
         acct = ::Stripe::Account.retrieve(tutor.acct_id)
       end
-      puts "acct!!!!!!! = #{acct}"
       acct.external_accounts.create(:external_account => token)
     end
 
@@ -61,6 +58,7 @@ module Processor
           application_fee: charge.axon_fee
         )
       else
+        # KEEP EXCESSIVE PUTS STATEMENTS HERE! This is really hard to write tests for so we're testing this bitch in the console output... \_(ツ)_/¯
         puts "SEND CHARGE METHOD IN STRIPE.RB"
         puts "charge.amount = #{charge.amount}"
         puts "charge.customer_id = #{charge.customer_id}"

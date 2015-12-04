@@ -14,3 +14,5 @@ class ApptDestroyOnTimeoutWorker
     end
   end
 end
+
+# x = Appointment.create(student_id: 1, slot_id: 1, course_id: 1, start_time: "2015-12-03 12:00:00")

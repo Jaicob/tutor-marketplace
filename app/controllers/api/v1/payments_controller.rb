@@ -1,13 +1,9 @@
 class API::V1::PaymentsController < API::V1::Defaults
-  before_action :set_student
-  def check_student_for_customer_id
-    @student = Student.find(params[:student_id])
-    if @student
-      card = if @student.card_brand && @student.last_4_digits
-        "#{@student.card_brand} **** #{@student.last_4_digits}"
-      else
-        nil
-      end
+  before_action :set_student, only: [:get_customer, :create_customer, :update_default_card]
+
+  def get_customer
+    if @student.customer_id
+      card = "#{@student.card_brand} **** #{@student.last_4_digits}"
       render json: {
         full_name: @student.full_name,
         card: card,
@@ -15,9 +11,21 @@ class API::V1::PaymentsController < API::V1::Defaults
         success: true
       }
     else
-      render json: {
-        success: false
-      }
+      render json: { success: false, error: 'Student does not have a customer_id' }
+    end
+  end
+
+  def create_customer
+    
+  end
+
+  def update_default_card
+    token = params[:stripe_token]
+    Processor::Stripe.new.update_customer(@student, token)
+    if student.reload.customer_id
+      render json: { success: true }
+    else
+      render json: { success: false, error: 'Error with update_customer method in payments/processor/stripe.rb' }
     end
   end
 
@@ -29,16 +37,22 @@ class API::V1::PaymentsController < API::V1::Defaults
       appt.save
     end
 
-    customer_id = if params[:customer_id].length > 0
-      params[:customer_id]
+    if params[:customer_id].length > 0
+      customer_id = params[:customer_id]
     else
-      nil
+      customer_id = nil
     end
 
-    token = if params[:token].length > 0
-      params[:token]
+    if params[:token].length > 0
+      token = params[:token]
     else
-      nil
+      token = nil
+    end
+
+    if params[:promotion_id].length > 0
+      promo = params[:promotion_id]
+    else
+      promo = nil
     end
 
     t = appts.first.tutor.id
@@ -46,12 +60,6 @@ class API::V1::PaymentsController < API::V1::Defaults
     rate = TutorCourse.where(tutor_id: t, course_id: c).first.rate
     rateArray = []
     appts.count.times { rateArray << rate }
-
-    promo = if params[:promotion_id].length > 0
-              params[:promotion_id]
-            else
-              nil
-            end
 
     formatted_params = {
       tutor: tutor,
@@ -67,4 +75,11 @@ class API::V1::PaymentsController < API::V1::Defaults
 
     render json: Charge.last
   end
+
+  private
+
+    def set_student
+      @student = Student.find(params[:student_id])
+    end
+
 end
