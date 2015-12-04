@@ -335,7 +335,10 @@ Rails.application.routes.draw do
       end
 
       resources :students, only: [] do
-        resources :appointments, only: [:index, :show, :create], controller: 'student_appointments' do
+        resources :appointments, only: [:index, :show, :create, :delete ], controller: 'student_appointments' do
+          collection do 
+          	post 'delete_group' => 'student_appointments#destroy_appointment_group' # POST bc carrying data for multiple appointments
+          end
           member do
             put 'reschedule'
             put 'cancel'
