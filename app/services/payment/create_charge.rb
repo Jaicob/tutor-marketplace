@@ -3,10 +3,11 @@ class CreateCharge
 
   # Call with: tutor: instance_of Tutor
   #            appointments: array of Appointments
-  #            customer_id: student.customer_id
-  #            rates: array of TutorCourse.rate in dollars
+  #            customer_id: customer_id
+  #            rates: array of rates in dollars
   #            transaction_percentage: School.transaction_percentage
   #            promotion_id: promotion.id (or nil)
+
   def call
     axon_fee_multiplier = ((context.transaction_percentage.to_f / 100) + 1)
 
@@ -21,22 +22,12 @@ class CreateCharge
     amount = tutor_fee * axon_fee_multiplier
     axon_fee = amount - tutor_fee
 
-    if context.customer_id
-      charge = context.tutor.charges.create(
-        customer_id: context.customer_id,
-        amount: amount,
-        axon_fee: axon_fee,
-        tutor_fee: tutor_fee
-      )
-    elsif context.token
-      charge = context.tutor.charges.create(
-        token: context.token,
-        amount: amount,
-        axon_fee: axon_fee,
-        tutor_fee: tutor_fee
-      )
-    end
-
+    charge = context.tutor.charges.create(
+      customer_id: context.customer_id,
+      amount: amount,
+      axon_fee: axon_fee,
+      tutor_fee: tutor_fee
+    )
 
     context.appointments.each{|appt| appt.update_attributes(charge_id: charge.id)}
     context.charge = charge
