@@ -22,7 +22,7 @@ class API::V1::StudentAppointmentsController < API::V1::Defaults
   end
 
   def delete # one or multiple appointments 
-    deleted = Appointment.delete(params[:appointment_ids])
+    deleted = Appointment.destroy_all(id: params[:appointment_ids])
     if deleted
       render json: deleted
     else
