@@ -222,7 +222,7 @@ Rails.application.routes.draw do
   post '/change-school'       => 'cookies#change_school_id_cookie'
 
   # custom_devise_routes
-  devise_for :users, controllers: { registrations: "tutor_registration" }
+  devise_for :users
 
   # standard resources for slots
   resources :slots
@@ -318,10 +318,15 @@ Rails.application.routes.draw do
       end
 
       resources :tutors, only: [] do
-        resources :slots, only: [:index, :show, :create, :update, :destroy]
-        post '/slots/update_group' => 'slots#update_slot_group' # POST bc carrying data for multiple slots
-        post '/slots/delete_group' => 'slots#destroy_slot_group' # POST bc carrying data for multiple slots
-        get '/courses' => 'tutor_courses#index'
+        member do 
+          get '/courses' => 'tutor_courses#index'
+        end
+        resources :slots, only: [:index, :show, :create, :update, :destroy] do
+          collection do 
+            post '/update_group' => 'slots#update_slot_group' # POST bc carrying data for multiple slots
+            post '/delete_group' => 'slots#destroy_slot_group' # POST bc carrying data for multiple slots
+          end
+        end
         resources :appointments, only: [:index, :show], controller: 'tutor_appointments' do
           member do
             put 'cancel'

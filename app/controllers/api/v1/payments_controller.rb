@@ -17,14 +17,15 @@ class API::V1::PaymentsController < API::V1::Defaults
   end
 
   def create_customer
-    # make user & student
+    # to make user & student
       params[:first_name]
       params[:last_name]
       params[:email]
       params[:password]
 
-    # make customer
+    # to make customer
       params[:stripe_token]
+      params[:save_card]
   end
 
   def update_default_card

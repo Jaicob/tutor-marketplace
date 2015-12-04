@@ -24,8 +24,13 @@ $(document).ready(function()
     <p id="input-error" class="no-show">Password must be at least 8 characters</p>
     <%= f.fields_for :tutor do |tt| %>
       <%= tt.text_field :phone_number, placeholder: 'Phone Number', required: true %>
+      <select name="user[tutor][school_id]">
+        <option value="" disabled="true" selected="true">Select Campus</option>
+        <% School.all.each do |school| %>
+          <option value="<%= school.id %>"><%= school.name %></option>
+        <% end %>
+      </select>
     <% end %>
-    <%= render '/course_selector/school' %>
     <%= f.submit "Get Started", class: 'custom-button full-width no-margin', id: 'tutor-submit-btn',disabled: true %>
   <% end %>
 </div>

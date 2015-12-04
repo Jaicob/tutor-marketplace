@@ -55,15 +55,16 @@ class User < ActiveRecord::Base
     # used in Devise::RegistrationsController to create a Tutor while creating a User
     user.create_tutor!(
       phone_number: params[:user][:tutor][:phone_number],
-      school_id: params[:course][:school_id]
+      school_id: params[:user][:tutor][:school_id]
     )
     # send welcome email
     TutorManagementMailer.delay.welcome_email(user.id)
   end
 
   def create_student_account(user, params)
+    # used in Devise::RegistrationsController to create a Student while creating a User
     user.create_student!(
-      school_id: params[:course][:school_id]
+      school_id: params[:user][:student][:school_id]
     )
     # TODO: send welcome email to student?
   end
