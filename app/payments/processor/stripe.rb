@@ -57,22 +57,21 @@ module Processor
           destination: charge.tutor.acct_id,
           application_fee: charge.axon_fee
         )
-      else
-        # KEEP EXCESSIVE PUTS STATEMENTS HERE! This is really hard to write tests for so we're testing this bitch in the console output... \_(ツ)_/¯
-        puts "SEND CHARGE METHOD IN STRIPE.RB"
-        puts "charge.amount = #{charge.amount}"
-        puts "charge.customer_id = #{charge.customer_id}"
-        puts "charge.tutor_acct_id = #{charge.tutor.acct_id}"
-        puts "charge.axon_fee = #{charge.axon_fee}"
-        puts "charge.tutor_fee = #{charge.tutor_fee}"
-        ::Stripe::Charge.create(
-          amount: charge.amount,
-          currency: 'usd',
-          customer: charge.customer_id,
-          destination: charge.tutor.acct_id,
-          application_fee: charge.axon_fee
-        )
       end
+      # KEEP EXCESSIVE PUTS STATEMENTS HERE! This is really hard to write tests for so we're testing this bitch in the console output... \_(ツ)_/¯
+      puts "SEND CHARGE METHOD IN STRIPE.RB"
+      puts "charge.amount = #{charge.amount}"
+      puts "charge.customer_id = #{charge.customer_id}"
+      puts "charge.tutor_acct_id = #{charge.tutor.acct_id}"
+      puts "charge.axon_fee = #{charge.axon_fee}"
+      puts "charge.tutor_fee = #{charge.tutor_fee}"
+      ::Stripe::Charge.create(
+        amount: charge.amount,
+        currency: 'usd',
+        customer: charge.customer_id,
+        destination: charge.tutor.acct_id,
+        application_fee: charge.axon_fee
+      )
     end
 
     def update_customer(student, token)

@@ -3,7 +3,9 @@ class API::V1::PaymentsController < API::V1::Defaults
 
   def get_customer
     if @student.customer_id
-      card = "#{@student.card_brand} **** #{@student.last_4_digits}"
+      if @student.last_4_digits
+        card = "#{@student.card_brand} **** #{@student.last_4_digits}"
+      end
       render json: {
         full_name: @student.full_name,
         card: card,
@@ -16,6 +18,21 @@ class API::V1::PaymentsController < API::V1::Defaults
   end
 
   def create_customer
+    params[:first_name]
+    params[:last_name]
+    params[:email]
+    params[:password]
+    params[:stripe_token]
+    params[:make_default]
+
+    # make user and student
+
+    # if make_default is true
+      # convert stripe_token into a customer_id and save to student
+    # else
+      # return student with stripe_token 
+
+
     
   end
 
@@ -37,36 +54,21 @@ class API::V1::PaymentsController < API::V1::Defaults
       appt.save
     end
 
-    if params[:customer_id].length > 0
-      customer_id = params[:customer_id]
-    else
-      customer_id = nil
-    end
+    customer_id = params[:customer_id] if params[:customer_id].length > 0
+    token = params[:token] if params[:token].length > 0
+    promo = params[:promotion_id] if params[:promotion_id].length > 0
+    course_id = appts.first.course.id
 
-    if params[:token].length > 0
-      token = params[:token]
-    else
-      token = nil
-    end
-
-    if params[:promotion_id].length > 0
-      promo = params[:promotion_id]
-    else
-      promo = nil
-    end
-
-    t = appts.first.tutor.id
-    c = appts.first.course.id
-    rate = TutorCourse.where(tutor_id: t, course_id: c).first.rate
-    rateArray = []
-    appts.count.times { rateArray << rate }
+    rate = TutorCourse.where(tutor_id: tutor.id, course_id: course_id).first.rate
+    rate_array = []
+    appts.count.times { rate_array << rate }
 
     formatted_params = {
       tutor: tutor,
       appointments: appts,
       customer_id: customer_id,
       token: token,
-      rates: rateArray,
+      rates: rate_array,
       transaction_percentage: params[:transaction_percentage],
       promotion_id: promo
     }
