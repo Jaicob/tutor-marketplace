@@ -17,8 +17,10 @@ class Devise::RegistrationsController < DeviseController
     if resource.save
       if params[:user][:tutor] != nil
         resource.create_tutor_account(resource, params)
+        if !resource.reload.tutor then return end
       else
         resource.create_student_account(resource, params)
+        if !resource.reload.tutor then return end
       end
     end
       
@@ -36,7 +38,11 @@ class Devise::RegistrationsController < DeviseController
     else
       clean_up_passwords resource
       set_minimum_password_length
-      redirect_to :back
+      respond_to do |format|
+        format.js { render json: resource.errors.first }
+        format.html { redirect_to :back }
+      end
+      # redirect_to :back
       flash.alert = "#{resource.errors.full_messages.first}"
     end
   end
