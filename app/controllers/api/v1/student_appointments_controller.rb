@@ -21,6 +21,16 @@ class API::V1::StudentAppointmentsController < API::V1::Defaults
     end
   end
 
+  def delete # one or multiple appointments 
+    deleted = Appointment.destroy_all(id: params[:appointment_ids])
+    if deleted
+      render json: deleted
+    else
+      render json: deleted.errors.full_messages
+    end
+  end
+
+
   def visitor_create # creates appt without student_id, but adds it in next step when visitor must sign up
     appts = Appointment.visitor_create_appts_from_array(params)
     if appts

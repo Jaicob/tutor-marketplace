@@ -184,6 +184,7 @@
 #       cancel_api_v1_tutor_appointment PUT      /api/v1/tutors/:tutor_id/appointments/:id/cancel(.:format)         api/v1/tutor_appointments#cancel {:format=>:json}
 #             api_v1_tutor_appointments GET      /api/v1/tutors/:tutor_id/appointments(.:format)                    api/v1/tutor_appointments#index {:format=>:json}
 #              api_v1_tutor_appointment GET      /api/v1/tutors/:tutor_id/appointments/:id(.:format)                api/v1/tutor_appointments#show {:format=>:json}
+#    delete_api_v1_student_appointments DELETE   /api/v1/students/:student_id/appointments/delete(.:format)         api/v1/student_appointments#delete {:format=>:json}
 # reschedule_api_v1_student_appointment PUT      /api/v1/students/:student_id/appointments/:id/reschedule(.:format) api/v1/student_appointments#reschedule {:format=>:json}
 #     cancel_api_v1_student_appointment PUT      /api/v1/students/:student_id/appointments/:id/cancel(.:format)     api/v1/student_appointments#cancel {:format=>:json}
 #           api_v1_student_appointments GET      /api/v1/students/:student_id/appointments(.:format)                api/v1/student_appointments#index {:format=>:json}
@@ -196,6 +197,9 @@
 #                   api_v1_get_customer GET      /api/v1/payments/student/:student_id/customer(.:format)            api/v1/payments#get_customer {:format=>:json}
 #                api_v1_create_customer POST     /api/v1/payments/student/:student_id/customer(.:format)            api/v1/payments#create_customer {:format=>:json}
 #            api_v1_update_default_card POST     /api/v1/payments/student/:student_id/default-card(.:format)        api/v1/payments#update_default_card {:format=>:json}
+#                                api_v1 GET      /api/v1/payments/student/:student_id(.:format)                     api/v1/payments#check_student_for_customer_id {:format=>:json}
+#                                       GET      /api/v1/check_promo_code/:tutor_id/:promo_code(.:format)           api/v1/promotions#check_promo_code {:format=>:json}
+#       api_v1_payments_process_payment POST     /api/v1/payments/process_payment(.:format)                         api/v1/payments#process_payment {:format=>:json}
 #                           sidekiq_web          /sidekiq                                                           Sidekiq::Web
 #
 
@@ -336,6 +340,9 @@ Rails.application.routes.draw do
 
       resources :students, only: [] do
         resources :appointments, only: [:index, :show, :create], controller: 'student_appointments' do
+          collection do
+          	delete 'delete'
+          end
           member do
             put 'reschedule'
             put 'cancel'
