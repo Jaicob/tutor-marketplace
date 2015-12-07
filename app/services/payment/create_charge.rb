@@ -13,10 +13,16 @@ class CreateCharge
 
     tutor_rates = []
 
-    context.rates.each do |rate|
+    context.appointments.each do |appt|
+      rate = TutorCourse.where(tutor_id: @tutor.id, course_id: course_id).first.rate
+
+      appt.course_id
       session_amount = (rate * 100)
       tutor_rates << session_amount
     end
+
+    rate_array = []
+    appts.count.times { rate_array << rate }
 
     tutor_fee = tutor_rates.map(&:to_i).reduce(:+)
     amount = tutor_fee * axon_fee_multiplier

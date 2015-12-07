@@ -65,14 +65,16 @@ class User < ActiveRecord::Base
     # used in Devise::RegistrationsController to create a Student while creating a User
     user.create_student!(
       school_id: params[:user][:student][:school_id]
-    )
-    # TODO: send welcome email to student?
+    ) 
+    # additional logic for sign-up during checkout below, creates a Stripe customer and saves default_card
+    if params[:stripe_token] && params[:save_card] == 'true'
+      Processor::Stripe.new.update_customer(self, params[:stripe_token])
+    end
   end
 
   def slug_candidates
     # variations of a user's name to create unique slugs in case of duplicate names
-    [ "#{first_name}#{last_name}", "#{first_name[0]}#{last_name}", "#{first_name}#{last_name[0]}", "#{first_name[0..1]}#{last_name}", "#{first_name}#{last_name[0..1]}", "#{first_name[0..2]}#{last_name}", "#{first_name}#{last_name[0..2]}", "#{first_name[0..3]}#{last_name}", "#{first_name}#{last_name[0..3]}"
-    ]
+    [ "#{first_name}#{last_name}", "#{first_name[0]}#{last_name}", "#{first_name}#{last_name[0]}", "#{first_name[0..1]}#{last_name}", "#{first_name}#{last_name[0..1]}", "#{first_name[0..2]}#{last_name}", "#{first_name}#{last_name[0..2]}", "#{first_name[0..3]}#{last_name}", "#{first_name}#{last_name[0..3]}"]
   end
 
   def full_name

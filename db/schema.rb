@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151127163359) do
+ActiveRecord::Schema.define(version: 20151207191127) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,15 +57,17 @@ ActiveRecord::Schema.define(version: 20151127163359) do
     t.float    "amount"
     t.float    "axon_fee"
     t.float    "tutor_fee"
-    t.string   "customer_id"
     t.integer  "tutor_id"
     t.string   "token"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
     t.integer  "promotion_id"
+    t.integer  "student_id"
+    t.string   "stripe_charge_id"
   end
 
   add_index "charges", ["promotion_id"], name: "index_charges_on_promotion_id", using: :btree
+  add_index "charges", ["student_id"], name: "index_charges_on_student_id", using: :btree
   add_index "charges", ["tutor_id"], name: "index_charges_on_tutor_id", using: :btree
 
   create_table "courses", force: :cascade do |t|
@@ -243,6 +245,7 @@ ActiveRecord::Schema.define(version: 20151127163359) do
   add_foreign_key "appointments", "students"
   add_foreign_key "campus_managers", "schools"
   add_foreign_key "campus_managers", "users"
+  add_foreign_key "charges", "students"
   add_foreign_key "charges", "tutors"
   add_foreign_key "courses", "schools"
   add_foreign_key "courses", "subjects"
