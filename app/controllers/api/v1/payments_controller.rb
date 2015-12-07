@@ -95,20 +95,14 @@ class API::V1::PaymentsController < API::V1::Defaults
       appt.update(student_id: params[:student_id])
     end
 
-    rate = TutorCourse.where(tutor_id: @tutor.id, course_id: course_id).first.rate
-    rate_array = []
-    appts.count.times { rate_array << rate }
-
     promotion = params[:promotion_id] if !params[:promotion_id].blank?
 
     formatted_params = {
-      tutor: @tutor,
-      student: @student,
+      tutor: @tutor.id,
+      student: @student.id,
       token: params[:stripe_token],
-      appointments: appts,
-      rates: rate_array,
-      transaction_percentage: params[:transaction_percentage],
-      promotion_id: promotion,
+      appointments: appt_ids,
+      promotion_id: promotion_id,
     }
 
     context = ProcessPayment.call(formatted_params)
