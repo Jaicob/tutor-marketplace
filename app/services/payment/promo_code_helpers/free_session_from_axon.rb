@@ -10,7 +10,6 @@ module PromoCodeHelpers
       @promotion = Promotion.find(context.promotion_id)
       @transaction_fee = ((@context.transaction_percentage.to_f / 100) + 1)
       @rates = context.rates
-      @is_payment_required = context.is_payment_required
     end
 
     def return_adjusted_fees
@@ -41,7 +40,7 @@ module PromoCodeHelpers
           axon_fee: new_axon_fee,
           promotion_id: @promotion.id
         )
-        @is_payment_required = false
+        context.is_payment_required = false
       else
         lowest_rate = rates.sort.first
         total_price_of_lowest_rate = lowest_rate * transaction_fee * 100

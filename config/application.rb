@@ -31,6 +31,7 @@ module WebApp
     config.autoload_paths += %W(#{config.root}/app/uploaders)
     config.autoload_paths += Dir["#{Rails.root}/app/services/**"]
     config.autoload_paths += Dir["#{Rails.root}/app/payments/**"]
+    config.autoload_paths += Dir["#{Rails.root}/app/workers/**"]
 
     # Auto-load API and its subdirectories
     config.paths.add 'app/api', glob: '**/*.rb'

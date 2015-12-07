@@ -6,7 +6,7 @@ select {
   .rate-container {
     background-color: #E4E4E4;
     border-radius: 3px;
-    height: 1.8em;
+    height: 2.3125em; // copied from Foundation style to exactly mirror select box size
     margin-bottom: 0.3em;
     font-weight: 100;
     border-style: solid;
@@ -20,13 +20,14 @@ select {
     font-weight: 100;
     font-family: 'Lato';
     text-align: center;
+    line-height: 2.1em;
   }
   input#rate {
     text-align: center;
     border-radius: 0;
     border: 0;
     position: relative;
-    top: -3px;
+    font-size: 1em;
   }
 
 // Selects need to be smaller for Tutor sign-up form to prevent the entire form from being too large

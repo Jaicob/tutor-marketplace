@@ -21,17 +21,18 @@ class Appointment < ActiveRecord::Base
   delegate :tutor, to: :slot
   delegate :school, to: :course
 
-  # validates :student_id, presence: true
   validates :slot_id, presence: true
   validates :course_id, presence: true
   validates :start_time, presence: true, uniqueness: { scope: :slot_id }
   validate :one_hour_appointment_buffer
   validate :inside_slot_availability
-  # validate :tutor_and_student_at_same_school
+  validate :tutor_and_student_at_same_school
 
   enum status: ['Scheduled', 'Cancelled', 'Completed']
 
   attr_accessor :appt_reminder_email_date
+
+  after_create :initialize_timeout_destroyer
 
   # custom validation
   def one_hour_appointment_buffer
@@ -52,22 +53,29 @@ class Appointment < ActiveRecord::Base
     end
   end
 
-  # # custom validation
-  # def tutor_and_student_at_same_school
-  #   tutor_id = Slot.find(slot_id).tutor.id
-  #   tutor = Tutor.find(tutor_id)
-  #   student = Student.find(student_id)
-  #   course = Course.find(course_id)
-  #   if !(tutor.school.name == course.school.name && student.school.name == course.school.name)
-  #     errors.add(:school_id, "is not the same for tutor, student and course: \ntutor and course = #{student.school.name == course.school.name}\nstudent and course = #{tutor.school.name == course.school.name}")
-  #   end
-  # end
+  # custom validation
+  def tutor_and_student_at_same_school
+    if student_id != nil # allows for appt creation before student is logged in, but runs when student exists
+      tutor_id = Slot.find(slot_id).tutor.id
+      tutor = Tutor.find(tutor_id)
+      student = Student.find(student_id)
+      course = Course.find(course_id)
+      if !(tutor.school.name == course.school.name && student.school.name == course.school.name)
+        errors.add(:school_id, "is not the same for tutor, student and course: \ntutor and course = #{student.school.name == course.school.name}\nstudent and course = #{tutor.school.name == course.school.name}")
+      end
+    end
+  end
 
   # This sets the delivery time for reminder emails as 12 hours before the appointment, except in the case where the appointment is tomorrow and no reminder is needed
   def appt_reminder_email_date
     if self.start_time.to_date > (self.created_at.to_date + 1)
       (self.start_time.to_time - 43200).to_datetime
     end
+  end
+
+  # This creates a Sidekiq worker for a new appointment that destroys it after 10 minutes if no charge_id is present
+  def initialize_timeout_destroyer
+    ApptDestroyOnTimeoutWorker.perform_at(15.minutes.from_now, id)
   end
 
   def formatted_start_time

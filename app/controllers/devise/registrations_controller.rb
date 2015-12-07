@@ -14,13 +14,14 @@ class Devise::RegistrationsController < DeviseController
   def create
     build_resource(sign_up_params)
     resource.sign_in_ip = request.env['REMOTE_ADDR']
-    resource.save
-    if params[:user][:tutor] != nil
-      resource.create_tutor_account(resource, params)
-    else
-      resource.create_student_account(resource, params)
+    if resource.save
+      if params[:user][:tutor] != nil
+        resource.create_tutor_account(resource, params)
+      else
+        resource.create_student_account(resource, params)
+      end
     end
-    
+      
     yield resource if block_given?
     if resource.persisted?
       if resource.active_for_authentication?
@@ -35,9 +36,17 @@ class Devise::RegistrationsController < DeviseController
     else
       clean_up_passwords resource
       set_minimum_password_length
-      redirect_to :back
-      flash.notice = 'Your account was not created. All fields are required. Please try again.'
-      flash.alert = "#{resource.errors.full_messages}"
+      respond_to do |format|
+        format.js { 
+          render json: {
+            error: resource.errors.first,
+            success: false
+          }
+        }
+        format.html { redirect_to :back }
+      end
+      # redirect_to :back
+      flash.alert = "#{resource.errors.full_messages.first}"
     end
   end
 

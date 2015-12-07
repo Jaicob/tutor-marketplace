@@ -4,7 +4,7 @@
 
 // STYLING FOR PROGRESS BAR
 
-.row.medium-collapse.progress-bar-container {
+.progress-bar-container {
     margin: 1em auto !important;
 
   .progress-step, .progress-next-button {
@@ -83,8 +83,7 @@
   text-align: center;
 }
 i.fi-arrow-right {
-  float: right;
-  margin-right: 1em;
+  padding-left: 1em;
 }
 
 /* STYLING FOR TUTOR APPLICATION */

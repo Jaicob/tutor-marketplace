@@ -19,9 +19,11 @@ class School < ActiveRecord::Base
   has_many :students
   has_many :appointments, through: :courses, dependent: :destroy
   has_many :slots, through: :tutors, dependent: :destroy
-  has_one  :campus_manager
+  has_one  :campus_manager, dependent: :destroy
 
   validates :name, :location, :transaction_percentage, presence: true
+
+  after_create :make_campus_manager
 
   extend FriendlyId
   friendly_id :name, use: :slugged
@@ -61,6 +63,12 @@ class School < ActiveRecord::Base
 
   def active_tutors
     self.tutors.where(active_status: 1)
+  end
+
+  def make_campus_manager
+    email = self.slug + '-no-email@axontutors.com'
+    campus_manager = User.create(email: email, password: 'password', first_name: 'No', last_name: 'Manager')
+    self.create_campus_manager(user: campus_manager)
   end
 
 end

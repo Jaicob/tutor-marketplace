@@ -11,8 +11,7 @@
 #                                  faqs GET      /faqs(.:format)                                                    single_views#faqs
 #                              partners GET      /partners(.:format)                                                single_views#partners
 #                               contact GET      /contact(.:format)                                                 single_views#contact
-#                        privacy_policy GET      /privacy-policy(.:format)                                          single_views#privacy_policy
-#                  terms_and_conditions GET      /terms-and-conditions(.:format)                                    single_views#terms_and_conditions
+#                     privacy_and_terms GET      /privacy-and-terms(.:format)                                       single_views#privacy_and_terms
 #                            set_school POST     /set-school(.:format)                                              cookies#set_school_id_cookie
 #                         change_school POST     /change-school(.:format)                                           cookies#change_school_id_cookie
 #                      new_user_session GET      /users/sign_in(.:format)                                           devise/sessions#new
@@ -105,74 +104,72 @@
 #                               student PATCH    /students/:id(.:format)                                            students#update
 #                                       PUT      /students/:id(.:format)                                            students#update
 #                                       DELETE   /students/:id(.:format)                                            students#destroy
-#                  search_admin_courses GET|POST /admin/courses/search(.:format)                                    admin/courses#search
-#         new_course_list_admin_courses POST     /admin/courses/new_course_list(.:format)                           admin/courses#new_course_list
-#  review_new_course_list_admin_courses POST     /admin/courses/review_new_course_list(.:format)                    admin/courses#review_new_course_list
-#  create_new_course_list_admin_courses POST     /admin/courses/create_new_course_list(.:format)                    admin/courses#create_new_course_list
-#                         admin_courses GET      /admin/courses(.:format)                                           admin/courses#index
-#                                       POST     /admin/courses(.:format)                                           admin/courses#create
-#                      new_admin_course GET      /admin/courses/new(.:format)                                       admin/courses#new
-#                     edit_admin_course GET      /admin/courses/:id/edit(.:format)                                  admin/courses#edit
-#                          admin_course GET      /admin/courses/:id(.:format)                                       admin/courses#show
-#                                       PATCH    /admin/courses/:id(.:format)                                       admin/courses#update
-#                                       PUT      /admin/courses/:id(.:format)                                       admin/courses#update
-#                                       DELETE   /admin/courses/:id(.:format)                                       admin/courses#destroy
-#                   search_admin_tutors GET|POST /admin/tutors/search(.:format)                                     admin/tutors#search
-#                          admin_tutors GET      /admin/tutors(.:format)                                            admin/tutors#index
-#                                       POST     /admin/tutors(.:format)                                            admin/tutors#create
-#                       new_admin_tutor GET      /admin/tutors/new(.:format)                                        admin/tutors#new
-#                      edit_admin_tutor GET      /admin/tutors/:id/edit(.:format)                                   admin/tutors#edit
-#                           admin_tutor GET      /admin/tutors/:id(.:format)                                        admin/tutors#show
-#                                       PATCH    /admin/tutors/:id(.:format)                                        admin/tutors#update
-#                                       PUT      /admin/tutors/:id(.:format)                                        admin/tutors#update
-#                                       DELETE   /admin/tutors/:id(.:format)                                        admin/tutors#destroy
-#                 search_admin_students GET|POST /admin/students/search(.:format)                                   admin/students#search
-#                        admin_students GET      /admin/students(.:format)                                          admin/students#index
-#                                       POST     /admin/students(.:format)                                          admin/students#create
-#                     new_admin_student GET      /admin/students/new(.:format)                                      admin/students#new
-#                    edit_admin_student GET      /admin/students/:id/edit(.:format)                                 admin/students#edit
-#                         admin_student GET      /admin/students/:id(.:format)                                      admin/students#show
-#                                       PATCH    /admin/students/:id(.:format)                                      admin/students#update
-#                                       PUT      /admin/students/:id(.:format)                                      admin/students#update
-#                                       DELETE   /admin/students/:id(.:format)                                      admin/students#destroy
-#             search_admin_appointments GET|POST /admin/appointments/search(.:format)                               admin/appointments#search
-#                    admin_appointments GET      /admin/appointments(.:format)                                      admin/appointments#index
-#                                       POST     /admin/appointments(.:format)                                      admin/appointments#create
-#                 new_admin_appointment GET      /admin/appointments/new(.:format)                                  admin/appointments#new
-#                edit_admin_appointment GET      /admin/appointments/:id/edit(.:format)                             admin/appointments#edit
-#                     admin_appointment GET      /admin/appointments/:id(.:format)                                  admin/appointments#show
-#                                       PATCH    /admin/appointments/:id(.:format)                                  admin/appointments#update
-#                                       PUT      /admin/appointments/:id(.:format)                                  admin/appointments#update
-#                                       DELETE   /admin/appointments/:id(.:format)                                  admin/appointments#destroy
-#                    search_admin_slots GET|POST /admin/slots/search(.:format)                                      admin/slots#search
-#                           admin_slots GET      /admin/slots(.:format)                                             admin/slots#index
-#                                       POST     /admin/slots(.:format)                                             admin/slots#create
-#                        new_admin_slot GET      /admin/slots/new(.:format)                                         admin/slots#new
-#                       edit_admin_slot GET      /admin/slots/:id/edit(.:format)                                    admin/slots#edit
-#                            admin_slot GET      /admin/slots/:id(.:format)                                         admin/slots#show
-#                                       PATCH    /admin/slots/:id(.:format)                                         admin/slots#update
-#                                       PUT      /admin/slots/:id(.:format)                                         admin/slots#update
-#                                       DELETE   /admin/slots/:id(.:format)                                         admin/slots#destroy
-#                  search_admin_schools GET|POST /admin/schools/search(.:format)                                    admin/schools#search
-#           campus_manager_admin_school GET      /admin/schools/:id/campus_manager(.:format)                        admin/schools#edit_campus_manager
-#                                       POST     /admin/schools/:id/campus_manager(.:format)                        admin/schools#update_campus_manager
-#                         admin_schools GET      /admin/schools(.:format)                                           admin/schools#index
-#                                       POST     /admin/schools(.:format)                                           admin/schools#create
-#                      new_admin_school GET      /admin/schools/new(.:format)                                       admin/schools#new
-#                     edit_admin_school GET      /admin/schools/:id/edit(.:format)                                  admin/schools#edit
-#                          admin_school GET      /admin/schools/:id(.:format)                                       admin/schools#show
-#                                       PATCH    /admin/schools/:id(.:format)                                       admin/schools#update
-#                                       PUT      /admin/schools/:id(.:format)                                       admin/schools#update
-#                                       DELETE   /admin/schools/:id(.:format)                                       admin/schools#destroy
-#               search_admin_promotions GET|POST /admin/promotions/search(.:format)                                 admin/promotions#search
-#                      admin_promotions GET      /admin/promotions(.:format)                                        admin/promotions#index
-#                                       POST     /admin/promotions(.:format)                                        admin/promotions#create
-#                   new_admin_promotion GET      /admin/promotions/new(.:format)                                    admin/promotions#new
-#                  edit_admin_promotion GET      /admin/promotions/:id/edit(.:format)                               admin/promotions#edit
-#                       admin_promotion GET      /admin/promotions/:id(.:format)                                    admin/promotions#show
-#                                       PATCH    /admin/promotions/:id(.:format)                                    admin/promotions#update
-#                                       PUT      /admin/promotions/:id(.:format)                                    admin/promotions#update
-#                                       DELETE   /admin/promotions/:id(.:format)                                    admin/promotions#destroy
+#                  search_admin_courses GET|POST /admin/courses/search(.:format)                                    dashboard/admin/courses#search
+#         new_course_list_admin_courses POST     /admin/courses/new_course_list(.:format)                           dashboard/admin/courses#new_course_list
+#  review_new_course_list_admin_courses POST     /admin/courses/review_new_course_list(.:format)                    dashboard/admin/courses#review_new_course_list
+#  create_new_course_list_admin_courses POST     /admin/courses/create_new_course_list(.:format)                    dashboard/admin/courses#create_new_course_list
+#                         admin_courses GET      /admin/courses(.:format)                                           dashboard/admin/courses#index
+#                                       POST     /admin/courses(.:format)                                           dashboard/admin/courses#create
+#                      new_admin_course GET      /admin/courses/new(.:format)                                       dashboard/admin/courses#new
+#                     edit_admin_course GET      /admin/courses/:id/edit(.:format)                                  dashboard/admin/courses#edit
+#                          admin_course GET      /admin/courses/:id(.:format)                                       dashboard/admin/courses#show
+#                                       PATCH    /admin/courses/:id(.:format)                                       dashboard/admin/courses#update
+#                                       PUT      /admin/courses/:id(.:format)                                       dashboard/admin/courses#update
+#                                       DELETE   /admin/courses/:id(.:format)                                       dashboard/admin/courses#destroy
+#                   search_admin_tutors GET|POST /admin/tutors/search(.:format)                                     dashboard/admin/tutors#search
+#                          admin_tutors GET      /admin/tutors(.:format)                                            dashboard/admin/tutors#index
+#                                       POST     /admin/tutors(.:format)                                            dashboard/admin/tutors#create
+#                       new_admin_tutor GET      /admin/tutors/new(.:format)                                        dashboard/admin/tutors#new
+#                      edit_admin_tutor GET      /admin/tutors/:id/edit(.:format)                                   dashboard/admin/tutors#edit
+#                           admin_tutor GET      /admin/tutors/:id(.:format)                                        dashboard/admin/tutors#show
+#                                       PATCH    /admin/tutors/:id(.:format)                                        dashboard/admin/tutors#update
+#                                       PUT      /admin/tutors/:id(.:format)                                        dashboard/admin/tutors#update
+#                                       DELETE   /admin/tutors/:id(.:format)                                        dashboard/admin/tutors#destroy
+#                 search_admin_students GET|POST /admin/students/search(.:format)                                   dashboard/admin/students#search
+#                        admin_students GET      /admin/students(.:format)                                          dashboard/admin/students#index
+#                                       POST     /admin/students(.:format)                                          dashboard/admin/students#create
+#                     new_admin_student GET      /admin/students/new(.:format)                                      dashboard/admin/students#new
+#                    edit_admin_student GET      /admin/students/:id/edit(.:format)                                 dashboard/admin/students#edit
+#                         admin_student GET      /admin/students/:id(.:format)                                      dashboard/admin/students#show
+#                                       PATCH    /admin/students/:id(.:format)                                      dashboard/admin/students#update
+#                                       PUT      /admin/students/:id(.:format)                                      dashboard/admin/students#update
+#                                       DELETE   /admin/students/:id(.:format)                                      dashboard/admin/students#destroy
+#             search_admin_appointments GET|POST /admin/appointments/search(.:format)                               dashboard/admin/appointments#search
+#                    admin_appointments GET      /admin/appointments(.:format)                                      dashboard/admin/appointments#index
+#                                       POST     /admin/appointments(.:format)                                      dashboard/admin/appointments#create
+#                 new_admin_appointment GET      /admin/appointments/new(.:format)                                  dashboard/admin/appointments#new
+#                edit_admin_appointment GET      /admin/appointments/:id/edit(.:format)                             dashboard/admin/appointments#edit
+#                     admin_appointment GET      /admin/appointments/:id(.:format)                                  dashboard/admin/appointments#show
+#                                       PATCH    /admin/appointments/:id(.:format)                                  dashboard/admin/appointments#update
+#                                       PUT      /admin/appointments/:id(.:format)                                  dashboard/admin/appointments#update
+#                                       DELETE   /admin/appointments/:id(.:format)                                  dashboard/admin/appointments#destroy
+#                    search_admin_slots GET|POST /admin/slots/search(.:format)                                      dashboard/admin/slots#search
+#                           admin_slots GET      /admin/slots(.:format)                                             dashboard/admin/slots#index
+#                                       POST     /admin/slots(.:format)                                             dashboard/admin/slots#create
+#                        new_admin_slot GET      /admin/slots/new(.:format)                                         dashboard/admin/slots#new
+#                       edit_admin_slot GET      /admin/slots/:id/edit(.:format)                                    dashboard/admin/slots#edit
+#                            admin_slot GET      /admin/slots/:id(.:format)                                         dashboard/admin/slots#show
+#                                       PATCH    /admin/slots/:id(.:format)                                         dashboard/admin/slots#update
+#                                       PUT      /admin/slots/:id(.:format)                                         dashboard/admin/slots#update
+#                                       DELETE   /admin/slots/:id(.:format)                                         dashboard/admin/slots#destroy
+#                  search_admin_schools GET|POST /admin/schools/search(.:format)                                    dashboard/admin/schools#search
+#                         admin_schools GET      /admin/schools(.:format)                                           dashboard/admin/schools#index
+#                                       POST     /admin/schools(.:format)                                           dashboard/admin/schools#create
+#                      new_admin_school GET      /admin/schools/new(.:format)                                       dashboard/admin/schools#new
+#                     edit_admin_school GET      /admin/schools/:id/edit(.:format)                                  dashboard/admin/schools#edit
+#                          admin_school GET      /admin/schools/:id(.:format)                                       dashboard/admin/schools#show
+#                                       PATCH    /admin/schools/:id(.:format)                                       dashboard/admin/schools#update
+#                                       PUT      /admin/schools/:id(.:format)                                       dashboard/admin/schools#update
+#                                       DELETE   /admin/schools/:id(.:format)                                       dashboard/admin/schools#destroy
+#               search_admin_promotions GET|POST /admin/promotions/search(.:format)                                 dashboard/admin/promotions#search
+#                      admin_promotions GET      /admin/promotions(.:format)                                        dashboard/admin/promotions#index
+#                                       POST     /admin/promotions(.:format)                                        dashboard/admin/promotions#create
+#                   new_admin_promotion GET      /admin/promotions/new(.:format)                                    dashboard/admin/promotions#new
+#                  edit_admin_promotion GET      /admin/promotions/:id/edit(.:format)                               dashboard/admin/promotions#edit
+#                       admin_promotion GET      /admin/promotions/:id(.:format)                                    dashboard/admin/promotions#show
+#                                       PATCH    /admin/promotions/:id(.:format)                                    dashboard/admin/promotions#update
+#                                       PUT      /admin/promotions/:id(.:format)                                    dashboard/admin/promotions#update
+#                                       DELETE   /admin/promotions/:id(.:format)                                    dashboard/admin/promotions#destroy
 #         api_v1_school_subject_courses GET      /api/v1/schools/:school_id/subjects/:subject_id/courses(.:format)  api/v1/courses#index {:format=>:json}
 #                api_v1_school_subjects GET      /api/v1/schools/:school_id/subjects(.:format)                      api/v1/subjects#index {:format=>:json}
 #                    api_v1_tutor_slots GET      /api/v1/tutors/:tutor_id/slots(.:format)                           api/v1/slots#index {:format=>:json}
@@ -187,15 +184,22 @@
 #       cancel_api_v1_tutor_appointment PUT      /api/v1/tutors/:tutor_id/appointments/:id/cancel(.:format)         api/v1/tutor_appointments#cancel {:format=>:json}
 #             api_v1_tutor_appointments GET      /api/v1/tutors/:tutor_id/appointments(.:format)                    api/v1/tutor_appointments#index {:format=>:json}
 #              api_v1_tutor_appointment GET      /api/v1/tutors/:tutor_id/appointments/:id(.:format)                api/v1/tutor_appointments#show {:format=>:json}
+#    delete_api_v1_student_appointments DELETE   /api/v1/students/:student_id/appointments/delete(.:format)         api/v1/student_appointments#delete {:format=>:json}
 # reschedule_api_v1_student_appointment PUT      /api/v1/students/:student_id/appointments/:id/reschedule(.:format) api/v1/student_appointments#reschedule {:format=>:json}
 #     cancel_api_v1_student_appointment PUT      /api/v1/students/:student_id/appointments/:id/cancel(.:format)     api/v1/student_appointments#cancel {:format=>:json}
 #           api_v1_student_appointments GET      /api/v1/students/:student_id/appointments(.:format)                api/v1/student_appointments#index {:format=>:json}
 #                                       POST     /api/v1/students/:student_id/appointments(.:format)                api/v1/student_appointments#create {:format=>:json}
 #            api_v1_student_appointment GET      /api/v1/students/:student_id/appointments/:id(.:format)            api/v1/student_appointments#show {:format=>:json}
 #                  api_v1_search_tutors GET      /api/v1/search/tutors(.:format)                                    api/v1/search#tutors {:format=>:json}
-#                                api_v1 GET      /api/v1/payments/student/:student_id(.:format)                     api/v1/payments#check_student_for_customer_id {:format=>:json}
-#               api_v1_check_promo_code POST     /api/v1/check_promo_code(.:format)                                 api/v1/promotions#check_promo_code {:format=>:json}
+#               api_v1_check_promo_code GET      /api/v1/check_promo_code/:tutor_id/:promo_code(.:format)           api/v1/promotions#check_promo_code {:format=>:json}
 #     api_v1_visitor_create_appointment POST     /api/v1/visitor/create_appointment(.:format)                       api/v1/student_appointments#visitor_create {:format=>:json}
+#                api_v1_process_payment POST     /api/v1/payments/process_payment(.:format)                         api/v1/payments#process_payment {:format=>:json}
+#                   api_v1_get_customer GET      /api/v1/payments/student/:student_id/customer(.:format)            api/v1/payments#get_customer {:format=>:json}
+#                api_v1_create_customer POST     /api/v1/payments/student/:student_id/customer(.:format)            api/v1/payments#create_customer {:format=>:json}
+#            api_v1_update_default_card POST     /api/v1/payments/student/:student_id/default-card(.:format)        api/v1/payments#update_default_card {:format=>:json}
+#                                api_v1 GET      /api/v1/payments/student/:student_id(.:format)                     api/v1/payments#check_student_for_customer_id {:format=>:json}
+#                                       GET      /api/v1/check_promo_code/:tutor_id/:promo_code(.:format)           api/v1/promotions#check_promo_code {:format=>:json}
+#       api_v1_payments_process_payment POST     /api/v1/payments/process_payment(.:format)                         api/v1/payments#process_payment {:format=>:json}
 #                           sidekiq_web          /sidekiq                                                           Sidekiq::Web
 #
 
@@ -222,7 +226,7 @@ Rails.application.routes.draw do
   post '/change-school'       => 'cookies#change_school_id_cookie'
 
   # custom_devise_routes
-  devise_for :users, controllers: { registrations: "tutor_registration" }
+  devise_for :users
 
   # standard resources for slots
   resources :slots
@@ -280,34 +284,32 @@ Rails.application.routes.draw do
         get  '/payment_info'          => 'dashboard/student/settings#payment_info'
         post '/payment_info'          => 'dashboard/student/settings#save_payment_info'
         get  '/edit_payment_info'     => 'dashboard/student/settings#edit_payment_info'
-        post '/edit_payment_info'      => 'dashboard/student/settings#save_payment_info'
+        post '/edit_payment_info'     => 'dashboard/student/settings#save_payment_info'
         get  '/appointment_history'   => 'dashboard/student/settings#appointment_history'
       end
     end
   end
 
   # restricted admin-only area routes (the collections after the resources are for ransack search)
-  namespace :admin do
-    resources :courses do
-      collection do
-        match 'search' => 'courses#search', via: [:get, :post], as: :search
-        post 'new_course_list' => 'courses#new_course_list'
-        post 'review_new_course_list' => 'courses#review_new_course_list'
-        post 'create_new_course_list' => 'courses#create_new_course_list'
+  scope module: 'dashboard' do
+    namespace :admin do
+      resources :courses do
+        collection do
+          match 'search' => 'courses#search', via: [:get, :post], as: :search
+          post 'new_course_list' => 'courses#new_course_list'
+          post 'review_new_course_list' => 'courses#review_new_course_list'
+          post 'create_new_course_list' => 'courses#create_new_course_list'
+        end
       end
-    end
-    resources :tutors do collection { match 'search' => 'tutors#search', via: [:get, :post], as: :search } end
-    resources :students do collection { match 'search' => 'students#search', via: [:get, :post], as: :search } end
-    resources :appointments do collection { match 'search' => 'appointments#search', via: [:get, :post], as: :search } end
-    resources :slots do collection { match 'search' => 'slots#search', via: [:get, :post], as: :search } end
-    resources :schools do
-      collection { match 'search' => 'schools#search', via: [:get, :post], as: :search }
-      member do
-        get   'campus_manager' => 'schools#edit_campus_manager'
-        post  'campus_manager' => 'schools#update_campus_manager'
+      resources :tutors do collection { match 'search' => 'tutors#search', via: [:get, :post], as: :search } end
+      resources :students do collection { match 'search' => 'students#search', via: [:get, :post], as: :search } end
+      resources :appointments do collection { match 'search' => 'appointments#search', via: [:get, :post], as: :search } end
+      resources :slots do collection { match 'search' => 'slots#search', via: [:get, :post], as: :search } end
+      resources :schools do
+        collection { match 'search' => 'schools#search', via: [:get, :post], as: :search }
       end
+      resources :promotions do collection { match 'search' => 'promotions#search', via: [:get, :post], as: :search } end
     end
-    resources :promotions do collection { match 'search' => 'promotions#search', via: [:get, :post], as: :search } end
   end
 
   # API routes
@@ -318,19 +320,29 @@ Rails.application.routes.draw do
           resources :courses, only: [:index]
         end
       end
+
       resources :tutors, only: [] do
-        resources :slots, only: [:index, :show, :create, :update, :destroy]
-        post '/slots/update_group' => 'slots#update_slot_group' # POST bc carrying data for multiple slots
-        post '/slots/delete_group' => 'slots#destroy_slot_group' # POST bc carrying data for multiple slots
-        get '/courses' => 'tutor_courses#index'
+        member do 
+          get '/courses' => 'tutor_courses#index'
+        end
+        resources :slots, only: [:index, :show, :create, :update, :destroy] do
+          collection do 
+            post '/update_group' => 'slots#update_slot_group' # POST bc carrying data for multiple slots
+            post '/delete_group' => 'slots#destroy_slot_group' # POST bc carrying data for multiple slots
+          end
+        end
         resources :appointments, only: [:index, :show], controller: 'tutor_appointments' do
           member do
             put 'cancel'
           end
         end
       end
+
       resources :students, only: [] do
         resources :appointments, only: [:index, :show, :create], controller: 'student_appointments' do
+          collection do
+          	delete 'delete'
+          end
           member do
             put 'reschedule'
             put 'cancel'
@@ -338,14 +350,13 @@ Rails.application.routes.draw do
         end
       end
 
-      get '/search/tutors' => 'search#tutors'
-      get '/payments/student/:student_id' => 'payments#check_student_for_customer_id'
-      ## special routes for checkout
-      # retrieves promo code info for checkout preview
-      get '/check_promo_code/:tutor_id/:promo_code' => 'promotions#check_promo_code'
-      # creates an appointment without a student_id for a visitor (before student_id is created and attached to appt in the next step of checkout)
-      post  '/visitor/create_appointment' => '/api/v1/student_appointments#visitor_create'
-      post  '/payments/process_payment' => 'payments#process_payment'
+      get  '/search/tutors'  => 'search#tutors'
+      get  '/check_promo_code/:tutor_id/:promo_code' => 'promotions#check_promo_code',      as: 'check_promo_code'
+      post '/visitor/create_appointment'             => 'student_appointments#visitor_create'
+      post '/payments/process_payment'               => 'payments#process_payment',         as: 'process_payment'
+      get  '/payments/student/:student_id/customer'      => 'payments#get_customer',        as: 'get_customer'
+      post '/payments/student/:student_id/customer'      => 'payments#create_customer',     as: 'create_customer'
+      post '/payments/student/:student_id/default-card'  => 'payments#update_default_card', as: 'update_default_card'
     end
   end
 

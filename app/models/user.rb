@@ -38,11 +38,12 @@ class User < ActiveRecord::Base
   has_one :tutor, dependent: :destroy
   has_one :student, dependent: :destroy
   has_one :campus_manager, dependent: :destroy
+  has_one :admin, dependent: :destroy
 
   validates :first_name, presence: true
   validates :last_name, presence: true
 
-  enum role: [:student, :tutor, :campus_manager, :super_admin]
+  enum role: [:student, :tutor, :campus_manager, :admin]
 
   extend FriendlyId
   friendly_id :slug_candidates, use: :slugged
@@ -54,15 +55,16 @@ class User < ActiveRecord::Base
     # used in Devise::RegistrationsController to create a Tutor while creating a User
     user.create_tutor!(
       phone_number: params[:user][:tutor][:phone_number],
-      school_id: params[:course][:school_id]
+      school_id: params[:user][:tutor][:school_id]
     )
     # send welcome email
     TutorManagementMailer.delay.welcome_email(user.id)
   end
 
   def create_student_account(user, params)
+    # used in Devise::RegistrationsController to create a Student while creating a User
     user.create_student!(
-      school_id: params[:course][:school_id]
+      school_id: params[:user][:student][:school_id]
     )
     # TODO: send welcome email to student?
   end
@@ -97,8 +99,6 @@ class User < ActiveRecord::Base
       return self.tutor.school
     when :campus_manager
       return self.campus_manager.school
-    when :super_admin
-      return self.super_admin.school
     end
   end
 

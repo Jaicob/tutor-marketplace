@@ -8,8 +8,6 @@ module Processor
     end
 
     def update_managed_account(tutor, token)
-      puts "tutor!!!!!!!! = #{tutor}"
-      puts "token!!!!!!!! = #{token}"
       if tutor.acct_id.nil?
         acct = ::Stripe::Account.create(
           managed: true,
@@ -38,7 +36,6 @@ module Processor
       else
         acct = ::Stripe::Account.retrieve(tutor.acct_id)
       end
-      puts "acct!!!!!!! = #{acct}"
       acct.external_accounts.create(:external_account => token)
     end
 
@@ -52,45 +49,46 @@ module Processor
     end
 
     def send_charge(charge)
+
       if charge.customer_id.nil?
-        ::Stripe::Charge.create(
-          amount: charge.amount,
-          currency: 'usd',
-          source: charge.token,
-          destination: charge.tutor.acct_id,
-          application_fee: charge.axon_fee
-        )
-      else
-        puts "SEND CHARGE METHOD IN STRIPE.RB"
-        puts "charge.amount = #{charge.amount}"
-        puts "charge.customer_id = #{charge.customer_id}"
-        puts "charge.tutor_acct_id = #{charge.tutor.acct_id}"
-        puts "charge.axon_fee = #{charge.axon_fee}"
-        puts "charge.tutor_fee = #{charge.tutor_fee}"
-        ::Stripe::Charge.create(
-          amount: charge.amount,
-          currency: 'usd',
-          customer: charge.customer_id,
-          destination: charge.tutor.acct_id,
-          application_fee: charge.axon_fee
-        )
+        update_customer()
+        # ::Stripe::Charge.create(
+        #   amount: charge.amount,
+        #   currency: 'usd',
+        #   source: charge.token,
+        #   destination: charge.tutor.acct_id,
+        #   application_fee: charge.axon_fee
+        # )
       end
+
+      # KEEP EXCESSIVE PUTS STATEMENTS HERE! This is really hard to write tests for so we're testing this bitch in the console output... \_(ツ)_/¯
+      puts "SEND CHARGE METHOD IN STRIPE.RB"
+      puts "charge.amount = #{charge.amount}"
+      puts "charge.customer_id = #{charge.customer_id}"
+      puts "charge.tutor_acct_id = #{charge.tutor.acct_id}"
+      puts "charge.axon_fee = #{charge.axon_fee}"
+      puts "charge.tutor_fee = #{charge.tutor_fee}"
+      ::Stripe::Charge.create(
+        amount: charge.amount,
+        currency: 'usd',
+        customer: charge.customer_id,
+        destination: charge.tutor.acct_id,
+        application_fee: charge.axon_fee
+      )
     end
 
-    def update_customer(student, token)
+    def update_customer(student, token, make_default)
       if student.customer_id.nil?
         cust = ::Stripe::Customer.create(
           card: token,
           description: "#{student.full_name} - #{student.email}",
           email: student.email
         )
-        if cust.sources['data'].first
-          brand = cust.sources['data'].first['brand']
-          last_4 = cust.sources['data'].first['last4']
+        if make_default == true
           student.update_attributes(
             customer_id: cust.id, 
-            last_4_digits: last_4,
-            card_brand: brand
+            last_4_digits: cust.sources['data'].first['last4'],
+            card_brand: cust.sources['data'].first['brand']
           )
         end
       else
@@ -100,15 +98,11 @@ module Processor
         # save new card
         cust.sources.create(source: token)
         cust.save
-        if cust.sources['data'].first
-          brand = cust.sources['data'].first['brand']
-          last_4 = cust.sources['data'].first['last4']
-          student.update_attributes(
-            customer_id: cust.id, 
-            last_4_digits: last_4,
-            card_brand: brand
-          )
-        end
+        student.update_attributes(
+          customer_id: cust.id, 
+          last_4_digits: cust.sources['data'].first['last4'],
+          card_brand: cust.sources['data'].first['brand']
+        )
       end
     end
 

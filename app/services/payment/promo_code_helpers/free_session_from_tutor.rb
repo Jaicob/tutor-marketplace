@@ -10,7 +10,6 @@ module PromoCodeHelpers
       @promotion = Promotion.find(context.promotion_id)
       @transaction_fee = ((@context.transaction_percentage.to_f / 100) + 1)
       @rates = context.rates
-      @is_payment_required = context.is_payment_required
       @tutor = context.tutor
     end
 
@@ -42,7 +41,7 @@ module PromoCodeHelpers
           axon_fee: 0,
           promotion_id: promotion.id
         )
-        @is_payment_required = false
+        context.is_payment_required = false
       else
         rates.sort!.slice!(0) # rates minus the lowest rate
         rates_total = rates.reduce(:+)

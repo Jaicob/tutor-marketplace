@@ -111,7 +111,8 @@ end
 
 # Create Slots for each Tutor
 Tutor.all.each do |tutor|
-  slot_creator = SlotCreator.new(tutor_id: tutor.id, start_time: Time.now.iso8601.to_s, duration: 7200, weeks_to_repeat: 18)
+  start_time = Date.today.to_s + ' 12:00'
+  slot_creator = SlotCreator.new(tutor_id: tutor.id, start_time: start_time, duration: 7200, weeks_to_repeat: 18)
   slot_creator.create_slots
 end
 
@@ -120,8 +121,8 @@ Tutor.all.each do |tutor|
   tutor.update(active_status: 1)
 end
 
-# Create 200 Users to become Students, 5 for each school
-200.times{
+# Create 200 Users to become Students, 25 for each school
+100.times{
   User.create!(
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
@@ -140,7 +141,7 @@ n = 1
 new_users.each do |new_user|
   new_user.create_student!(school_id: n)
   x = Student.count
-  if (x == 50) || (x == 100) || (x == 150)
+  if (x == 25) || (x == 50) || (x == 75)
     n += 1
   end
 end
@@ -149,27 +150,13 @@ end
 School.all.each do |school|
   @students = school.students
   @tutors = school.tutors
-  5.times { |ordinal|
+  @start_time = Date.today.to_s + ' 12:00'
+  25.times { |ordinal|
     Appointment.create(
       student_id: @students[ordinal].id,
       slot_id: @tutors[ordinal].slots.first.id,
       course_id: @tutors[ordinal].courses.first.id,
-      start_time: "2015-08-01 12:00:00"
+      start_time: @start_time
     )
   }
-end
-
-# Create a CampusManager for each school
-n = 1
-4.times do
-  x = User.create(
-    first_name: Faker::Name.first_name,
-    last_name: Faker::Name.last_name,
-    email: Faker::Internet.safe_email(SecureRandom.hex(8).to_s),
-    password: 'password',
-    password_confirmation: 'password'
-  )
-  x.create_campus_manager(school_id: n)
-  x.update(role: 2) # sets user.role to campus_manager
-  n += 1
 end

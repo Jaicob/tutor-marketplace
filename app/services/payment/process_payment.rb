@@ -1,7 +1,7 @@
 class ProcessPayment
   include Interactor::Organizer
 
-  organize CreateCharge, ApplyPromoCode, ReconcileCouponDifference, SendPayment, SendEmails
+  organize SetCustomer, CreateCharge, ApplyPromoCode, ReconcileCouponDifference, SendPayment, SendEmails, DestroyCard
 
 end
 
@@ -11,12 +11,12 @@ end
 # @promotion = Promotion.create(category: 5, amount: 10, valid_from: Date.today, valid_until: Date.today + 30, redemption_limit: 200, tutor_id: 23)
 
 # params = {
-#   tutor: Tutor.find(23),
-#   appointments: [Appointment.first],
-#   customer_id: Student.find(22).customer_id,
-#   rates: [23],
+#   tutor: Tutor object,
+#   appointments: [array of Appointment objects],
+#   student: Student object,
+#   rates: [array of integers (representing dollar amounts)],
 #   transaction_percentage: 15.0,
-#   promotion_id: @promotion.id,
+#   promotion_id: promotion_id,
 #   is_payment_required: true
 # }
 

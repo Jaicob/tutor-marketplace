@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="small-12 columns">
+    <h1>New School</h1>
+  </div>
+</div>
+
+<div class="row">
+  <div class="small-12 medium-4 columns">
+    <%= form_for @working_school, url: '/admin/schools' do |f| %>
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+
+      <%= f.label :location %>
+      <%= f.text_field :location %>
+
+      <%= f.label :transaction_percentage, "Transaction Percentage (as an integer)" %>
+      <%= f.text_field :transaction_percentage %>
+
+      <%= f.submit 'Add School', class: 'custom-button full-width' %>
+    <% end %>
+  </div>
+</div>

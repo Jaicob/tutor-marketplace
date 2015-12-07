@@ -26,7 +26,7 @@
   </div>
   <div class="row">
     <div class="small-12 medium-8 medium-centered columns">
-      <div class="row medium-collapse home-search">
+      <div class="row medium-collapse course-search-box">
         <div class="small-12 medium-5 columns">
           <%= form_for :search, url: search_from_home_path, method: :post do |f| %>
             <%= render '/course_selector/subject' %>
@@ -35,7 +35,7 @@
             <%= render '/course_selector/course' %>
         </div>
         <div class="small-12 medium-2 columns">
-            <%= f.submit 'Search', class: 'custom-button full-width', id: 'submit-search-home-page' %>
+            <%= f.submit 'Search', class: 'custom-button full-width', id: 'course-search-submit' %>
           <% end %>
         </div>
       </div>

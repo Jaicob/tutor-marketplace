@@ -1,0 +1,132 @@
+<div class="row">
+  <div class="medium-6 columns">
+    <h3>Tutors</h3>
+  </div>
+  <div class="medium-6 columns">
+    <% if Tutor.applications_awaiting_approval(current_user).count > 0 %>
+      <%= search_form_for @q, url: search_admin_tutors_path, html: { method: :post } do |f| %> 
+        <%= f.hidden_field :active_status_eq, value: '0' %>
+        <%= f.hidden_field :application_status_eq, value: '1' %>
+        <%= f.submit "Applications Awaiting Approval: #{Tutor.applications_awaiting_approval(current_user).count}", class: 'button radius alert small expand' %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+<div class="row">
+  <div class="medium-12 columns">
+  <%= search_form_for @q, url: search_admin_tutors_path, html: { method: :post } do |f| %>
+    <fieldset class="admin-panel">
+      <legend class="admin-panel">Search for Tutors</legend>
+      <div class="row">
+        <div class="medium-4 columns">   
+          <%= f.label :id_eq, 'ID' %>
+          <%= f.search_field :id_eq %>
+        </div>
+
+        <div class="medium-4 columns">   
+          <%= f.label :user_first_name_or_user_last_name_matches, 'Name' %>
+          <%= f.search_field :user_first_name_or_user_last_name_matches %>
+        </div>
+        
+        <div class="medium-4 columns">   
+          <%= f.label :user_email_matches, 'Email' %>
+          <%= f.search_field :user_email_matches %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="medium-4 columns"> 
+          <%= f.label :school_id_eq, 'School' %>
+          <%= f.collection_select(:school_id_eq, School.all, :id, :name, include_blank: true) %>
+        </div>
+        <div class="medium-4 columns">   
+          <%= f.label :active_status_eq, 'Active Status' %>
+          <%= f.select(:active_status_eq, options_for_select([['Active', 1],['Inactive', 0]]), include_blank: true) %>
+        </div>
+        <div class="medium-4 columns">   
+          <%= f.label :application_status_eq, 'Application Status' %>
+          <%= f.select(:application_status_eq, options_for_select([['Incomplete', 0],['Complete', 1],['Approved', 2]]), include_blank: true) %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="large-3 medium-2 columns">
+          <%= f.label :courses_subject_id_eq, "Subject" %>
+          <%= f.collection_select(:courses_subject_id_eq, Subject.all, :id, :name, include_blank: true) %>
+        </div>
+
+        <div class="large-3 medium-2 columns">
+          <%= f.label :courses_call_number_eq, 'Call Number' %>
+          <%= f.search_field :courses_call_number_eq %>
+        </div>
+
+        <div class="large-3 medium-4 columns">
+          <%= f.label :created_at_gteq, 'Applied after:' %>
+          <%= f.date_select :created_at_gteq, {:include_blank => true, :default => nil} %>
+        </div>
+
+        <div class="large-3 medium-4 columns">
+          <%= f.label :created_at_lteq, 'Applied before:' %>
+          <%= f.date_select :created_at_lteq, {:include_blank => true, :default => nil} %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="medium-3 columns">
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="medium-6 medium-offset-6 columns">
+          <div class="row">
+            <div class="medium-4 columns">
+            </div>
+            <div class="medium-4 columns">
+              <%= link_to 'Reset', '/admin/tutors', class: 'button info tiny full-width' %>
+            </div>
+            <div class="medium-4 columns">
+              <%= f.submit class: 'button success tiny full-width' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+  <% end %>
+</div>
+
+<div class="row">
+  <div class="medium-12 columns">
+    <table>
+      <thead>
+        <tr>
+          <th class="id">ID</th>
+          <th class="active-status">Active Status</th>
+          <th class="name">Name</th>
+          <th class="email">Email</th>
+          <th class="school">School</th>
+          <th class="appointments">Appts</th>
+          <th class="availability">Availabilty Booked</th>
+          <th class="application-status">Application Status</th>
+          <th class="applied-on">Applied On</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @tutors.each do |tutor| %>
+        <tr>
+          <td><%= link_to "#{tutor.id}", admin_tutor_path(tutor) %></td>
+          <td><%= tutor.active_status %></td>
+          <td><%= tutor.user.full_name %></td>
+          <td><%= tutor.user.email %></td>
+          <td><%= tutor.school.name %></td>
+          <td><%= tutor.appointments.count %></td>
+          <td></td>
+          <td><%= tutor.application_status %></td>
+          <td><%= tutor.created_at.strftime('%-m-%d-%y') %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

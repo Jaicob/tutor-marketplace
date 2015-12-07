@@ -44,6 +44,8 @@ class Tutor < ActiveRecord::Base
 
   delegate :first_name, :last_name, :full_name, :sign_in_ip, :email, :password, :slug, to: :user
 
+  validates :user, presence: true
+
   enum application_status: ['Incomplete', 'Complete', 'Approved']
   enum active_status: ['Inactive', 'Active']
   enum degree: ["B.A.","B.S.","M.B.A.","M.S.","M.Ed.","PhD."]

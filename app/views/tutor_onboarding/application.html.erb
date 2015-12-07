@@ -24,12 +24,14 @@ $(document).ready(function()
 });
 </script>
 <%= render '/tutor_onboarding/progress_bar' %>
-<div class="row box">
+<div class="row">
   <div class="small-12 columns">
-    <h1>Welcome, <%= @tutor.first_name %></h1>
-    <p class="big-text">Congratulations on signing up to become an Axon tutor!</p>
-    <p class="big-text">You're only <span>4 steps away from setting up your account</span>. After all steps are complete, the Axon tutor management team must review and accept your application before your profile is activated.</p>
-    <p class="big-text">To finish setting up your account, you'll need: your <span>resume or unofficial school transcript</span>, a <span>profile picture</span> for your home page, and your <span>banking information</span> to set up direct deposit for your payments.</p>
+    <div class="box">
+      <h1>Welcome, <%= @tutor.first_name %></h1>
+      <p class="big-text">Congratulations on signing up to become an Axon tutor!</p>
+      <p class="big-text">You're only <span>4 steps away from setting up your account</span>. After all steps are complete, the Axon tutor management team must review and accept your application before your profile is activated.</p>
+      <p class="big-text">To finish setting up your account, you'll need: your <span>resume or unofficial school transcript</span>, a <span>profile picture</span> for your home page, and your <span>banking information</span> to set up direct deposit for your payments.</p>
+    </div>
   </div>
 </div>
 <div class="row">
@@ -44,7 +46,7 @@ $(document).ready(function()
 
       <%= form_for @tutor, url: submit_application_tutor_path do |f| %>
 
-        <h4 class="first-subheader">1. Education</h4>
+        <h4 class="first-subheader">Education</h4>
 
         <p class="prompt">What is your degree type, major and graduation year?</p>
         <div class="row medium-collapse">
@@ -65,7 +67,7 @@ $(document).ready(function()
         <p>If so, please summarize this information in one line (optional field)</p>
         <%= f.text_field :additional_degrees, placeholder: 'Second Major: Chemistry', class: 'border-radius' %>
 
-        <h4>2. Personal Statements</h4>
+        <h4>Personal Statements</h4>
 
         <p class="prompt">Share three facts about yourself that you want students to see.</p>
 
@@ -84,7 +86,7 @@ $(document).ready(function()
           <%= f.text_area :extra_info_3, placeholder: 'Statement #3', required: true %>
         </div>
 
-        <h4>3. File Uploads</h4>
+        <h4>File Uploads</h4>
 
         <h6>Upload your unofficial transcript or resume</h6>
         <p class="fine-print">Acceptable file types: .jpg, .jpeg, .png, .txt, .rtf, .doc, .docx, .pdf</p>
@@ -176,8 +178,10 @@ $(document).ready(function()
   </div>
 </div>
 <div class="row">
-  <div class="small-12 medium-8 columns box next-step-instructions">
-    <p>Finished with your application? Review it then click here to set your Courses! <i class="fi-arrow-right"></i></p>
+  <div class="small-12 medium-8 columns next-step-instructions">
+    <div class="box">
+      <p>Finished with your application? Review it then click here to set your Courses! <i class="fi-arrow-right"></i></p>
+    </div>
   </div>
   <div class="small-12 medium-4 columns">   
     <%= f.hidden_field :onboarding_status, value: 1 %>

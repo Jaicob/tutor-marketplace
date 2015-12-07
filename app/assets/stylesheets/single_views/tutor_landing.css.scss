@@ -28,56 +28,11 @@ $green: #58AA4D;
   }
 }
 
-.blue-3 {
-  color: #0095AC;
-}
-.shadow {
-  text-shadow: 1px 1px 1px black;
-}
-.bottom-margin {
-  margin-bottom: 1em;
-}
-.headline {
-  font-family: 'Lato';
-}
-.school-selection-box {
-  margin: auto;
-  max-width: 25em;
-}
-.school-selection {
-  display: block;
-  width: 100%;
-  text-align: center;
-  background-color: #0095AC;
-  border: 2px solid white;
-  border-radius: 4px;
-  color: white;
-  font-size: 0.8em;
-  padding: 1em;
-}
-.book-two-mins {
-  margin-bottom: 4em;
-}
-.top-banner {
-  border-top: none;
-}
-.top-padding {
-  padding-top: 1.5em;
-}
 .landing-page {
   padding: 1em;
   text-align: center;
 }
-.landing-page p {
-  text-align: center;
-  max-width: 20em;
-  width: 100%;
-  margin: 1em auto;
-}
-p.axon-is-easy {
-  max-width: 20em;
-  margin: 0 auto 1em;
-}
+
 img.testimonial-pic {
   border-radius: 100%;
   width: 100%;
@@ -89,21 +44,8 @@ p.testimonial-name {
   font-weight: 400;
   margin-bottom: 2em;
 }
-a.faqs-link {
-  padding: 1em 5em;
-  background-color: #0095AC;
-  color: white;
-  border-radius: 4px;
-}
-.campus-pic-boxes {
-  margin-bottom: 3em;
-}
-.campus-pic-box {
-  width: 100%;
-  margin: 1em auto;
-  max-width: 15em;
-  overflow: hidden;
-}
+
+
 p.campus-pic-title {
   font-size: 5em;
   font-weight: 900;
@@ -122,45 +64,6 @@ p.select-campus-pic {
   margin: auto;
   padding: 2em;
   color: white;
-}
-button.custom-button.bottom-register-button {
-  padding: 1em 5em;
-}
-
-
-
-
-
-/* Full view */
-
-@media (min-width: 1000px) {
-.school-selection-box {
-  width: 40%;
-  margin: auto;
-}
-.school-selection {
-  display: inline-block;
-  width: 49%;
-  text-align: center;
-  background-color: #0095AC;
-  border: 2px solid white;
-  border-radius: 4px;
-  color: white;
-  font-size: 0.8em;
-}
-.number-banner {
-  display: inline-block;
-  width: 33%;
-  border: none;
-  vertical-align: top;
-}
-.pic-box {
-  width: 33%;
-  display: inline-block;
-  padding: 2em;
-  vertical-align: top;
-  margin: 0;
-}
 }
 
 /* Tutor sign-up form */
