@@ -3,6 +3,9 @@ class API::V1::PaymentsController < API::V1::Defaults
   before_action :set_tutor, only: [:process_payment]
 
   def get_customer
+    # required_params
+      # :student_id
+
     if @student.customer_id
       card = "#{@student.card_brand} **** #{@student.last_4_digits}" if @student.last_4_digits
       render json: { 
@@ -17,6 +20,14 @@ class API::V1::PaymentsController < API::V1::Defaults
   end
 
   def create_student
+    # required_params
+      # :first_name
+      # :last_name
+      # :email
+      # :password
+      # :school_id
+      # :stripe_token
+
     @token = params[:stripe_token]
 
     new_user = User.create(
@@ -60,6 +71,10 @@ class API::V1::PaymentsController < API::V1::Defaults
   end
 
   def update_default_card
+    # required_params
+      # :student_id
+      # :stripe_token
+
     token = params[:stripe_token]
     Processor::Stripe.new.update_customer(@student, token)
     if @student.reload.customer_id
@@ -70,6 +85,11 @@ class API::V1::PaymentsController < API::V1::Defaults
   end
 
   def process_payment
+    # required_params
+      # :student_id
+      # :stripe_token
+      # :appt_ids
+  
     appts = params[:appt_ids].map { |appt| Appointment.find(appt) }
     appts.each do |appt|
       appt.update(student_id: params[:student_id])
@@ -84,6 +104,7 @@ class API::V1::PaymentsController < API::V1::Defaults
     formatted_params = {
       tutor: @tutor,
       student: @student,
+      token: params[:stripe_token],
       appointments: appts,
       rates: rate_array,
       transaction_percentage: params[:transaction_percentage],
