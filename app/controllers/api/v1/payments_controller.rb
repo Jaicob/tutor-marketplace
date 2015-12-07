@@ -3,14 +3,9 @@ class API::V1::PaymentsController < API::V1::Defaults
   before_action :set_tutor, only: [:process_payment]
 
   def get_customer
-    # should I create a customer here if there is no customer?
-    # or, is it even possible for a student to exist without a customer id if we always create a customer for a new student
-    # if so, then should the Stripe.create_customer method go in the Student controller?
-    # if that's the case, then a student always has a customer id and this just returns whether or not a student has a default card,
-    # so then the action is not 'get_customer', it's more like 'check_for_card' 
     if @student.customer_id
       card = "#{@student.card_brand} **** #{@student.last_4_digits}" if @student.last_4_digits
-      render json: {
+      render json: { 
         full_name: @student.full_name,
         card: card,
         customer: @student.customer_id,
@@ -22,15 +17,46 @@ class API::V1::PaymentsController < API::V1::Defaults
   end
 
   def create_student
-    # to make user & student
-      params[:first_name]
-      params[:last_name]
-      params[:email]
-      params[:password]
+    @token = params[:stripe_token]
 
-    # to make customer
-      params[:stripe_token]
-      params[:save_card]
+    new_user = User.create(
+      first_name: params[:first_name],
+      last_name: params[:last_name],
+      email: params[:email],
+      password: params[:password]
+    )
+    
+    if new_user.save
+      @student = new_user.create_student(school_id: params[:school_id])
+      if !@student.save
+        render json: {success: false, error: @student.errors.full_messages}
+      end
+    else
+      render json: {success: false, error: new_user.errors.full_messages}
+      return
+    end
+
+    if params[:save_card] == 'true'
+      Processor::Stripe.new.update_customer(@student, @token)
+      if @student.reload.customer_id
+        render json: { 
+          success: true, 
+          student_id: @student.id, 
+          customer_id: @student.customer_id 
+        }
+        return
+      else
+        render json: { 
+          success: false, error: 'Error with update_customer method in payments/processor/stripe.rb' 
+        }
+      end
+    else
+      render json: {
+        success: true,
+        student_id: @student.id,
+        stripe_token: @token
+      }
+    end
   end
 
   def update_default_card
@@ -62,12 +88,14 @@ class API::V1::PaymentsController < API::V1::Defaults
       rates: rate_array,
       transaction_percentage: params[:transaction_percentage],
       promotion_id: promotion,
-      save_card: params[:save_card]
     }
 
-    ProcessPayment.call(formatted_params)
+    context = ProcessPayment.call(formatted_params)
 
-    render json: Charge.last
+    render json: {
+      success: true,
+      charge: Charge.find(context.charge.id)
+    }
   end
 
   private

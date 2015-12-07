@@ -10,7 +10,7 @@ class Dashboard::Student::SettingsController < DashboardController
   def save_payment_info
     token = params[:stripeToken]
     processor = PaymentFactory.new.build
-    processor.update_customer(@student, token)
+    processor.save_default_card(@student, token)
     redirect_to payment_info_student_path
   end
 

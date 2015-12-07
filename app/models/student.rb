@@ -20,12 +20,17 @@ class Student < ActiveRecord::Base
 
   delegate :full_name, :email, :password, :slug, to: :user
 
+  after_create :create_stripe_customer
+
   def subjects
     # returns subjects that a student makes appointments for, only used in Admin section for analytics
     subjects = []
     self.appointments.map{ |appt| 
       subjects << appt.course.subject[:name] unless subjects.include?(appt.course.subject[:name])
     }
+  end
+
+  def create_stripe_customer
   end
 
 end

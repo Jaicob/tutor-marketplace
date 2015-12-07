@@ -1,7 +1,7 @@
 class ProcessPayment
   include Interactor::Organizer
 
-  organize SetCustomer, CreateCharge, ApplyPromoCode, ReconcileCouponDifference, SendPayment, SendEmails, DestroyCard
+  organize CreateCharge, ApplyPromoCode, ReconcileCouponDifference, SendPayment, SendEmails
 
 end
 
@@ -19,5 +19,3 @@ end
 #   promotion_id: promotion_id,
 #   is_payment_required: true
 # }
-
-# When called in isolation for preview of charges during checkout, before final payment, it's OK to omit customer_id
