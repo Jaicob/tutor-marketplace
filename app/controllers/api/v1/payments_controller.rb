@@ -19,57 +19,6 @@ class API::V1::PaymentsController < API::V1::Defaults
     end
   end
 
-  def create_student
-    # required_params
-      # :first_name
-      # :last_name
-      # :email
-      # :password
-      # :school_id
-      # :stripe_token
-
-    @token = params[:stripe_token]
-
-    new_user = User.create(
-      first_name: params[:first_name],
-      last_name: params[:last_name],
-      email: params[:email],
-      password: params[:password]
-    )
-    
-    if new_user.save
-      @student = new_user.create_student(school_id: params[:school_id])
-      if !@student.save
-        render json: {success: false, error: @student.errors.full_messages}
-      end
-    else
-      render json: {success: false, error: new_user.errors.full_messages}
-      return
-    end
-
-    if params[:save_card] == 'true'
-      Processor::Stripe.new.update_customer(@student, @token)
-      if @student.reload.customer_id
-        render json: { 
-          success: true, 
-          student_id: @student.id, 
-          customer_id: @student.customer_id 
-        }
-        return
-      else
-        render json: { 
-          success: false, error: 'Error with update_customer method in payments/processor/stripe.rb' 
-        }
-      end
-    else
-      render json: {
-        success: true,
-        student_id: @student.id,
-        stripe_token: @token
-      }
-    end
-  end
-
   def update_default_card
     # required_params
       # :student_id

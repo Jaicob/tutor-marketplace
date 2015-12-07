@@ -9,7 +9,7 @@ class API::V1::TutorCoursesController < API::V1::Defaults
   private
 
     def set_tutor
-      @tutor = Tutor.find(params[:id])
+      @tutor = Tutor.find(params[:tutor_id])
     end
 
 end

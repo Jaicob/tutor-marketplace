@@ -31,17 +31,17 @@ end
 #  charge_id  :integer
 #
 
-class Appointment < ActiveRecord::Base
-  belongs_to :student
-  belongs_to :slot
-  belongs_to :course
-  belongs_to :charge
-  delegate :tutor, to: :slot
-  delegate :school, to: :course
+# class Appointment < ActiveRecord::Base
+#   belongs_to :student
+#   belongs_to :slot
+#   belongs_to :course
+#   belongs_to :charge
+#   delegate :tutor, to: :slot
+#   delegate :school, to: :course
 
-  validates :slot_id, presence: true
-  validates :course_id, presence: true
-  validates :start_time, presence: true, uniqueness: { scope: :slot_id }
-  validate :one_hour_appointment_buffer
-  validate :inside_slot_availability
-  validate :tutor_and_student_at_same_school
+#   validates :slot_id, presence: true
+#   validates :course_id, presence: true
+#   validates :start_time, presence: true, uniqueness: { scope: :slot_id }
+#   validate :one_hour_appointment_buffer
+#   validate :inside_slot_availability
+#   validate :tutor_and_student_at_same_school
