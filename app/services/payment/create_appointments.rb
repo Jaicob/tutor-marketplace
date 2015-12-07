@@ -1,4 +1,4 @@
-class SetCustomer
+class CreateAppointments
   include Interactor
 
   def call

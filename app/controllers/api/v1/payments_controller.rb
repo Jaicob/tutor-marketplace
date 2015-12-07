@@ -1,6 +1,6 @@
 class API::V1::PaymentsController < API::V1::Defaults
-  before_action :set_student, only: [:get_customer, :create_customer, :update_default_card, :process_payment]
-  before_action :set_tutor, only: [:process_payment]
+  before_action :set_student, only: [:get_customer, :update_default_card, :run_checkout_organizer]
+  before_action :set_tutor, only: [:run_checkout_organizer]
 
   def get_customer
     # required_params
@@ -33,16 +33,13 @@ class API::V1::PaymentsController < API::V1::Defaults
     end
   end
 
-  def process_payment
+  def run_checkout_organizer
     # required_params
+      # :tutor_id
       # :student_id
       # :stripe_token
-      # :appt_ids
-  
-    appts = params[:appt_ids].map { |appt| Appointment.find(appt) }
-    appts.each do |appt|
-      appt.update(student_id: params[:student_id])
-    end
+      # :appts_info [{slot_id: x, course_id: x, start_time: xxx},{slot_id: x, course_id: x, start_time: xxx}]
+      # :promotion_id (optional)
 
     promotion = params[:promotion_id] if !params[:promotion_id].blank?
 
@@ -50,16 +47,23 @@ class API::V1::PaymentsController < API::V1::Defaults
       tutor: @tutor.id,
       student: @student.id,
       token: params[:stripe_token],
-      appointments: appt_ids,
+      appts_info: params[:appts_info]
       promotion_id: promotion_id,
     }
 
-    context = ProcessPayment.call(formatted_params)
+    organizer = CheckoutOrganizer.call(formatted_params)
 
-    render json: {
-      success: true,
-      charge: Charge.find(context.charge.id)
-    }
+    if organizer.NO_ERRORS?
+      render json: {
+        success: true,
+        charge: Charge.find(organizer.charge.id)
+      }
+    else
+      render json: {
+        success: false,
+        errors: errors_go_here
+      }
+    end
   end
 
   private

@@ -1,14 +1,14 @@
 class CreateCharge
   include Interactor
 
-  # Call with: tutor: instance_of Tutor
-  #            appointments: array of Appointments
-  #            customer_id: customer_id
-  #            rates: array of rates in dollars
-  #            transaction_percentage: School.transaction_percentage
+  # Call with: tutor: tutor_id
+  #            appointments: array of appt_ids
+  #            student: student_id
   #            promotion_id: promotion.id (or nil)
 
   def call
+    context.tutor
+    context.transaction_percentage = School.find()
     axon_fee_multiplier = ((context.transaction_percentage.to_f / 100) + 1)
 
     tutor_rates = []
