@@ -226,7 +226,7 @@ Rails.application.routes.draw do
   post '/change-school'       => 'cookies#change_school_id_cookie'
 
   # custom_devise_routes
-  devise_for :users
+  devise_for :users, :controllers => {sessions: 'sessions', registrations: 'registrations'}
 
   # standard resources for slots
   resources :slots
@@ -322,11 +322,11 @@ Rails.application.routes.draw do
       end
 
       resources :tutors, only: [] do
-        member do 
+        member do
           get '/courses' => 'tutor_courses#index'
         end
         resources :slots, only: [:index, :show, :create, :update, :destroy] do
-          collection do 
+          collection do
             post '/update_group' => 'slots#update_slot_group' # POST bc carrying data for multiple slots
             post '/delete_group' => 'slots#destroy_slot_group' # POST bc carrying data for multiple slots
           end
