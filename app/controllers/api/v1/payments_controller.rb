@@ -47,8 +47,8 @@ class API::V1::PaymentsController < API::V1::Defaults
       tutor: @tutor.id,
       student: @student.id,
       token: params[:stripe_token],
-      appts_info: params[:appts_info]
-      promotion_id: promotion_id,
+      appts_info: params[:appts_info],
+      promotion_id: promotion_id
     }
 
     organizer = CheckoutOrganizer.call(formatted_params)

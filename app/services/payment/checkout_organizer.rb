@@ -11,3 +11,15 @@ class CheckoutOrganizer
   organize CreateAppointments, CreateCharge, ApplyPromoCode, ReconcileCouponDifference, SendPayment, SendEmails
 
 end
+
+
+  CheckoutOrganizer.call(
+    tutor_id: 1,
+    student_id: 1,
+    stripe_token: nil,
+    appts_info: [
+      {slot_id: 1, course_id: 1, start_time: "2015-12-08 12:00:00" },
+      {slot_id: 2, course_id: 1, start_time: "2015-12-15 12:00:00" },
+    ],
+    promotion_id: nil
+  )

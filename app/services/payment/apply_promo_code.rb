@@ -39,7 +39,14 @@ class ApplyPromoCode
   end
 
   def call
-    @method
+    begin 
+      @method
+    rescue => error
+      context.fail!(
+        error: error,
+        failed_interactor: self.class
+      )
+    end
   end
 
   private
