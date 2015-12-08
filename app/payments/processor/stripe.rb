@@ -92,7 +92,7 @@ module Processor
         # save Stripe customer details on Student object
         student.update_attributes(
           customer_id: cust.id, 
-          last_4_digits: last_4 = cust.sources.data.first.last4,
+          last_4_digits: cust.sources.data.first.last4,
           card_brand: cust.sources.data.first.brand
         )
       else
@@ -123,20 +123,3 @@ module Processor
 
   end
 end
-
-# cust = Stripe::Customer.retrieve('cus_7AGSIp5Yb7uxfg')
-
-# token = Stripe::Token.create(
-#   :card => {
-#     :number => "4242424242424242",
-#     :exp_month => 6,
-#     :exp_year => 2019,
-#     :cvc => "314"
-#   }
-# )
-
-# cust = ::Stripe::Customer.create(
-#   card: token,
-# )
-
-# cust.sources.create(source: token)
