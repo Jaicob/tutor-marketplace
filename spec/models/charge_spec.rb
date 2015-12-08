@@ -3,9 +3,9 @@
 # Table name: charges
 #
 #  id               :integer          not null, primary key
-#  amount           :float
-#  axon_fee         :float
-#  tutor_fee        :float
+#  amount           :integer
+#  axon_fee         :integer
+#  tutor_fee        :integer
 #  tutor_id         :integer
 #  token            :string
 #  created_at       :datetime         not null
