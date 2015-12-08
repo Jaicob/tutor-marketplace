@@ -14,21 +14,21 @@
 #                     privacy_and_terms GET      /privacy-and-terms(.:format)                                       single_views#privacy_and_terms
 #                            set_school POST     /set-school(.:format)                                              cookies#set_school_id_cookie
 #                         change_school POST     /change-school(.:format)                                           cookies#change_school_id_cookie
-#                      new_user_session GET      /users/sign_in(.:format)                                           devise/sessions#new
-#                          user_session POST     /users/sign_in(.:format)                                           devise/sessions#create
-#                  destroy_user_session DELETE   /users/sign_out(.:format)                                          devise/sessions#destroy
+#                      new_user_session GET      /users/sign_in(.:format)                                           sessions#new
+#                          user_session POST     /users/sign_in(.:format)                                           sessions#create
+#                  destroy_user_session DELETE   /users/sign_out(.:format)                                          sessions#destroy
 #                         user_password POST     /users/password(.:format)                                          devise/passwords#create
 #                     new_user_password GET      /users/password/new(.:format)                                      devise/passwords#new
 #                    edit_user_password GET      /users/password/edit(.:format)                                     devise/passwords#edit
 #                                       PATCH    /users/password(.:format)                                          devise/passwords#update
 #                                       PUT      /users/password(.:format)                                          devise/passwords#update
-#              cancel_user_registration GET      /users/cancel(.:format)                                            tutor_registration#cancel
-#                     user_registration POST     /users(.:format)                                                   tutor_registration#create
-#                 new_user_registration GET      /users/sign_up(.:format)                                           tutor_registration#new
-#                edit_user_registration GET      /users/edit(.:format)                                              tutor_registration#edit
-#                                       PATCH    /users(.:format)                                                   tutor_registration#update
-#                                       PUT      /users(.:format)                                                   tutor_registration#update
-#                                       DELETE   /users(.:format)                                                   tutor_registration#destroy
+#              cancel_user_registration GET      /users/cancel(.:format)                                            registrations#cancel
+#                     user_registration POST     /users(.:format)                                                   registrations#create
+#                 new_user_registration GET      /users/sign_up(.:format)                                           registrations#new
+#                edit_user_registration GET      /users/edit(.:format)                                              registrations#edit
+#                                       PATCH    /users(.:format)                                                   registrations#update
+#                                       PUT      /users(.:format)                                                   registrations#update
+#                                       DELETE   /users(.:format)                                                   registrations#destroy
 #                     user_confirmation POST     /users/confirmation(.:format)                                      devise/confirmations#create
 #                 new_user_confirmation GET      /users/confirmation/new(.:format)                                  devise/confirmations#new
 #                                       GET      /users/confirmation(.:format)                                      devise/confirmations#show
@@ -172,15 +172,15 @@
 #                                       DELETE   /admin/promotions/:id(.:format)                                    dashboard/admin/promotions#destroy
 #         api_v1_school_subject_courses GET      /api/v1/schools/:school_id/subjects/:subject_id/courses(.:format)  api/v1/courses#index {:format=>:json}
 #                api_v1_school_subjects GET      /api/v1/schools/:school_id/subjects(.:format)                      api/v1/subjects#index {:format=>:json}
+#                  courses_api_v1_tutor GET      /api/v1/tutors/:id/courses(.:format)                               api/v1/tutor_courses#index {:format=>:json}
+#       update_group_api_v1_tutor_slots POST     /api/v1/tutors/:tutor_id/slots/update_group(.:format)              api/v1/slots#update_slot_group {:format=>:json}
+#       delete_group_api_v1_tutor_slots POST     /api/v1/tutors/:tutor_id/slots/delete_group(.:format)              api/v1/slots#destroy_slot_group {:format=>:json}
 #                    api_v1_tutor_slots GET      /api/v1/tutors/:tutor_id/slots(.:format)                           api/v1/slots#index {:format=>:json}
 #                                       POST     /api/v1/tutors/:tutor_id/slots(.:format)                           api/v1/slots#create {:format=>:json}
 #                     api_v1_tutor_slot GET      /api/v1/tutors/:tutor_id/slots/:id(.:format)                       api/v1/slots#show {:format=>:json}
 #                                       PATCH    /api/v1/tutors/:tutor_id/slots/:id(.:format)                       api/v1/slots#update {:format=>:json}
 #                                       PUT      /api/v1/tutors/:tutor_id/slots/:id(.:format)                       api/v1/slots#update {:format=>:json}
 #                                       DELETE   /api/v1/tutors/:tutor_id/slots/:id(.:format)                       api/v1/slots#destroy {:format=>:json}
-#       api_v1_tutor_slots_update_group POST     /api/v1/tutors/:tutor_id/slots/update_group(.:format)              api/v1/slots#update_slot_group {:format=>:json}
-#       api_v1_tutor_slots_delete_group POST     /api/v1/tutors/:tutor_id/slots/delete_group(.:format)              api/v1/slots#destroy_slot_group {:format=>:json}
-#                  api_v1_tutor_courses GET      /api/v1/tutors/:tutor_id/courses(.:format)                         api/v1/tutor_courses#index {:format=>:json}
 #       cancel_api_v1_tutor_appointment PUT      /api/v1/tutors/:tutor_id/appointments/:id/cancel(.:format)         api/v1/tutor_appointments#cancel {:format=>:json}
 #             api_v1_tutor_appointments GET      /api/v1/tutors/:tutor_id/appointments(.:format)                    api/v1/tutor_appointments#index {:format=>:json}
 #              api_v1_tutor_appointment GET      /api/v1/tutors/:tutor_id/appointments/:id(.:format)                api/v1/tutor_appointments#show {:format=>:json}
@@ -197,9 +197,6 @@
 #                   api_v1_get_customer GET      /api/v1/payments/student/:student_id/customer(.:format)            api/v1/payments#get_customer {:format=>:json}
 #                api_v1_create_customer POST     /api/v1/payments/student/:student_id/customer(.:format)            api/v1/payments#create_customer {:format=>:json}
 #            api_v1_update_default_card POST     /api/v1/payments/student/:student_id/default-card(.:format)        api/v1/payments#update_default_card {:format=>:json}
-#                                api_v1 GET      /api/v1/payments/student/:student_id(.:format)                     api/v1/payments#check_student_for_customer_id {:format=>:json}
-#                                       GET      /api/v1/check_promo_code/:tutor_id/:promo_code(.:format)           api/v1/promotions#check_promo_code {:format=>:json}
-#       api_v1_payments_process_payment POST     /api/v1/payments/process_payment(.:format)                         api/v1/payments#process_payment {:format=>:json}
 #                           sidekiq_web          /sidekiq                                                           Sidekiq::Web
 #
 
@@ -226,7 +223,7 @@ Rails.application.routes.draw do
   post '/change-school'       => 'cookies#change_school_id_cookie'
 
   # custom_devise_routes
-  devise_for :users
+  devise_for :users, :controllers => {sessions: 'sessions', registrations: 'registrations'}
 
   # standard resources for slots
   resources :slots
@@ -322,11 +319,11 @@ Rails.application.routes.draw do
       end
 
       resources :tutors, only: [] do
-        member do 
+        member do
           get '/courses' => 'tutor_courses#index'
         end
         resources :slots, only: [:index, :show, :create, :update, :destroy] do
-          collection do 
+          collection do
             post '/update_group' => 'slots#update_slot_group' # POST bc carrying data for multiple slots
             post '/delete_group' => 'slots#destroy_slot_group' # POST bc carrying data for multiple slots
           end

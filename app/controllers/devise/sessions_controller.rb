@@ -9,7 +9,16 @@ class Devise::SessionsController < DeviseController
     self.resource = resource_class.new(sign_in_params)
     clean_up_passwords(resource)
     yield resource if block_given?
-    respond_with(resource, serialize_options(resource))
+    respond_to do |format|
+      format.js {
+        # renders only when redirected here from create for failed sign-in, thus "success: false"
+        render json: {
+          success: false,
+          errors: flash.alert
+        }
+      }
+      format.html {} # keep blank
+    end
   end
 
   # POST /resource/sign_in
@@ -18,7 +27,18 @@ class Devise::SessionsController < DeviseController
     set_flash_message(:notice, :signed_in) if is_flashing_format?
     sign_in(resource_name, resource)
     yield resource if block_given?
-    respond_with resource, location: after_sign_in_path_for(resource)
+    respond_to do |format|
+      format.js {
+        render json: {
+          student_id: resource.student.id,
+          success: true
+        }
+      }
+      format.html {
+        redirect_to after_sign_in_path_for(resource)
+      }
+    end
+    # respond_with resource, location: 
   end
 
   # DELETE /resource/sign_out

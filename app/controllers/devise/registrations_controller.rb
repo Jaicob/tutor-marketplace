@@ -7,7 +7,16 @@ class Devise::RegistrationsController < DeviseController
     build_resource({})
     set_minimum_password_length
     yield resource if block_given?
-    respond_with self.resource
+    respond_to do |format|
+      format.js {
+        # renders only when redirected here from create for failed sign-up, thus "success: false"
+        render json: {
+          success: false,
+          errors: flash.alert
+        }
+      }
+      format.html {} # keep blank
+    end
   end
 
   # POST /resource
@@ -21,21 +30,23 @@ class Devise::RegistrationsController < DeviseController
         resource.create_student_account(resource, params)
       end
     end
-      
+
     yield resource if block_given?
     if resource.persisted?
       if resource.active_for_authentication?
         set_flash_message :notice, :signed_up if is_flashing_format?
         sign_up(resource_name, resource)
-        if params[:stripe_token]
-          render json: { 
-            success: true, 
-            student_id: @student.id, 
-            customer_id: @student.customer_id 
-            stripe_token: @token
+        respond_to do |format|
+          format.js {
+            render json: {
+              success: true,
+              student_id: resource.student.id,
+              customer_id: resource.student.customer_id
+            }
           }
-        else
-          respond_with resource, location: after_sign_up_path_for(resource)
+          format.html {
+            redirect_to after_sign_in_path_for(resource)
+          }
         end
       else
         set_flash_message :notice, :"signed_up_but_#{resource.inactive_message}" if is_flashing_format?
@@ -46,7 +57,7 @@ class Devise::RegistrationsController < DeviseController
       clean_up_passwords resource
       set_minimum_password_length
       respond_to do |format|
-        format.js { 
+        format.js {
           render json: {
             error: resource.errors.first,
             success: false
@@ -54,7 +65,6 @@ class Devise::RegistrationsController < DeviseController
         }
         format.html { redirect_to :back }
       end
-      # redirect_to :back
       flash.alert = "#{resource.errors.full_messages.first}"
     end
   end

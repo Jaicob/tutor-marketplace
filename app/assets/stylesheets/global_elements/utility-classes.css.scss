@@ -3,7 +3,7 @@
   SECTIONS
 
   1. Text Styles
-  2. Borders & Border Radiuses
+  2. Borders & Border Radii
   3. Positioning
   4. Links
   5. Display Properties
@@ -13,7 +13,7 @@
 
 
 //  1. Text Styles
-center {
+.center {
   text-align: center;
 }
 .white {
@@ -25,7 +25,7 @@ center {
 
 
 
-//  2.  Borders & Border Radiuses
+//  2.  Borders & Border Radii
 .border-radius {
   border-radius: 3px !important;
 }

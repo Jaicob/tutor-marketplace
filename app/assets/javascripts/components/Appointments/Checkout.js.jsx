@@ -110,7 +110,7 @@ var Checkout = React.createClass({
                 {
                   this.props.selectedSlots.map((slot) =>
                     <li className="cart-item">
-                      {moment.utc(slot.start_time).format("ddd, MM/DD/YYYY, h:mm A")} - {moment.utc(slot.start_time).add(1, 'h').format("h:mm A")}
+                      {moment(slot.start_time).format("ddd, MM/DD/YYYY, h:mm A")} - {moment(slot.start_time).add(1, 'h').format("h:mm A")}
                       <span className="rate">${rate.toFixed(2)}</span>
                     </li>
                   )
