@@ -25,19 +25,13 @@
     input
       margin: 0
       vertical-align: middle
-  #repeating-options
-    &:first-child span
-      border-bottom-left-radius: 4px
-    &:last-child span
-      border-bottom-right-radius: 4px
-  &:first-child
-    margin-top: 0
   .fc-event
     position: relative
-    height: 50px
-    width: 100%
+    height: 85px
+    width: 180px
     margin-top: 20px
     padding: 15px
+    font-weight: bold 
     &.ui-draggable
       cursor: -webkit-grab
     &.ui-draggable-dragging
@@ -49,7 +43,7 @@
         border-bottom-right-radius: 0
     &.one-off-availability
     i.fi-widget
-      $main-color: #3A87AD
+      $main-color: #0095AC
       $accent-color: white
       position: absolute
       top: -10px
@@ -65,3 +59,42 @@
         color: $main-color
         background: $accent-color
         border: 1px solid $main-color
+
+
+// Edit appeaance of today in schedule
+.fc-today
+  opacity: 0
+  border: none
+
+//This the text dsiplaying the time on the right side of calendar
+.fc-ltr .fc-axis
+  .fc-ltr .fc-axis
+
+//The rows between each hour on the calendar
+.fc-minor
+  background: #F3F3F3 
+
+// Styling for each event from Schedule 
+.fc-time-grid-event.fc-v-event.fc-event
+  border-radius: 4px
+  border: none
+  padding: 5px
+  left: 5% !important
+  right: 5% !important
+
+// Remove the header border
+.fc td, .fc th
+  border-style: none !important
+  border-width: 1px !important
+  padding: 0 !important
+  vertical-align: top !important
+
+// Remove border from calendar
+.fc-view table
+  &:first-child
+    border: none
+
+// Use normal weight for each time in the event
+.fc-time-grid-event .fc-time
+  font-weight: normal !important
+

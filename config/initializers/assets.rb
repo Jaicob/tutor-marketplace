@@ -18,4 +18,6 @@ Rails.application.config.assets.precompile += %w(
   custom/admin_panel.css.scss
   custom/dashboard_nav.css.scss
   vendor/modernizr.js
+  fullcalendar/dist/fullcalendar.css
+  custom/schedule.css
 )

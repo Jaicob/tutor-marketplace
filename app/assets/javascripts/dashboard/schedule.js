@@ -5,11 +5,6 @@ $(document).ready(function() {
     $(".regular-availability").toggleClass("expanded");
   })
 
-  // var testDateUtc = moment.utc("2015-01-30 10:00:00");
-  // var localDate = moment(testDateUtc).local();
-  // moment.tz.setDefault("America/New_York");
-  // Setup up qTip2 api for
-
   var tooltip = $('#calendar').qtip({
     id: 'fullcalendar',
     prerender: false,
@@ -52,7 +47,7 @@ $(document).ready(function() {
       start: moment(eventData.start_time, moment.ISO_8601),
       end: end_time,
       slot_id: eventData.id,
-      status: eventData.status
+      status: eventData.status === 1 ? 'Blocked' : 'Open'//eventData.status
     };
     return postFormat;
   }
@@ -130,6 +125,10 @@ $(document).ready(function() {
 
   var updateSlotDurationResize = function(event, delta, revertFunc, jsEvent, ui, view) {
     var newDuration = originalDuration + delta.asSeconds();
+    if (newDuration < 3600){
+      revertFunc();
+      return;
+    } 
 
     swal({
         title: "Update all future availability?",
@@ -294,7 +293,7 @@ $(document).ready(function() {
 
   var blockSlot = function(event) {
     var toggledStatus = event.data.status === 'Open' ? 'Blocked' : 'Open';
-    console.log(toggledStatus);
+    console.log("NEW STATUS",toggledStatus);
 
     $.ajax({
       type: "PUT",
@@ -307,6 +306,7 @@ $(document).ready(function() {
       },
       dataType: "json",
       success: function(data) {
+        console.log("UPDATE EEVNT");
         event.data.status = data.status;
         $('#calendar').fullCalendar('updateEvent', event.data);
       },
@@ -318,9 +318,10 @@ $(document).ready(function() {
   }
 
   var eventRender = function(event, element, view) {
+    console.log("STATUS",event.status);
     switch (event.status) {
       case "Open":
-        element.css('background-color', '#3a87ad');
+        element.css('background-color', '#0095AC');
         break;
       case "Blocked":
         element.css('background-color', 'lightgrey');
@@ -434,6 +435,5 @@ $(document).ready(function() {
       tooltip.hide()
     },
   });
-
 
 });

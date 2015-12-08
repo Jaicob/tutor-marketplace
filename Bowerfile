@@ -1,7 +1,7 @@
 asset "jquery-ui", "1.11.4"
 asset "jquery-ujs", "1.0.4"
 asset "chained", "1.0.2", github: "anurag-banerjee/jquery_chained"
-asset "fullcalendar", "2.3.2"
+asset "fullcalendar", "2.5.0"
 asset "Jcrop", "2.0.0"
 asset "qTip2", "2.2.1", github: "qTip2/bower"
 asset "sweetalert", "1.1.0"
