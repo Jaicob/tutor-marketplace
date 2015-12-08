@@ -48,7 +48,8 @@ class CreateCharge
         student_id: @student.id,
         amount: amount,
         axon_fee: axon_fee,
-        tutor_fee: tutor_fee
+        tutor_fee: tutor_fee,
+        token: context.stripe_token
       )
 
       context.appointments.each{|appt| appt.update_attributes(charge_id: charge.id)}

@@ -40,7 +40,21 @@ module Processor
     end
 
     def send_charge(charge)
-      if charge.customer_id.nil?
+      @student = Student.find(charge.student_id)
+      if @student.customer_id.nil?
+
+        # KEEP PUTS STATEMENTS here for testing! I couldn't figure out a better way to test this than to check these values in the logs
+        puts "SEND CHARGE METHOD IN STRIPE.RB"
+        puts "SENDING CHARGE WITH CARD TOKEN"
+        puts "charge.amount = #{charge.amount}"
+        puts "charge.student_id = #{charge.student_id}"
+        puts "charge.tutor_acct_id = #{charge.tutor.acct_id}"
+        puts "charge.axon_fee = #{charge.axon_fee}"
+        puts "charge.tutor_fee = #{charge.tutor_fee}"
+        puts "charge.token = #{charge.token}"
+        puts "@student.customer_id = #{@student.customer_id}"
+        # end of logs testing
+
         # creates charge with token if Student does not have a Stripe Customer
         ::Stripe::Charge.create(
           amount: charge.amount,
@@ -50,33 +64,28 @@ module Processor
           application_fee: charge.axon_fee
         )
 
+      else
+
         # KEEP PUTS STATEMENTS here for testing! I couldn't figure out a better way to test this than to check these values in the logs
         puts "SEND CHARGE METHOD IN STRIPE.RB"
+        puts "SENDING CHARGE FROM STUDENT CUSTOMER ACCOUNT"
         puts "charge.amount = #{charge.amount}"
-        puts "charge.customer_id = #{charge.customer_id}"
+        puts "charge.student_id = #{charge.student_id}"
         puts "charge.tutor_acct_id = #{charge.tutor.acct_id}"
         puts "charge.axon_fee = #{charge.axon_fee}"
         puts "charge.tutor_fee = #{charge.tutor_fee}"
+        puts "charge.token = #{charge.token}"
+        puts "@student.customer_id = #{@student.customer_id}"
         # end of logs testing
 
-      else
         # creates charge with Student's Customer and default source
         ::Stripe::Charge.create(
           amount: charge.amount,
           currency: 'usd',
-          customer: charge.customer_id,
+          customer: Student.find(charge.student_id).customer_id,
           destination: charge.tutor.acct_id,
           application_fee: charge.axon_fee
         )
-
-        # KEEP PUTS STATEMENTS here for testing! I couldn't figure out a better way to test this than to check these values in the logs
-        puts "SEND CHARGE METHOD IN STRIPE.RB"
-        puts "charge.amount = #{charge.amount}"
-        puts "charge.customer_id = #{charge.customer_id}"
-        puts "charge.tutor_acct_id = #{charge.tutor.acct_id}"
-        puts "charge.axon_fee = #{charge.axon_fee}"
-        puts "charge.tutor_fee = #{charge.tutor_fee}"
-        # end of logs testing
 
       end
     end

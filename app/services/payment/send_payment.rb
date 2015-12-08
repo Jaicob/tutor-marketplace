@@ -4,13 +4,10 @@ class SendPayment
   def call
     begin 
       if context.is_payment_required != false && context.charge.amount > 0
-        charge = context.charge
         processor = PaymentFactory.new.build
-        payment = processor.send_charge(charge)
-        context.payment = payment
-        puts "CALLED IF"
+        stripe_charge_object = processor.send_charge(context.charge)
+        context.charge.update(stripe_charge_id: stripe_charge_object.id)
       else
-        puts "CALLED ELSE"
         return
       end
     rescue => error
