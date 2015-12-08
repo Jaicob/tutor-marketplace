@@ -1,28 +1,17 @@
 <%= javascript_include_tag "dashboard/schedule" %>
 <%= stylesheet_link_tag 'fullcalendar' %>
-<%= stylesheet_link_tag 'custom/schedule' %>
-
+<%= stylesheet_link_tag 'overrides/schedule' %>
 <div class="row">
   <div class="medium-12 columns">
-    <h1>My Schedule</h1>
-    <h3 class="subheader">Drag from availability to create your schedule.</h3>
+    <h3 class="subheader">Drag from options to create your schedule.</h3>
   </div>
 </div>
 <%= content_tag "div", id: "axoncalendar", data: { tutor: @user.tutor.id } do %>
 <div class="row">
   <div id="scheduling-container">
-    <div id='wrap' class="columns medium-9">
-      <div id='calendar'></div>
-      <!-- dont move this, needs to be here for popovers to work -->
-      <div id="slotpopover" hidden="true">
-        <%= render '/dashboard/tutor/schedule/edit_slot' %>
-      </div>
-      <div style='clear:both'></div>
-    </div>
     <div class="columns medium-3">
       <div id='availability-slots-section'>
-        <h4>Availability</h4>
-
+        <h2>Options</h2>
         <div class='fc-event regular-availability'>
           Weekly
           <div class="row collapse" id="repeating-options">
@@ -38,9 +27,18 @@
           </div>
         </div>
         
-        <div class='fc-event one-off-availability'>One-Off</div>
+        <div class='fc-event one-off-availability'>One Time</div>
       </div>
     </div>
+    <div id='wrap' class="columns medium-9">
+      <div id='calendar'></div>
+      <!-- dont move this, needs to be here for popovers to work -->
+      <div id="slotpopover" hidden="true">
+        <%= render '/dashboard/tutor/schedule/edit_slot' %>
+      </div>
+      <div style='clear:both'></div>
+    </div>
+    
   </div>
 </div>
 <% end %>
