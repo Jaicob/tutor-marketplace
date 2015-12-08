@@ -73,6 +73,10 @@ class User < ActiveRecord::Base
   end
 
   def slug_candidates
+    if first_name.nil? || last_name.nil?
+      puts "ERROR: First and last name can't be blank"
+      return
+    end
     # variations of a user's name to create unique slugs in case of duplicate names
     [ "#{first_name}#{last_name}", "#{first_name[0]}#{last_name}", "#{first_name}#{last_name[0]}", "#{first_name[0..1]}#{last_name}", "#{first_name}#{last_name[0..1]}", "#{first_name[0..2]}#{last_name}", "#{first_name}#{last_name[0..2]}", "#{first_name[0..3]}#{last_name}", "#{first_name}#{last_name[0..3]}"]
   end
