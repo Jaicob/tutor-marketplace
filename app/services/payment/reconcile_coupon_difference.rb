@@ -11,6 +11,10 @@ class ReconcileCouponDifference
       if context.charge.axon_fee < 0
         processor = PaymentFactory.new.build
         tutor = context.charge.tutor
+        puts "context.charge.axon_fee = #{context.charge.axon_fee}"
+        puts "context.charge.axon_fee.abs = #{context.charge.axon_fee.abs}"
+        puts "context.charge.axon_fee.abs.class = #{context.charge.axon_fee.abs.class}"
+        puts "context.charge.axon_fee.abs.to_i = #{context.charge.axon_fee.abs.to_i}"
         transfer_amount = context.charge.axon_fee.abs
         promotion = Promotion.find(context.promotion_id)
         processor.reconcile_coupon_difference(tutor, transfer_amount, promotion)

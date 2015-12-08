@@ -29,18 +29,16 @@ class CreateCharge
       context.transaction_percentage = School.find(@tutor.id).transaction_percentage
       axon_fee_multiplier = ((context.transaction_percentage.to_f / 100) + 1)
 
-      tutor_rates = []
+
+      tutor_rates = [] # array of rates in cents
+      context.rates = [] # array of rates in dollar amounts
 
       context.appointments.each do |appt|
         rate = TutorCourse.where(tutor_id: @tutor.id, course_id: appt.course_id).first.rate
-
-        appt.course_id
-        session_amount = (rate * 100)
-        tutor_rates << session_amount
+        context.rates << rate
+        tutor_rate_in_cents = (rate * 100)
+        tutor_rates << tutor_rate_in_cents 
       end
-
-      # rate_array = []
-      # context.appointments.count.times { rate_array << rate }
 
       tutor_fee = tutor_rates.map(&:to_i).reduce(:+)
       amount = tutor_fee * axon_fee_multiplier
@@ -55,13 +53,17 @@ class CreateCharge
 
       context.appointments.each{|appt| appt.update_attributes(charge_id: charge.id)}
       context.charge = charge
+
     rescue => error
       context.fail!(
         error: error,
         failed_interactor: self.class
       )
-      puts "THIS WAS CALLED IN CREATECHARGE!"
     end
+  end
+
+  def rollback
+    context.charge.destroy
   end
 
 end

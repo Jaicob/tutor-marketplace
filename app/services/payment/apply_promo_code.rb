@@ -39,13 +39,21 @@ class ApplyPromoCode
   end
 
   def call
-    begin 
+    begin
       @method
     rescue => error
       context.fail!(
         error: error,
         failed_interactor: self.class
       )
+    end
+  end
+
+  def rollback
+    if context.promotion_id
+      promo = Promotion.find(context.promotion_id)
+      promo.redemption_count -= 1
+      promo.save
     end
   end
 
