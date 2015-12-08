@@ -7,7 +7,16 @@ class Devise::RegistrationsController < DeviseController
     build_resource({})
     set_minimum_password_length
     yield resource if block_given?
-    respond_with self.resource
+    respond_to do |format|
+      format.js {
+        # renders only when redirected here from create for failed sign-up, thus "success: false"
+        render json: {
+          success: false,
+          errors: flash.alert
+        }
+      }
+      format.html {} # keep blank
+    end
   end
 
   # POST /resource
@@ -35,9 +44,8 @@ class Devise::RegistrationsController < DeviseController
               customer_id: resource.student.customer_id
             }
           }
-
           format.html {
-            respond_with resource, location: after_sign_up_path_for(resource)
+            redirect_to after_sign_in_path_for(resource)
           }
         end
       else
@@ -57,7 +65,6 @@ class Devise::RegistrationsController < DeviseController
         }
         format.html { redirect_to :back }
       end
-      # redirect_to :back
       flash.alert = "#{resource.errors.full_messages.first}"
     end
   end
