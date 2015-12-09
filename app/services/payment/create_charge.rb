@@ -29,7 +29,6 @@ class CreateCharge
       context.transaction_percentage = School.find(@tutor.id).transaction_percentage
       axon_fee_multiplier = ((context.transaction_percentage.to_f / 100) + 1)
 
-
       tutor_rates = [] # array of rates in cents
       context.rates = [] # array of rates in dollar amounts
 
@@ -41,7 +40,7 @@ class CreateCharge
       end
 
       tutor_fee = tutor_rates.map(&:to_i).reduce(:+)
-      amount = tutor_fee * axon_fee_multiplier
+      amount = (tutor_fee * axon_fee_multiplier).round
       axon_fee = amount - tutor_fee
 
       charge = @tutor.charges.create(

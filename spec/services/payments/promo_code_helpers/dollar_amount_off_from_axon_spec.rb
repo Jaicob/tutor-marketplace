@@ -1,25 +1,31 @@
 require 'rails_helper'
 
 RSpec.describe 'PromoCodeHelpers::DollarAmountOffFromAxon' do
-  let(:tutor)       { create(:tutor) }
-  let(:appointment) { create(:appointment) }
+  
+  # Runs once before all examples
+  before(:context) do
+    @tutor = create(:tutor, :with_tutor_course_and_slot)
+    @tutor_course = @tutor.tutor_courses.first
+    @student = create(:student)
+  end
 
-  describe 'Methods in PromoCodeServices::DollarAmountOffFromAxon' do
+  describe 'Dollar Amount Off From Axon Promos' do
+
+    before(:each) do 
+      @promotion = create(:promotion, category: :dollar_amount_off_from_axon)
+    end
 
     it 'correctly adjusts fees for a $5-off coupon issued by Axon' do 
-      @promotion = create(:promotion, category: :dollar_amount_off_from_axon, amount: 5, redemption_limit: 100, redemption_count: 0)
+      @promotion.update(amount: 5)
       params = {
-        tutor: tutor,
-        appointments: [appointment],
-        customer_id: 1,
-        token: 1111111111,
-        rates: [23],
-        transaction_percentage: 15,
-        promotion_id: @promotion.id,
-        is_payment_required: true,
-        promotion_category: nil
+        tutor_id: @tutor.id,
+        student_id: @student.id,
+        stripe_token: @token,
+        appts_info: [{slot_id: @tutor.slots.first.id, course_id: @tutor.courses.first.id, start_time: @tutor.slots.first.start_time}],
+        promotion_id: @promotion.id
       }
-      context = CreateCharge.call(params)
+      context = CreateAppointments.call(params)
+      context = CreateCharge.call(context)
       @context = PromoCodeHelpers::DollarAmountOffFromAxon.new(context)
 
       expect(@context.charge.amount).to eq 2645
@@ -32,19 +38,16 @@ RSpec.describe 'PromoCodeHelpers::DollarAmountOffFromAxon' do
     end
 
     it 'correctly adjusts fees for a $10-off coupon issued by Axon' do 
-      @promotion = create(:promotion, category: :dollar_amount_off_from_axon, amount: 10)
+      @promotion.update(amount: 10)
       params = {
-        tutor: tutor,
-        appointments: [appointment],
-        customer_id: 1,
-        token: 1111111111,
-        rates: [23],
-        transaction_percentage: 15,
-        promotion_id: @promotion.id,
-        is_payment_required: true,
-        promotion_category: nil
+        tutor_id: @tutor.id,
+        student_id: @student.id,
+        stripe_token: @token,
+        appts_info: [{slot_id: @tutor.slots.first.id, course_id: @tutor.courses.first.id, start_time: @tutor.slots.first.start_time}],
+        promotion_id: @promotion.id
       }
-      context = CreateCharge.call(params)
+      context = CreateAppointments.call(params)
+      context = CreateCharge.call(context)
       @context = PromoCodeHelpers::DollarAmountOffFromAxon.new(context)
 
       expect(@context.charge.amount).to eq 2645
@@ -57,19 +60,16 @@ RSpec.describe 'PromoCodeHelpers::DollarAmountOffFromAxon' do
     end
 
     it 'correctly adjusts fees for a $20-off coupon issued by Axon' do 
-      @promotion = create(:promotion, category: :dollar_amount_off_from_axon, amount: 20)
+      @promotion.update(amount: 20)
       params = {
-        tutor: tutor,
-        appointments: [appointment],
-        customer_id: 1,
-        token: 1111111111,
-        rates: [23],
-        transaction_percentage: 15,
-        promotion_id: @promotion.id,
-        is_payment_required: true,
-        promotion_category: nil
+        tutor_id: @tutor.id,
+        student_id: @student.id,
+        stripe_token: @token,
+        appts_info: [{slot_id: @tutor.slots.first.id, course_id: @tutor.courses.first.id, start_time: @tutor.slots.first.start_time}],
+        promotion_id: @promotion.id
       }
-      context = CreateCharge.call(params)
+      context = CreateAppointments.call(params)
+      context = CreateCharge.call(context)
       @context = PromoCodeHelpers::DollarAmountOffFromAxon.new(context)
 
       expect(@context.charge.amount).to eq 2645
@@ -82,19 +82,15 @@ RSpec.describe 'PromoCodeHelpers::DollarAmountOffFromAxon' do
     end
 
     it 'increments the redemption_count for a promotion by 1 when succesfully applied' do
-      @promotion = create(:promotion, category: :dollar_amount_off_from_axon, amount: 20)
       params = {
-        tutor: tutor,
-        appointments: [appointment],
-        customer_id: 1,
-        token: 1111111111,
-        rates: [23],
-        transaction_percentage: 15,
-        promotion_id: @promotion.id,
-        is_payment_required: true,
-        promotion_category: nil
+        tutor_id: @tutor.id,
+        student_id: @student.id,
+        stripe_token: @token,
+        appts_info: [{slot_id: @tutor.slots.first.id, course_id: @tutor.courses.first.id, start_time: @tutor.slots.first.start_time}],
+        promotion_id: @promotion.id
       }
-      context = CreateCharge.call(params)
+      context = CreateAppointments.call(params)
+      context = CreateCharge.call(context)
       @context = PromoCodeHelpers::DollarAmountOffFromAxon.new(context)
 
       expect(@promotion.redemption_count).to eq 0
@@ -103,19 +99,16 @@ RSpec.describe 'PromoCodeHelpers::DollarAmountOffFromAxon' do
     end
 
     it 'does not give discount for promo_code if code is past redemption_limit' do 
-      @promotion = create(:promotion, category: :dollar_amount_off_from_axon, amount: 20, redemption_limit: 100, redemption_count: 100)
+      @promotion.update(redemption_limit: 1, redemption_count: 1)
       params = {
-        tutor: tutor,
-        appointments: [appointment],
-        customer_id: 1,
-        token: 1111111111,
-        rates: [23],
-        transaction_percentage: 15,
-        promotion_id: @promotion.id,
-        is_payment_required: true,
-        promotion_category: nil
+        tutor_id: @tutor.id,
+        student_id: @student.id,
+        stripe_token: @token,
+        appts_info: [{slot_id: @tutor.slots.first.id, course_id: @tutor.courses.first.id, start_time: @tutor.slots.first.start_time}],
+        promotion_id: @promotion.id
       }
-      context = CreateCharge.call(params)
+      context = CreateAppointments.call(params)
+      context = CreateCharge.call(context)
       @context = PromoCodeHelpers::DollarAmountOffFromAxon.new(context)
 
       expect(@context.charge.amount).to eq 2645
@@ -128,19 +121,16 @@ RSpec.describe 'PromoCodeHelpers::DollarAmountOffFromAxon' do
     end
 
      it 'does not give discount for expired promo_code' do
-      @promotion = create(:promotion, category: :dollar_amount_off_from_tutor, amount: 20, valid_from: Date.today - 300, valid_until: Date.today - 299) 
+      @promotion.update(valid_from: Date.today - 10, valid_until: Date.today - 1)
       params = {
-        tutor: tutor,
-        appointments: [appointment],
-        customer_id: 1,
-        token: 1111111111,
-        rates: [23],
-        transaction_percentage: 15,
-        promotion_id: @promotion.id,
-        is_payment_required: true,
-        promotion_category: nil
+        tutor_id: @tutor.id,
+        student_id: @student.id,
+        stripe_token: @token,
+        appts_info: [{slot_id: @tutor.slots.first.id, course_id: @tutor.courses.first.id, start_time: @tutor.slots.first.start_time}],
+        promotion_id: @promotion.id
       }
-      context = CreateCharge.call(params)
+      context = CreateAppointments.call(params)
+      context = CreateCharge.call(context)
       @context = PromoCodeHelpers::DollarAmountOffFromAxon.new(context)
 
       expect(@context.charge.amount).to eq 2645

@@ -19,7 +19,7 @@ module PromoCodeHelpers
         @promotion.redemption_count += 1
         @promotion.save
       else
-        puts 'Promo code is invalid'
+        puts 'ERROR: Promo code is invalid'
         return 
       end
       update_charge(@charge, @amount, @price_difference, @tutor_fee, @promotion)

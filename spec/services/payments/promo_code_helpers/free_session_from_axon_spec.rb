@@ -1,10 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe 'PromoCodeHelpers::FreeSessionFromAxon' do
-  let(:tutor)       { create(:tutor) }
-  let(:appointment) { create(:appointment) }
 
-  describe 'Methods in PromoCodeServices::FreeSessionFromAxon' do
+  # Runs once before all examples
+  before(:context) do
+    @tutor = create(:tutor, :with_tutor_course_and_slot)
+    @tutor_course = @tutor.tutor_courses.first
+    @student = create(:student)
+  end
+
+  describe 'Free Session From Axon Promos' do
   
     it 'adjusts fees for a free_session coupon issued by Axon' do 
       @promotion = create(:promotion, category: :free_from_axon, amount: 1)

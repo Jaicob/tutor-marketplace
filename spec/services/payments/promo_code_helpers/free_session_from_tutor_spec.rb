@@ -1,11 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe 'PromoCodeHelpers::FreeSessionFromTutor' do
-  let(:tutor)       { create(:tutor) }
-  let(:different_tutor) { create(:second_complete_tutor) }
-  let(:appointment) { create(:appointment) }
+  
+  # Runs once before all examples
+  before(:context) do
+    @tutor = create(:tutor, :with_tutor_course_and_slot)
+    @tutor_course = @tutor.tutor_courses.first
+    @student = create(:student)
+  end
 
-  describe 'Methods in PromoCodeServices::FreeSessionFromTutor' do
+  describe 'Free Session From Tutor Promos' do
 
     before :each do 
        @promotion = create(:promotion, category: :free_from_tutor, tutor_id: tutor.id, amount: 10)

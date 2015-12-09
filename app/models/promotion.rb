@@ -36,7 +36,6 @@ class Promotion < ActiveRecord::Base
     :repeating_dollar_amount_off_from_tutor]
 
   def generate_secure_code
-    puts "CATEGORY = #{self.category}"
     promo_category = self.category
     case self.category
     when 'free_from_axon' # 0

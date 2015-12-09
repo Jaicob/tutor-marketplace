@@ -1,11 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe 'PromoCodeHelpers::PercentOffFromTutor' do
-  let(:tutor)       { create(:tutor) }
-  let(:different_tutor) { create(:second_complete_tutor) }
-  let(:appointment) { create(:appointment) }
 
-  describe 'Methods in PromoCodeServices::PercentOffFromTutor' do
+  # Runs once before all examples
+  before(:context) do
+    @tutor = create(:tutor, :with_tutor_course_and_slot)
+    @tutor_course = @tutor.tutor_courses.first
+    @student = create(:student)
+  end
+
+  describe 'Percent Off From Tutor Promos' do
 
     before :each do
       @promotion = create(:promotion, category: :percent_off_from_tutor, tutor_id: tutor.id)
