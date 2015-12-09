@@ -1,3 +1,6 @@
+#axoncalendar, #options-header
+  background: #EAEAEA
+  border-radius: 3px
 #scheduling-container
   text-align: center
   font-size: 14px
@@ -6,10 +9,7 @@
 #calendar
   width: 100%
 #availability-slots-section
-  float: left
-  height: 300px
   padding: 0 10px
-  text-align: center
   h4
     font-size: 16px
     margin-top: 0
@@ -24,25 +24,16 @@
       vertical-align: middle
   .regular-availability, .one-off-availability
     background: #0095AC
+    text-align: center
   .fc-event
     position: relative
-    height: 85px
-    width: 155px
+    height: 50px
+    width: 175px
     margin-top: 20px
     padding-top: 5px
     font-weight: bold 
-    h6
+    h4
       color: white
-    .prefix:first-of-type
-      color: #FFFFFF
-      background: #0095AC
-      border: none
-    .postfix:first-of-type
-      color: #FFFFFF
-      background: #0095AC
-      border: none
-    #weeksToRepeat:first-of-type
-      border-radius: 4px !important
     &.ui-draggable
       cursor: -webkit-grab
     &.ui-draggable-dragging
@@ -70,6 +61,19 @@
         color: $main-color
         background: $accent-color
         border: 1px solid $main-color
+#repeating-options  
+  margin-top: 20px      
+  .prefix:first-of-type
+    text-align: left
+    background: #EAEAEA
+    border: none
+  .postfix:first-of-type
+    color: #FFFFFF
+    background: #EAEAEA
+    border: none
+  #weeksToRepeat:first-of-type
+    border-radius: 4px !important
+
 
 //Toolbar
 .fc-toolbar
@@ -141,7 +145,10 @@
   .fc-state-default
     border-radius: 3px 
     margin: 4px 
-  .fc-state-hover
-    background-color: white !important 
+  &.fc-state-hover
+    background-color: #EAEAEA !important 
+  &.fc-state-active
+    border-bottom: 1px white solid !important
+    border-radius: 0 !important
 
 
