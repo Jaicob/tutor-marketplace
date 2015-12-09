@@ -10,7 +10,6 @@ source 'https://rubygems.org' do
     gem 'factory_girl_rails', '~> 4.5'
     gem 'capybara'
     gem 'capybara-webkit'
-    gem 'stripe-ruby-mock', '~> 2.2.1', :require => 'stripe_mock'
   end
 
   group :development do
