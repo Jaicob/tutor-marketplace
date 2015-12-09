@@ -157,7 +157,37 @@ RSpec.describe CheckoutOrganizer do
     end
   end
 
-    describe 'with customer default_source' do
+  describe 'with customer default_source' do
+
+    it 'creates charge correctly for two $23 sessions' do 
+      # Creates a Stripe customer for Student
+      Processor::Stripe.new.update_customer(@student, @token)
+
+      @tutor_course.update(rate: 23)
+      params = {
+        tutor_id: @tutor.id,
+        student_id: @student.id,
+        stripe_token: nil,
+        appts_info: [
+          {slot_id: @tutor.slots.first.id, course_id: @tutor.courses.first.id, start_time: @tutor.slots.first.start_time},
+          {slot_id: @tutor.slots.first.id, course_id: @tutor.courses.first.id, start_time: @tutor.slots.first.start_time.to_date.to_s + " 13:00"}
+        ],
+        promotion_id: nil
+      }
+      context = CheckoutOrganizer.call(params)
+      expect(context.success?).to eq(true)
+      expect(context.charge.tutor_id).to eq(@tutor.id)
+      expect(context.charge.student_id).to eq(@student.id)
+      expect(context.charge.amount).to eq(5290)
+      expect(context.charge.axon_fee).to eq(690)
+      expect(context.charge.tutor_fee).to eq(4600)
+      expect(context.charge.token).to eq(nil)
+      expect(context.charge.promotion_id).to eq(nil)
+      expect(context.charge.stripe_charge_id).to_not eq(nil)
+    end
+  end
+
+  describe 'with customer default_source' do
 
     it 'creates charge correctly for two $23 sessions' do 
       # Creates a Stripe customer for Student

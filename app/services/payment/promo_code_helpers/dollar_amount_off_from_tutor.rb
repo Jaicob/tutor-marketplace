@@ -4,6 +4,8 @@ module PromoCodeHelpers
     attr_accessor :charge
 
     def initialize(context)
+      puts "context.charge = #{context.charge}"
+      puts "context.charge.amount = #{context.charge.amount}"
       @context = context
       @charge = context.charge
       @amount = @charge.amount

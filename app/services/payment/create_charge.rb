@@ -51,6 +51,11 @@ class CreateCharge
         token: context.stripe_token
       )
 
+      unless charge.
+        
+      end
+
+
       context.appointments.each{|appt| appt.update_attributes(charge_id: charge.id)}
       context.charge = charge
 

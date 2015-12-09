@@ -26,15 +26,15 @@ RSpec.describe 'PromoCodeHelpers::DollarAmountOffFromAxon' do
       }
       context = CreateAppointments.call(params)
       context = CreateCharge.call(context)
-      @context = PromoCodeHelpers::DollarAmountOffFromAxon.new(context)
+      promo_helper = PromoCodeHelpers::DollarAmountOffFromAxon.new(context)
 
-      expect(@context.charge.amount).to eq 2645
-      expect(@context.charge.tutor_fee).to eq 2300
-      expect(@context.charge.axon_fee).to eq 345
-      @context.return_adjusted_fees
-      expect(@context.charge.amount).to eq 2145
-      expect(@context.charge.tutor_fee).to eq 2300
-      expect(@context.charge.axon_fee).to eq -155
+      expect(promo_helper.charge.amount).to eq 2300
+      expect(promo_helper.charge.tutor_fee).to eq 2000
+      expect(promo_helper.charge.axon_fee).to eq 300
+      promo_helper.return_adjusted_fees
+      expect(promo_helper.charge.amount).to eq 1800
+      expect(promo_helper.charge.tutor_fee).to eq 2000
+      expect(promo_helper.charge.axon_fee).to eq -200
     end
 
     it 'correctly adjusts fees for a $10-off coupon issued by Axon' do 
@@ -48,15 +48,15 @@ RSpec.describe 'PromoCodeHelpers::DollarAmountOffFromAxon' do
       }
       context = CreateAppointments.call(params)
       context = CreateCharge.call(context)
-      @context = PromoCodeHelpers::DollarAmountOffFromAxon.new(context)
+      promo_helper = PromoCodeHelpers::DollarAmountOffFromAxon.new(context)
 
-      expect(@context.charge.amount).to eq 2645
-      expect(@context.charge.tutor_fee).to eq 2300
-      expect(@context.charge.axon_fee).to eq 345
-      @context.return_adjusted_fees
-      expect(@context.charge.amount).to eq 1645
-      expect(@context.charge.tutor_fee).to eq 2300
-      expect(@context.charge.axon_fee).to eq -655
+      expect(promo_helper.charge.amount).to eq 2300
+      expect(promo_helper.charge.tutor_fee).to eq 2000
+      expect(promo_helper.charge.axon_fee).to eq 300
+      promo_helper.return_adjusted_fees
+      expect(promo_helper.charge.amount).to eq 1300
+      expect(promo_helper.charge.tutor_fee).to eq 2000
+      expect(promo_helper.charge.axon_fee).to eq -700
     end
 
     it 'correctly adjusts fees for a $20-off coupon issued by Axon' do 
@@ -70,15 +70,15 @@ RSpec.describe 'PromoCodeHelpers::DollarAmountOffFromAxon' do
       }
       context = CreateAppointments.call(params)
       context = CreateCharge.call(context)
-      @context = PromoCodeHelpers::DollarAmountOffFromAxon.new(context)
+      promo_helper = PromoCodeHelpers::DollarAmountOffFromAxon.new(context)
 
-      expect(@context.charge.amount).to eq 2645
-      expect(@context.charge.tutor_fee).to eq 2300
-      expect(@context.charge.axon_fee).to eq 345
-      @context.return_adjusted_fees
-      expect(@context.charge.amount).to eq 645
-      expect(@context.charge.tutor_fee).to eq 2300
-      expect(@context.charge.axon_fee).to eq -1655
+      expect(promo_helper.charge.amount).to eq 2300
+      expect(promo_helper.charge.tutor_fee).to eq 2000
+      expect(promo_helper.charge.axon_fee).to eq 300
+      promo_helper.return_adjusted_fees
+      expect(promo_helper.charge.amount).to eq 300
+      expect(promo_helper.charge.tutor_fee).to eq 2000
+      expect(promo_helper.charge.axon_fee).to eq -1700
     end
 
     it 'increments the redemption_count for a promotion by 1 when succesfully applied' do
@@ -91,10 +91,10 @@ RSpec.describe 'PromoCodeHelpers::DollarAmountOffFromAxon' do
       }
       context = CreateAppointments.call(params)
       context = CreateCharge.call(context)
-      @context = PromoCodeHelpers::DollarAmountOffFromAxon.new(context)
+      promo_helper = PromoCodeHelpers::DollarAmountOffFromAxon.new(context)
 
       expect(@promotion.redemption_count).to eq 0
-      @context.return_adjusted_fees
+      promo_helper.return_adjusted_fees
       expect(@promotion.reload.redemption_count).to eq 1
     end
 
@@ -109,15 +109,15 @@ RSpec.describe 'PromoCodeHelpers::DollarAmountOffFromAxon' do
       }
       context = CreateAppointments.call(params)
       context = CreateCharge.call(context)
-      @context = PromoCodeHelpers::DollarAmountOffFromAxon.new(context)
+      promo_helper = PromoCodeHelpers::DollarAmountOffFromAxon.new(context)
 
-      expect(@context.charge.amount).to eq 2645
-      expect(@context.charge.tutor_fee).to eq 2300
-      expect(@context.charge.axon_fee).to eq 345
-      @context.return_adjusted_fees
-      expect(@context.charge.amount).to eq 2645
-      expect(@context.charge.tutor_fee).to eq 2300
-      expect(@context.charge.axon_fee).to eq 345
+      expect(promo_helper.charge.amount).to eq 2300
+      expect(promo_helper.charge.tutor_fee).to eq 2000
+      expect(promo_helper.charge.axon_fee).to eq 300
+      promo_helper.return_adjusted_fees
+      expect(promo_helper.charge.amount).to eq 2300
+      expect(promo_helper.charge.tutor_fee).to eq 2000
+      expect(promo_helper.charge.axon_fee).to eq 300
     end
 
      it 'does not give discount for expired promo_code' do
@@ -131,15 +131,15 @@ RSpec.describe 'PromoCodeHelpers::DollarAmountOffFromAxon' do
       }
       context = CreateAppointments.call(params)
       context = CreateCharge.call(context)
-      @context = PromoCodeHelpers::DollarAmountOffFromAxon.new(context)
+      promo_helper = PromoCodeHelpers::DollarAmountOffFromAxon.new(context)
 
-      expect(@context.charge.amount).to eq 2645
-      expect(@context.charge.tutor_fee).to eq 2300
-      expect(@context.charge.axon_fee).to eq 345
-      @context.return_adjusted_fees
-      expect(@context.charge.amount).to eq 2645
-      expect(@context.charge.tutor_fee).to eq 2300
-      expect(@context.charge.axon_fee).to eq 345
+      expect(promo_helper.charge.amount).to eq 2300
+      expect(promo_helper.charge.tutor_fee).to eq 2000
+      expect(promo_helper.charge.axon_fee).to eq 300
+      promo_helper.return_adjusted_fees
+      expect(promo_helper.charge.amount).to eq 2300
+      expect(promo_helper.charge.tutor_fee).to eq 2000
+      expect(promo_helper.charge.axon_fee).to eq 300
     end
 
   end
