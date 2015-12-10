@@ -43,8 +43,8 @@ module WebApp
 
     # Added to get rid of error messages in server log per advice here:
     # http://stackoverflow.com/questions/29417328/how-to-disable-cannot-render-console-from-on-rails
-    # config.web_console.whitelisted_ips = '10.0.2.2'
-    # config.web_console.whitelisted_ips = '192.168.59.3'
+    config.web_console.whitelisted_ips = '10.0.2.2'
+    config.web_console.whitelisted_ips = '192.168.59.3'
 
     # Added because changes were not loading automaticaly, I had to restart the server a bunch, this is supposed to fix that
     config.reload_classes_only_on_change = false

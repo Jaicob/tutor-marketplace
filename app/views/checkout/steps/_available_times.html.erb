@@ -1,1 +1,65 @@
-available_times.html.erb
+<% get_week_dates(week_start_date) %>
+
+<li>  
+  <%= @day_1.strftime('%A') %><br /><%= @day_1.strftime('%m/%d') %><br />
+  <% if @day_1_slots %>
+    <% @day_1_slots.each do |start_time| %>
+      <%= start_time %>
+      <%= check_box_tag(start_time) %><br>
+    <% end %>
+  <% end %>
+</li>
+<li>
+  <%= @day_2.strftime('%A') %><br /><%= @day_2.strftime('%m/%d') %><br />
+  <% if @day_2_slots %>
+    <% @day_2_slots.each do |start_time| %>
+      <%= start_time %>
+      <%= check_box_tag(start_time) %><br>
+    <% end %>
+  <% end %>
+</li>
+<li>
+  <%= @day_3.strftime('%A') %><br /><%= @day_3.strftime('%m/%d') %><br />
+  <% if @day_3_slots %>
+    <% @day_3_slots.each do |start_time| %>
+      <%= start_time %>
+      <%= check_box_tag(start_time) %><br>
+    <% end %>
+  <% end %>
+</li>
+<li>
+  <%= @day_4.strftime('%A') %><br /><%= @day_4.strftime('%m/%d') %><br />
+  <% if @day_4_slots %>
+    <% @day_4_slots.each do |start_time| %>
+      <%= start_time %>
+      <%= check_box_tag(start_time) %><br>
+    <% end %>
+  <% end %>
+</li>
+<li>
+  <%= @day_5.strftime('%A') %><br /><%= @day_5.strftime('%m/%d') %><br />
+  <% if @day_5_slots %>
+    <% @day_5_slots.each do |start_time| %>
+      <%= start_time %>
+      <%= check_box_tag(start_time) %><br>
+    <% end %>
+  <% end %>
+</li>
+<li>
+  <%= @day_6.strftime('%A') %><br /><%= @day_6.strftime('%m/%d') %><br />
+  <% if @day_6_slots %>
+    <% @day_6_slots.each do |start_time| %>
+      <%= start_time %>
+      <%= check_box_tag(start_time) %><br>
+    <% end %>
+  <% end %>
+</li>
+<li>
+  <%= @day_7.strftime('%A') %><br /><%= @day_7.strftime('%m/%d') %><br />
+  <% if @day_7_slots %>
+    <% @day_7_slots.each do |start_time| %>
+      <%= start_time %>
+      <%= check_box_tag(start_time) %><br>
+    <% end %>
+  <% end %>
+</li>

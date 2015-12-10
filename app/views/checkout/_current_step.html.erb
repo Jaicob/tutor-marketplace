@@ -1,14 +1,14 @@
-<% session[:checkout_step] = 1 %>
+<% session[:checkout_step] = 2 %>
 <% @checkout_step = session[:checkout_step] %>
 
 <% if @checkout_step == 1 %>
-  <%= render '/checkout/steps/course_list' %>
+  <%= render '/checkout/steps/select_course' %>
 <% elsif @checkout_step == 2 %>
-  <%= render '/checkout/steps/available_times' %>
+  <%= render '/checkout/steps/select_times' %>
 <% elsif @checkout_step == 3 %>
-  <%= render '/checkout/steps/set_location' %>
+  <%= render '/checkout/steps/select_location' %>
 <% elsif @checkout_step == 4 %>
-  <%= render '/checkout/steps/summary' %>
+  <%= render '/checkout/steps/review_summary' %>
 <% elsif @checkout_step == 5 %>
   <%= render '/checkout/steps/login' %>  
 <% end %>
