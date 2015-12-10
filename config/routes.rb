@@ -222,6 +222,13 @@ Rails.application.routes.draw do
   post '/set-school'          => 'cookies#set_school_id_cookie'
   post '/change-school'       => 'cookies#change_school_id_cookie'
 
+  # checkout pages
+  get '/checkout/course_list'       => 'checkout#course_list'
+  get '/checkout/available_times'   => 'checkout#available_times'
+  get '/checkout/set_location'      => 'checkout#set_location'
+  get '/checkout/summary'           => 'checkout#summary'
+  get '/checkout/login'             => 'checkout#login'
+
   # custom_devise_routes
   devise_for :users, :controllers => {sessions: 'sessions', registrations: 'registrations'}
 

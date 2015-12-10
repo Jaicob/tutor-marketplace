@@ -1,0 +1,53 @@
+Checkout Process
+
+3 Panels
+
+1) Appointment selector
+  -students select appt times here
+  -needs to create appts in order to reserve them (once Next button is clicked, create in bundle)
+
+2) Appointment checkout summary
+  -overview of appts from last screen (can access by searching for student's appointments that are scheduled but unpaid)
+  -need to allow update on charge amount with promo_code_helpers
+
+3) Payment form
+  -allow input of card or selection of default card to pay for appt with either token or customer_id
+  -call ProcessPayment
+
+
+
+    Tutor Load (1.0ms)  SELECT  "tutors".* FROM "tutors" WHERE "tutors"."user_id" = $1 LIMIT 1  [["user_id", 305]]
+=> #<Tutor id: 101, user_id: 305, school_id: 1, active_status: 0, application_status: 0, rating: nil, degree: nil, major: nil, additional_degrees: nil, extra_info_1: nil, extra_info_2: nil, extra_info_3: nil, graduation_year: nil, phone_number: "3369374875", profile_pic: nil, transcript: nil, appt_notes: nil, courses_approved: false, created_at: "2015-11-13 02:04:56", updated_at: "2015-11-13 16:39:42", last_4_acct: nil, line1: nil, line2: nil, city: nil, state: nil, postal_code: nil, ssn_last_4: nil, acct_id: nil>
+irb(main):005:0> me.slots.first
+  Slot Load (1.7ms)  SELECT  "slots".* FROM "slots" WHERE "slots"."tutor_id" = $1  ORDER BY "slots"."id" ASC LIMIT 1  [["tutor_id", 101]]
+=> nil
+irb(main):006:0> me.courses.first
+  Course Load (1.6ms)  SELECT  "courses".* FROM "courses" INNER JOIN "tutor_courses" ON "courses"."id" = "tutor_courses"."course_id" WHERE "tutor_courses"."tutor_id" = $1  ORDER BY "courses"."id" ASC LIMIT 1  [["tutor_id", 101]]
+=> #<Course id: 1, school_id: 1, subject_id: 1, call_number: "101", friendly_name: "Intro to Biology (U1)", created_at: "2015-11-13 02:02:27", updated_at: "2015-11-13 02:02:27">
+irb(main):007:0> me.school
+  School Load (0.9ms)  SELECT  "schools".* FROM "schools" WHERE "schools"."id" = $1 LIMIT 1  [["id", 1]]
+=> #<School id: 1, name: "University of North Carolina", location: "Chapel Hill, NC", campus_pic: nil, created_at: "2015-11-13 02:02:27", updated_at: "2015-11-13 02:02:27", slug: "university-of-north-carolina", transaction_percentage: 17.5>
+irb(main):008:0> User.find('gijoe')
+  User Load (1.2ms)  SELECT  "users".* FROM "users" WHERE "users"."slug" = $1  ORDER BY "users"."id" ASC LIMIT 1  [["slug", "gijoe"]]
+=> #<User id: 306, email: "gijoe@gmail.com", encrypted_password: "$2a$10$.Oakjwr7H93ZDwX384dlGe.bJRprE25NgH1SHjVq6Bx...", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil, sign_in_count: 1, current_sign_in_at: "2015-11-13 17:59:19", last_sign_in_at: "2015-11-13 17:59:19", current_sign_in_ip: #<IPAddr: IPv4:192.168.59.3/255.255.255.255>, last_sign_in_ip: #<IPAddr: IPv4:192.168.59.3/255.255.255.255>, confirmation_token: "d8320f3750c57ab570400133c3cda203108c10eedaaac3430a...", confirmed_at: nil, confirmation_sent_at: "2015-11-13 17:59:19", created_at: "2015-11-13 17:59:19", updated_at: "2015-11-13 17:59:19", first_name: "GI", last_name: "Joe", role: 0, payment_info: nil, invitation_token: nil, invitation_created_at: nil, invitation_sent_at: nil, invitation_accepted_at: nil, invitation_limit: nil, invited_by_id: nil, invited_by_type: nil, invitations_count: 0, slug: "gijoe", sign_in_ip: "192.168.59.3">
+irb(main):009:0> User.find('gijoe').school
+  User Load (0.8ms)  SELECT  "users".* FROM "users" WHERE "users"."slug" = $1  ORDER BY "users"."id" ASC LIMIT 1  [["slug", "gijoe"]]
+  Student Load (0.7ms)  SELECT  "students".* FROM "students" WHERE "students"."user_id" = $1 LIMIT 1  [["user_id", 306]]
+  School Load (0.8ms)  SELECT  "schools".* FROM "schools" WHERE "schools"."id" = $1 LIMIT 1  [["id", 1]]
+=> #<School id: 1, name: "University of North Carolina", location: "Chapel Hill, NC", campus_pic: nil, created_at: "2015-11-13 02:02:27", updated_at: "2015-11-13 02:02:27", slug: "university-of-north-carolina", transaction_percentage: 17.5>
+=> #<Slot id: 1809, tutor_id: 101, status: 0, start_time: "2015-11-08 08:30:00", duration: 3600, reservation_min: nil, reservation_max: nil, created_at: "2015-11-13 19:11:21", updated_at: "2015-11-13 19:11:21">
+
+
+
+Appointment.create(student_id: 201, slot_id: 1809 , course_id: 1, start_time: "2015-11-08 08:30:00")
+
+
+
+Checkout Controller
+
+-Actions
+--course_list (view all courses a Tutor offers - bypassed from Search)
+--available_times (view all times that a Tutor is available - slots minus booked appointments)
+--set_location (view page with input for setting location)
+--summary (view checkout details - 'Your Booking' - plus field for Promo codes)
+--sign_in_or_up (view two options - sign_up or sign_in - bypassed if already logged in)
