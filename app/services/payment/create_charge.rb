@@ -52,7 +52,7 @@ class CreateCharge
       )
 
       unless charge.
-        
+        rescue
       end
 
 
