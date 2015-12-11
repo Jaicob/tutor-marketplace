@@ -24,3 +24,5 @@ module CheckoutHelper
   end
 
 end
+
+# Slot.possible_appt_times(6, Date.today + 3)
