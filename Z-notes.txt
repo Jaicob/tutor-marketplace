@@ -51,3 +51,136 @@ Checkout Controller
 --set_location (view page with input for setting location)
 --summary (view checkout details - 'Your Booking' - plus field for Promo codes)
 --sign_in_or_up (view two options - sign_up or sign_in - bypassed if already logged in)
+
+
+<li>  
+  <div class="calendar-column">
+    <p class="day"><%= DAY_X.strftime('%A') %></p>
+    <p class="date"><%= DAY_X.strftime('%m/%d') %></p>
+    <% if !DAY_X_SLOTS.nil? %>
+      <% DAY_X_SLOTS.each do |start_time| %>
+        <div class="appt-time-box">
+          <label>
+            <input type="checkbox" value="1">
+            <div class="appt-time"><%= start_time %></div>
+          </label>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</li>
+
+
+
+<li>  
+  <div class="calendar-column">
+    <p class="day"><%= @day_1.strftime('%A') %></p>
+    <p class="date"><%= @day_1.strftime('%m/%d') %></p>
+    <% if @day_1_slots %>
+      <% @day_1_slots.each do |start_time| %>
+        <div class="appt-time-box">
+          <label>
+            <input type="checkbox" value="1">
+            <div class="appt-time"><%= start_time %></div>
+          </label>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</li>
+<li>
+  <div class="calendar-column">
+    <p class="day"><%= @day_2.strftime('%A') %></p>
+    <p class="date"><%= @day_2.strftime('%m/%d') %></p>
+    <% if @day_2_slots %>
+      <% @day_2_slots.each do |start_time| %>
+        <div class="appt-time-box">
+          <label>
+            <input type="checkbox" value="1">
+            <div class="appt-time"><%= start_time %></div>
+          </label>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</li>
+<li>
+  <div class="calendar-column">
+    <p class="day"><%= @day_3.strftime('%A') %></p>
+    <p class="date"><%= @day_3.strftime('%m/%d') %></p>
+    <% if @day_3_slots %>
+      <% @day_3_slots.each do |start_time| %>
+        <div class="appt-time-box">
+          <label>
+            <input type="checkbox" value="1">
+            <div class="appt-time"><%= start_time %></div>
+          </label>
+        </div>
+      <% end %>
+    <% end %>
+    </div>
+</li>
+<li>
+  <div class="calendar-column">
+    <p class="day"><%= @day_4.strftime('%A') %></p>
+    <p class="date"><%= @day_4.strftime('%m/%d') %></p>
+    <% if @day_4_slots %>
+      <% @day_4_slots.each do |start_time| %>
+        <div class="appt-time-box">
+          <label>
+            <input type="checkbox" value="1">
+            <div class="appt-time"><%= start_time %></div>
+          </label>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</li>
+<li>
+  <div class="calendar-column">
+    <p class="day"><%= @day_5.strftime('%A') %></p>
+    <p class="date"><%= @day_5.strftime('%m/%d') %></p>
+    <% if @day_5_slots %>
+      <% @day_5_slots.each do |start_time| %>
+        <div class="appt-time-box">
+          <label>
+            <input type="checkbox" value="1">
+            <div class="appt-time"><%= start_time %></div>
+          </label>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</li>
+<li>
+  <div class="calendar-column">
+    <p class="day"><%= @day_6.strftime('%A') %></p>
+    <p class="date"><%= @day_6.strftime('%m/%d') %></p>
+    <% if @day_6_slots %>
+      <% @day_6_slots.each do |start_time| %>
+        <div class="appt-time-box">
+          <label>
+            <input type="checkbox" value="1">
+            <div class="appt-time"><%= start_time %></div>
+          </label>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</li>
+<li>
+  <div class="calendar-column">
+    <p class="day"><%= @day_7.strftime('%A') %></p>
+    <p class="date"><%= @day_7.strftime('%m/%d') %></p>
+    <% if @day_7_slots %>
+      <% @day_7_slots.each do |start_time| %>
+        <div class="appt-time-box">
+          <label>
+            <input type="checkbox" value="1">
+            <div class="appt-time"><%= start_time %></div>
+          </label>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</li>

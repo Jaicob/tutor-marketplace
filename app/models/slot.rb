@@ -24,7 +24,7 @@ class Slot < ActiveRecord::Base
 
   enum status: ['Open', 'Blocked']
 
-  def self.possible_appt_times(tutor_id, date)
+  def self.possible_appt_times_for_date(tutor_id, date)
     @start_times_array = nil # necessary to reset to nil since this is called in succession and times will carry over
     Slot.where(tutor_id: tutor_id).each do |slot|
       if slot.start_time.to_date == date
@@ -41,6 +41,16 @@ class Slot < ActiveRecord::Base
     @start_times_array
   end
 
-end
+  def self.possible_appt_times_for_week(start_date, tutor_id)
+    data = {}
+    7.times do |count|
+      data[count] = {
+        date: start_date,
+        times: Slot.possible_appt_times_for_date(tutor_id, start_date)
+      }
+      start_date += 1
+    end
+    data
+  end
 
-# Slot.appt_times(Tutor.first, Date.today - 1)
+end
