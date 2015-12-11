@@ -35,6 +35,7 @@
     background: #009688
   .one-off-availability
     background: #FF9100
+    border: none 
   .fc-event
     position: relative
     height: 50px
@@ -42,6 +43,8 @@
     width: 175px
     padding-top: 5px
     font-weight: bold 
+    transition-duration: 0.4s
+    transition: box-shadow, transform
     h4
       color: white
       padding: 0
@@ -62,10 +65,11 @@
       border-radius: 20px
       border: none 
       cursor: pointer
-      &:hover
-        color: $main-color
-        background: $accent-color
-        border: 1px solid $main-color
+
+  .fc-event:hover
+    box-shadow: 6px 6px 5px #888888 
+    transform: scale(1.2,1.2)
+
 #repeating-options       
   .prefix:first-of-type
     text-align: left

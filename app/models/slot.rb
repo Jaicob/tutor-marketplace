@@ -23,5 +23,6 @@ class Slot < ActiveRecord::Base
   validates :status, presence: true
 
   enum status: ['Open', 'Blocked']
+  enum slot_type: ['weekly', 'oneTime']
 
 end

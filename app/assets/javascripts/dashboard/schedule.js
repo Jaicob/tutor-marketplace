@@ -39,6 +39,7 @@ $(document).ready(function() {
   var originalDuration;
 
   var formatDataAsEvent = function(eventData) {
+    console.log("FIRST TYPE:",eventData.slot_type)
     end_time = moment(eventData.start_time, moment.ISO_8601);
     end_time = end_time.add(eventData.duration, 'seconds');
     var postFormat = {
@@ -46,7 +47,8 @@ $(document).ready(function() {
       start: moment(eventData.start_time, moment.ISO_8601),
       end: end_time,
       slot_id: eventData.id,
-      status: eventData.status === 1 ? 'Blocked' : 'Open'//eventData.status
+      status: eventData.status === 1 ? 'Blocked' : 'Open',//eventData.status
+      slot_type: eventData.slot_type
     };
     return postFormat;
   }
@@ -188,6 +190,7 @@ $(document).ready(function() {
 
   var addSlot = function(event, jsEvent, ui) {
     //event.start = moment(event.start);
+    console.log("ADDING SLOT WITH TYPE",event.slot_type);
     event.end = moment(event.end);
     var duration = moment.duration(event.end.diff(event.start));
     var seconds = duration.asSeconds();
@@ -200,6 +203,7 @@ $(document).ready(function() {
       start_time: event.start.toISOString(), //end_time.add(eventData.duration, 'seconds');
       duration: seconds,
       weeks_to_repeat: event.weeksToRepeat(),
+      slot_type: event.slot_type,
     })
 
     request.success(function(data) {
@@ -292,7 +296,7 @@ $(document).ready(function() {
 
   var blockSlot = function(event) {
     var toggledStatus = event.data.status === 'Open' ? 'Blocked' : 'Open';
-    console.log("NEW STATUS",toggledStatus);
+    //console.log("NEW STATUS",toggledStatus);
 
     $.ajax({
       type: "PUT",
@@ -318,13 +322,26 @@ $(document).ready(function() {
 
   var eventRender = function(event, element, view) {
     console.log("STATUS",event.status);
-    switch (event.status) {
-      case "Open":
-        element.css('background-color', '#009688');
-        break;
-      case "Blocked":
-        element.css('background-color', '#E0E0E0');
-        break;
+    console.log("TYPE",event.slot_type);
+    // switch (event.status) {
+    //   case "Open":
+    //     element.css('background-color', '#009688');
+    //     break;
+    //   case "Blocked":
+    //     element.css('background-color', '#E0E0E0');
+    //     break;
+    // }
+    if (event.status === 'Blocked') {
+      element.css('background-color', '#E0E0E0');
+    } else {
+      switch (event.slot_type) {
+        case 'weekly':
+          element.css('background-color', '#009688');
+          break;
+        case 'oneTime':
+          element.css('background-color', '#FF9100');
+          break;
+      }
     }
   }
 
@@ -369,7 +386,8 @@ $(document).ready(function() {
           weeks = 2
         }
         return weeks
-      }
+      },
+      slot_type:'weekly'
     });
 
     // make the event draggable using jQuery UI
@@ -388,7 +406,8 @@ $(document).ready(function() {
       stick: false,
       weeksToRepeat: function(){
         return 1
-      } // maintain when user navigates (see docs on the renderEvent method)
+      }, // maintain when user navigates (see docs on the renderEvent method)
+      slot_type:'oneTime'
     });
 
     // make the event draggable using jQuery UI

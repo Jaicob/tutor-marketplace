@@ -4,7 +4,7 @@ class SlotCreator
   # sc = SlotCreator.new(tutor_id: 1, start_time: '2015-08-01 12:00', duration: 3600, weeks_to_repeat: 10)
   # sm = SlotManager.new(tutor_id: 1, original_start_time: '2015-08-01 12:00:00', original_duration: 3600, new_start_time: '2015-08-02 11:00:00', new_duration: '7200')
 
-  attr_accessor :tutor, :start_time, :duration, :weeks_to_repeat, :start_date, :end_date, :slots
+  attr_accessor :tutor, :start_time, :duration, :weeks_to_repeat, :start_date, :end_date, :slots, :slot_type
 
   def initialize(params)
      # ex. params = (
@@ -16,6 +16,7 @@ class SlotCreator
     @tutor = Tutor.find(params[:tutor_id])
     @start_time = DateTime.iso8601(params[:start_time].to_datetime.to_s)
     @duration = params[:duration]
+    @slot_type = params[:slot_type]
     @weeks_to_repeat = (params[:weeks_to_repeat] || 1).to_i
 
     @start_date = @start_time.to_date
@@ -27,7 +28,7 @@ class SlotCreator
     date = @start_date
     @slots = []
     while date < @end_date
-      @slots << @tutor.slots.create(start_time: @start_time, duration: @duration)
+      @slots << @tutor.slots.create(start_time: @start_time, duration: @duration, slot_type: @slot_type)
       date = date + 7
       @start_time = @start_time + 7
     end
