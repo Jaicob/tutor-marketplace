@@ -4,3 +4,12 @@ div.box {
   border-radius: 4px;
   background-color: #eff1f3; 
 }
+
+.v-centered-text-outer {
+	display: table;
+}
+
+.v-centered-text-inner {
+	display: table-cell;
+    vertical-align: middle;
+}

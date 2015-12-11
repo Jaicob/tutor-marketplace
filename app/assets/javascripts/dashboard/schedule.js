@@ -39,7 +39,6 @@ $(document).ready(function() {
   var originalDuration;
 
   var formatDataAsEvent = function(eventData) {
-    console.log("PRE-Format",eventData);
     end_time = moment(eventData.start_time, moment.ISO_8601);
     end_time = end_time.add(eventData.duration, 'seconds');
     var postFormat = {
@@ -321,10 +320,10 @@ $(document).ready(function() {
     console.log("STATUS",event.status);
     switch (event.status) {
       case "Open":
-        element.css('background-color', '#0095AC');
+        element.css('background-color', '#009688');
         break;
       case "Blocked":
-        element.css('background-color', 'lightgrey');
+        element.css('background-color', '#E0E0E0');
         break;
     }
   }
@@ -412,7 +411,7 @@ $(document).ready(function() {
     forceEventDuration: true,
     minTime: "6:00:00",
     maxTime: "24:00:00",
-    defaultTimedEventDuration: "1:00:00",
+    defaultTimedEventDuration: "2:00:00",
     height: "auto",
     header: {
       left: 'prev,next today',
