@@ -13,13 +13,17 @@
           <div class="small-12 columns">
             <div class="row small-collapse">
               <div class="small-3 columns">
-                <button class="checkout-button weeks-btns">Previous Week</button>
+                <button class="checkout-button weeks-btns">
+                  <%= link_to "Previous Week", tutor_path(@tutor.slug, course: 1, current: @start_date.to_s, week: 0) %>
+                </button>
               </div>
               <div class="small-6 columns">
                 <p>Select a time</p>
               </div>
               <div class="small-3 columns">
-                <button class="checkout-button weeks-btns">Next Week</button>
+                <button class="checkout-button weeks-btns">
+                  <%= link_to "Next Week", tutor_path(@tutor.slug, course: 1, current: @start_date.to_s, week: 1) %>
+                </button>
               </div>
             </div>
           </div>

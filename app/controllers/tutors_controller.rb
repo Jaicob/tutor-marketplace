@@ -7,9 +7,10 @@ class TutorsController < ApplicationController
   # TUTOR CREATION IS HANDLED THROUGH THE DEVISE REGISTRATION CONTROLLER - ONE FORM CREATES USER AND TUTOR
 
   def show
-    if request.referer && request.referer.split(/[^[:alpha:]]+/).include?('search')
-      @from_search = true
-    end
+    @from_search = true if request.referer && request.referer.split(/[^[:alpha:]]+/).include?('search')
+    service = TutorAvailability.new(@tutor.id, params[:current], params[:week])
+    @start_date = service.set_week
+    @availability_data = service.get_times
   end
 
   def update
@@ -28,7 +29,7 @@ class TutorsController < ApplicationController
       redirect_to @tutor.update_action_redirect_path(tutor_params) # redirects back to current page in settings
     else
       redirect_to :back
-      flash[:alert] = "Tutor was not updated: #{@tutor.errors.full_messages}"
+      flash[:alert] = "Your account was not updated: #{@tutor.errors.full_messages}"
     end
   end
 

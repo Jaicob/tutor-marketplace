@@ -1,12 +1,10 @@
-<% @data = Slot.possible_appt_times_for_week(Date.today, @tutor.id) %>
-
 <% 7.times do |count| %>
   <li>  
     <div class="calendar-column">
-      <p class="day"><%= @data[count][:date].strftime('%A') %></p>
-      <p class="date"><%= @data[count][:date].strftime('%m/%d') %></p>
-      <% if @data[count][:times] %>
-        <% @data[count][:times].each do |start_time| %>
+      <p class="day"><%= @availability_data[count][:date].strftime('%A') %></p>
+      <p class="date"><%= @availability_data[count][:date].strftime('%m/%d') %></p>
+      <% if @availability_data[count][:times] %>
+        <% @availability_data[count][:times].each do |start_time| %>
           <div class="appt-time-box">
             <label>
               <input type="checkbox" value="1">

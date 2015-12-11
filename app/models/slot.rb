@@ -42,15 +42,15 @@ class Slot < ActiveRecord::Base
   end
 
   def self.possible_appt_times_for_week(start_date, tutor_id)
-    data = {}
+    availability_data = {}
     7.times do |count|
-      data[count] = {
+      availability_data[count] = {
         date: start_date,
         times: Slot.possible_appt_times_for_date(tutor_id, start_date)
       }
       start_date += 1
     end
-    data
+    availability_data
   end
 
 end
