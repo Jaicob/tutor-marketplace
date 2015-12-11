@@ -90,3 +90,8 @@ li {
     padding: 0.5em;
     font-family: 'Lato';
 }
+
+.appt-time-box input:disabled + .appt-time {
+    background-color: #C3C3C3;
+    color: #7D7D7D;
+}

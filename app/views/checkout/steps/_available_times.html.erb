@@ -1,3 +1,4 @@
+<% checkbox_id = 1 %>
 <% 7.times do |count| %>
   <li>  
     <div class="calendar-column">
@@ -7,14 +8,32 @@
         <% @availability_data[count][:times].each do |start_time| %>
           <div class="appt-time-box">
             <label>
-              <input type="checkbox" value="1">
+              <input type="checkbox" id="<%= checkbox_id %>" value="<%= start_time %>" onchange="disableFollowingCheckbox(this)">
               <div class="appt-time"><%= start_time %></div>
             </label>
           </div>
+          <% checkbox_id += 1 %>
         <% end %>
       <% end %>
     </div>
   </li>
+  <% checkbox_id += 10 %>
 <% end %>
+
+<script>
+function disableFollowingCheckbox(element)
+  {
+    console.log(element.id)
+    checkboxId = parseInt(element.id) + 1;
+    console.log(checkboxId);
+    var checkbox = document.getElementById(checkboxId);
+    console.log(checkbox.disabled)
+    if (checkbox.disabled == true) {
+      checkbox.disabled = false;
+    } else {
+      checkbox.disabled = true;
+    }
+  }
+</script>
 
 <!-- Slot.create(tutor_id: 6, start_time: ((Date.today + 5).to_s + " 16:00"), duration: 10800) -->

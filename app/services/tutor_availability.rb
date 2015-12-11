@@ -21,5 +21,3 @@ class TutorAvailability
   end
 
 end
-
-
