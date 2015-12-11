@@ -17,18 +17,32 @@
             <% @tutor.course_list_by_subject.each do |subject, courses| %>
 
               <div class="row">
-                <div class="small-12 medium-4 columns">
+                <div class="small-12 medium-3 columns">
 
-                  <p><%= subject %></p>
+                  <p class="subject-title"><%= subject %></p>
 
                 </div>
-                <div class="small-12 medium-8 columns">
+                <div class="small-12 medium-9 columns">
+
+                  <div class="row checkout-course-list-row">
 
                     <% courses.each do |course| %>
-                      <p><%= course[:short_name] %></p>
-                      <p><%= course[:friendly_name] %></p>
-                      <p><%= course[:rate] %></p>
+
+                      <div class="small-12 medium-4 columns">
+                        <p><%= course[:short_name] %></p>
+
+                      </div> 
+                      <div class="small-12 medium-7 columns">
+                        <p class="center"><%= course[:friendly_name] %></p>
+
+                      </div>
+                      <div class="small-12 medium-1 columns">
+                        <p class="right">$<%= course[:rate] %></p>
+                      </div>
+
                     <% end %>
+
+                  </div>
        
 
                 </div>
