@@ -210,4 +210,20 @@ class Tutor < ActiveRecord::Base
     end
   end
 
+  def course_list_by_subject
+    data = {}
+    self.tutor_courses.each do |tc|
+      unless data.has_key?(tc.course.subject.name)
+        data[tc.course.subject.name] = []
+      end
+      tc_info = {
+        short_name: tc.course.subject.name + " " + tc.course.call_number,
+        friendly_name: tc.course.friendly_name,
+        rate: tc.rate
+      }
+      data[tc.course.subject.name] << tc_info
+    end
+    return data
+  end
+
 end

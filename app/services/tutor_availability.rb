@@ -2,7 +2,7 @@ class TutorAvailability
 
   def initialize(tutor_id, start_date, week_change)
     @tutor_id = tutor_id
-    @start_date = start_date.to_date
+    @start_date = if start_date then start_date.to_date else Date.today end
     @week_change = week_change
   end
 

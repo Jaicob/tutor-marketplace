@@ -1,8 +1,0 @@
-<% if @from_search == true %>
-  <div class="row top-buffer bottom-buffer">
-  <!-- [ ] TODO (AJ) Refactor NOT to use request.fullpath.to_s.split('=').second -->
-  <%= link_to '← Back to Results', search_path(:course_id => request.fullpath.to_s.split('=').second, :indirect_search => true), class: 'custom-button' %>
-  </div>
-<% end %>
-<%= render '/dashboard/tutor/profile/tutor_profile' %>
-<%= render '/checkout/current_step' %>

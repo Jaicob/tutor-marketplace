@@ -1,0 +1,57 @@
+<%= render '/dashboard/tutor/profile/tutor_profile' %>
+
+<div class="row">
+  <div class="small-12 columns">
+    <div class="box">
+      <div class="checkout-step-title">
+        <div class="row">
+          <div class="small-12 columns">
+            <p>Select the course you want to improve in</p>
+          </div>
+        </div>
+      </div>
+      <div class="checkout-step-body">
+        <div class="row">
+          <div class="small-12 columns">
+            
+            <% @tutor.course_list_by_subject.each do |subject, courses| %>
+
+              <div class="row">
+                <div class="small-12 medium-4 columns">
+
+                  <p><%= subject %></p>
+
+                </div>
+                <div class="small-12 medium-8 columns">
+
+                    <% courses.each do |course| %>
+                      <p><%= course[:short_name] %></p>
+                      <p><%= course[:friendly_name] %></p>
+                      <p><%= course[:rate] %></p>
+                    <% end %>
+       
+
+                </div>
+              </div>
+
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="checkout-steps-nav">
+        <div class="row small-collapse">
+          <div class="small-12 columns">
+            <div class="row small-collapse">
+              <div class="small-3 columns">
+                <%= link_to "Previous Step", tutor_path(@tutor.slug, course: 1, current: @start_date.to_s, week: 1), class: 'checkout-button gray' %>
+              </div>
+              <div class="small-3 columns">
+                <%= link_to "Next Step", tutor_path(@tutor.slug, course: 1, current: @start_date.to_s, week: 1), class: 'checkout-button' %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

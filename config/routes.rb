@@ -14,6 +14,11 @@
 #                     privacy_and_terms GET      /privacy-and-terms(.:format)                                       single_views#privacy_and_terms
 #                            set_school POST     /set-school(.:format)                                              cookies#set_school_id_cookie
 #                         change_school POST     /change-school(.:format)                                           cookies#change_school_id_cookie
+#                checkout_select_course GET      /tutors/:id/select_course(.:format)                                checkout#select_course
+#                 checkout_select_times GET      /tutors/:id/select_times(.:format)                                 checkout#select_times
+#              checkout_select_location GET      /tutors/:id/select_location(.:format)                              checkout#select_location
+#                 checkout_confirmation GET      /tutors/:id/confirmation(.:format)                                 checkout#confirmation
+#                      checkout_summary GET      /tutors/:id/summary(.:format)                                      checkout#summary
 #                      new_user_session GET      /users/sign_in(.:format)                                           sessions#new
 #                          user_session POST     /users/sign_in(.:format)                                           sessions#create
 #                  destroy_user_session DELETE   /users/sign_out(.:format)                                          sessions#destroy
@@ -223,11 +228,13 @@ Rails.application.routes.draw do
   post '/change-school'       => 'cookies#change_school_id_cookie'
 
   # checkout pages
-  get '/checkout/course_list'       => 'checkout#course_list'
-  get '/checkout/available_times'   => 'checkout#available_times'
-  get '/checkout/set_location'      => 'checkout#set_location'
-  get '/checkout/summary'           => 'checkout#summary'
-  get '/checkout/login'             => 'checkout#login'
+  scope '/tutors/:id' do   
+    get '/select_course'       => 'checkout#select_course', as: 'checkout_select_course'
+    get '/select_times'   => 'checkout#select_times', as: 'checkout_select_times'
+    get '/select_location'      => 'checkout#select_location', as: 'checkout_select_location'
+    get '/confirmation'      => 'checkout#confirmation', as: 'checkout_confirmation'
+    get '/summary'           => 'checkout#summary', as: 'checkout_summary'
+  end
 
   # custom_devise_routes
   devise_for :users, :controllers => {sessions: 'sessions', registrations: 'registrations'}

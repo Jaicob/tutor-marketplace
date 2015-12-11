@@ -1,16 +1,11 @@
 class TutorsController < ApplicationController
   before_action :set_user, only: [:edit, :update, :destroy]
-  before_action :set_tutor, only: [:show, :edit, :update, :destroy, :submit_application]
-  before_action :set_tutor_for_profile_viewer, only: [:show]
-  before_action :set_student, only: [:show]
+  before_action :set_tutor, only: [:show, :update, :destroy]
 
   # TUTOR CREATION IS HANDLED THROUGH THE DEVISE REGISTRATION CONTROLLER - ONE FORM CREATES USER AND TUTOR
 
   def show
-    @from_search = true if request.referer && request.referer.split(/[^[:alpha:]]+/).include?('search')
-    service = TutorAvailability.new(@tutor.id, params[:current], params[:week])
-    @start_date = service.set_week
-    @availability_data = service.get_times
+    redirect_to checkout_select_course_path(@tutor.slug)
   end
 
   def update
@@ -66,7 +61,7 @@ class TutorsController < ApplicationController
 
   private
 
-    def set_tutor_for_profile_viewer
+    def set_tutor
       @tutor = User.find(params[:id]).tutor
     end
 

@@ -1,3 +1,5 @@
+<%= render '/dashboard/tutor/profile/tutor_profile' %>
+
 <div class="row">
   <div class="small-12 columns">
     <div class="box">
@@ -13,27 +15,20 @@
           <div class="small-12 columns">
             <div class="row small-collapse">
               <div class="small-3 columns">
-                <button class="checkout-button weeks-btns">
-                  <%= link_to "Previous Week", tutor_path(@tutor.slug, course: 1, current: @start_date.to_s, week: 0) %>
-                </button>
-              </div>
-              <div class="small-6 columns">
-                <p>Select a time</p>
+                <%= link_to "Previous Week", checkout_select_times_path(@tutor.slug, course: 1, current: @start_date.to_s, week: 0), class: 'checkout-button gray' %>
               </div>
               <div class="small-3 columns">
-                <button class="checkout-button weeks-btns">
-                  <%= link_to "Next Week", tutor_path(@tutor.slug, course: 1, current: @start_date.to_s, week: 1) %>
-                </button>
+                <%= link_to "Next Week", checkout_select_times_path(@tutor.slug, course: 1, current: @start_date.to_s, week: 1), class: 'checkout-button gray' %>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="calendar-body">
+      <div class="checkout-step-body">
         <div class="row">
           <div class="small-12 columns">
             <div class="small-block-grid-1 medium-block-grid-7">
-              <%= render '/checkout/steps/available_times', week_start_date: Date.today %>
+              <%= render '/checkout/available_times', week_start_date: Date.today %>
             </div>
           </div>
         </div>
@@ -43,10 +38,10 @@
           <div class="small-12 columns">
             <div class="row small-collapse">
               <div class="small-3 columns">
-                <button class="checkout-button">Go Back</button>
+                <%= link_to "Previous Step", tutor_path(@tutor.slug, course: 1, current: @start_date.to_s, week: 1), class: 'checkout-button gray' %>
               </div>
               <div class="small-3 columns">
-                <button class="checkout-button">Next Step</button>
+                <%= link_to "Next Step", tutor_path(@tutor.slug, course: 1, current: @start_date.to_s, week: 1), class: 'checkout-button' %>
               </div>
             </div>
           </div>
