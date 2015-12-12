@@ -1,22 +1,26 @@
-
+.row.subject-row {
+  display: block;
+  border: 1px solid #4F5252;
+  margin: .8em 0 !important;
+  padding: 0.8em 1em;
+  background-color: #EFF1F3;
+  border: 1px solid #8A8A8A;
+  box-shadow: 0px 0px 20px 0px gray;
   .subject-title {
-    background-color: rgb(11, 161, 189);
-    display: inline-block;
-    color: white;
-    font-weight: 400;
-    border-radius: 4px;
-    font-size: 1.4em;
-    width: 100%;
-    text-align: center;
-    padding: 0.5em;
-  }  
-  .row.checkout-course-list-row {
-    border: 1px solid #D2D2D2;
+    font-size: 2.2em;
+    font-weight: 700;
+    padding: 0.1em;
+  }
+  .row.course-list-row {
+    border: 1px solid #909090;
     border-radius: 4px;
     padding: 0.7em;
-    background-color: #F3F3F3;
+    background-color: #E0E0E0;
+    margin: 1em 0;
     p {
       margin: 0;
       font-weight: 400;
+      font-size: 1.1em;
     }
   }
+}

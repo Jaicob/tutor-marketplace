@@ -1,5 +1,5 @@
 .checkout-step-title {
-  background-color: #2bc2de;
+  background-color: #0095AC;
   text-align: center;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
@@ -10,15 +10,15 @@
     max-width: none;
     margin: 0;
     padding: 0.2em;
-    font-size: 1.7em;
+    font-size: 2em;
   }
 }
 
 .checkout-step-body {
-  border: 1px solid #E0E0E0;
   border-top: none;
   border-bottom: none;
-  padding: 1em;
+  background-color: #BDBDBD;
+  overflow: hidden;
 }
 
 .checkout-steps-nav {
