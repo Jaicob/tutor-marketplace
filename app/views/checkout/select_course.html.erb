@@ -6,7 +6,7 @@
       <div class="checkout-step-title">
         <div class="row">
           <div class="small-12 columns">
-            <p>Select the course you want to improve in</p>
+            <p>Select a Course</p>
           </div>
         </div>
       </div>
@@ -18,41 +18,33 @@
 
               <div class="row medium-collapse subject-row">
                 <div class="small-12 medium-3 columns">
-
                   <p class="subject-title"><%= subject %></p>
-
                 </div>
                 <div class="small-12 medium-9 columns">
-
-                 
-
-                    <% courses.each do |course| %>
-
-                     <div class="row course-list-row">
-
-                      <div class="small-12 medium-4 columns">
-                        <p><%= course[:short_name] %></p>
-
-                      </div> 
-                      <div class="small-12 medium-7 columns">
-                        <p><%= course[:friendly_name] %></p>
-
+                
+                <% courses.each do |course| %>
+                  <div class="course-box">
+                    <label>
+                      <input type="checkbox" value="<%= course[:id] %>" name="<%= course[:friendly_name] %>">
+                      <div class="row course-list-row">
+                        <div class="small-12 medium-4 columns">
+                          <p class="course-text"><%= course[:short_name] %></p>
+                        </div> 
+                        <div class="small-12 medium-7 columns">
+                          <p class="course-text"><%= course[:friendly_name] %></p>
+                        </div>
+                        <div class="small-12 medium-1 columns">
+                          <p class="course-text">$<%= course[:rate] %></p>
+                        </div>
                       </div>
-                      <div class="small-12 medium-1 columns">
-                        <p>$<%= course[:rate] %></p>
-                      </div>
-
-                       </div>
-
-                    <% end %>
-
-                 
-       
+                    </label>
+                  </div>      
+                <% end %>
 
                 </div>
               </div>
-
             <% end %>
+
           </div>
         </div>
       </div>
@@ -60,10 +52,13 @@
         <div class="row small-collapse">
           <div class="small-12 columns">
             <div class="row small-collapse">
-              <div class="small-3 columns">
+              <div class="small-12 medium-3 columns">
                 <%= link_to "Previous Step", tutor_path(@tutor.slug, course: 1, current: @start_date.to_s, week: 1), class: 'checkout-button gray' %>
               </div>
-              <div class="small-3 columns">
+              <div class="small-12 medium-6 columns">
+                <p id="selected-course"></p>
+              </div>
+              <div class="small-12 medium-3 columns">
                 <%= link_to "Next Step", tutor_path(@tutor.slug, course: 1, current: @start_date.to_s, week: 1), class: 'checkout-button' %>
               </div>
             </div>
@@ -73,3 +68,16 @@
     </div>
   </div>
 </div>
+
+<script>
+$(document).ready(function(){
+  $( "input[type='checkbox']" ).change(function() {
+    $('input[type=checkbox]').addClass('out-of-focus');
+    $('input[type=checkbox]').prop('checked', false);
+    $(this).removeClass('out-of-focus');
+    $(this).prop('checked', true);
+    $('#selected-course').html(this.name);
+  });
+});
+
+</script>

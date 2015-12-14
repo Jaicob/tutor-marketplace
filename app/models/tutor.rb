@@ -217,6 +217,7 @@ class Tutor < ActiveRecord::Base
         data[tc.course.subject.name] = []
       end
       tc_info = {
+        id: tc.id,
         short_name: tc.course.subject.name + " " + tc.course.call_number,
         friendly_name: tc.course.friendly_name,
         rate: tc.rate
