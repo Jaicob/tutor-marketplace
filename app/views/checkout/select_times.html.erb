@@ -1,12 +1,15 @@
 <%= render '/dashboard/tutor/profile/tutor_profile' %>
 
+<h1><%= @tutor_course.course.formatted_name %></h1>
+
 <div class="row">
   <div class="small-12 columns">
+    <%= form_for :appt_selection, url: checkout_set_appt_times_path, method: :post do |f| %>
     <div class="box">
       <div class="checkout-step-title">
         <div class="row">
           <div class="small-12 columns">
-            <p>Select a time to meet with <%= @tutor.first_name + " " + @tutor.last_name.slice(0) + "." %></p>
+            <p>Select a Time</p>
           </div>
         </div>
       </div>
@@ -38,15 +41,16 @@
           <div class="small-12 columns">
             <div class="row small-collapse">
               <div class="small-3 columns">
-                <%= link_to "Previous Step", tutor_path(@tutor.slug, course: 1, current: @start_date.to_s, week: 1), class: 'checkout-button gray' %>
+                <%= link_to "Back to Course Select", checkout_select_course_path(@tutor.slug), class: 'checkout-button gray' %>
               </div>
               <div class="small-3 columns">
-                <%= link_to "Next Step", tutor_path(@tutor.slug, course: 1, current: @start_date.to_s, week: 1), class: 'checkout-button' %>
+                <%= f.submit "Next Step", class: 'checkout-button' %>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <% end %>
   </div>
 </div>

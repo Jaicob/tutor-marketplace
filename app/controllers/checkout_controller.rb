@@ -6,10 +6,21 @@ class CheckoutController < ApplicationController
    # (view all courses a Tutor offers - bypassed from Search)
   end
 
+  def set_course_id
+    session[:tutor_course_id] = params[:course_selection][:tutor_course_id]
+    redirect_to checkout_select_times_path(@tutor.slug)
+  end
+
   def select_times # step 2
+    @tutor_course = TutorCourse.find(session[:tutor_course_id])
     service = TutorAvailability.new(@tutor.id, params[:current], params[:week])
     @start_date = service.set_week
     @availability_data = service.get_times
+  end
+
+  def set_appt_times
+    session[:appts_info] = params[:appt_selection]
+    redirect_to checkout_select_location_path(@tutor.slug)
   end
 
   def select_location # step 3

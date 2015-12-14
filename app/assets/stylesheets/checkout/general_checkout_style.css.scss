@@ -15,10 +15,14 @@
 }
 
 .checkout-step-body {
+  border: 1px solid #D4D4D4;
   border-top: none;
   border-bottom: none;
-  background-color: #BDBDBD;
   overflow: hidden;
+  &.course-select-bg {
+    background-color: #BDBDBD;
+    border: none;
+   }
 }
 
 .checkout-steps-nav {
