@@ -23,6 +23,10 @@ class Devise::SessionsController < DeviseController
 
   # POST /resource/sign_in
   def create
+    if params[:user][:checkout_redirect]
+      tutor_id = params[:user][:checkout_redirect]
+      cookies[:checkout_redirect] = { value: tutor_id, expires: 5.minutes.from_now }
+    end
     self.resource = warden.authenticate!(auth_options)
     set_flash_message(:notice, :signed_in) if is_flashing_format?
     sign_in(resource_name, resource)

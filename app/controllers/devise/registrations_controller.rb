@@ -27,6 +27,10 @@ class Devise::RegistrationsController < DeviseController
       if params[:user][:tutor] != nil
         resource.create_tutor_account(resource, params)
       else
+        if params[:user][:checkout_redirect] != nil
+          tutor_id = params[:user][:checkout_redirect] # tutor_id for redirect to ongoing checkout process after registration
+          cookies[:checkout_redirect] = { value: tutor_id, expires: 5.minutes.from_now }
+        end
         resource.create_student_account(resource, params)
       end
     end

@@ -14,20 +14,27 @@
       <div class="checkout-step-body">
         <div class="row small-collapse">
           <div class="small-12 columns">
-            
-            <h1>Login or Sign Up</h1>
-
-            <h6>Your Booking</h6>
-
-            <h6>Promo Codes</h6>
-
-            <h6>Login</h6>
-
-            <h6>Sign Up</h6>
-
-
-
-
+            <div class="row">
+              <div class="small-12 medium-6 columns">
+                <div class="box">
+                  <h6>Your Booking</h6>
+                  <p>Tutor: <%= @booking_preview[:tutor].first_name + @booking_preview[:tutor].last_name.slice(0) %></p>
+                  <p>Course: <%= @booking_preview[:course].formatted_name %></p>
+                  <p>Location: <%= @booking_preview[:location] %></p>
+                  <p>Rate: <%= @booking_preview[:rate] %></p>
+                  <h6>Appointments</h6>
+                  <% @booking_preview[:appointments].each do |k,v| %>
+                    <p><%= v[:start_time] %></p>
+                  <% end %>
+                </div>
+              </div>
+              <div class="small-12 medium-6 columns">
+                <div class="box">
+                  <h6>Promo Codes</h6>
+                </div>
+              </div>
+            </div>
+            <%= render '/checkout/payment_options' %>
           </div>
         </div>
       </div>

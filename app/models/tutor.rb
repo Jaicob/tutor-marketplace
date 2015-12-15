@@ -66,6 +66,10 @@ class Tutor < ActiveRecord::Base
     self.courses.count > 0 ? false : true
   end
 
+  def first_and_last_initial
+    self.first_name + " " + self.last_name.slice(0) + "."
+  end
+
   def self.degree_collection
     ["B.A.","B.S.","M.B.A.","M.S.","M.Ed.","PhD."]
   end

@@ -19,7 +19,11 @@ class ApplicationController < ActionController::Base
     def after_sign_in_path_for(resource)
       case resource.role
       when 'student'
-        home_student_path(resource)
+        if cookies[:checkout_redirect]
+          checkout_options_path(cookies[:checkout_redirect])
+        else
+          home_student_path(resource)
+        end
       when 'tutor'
         home_tutor_path(resource)
       when 'campus_manager'
@@ -31,7 +35,9 @@ class ApplicationController < ActionController::Base
 
     # Devise modification
     def after_sign_up_path_for(resource)
-      if resource.tutor
+      if cookies[:checkout_redirect]
+        checkout_options_path(cookies[:checkout_redirect])
+      elsif resource.tutor
         home_tutor_path(resource)
       else
         home_student_path(resource)

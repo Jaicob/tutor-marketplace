@@ -20,10 +20,8 @@ class CheckoutController < ApplicationController
     service = TutorAvailability.new(@tutor.id, params[:current], params[:week])
     @start_date = service.set_week
     @availability_data = service.get_times
-    if session[:appt_info]
+    if session[:appt_info] && TutorCourse.find(session[:tutor_course_id]).tutor_id == @tutor.id
       gon.selected_appt_ids = session[:appt_info].keys
-      # @selected_appt_ids = session[:appt_info].keys
-      # gon.selected_appt_ids = @selected_appt_ids
     end
   end
 
@@ -38,24 +36,20 @@ class CheckoutController < ApplicationController
   end
 
   def set_location
-    # recieves step 3 input, saves it to session & redirects to step 4 (checkout - but branches based on logged in or not)
+    # recieves step 3 input, saves it to session & redirects to step 4
     session[:location] = params[:location_selection][:location]
-    if current_user
-      redirect_to confirmation_path
-    else
-      redirect_to checkout_login_or_signup_path
-    end
+    redirect_to checkout_options_path(@tutor.slug)
   end
 
-  def login_or_signup
+  def checkout_options
+    @booking_preview = PreviewBooking.new(session).format_info
   end
 
   def confirmation # step 4
-   # (view two options - sign_up or sign_in - bypassed if already logged in)
+    @booking_preview = PreviewBooking.new(session).format_info
   end
 
   def summary # step 5
-   # (view checkout details - 'Your Booking' - plus field for Promo codes)
   end
 
   # def set_school_id_cookie
