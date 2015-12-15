@@ -1,6 +1,7 @@
 class CheckoutController < ApplicationController
   before_action :set_tutor
   before_action :back_to_search, only: [:available_times]
+  before_action :appointments_preview, only: [:login_or_signup, :confirmation]
 
   def select_course # step 1
    # (view all courses a Tutor offers - bypassed from Search)
@@ -27,6 +28,18 @@ class CheckoutController < ApplicationController
    # (view page with input for setting location)
   end
 
+  def set_location
+    session[:location] = params[:location_selection][:location]
+    if current_user
+      redirect_to confirmation_path
+    else
+      redirect_to checkout_login_or_signup_path
+    end
+  end
+
+  def login_or_signup
+  end
+
   def confirmation # step 4
    # (view two options - sign_up or sign_in - bypassed if already logged in)
   end
@@ -49,11 +62,8 @@ class CheckoutController < ApplicationController
       @from_search = true if request.referer && request.referer.split(/[^[:alpha:]]+/).include?('search')
     end
 
+    def appointments_preview
+      @appt_preview = Appointment.build_preview(session)
+    end
+
 end
-
-
-    # get '/course_list'       => 'checkout#select_course', as: 'checkout_select_course'
-    # get '/available_times'   => 'checkout#select_times', as: 'checkout_select_times'
-    # get '/set_location'      => 'checkout#select_location', as: 'checkout_select_location'
-    # get '/confirmation'      => 'checkout#confirmation', as: 'checkout_confirmation'
-    # get '/summary'           => 'checkout#summary', as: 'checkout_summary'

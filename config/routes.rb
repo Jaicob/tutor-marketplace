@@ -229,13 +229,15 @@ Rails.application.routes.draw do
 
   # checkout pages
   scope '/tutors/:id' do   
-    get '/select_course'       => 'checkout#select_course', as: 'checkout_select_course'
-    post  '/set_course_id'     => 'checkout#set_course_id', as: 'checkout_set_course_id'
-    get '/select_times'        => 'checkout#select_times', as: 'checkout_select_times'
-    post  '/set_appt_times'    => 'checkout#set_appt_times', as: 'checkout_set_appt_times'
-    get '/select_location'     => 'checkout#select_location', as: 'checkout_select_location'
-    get '/confirmation'        => 'checkout#confirmation', as: 'checkout_confirmation'
-    get '/summary'             => 'checkout#summary', as: 'checkout_summary'
+    get   '/select_course'    => 'checkout#select_course', as: 'checkout_select_course'
+    post  '/set_course_id'    => 'checkout#set_course_id', as: 'checkout_set_course_id'
+    get   '/select_times'     => 'checkout#select_times', as: 'checkout_select_times'
+    post  '/set_appt_times'   => 'checkout#set_appt_times', as: 'checkout_set_appt_times'
+    get   '/select_location'  => 'checkout#select_location', as: 'checkout_select_location'
+    post  '/set_location'     => 'checkout#set_location', as: 'checkout_set_location'
+    get   '/login_or_signup'  => 'checkout#login_or_signup', as: 'checkout_login_or_signup'
+    get   '/confirmation'     => 'checkout#confirmation', as: 'checkout_confirmation'
+    get   '/summary'          => 'checkout#summary', as: 'checkout_summary'
   end
 
   # custom_devise_routes

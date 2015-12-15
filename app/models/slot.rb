@@ -32,14 +32,34 @@ class Slot < ActiveRecord::Base
         @start_times_array = []
         start_time = slot.start_time
         x.times do
-          @start_times_array << start_time
+          data = {
+            time: start_time.strftime('%l:%M %p'),
+            datetime: start_time
+          }
+          @start_times_array << data
           start_time += 1800 # adds a 1/2 hour to the start_time each iteration
         end
-        @start_times_array = @start_times_array.map{|time| time.strftime('%l:%M %p')}
       end
     end
     @start_times_array
   end
+
+  # def self.possible_appt_times_for_date(tutor_id, date)
+  #   @start_times_array = nil # necessary to reset to nil since this is called in succession and times will carry over
+  #   Slot.where(tutor_id: tutor_id).each do |slot|
+  #     if slot.start_time.to_date == date
+  #       x = (slot.duration / 1800) - 1 # equals number of possible start times for an appointment
+  #       @start_times_array = []
+  #       start_time = slot.start_time
+  #       x.times do
+  #         @start_times_array << start_time
+  #         start_time += 1800 # adds a 1/2 hour to the start_time each iteration
+  #       end
+  #       @start_times_array = @start_times_array.map{|time| time.strftime('%l:%M %p')}
+  #     end
+  #   end
+  #   @start_times_array
+  # end
 
   def self.possible_appt_times_for_week(start_date, tutor_id)
     availability_data = {}

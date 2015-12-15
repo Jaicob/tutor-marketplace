@@ -5,11 +5,11 @@
       <p class="day"><%= @availability_data[count][:date].strftime('%A') %></p>
       <p class="date"><%= @availability_data[count][:date].strftime('%m/%d') %></p>
       <% if @availability_data[count][:times] %>
-        <% @availability_data[count][:times].each do |start_time| %>
+        <% @availability_data[count][:times].each do |data| %>
           <div class="appt-time-box">
             <label>
-              <input type="checkbox" name="appt_selection[<%= checkbox_id %>]" id="<%= checkbox_id %>" value="<%= start_time %>" onchange="disableNeighborCheckboxes(this)">
-              <div class="appt-time"><%= start_time %></div>
+              <input type="checkbox" name="appt_selection[<%= checkbox_id %>]" id="<%= checkbox_id %>" value="<%= data[:datetime] %>" onchange="disableNeighborCheckboxes(this)">
+              <div class="appt-time"><%= data[:time] %></div>
             </label>
           </div>
           <% checkbox_id += 1 %>
@@ -63,4 +63,3 @@ function disableNeighborCheckboxes(element)
   }
 </script>
 
-<!-- Slot.create(tutor_id: 6, start_time: ((Date.today + 5).to_s + " 16:00"), duration: 10800) -->
