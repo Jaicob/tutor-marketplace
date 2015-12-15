@@ -46,6 +46,10 @@ class Slot < ActiveRecord::Base
             time: start_time.strftime('%l:%M %p'),
             datetime: start_time,
             slot_id: slot.id,
+            date_and_slot_info: {
+              start_time: start_time,
+              slot_id: slot.id
+            },
             available: unavailable_times.include?(start_time) ? false : true
           }
           appt_times << data
@@ -72,3 +76,11 @@ class Slot < ActiveRecord::Base
   end
 
 end
+
+          # data = {
+          #   time: start_time.strftime('%l:%M %p'),
+          #   datetime: start_time,
+          #   slot_id: slot.id,
+          #   date_and_slot_info: "start_time: " + start_time.to_s + " slot_id: " + slot.id.to_s,
+          #   available: unavailable_times.include?(start_time) ? false : true
+          # }

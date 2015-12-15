@@ -11,6 +11,7 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  charge_id  :integer
+#  location   :string
 #
 
 require 'rails_helper'

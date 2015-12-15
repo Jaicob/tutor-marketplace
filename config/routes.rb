@@ -15,8 +15,12 @@
 #                            set_school POST     /set-school(.:format)                                              cookies#set_school_id_cookie
 #                         change_school POST     /change-school(.:format)                                           cookies#change_school_id_cookie
 #                checkout_select_course GET      /tutors/:id/select_course(.:format)                                checkout#select_course
+#                checkout_set_course_id POST     /tutors/:id/set_course_id(.:format)                                checkout#set_course_id
 #                 checkout_select_times GET      /tutors/:id/select_times(.:format)                                 checkout#select_times
+#                    checkout_set_times POST     /tutors/:id/set_appt_times(.:format)                               checkout#set_times
 #              checkout_select_location GET      /tutors/:id/select_location(.:format)                              checkout#select_location
+#                 checkout_set_location POST     /tutors/:id/set_location(.:format)                                 checkout#set_location
+#              checkout_login_or_signup GET      /tutors/:id/login_or_signup(.:format)                              checkout#login_or_signup
 #                 checkout_confirmation GET      /tutors/:id/confirmation(.:format)                                 checkout#confirmation
 #                      checkout_summary GET      /tutors/:id/summary(.:format)                                      checkout#summary
 #                      new_user_session GET      /users/sign_in(.:format)                                           sessions#new
@@ -232,7 +236,7 @@ Rails.application.routes.draw do
     get   '/select_course'    => 'checkout#select_course', as: 'checkout_select_course'
     post  '/set_course_id'    => 'checkout#set_course_id', as: 'checkout_set_course_id'
     get   '/select_times'     => 'checkout#select_times', as: 'checkout_select_times'
-    post  '/set_appt_times'   => 'checkout#set_appt_times', as: 'checkout_set_appt_times'
+    post  '/set_appt_times'   => 'checkout#set_times', as: 'checkout_set_times'
     get   '/select_location'  => 'checkout#select_location', as: 'checkout_select_location'
     post  '/set_location'     => 'checkout#set_location', as: 'checkout_set_location'
     get   '/login_or_signup'  => 'checkout#login_or_signup', as: 'checkout_login_or_signup'

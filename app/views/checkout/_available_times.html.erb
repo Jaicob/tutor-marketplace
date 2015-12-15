@@ -8,7 +8,7 @@
         <% @availability_data[count][:times].each do |data| %>
           <div class="appt-time-box">
             <label>
-              <input type="checkbox" name="appt_selection[<%= checkbox_id %>]" id="<%= checkbox_id %>" value="<%= data[:datetime] %>" onchange="disableNeighborCheckboxes(this)">
+              <input type="checkbox" name="appt_selection[<%= checkbox_id %>]" id="<%= checkbox_id %>" value="<%= data[:date_and_slot_info] %>" onchange="disableNeighborCheckboxes(this)">
               <div class="appt-time"><%= data[:time] %></div>
             </label>
           </div>
@@ -20,7 +20,27 @@
   <% checkbox_id += 10 %>
 <% end %>
 
+
 <script>
+window.onload = function setSelectedAppts() {
+  if (gon.selected_appt_ids != null){
+    var selectedApptIds = gon.selected_appt_ids
+    var arrayLength = selectedApptIds.length;
+    console.log(selectedApptIds);
+    console.log(arrayLength);
+    for (var i = 0; i < arrayLength; i++) {
+      // var x = document.getElementById(selectedApptIds[i]);
+      // x.onchange(x);
+      var checkbox = document.getElementById(selectedApptIds[i]);
+      console.log(checkbox.id);
+      console.log(checkbox.checked);
+      checkbox.checked = true;
+      console.log(checkbox.checked);
+      checkbox.onchange();
+    }
+  }
+}
+
 function disableNeighborCheckboxes(element)
   {
     var selected = parseInt(element.id);
