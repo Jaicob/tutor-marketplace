@@ -128,10 +128,10 @@ class Appointment < ActiveRecord::Base
 
   end
 
-    @appt_preview = Appointment.build_preview(session)
-    session[:tutor_course_id] = params[:course_selection][:tutor_course_id]
-    session[:appts_info] = params[:appt_selection]
-    session[:location] = params[:location_selection][:location]
+    # @appt_preview = Appointment.build_preview(session)
+    # session[:tutor_course_id] = params[:course_selection][:tutor_course_id]
+    # session[:appts_info] = params[:appt_selection]
+    # session[:location] = params[:location_selection][:location]
 
 
 
