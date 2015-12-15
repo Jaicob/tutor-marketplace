@@ -1,4 +1,4 @@
-class PreviewBooking
+class BookingPreview
 
   def initialize(session)
     @appt_info = session[:appt_info]
@@ -18,6 +18,7 @@ class PreviewBooking
         start_time: array.first,
         slot_id: array.second
       }
+      count += 1
     end
     return @appt_hash
   end

@@ -1,6 +1,5 @@
 <%= render '/dashboard/tutor/profile/tutor_profile' %>
 
-
 <div class="row">
   <div class="small-12 columns">
     <div class="box">
@@ -17,14 +16,15 @@
             <div class="row">
               <div class="small-12 medium-6 columns">
                 <div class="box">
-                  <h6>Your Booking</h6>
+                  <h4>Your Booking</h4>
+                  <h5>General Info</h5>
                   <p>Tutor: <%= @booking_preview[:tutor].first_name + @booking_preview[:tutor].last_name.slice(0) %></p>
                   <p>Course: <%= @booking_preview[:course].formatted_name %></p>
                   <p>Location: <%= @booking_preview[:location] %></p>
                   <p>Rate: <%= @booking_preview[:rate] %></p>
-                  <h6>Appointments</h6>
+                  <h5>Appointment Times</h5>
                   <% @booking_preview[:appointments].each do |k,v| %>
-                    <p><%= v[:start_time] %></p>
+                    <p><%= v[:start_time].to_datetime.strftime('%l:%M %p - %B %e, %Y') %></p>
                   <% end %>
                 </div>
               </div>

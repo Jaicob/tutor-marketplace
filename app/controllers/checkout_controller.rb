@@ -38,15 +38,15 @@ class CheckoutController < ApplicationController
   def set_location
     # recieves step 3 input, saves it to session & redirects to step 4
     session[:location] = params[:location_selection][:location]
-    redirect_to checkout_options_path(@tutor.slug)
+    redirect_to checkout_payment_options_path(@tutor.slug)
   end
 
-  def checkout_options
-    @booking_preview = PreviewBooking.new(session).format_info
+  def payment_options
+    @booking_preview = BookingPreview.new(session).format_info
   end
 
   def confirmation # step 4
-    @booking_preview = PreviewBooking.new(session).format_info
+    @booking_preview = BookingPreview.new(session).format_info
   end
 
   def summary # step 5

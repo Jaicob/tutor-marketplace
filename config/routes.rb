@@ -20,7 +20,7 @@
 #                    checkout_set_times POST     /tutors/:id/set_appt_times(.:format)                               checkout#set_times
 #              checkout_select_location GET      /tutors/:id/select_location(.:format)                              checkout#select_location
 #                 checkout_set_location POST     /tutors/:id/set_location(.:format)                                 checkout#set_location
-#              checkout_login_or_signup GET      /tutors/:id/login_or_signup(.:format)                              checkout#login_or_signup
+#              checkout_payment_options GET      /tutors/:id/payment_options(.:format)                              checkout#payment_options
 #                 checkout_confirmation GET      /tutors/:id/confirmation(.:format)                                 checkout#confirmation
 #                      checkout_summary GET      /tutors/:id/summary(.:format)                                      checkout#summary
 #                      new_user_session GET      /users/sign_in(.:format)                                           sessions#new
@@ -239,7 +239,7 @@ Rails.application.routes.draw do
     post  '/set_appt_times'   => 'checkout#set_times', as: 'checkout_set_times'
     get   '/select_location'  => 'checkout#select_location', as: 'checkout_select_location'
     post  '/set_location'     => 'checkout#set_location', as: 'checkout_set_location'
-    get   '/checkout_options' => 'checkout#checkout_options', as: 'checkout_options'
+    get   '/payment_options'  => 'checkout#payment_options', as: 'checkout_payment_options'
     get   '/confirmation'     => 'checkout#confirmation', as: 'checkout_confirmation'
     get   '/summary'          => 'checkout#summary', as: 'checkout_summary'
   end
