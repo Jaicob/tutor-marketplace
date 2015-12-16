@@ -41,9 +41,24 @@ class CheckoutController < ApplicationController
     redirect_to checkout_payment_options_path(@tutor.slug)
   end
 
-  def payment_options
-    @booking_preview = BookingPreview.new(session).format_info
+  def sign_in
   end
+
+  def sign_up
+  end
+
+  def sign_in_or_up
+  end
+
+  def payment_options
+    # redirect_to checkout_sign_in_path if !current_user
+    @booking_preview = BookingPreview.new(session).format_info
+    # @token = Stripe::Token.retrieve(params[:stripeToken])
+  end
+
+  # def new_card
+  #   session[:token] = params[:stripeToken]
+  # end
 
   def confirmation # step 4
     @booking_preview = BookingPreview.new(session).format_info
@@ -51,10 +66,6 @@ class CheckoutController < ApplicationController
 
   def summary # step 5
   end
-
-  # def set_school_id_cookie
-  #   session[:checkout_step] = 1
-  # end
 
   private
 

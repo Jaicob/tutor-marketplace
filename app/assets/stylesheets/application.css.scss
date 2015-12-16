@@ -19,10 +19,9 @@
  *= require framework_and_overrides
  */
 
-  p, h1, h2, h3, h4, h5, h6, th, td, li, a, input, select, textarea, span, button {
+  p, h1, h2, h3, h4, h5, h6, th, td, li, a, label, input, select, textarea, span, button {
     font-family: 'Lato' !important;
     color: #4F5252;
-    max-width: 40em;
   }
 
   p, h1, h2, h3, h4, h5, h6 {
@@ -74,33 +73,6 @@
       &.footer-bg {
         background-color: #0095AC;
       }
-    }
-  }
-
-  .custom-button {
-    background-color: #58AA4D;
-    padding: 0.5em 2em;
-    font-weight: 100;
-    font-size: 0.8em;
-    font-family: 'Lato';
-    border-radius: 4px !important;
-    border: none;
-    color: white;
-    margin-bottom: 1em;
-    text-align: center;
-    &.full-width {
-      width: 100%;
-    }
-    &.no-margin {
-      margin: 0;
-    }
-    &.blue {
-      background-color: #0095AC;
-    }
-
-    &:hover,
-    &:active {
-      color: white;
     }
   }
 
@@ -210,6 +182,7 @@
       display: inline-block;
       padding: 0 1em;
     }
+    
     }
 
     /* Full view */

@@ -1,1 +1,80 @@
-_no_saved_card_form.html.erb
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+<script type="text/javascript">
+  // This identifies your website in the createToken call below
+  Stripe.setPublishableKey("<%= ENV['stripe_public_key'] %>");
+  // ...
+
+  jQuery(function($) {
+    $('#payment-form').submit(function(event) {
+      var $form = $(this);
+
+      // Disable the submit button to prevent repeated clicks
+      $form.find('button').prop('disabled', true);
+
+      Stripe.card.createToken($form, stripeResponseHandler);
+
+      // Prevent the form from submitting with the default action
+      return false;
+    });
+  });
+
+  function stripeResponseHandler(status, response) {
+    var $form = $('#payment-form');
+
+    if (response.error) {
+      // Show the errors on the form
+      $form.find('.payment-errors').text(response.error.message);
+      $form.find('button').prop('disabled', false);
+    } else {
+      // response contains id and card, which contains additional card details
+      var token = response.id;
+      // Insert the token into the form so it gets submitted to the server
+      $form.append($('<input type="hidden" name="stripeToken" />').val(token));
+      // and submit
+      $form.get(0).submit();
+    }
+  };
+
+</script>
+
+
+<% if @token %>
+  <div class="row">
+    <div class="small-12 medium-6 columns">
+      <h5>Card</h5>
+      <p><%= @token.card.brand %></p>
+      <p><%= @token.card.exp_month %></p>
+      <p><%= @token.card.exp_year %></p>
+      <p><%= @token.card.last4 %></p>
+    </div>
+  </div>
+<% else %>
+  <!-- form for creating Stripe card token -->
+  <form action="/tutors/<%= @tutor.slug %>/payment_options" method="POST" id="payment-form">
+    <span class="payment-errors"></span>
+
+    <div class="form-row">
+      <label>
+        <span>Card Number</span>
+        <input type="text" size="20" data-stripe="number"/>
+      </label>
+    </div>
+
+        <label>
+          <span>CVC</span>
+          <input type="text" size="4" data-stripe="cvc"/>
+        </label>
+
+        <label>
+          <span>Expiration (MM)</span>
+          <input type="text" size="2" data-stripe="exp-month"/>
+        </label>
+
+
+        <span>(YYYY)</span>
+        <input type="text" size="4" data-stripe="exp-year"/>
+
+    <button type="submit">Submit Payment</button>
+  </form>
+
+<% end %>

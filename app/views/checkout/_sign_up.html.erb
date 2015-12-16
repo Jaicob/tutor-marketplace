@@ -1,0 +1,25 @@
+<div class="row">
+  <div class="small-12 medium-5 medium-centered columns">
+    <div class="box margin-top-2em">
+      <div class="max-width-16em">
+        <h1 class="center">Sign up</h1>
+
+        <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :method => 'post', :html => { :role => 'form'}) do |f| %>
+          <%= devise_error_messages! %>
+          <%= f.text_field :first_name, placeholder: 'First Name', :autofocus => true, class: 'form-control', required: true %>
+          <select required name="user[student][school_id]">
+            <option value="" disabled="true" selected="true">Select Campus</option>
+            <% School.all.each do |school| %>
+              <option value="<%= school.id %>"><%= school.name %></option>
+            <% end %>
+          </select>
+          <%= f.email_field :email, placeholder: 'Email', :autofocus => true, class: 'form-control', required: true %>
+          <%= f.password_field :password, placeholder: 'Password', class: 'form-control', required: true %>
+          <%= f.hidden_field :checkout_redirect, value: @tutor.id %>
+          <%= f.submit 'Sign up', class: 'custom-button margin-top-2em' %>
+        <% end %>
+
+      </div>
+    </div>
+  </div>
+</div>

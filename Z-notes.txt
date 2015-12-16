@@ -186,6 +186,12 @@ Checkout Controller
 </li>
 
 
+                <p>Tutor: <%= @booking_preview[:tutor].first_and_last_initial %></p>
+                <p>Course: <%= @booking_preview[:course].formatted_name %></p>
+                <p>Location: <%= @booking_preview[:location] %></p>
+                <p>Rate: <%= @booking_preview[:rate] %></p>
+
+
 
 
 

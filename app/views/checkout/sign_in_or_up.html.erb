@@ -1,0 +1,87 @@
+<%= render '/dashboard/tutor/profile/tutor_profile' %>
+
+<div class="row">
+  <div class="small-12 columns">
+    <div class="checkout-step-title">
+      <div class="row">
+        <div class="small-12 columns">
+          <p>Checkout</p>
+        </div>
+      </div>
+    </div>
+    <div class="checkout-step-body">
+      <div class="row small-collapse">
+        <div class="small-12 columns">
+
+          <div class="row">
+            <div class="small-12 columns">
+              <h5 class="center margin-top-1em margin-bottom-2em margin-auto">Sign in or sign up to complete checkout</h5>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="small-12 medium-4 medium-offset-2 columns">
+              <div class="box max-width-16em">
+                <h4>Sign in</h4>
+                <%= devise_error_messages! %>
+                <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+                  <%= f.label :email %>
+                  <%= f.email_field :email, class: 'form-control', required: true %>
+                  <%= f.label :password, class: 'pwd-label' %>
+                  <%= link_to "Forgot password?", new_password_path(resource_name), class: 'forgot-pwd' %>
+                  <%= f.password_field :password, class: 'form-control', required: true%>
+                  <%= f.hidden_field :checkout_redirect, value: @tutor.id %>
+                  <%= f.submit 'Sign in', class: 'custom-button' %>
+                <% end %>
+              </div>
+            </div>
+            <div class="small-12 medium-4 end columns">
+              <div class="box max-width-16em">
+                <h4>Sign up</h4>
+                <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :method => 'post', :html => { :role => 'form'}) do |f| %>
+                  <%= devise_error_messages! %>
+                  <%= f.label :first_name %>
+                  <%= f.text_field :first_name, :autofocus => true, class: 'form-control', required: true %>
+                  <%= f.label :last_name_name %>
+                  <%= f.text_field :last_name, :autofocus => true, class: 'form-control', required: true %>
+                  <%= f.label :school_id, 'Campus' %>
+                  <select required name="user[student][school_id]">
+                    <option value="" disabled="true" selected="true">Select Campus</option>
+                    <% School.all.each do |school| %>
+                      <option value="<%= school.id %>"><%= school.name %></option>
+                    <% end %>
+                  </select>
+                  <%= f.label :email %>
+                  <%= f.email_field :email, placeholder: 'Email', :autofocus => true, class: 'form-control', required: true %>
+                  <%= f.label :password %>
+                  <%= f.password_field :password, placeholder: 'Password', class: 'form-control', required: true %>
+                  <%= f.hidden_field :checkout_redirect, value: @tutor.id %>
+                  <%= f.submit 'Sign up', class: 'custom-button' %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="checkout-steps-nav">
+      <div class="row small-collapse">
+        <div class="small-12 columns">
+          <div class="row small-collapse">
+            <div class="small-12 medium-3 columns">
+              <%= link_to "Back to Search", search_path, class: 'checkout-button gray' %>
+            </div>
+            <div class="small-12 medium-6 columns">
+              <p id="selected-course"></p>
+            </div>
+            <div class="small-12 medium-3 columns">
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<% console %>

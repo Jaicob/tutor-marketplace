@@ -7,6 +7,7 @@
   3. Positioning
   4. Links
   5. Display Properties
+  6. Max Widths/Heights
 
 */
 
@@ -69,8 +70,11 @@
 .margin-1em {
   margin: 1em;
 }
-.bottom-margin {
+.margin-bottom-1em, .bottom-margin {
   margin-bottom: 1em;
+}
+.padding-1em {
+  padding: 1em;
 }
 .padding-2em {
   padding: 2em;
@@ -84,6 +88,10 @@
 .margin-bottom-3em {
   margin-bottom: 3em !important;
 }
+.margin-bottom-2em {
+  margin-bottom: 2em;
+}
+
 .top-buffer {
   margin-top: 20px !important;
 }
@@ -95,6 +103,10 @@
 }
 .top-padding {
   padding-top: 1.5em;
+}
+.margin-auto {
+  display: block;
+  margin: auto;
 }
 
 
@@ -118,4 +130,9 @@
 }
 .display-none { // only used for a hacky space filler on Promotions page to hold the submit btn down in line with the other inputs - can removed once that's fixed in a better way
   color: #eff1f3;
+}
+
+// 6. Max Widths/Heights
+.max-width-16em {
+  max-width: 16em;
 }

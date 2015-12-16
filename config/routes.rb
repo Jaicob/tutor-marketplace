@@ -239,7 +239,11 @@ Rails.application.routes.draw do
     post  '/set_appt_times'   => 'checkout#set_times', as: 'checkout_set_times'
     get   '/select_location'  => 'checkout#select_location', as: 'checkout_select_location'
     post  '/set_location'     => 'checkout#set_location', as: 'checkout_set_location'
+    get   'sign_in'           => 'checkout#sign_in', as: 'checkout_sign_in'
+    get   '/sign_up'          => 'checkout#sign_up', as: 'checkout_sign_up'
+    get   '/sign_in_or_up'    => 'checkout#sign_in_or_up', as: 'checkout_sign_in_or_up'
     get   '/payment_options'  => 'checkout#payment_options', as: 'checkout_payment_options'
+    post  '/payment_options'  => 'checkout#payment_options', as: 'checkout_new_card'
     get   '/confirmation'     => 'checkout#confirmation', as: 'checkout_confirmation'
     get   '/summary'          => 'checkout#summary', as: 'checkout_summary'
   end

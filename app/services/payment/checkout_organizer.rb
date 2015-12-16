@@ -12,8 +12,26 @@ class CheckoutOrganizer
 
 end
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # ##
-# # For testing:
+# # MOCK DATA FOR EASY TESTING
 
 # ##
 # # Create a Promotion
