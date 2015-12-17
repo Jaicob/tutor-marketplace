@@ -41,30 +41,19 @@ class CheckoutController < ApplicationController
     redirect_to checkout_payment_options_path(@tutor.slug)
   end
 
-  def sign_in
-  end
-
-  def sign_up
-  end
-
-  def sign_in_or_up
-  end
-
-  def payment_options
-    # redirect_to checkout_sign_in_path if !current_user
+  def review_booking
     @booking_preview = BookingPreview.new(session).format_info
-    # @token = Stripe::Token.retrieve(params[:stripeToken])
   end
 
-  # def new_card
-  #   session[:token] = params[:stripeToken]
-  # end
+  def process_booking
+    @token = Stripe::Token.retrieve(params[:stripeToken])
+    CheckoutRegistration.new(params, @tutor).create_student_user
+    redirect_to checkout_confirmation_path
+  end
 
   def confirmation # step 4
+    @token = Stripe::Token.retrieve(params[:stripeToken])
     @booking_preview = BookingPreview.new(session).format_info
-  end
-
-  def summary # step 5
   end
 
   private

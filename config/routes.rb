@@ -239,13 +239,9 @@ Rails.application.routes.draw do
     post  '/set_appt_times'   => 'checkout#set_times', as: 'checkout_set_times'
     get   '/select_location'  => 'checkout#select_location', as: 'checkout_select_location'
     post  '/set_location'     => 'checkout#set_location', as: 'checkout_set_location'
-    get   'sign_in'           => 'checkout#sign_in', as: 'checkout_sign_in'
-    get   '/sign_up'          => 'checkout#sign_up', as: 'checkout_sign_up'
-    get   '/sign_in_or_up'    => 'checkout#sign_in_or_up', as: 'checkout_sign_in_or_up'
-    get   '/payment_options'  => 'checkout#payment_options', as: 'checkout_payment_options'
-    post  '/payment_options'  => 'checkout#payment_options', as: 'checkout_new_card'
+    get   '/review_booking'   => 'checkout#review_booking', as: 'checkout_review_booking'
+    post  '/process_booking'  => 'checkout#process_booking', as: 'checkout_process_booking'
     get   '/confirmation'     => 'checkout#confirmation', as: 'checkout_confirmation'
-    get   '/summary'          => 'checkout#summary', as: 'checkout_summary'
   end
 
   # custom_devise_routes

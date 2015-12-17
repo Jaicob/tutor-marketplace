@@ -1,9 +1,0 @@
-<% if current_user %>
-  <% if current_user.student.customer_id && current_user.student.last_4_digits %>
-    <%= render 'saved_card_form' %>
-  <% else %>
-    <%= render 'no_saved_card_form' %>
-  <% end %>
-<% else %>
-  <%= render 'sign_up' %>
-<% end %>

@@ -14,6 +14,12 @@ button, .custom-button {
     width: 100%;
     display: block;
   }
+  &.short-width {
+    width: 100%;
+    text-align: center;
+    padding-left: 0;
+    padding-right: 0;
+  }
   &.no-margin {
     margin: 0;
   }
