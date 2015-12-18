@@ -29,7 +29,7 @@ module Processor
           debit_negative_balances: true,
           tos_acceptance: {
             date: Time.zone.now.to_i,
-            ip: tutor.sign_in_ip || ("75.137.2.212" if Rails.env.test?)
+            ip: tutor.sign_in_ip || ("75.137.2.212" if Rails.env.test? || Rails.env.development?)
           }
         )
         tutor.update_attributes(acct_id: acct[:id])
@@ -40,53 +40,64 @@ module Processor
     end
 
     def send_charge(charge)
+      puts "CALLLED!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
       @student = Student.find(charge.student_id)
+
+      puts "@student = #{@student}!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+
       if @student.customer_id.nil?
+        puts "@student.customer_id.nil? CALLLED!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+
 
         # # KEEP PUTS STATEMENTS here for manual testing!
-        # puts "SEND CHARGE METHOD IN STRIPE.RB"
-        # puts "SENDING CHARGE WITH CARD TOKEN"
-        # puts "charge.amount = #{charge.amount}"
-        # puts "charge.student_id = #{charge.student_id}"
-        # puts "charge.tutor_acct_id = #{charge.tutor.acct_id}"
-        # puts "charge.axon_fee = #{charge.axon_fee}"
-        # puts "charge.tutor_fee = #{charge.tutor_fee}"
-        # puts "charge.token = #{charge.token}"
-        # puts "@student.customer_id = #{@student.customer_id}"
+        puts "SEND CHARGE METHOD IN STRIPE.RB"
+        puts "SENDING CHARGE WITH CARD TOKEN"
+        puts "charge.amount = #{charge.amount}"
+        puts "charge.student_id = #{charge.student_id}"
+        puts "charge.tutor_acct_id = #{charge.tutor.acct_id}"
+        puts "charge.axon_fee = #{charge.axon_fee}"
+        puts "charge.tutor_fee = #{charge.tutor_fee}"
+        puts "charge.token = #{charge.token}"
+        puts "@student.customer_id = #{@student.customer_id}"
         # # end of logs testing
 
         # creates charge with token if Student does not have a Stripe Customer
-        ::Stripe::Charge.create(
+        x = ::Stripe::Charge.create(
           amount: charge.amount,
           currency: 'usd',
           source: charge.token,
           destination: charge.tutor.acct_id,
           application_fee: charge.axon_fee
         )
+        puts "x = #{x}"
+        puts "x.errors = #{x.errors}"
+        puts "x.errors.full_messages = #{x.errors.full_messages}"
 
       else
+        puts "---else---- CALLLED!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+
 
         # # KEEP PUTS STATEMENTS here for manual testing!
-        # puts "SEND CHARGE METHOD IN STRIPE.RB"
-        # puts "SENDING CHARGE FROM STUDENT CUSTOMER ACCOUNT"
-        # puts "charge.amount = #{charge.amount}"
-        # puts "charge.student_id = #{charge.student_id}"
-        # puts "charge.tutor_acct_id = #{charge.tutor.acct_id}"
-        # puts "charge.axon_fee = #{charge.axon_fee}"
-        # puts "charge.tutor_fee = #{charge.tutor_fee}"
-        # puts "charge.token = #{charge.token}"
-        # puts "@student.customer_id = #{@student.customer_id}"
+        puts "SEND CHARGE METHOD IN STRIPE.RB"
+        puts "SENDING CHARGE FROM STUDENT CUSTOMER ACCOUNT"
+        puts "charge.amount = #{charge.amount}"
+        puts "charge.student_id = #{charge.student_id}"
+        puts "charge.tutor_acct_id = #{charge.tutor.acct_id}"
+        puts "charge.axon_fee = #{charge.axon_fee}"
+        puts "charge.tutor_fee = #{charge.tutor_fee}"
+        puts "charge.token = #{charge.token}"
+        puts "@student.customer_id = #{@student.customer_id}"
         # # end of logs testing
 
         # creates charge with Student's Customer and default source
-        ::Stripe::Charge.create(
+        stripe_charge_object = ::Stripe::Charge.create(
           amount: charge.amount,
           currency: 'usd',
           customer: Student.find(charge.student_id).customer_id,
           destination: charge.tutor.acct_id,
           application_fee: charge.axon_fee
         )
-
+        return stripe_charge_object
       end
     end
 

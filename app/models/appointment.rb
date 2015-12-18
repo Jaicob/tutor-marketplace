@@ -123,17 +123,4 @@ class Appointment < ActiveRecord::Base
     end
   end
 
-  def self.build_preview(session)
-    session[:appts_info].each do |slot_id, start_time|
-    end 
-
-  end
-
-    # @appt_preview = Appointment.build_preview(session)
-    # session[:tutor_course_id] = params[:course_selection][:tutor_course_id]
-    # session[:appts_info] = params[:appt_selection]
-    # session[:location] = params[:location_selection][:location]
-
-
-
 end

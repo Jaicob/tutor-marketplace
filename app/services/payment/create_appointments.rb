@@ -12,11 +12,6 @@ class CreateAppointments
     begin 
       context.appointments = []
 
-      puts "#{self.class} was CALLLLEEED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-      
-      puts "context.appointments = #{context.appointments}"
-
       context.appts_info.each do |appt_info|
         new_appt = Appointment.create(
           student_id: context.student,
@@ -36,7 +31,7 @@ class CreateAppointments
         #   return
         # end
         context.appointments << new_appt
-      end    
+      end  
     rescue => error
       context.fail!(
         error: error,

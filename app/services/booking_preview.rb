@@ -1,12 +1,11 @@
 class BookingPreview
 
-  def initialize(session)
+  def initialize(session, tutor)
     @appt_info = session[:appt_info]
     @location = session[:location]
-    @tutor_course = TutorCourse.find(session[:tutor_course_id])
-    @tutor = @tutor_course.tutor
-    @course = @tutor_course.course
-    @rate = @tutor_course.rate
+    @course = Course.find(session[:course_id])
+    @tutor = tutor
+    @rate = TutorCourse.where(tutor_id: tutor.id, course_id: @course.id).first.rate
   end
 
   def extract_appt_times_and_slot

@@ -3,13 +3,10 @@ class SendPayment
 
   def call
     begin 
-      puts "#{self.class} was CALLLLEEED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-
       if context.charge.amount > 0
         processor = PaymentFactory.new.build
         stripe_charge_object = processor.send_charge(context.charge)
-        context.charge.update(stripe_charge_id: stripe_charge_object.id)
+        context.charge.update(stripe_charge_id: stripe_charge_object.id)  
       else
         puts "No payment necessary"
         return

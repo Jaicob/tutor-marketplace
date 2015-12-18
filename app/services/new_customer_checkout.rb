@@ -60,9 +60,7 @@ class NewCustomerCheckout
       }
       formatted_appts_array << appt_hash
     end
-    puts "FORMATTED APPTS ARRAY!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! = #{formatted_appts_array}"
-        return formatted_appts_array
-
+    return formatted_appts_array
   end
 
 # {"17"=>"2015-12-19 15:00:00 UTC-!-1882", "43"=>"2015-12-21 13:30:00 UTC-!-1883"} 

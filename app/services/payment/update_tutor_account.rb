@@ -3,10 +3,6 @@ class UpdateTutorAccount
 
   def call
     begin 
-
-      puts "#{self.class} was CALLLLEEED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-      
       processor = PaymentFactory.new().build
       response = processor.update_managed_account(context.tutor, context.token)
     rescue => error
