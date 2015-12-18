@@ -26,7 +26,7 @@
                 <% tutor_courses.each do |tutor_course| %>
                   <div class="course-box">
                     <label>
-                      <input type="checkbox" value="<%= tutor_course[:id] %>" name="course_selection[tutor_course_id]" data-friendly-name="<%= tutor_course[:friendly_name] %>" class="course-select-checkbox">
+                      <input type="checkbox" value="<%= tutor_course[:course_id] %>" name="course_selection[course_id]" data-friendly-name="<%= tutor_course[:friendly_name] %>" class="course-select-checkbox">
                       <div class="row course-list-row">
                         <div class="small-12 medium-4 columns">
                           <p class="course-text"><%= tutor_course[:short_name] %></p>

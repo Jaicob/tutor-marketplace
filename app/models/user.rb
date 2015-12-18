@@ -67,6 +67,8 @@ class User < ActiveRecord::Base
       school_id: params[:user][:student][:school_id]
     ) 
     # additional logic for sign-up during checkout below, creates a Stripe customer and saves default_card
+    # - used for checkout via AJ's React component only
+    # - checkout via JT's forms does not use Devise controllers and handle student and Stripe customer creation through Checkout controller and CheckoutRegistration service class
     if params[:stripe_token] && params[:save_card] == 'true'
       Processor::Stripe.new.update_customer(self, params[:stripe_token])
     end

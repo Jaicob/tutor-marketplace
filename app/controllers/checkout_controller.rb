@@ -10,7 +10,7 @@ class CheckoutController < ApplicationController
 
   def set_course_id 
     # recieves step 1 input, saves it to session & redirects to step 2
-    session[:tutor_course_id] = params[:course_selection][:tutor_course_id]
+    session[:course_id] = params[:course_selection][:course_id]
     redirect_to checkout_select_times_path(@tutor.slug)
   end
 
@@ -44,15 +44,27 @@ class CheckoutController < ApplicationController
 
   def review_booking
     # step 4, all booking information is set and shown to customer here
-    # if logged in, customer has option to use saved card (if one exists) or use a new card (with an option to save it)
-    # if not logged in, a customer has the option to sign in (moves to above step) or sign up and use a new card (with an option to save it)
+    # - if logged in, customer has option to use saved card (if one exists) or use a new card (with an option to save it)
+    # - if NOT logged in, a customer has the option to sign in (moves to above step) or sign up and use a new card (with an option to save it)
     @booking_preview = BookingPreview.new(session).format_info
   end
 
   def process_booking
-    @token = Stripe::Token.retrieve(params[:stripeToken])
-    CheckoutRegistration.new(params, @tutor).create_student_user
-    redirect_to checkout_confirmation_path
+    # if new customer
+      data = NewCustomerCheckout.new(params, session, @tutor).prepare_data_for_checkout_organizer
+    # elsif returning customer
+      # data = ReturningCustomerCheckout.new(params, session, @tutor).prepare_data_for_checkout_organizer
+    # end
+    session[:appt_info] = nil
+    session[:course_id] = nil
+    session[:location] = nil
+     context = CheckoutOrganizer.call(data)
+    if context.success?
+      redirect_to checkout_confirmation_path
+    else
+      flash[:alert] = context.error
+      redirect_to checkout_review_booking_path
+    end
   end
 
   def confirmation # step 4

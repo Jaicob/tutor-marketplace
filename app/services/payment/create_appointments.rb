@@ -12,6 +12,11 @@ class CreateAppointments
     begin 
       context.appointments = []
 
+      puts "#{self.class} was CALLLLEEED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+      
+      puts "context.appointments = #{context.appointments}"
+
       context.appts_info.each do |appt_info|
         new_appt = Appointment.create(
           student_id: context.student,
@@ -19,12 +24,17 @@ class CreateAppointments
           course_id: appt_info[:course_id],
           start_time: appt_info[:start_time]
         )
-        unless new_appt.save
-          context.fail!(
-            message: new_appt.errors.full_messages,
-            failed_interactor: self.class
-          )
+        if !new_appt.save
+          puts "ERRROR!!!!!!!!!!!!!!!!!!!"
+          puts "new_appt.errors = #{new_appt.errors.full_messages}"
         end
+        # if !new_appt.save
+        #   context.fail!(
+        #     message: new_appt.errors.full_messages,
+        #     failed_interactor: self.class
+        #   )
+        #   return
+        # end
         context.appointments << new_appt
       end    
     rescue => error

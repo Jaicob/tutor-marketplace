@@ -3,6 +3,9 @@ class SendPayment
 
   def call
     begin 
+      puts "#{self.class} was CALLLLEEED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+
       if context.charge.amount > 0
         processor = PaymentFactory.new.build
         stripe_charge_object = processor.send_charge(context.charge)

@@ -2,7 +2,11 @@ class SendEmails
   include Interactor
 
   def call
-    begin     
+    begin 
+
+      puts "#{self.class} was CALLLLEEED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"  
+        
       context.appointments.each do |appt|
         AppointmentMailer.delay.appointment_confirmation_for_tutor(appt.id)
         AppointmentMailer.delay.appointment_confirmation_for_student(appt.id)

@@ -8,7 +8,7 @@
         <% @availability_data[count][:times].each do |data| %>
           <div class="appt-time-box">
             <label>
-              <input type="checkbox" name="appt_selection[<%= checkbox_id %>]" id="<%= checkbox_id %>" value="<%= data[:datetime].to_s + '-!-' + data[:slot_id].to_s %>" onchange="disableNeighborCheckboxes(this)">
+              <input type="checkbox" name="appt_selection[<%= checkbox_id %>]" id="<%= checkbox_id %>" value="<%= data[:datetime].to_s + '----' + data[:slot_id].to_s %>" onchange="disableNeighborCheckboxes(this)">
               <div class="appt-time"><%= data[:time] %></div>
             </label>
           </div>

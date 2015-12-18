@@ -15,7 +15,7 @@
           <div class="small-12 columns">
             <div class="small-block-grid-1 medium-block-grid-7">
               <p>Choose Location</p>
-              <%= f.text_field :location %>
+              <%= f.text_field :location, value: session[:location] %>
             </div>
           </div>
         </div>

@@ -23,14 +23,27 @@ class CreateCharge
 
   def call
     begin 
+
+      puts " 1 - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+
       @tutor = Tutor.find(context.tutor_id)
       @student = Student.find(context.student_id)
 
-      context.transaction_percentage = School.find(@tutor.id).transaction_percentage
+            puts " 2 - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+
+      context.transaction_percentage = School.find(@tutor.school_id).transaction_percentage
       axon_fee_multiplier = ((context.transaction_percentage.to_f / 100) + 1)
+
+            puts " 3 - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 
       tutor_rates = [] # array of rates in cents
       context.rates = [] # array of rates in dollar amounts
+
+            puts " 4 - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 
       context.appointments.each do |appt|
         rate = TutorCourse.where(tutor_id: @tutor.id, course_id: appt.course_id).first.rate
@@ -39,9 +52,15 @@ class CreateCharge
         tutor_rates << tutor_rate_in_cents 
       end
 
+            puts " 5 - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+
       tutor_fee = tutor_rates.map(&:to_i).reduce(:+)
       amount = (tutor_fee * axon_fee_multiplier).round
       axon_fee = amount - tutor_fee
+
+      puts " 6 - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 
       charge = @tutor.charges.create(
         student_id: @student.id,
@@ -51,13 +70,16 @@ class CreateCharge
         token: context.stripe_token
       )
 
-      unless charge.
-        rescue
-      end
+            puts " 7 - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 
+      # TODO - error message for charge creation failure?
 
       context.appointments.each{|appt| appt.update_attributes(charge_id: charge.id)}
       context.charge = charge
+
+            puts " 8 - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 
     rescue => error
       context.fail!(
