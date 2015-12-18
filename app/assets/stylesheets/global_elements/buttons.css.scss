@@ -29,6 +29,13 @@ button, .custom-button {
   &.light-blue {
     background-color: #2BC2DE;
   }
+  &.gray {
+    background-color: #C3C3C3;
+    font-weight: 400;
+    &:hover {
+      background-color: #0095AC;
+    }
+  }
   &.danger {
     background-color: #DE6328;
   }

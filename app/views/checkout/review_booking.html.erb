@@ -23,7 +23,7 @@
 
     if (response.error) {
       // Show the errors on the form
-      $form.find('.payment-errors').text(response.error.message);
+      $form.find('.checkout-card-errors').text(response.error.message);
       $form.find('button').prop('disabled', false);
     } else {
       // response contains id and card, which contains additional card details
@@ -39,8 +39,6 @@
 
 <%= render '/dashboard/tutor/profile/tutor_profile' %>
 
-<form action="/tutors/<%= @tutor.slug %>/process_booking" method="POST" id="payment-form">
-
 <div class="row">
   <div class="small-12 columns">
     <div class="checkout-step-title">
@@ -52,8 +50,7 @@
     </div>
     <div class="checkout-step-body padding-1em">
       <div class="row small-collapse">
-        <div class="small-12 columns">
-              
+        <div class="small-12 columns">      
           <div class="row">
             <div class="small-12 columns medium-6 columns">
               <h3>Booking Details</h3>
@@ -62,7 +59,6 @@
               <h3>Appointments</h3>
             </div>
           </div>
-
           <div class="row">
             <div class="small-12 medium-6 columns">
               <table>
@@ -101,7 +97,6 @@
               </table>
             </div>
           </div>
-
           <div class="row">
             <div class="small-12 columns">
               <h3 class="margin-top-2em">Booking Summary</h3>
@@ -138,7 +133,6 @@
               </div>
             </div>
           </div>
-
           <div class="row">
             <div class="small-12 columns">
               <div class="row">
@@ -158,7 +152,7 @@
                     <%= ff.text_field :password, placeholder: 'Password', required: true, class: 'border-radius no-bottom-margin' %>
                 </div>
                 <div class="small-12 medium-3 columns">
-                    <%= ff.submit 'Sign in', class: 'custom-button full-width' %>
+                    <%= ff.submit 'Sign in', class: 'custom-button full-width gray' %>
                   <% end %>
                 </div>
               </div>
@@ -166,8 +160,9 @@
           </div>
           <div class="row">
             <div class="small-12 columns">
-              <div class="box no-top-border-radius">
-                <div class="row">
+              <div class="box zero-padding no-top-border-radius margin-bottom-4em">
+                <form action="/tutors/<%= @tutor.slug %>/process_booking" method="POST" id="payment-form">
+                <div class="row padding-1em">
                   <div class="small-12 medium-6 columns">
                     <div class="max-width-16em">
                       <h4>Create Your Account</h4>
@@ -253,11 +248,18 @@
                     </div>
                   </div>
                 </div>
+                <div class="row submit-bar">
+                  <div class="small-12 medium-6 medium-offset-6 columns">
+                    <button type="submit" class="custom-button full-width creat-and-pay-btn">Create Account & Pay</button>
+                  </div>
+                </div>
+                </form>
               </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
     <div class="checkout-steps-nav">
       <div class="row small-collapse">
         <div class="small-12 columns">
@@ -268,7 +270,6 @@
             <div class="small-12 medium-6 columns">
             </div>
             <div class="small-12 medium-3 columns">
-              <button type="submit">Submit Payment</button>
             </div>
           </div>
         </div>
@@ -276,7 +277,5 @@
     </div>
   </div>
 </div>
-
-</form>
 
 <% console %>

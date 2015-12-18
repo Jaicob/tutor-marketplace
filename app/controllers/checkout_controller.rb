@@ -31,17 +31,21 @@ class CheckoutController < ApplicationController
     redirect_to checkout_select_location_path(@tutor.slug)
   end
 
-  def select_location # step 3
-   # (view page with input for setting location)
+  def select_location 
+    # step 3
+    # (view page with input for setting location)
   end
 
   def set_location
     # recieves step 3 input, saves it to session & redirects to step 4
     session[:location] = params[:location_selection][:location]
-    redirect_to checkout_payment_options_path(@tutor.slug)
+    redirect_to checkout_review_booking_path(@tutor.slug)
   end
 
   def review_booking
+    # step 4, all booking information is set and shown to customer here
+    # if logged in, customer has option to use saved card (if one exists) or use a new card (with an option to save it)
+    # if not logged in, a customer has the option to sign in (moves to above step) or sign up and use a new card (with an option to save it)
     @booking_preview = BookingPreview.new(session).format_info
   end
 
