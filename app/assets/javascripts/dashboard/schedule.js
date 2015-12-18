@@ -38,8 +38,52 @@ $(document).ready(function() {
   var originalStartTime;
   var originalDuration;
 
+  var multiSlotUpdate = function(originalStartTime, originalDuration, newStartTime, newDuration) {
+    $.ajax({
+      type: "POST",
+      url: API.endpoints.tutor_slots.update_slot_group({
+        tutor_id: tutor_id
+      }),
+      data: {
+        original_start_time: originalStartTime,
+        original_duration: originalDuration,
+        new_start_time: newStartTime,
+        new_duration: newDuration
+      },
+      dataType: "json",
+      success: function(data) {
+        $('#calendar').fullCalendar('updateEvent', event);
+      },
+      error: function(data, status) {
+        alert('failure', data, status);
+        revertFunc();
+      }
+    });
+  }
+
+  var singleSlotUpdate = function(slotID, newStartTime, originalDuration){
+    $.ajax({
+      type: "PUT",
+      url: API.endpoints.tutor_slots.update({
+        tutor_id: tutor_id,
+        slot_id: slotID
+      }),
+      data: {
+        start_time: newStartTime,
+        duration: originalDuration
+      },
+      dataType: "json",
+      success: function(data) {
+        $('#calendar').fullCalendar('updateEvent', event);
+      },
+      error: function(data, status) {
+        alert('failure', data, status);
+        revertFunc();
+      }
+    });
+  }
+
   var formatDataAsEvent = function(eventData) {
-    console.log("FIRST TYPE:",eventData.slot_type)
     end_time = moment(eventData.start_time, moment.ISO_8601);
     end_time = end_time.add(eventData.duration, 'seconds');
     var postFormat = {
@@ -47,8 +91,8 @@ $(document).ready(function() {
       start: moment(eventData.start_time, moment.ISO_8601),
       end: end_time,
       slot_id: eventData.id,
-      status: eventData.status === 1 ? 'Blocked' : 'Open',//eventData.status
-      slot_type: eventData.slot_type
+      status: eventData.status === 0 ? 'Open' : 'Blocked',//eventData.status
+      slot_type: eventData.slot_type === 0 ? 'Weekly' : 'OneTime'
     };
     return postFormat;
   }
@@ -67,6 +111,10 @@ $(document).ready(function() {
   }
 
   var updateSlotDurationDrop = function(event, delta, revertFunc, jsEvent, ui, view) {
+    if (event.slot_type === "OneTime") {
+      singleSlotUpdate(event.slot_id, event.start.toISOString(), originalDuration);
+      return;
+    }
     swal({
         title: "Update all future availability?",
         showCancelButton: true,
@@ -78,47 +126,9 @@ $(document).ready(function() {
       },
       function(isConfirm) {
         if (isConfirm) {
-          $.ajax({
-            type: "POST",
-            url: API.endpoints.tutor_slots.update_slot_group({
-              tutor_id: tutor_id
-            }),
-            data: {
-              original_start_time: originalStartTime,
-              original_duration: originalDuration,
-              new_start_time: event.start.toISOString(),
-              new_duration: originalDuration
-            },
-            dataType: "json",
-            success: function(data) {
-              $('#calendar').fullCalendar('updateEvent', event);
-            },
-            error: function(data, status) {
-              alert('failure', data, status);
-              revertFunc();
-            }
-          });
+          multiSlotUpdate(originalStartTime, originalDuration, event.start.toISOString(), originalDuration);
         } else {
-          $.ajax({
-            type: "PUT",
-            url: API.endpoints.tutor_slots.update({
-              tutor_id: tutor_id,
-              slot_id: event.slot_id
-            }),
-            data: {
-              start_time: event.start.toISOString(),
-              duration: originalDuration
-            },
-            dataType: "json",
-            success: function(data) {
-              $('#calendar').fullCalendar('updateEvent', event);
-            },
-            error: function(data, status) {
-              console.log("failure,", data, status);
-              alert('failure', data, status);
-              revertFunc();
-            }
-          });
+          singleSlotUpdate(event.slot_id, event.start.toISOString(), originalDuration);
         }
         swal.close();
       });
@@ -126,10 +136,16 @@ $(document).ready(function() {
 
   var updateSlotDurationResize = function(event, delta, revertFunc, jsEvent, ui, view) {
     var newDuration = originalDuration + delta.asSeconds();
+    
     if (newDuration < 3600){
       revertFunc();
       return;
     } 
+
+    if (event.slot_type === "OneTime") {
+      singleSlotUpdate(event.slot_id, event.start.toISOString(), originalDuration);
+      return;
+    }
 
     swal({
         title: "Update all future availability?",
@@ -142,55 +158,15 @@ $(document).ready(function() {
       },
       function(isConfirm) {
         if (isConfirm) {
-          $.ajax({
-            type: "POST",
-            url: API.endpoints.tutor_slots.update_slot_group({
-              tutor_id: tutor_id
-            }),
-            data: {
-              original_start_time: originalStartTime,
-              original_duration: originalDuration,
-              new_start_time: event.start.toISOString(),
-              new_duration: newDuration
-            },
-            dataType: "json",
-            success: function(data) {
-              console.log("Updated Slots",data);
-              $('#calendar').fullCalendar('updateEvent', event);
-            },
-            error: function(data, status) {
-              alert('failure', data, status);
-              revertFunc();
-            }
-          });
+          multiSlotUpdate(originalStartTime, originalDuration, event.start.toISOString(), newDuration);
         } else {
-          $.ajax({
-            type: "PUT",
-            url: API.endpoints.tutor_slots.update({
-              tutor_id: tutor_id,
-              slot_id: event.slot_id
-            }),
-            data: {
-              start_time: event.start.toISOString(),
-              duration: newDuration
-            },
-            dataType: "json",
-            success: function(data) {
-              $('#calendar').fullCalendar('updateEvent', event);
-            },
-            error: function(data, status) {
-              alert('failure', data, status);
-              revertFunc();
-            }
-          });
+          singleSlotUpdate(event.slot_id, event.start.toISOString(), newDuration);
         }
         swal.close();
       });
   }
 
   var addSlot = function(event, jsEvent, ui) {
-    //event.start = moment(event.start);
-    console.log("ADDING SLOT WITH TYPE",event.slot_type);
     event.end = moment(event.end);
     var duration = moment.duration(event.end.diff(event.start));
     var seconds = duration.asSeconds();
@@ -198,7 +174,6 @@ $(document).ready(function() {
       tutor_id: tutor_id
     });
 
-    // console.log("START",event.start);
     request = $.post(endpoint, { //DateTime.iso8601('2001-02-03T04:05:06+07:00')
       start_time: event.start.toISOString(), //end_time.add(eventData.duration, 'seconds');
       duration: seconds,
@@ -207,7 +182,6 @@ $(document).ready(function() {
     })
 
     request.success(function(data) {
-      // console.log("DATAADDED", data);
       event.slot_id = data[0].id;
       event.status = data[0].status;
       $('#calendar').fullCalendar('updateEvent', event);
@@ -267,20 +241,15 @@ $(document).ready(function() {
       },
       dataType: "json",
       success: function(data) {
-        console.log(data);
-
         $('#calendar').fullCalendar('removeEvents', function(event) {
-          console.log("EVENT", event);
           var target = formatDataAsEvent(data[0]);
-          console.log("TARGET",target);
-          var isStartMatch = (event.start.format('DD HH:mm:ss') === target.start.format('DD HH:mm:ss'));
-          var isEndMatch = (event.end.format('DD HH:mm:ss') === target.end.format('DD HH:mm:ss'));
+          var isStartMatch = (event.start.format('E HH:mm:ss') === target.start.format('E HH:mm:ss'));
+          var isEndMatch = (event.end.format('E HH:mm:ss') === target.end.format('E HH:mm:ss'));
           return (isStartMatch && isEndMatch) ? true : false;
         });
       },
       error: function(data, status) {
         swal('failure');
-        console.log(data, status);
       }
     });
     swal.close();
@@ -296,7 +265,6 @@ $(document).ready(function() {
 
   var blockSlot = function(event) {
     var toggledStatus = event.data.status === 'Open' ? 'Blocked' : 'Open';
-    //console.log("NEW STATUS",toggledStatus);
 
     $.ajax({
       type: "PUT",
@@ -309,36 +277,26 @@ $(document).ready(function() {
       },
       dataType: "json",
       success: function(data) {
-        console.log("UPDATE EEVNT");
         event.data.status = data.status;
         $('#calendar').fullCalendar('updateEvent', event.data);
       },
       error: function(data, status) {
-        console.log("failure,", data, status);
         alert('failure', data, status);
       }
     });
   }
 
   var eventRender = function(event, element, view) {
-    console.log("STATUS",event.status);
-    console.log("TYPE",event.slot_type);
-    // switch (event.status) {
-    //   case "Open":
-    //     element.css('background-color', '#009688');
-    //     break;
-    //   case "Blocked":
-    //     element.css('background-color', '#E0E0E0');
-    //     break;
-    // }
     if (event.status === 'Blocked') {
       element.css('background-color', '#E0E0E0');
+      event.title = "Blocked";
     } else {
+      event.title = event.slot_type;
       switch (event.slot_type) {
-        case 'weekly':
+        case 'Weekly':
           element.css('background-color', '#009688');
           break;
-        case 'oneTime':
+        case 'OneTime':
           element.css('background-color', '#FF9100');
           break;
       }
@@ -387,7 +345,7 @@ $(document).ready(function() {
         }
         return weeks
       },
-      slot_type:'weekly'
+      slot_type:'Weekly'
     });
 
     // make the event draggable using jQuery UI
@@ -407,7 +365,7 @@ $(document).ready(function() {
       weeksToRepeat: function(){
         return 1
       }, // maintain when user navigates (see docs on the renderEvent method)
-      slot_type:'oneTime'
+      slot_type:'OneTime'
     });
 
     // make the event draggable using jQuery UI
