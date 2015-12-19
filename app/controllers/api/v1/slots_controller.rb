@@ -73,6 +73,7 @@ class API::V1::SlotsController < API::V1::Defaults
       hash = {}
       hash[:tutor_id] = params[:tutor_id] if params[:tutor_id]
       hash[:status] = params[:status] if params[:status]
+      hash[:slot_type] = params[:slot_type] if params[:slot_type]
       hash[:start_time] = params[:start_time] if params[:start_time]
       hash[:duration] = params[:duration] if params[:duration]
       hash[:weeks_to_repeat] = params[:weeks_to_repeat] if params[:weeks_to_repeat]

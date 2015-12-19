@@ -10,13 +10,18 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require_tree .
+
+ *= require_tree ./admin
+ *= require_tree ./custom
+ *= require_tree ./dashboard
+ *= require_tree ./global_elements
+ *= require_tree ./include_everywhere
+ *= require_tree ./single_views
  *= require_self
  *= require Jcrop/css/Jcrop.min
  *= require sweetalert
- *= require fullcalendar
  *= require qTip2/jquery.qtip.min.css
- *= require framework_and_overrides
+ *= require include_everywhere/framework_and_overrides
  */
 
   p, h1, h2, h3, h4, h5, h6, th, td, li, a, label, input, select, textarea, span, button {

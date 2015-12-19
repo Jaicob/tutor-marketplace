@@ -10,7 +10,7 @@ var API = {
         },
         tutor_slots: {
             get: function (data) { // { tutor_id }
-                return API_LOCATION + "/tutors/" + data["tutor_id"] + "/slots";
+                return API_LOCATION + "/tutors/" + data["tutor_id"] + "/slots.json";
             },
             create: function (data) { // { tutor_id }
                 return API_LOCATION + "/tutors/" + data["tutor_id"] + "/slots";

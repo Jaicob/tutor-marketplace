@@ -101,3 +101,11 @@ section {
    margin-right: auto;
    max-width: initial;
 }
+
+//Remove outline on focused elements
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}

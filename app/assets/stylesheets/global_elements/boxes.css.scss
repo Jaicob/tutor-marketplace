@@ -3,3 +3,12 @@ div.box {
   padding: 1em;
   border-radius: 4px;
 }
+
+.v-centered-text-outer {
+	display: table;
+}
+
+.v-centered-text-inner {
+	display: table-cell;
+  vertical-align: middle;
+}
