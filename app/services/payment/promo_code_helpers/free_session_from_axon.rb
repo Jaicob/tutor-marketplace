@@ -40,7 +40,6 @@ module PromoCodeHelpers
           axon_fee: new_axon_fee,
           promotion_id: @promotion.id
         )
-        context.is_payment_required = false
       else
         lowest_rate = rates.sort.first
         total_price_of_lowest_rate = lowest_rate * transaction_fee * 100

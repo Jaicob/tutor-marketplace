@@ -3,7 +3,6 @@ source 'https://rubygems.org' do
 
   group :development, :test do
     gem 'byebug', '~> 5.0'
-    gem 'web-console', '~> 2.1'
     gem 'spring', '~> 1.3'
     gem 'rubocop', '~> 0.32'
     gem 'rspec-rails', '~> 3.3'
@@ -13,7 +12,6 @@ source 'https://rubygems.org' do
   end
 
   group :development do
-    gem 'better_errors', '~> 2.1'
     gem 'rails_layout', '~> 1.0'
     gem 'spring-commands-rspec', '~> 1.0'
   end

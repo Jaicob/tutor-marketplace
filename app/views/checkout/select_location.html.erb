@@ -1,0 +1,45 @@
+<%= render '/dashboard/tutor/profile/tutor_profile' %>
+
+<div class="row">
+  <div class="small-12 columns">
+    <%= form_for :location_selection, url: checkout_set_location_path, method: :post do |f| %>
+      <div class="checkout-step-title">
+        <div class="row">
+          <div class="small-12 columns">
+            <p>Set a Meeting Place</p>
+          </div>
+        </div>
+      </div>
+      <div class="checkout-step-body padding-2em">
+        <div class="row">
+          <div class="small-12 columns">
+            <div class="row">
+              <div class="small-12 columns">
+                <h5 class="center no-max-width">Where do you want to meet your tutor?</h5>
+              </div>
+            </div>
+            <div class="row">
+              <div class="small-12 medium-4 medium-centered columns">
+                <%= f.text_field :location, value: session[:location] %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="checkout-steps-nav">
+        <div class="row small-collapse">
+          <div class="small-12 columns">
+            <div class="row small-collapse">
+              <div class="small-3 columns zero-padding">
+                <%= link_to "Back to Available Times", checkout_select_times_path(@tutor.slug), class: 'checkout-button gray' %>
+              </div>
+              <div class="small-3 columns zero-padding">
+                <%= f.submit "Next Step", class: 'custom-button full-width checkout-submit' %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

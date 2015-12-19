@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 20151211182637) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.integer  "charge_id"
+    t.string   "location"
   end
 
   add_index "appointments", ["charge_id"], name: "index_appointments_on_charge_id", using: :btree
@@ -54,18 +55,20 @@ ActiveRecord::Schema.define(version: 20151211182637) do
   add_index "campus_managers", ["user_id"], name: "index_campus_managers_on_user_id", using: :btree
 
   create_table "charges", force: :cascade do |t|
-    t.float    "amount"
-    t.float    "axon_fee"
-    t.float    "tutor_fee"
-    t.string   "customer_id"
+    t.integer  "amount"
+    t.integer  "axon_fee"
+    t.integer  "tutor_fee"
     t.integer  "tutor_id"
     t.string   "token"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
     t.integer  "promotion_id"
+    t.integer  "student_id"
+    t.string   "stripe_charge_id"
   end
 
   add_index "charges", ["promotion_id"], name: "index_charges_on_promotion_id", using: :btree
+  add_index "charges", ["student_id"], name: "index_charges_on_student_id", using: :btree
   add_index "charges", ["tutor_id"], name: "index_charges_on_tutor_id", using: :btree
 
   create_table "courses", force: :cascade do |t|
@@ -244,6 +247,7 @@ ActiveRecord::Schema.define(version: 20151211182637) do
   add_foreign_key "appointments", "students"
   add_foreign_key "campus_managers", "schools"
   add_foreign_key "campus_managers", "users"
+  add_foreign_key "charges", "students"
   add_foreign_key "charges", "tutors"
   add_foreign_key "courses", "schools"
   add_foreign_key "courses", "subjects"

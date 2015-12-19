@@ -29,7 +29,7 @@ module Processor
           debit_negative_balances: true,
           tos_acceptance: {
             date: Time.zone.now.to_i,
-            ip: tutor.sign_in_ip
+            ip: tutor.sign_in_ip || ("75.137.2.212" if Rails.env.test? || Rails.env.development?)
           }
         )
         tutor.update_attributes(acct_id: acct[:id])
@@ -39,75 +39,100 @@ module Processor
       acct.external_accounts.create(:external_account => token)
     end
 
-    def reconcile_coupon_difference(charge)
-      transfer = ::Stripe::Transfer.create(
-        amount: charge.amount,
-        currency: 'usd',
-        destination: charge.tutor.acct_id,
-        description: "Reconciliation for Coupon #{promotion.description}"
-      )
-    end
-
     def send_charge(charge)
+      puts "CALLLED!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+      @student = Student.find(charge.student_id)
 
-      if charge.customer_id.nil?
-        update_customer()
-        # ::Stripe::Charge.create(
-        #   amount: charge.amount,
-        #   currency: 'usd',
-        #   source: charge.token,
-        #   destination: charge.tutor.acct_id,
-        #   application_fee: charge.axon_fee
-        # )
+      puts "@student = #{@student}!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+
+      if @student.customer_id.nil?
+        puts "@student.customer_id.nil? CALLLED!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+
+
+        # # KEEP PUTS STATEMENTS here for manual testing!
+        puts "SEND CHARGE METHOD IN STRIPE.RB"
+        puts "SENDING CHARGE WITH CARD TOKEN"
+        puts "charge.amount = #{charge.amount}"
+        puts "charge.student_id = #{charge.student_id}"
+        puts "charge.tutor_acct_id = #{charge.tutor.acct_id}"
+        puts "charge.axon_fee = #{charge.axon_fee}"
+        puts "charge.tutor_fee = #{charge.tutor_fee}"
+        puts "charge.token = #{charge.token}"
+        puts "@student.customer_id = #{@student.customer_id}"
+        # # end of logs testing
+
+        # creates charge with token if Student does not have a Stripe Customer
+        x = ::Stripe::Charge.create(
+          amount: charge.amount,
+          currency: 'usd',
+          source: charge.token,
+          destination: charge.tutor.acct_id,
+          application_fee: charge.axon_fee
+        )
+        puts "x = #{x}"
+        puts "x.errors = #{x.errors}"
+        puts "x.errors.full_messages = #{x.errors.full_messages}"
+
+      else
+        puts "---else---- CALLLED!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+
+
+        # # KEEP PUTS STATEMENTS here for manual testing!
+        puts "SEND CHARGE METHOD IN STRIPE.RB"
+        puts "SENDING CHARGE FROM STUDENT CUSTOMER ACCOUNT"
+        puts "charge.amount = #{charge.amount}"
+        puts "charge.student_id = #{charge.student_id}"
+        puts "charge.tutor_acct_id = #{charge.tutor.acct_id}"
+        puts "charge.axon_fee = #{charge.axon_fee}"
+        puts "charge.tutor_fee = #{charge.tutor_fee}"
+        puts "charge.token = #{charge.token}"
+        puts "@student.customer_id = #{@student.customer_id}"
+        # # end of logs testing
+
+        # creates charge with Student's Customer and default source
+        stripe_charge_object = ::Stripe::Charge.create(
+          amount: charge.amount,
+          currency: 'usd',
+          customer: Student.find(charge.student_id).customer_id,
+          destination: charge.tutor.acct_id,
+          application_fee: charge.axon_fee
+        )
+        return stripe_charge_object
       end
-
-      # KEEP EXCESSIVE PUTS STATEMENTS HERE! This is really hard to write tests for so we're testing this bitch in the console output... \_(ツ)_/¯
-      puts "SEND CHARGE METHOD IN STRIPE.RB"
-      puts "charge.amount = #{charge.amount}"
-      puts "charge.customer_id = #{charge.customer_id}"
-      puts "charge.tutor_acct_id = #{charge.tutor.acct_id}"
-      puts "charge.axon_fee = #{charge.axon_fee}"
-      puts "charge.tutor_fee = #{charge.tutor_fee}"
-      ::Stripe::Charge.create(
-        amount: charge.amount,
-        currency: 'usd',
-        customer: charge.customer_id,
-        destination: charge.tutor.acct_id,
-        application_fee: charge.axon_fee
-      )
     end
 
-    def update_customer(student, token, make_default)
+    def update_customer(student, token)
       if student.customer_id.nil?
+        # create Stripe customer
         cust = ::Stripe::Customer.create(
           card: token,
           description: "#{student.full_name} - #{student.email}",
           email: student.email
         )
-        if make_default == true
-          student.update_attributes(
-            customer_id: cust.id, 
-            last_4_digits: cust.sources['data'].first['last4'],
-            card_brand: cust.sources['data'].first['brand']
-          )
-        end
-      else
-        cust = ::Stripe::Customer.retrieve(student.customer_id)
-        # delete old card
-        cust.sources.first.delete()
-        # save new card
-        cust.sources.create(source: token)
-        cust.save
+        # save Stripe customer details on Student object
         student.update_attributes(
           customer_id: cust.id, 
-          last_4_digits: cust.sources['data'].first['last4'],
-          card_brand: cust.sources['data'].first['brand']
+          last_4_digits: cust.sources.data.first.last4,
+          card_brand: cust.sources.data.first.brand
+        )
+      else
+        cust = ::Stripe::Customer.retrieve(student.customer_id)
+        # deletes customer's old card
+        cust.sources.data.first.delete()
+        # creates new card and then saves customer to refresh customer data with new card
+        cust.sources.create(source: token)
+        cust.save
+        # updates card info on Student object
+        student.update_attributes(
+          last_4_digits: cust.sources.data.first.last4,
+          card_brand: cust.sources.data.first.brand
         )
       end
     end
 
     def reconcile_coupon_difference(tutor, transfer_amount, promotion)
-      # transfer_amount = amount that Axon owes tutor (represented by a negative Axon fee converted to positive integer)
+      # transfers $ from Axon account to a Tutor account when an Axon issued coupon results in a Student paying less that the Tutor's total fee
+      # transfer_amount = amount that Axon owes tutor (value should be a positive integer)
       transfer = ::Stripe::Transfer.create(
         amount: transfer_amount,
         currency: 'usd',

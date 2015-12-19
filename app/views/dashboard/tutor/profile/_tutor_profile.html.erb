@@ -1,10 +1,5 @@
 <%# [ ] TODO (AJ) Refactor this into a profile.scss %>
 <%# Currently, we still need controller-specific stylesheets. %>
-<style type="text/css">
-.main-content{
-  background: #eee !important;
-}
-</style>
 
 <section class="tutor-profile">
   <div class="row">
@@ -38,20 +33,5 @@
         <%= @tutor.extra_info_3 %></li>
       </div>
     </div>
-  </div>
-  <div class="row">
-    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-    <%# [ ] TODO (AJ) Refactor NOT to use request.fullpath.to_s.split('=').second %>
-    <%= react_component('AppointmentSelector', {
-        tutor: @tutor.id,
-        tutor_school: @tutor.school.name,
-        tutor_name: @tutor.user.first_name,
-        student: (if @student then @student.id else nil end),
-        course: request.fullpath.to_s.split('=').second,
-        margin: @tutor.school.transaction_percentage
-      },
-      {
-        class: "medium-12 columns"
-      }) %>
   </div>
 </section>

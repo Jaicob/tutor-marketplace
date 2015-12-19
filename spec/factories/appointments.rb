@@ -11,6 +11,7 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  charge_id  :integer
+#  location   :string
 #
 
 FactoryGirl.define do
@@ -24,10 +25,6 @@ FactoryGirl.define do
     trait :second do
       start_time '2015-09-01 13:00'
     end
-
-    # trait :with_tutor_course do 
-    #   association :course, factory: [:course, :with_tutor_course]
-    # end
 
   end
 end

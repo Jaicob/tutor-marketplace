@@ -1,10 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe 'PromoCodeHelpers::PercentOffFromAxon' do
-  let(:tutor)       { create(:tutor) }
-  let(:appointment) { create(:appointment) }
+  
+  # Runs once before all examples
+  before(:context) do
+    @tutor = create(:tutor, :with_tutor_course_and_slot)
+    @tutor_course = @tutor.tutor_courses.first
+    @student = create(:student)
+  end
 
-  describe 'Methods in PromoCodeServices::PercentOffFromAxon' do
+  describe 'Percent Off From Axon Promos' do
     
     it 'correctly adjusts fees for a 10%-off coupon issued by Axon' do
       @promotion = create(:promotion, category: :percent_off_from_axon, amount: 10)

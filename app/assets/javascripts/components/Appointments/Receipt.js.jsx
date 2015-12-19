@@ -43,7 +43,7 @@ var Receipt = React.createClass({
               <div className="medium-12 columns tutor-side">
                 {this.props.student.full_name} (Student) ↔ {this.props.tutor_name} for {this.props.selectedSubject.course_name} on {this.props.tutor_school} campus
                 <ul>
-                {this.props.selectedSlots.map((slot) => <li>{moment.utc(slot.start_time).format("ddd, MM/DD/YYYY, h:mm A")} - {moment.utc(slot.start_time).add(1, 'h').format("h:mm A")} <span className="rate">${(this.props.selectedSubject.rate * 1 - (this.props.margin / 100)).toFixed(2)}</span></li>)}
+                {this.props.selectedSlots.map((slot) => <li>{moment(slot.start_time).format("ddd, MM/DD/YYYY, h:mm A")} - {moment(slot.start_time).add(1, 'h').format("h:mm A")} <span className="rate">${(this.props.selectedSubject.rate * 1 - (this.props.margin / 100)).toFixed(2)}</span></li>)}
                 {this.showPromoCode()}
                 </ul>
                 <hr></hr>

@@ -1,6 +1,20 @@
 <div class="row">
-  <div class="small-12 medium-4 medium-centered columns">
-    <h3 class="sign-in">Sign In</h3>
-    <%= render 'sign_in_form' %>
+  <div class="small-12 medium-5 medium-centered columns">
+    <div class="box margin-top-2em">
+      <div class="max-width-16em margin-auto">
+        <h1 class="center">Sign in</h1>
+        <%= devise_error_messages! %>
+        <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+          <%= f.label :email %>
+          <%= f.email_field :email, class: 'form-control', required: true %>
+          <%= f.label :password, class: 'pwd-label' %>
+          <%= link_to "Forgot password?", new_password_path(resource_name), class: 'forgot-pwd' %>
+          <%= f.password_field :password, class: 'form-control', required: true%>
+          <%= f.submit 'Go', class: 'custom-button full-width' %>
+        <% end %>
+        <h6 class="center margin-top-2em margin-bottom-1em">First time booking with Axon?</h6>
+        <button class="custom-button full-width blue">Sign up to study smarter</button>
+      </div>
+    </div>
   </div>
 </div>

@@ -4,18 +4,20 @@ module PromoCodeHelpers
     attr_accessor :charge
 
     def initialize(context)
+      puts "context.charge = #{context.charge}"
+      puts "context.charge.amount = #{context.charge.amount}"
       @context = context
       @charge = context.charge
       @amount = @charge.amount
       @promotion = Promotion.find(context.promotion_id)
       @transaction_fee = ((@context.transaction_percentage.to_f / 100) + 1)
       @rates = context.rates
-      @tutor = context.tutor
+      @tutor_id = context.tutor_id
     end
 
     def return_adjusted_fees
       return false unless @promotion.category == 'dollar_amount_off_from_tutor'
-      if is_redemption_valid?(@promotion, @tutor)
+      if is_redemption_valid?(@promotion, @tutor_id)
         @promotion.redemption_count += 1
         @promotion.save
       else
@@ -27,10 +29,10 @@ module PromoCodeHelpers
       return @context
     end
 
-    def is_redemption_valid?(promotion, tutor)
+    def is_redemption_valid?(promotion, tutor_id)
       (promotion.redemption_count < promotion.redemption_limit) && 
       (promotion.valid_from.to_date <= Date.today && Date.today <= promotion.valid_until.to_date ) && 
-      (promotion.tutor_id == tutor.id) ? 
+      (promotion.tutor_id == tutor_id) ? 
       true : false
     end
 

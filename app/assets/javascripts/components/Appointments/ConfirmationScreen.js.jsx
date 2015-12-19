@@ -9,7 +9,7 @@ var ConfirmationScreen = React.createClass({
           Times: <br></br> {this.props.selectedSlots.map(
             (slot) =>
               <span style={{display: "block"}}>
-                {moment(slot.start_time).utc().format("M/DD/YYYY hh:mm A") + " - " + moment(slot.start_time).utc().add(1, 'h').format("M/DD/YYYY hh:mm A")}
+                {moment(slot.start_time).format("M/DD/YYYY hh:mm A") + " - " + moment(slot.start_time).add(1, 'h').format("M/DD/YYYY hh:mm A")}
               </span>
           )}
         </p>

@@ -38,19 +38,19 @@ FactoryGirl.define do
     rating 1
     active_status 0
     application_status 0
-    birthdate "1992-05-28"
     degree 0
     major "Biology"
     graduation_year "2019"
     phone_number "555-555-5555"
-    extra_info "Default Extra Info"
+    extra_info_1 "Default Extra Info 1"
     appt_notes "Default Appt Notes"
+    school
 
-      factory :invalid_tutor do
-        extra_info nil
+      trait :invalid_tutor do
+        extra_info_1 nil
       end
 
-      factory :tutor_with_complete_application do
+      trait :tutor_with_complete_application do
         line1        '101 Axon Way'
         line2        'Suite A'
         city         'Athens'
@@ -60,27 +60,23 @@ FactoryGirl.define do
         acct_id      '123456789'
         last_4_acct  '2222'
 
-        after :create do |t|
+        after(:create) do |t|
           t.update_column(:transcript, "/assets/images/file-icon.png")
           t.update_column(:profile_pic, "/assets/images/doge.png")
         end
       end
 
-      factory :second_complete_tutor do
-        degree 'PhD'
-        major 'Chemistry'
-        graduation_year '2017'
-        phone_number '999-999-9999'
+      trait :with_tutor_course do 
+        after(:create) do |tutor|
+          course = create(:course, school: tutor.school)
+          create(:tutor_course, tutor: tutor, course: course)
+        end
       end
 
-      trait :at_UNC do
-        association :user, factory: [:user, :UNC]
-      end
-
-      trait :with_tutor_courses do 
-        after :create do |tutor|
-          course = create(:course)
-          tutor_course = create(:tutor_course, tutor: tutor, course: course)
+      trait :with_tutor_course_and_slot do 
+        with_tutor_course
+        after(:create) do |tutor|
+          create(:slot, tutor: tutor)
         end
       end
   end

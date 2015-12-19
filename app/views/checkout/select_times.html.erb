@@ -1,0 +1,52 @@
+<%= render '/dashboard/tutor/profile/tutor_profile' %>
+
+<div class="row">
+  <div class="small-12 columns">
+    <%= form_for :appt_selection, url: checkout_set_times_path, method: :post do |f| %>
+      <div class="checkout-step-title">
+        <div class="row">
+          <div class="small-12 columns">
+            <p>Select a Time</p>
+          </div>
+        </div>
+      </div>
+      <div class="calendar-header">
+        <div class="row small-collapse">
+          <div class="small-12 columns">
+            <div class="row small-collapse">
+              <div class="small-3 columns zero-padding">
+                <%= link_to "Previous Week", checkout_select_times_path(@tutor.slug, course: 1, current: @start_date.to_s, week: 0), class: 'checkout-button gray' %>
+              </div>
+              <div class="small-3 columns zero-padding">
+                <%= link_to "Next Week", checkout_select_times_path(@tutor.slug, course: 1, current: @start_date.to_s, week: 1), class: 'checkout-button gray' %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="checkout-step-body">
+        <div class="row">
+          <div class="small-12 columns">
+            <div class="small-block-grid-1 medium-block-grid-7">
+              <%= render '/checkout/available_times', week_start_date: Date.today %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="checkout-steps-nav">
+        <div class="row small-collapse">
+          <div class="small-12 columns">
+            <div class="row small-collapse">
+              <div class="small-3 columns zero-padding">
+                <%= link_to "Back to Course Select", checkout_select_course_path(@tutor.slug), class: 'checkout-button gray' %>
+              </div>
+              <div class="small-3 columns zero-padding">
+                <%= f.submit "Next Step", class: 'custom-button full-width checkout-submit' %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

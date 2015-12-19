@@ -1,0 +1,85 @@
+<%= render '/dashboard/tutor/profile/tutor_profile' %>
+
+
+<div class="row">
+  <div class="small-12 columns">
+    <%= form_for :course_selection, url: checkout_set_course_id_path, method: :post do |f| %>
+      <div class="checkout-step-title">
+        <div class="row">
+          <div class="small-12 columns">
+            <p>Select a Course</p>
+          </div>
+        </div>
+      </div>
+      <div class="checkout-step-body course-select-bg">
+        <div class="row small-collapse">
+          <div class="small-12 columns">
+            
+            <% @tutor.course_list_by_subject.each do |subject, tutor_courses| %>
+
+              <div class="row medium-collapse subject-row">
+                <div class="small-12 medium-3 columns">
+                  <p class="subject-title"><%= subject %></p>
+                </div>
+                <div class="small-12 medium-9 columns">
+                
+                <% tutor_courses.each do |tutor_course| %>
+                  <div class="course-box">
+                    <label>
+                      <input type="checkbox" value="<%= tutor_course[:course_id] %>" name="course_selection[course_id]" data-friendly-name="<%= tutor_course[:friendly_name] %>" class="course-select-checkbox">
+                      <div class="row course-list-row">
+                        <div class="small-12 medium-4 columns">
+                          <p class="course-text"><%= tutor_course[:short_name] %></p>
+                        </div> 
+                        <div class="small-12 medium-7 columns">
+                          <p class="course-text"><%= tutor_course[:friendly_name] %></p>
+                        </div>
+                        <div class="small-12 medium-1 columns">
+                          <p class="course-text">$<%= tutor_course[:rate] %></p>
+                        </div>
+                      </div>
+                    </label>
+                  </div>      
+                <% end %>
+
+                </div>
+              </div>
+            <% end %>
+
+          </div>
+        </div>
+      </div>
+      <div class="checkout-steps-nav">
+        <div class="row small-collapse">
+          <div class="small-12 columns">
+            <div class="row small-collapse">
+              <div class="small-12 medium-3 columns zero-padding">
+                <%= link_to "Back to Search", search_path, class: 'checkout-button gray' %>
+              </div>
+              <div class="small-12 medium-6 columns">
+                <p id="selected-course"></p>
+              </div>
+              <div class="small-12 medium-3 columns zero-padding">
+                <%= f.submit 'Next Step', class: 'custom-button full-width checkout-submit' %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+
+<script>
+$(document).ready(function(){
+  $( '.course-select-checkbox' ).change(function() {
+    $('.course-select-checkbox').addClass('out-of-focus');
+    $('.course-select-checkbox').prop('checked', false);
+    $(this).removeClass('out-of-focus');
+    $(this).prop('checked', true);
+    $('#selected-course').html(this.dataset.friendlyName);
+  });
+});
+
+</script>

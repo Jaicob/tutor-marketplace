@@ -46,7 +46,6 @@ FactoryGirl.define do
     email
     password "please123"
     slug
-    school { FactoryGirl.create(:school, :UNC) }
 
     trait :student do
       role 0
@@ -58,7 +57,6 @@ FactoryGirl.define do
 
     trait :campus_manager do 
       role 2
-      association :school, factory: :school, name: "Campus Manager's University"
     end
     
     trait :admin do
