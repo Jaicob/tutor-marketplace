@@ -14,10 +14,10 @@
         <div class="row small-collapse">
           <div class="small-12 columns">
             <div class="row small-collapse">
-              <div class="small-3 columns">
+              <div class="small-3 columns zero-padding">
                 <%= link_to "Previous Week", checkout_select_times_path(@tutor.slug, course: 1, current: @start_date.to_s, week: 0), class: 'checkout-button gray' %>
               </div>
-              <div class="small-3 columns">
+              <div class="small-3 columns zero-padding">
                 <%= link_to "Next Week", checkout_select_times_path(@tutor.slug, course: 1, current: @start_date.to_s, week: 1), class: 'checkout-button gray' %>
               </div>
             </div>
@@ -37,11 +37,11 @@
         <div class="row small-collapse">
           <div class="small-12 columns">
             <div class="row small-collapse">
-              <div class="small-3 columns">
+              <div class="small-3 columns zero-padding">
                 <%= link_to "Back to Course Select", checkout_select_course_path(@tutor.slug), class: 'checkout-button gray' %>
               </div>
-              <div class="small-3 columns">
-                <%= f.submit "Next Step", class: 'checkout-button' %>
+              <div class="small-3 columns zero-padding">
+                <%= f.submit "Next Step", class: 'custom-button full-width checkout-submit' %>
               </div>
             </div>
           </div>

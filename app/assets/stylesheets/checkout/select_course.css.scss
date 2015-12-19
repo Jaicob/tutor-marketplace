@@ -35,11 +35,13 @@
     font-family: 'Lato';
   }
   label + .row.course-list-row {
+    transition: background-color 0.5s ease;
     text-align: center;
     padding: 3px 0px;
     display: block;
   }
   input + .row.course-list-row:hover {
+    transition: background-color 0.5s ease;
     background: #80CBC4;
     .course-text {
       color: white;

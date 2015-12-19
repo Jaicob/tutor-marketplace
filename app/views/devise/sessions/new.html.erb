@@ -10,7 +10,6 @@
           <%= f.label :password, class: 'pwd-label' %>
           <%= link_to "Forgot password?", new_password_path(resource_name), class: 'forgot-pwd' %>
           <%= f.password_field :password, class: 'form-control', required: true%>
-          <%= f.hidden_field :checkout_redirect, value: @tutor.id %>
           <%= f.submit 'Go', class: 'custom-button full-width' %>
         <% end %>
         <h6 class="center margin-top-2em margin-bottom-1em">First time booking with Axon?</h6>

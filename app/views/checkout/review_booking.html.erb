@@ -113,14 +113,14 @@
                         <span id="3">1-Hour Tutoring Appointment</span>
                         <span id="4">$<%= @booking_preview[:rate] %></span>
                       </p>
-                      <p class="total-price-box"><span id="total-word">Total:</span>$75</p>
+                      <p class="total-price-box"><span id="total-word">Total:</span>$ xx</p>
                     </div>
-                    <%= form_for :promo_code, url: root_path do |tt| %>
+                    <%= form_for :apply_promo_code, url: checkout_apply_promo_code_path do |tt| %>
                     <div class="small-12 medium-6 columns">
                       <h5>Promo Code</h5>
                       <div class="row small-collapse">
                         <div class="small-12 medium-8 columns zero-padding">
-                          <%= tt.text_field :promo_code, required: true, class: 'border-radius' %>
+                          <%= tt.text_field :code, required: true, class: 'border-radius' %>
                         </div>
                         <div class="small-12 medium-4 columns">
                           <%= tt.submit 'Apply', class: 'custom-button short-width' %>
@@ -145,14 +145,15 @@
                   <p class="already-registered">Already registered?</p>
                 </div>
                 <div class="small-12 medium-3 columns">
-                  <%= form_for :user_login, url: root_path do |ff| %>
+                  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |ff| %>
                     <%= ff.text_field :email, placeholder: 'Email', required: true, class: 'border-radius no-bottom-margin' %>
                 </div>
                 <div class="small-12 medium-3 columns">
                     <%= ff.text_field :password, placeholder: 'Password', required: true, class: 'border-radius no-bottom-margin' %>
+                    <%= ff.hidden_field :checkout_login_redirect, value: @tutor.id %>
                 </div>
                 <div class="small-12 medium-3 columns">
-                    <%= ff.submit 'Sign in', class: 'custom-button full-width gray' %>
+                    <%= ff.submit 'Sign in', class: 'custom-button full-width blue-green no-bottom-margin' %>
                   <% end %>
                 </div>
               </div>
@@ -168,11 +169,11 @@
                       <h4>Create Your Account</h4>
 
                         <label for="user_first_name">First name</label>
-                        <input autofocus="autofocus" class="border-radius" required="required" type="text" name="user[first_name]" id="user_first_name" />
+                        <input class="border-radius" required="required" type="text" name="user[first_name]" id="user_first_name" />
                         <label for="user_last_name">Last name</label>
-                        <input autofocus="autofocus" class="border-radius" required="required" type="text" name="user[last_name]" id="user_last_name" />
+                        <input class="border-radius" required="required" type="text" name="user[last_name]" id="user_last_name" />
                         <label for="user_email">Email</label>
-                        <input autofocus="autofocus" class="border-radius" required="required" type="email" value="" name="user[email]" id="user_email" />
+                        <input class="border-radius" required="required" type="email" value="" name="user[email]" id="user_email" />
                         <label for="user_password">Password</label>
                         <input class="border-radius" required="required" type="password" name="user[password]" id="user_password" />
 
@@ -252,7 +253,6 @@
                   <div class="small-12 medium-6 medium-offset-6 columns">
                     <button type="submit" class="custom-button full-width creat-and-pay-btn">Create Account & Pay</button>
                   </div>
-                </div>
                 </form>
               </div>
             </div>

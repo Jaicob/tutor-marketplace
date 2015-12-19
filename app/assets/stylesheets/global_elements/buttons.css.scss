@@ -10,6 +10,7 @@ button, .custom-button {
   color: white;
   text-align: center;
   padding: 0.5em 3em;
+  margin-bottom: 1em;
   &.full-width {
     width: 100%;
     display: block;
@@ -29,11 +30,10 @@ button, .custom-button {
   &.light-blue {
     background-color: #2BC2DE;
   }
-  &.gray {
-    background-color: #C3C3C3;
-    font-weight: 400;
+  &.blue-green {
+    background-color: #0095AC;
     &:hover {
-      background-color: #0095AC;
+      background-color: #58AA4D;
     }
   }
   &.danger {

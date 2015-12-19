@@ -10,12 +10,18 @@
           </div>
         </div>
       </div>
-      <div class="checkout-step-body">
+      <div class="checkout-step-body padding-2em">
         <div class="row">
           <div class="small-12 columns">
-            <div class="small-block-grid-1 medium-block-grid-7">
-              <p>Choose Location</p>
-              <%= f.text_field :location, value: session[:location] %>
+            <div class="row">
+              <div class="small-12 columns">
+                <h5 class="center no-max-width">Where do you want to meet your tutor?</h5>
+              </div>
+            </div>
+            <div class="row">
+              <div class="small-12 medium-4 medium-centered columns">
+                <%= f.text_field :location, value: session[:location] %>
+              </div>
             </div>
           </div>
         </div>
@@ -24,11 +30,11 @@
         <div class="row small-collapse">
           <div class="small-12 columns">
             <div class="row small-collapse">
-              <div class="small-3 columns">
+              <div class="small-3 columns zero-padding">
                 <%= link_to "Back to Available Times", checkout_select_times_path(@tutor.slug), class: 'checkout-button gray' %>
               </div>
-              <div class="small-3 columns">
-                <%= f.submit "Next Step", class: 'checkout-button' %>
+              <div class="small-3 columns zero-padding">
+                <%= f.submit "Next Step", class: 'custom-button full-width checkout-submit' %>
               </div>
             </div>
           </div>

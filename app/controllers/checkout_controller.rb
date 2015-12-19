@@ -32,7 +32,7 @@ class CheckoutController < ApplicationController
 
   def select_location 
     # step 3
-    # (view page with input for setting location)
+    # - view page with input for setting location
   end
 
   def set_location
@@ -48,13 +48,18 @@ class CheckoutController < ApplicationController
     @booking_preview = BookingPreview.new(session, @tutor).format_info
   end
 
+  def apply_promo_code
+    # recieves promo_code, saves it in session variable and redirects back to review_booking page
+    session[:promo_code] = params[:apply_promo_code][:code]
+    redirect_to checkout_review_booking_path
+  end
+
   def process_booking
     # if new customer
       data = NewCustomerCheckout.new(params, session, @tutor).prepare_data_for_checkout_organizer
     # elsif returning customer
       # data = ReturningCustomerCheckout.new(params, session, @tutor).prepare_data_for_checkout_organizer
     # end
-    puts "data!!!!!!!!! = #{data}"
     
     CheckoutOrganizer.call(data)
     # if context.success?

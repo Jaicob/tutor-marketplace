@@ -240,6 +240,7 @@ Rails.application.routes.draw do
     get   '/select_location'  => 'checkout#select_location', as: 'checkout_select_location'
     post  '/set_location'     => 'checkout#set_location', as: 'checkout_set_location'
     get   '/review_booking'   => 'checkout#review_booking', as: 'checkout_review_booking'
+    post  '/apply_promo_code' => 'checkout#apply_promo_code', as: 'checkout_apply_promo_code'
     post  '/process_booking'  => 'checkout#process_booking', as: 'checkout_process_booking'
     get   '/confirmation'     => 'checkout#confirmation', as: 'checkout_confirmation'
   end

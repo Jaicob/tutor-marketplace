@@ -1,1 +1,95 @@
-<h1>Confirmation</h1>
+<%= render '/dashboard/tutor/profile/tutor_profile' %>
+
+<div class="row">
+  <div class="small-12 columns">
+    <div class="checkout-step-title">
+      <div class="row">
+        <div class="small-12 columns">
+          <p>Confirmation</p>
+        </div>
+      </div>
+    </div>
+    <div class="checkout-step-body padding-1em">
+      <div class="row small-collapse">
+        <div class="small-12 columns"> 
+          <div class="row">
+            <div class="small-12 columns">
+              <h3 class="center">Thank you for using Axon to book your tutoring appointment!</h3>
+              <h3 class="center">Your appointments are confirmed and you will hear from your tutor shortly.</h3>
+              <h3 class="center">Please contact us if you have any questions or concerns</h3>
+            </div>
+          </div>
+          <div class="row">
+            <div class="small-12 columns medium-6 columns">
+              <h3>Booking Details</h3>
+            </div>
+            <div class="small-12 columns medium-6 columns">
+              <h3>Appointments</h3>
+            </div>
+          </div>
+          <div class="row">
+            <div class="small-12 medium-6 columns">
+              <table>
+                <tbody>
+                  <tr>
+                    <td><b>Tutor</b></td>
+                    <td><%= @booking_preview[:tutor].first_and_last_initial %></td>
+                  </tr>
+                  <tr>
+                    <td><b>Course</b></td>
+                    <td><%= @booking_preview[:course].formatted_name %></td>
+                  </tr>
+                  <tr>
+                    <td><b><b>Location</b></td>
+                    <td><%= @booking_preview[:location] %></td>
+                  </tr>
+                  <tr>
+                    <td><b>Hourly Rate</b></td>
+                    <td>$<%= @booking_preview[:rate] %></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="small-12 medium-6 columns">
+              <table>
+                <tbody>
+                  <% appt_count = 1 %>
+                  <% @booking_preview[:appointments].each do |k,v| %>
+                    <tr>
+                      <td class="center">#<%= appt_count %></td>
+                      <td><%= v[:start_time].to_datetime.strftime('%B %e, %Y at %l:%M %p') %></td>
+                    </tr>
+                    <% appt_count += 1 %>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="row">
+            <div class="small-12 columns">
+              <h3 class="margin-top-2em">Booking Summary</h3>
+            </div>
+          </div>
+          <div class="row">
+            <div class="small-12 columns">
+               <div class="box">
+                  <div class="row">
+                    <div class="small-12 medium-6 columns">
+                      <p class="price-breakdown">
+                        <span id="1"><%= @booking_preview[:appointments].count %></span>
+                        <span id="2">x</span>
+                        <span id="3">1-Hour Tutoring Appointment</span>
+                        <span id="4">$<%= @booking_preview[:rate] %></span>
+                      </p>
+                      <p class="total-price-box"><span id="total-word">Total:</span>$XX</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
