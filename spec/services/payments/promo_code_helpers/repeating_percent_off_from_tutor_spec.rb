@@ -1,18 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe 'PromoCodeHelpers::RepeatingPercentOffFromTutor' do
-  let(:second_course) { create(:second_course) }
 
-  describe 'Methods in PromoCodeServices::RepeatingPercentOffFromTutor' do
+  # Runs once before all examples
+  before(:context) do
+    @tutor = create(:tutor, :with_tutor_course_and_slot)
+    @tutor_course = @tutor.tutor_courses.first
+    @student = create(:student)
+  end
 
-    before :each do 
-      @tutor = create(:tutor, :with_tutor_courses)
-      course_id = @tutor.courses.first.id
-      slot_id = @tutor.slots.create(start_time: "2015-09-01 10:00:00", duration: 21600).id
-      @appointment = create(:appointment, slot_id: slot_id, course_id: course_id)
-      @promotion = @tutor.promotions.create(code: '123', category: :repeating_percent_off_from_tutor, amount: 15, valid_from: Date.today, valid_until: Date.today + 30, redemption_limit: 5, redemption_count: 0, course_id: course_id)
-      tutor_course = create(:tutor_course, tutor_id: @tutor.id, course_id: course_id, rate: 23)
-    end
+  describe 'Repeating Percent Off From Tutor Promos' do
 
     it 'adjusts fees for a 15%-off repeating-tutor-discount for one eligible appt' do 
       params = {

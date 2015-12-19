@@ -36,7 +36,6 @@ class Promotion < ActiveRecord::Base
     :repeating_dollar_amount_off_from_tutor]
 
   def generate_secure_code
-    puts "CATEGORY = #{self.category}"
     promo_category = self.category
     case self.category
     when 'free_from_axon' # 0
@@ -52,9 +51,9 @@ class Promotion < ActiveRecord::Base
     when 'dollar_amount_off_from_tutor' # 5
       prefix = 'TUTORDLR'
     when 'repeating_percent_off_from_tutor' # 6
-      prefix = 'TUTORPKPER'
+      prefix = 'TUTORPACKPER'
     when 'repeating_dollar_amount_off_from_tutor' # 7
-      prefix = 'TUTORPKDLR'
+      prefix = 'TUTORPACKDLR'
     end
     self.code = prefix + SecureRandom.hex(6)
     self.save

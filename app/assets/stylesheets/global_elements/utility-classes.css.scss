@@ -3,17 +3,18 @@
   SECTIONS
 
   1. Text Styles
-  2. Borders & Border Radiuses
+  2. Borders & Border Radii
   3. Positioning
   4. Links
   5. Display Properties
+  6. Max Widths/Heights
 
 */
 
 
 
 //  1. Text Styles
-center {
+.center {
   text-align: center;
 }
 .white {
@@ -22,10 +23,13 @@ center {
 .bold {
   font-weight: 700;
 }
+.small-font {
+  font-size: 0.8em;
+}
 
 
 
-//  2.  Borders & Border Radiuses
+//  2.  Borders & Border Radii
 .border-radius {
   border-radius: 3px !important;
 }
@@ -69,11 +73,17 @@ center {
 .margin-1em {
   margin: 1em;
 }
-.bottom-margin {
+.margin-bottom-1em, .bottom-margin {
   margin-bottom: 1em;
+}
+.padding-1em {
+  padding: 1em;
 }
 .padding-2em {
   padding: 2em;
+}
+.zero-padding {
+  padding: 0 !important;
 }
 .no-top-margin {
   margin-top: 0;
@@ -84,6 +94,20 @@ center {
 .margin-bottom-3em {
   margin-bottom: 3em !important;
 }
+.margin-bottom-4em {
+  margin-bottom: 4em !important;
+}
+.margin-bottom-2em {
+  margin-bottom: 2em;
+}
+.margin-bottom-small {
+  margin-bottom: 0.5em;
+}
+
+.no-bottom-margin {
+  margin-bottom: 0 !important;
+}
+
 .top-buffer {
   margin-top: 20px !important;
 }
@@ -95,6 +119,10 @@ center {
 }
 .top-padding {
   padding-top: 1.5em;
+}
+.margin-auto {
+  display: block;
+  margin: auto;
 }
 
 
@@ -118,4 +146,17 @@ center {
 }
 .display-none { // only used for a hacky space filler on Promotions page to hold the submit btn down in line with the other inputs - can removed once that's fixed in a better way
   color: #eff1f3;
+}
+
+
+
+// 6. Max Widths/Heights
+.max-width-16em {
+  max-width: 16em;
+}
+.max-width-20em {
+  max-width: 20em;
+}
+.no-max-width {
+  max-width: none;
 }

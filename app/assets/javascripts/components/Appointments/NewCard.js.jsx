@@ -26,7 +26,7 @@ var NewCard = React.createClass({
     var exp_split = exp_joined.split("/");
     exp_month = exp_split[0];
     exp_year = exp_split[1];
-    Stripe.setPublishableKey("pk_test_4VObdz0T8dwNAdD0ZPcU8amz");
+    Stripe.setPublishableKey("<%= ENV['stripe_public_key'] %>");
     var form = {"number": this.state.cardNumber, "exp_month": exp_month, "exp_year": exp_year, "cvc": this.state.cvc}
     console.log(form)
     Stripe.card.createToken(form, this.stripeResponseHandler);

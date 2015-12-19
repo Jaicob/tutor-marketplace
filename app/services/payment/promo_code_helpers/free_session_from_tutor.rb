@@ -10,12 +10,12 @@ module PromoCodeHelpers
       @promotion = Promotion.find(context.promotion_id)
       @transaction_fee = ((@context.transaction_percentage.to_f / 100) + 1)
       @rates = context.rates
-      @tutor = context.tutor
+      @tutor_id = context.tutor_id
     end
 
     def return_adjusted_fees
       return false unless @promotion.category == 'free_from_tutor'
-      if is_redemption_valid?(@promotion, @tutor)
+      if is_redemption_valid?(@promotion, @tutor_id)
         @promotion.redemption_count += 1
         @promotion.save
       else
@@ -26,10 +26,10 @@ module PromoCodeHelpers
       return @context
     end
 
-    def is_redemption_valid?(promotion, tutor)
+    def is_redemption_valid?(promotion, tutor_id)
       (promotion.redemption_count < promotion.redemption_limit) && 
       (promotion.valid_from.to_date <= Date.today && Date.today <= promotion.valid_until.to_date ) &&
-      (promotion.tutor_id == tutor.id) ? 
+      (promotion.tutor_id == tutor_id) ? 
       true : false
     end
 
@@ -41,7 +41,6 @@ module PromoCodeHelpers
           axon_fee: 0,
           promotion_id: promotion.id
         )
-        context.is_payment_required = false
       else
         rates.sort!.slice!(0) # rates minus the lowest rate
         rates_total = rates.reduce(:+)

@@ -1,36 +1,71 @@
 class CreateCharge
   include Interactor
+  
+  ##
+  # Call with: tutor_id: tutor_id
+  #       appointments: array of appt_ids
+  #       student_id: student_id
+  #       promotion_id: promotion.id (or nil)
 
-  # Call with: tutor: instance_of Tutor
-  #            appointments: array of Appointments
-  #            customer_id: customer_id
-  #            rates: array of rates in dollars
-  #            transaction_percentage: School.transaction_percentage
-  #            promotion_id: promotion.id (or nil)
+  ##
+  # Charge attributes
+  #       id               :integer          not null, primary key
+  #       amount           :float
+  #       axon_fee         :float
+  #       tutor_fee        :float
+  #       tutor_id         :integer
+  #       token            :string
+  #       created_at       :datetime         not null
+  #       updated_at       :datetime         not null
+  #       promotion_id     :integer
+  #       student_id       :integer
+  #       stripe_charge_id :string
 
   def call
-    axon_fee_multiplier = ((context.transaction_percentage.to_f / 100) + 1)
+    begin 
+      @tutor = Tutor.find(context.tutor_id)
+      @student = Student.find(context.student_id)
 
-    tutor_rates = []
+      context.transaction_percentage = School.find(@tutor.school_id).transaction_percentage
+      axon_fee_multiplier = ((context.transaction_percentage.to_f / 100) + 1)
 
-    context.rates.each do |rate|
-      session_amount = (rate * 100)
-      tutor_rates << session_amount
+      tutor_rates = [] # array of rates in cents
+      context.rates = [] # array of rates in dollar amounts
+
+      context.appointments.each do |appt|
+        rate = TutorCourse.where(tutor_id: @tutor.id, course_id: appt.course_id).first.rate
+        context.rates << rate
+        tutor_rate_in_cents = (rate * 100)
+        tutor_rates << tutor_rate_in_cents 
+      end
+
+      tutor_fee = tutor_rates.map(&:to_i).reduce(:+)
+      amount = (tutor_fee * axon_fee_multiplier).round
+      axon_fee = amount - tutor_fee
+
+      charge = @tutor.charges.create(
+        student_id: @student.id,
+        amount: amount,
+        axon_fee: axon_fee,
+        tutor_fee: tutor_fee,
+        token: context.stripe_token
+      )
+      
+      # TODO - error message for charge creation failure?
+
+      context.appointments.each{|appt| appt.update_attributes(charge_id: charge.id)}
+      context.charge = charge
+
+    rescue => error
+      context.fail!(
+        error: error,
+        failed_interactor: self.class
+      )
     end
+  end
 
-    tutor_fee = tutor_rates.map(&:to_i).reduce(:+)
-    amount = tutor_fee * axon_fee_multiplier
-    axon_fee = amount - tutor_fee
-
-    charge = context.tutor.charges.create(
-      customer_id: context.customer_id,
-      amount: amount,
-      axon_fee: axon_fee,
-      tutor_fee: tutor_fee
-    )
-
-    context.appointments.each{|appt| appt.update_attributes(charge_id: charge.id)}
-    context.charge = charge
+  def rollback
+    context.charge.destroy
   end
 
 end

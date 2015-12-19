@@ -1,16 +1,25 @@
 button, .custom-button {
+  transition: background-color 0.5s ease;
   display: inline-block;
   background-color: #58AA4D;  
   font-weight: 100;
   font-family: 'Lato';
+  font-size: 1em;
   border-radius: 4px !important;
   border: none;
   color: white;
   text-align: center;
-  padding: 1.3em 3em;
+  padding: 0.5em 3em;
+  margin-bottom: 1em;
   &.full-width {
     width: 100%;
     display: block;
+  }
+  &.short-width {
+    width: 100%;
+    text-align: center;
+    padding-left: 0;
+    padding-right: 0;
   }
   &.no-margin {
     margin: 0;
@@ -20,6 +29,12 @@ button, .custom-button {
   }
   &.light-blue {
     background-color: #2BC2DE;
+  }
+  &.blue-green {
+    background-color: #0095AC;
+    &:hover {
+      background-color: #58AA4D;
+    }
   }
   &.danger {
     background-color: #DE6328;
@@ -51,11 +66,9 @@ button, .custom-button {
 }
 
 .custom-button:hover, .custom-button:active {
-  background-color: #0095AC;
+  transition: background-color 0.5s ease;
+  background-color: #2BC2DE;
   color: white;
-  &.blue {
-    background-color: #2BC2DE;
-  }
 }
 
  .custom-button:visited, .custom-button:link  {

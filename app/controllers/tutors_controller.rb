@@ -1,15 +1,11 @@
 class TutorsController < ApplicationController
   before_action :set_user, only: [:edit, :update, :destroy]
-  before_action :set_tutor, only: [:show, :edit, :update, :destroy, :submit_application]
-  before_action :set_tutor_for_profile_viewer, only: [:show]
-  before_action :set_student, only: [:show]
+  before_action :set_tutor, only: [:show, :update, :destroy]
 
   # TUTOR CREATION IS HANDLED THROUGH THE DEVISE REGISTRATION CONTROLLER - ONE FORM CREATES USER AND TUTOR
 
   def show
-    if request.referer && request.referer.split(/[^[:alpha:]]+/).include?('search')
-      @from_search = true
-    end
+    redirect_to checkout_select_course_path(@tutor.slug)
   end
 
   def update
@@ -28,7 +24,7 @@ class TutorsController < ApplicationController
       redirect_to @tutor.update_action_redirect_path(tutor_params) # redirects back to current page in settings
     else
       redirect_to :back
-      flash[:alert] = "Tutor was not updated: #{@tutor.errors.full_messages}"
+      flash[:alert] = "Your account was not updated: #{@tutor.errors.full_messages}"
     end
   end
 
@@ -65,7 +61,7 @@ class TutorsController < ApplicationController
 
   private
 
-    def set_tutor_for_profile_viewer
+    def set_tutor
       @tutor = User.find(params[:id]).tutor
     end
 

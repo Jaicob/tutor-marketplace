@@ -17,7 +17,7 @@ FactoryGirl.define do
     subject
     call_number     101
     friendly_name   "Pre Calculus"
-    association     :school, factory: [:school, :UNC]
+    school
 
     factory :invalid_course do
       subject   nil

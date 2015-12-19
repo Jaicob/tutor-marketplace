@@ -14,10 +14,8 @@
 
 FactoryGirl.define do
 
-  sequence(:name) { |n| "University #{n}"}
-
   factory :school do
-    name
+    name  "University of Georgia"
     location  "Athens, GA"
     transaction_percentage 15
 
@@ -30,19 +28,19 @@ FactoryGirl.define do
       location "Chapel Hill, NC"
     end
 
-    factory :school_with_chem_courses do
+    trait :with_chem_courses do
       after(:create) do |school|
         create_list(:course, 2, school: school)
       end
     end
 
-    factory :school_with_bio_courses do
+    trait :with_bio_courses do
       after(:create) do |school|
         create_list(:course, 2, school: school, subject: {name: 'Biology', id: 0})
       end
     end
 
-    factory :school_with_two_subjects do
+    trait :with_two_subjects do
       after(:create) do |school|
         create(:course, school: school, subject: FactoryGirl.create(:subject) )
         create(:course, school: school, subject: FactoryGirl.create(:subject, :Chem) )

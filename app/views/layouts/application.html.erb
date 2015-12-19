@@ -9,6 +9,7 @@
     <%= javascript_include_tag 'vendor/modernizr' %>
     <%= javascript_include_tag 'application' %>
     <%= csrf_meta_tags %>
+    <%= include_gon %>
     <%= yield(:header) %>
   </head>
   <body>
