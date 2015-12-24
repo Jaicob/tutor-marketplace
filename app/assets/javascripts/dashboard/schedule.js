@@ -87,7 +87,7 @@ $(document).ready(function() {
     end_time = moment(eventData.start_time, moment.ISO_8601);
     end_time = end_time.add(eventData.duration, 'seconds');
     var postFormat = {
-      title: "Availability",
+      title: eventData.slot_type === 0 ? 'Weekly' : 'One Time',
       start: moment(eventData.start_time, moment.ISO_8601),
       end: end_time,
       slot_id: eventData.id,
@@ -114,24 +114,9 @@ $(document).ready(function() {
     if (event.slot_type === "OneTime") {
       singleSlotUpdate(event.slot_id, event.start.toISOString(), originalDuration);
       return;
+    } else {
+      multiSlotUpdate(originalStartTime, originalDuration, event.start.toISOString(), originalDuration);
     }
-    swal({
-        title: "Update all future availability?",
-        showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Yes",
-        cancelButtonText: "No",
-        closeOnConfirm: false,
-        closeOnCancel: false,
-      },
-      function(isConfirm) {
-        if (isConfirm) {
-          multiSlotUpdate(originalStartTime, originalDuration, event.start.toISOString(), originalDuration);
-        } else {
-          singleSlotUpdate(event.slot_id, event.start.toISOString(), originalDuration);
-        }
-        swal.close();
-      });
   }
 
   var updateSlotDurationResize = function(event, delta, revertFunc, jsEvent, ui, view) {
@@ -145,25 +130,9 @@ $(document).ready(function() {
     if (event.slot_type === "OneTime") {
       singleSlotUpdate(event.slot_id, event.start.toISOString(), originalDuration);
       return;
+    } else {
+      multiSlotUpdate(originalStartTime, originalDuration, event.start.toISOString(), newDuration);
     }
-
-    swal({
-        title: "Update all future availability?",
-        showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Yes",
-        cancelButtonText: "No",
-        closeOnConfirm: false,
-        closeOnCancel: false
-      },
-      function(isConfirm) {
-        if (isConfirm) {
-          multiSlotUpdate(originalStartTime, originalDuration, event.start.toISOString(), newDuration);
-        } else {
-          singleSlotUpdate(event.slot_id, event.start.toISOString(), newDuration);
-        }
-        swal.close();
-      });
   }
 
   var addSlot = function(event, jsEvent, ui) {
