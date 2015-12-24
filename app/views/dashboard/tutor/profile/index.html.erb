@@ -7,9 +7,7 @@
   <div class="row">
     <div class="small-12 columns">
       <p>Share your profile link:<%= link_to public_profile_url %></p>
-      <%= link_to profile_tutor_path do %>
-        <button type="button" class="btn-labeled radius primary right" id="edit_profile_button">Edit</button>
-      <% end %>
+      <p><%= link_to  'Edit Profile', edit_profile_tutor_url%></p>
       <%= render 'tutor_profile' %>
     </div>
   </div>
