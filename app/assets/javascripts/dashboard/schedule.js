@@ -307,12 +307,12 @@ $(document).ready(function() {
       overlap: false,
       stick: false, // maintain when user navigates (see docs on the renderEvent method)
       weeksToRepeat: function(){
-        if ($.isNumeric($("#weeksToRepeat").val())){
-          weeks = $("#weeksToRepeat").val()
+        if ($.isNumeric($("#weeksToRepeat").val()) && $("#weeksToRepeat").val() > 1){
+          weeks = $("#weeksToRepeat").val();
         } else {
-          weeks = 2
+          weeks = 2;
         }
-        return weeks
+        return weeks;
       },
       slot_type:'Weekly'
     });
