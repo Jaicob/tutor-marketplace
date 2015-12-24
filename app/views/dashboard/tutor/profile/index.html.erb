@@ -6,7 +6,7 @@
   </div>
   <div class="row">
     <div class="small-12 columns">
-      <p>Share your profile link: <%= link_to "www.axontutors.com/tutors/#{@tutor.user.friendly_id}", tutor_path(@tutor.user) %></p>
+      <p>Share your profile link:<%= link_to public_profile_url %></p>
       <%= link_to profile_tutor_path do %>
         <button type="button" class="btn-labeled radius primary right" id="edit_profile_button">Edit</button>
       <% end %>
