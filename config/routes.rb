@@ -232,7 +232,8 @@ Rails.application.routes.draw do
   post '/change-school'       => 'cookies#change_school_id_cookie'
 
   # checkout pages
-  scope '/tutors/:id' do   
+  scope '/tutors/:id' do 
+    get   '/'    			  => 'checkout#select_course', as: 'public_profile'  
     get   '/select_course'    => 'checkout#select_course', as: 'checkout_select_course'
     post  '/set_course_id'    => 'checkout#set_course_id', as: 'checkout_set_course_id'
     get   '/select_times'     => 'checkout#select_times', as: 'checkout_select_times'

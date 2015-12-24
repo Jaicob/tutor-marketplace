@@ -63,7 +63,6 @@ class TutorsController < ApplicationController
 
     def set_tutor
       @tutor = Tutor.find(params[:id]) #This is using the tutors ID, can user switch ti Tutor.find... or change the id being used - JS
-      puts @tutor
     end
 
     def tutor_params
