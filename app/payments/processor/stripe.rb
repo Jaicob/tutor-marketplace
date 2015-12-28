@@ -62,17 +62,15 @@ module Processor
         # # end of logs testing
 
         # creates charge with token if Student does not have a Stripe Customer
-        x = ::Stripe::Charge.create(
+        stripe_charge_object = ::Stripe::Charge.create(
           amount: charge.amount,
           currency: 'usd',
           source: charge.token,
           destination: charge.tutor.acct_id,
           application_fee: charge.axon_fee
         )
-        puts "x = #{x}"
-        puts "x.errors = #{x.errors}"
-        puts "x.errors.full_messages = #{x.errors.full_messages}"
-
+        puts "stripe_charge_object !!!!!!!!! = #{stripe_charge_object}"
+        return stripe_charge_object
       else
         puts "---else---- CALLLED!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 
@@ -97,6 +95,7 @@ module Processor
           destination: charge.tutor.acct_id,
           application_fee: charge.axon_fee
         )
+        puts "stripe_charge_object !!!!!!!!! = #{stripe_charge_object}"
         return stripe_charge_object
       end
     end

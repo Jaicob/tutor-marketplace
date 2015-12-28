@@ -57,6 +57,12 @@ class CheckoutController < ApplicationController
   def process_booking
     # if new customer
       data = NewCustomerCheckout.new(params, session, @tutor).prepare_data_for_checkout_organizer
+      puts "DATA = #{data}"
+      if data[:success] == false
+        flash[:alert] = data[:errors]
+        redirect_to checkout_review_booking_path
+        return
+      end
     # elsif returning customer
       # data = ReturningCustomerCheckout.new(params, session, @tutor).prepare_data_for_checkout_organizer
     # end

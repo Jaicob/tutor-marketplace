@@ -20,27 +20,36 @@ class NewCustomerCheckout
     @promotion_id = session[:promotion_id]
   end
 
+  def prepare_data_for_checkout_organizer
+    begin 
+      create_student_user
+      appts_info = format_appt_info
+      data = {
+        tutor_id: @tutor.id,
+        student_id: @student.id,
+        stripe_token: @token,
+        appts_info: appts_info,
+        promotion_id: @promotion_id
+      }
+    rescue Exception => e
+      data = {
+        success: false,
+        errors: e.record.errors.full_messages.first
+      }
+      return data
+    end
+  end
+
   def create_student_user
-    user = User.create(
+    user = User.create!(
       first_name: @first_name,
       last_name: @last_name,
       email: @email,
       password: @password
     )
-    
-    if !user.save
-      puts "ERROR! User was not created: #{user.errors.full_messages}"
-      return
-    end
-
-    @student = user.create_student(
+    @student = user.create_student!(
       school_id: @school_id
     )
-    
-    if !@student.save
-      puts "ERROR! Student was not created: #{@student.errors.full_messages}"
-      return
-    end
 
     # TODO - send welcome email to student!
     if @create_customer
@@ -68,16 +77,6 @@ class NewCustomerCheckout
 # [{slot_id: x, course_id: x, start_time: xxx},{slot_id: x, course_id: x, start_time: xxx}]
 
 
-  def prepare_data_for_checkout_organizer
-    create_student_user
-    appts_info = format_appt_info
-    data = {
-      tutor_id: @tutor.id,
-      student_id: @student.id,
-      stripe_token: @token,
-      appts_info: appts_info,
-      promotion_id: @promotion_id
-    }
-  end
+
 
 end
