@@ -16,6 +16,7 @@
 class Student < ActiveRecord::Base
   belongs_to :user
   belongs_to :school
+  has_many :charges, dependent: :destroy
   has_many :appointments, dependent: :destroy
 
   delegate :full_name, :email, :password, :slug, to: :user

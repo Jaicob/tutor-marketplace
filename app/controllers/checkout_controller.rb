@@ -57,9 +57,10 @@ class CheckoutController < ApplicationController
   def process_booking
     # if new customer
       data = NewCustomerCheckout.new(params, session, @tutor).prepare_data_for_checkout_organizer
-      puts "DATA = #{data}"
-      if data[:success] == false
-        flash[:alert] = data[:errors]
+      if data[:success] == true
+        @new_user = Student.find(data[:student_id]).user
+      elsif data[:success] == false
+        flash[:alert] = data[:error]
         redirect_to checkout_review_booking_path
         return
       end
@@ -67,13 +68,14 @@ class CheckoutController < ApplicationController
       # data = ReturningCustomerCheckout.new(params, session, @tutor).prepare_data_for_checkout_organizer
     # end
     
-    CheckoutOrganizer.call(data)
-    # if context.success?
-    #   redirect_to checkout_confirmation_path
-    # else
-    #   flash[:alert] = context.error
-    redirect_to checkout_confirmation_path(@tutor.slug)
-    # end
+    context = CheckoutOrganizer.call(data)
+    if context.success?
+      redirect_to checkout_confirmation_path(@tutor.slug)
+    else
+      @new_user.destroy
+      flash[:alert] = context.error
+      redirect_to checkout_review_booking_path(@tutor.slug)
+    end
   end
 
   def confirmation # step 4

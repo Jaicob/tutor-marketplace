@@ -40,63 +40,31 @@ module Processor
     end
 
     def send_charge(charge)
-      puts "CALLLED!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-      @student = Student.find(charge.student_id)
-
-      puts "@student = #{@student}!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-
-      if @student.customer_id.nil?
-        puts "@student.customer_id.nil? CALLLED!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-
-
-        # # KEEP PUTS STATEMENTS here for manual testing!
-        puts "SEND CHARGE METHOD IN STRIPE.RB"
-        puts "SENDING CHARGE WITH CARD TOKEN"
-        puts "charge.amount = #{charge.amount}"
-        puts "charge.student_id = #{charge.student_id}"
-        puts "charge.tutor_acct_id = #{charge.tutor.acct_id}"
-        puts "charge.axon_fee = #{charge.axon_fee}"
-        puts "charge.tutor_fee = #{charge.tutor_fee}"
-        puts "charge.token = #{charge.token}"
-        puts "@student.customer_id = #{@student.customer_id}"
-        # # end of logs testing
-
-        # creates charge with token if Student does not have a Stripe Customer
-        stripe_charge_object = ::Stripe::Charge.create(
-          amount: charge.amount,
-          currency: 'usd',
-          source: charge.token,
-          destination: charge.tutor.acct_id,
-          application_fee: charge.axon_fee
-        )
-        puts "stripe_charge_object !!!!!!!!! = #{stripe_charge_object}"
-        return stripe_charge_object
-      else
-        puts "---else---- CALLLED!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-
-
-        # # KEEP PUTS STATEMENTS here for manual testing!
-        puts "SEND CHARGE METHOD IN STRIPE.RB"
-        puts "SENDING CHARGE FROM STUDENT CUSTOMER ACCOUNT"
-        puts "charge.amount = #{charge.amount}"
-        puts "charge.student_id = #{charge.student_id}"
-        puts "charge.tutor_acct_id = #{charge.tutor.acct_id}"
-        puts "charge.axon_fee = #{charge.axon_fee}"
-        puts "charge.tutor_fee = #{charge.tutor_fee}"
-        puts "charge.token = #{charge.token}"
-        puts "@student.customer_id = #{@student.customer_id}"
-        # # end of logs testing
-
-        # creates charge with Student's Customer and default source
-        stripe_charge_object = ::Stripe::Charge.create(
-          amount: charge.amount,
-          currency: 'usd',
-          customer: Student.find(charge.student_id).customer_id,
-          destination: charge.tutor.acct_id,
-          application_fee: charge.axon_fee
-        )
-        puts "stripe_charge_object !!!!!!!!! = #{stripe_charge_object}"
-        return stripe_charge_object
+      begin 
+        @student = Student.find(charge.student_id)
+        if @student.customer_id.nil?
+          # creates charge with token if Student does not have a Stripe Customer
+          @stripe_charge_object = ::Stripe::Charge.create(
+            amount: charge.amount,
+            currency: 'usd',
+            source: charge.token,
+            destination: charge.tutor.acct_id,
+            application_fee: charge.axon_fee
+          )
+        else
+          # creates charge with Student's Customer and default source
+          @stripe_charge_object = ::Stripe::Charge.create(
+            amount: charge.amount,
+            currency: 'usd',
+            customer: Student.find(charge.student_id).customer_id,
+            destination: charge.tutor.acct_id,
+            application_fee: charge.axon_fee
+          )
+        end
+        return @stripe_charge_object
+      rescue ::Stripe::StripeError => e
+        puts "STRIPE ERROR!!!!!!"
+        puts "DETAILS: #{e}"
       end
     end
 

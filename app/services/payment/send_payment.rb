@@ -13,7 +13,7 @@ class SendPayment
       end
     rescue => error
       context.fail!(
-        error: error,
+        error: 'Your payment was not processed.',
         failed_interactor: self.class
       )
     end

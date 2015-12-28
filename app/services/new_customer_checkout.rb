@@ -25,6 +25,7 @@ class NewCustomerCheckout
       create_student_user
       appts_info = format_appt_info
       data = {
+        success: true,
         tutor_id: @tutor.id,
         student_id: @student.id,
         stripe_token: @token,
@@ -34,7 +35,7 @@ class NewCustomerCheckout
     rescue Exception => e
       data = {
         success: false,
-        errors: e.record.errors.full_messages.first
+        error: e.record.errors.full_messages.first
       }
       return data
     end
@@ -75,8 +76,6 @@ class NewCustomerCheckout
 # {"17"=>"2015-12-19 15:00:00 UTC-!-1882", "43"=>"2015-12-21 13:30:00 UTC-!-1883"} 
 
 # [{slot_id: x, course_id: x, start_time: xxx},{slot_id: x, course_id: x, start_time: xxx}]
-
-
 
 
 end

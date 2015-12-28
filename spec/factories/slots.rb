@@ -11,6 +11,7 @@
 #  reservation_max :integer
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  slot_type       :integer          default(0)
 #
 
 FactoryGirl.define do
