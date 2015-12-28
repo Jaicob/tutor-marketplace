@@ -41,7 +41,6 @@ source 'https://rubygems.org' do
   gem 'carrierwave', '~> 0.10'
   gem 'rmagick', '~> 2.15'
   gem 'simple_form'
-  gem 'rack-cors'
   gem 'gon'
   gem 'premailer-rails'
   gem 'nokogiri'

@@ -283,7 +283,6 @@ GEM
       actionmailer (>= 3, < 5)
       premailer (~> 1.7, >= 1.7.9)
     rack (1.6.4)
-    rack-cors (0.4.0)
     rack-protection (1.5.3)
       rack
     rack-test (0.6.3)
@@ -469,7 +468,6 @@ DEPENDENCIES
   nokogiri!
   pg (~> 0.18)!
   premailer-rails!
-  rack-cors!
   rails (~> 4.2)!
   rails_layout (~> 1.0)!
   ransack!
@@ -490,4 +488,4 @@ DEPENDENCIES
   unicorn-rails (~> 2.2)!
 
 BUNDLED WITH
-   1.10.6
+   1.11.2
