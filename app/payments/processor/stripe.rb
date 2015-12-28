@@ -65,6 +65,7 @@ module Processor
       rescue ::Stripe::StripeError => e
         puts "STRIPE ERROR!!!!!!"
         puts "DETAILS: #{e}"
+        return e
       end
     end
 
