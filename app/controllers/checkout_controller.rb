@@ -1,6 +1,7 @@
 class CheckoutController < ApplicationController
   before_action :set_tutor
   before_action :back_to_search, only: [:available_times]
+  before_action :set_booking_preview
 
   def select_course 
     # step 1
@@ -45,7 +46,6 @@ class CheckoutController < ApplicationController
     # step 4, all booking information is set and shown to customer here
     # - if logged in, customer has option to use saved card (if one exists) or use a new card (with an option to save it)
     # - if NOT logged in, a customer has the option to sign in (moves to above step) or sign up and use a new card (with an option to save it)
-    @booking_preview = BookingPreview.new(session, @tutor).format_info
   end
 
   def apply_promo_code
@@ -90,6 +90,10 @@ class CheckoutController < ApplicationController
 
     def back_to_search
       @from_search = true if request.referer && request.referer.split(/[^[:alpha:]]+/).include?('search')
+    end
+
+    def set_booking_preview # for review page and booking progress bar
+      @booking_preview = BookingPreview.new(session, @tutor).format_info
     end
 
 end
