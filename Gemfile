@@ -1,12 +1,42 @@
 source 'https://rubygems.org' do
   ruby '2.2.0'
 
+  group :development, :test do
+    gem 'byebug', '~> 5.0'
+    gem 'spring', '~> 1.3'
+    gem 'rubocop', '~> 0.32'
+    gem 'rspec-rails', '~> 3.3'
+    gem 'factory_girl_rails', '~> 4.5'
+    gem 'capybara'
+    gem 'capybara-webkit'
+  end
+
+  group :development do
+    gem 'rails_layout', '~> 1.0'
+    gem 'spring-commands-rspec', '~> 1.0'
+    gem 'rack-mini-profiler', require: false
+    gem 'flamegraph', require: false
+  end
+
+  group :test do
+    gem 'ci_reporter', '~> 2.0'
+    gem 'ci_reporter_rspec', '~> 1.0'
+    gem 'database_cleaner', '~> 1.4'
+    gem 'headless'
+    gem 'launchy', '~> 2.4'
+  end
+
+  group :production do
+    gem 'unicorn', '~> 4.9'
+    gem 'unicorn-rails', '~> 2.2'
+  end
+
   gem 'annotate', '~> 2.6'
   gem 'brakeman'
   gem 'carrierwave', '~> 0.10'
-  gem 'devise-async'
   gem 'devise', '~> 3.5'
   gem 'devise_invitable', '~> 1.5'
+  gem 'devise-async'
   gem 'faker', '~> 1.4'
   gem 'figaro', '~> 1.1'
   gem 'friendly_id', '~> 5.1'
@@ -37,35 +67,5 @@ source 'https://rubygems.org' do
   gem 'sass-rails', '~> 5.0'
   gem "foundation-rails", "~> 5.5"
   gem "foundation-icons-sass-rails", "~> 3.0"
-
-  group :development, :test do
-    gem 'byebug', '~> 5.0'
-    gem 'spring', '~> 1.3'
-    gem 'rubocop', '~> 0.32'
-    gem 'rspec-rails', '~> 3.3'
-    gem 'factory_girl_rails', '~> 4.5'
-    gem 'capybara'
-    gem 'capybara-webkit'
-  end
-
-  group :development do
-    gem 'rails_layout', '~> 1.0'
-    gem 'spring-commands-rspec', '~> 1.0'
-    gem 'rack-mini-profiler'
-    gem 'flamegraph'
-  end
-
-  group :test do
-    gem 'ci_reporter', '~> 2.0'
-    gem 'ci_reporter_rspec', '~> 1.0'
-    gem 'database_cleaner', '~> 1.4'
-    gem 'headless'
-    gem 'launchy', '~> 2.4'
-  end
-
-  group :production do
-    gem 'unicorn', '~> 4.9'
-    gem 'unicorn-rails', '~> 2.2'
-  end
 
 end
