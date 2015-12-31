@@ -32,7 +32,7 @@ a.profile-settings-link {
         </div>
       </div>
 
-      <%= form_for @tutor do |f| %>
+      <%= form_for @tutor, url: tutor_path(@tutor.slug) do |f| %>
         <h5 class="header-top-margin" id="profile-fields">Profile Info</h5>
 
         <%= f.label :degree %>
@@ -81,7 +81,7 @@ a.profile-settings-link {
 
     <div class="row">
       <div class="small-8 small-centered columns">
-        <%= form_for @tutor do |f| %>
+        <%= form_for @tutor, url: tutor_path(@tutor.slug) do |f| %>
 
           <p class='file-types'>Acceptable file types: .jpg, .jpeg, .png</p>
 
@@ -138,7 +138,7 @@ a.profile-settings-link {
     <div class="row">
       <div class="small-6 small-centered columns">
         <div class="text-center">
-          <%= form_for @tutor do |f| %>
+          <%= form_for @tutor, url: tutor_path(@tutor.slug) do |f| %>
             <% %w[x y w h].each do |attribute| %>
               <%= f.hidden_field "crop_#{attribute}" %>
             <% end %>

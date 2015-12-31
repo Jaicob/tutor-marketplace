@@ -1,15 +1,19 @@
-class NewCustomerCheckout
+class PrepareCheckout
 
-  def initialize(params, session, tutor_booked) # tutor_booked is supplied to determine school_id for new student
+  def initialize(params, session, tutor_booked, student) # tutor_booked is supplied to determine school_id for new student
     # for user creation
-    @first_name = params[:user][:first_name]
-    @last_name = params[:user][:last_name]
-    @email = params[:user][:email]
-    @password = params[:user][:password]
+    if params[:user]
+      @first_name = params[:user][:first_name]
+      @last_name = params[:user][:last_name]
+      @email = params[:user][:email]
+      @password = params[:user][:password]
+    else 
+      @student = student
+    end
     # for student creation
     @school_id = tutor_booked.school_id
     # boolean for Stripe customer creation
-    @create_customer = (params[:create_customer] == 'true') ? true : false
+    @save_card = (params[:save_card] == 'true') ? true : false
     # for appointment creation
     @course_id = session[:course_id]
     @appt_info = session[:appt_info]
@@ -23,6 +27,7 @@ class NewCustomerCheckout
   def prepare_data_for_checkout_organizer
     begin 
       create_student_user
+      save_card_on_stripe_customer
       appts_info = format_appt_info
       data = {
         success: true,
@@ -32,6 +37,9 @@ class NewCustomerCheckout
         appts_info: appts_info,
         promotion_id: @promotion_id
       }
+      # if !@first_name.nil?
+      #   data[:new_user] = true
+      # end
     rescue Exception => e
       data = {
         success: false,
@@ -42,18 +50,22 @@ class NewCustomerCheckout
   end
 
   def create_student_user
-    user = User.create!(
-      first_name: @first_name,
-      last_name: @last_name,
-      email: @email,
-      password: @password
-    )
-    @student = user.create_student!(
-      school_id: @school_id
-    )
+    if !@first_name.nil?
+      user = User.create!(
+        first_name: @first_name,
+        last_name: @last_name,
+        email: @email,
+        password: @password
+      )
+      @student = user.create_student!(
+        school_id: @school_id
+      )
+      # TODO - send welcome email to student!
+    end
+  end
 
-    # TODO - send welcome email to student!
-    if @create_customer
+  def save_card_on_stripe_customer
+    if @save_card
       Processor::Stripe.new.update_customer(@student, @token) # this method creates a customer if none exists
     end
   end

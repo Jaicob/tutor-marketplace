@@ -14,14 +14,13 @@ class CreateAppointments
 
       context.appts_info.each do |appt_info|
         new_appt = Appointment.create(
-          student_id: context.student,
+          student_id: context.student_id,
           slot_id: appt_info[:slot_id],
           course_id: appt_info[:course_id],
           start_time: appt_info[:start_time]
         )
         if !new_appt.save
-          puts "ERRROR!!!!!!!!!!!!!!!!!!!"
-          puts "new_appt.errors = #{new_appt.errors.full_messages}"
+          raise "Appointment could not be saved #{new_appt.errors.full_messages.first}"
         end
         # if !new_appt.save
         #   context.fail!(

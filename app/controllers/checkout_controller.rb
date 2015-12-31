@@ -1,7 +1,7 @@
 class CheckoutController < ApplicationController
   before_action :set_tutor
+  before_action :set_student
   before_action :back_to_search, only: [:available_times]
-  before_action :set_booking_preview
 
   def select_course 
     # step 1
@@ -46,6 +46,7 @@ class CheckoutController < ApplicationController
     # step 4, all booking information is set and shown to customer here
     # - if logged in, customer has option to use saved card (if one exists) or use a new card (with an option to save it)
     # - if NOT logged in, a customer has the option to sign in (moves to above step) or sign up and use a new card (with an option to save it)
+    @booking_preview = BookingPreview.new(session, @tutor).format_info
   end
 
   def apply_promo_code
@@ -55,24 +56,22 @@ class CheckoutController < ApplicationController
   end
 
   def process_booking
-    # if new customer
-      data = NewCustomerCheckout.new(params, session, @tutor).prepare_data_for_checkout_organizer
-      if data[:success] == true
-        @new_user = Student.find(data[:student_id]).user
-      elsif data[:success] == false
-        flash[:alert] = data[:error]
-        redirect_to checkout_review_booking_path
-        return
-      end
-    # elsif returning customer
-      # data = ReturningCustomerCheckout.new(params, session, @tutor).prepare_data_for_checkout_organizer
-    # end
-    
+    data = PrepareCheckout.new(params, session, @tutor, @student).prepare_data_for_checkout_organizer
+    if data[:success] == false
+      flash[:alert] = data[:error]
+      redirect_to checkout_review_booking_path
+      return
+    end
+  
     context = CheckoutOrganizer.call(data)
     if context.success?
       redirect_to checkout_confirmation_path(@tutor.slug)
     else
-      @new_user.destroy
+      if data[:new_user] == true
+        # prevents user and studen registration on failed checkout attempt
+        @new_user = Student.find(data[:student_id]).user
+        @new_user.student.destroy && @new_user.destroy
+      end
       flash[:alert] = context.error
       redirect_to checkout_review_booking_path(@tutor.slug)
     end
@@ -90,10 +89,6 @@ class CheckoutController < ApplicationController
 
     def back_to_search
       @from_search = true if request.referer && request.referer.split(/[^[:alpha:]]+/).include?('search')
-    end
-
-    def set_booking_preview # for review page and booking progress bar
-      @booking_preview = BookingPreview.new(session, @tutor).format_info
     end
 
 end
