@@ -15,7 +15,7 @@ var SlotSelector = React.createClass({
     navBar = this.props.UINavigationBarDelegate;
     navBar.titleBarText = "Book " + this.props.tutor_name + " for " + this.props.selectedSubject.course_number;
     navBar.forwardButtonText = "Set Location";
-    navBar.backButtonText = "Change Subject";
+    navBar.backButtonText = "Change Course";
 
     // if(newLength == 1) {
     //   navBar.description = newLength + " session selected.";

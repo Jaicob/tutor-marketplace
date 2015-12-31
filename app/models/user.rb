@@ -45,9 +45,6 @@ class User < ActiveRecord::Base
 
   enum role: [:student, :tutor, :campus_manager, :admin]
 
-  extend FriendlyId
-  friendly_id :slug_candidates, use: :slugged
-
   devise :async, :invitable, :database_authenticatable, :registerable, :confirmable,
     :recoverable, :rememberable, :trackable, :validatable
 
