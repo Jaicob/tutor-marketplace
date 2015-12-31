@@ -40,8 +40,8 @@ class User < ActiveRecord::Base
   has_one :campus_manager, dependent: :destroy
   has_one :admin, dependent: :destroy
 
-  validates :first_name, presence: true
-  validates :last_name, presence: true
+  # validates :first_name, presence: true
+  # validates :last_name, presence: true
 
   enum role: [:student, :tutor, :campus_manager, :admin]
 
