@@ -14,6 +14,8 @@ source 'https://rubygems.org' do
   group :development do
     gem 'rails_layout', '~> 1.0'
     gem 'spring-commands-rspec', '~> 1.0'
+    gem 'rack-mini-profiler', require: false
+    gem 'flamegraph', require: false
   end
 
   group :test do
@@ -29,31 +31,30 @@ source 'https://rubygems.org' do
     gem 'unicorn-rails', '~> 2.2'
   end
 
-  gem 'rails', '~> 4.2'
-  gem 'uglifier', '~> 2.7'
-  gem 'jbuilder', '~> 2.3'
+  gem 'annotate', '~> 2.6'
+  gem 'brakeman'
+  gem 'carrierwave', '~> 0.10'
   gem 'devise', '~> 3.5'
   gem 'devise_invitable', '~> 1.5'
-  gem 'pg', '~> 0.18'
+  gem 'devise-async'
+  gem 'faker', '~> 1.4'
   gem 'figaro', '~> 1.1'
-  gem 'annotate', '~> 2.6'
   gem 'friendly_id', '~> 5.1'
-  gem 'carrierwave', '~> 0.10'
+  gem 'fog-aws'
+  gem 'fog'
+  gem 'gon'  
+  gem 'rails', '~> 4.2'
+  gem 'jbuilder', '~> 2.3'
+  gem 'nokogiri'
+  gem 'pg', '~> 0.18'
+  gem 'premailer-rails'
+  gem 'ransack'
   gem 'rmagick', '~> 2.15'
   gem 'simple_form'
-  gem 'rack-cors'
-  gem 'gon'
-  gem 'premailer-rails'
-  gem 'nokogiri'
   gem 'sidekiq' # for info on redis, which must be running for sidekiq: http://redis.io/topics/quickstart
   gem 'sinatra', require: false
   gem 'slim'
-  gem 'devise-async'
-  gem 'ransack'
-  gem 'fog'
-  gem 'fog-aws'
-  gem 'brakeman'
-  gem 'faker', '~> 1.4'
+  gem 'uglifier', '~> 2.7' 
 
   # Payments through Stripe
   gem 'stripe'
@@ -66,4 +67,5 @@ source 'https://rubygems.org' do
   gem 'sass-rails', '~> 5.0'
   gem "foundation-rails", "~> 5.5"
   gem "foundation-icons-sass-rails", "~> 3.0"
+
 end

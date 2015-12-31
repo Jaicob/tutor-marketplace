@@ -113,7 +113,6 @@ $(document).ready(function() {
   var updateSlotDurationDrop = function(event, delta, revertFunc, jsEvent, ui, view) {
     if (event.slot_type === "OneTime") {
       singleSlotUpdate(event.slot_id, event.start.toISOString(), originalDuration);
-      return;
     } else {
       multiSlotUpdate(originalStartTime, originalDuration, event.start.toISOString(), originalDuration);
     }
@@ -129,7 +128,6 @@ $(document).ready(function() {
 
     if (event.slot_type === "OneTime") {
       singleSlotUpdate(event.slot_id, event.start.toISOString(), originalDuration);
-      return;
     } else {
       multiSlotUpdate(originalStartTime, originalDuration, event.start.toISOString(), newDuration);
     }
