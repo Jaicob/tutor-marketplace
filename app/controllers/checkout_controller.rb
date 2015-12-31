@@ -68,7 +68,7 @@ class CheckoutController < ApplicationController
       redirect_to checkout_confirmation_path(@tutor.slug)
     else
       if data[:new_user] == true
-        # prevents user and studen registration on failed checkout attempt
+        # undoes user and student account creation on failed checkout attempt
         @new_user = Student.find(data[:student_id]).user
         @new_user.student.destroy && @new_user.destroy
       end

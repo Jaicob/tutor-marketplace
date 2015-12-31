@@ -66,10 +66,9 @@ class PrepareCheckout
 
   def save_card_on_stripe_customer
     if @save_card
-      Processor::Stripe.new.update_customer(@student, @token) # this method creates a customer if none exists
+      Processor::Stripe.new.update_customer(@student, @token) # this method both creates a customer if none exists and updates the default card on an existing customer
     end
   end
-
 
   def format_appt_info
     formatted_appts_array = []
@@ -84,10 +83,5 @@ class PrepareCheckout
     end
     return formatted_appts_array
   end
-
-# {"17"=>"2015-12-19 15:00:00 UTC-!-1882", "43"=>"2015-12-21 13:30:00 UTC-!-1883"} 
-
-# [{slot_id: x, course_id: x, start_time: xxx},{slot_id: x, course_id: x, start_time: xxx}]
-
 
 end
