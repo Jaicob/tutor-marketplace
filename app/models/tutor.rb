@@ -42,7 +42,7 @@ class Tutor < ActiveRecord::Base
   has_many :charges, dependent: :destroy
   has_many :promotions
 
-  delegate :first_name, :last_name, :full_name, :sign_in_ip, :email, :password, :slug, to: :user
+  delegate :first_name, :last_name, :full_name, :sign_in_ip, :email, :password, to: :user
 
   validates :user, presence: true
 
@@ -63,6 +63,16 @@ class Tutor < ActiveRecord::Base
 
   after_create :change_user_role_to_tutor
   after_commit :update_application_status
+
+
+  def slug_candidates
+    if self.first_name.nil? || self.last_name.nil?
+      puts "ERROR: First and last name can't be blank"
+      return
+    end
+    # variations of a user's name to create unique slugs in case of duplicate names
+    [ "#{first_name}#{last_name}", "#{first_name[0]}#{last_name}", "#{first_name}#{last_name[0]}", "#{first_name[0..1]}#{last_name}", "#{first_name}#{last_name[0..1]}", "#{first_name[0..2]}#{last_name}", "#{first_name}#{last_name[0..2]}", "#{first_name[0..3]}#{last_name}", "#{first_name}#{last_name[0..3]}"]
+  end
 
   # custom validation - prevents a tutor from changing school if tutor has courses at one school
   def school_change_allowed?
@@ -152,15 +162,15 @@ class Tutor < ActiveRecord::Base
 
   def update_action_redirect_path(tutor_params)
     if tutor_params[:birthdate] || tutor_params[:phone_number] || tutor_params[:transcript]
-      "/tutors/#{self.user.slug}/settings/account"
+      "/tutors/#{self.slug}/settings/account"
     elsif tutor_params[:appt_notes]
-      "/tutors/#{self.user.slug}/settings/appointment_settings"
+      "/tutors/#{self.slug}/settings/appointment_settings"
     elsif tutor_params[:line1] || tutor_params[:city] || tutor_params[:state] || tutor_params [:postal_code]
-      "/tutors/#{self.user.slug}/settings/payment_info"
+      "/tutors/#{self.slug}/settings/payment_info"
     elsif tutor_params[:courses_approved]
-      "/tutors/#{self.user.slug}/courses"
+      "/tutors/#{self.slug}/courses"
     else
-      "/tutors/#{self.user.slug}/settings/edit_profile"
+      "/tutors/#{self.slug}/settings/edit_profile"
     end
   end
 

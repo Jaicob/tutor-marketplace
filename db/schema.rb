@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151215001503) do
+ActiveRecord::Schema.define(version: 20151231204422) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -196,9 +196,11 @@ ActiveRecord::Schema.define(version: 20151215001503) do
     t.string   "postal_code"
     t.string   "ssn_last_4"
     t.string   "acct_id"
+    t.string   "slug"
   end
 
   add_index "tutors", ["school_id"], name: "index_tutors_on_school_id", using: :btree
+  add_index "tutors", ["slug"], name: "index_tutors_on_slug", unique: true, using: :btree
   add_index "tutors", ["user_id"], name: "index_tutors_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
@@ -229,7 +231,6 @@ ActiveRecord::Schema.define(version: 20151215001503) do
     t.integer  "invited_by_id"
     t.string   "invited_by_type"
     t.integer  "invitations_count",      default: 0
-    t.string   "slug"
     t.string   "sign_in_ip"
   end
 
@@ -238,7 +239,6 @@ ActiveRecord::Schema.define(version: 20151215001503) do
   add_index "users", ["invitations_count"], name: "index_users_on_invitations_count", using: :btree
   add_index "users", ["invited_by_id"], name: "index_users_on_invited_by_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
-  add_index "users", ["slug"], name: "index_users_on_slug", unique: true, using: :btree
 
   add_foreign_key "admins", "users"
   add_foreign_key "appointments", "charges"
