@@ -54,7 +54,7 @@ end
   User.create!(
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
-    email:  "#{SecureRandom.hex(8).to_s} @sink.sendgrid.net",,
+    email:  "#{SecureRandom.hex(8).to_s}@sink.sendgrid.net",,
     password: 'password',
     password_confirmation: 'password')
 }
@@ -121,12 +121,12 @@ Tutor.all.each do |tutor|
   tutor.update(active_status: 1)
 end
 
-# Create 200 Users to become Students, 25 for each school
+# Create 100 Users to become Students, 25 for each school
 100.times{
   User.create!(
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
-    email: Faker::Internet.safe_email(SecureRandom.hex(8).to_s),
+    email: "#{SecureRandom.hex(8).to_s}@sink.sendgrid.net",
     password: 'password',
     password_confirmation: 'password')
 }

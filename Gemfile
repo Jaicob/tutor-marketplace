@@ -16,6 +16,7 @@ source 'https://rubygems.org' do
     gem 'spring-commands-rspec', '~> 1.0'
     gem 'rack-mini-profiler', require: false
     gem 'flamegraph', require: false
+    gem "letter_opener"
   end
 
   group :test do
@@ -32,7 +33,6 @@ source 'https://rubygems.org' do
   end
 
   gem 'annotate', '~> 2.6'
-  gem 'brakeman'
   gem 'carrierwave', '~> 0.10'
   gem 'devise', '~> 3.5'
   gem 'devise_invitable', '~> 1.5'
@@ -53,7 +53,6 @@ source 'https://rubygems.org' do
   gem 'simple_form'
   gem 'sidekiq' # for info on redis, which must be running for sidekiq: http://redis.io/topics/quickstart
   gem 'sinatra', require: false
-  gem 'slim'
   gem 'uglifier', '~> 2.7' 
 
   # Payments through Stripe
