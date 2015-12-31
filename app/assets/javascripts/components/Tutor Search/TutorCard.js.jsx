@@ -14,7 +14,7 @@ var TutorCard = React.createClass({
           return (
             <p>&#8226;
               {extra_info.slice(0, 100) + "..."}
-              <a href={"/tutors/" + tutor.user.slug} className="see-more">See More</a>
+              <a href={"/tutors/" + tutor.slug} className="see-more">See More</a>
             </p>
             )
         }
@@ -27,7 +27,7 @@ var TutorCard = React.createClass({
           return (
             <p>&#8226;
               {extra_info.slice(0, 130) + "..."}
-              <a href={"/tutors/" + tutor.user.slug} className="see-more">See More</a>
+              <a href={"/tutors/" + tutor.slug} className="see-more">See More</a>
             </p>
             )
         }
@@ -51,7 +51,7 @@ var TutorCard = React.createClass({
 		return (
         <div className="card">
           <div className="card-content">
-            <a href={"/tutors/" + tutor.user.slug + search} data={"from-search"}>
+            <a href={"/tutors/" + tutor.slug + search} data={"from-search"}>
               <div className="profile-pic-box">
                 <img src={profile_pic_url} alt="Profile Picture" className="profile-pic"></img>
               </div>
@@ -78,7 +78,7 @@ var TutorCard = React.createClass({
               </div>
             </div>
           </div>
-          <a href={"/tutors/" + tutor.user.slug + search} data={"from-search"}>
+          <a href={"/tutors/" + tutor.slug + search} data={"from-search"}>
             <div className="custom-button full-width adust-position{adjustButtonPosition}">Book Now
             </div>
           </a>
