@@ -5,9 +5,15 @@
     </div>
   </div>
   <div class="row">
+    <div class="small-12 medium-8 columns">
+      <p>Share your profile link: <%= link_to "www.axontutors.com/tutors/#{@tutor.slug}", public_profile_url, class: 'blue-link' %></p>
+    </div>
+    <div class="small-12 medium-4 columns">
+      <p><%= link_to 'Edit Profile', edit_profile_tutor_path(@tutor.slug), class: 'custom-button full-width' %></p>
+    </div>  
+  </div>
+  <div class="row">
     <div class="small-12 columns">
-      <p>Share your profile link:<%= link_to public_profile_url %></p>
-      <p><%= link_to  'Edit Profile', edit_profile_tutor_url%></p>
       <%= render 'tutor_profile' %>
     </div>
   </div>

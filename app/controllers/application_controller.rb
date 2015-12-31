@@ -17,19 +17,19 @@ class ApplicationController < ActionController::Base
 
     # Devise modification
     def after_sign_in_path_for(resource)
-      case resource.role
-      when 'student'
-        if cookies[:checkout_login_redirect]
-          checkout_payment_options_path(cookies[:checkout_login_redirect])
-        else
+      if cookies[:checkout_login_redirect]
+        checkout_review_booking_path(cookies[:checkout_login_redirect])
+      else 
+        case resource.role
+        when 'student'
           home_student_path(resource)
+        when 'tutor'
+          home_tutor_path(resource)
+        when 'campus_manager'
+          admin_school_path(resource.campus_manager.school)
+        when 'admin'
+          admin_schools_path
         end
-      when 'tutor'
-        home_tutor_path(resource)
-      when 'campus_manager'
-        admin_school_path(resource.campus_manager.school)
-      when 'admin'
-        admin_schools_path
       end
     end
 

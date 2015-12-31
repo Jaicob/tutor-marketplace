@@ -55,3 +55,18 @@ input.custom-button.full-width.checkout-submit {
     border-radius: 0 !important;
     font-weight: 400;
 }
+
+// Styles for Booking Progress Bar 
+
+.booking-progress-title {
+    background-color: #D0D0D0;
+    h5.small-margins {
+      margin: 0.2em 0;
+    }
+}
+.booking-progress-headers {
+    background-color: #E8E8E8;
+    h6.small-margins {
+      margin: 0.2em 0;
+    }
+}

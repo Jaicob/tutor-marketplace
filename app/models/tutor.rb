@@ -46,6 +46,9 @@ class Tutor < ActiveRecord::Base
 
   validates :user, presence: true
 
+  extend FriendlyId
+  friendly_id :slug_candidates, use: :slugged
+
   enum application_status: ['Incomplete', 'Complete', 'Approved']
   enum active_status: ['Inactive', 'Active']
   enum degree: ["B.A.","B.S.","M.B.A.","M.S.","M.Ed.","PhD."]

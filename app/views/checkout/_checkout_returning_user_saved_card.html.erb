@@ -1,0 +1,140 @@
+<!-- Partial for bottom 'Complete Your Booking' box for returning users who do have a saved card -->
+<div class="row">
+  <div class="small-12 columns">
+    <div class="row">
+      <div class="small-12 columns">
+        <h3 class="margin-top-2em margin-bottom-small">Complete Your Booking</h4>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="small-12 columns">
+    <div class="box margin-bottom-4em zero-padding">
+      <div class="padding-1em">
+        <div class="row">
+          <div class="small-12 columns">
+            <h4>Payment Information</h4>
+          </div>
+        </div>
+
+          <form action="/tutors/<%= @tutor.slug %>/process_booking" method="POST" id="payment-form">
+
+
+        <div class="row">
+          <div class="small-12 medium-4 columns">
+            <div class="margin-1em">
+              <input type="radio" name="default_or_new_card" id="default-card" value="default-card" checked="true" onclick="toggleCardFormDisabled(this)">
+              <span class="save-card-radio">Use my saved card</span><br />
+              <p><%= @student.card_brand %> **** <%= @student.last_4_digits %></p>
+            </div>
+            <div class="margin-1em">
+              <input type="radio" name="default_or_new_card" id="new-card" value="new-card" onclick="toggleCardFormDisabled(this)">
+              <span class="save-card-radio">Use a different card</span>
+            </div>
+          </div>
+          <div class="small-12 medium-8 columns">
+            <div class="box zero-padding vertical-margin-1em" id="new-card-form">
+              <div class="row">
+                <div class="small-12 medium-6 columns">
+
+                  <span class="checkout-card-errors"></span>
+                  <label>
+                    <span>Card Number</span>
+                    <input type="text" class="card-form-input border-radius" data-stripe="number" disabled="true" required="true"/>
+                  </label>
+                  <div class="row small-collapse">
+                    <div class="small-6 medium-3 columns zero-padding">
+                      <label>
+                        <span>Month</span>
+                        <select required="true" data-stripe="exp-month" class="card-form-input" disabled="true">
+                          <option value="1" selected="true">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                          <option value="6">6</option>
+                          <option value="7">7</option>
+                          <option value="8">8</option>
+                          <option value="9">9</option>
+                          <option value="10">10</option>
+                          <option value="11">11</option>
+                          <option value="12">12</option>
+                        </select>
+                      </label>
+                    </div>
+                    <div class="small-6 medium-3 medium-offset-1 columns zero-padding">
+                      <label>
+                        <span>Year</span>
+                        <select required="true" data-stripe="exp-year" class="card-form-input" disabled="true">
+                          <option value="2015">2015</option>
+                          <option value="2016" selected="true">2016</option>
+                          <option value="2017">2017</option>
+                          <option value="2018">2018</option>
+                          <option value="2019">2019</option>
+                          <option value="2020">2020</option>
+                          <option value="2021">2021</option>
+                          <option value="2022">2022</option>
+                          <option value="2023">2023</option>
+                          <option value="2024">2024</option>
+                          <option value="2025">2025</option>
+                          <option value="2026">2026</option>
+                          <option value="2027">2027</option>
+                          <option value="2028">2028</option>
+                          <option value="2029">2029</option>
+                          <option value="2030">2030</option>
+                        </select>
+                      </label>
+                    </div>
+                    <div class="small-6 medium-3 medium-offset-2 columns zero-padding">
+                      <label>
+                        <span>CVC</span>
+                        <input type="text" class="card-form-input border-radius" data-stripe="cvc" required="true" disabled="true"/>
+                      </label>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="small-12 medium-6 columns padding-1em">
+
+                  <input type="radio" name="save_card" value="true" checked="true" class="card-form-input" disabled="true">
+                  <span class="save-card-radio">Save this card as my default</span><br />
+                  <input type="radio" name="save_card" value="false" class="card-form-input" disabled="true">
+                  <span class="save-card-radio">Don't save this card</span>
+                  <p class="small-font">Security Notice: We store all of our customers' card details on a secure PCI compliant server managed by <a href="https://stripe.com/about" target="_blank" class="blue-link">Stripe</a>.</p>
+      
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row submit-bar">
+        <div class="small-12 medium-6 medium-offset-6 columns">
+          <button type="submit" class="custom-button full-width create-and-pay-btn">Complete Booking & Pay</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+function toggleCardFormDisabled(element)
+  {
+    var radio = element.id;
+    var card_form_inputs = document.getElementsByClassName('card-form-input');
+    var arrayLength = card_form_inputs.length;
+
+
+    for (var i = 0; i < arrayLength; i++) {
+      if (radio == 'new-card') {
+        card_form_inputs[i].disabled = false;
+      } else if (radio == 'default-card') {
+        card_form_inputs[i].disabled = true;
+      }
+    }
+  }
+</script>

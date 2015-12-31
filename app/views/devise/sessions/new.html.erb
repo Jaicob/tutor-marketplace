@@ -13,7 +13,7 @@
           <%= f.submit 'Go', class: 'custom-button full-width' %>
         <% end %>
         <h6 class="center margin-top-2em margin-bottom-1em">First time booking with Axon?</h6>
-        <button class="custom-button full-width blue">Sign up to study smarter</button>
+        <%= link_to 'Sign up to study smarter', new_user_registration_path, class: "custom-button full-width blue" %>
       </div>
     </div>
   </div>

@@ -11,10 +11,15 @@
       // Disable the submit button to prevent repeated clicks
       $form.find('button').prop('disabled', true);
 
-      Stripe.card.createToken($form, stripeResponseHandler);
-
-      // Prevent the form from submitting with the default action
-      return false;
+      if($('input#default-card').is(':checked')) {
+        console.log('CHECKED!');
+        $form.get(0).submit();
+      } else {
+        Stripe.card.createToken($form, stripeResponseHandler);
+        // Prevent the form from submitting with the default action
+        return false;
+      }      
+      
     });
   });
 
@@ -132,131 +137,18 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="small-12 columns">
-              <div class="row">
-                <div class="small-12 columns">
-                  <h3 class="margin-top-2em margin-bottom-small">Complete Your Booking</h4>
-                </div>
-              </div>
-              <div class="row sign-in-bar">
-                <div class="small-12 medium-3 columns">
-                  <p class="already-registered">Already registered?</p>
-                </div>
-                <div class="small-12 medium-3 columns">
-                  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |ff| %>
-                    <%= ff.text_field :email, placeholder: 'Email', required: true, class: 'border-radius no-bottom-margin' %>
-                </div>
-                <div class="small-12 medium-3 columns">
-                    <%= ff.text_field :password, placeholder: 'Password', required: true, class: 'border-radius no-bottom-margin' %>
-                    <%= ff.hidden_field :checkout_login_redirect, value: @tutor.id %>
-                </div>
-                <div class="small-12 medium-3 columns">
-                    <%= ff.submit 'Sign in', class: 'custom-button full-width blue-green no-bottom-margin' %>
-                  <% end %>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="small-12 columns">
-              <div class="box zero-padding no-top-border-radius margin-bottom-4em">
-                <form action="/tutors/<%= @tutor.slug %>/process_booking" method="POST" id="payment-form">
-                <div class="row padding-1em">
-                  <div class="small-12 medium-6 columns">
-                    <div class="max-width-16em">
-                      <h4>Create Your Account</h4>
+          <% if current_user %>
+            <% if current_user.student && current_user.student.customer_id %>
+              <%= render '/checkout/checkout_returning_user_saved_card' %>
+            <% elsif current_user.student %>
+              <%= render '/checkout/checkout_returning_user_no_card' %>
+            <% elsif current_user.tutor %>
+              <%= render '/checkout/checkout_tutor_error_message' %>
+            <% end %>
+          <% else %>
+            <%= render '/checkout/checkout_new_user' %>
+          <% end %>
 
-                        <label for="user_first_name">First name</label>
-                        <input class="border-radius" required="required" type="text" name="user[first_name]" id="user_first_name" />
-                        <label for="user_last_name">Last name</label>
-                        <input class="border-radius" required="required" type="text" name="user[last_name]" id="user_last_name" />
-                        <label for="user_email">Email</label>
-                        <input class="border-radius" required="required" type="email" value="" name="user[email]" id="user_email" />
-                        <label for="user_password">Password</label>
-                        <input class="border-radius" required="required" type="password" name="user[password]" id="user_password" />
-
-                    </div>
-                  </div>
-                  <div class="small-12 medium-6 columns">
-                    <div class="max-width-16em">
-                    <h4>Payment Information</h4>
-                      <span class="checkout-card-errors"></span>
-                      <label>
-                        <span>Card Number</span>
-                        <input type="text" class="border-radius" data-stripe="number" required="true"/>
-                      </label>
-                      <div class="row small-collapse">
-                        <div class="small-6 medium-3 columns zero-padding">
-                          <label>
-                            <span>Month</span>
-                            <select required="true" data-stripe="exp-month">
-                              <option value="1" selected="true">1</option>
-                              <option value="2" selected="true">2</option>
-                              <option value="3" selected="true">3</option>
-                              <option value="4" selected="true">4</option>
-                              <option value="5" selected="true">5</option>
-                              <option value="6" selected="true">6</option>
-                              <option value="7" selected="true">7</option>
-                              <option value="8" selected="true">8</option>
-                              <option value="9" selected="true">9</option>
-                              <option value="10" selected="true">10</option>
-                              <option value="11" selected="true">11</option>
-                              <option value="12" selected="true">12</option>
-                            </select>
-                          </label>
-                        </div>
-                        <div class="small-6 medium-3 medium-offset-1 columns zero-padding">
-                          <label>
-                            <span>Year</span>
-                            <select required="true" data-stripe="exp-year">
-                              <option value="2015" selected="true">2015</option>
-                              <option value="2016" selected="true">2016</option>
-                              <option value="2017" selected="true">2017</option>
-                              <option value="2018" selected="true">2018</option>
-                              <option value="2019" selected="true">2019</option>
-                              <option value="2020" selected="true">2020</option>
-                              <option value="2021" selected="true">2021</option>
-                              <option value="2022" selected="true">2022</option>
-                              <option value="2023" selected="true">2023</option>
-                              <option value="2024" selected="true">2024</option>
-                              <option value="2025" selected="true">2025</option>
-                              <option value="2026" selected="true">2026</option>
-                              <option value="2027" selected="true">2027</option>
-                              <option value="2028" selected="true">2028</option>
-                              <option value="2029" selected="true">2029</option>
-                              <option value="2030" selected="true">2030</option>
-                            </select>
-                          </label>
-                        </div>
-                        <div class="small-6 medium-3 medium-offset-2 columns zero-padding">
-                          <label>
-                            <span>CVC</span>
-                            <input type="text" class="border-radius" data-stripe="cvc" required="true"/>
-                          </label>
-                        </div>
-
-                        <input type="radio" name="create_customer" value="true" checked="true">
-                        <span class="save-card-radio">Save this card for easy checkouts</span><br />
-
-                        <input type="radio" name="create_customer" value="false">
-                        <span class="save-card-radio">Don't save this card</span>
-
-                        <p class="small-font">Security Notice: We store all of our customers' card details on a secure PCI compliant server managed by <a href="https://stripe.com/about" target="_blank" class="blue-link">Stripe</a>.</p>
-
-                      </div>       
-                    </div>
-                  </div>
-                </div>
-                <div class="row submit-bar">
-                  <div class="small-12 medium-6 medium-offset-6 columns">
-                    <button type="submit" class="custom-button full-width creat-and-pay-btn">Create Account & Pay</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>

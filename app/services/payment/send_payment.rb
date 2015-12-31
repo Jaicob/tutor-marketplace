@@ -5,15 +5,15 @@ class SendPayment
     begin 
       if context.charge.amount > 0
         processor = PaymentFactory.new.build
-        stripe_charge_object = processor.send_charge(context.charge)
-        context.charge.update(stripe_charge_id: stripe_charge_object.id)  
+        @stripe_create_charge_response = processor.send_charge(context.charge)
+        context.charge.update(stripe_charge_id: @stripe_create_charge_response.id)  
       else
         puts "No payment necessary"
         return
       end
     rescue => error
       context.fail!(
-        error: error,
+        error: @stripe_create_charge_response.message,
         failed_interactor: self.class
       )
     end

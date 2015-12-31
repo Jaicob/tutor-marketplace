@@ -20,9 +20,10 @@
 #                    checkout_set_times POST     /tutors/:id/set_appt_times(.:format)                               checkout#set_times
 #              checkout_select_location GET      /tutors/:id/select_location(.:format)                              checkout#select_location
 #                 checkout_set_location POST     /tutors/:id/set_location(.:format)                                 checkout#set_location
-#              checkout_payment_options GET      /tutors/:id/payment_options(.:format)                              checkout#payment_options
+#               checkout_review_booking GET      /tutors/:id/review_booking(.:format)                               checkout#review_booking
+#             checkout_apply_promo_code POST     /tutors/:id/apply_promo_code(.:format)                             checkout#apply_promo_code
+#              checkout_process_booking POST     /tutors/:id/process_booking(.:format)                              checkout#process_booking
 #                 checkout_confirmation GET      /tutors/:id/confirmation(.:format)                                 checkout#confirmation
-#                      checkout_summary GET      /tutors/:id/summary(.:format)                                      checkout#summary
 #                      new_user_session GET      /users/sign_in(.:format)                                           sessions#new
 #                          user_session POST     /users/sign_in(.:format)                                           sessions#create
 #                  destroy_user_session DELETE   /users/sign_out(.:format)                                          sessions#destroy

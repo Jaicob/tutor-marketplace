@@ -1,5 +1,6 @@
 class CheckoutController < ApplicationController
   before_action :set_tutor
+  before_action :set_student
   before_action :back_to_search, only: [:available_times]
 
   def select_course 
@@ -55,19 +56,25 @@ class CheckoutController < ApplicationController
   end
 
   def process_booking
-    # if new customer
-      data = NewCustomerCheckout.new(params, session, @tutor).prepare_data_for_checkout_organizer
-    # elsif returning customer
-      # data = ReturningCustomerCheckout.new(params, session, @tutor).prepare_data_for_checkout_organizer
-    # end
-    
-    CheckoutOrganizer.call(data)
-    # if context.success?
-    #   redirect_to checkout_confirmation_path
-    # else
-    #   flash[:alert] = context.error
-    redirect_to checkout_confirmation_path(@tutor.slug)
-    # end
+    data = PrepareCheckout.new(params, session, @tutor, @student).prepare_data_for_checkout_organizer
+    if data[:success] == false
+      flash[:alert] = data[:error]
+      redirect_to checkout_review_booking_path
+      return
+    end
+  
+    context = CheckoutOrganizer.call(data)
+    if context.success?
+      redirect_to checkout_confirmation_path(@tutor.slug)
+    else
+      if data[:new_user] == true
+        # undoes user and student account creation on failed checkout attempt
+        @new_user = Student.find(data[:student_id]).user
+        @new_user.student.destroy && @new_user.destroy
+      end
+      flash[:alert] = context.error
+      redirect_to checkout_review_booking_path(@tutor.slug)
+    end
   end
 
   def confirmation # step 4

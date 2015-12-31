@@ -25,7 +25,7 @@ class Devise::SessionsController < DeviseController
   def create
     if params[:user][:checkout_login_redirect]
       tutor_id = params[:user][:checkout_login_redirect] # this is the id of the tutor who was being booked by customer
-      cookies[:checkout_login_redirect] = { value: tutor_id, expires: 5.minutes.from_now }
+      cookies[:checkout_login_redirect] = { value: tutor_id, expires: 10.seconds.from_now }
     end
     self.resource = warden.authenticate!(auth_options)
     set_flash_message(:notice, :signed_in) if is_flashing_format?
@@ -42,7 +42,6 @@ class Devise::SessionsController < DeviseController
         redirect_to after_sign_in_path_for(resource)
       }
     end
-    # respond_with resource, location: 
   end
 
   # DELETE /resource/sign_out
