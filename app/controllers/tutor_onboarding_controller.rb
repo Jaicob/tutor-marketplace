@@ -1,9 +1,27 @@
 class TutorOnboardingController < ApplicationController
-  before_action :set_user
-  before_action :set_tutor
+  before_action :set_user, except: [:create_existing_tutor_account]
+  before_action :set_tutor, except: [:create_existing_tutor_account]
   before_action :set_tutor_course, only: [:update_course, :delete_course]
 
   helper OnboardingLinksHelper
+
+  def create_existing_tutor_account
+    puts "NEED TO CENSOR PASSWORD!"
+    email = params[:existing_tutor][:email]
+    password = params[:existing_tutor][:password]
+    response = ExistingTutorOnboarding.new(email, password).create_user_and_tutor
+    if response[:success] == true
+      tutor = response[:tutor]
+      redirect_to application_for_existing_tutor_path(tutor.slug)
+    else
+      flash[:error] = response[:error]
+      redirect_to welcome_back_path
+    end
+  end
+
+  def application_for_existing_tutor
+    # modified application for existing tutor, which submits to submit_application
+  end
 
   def application
   end

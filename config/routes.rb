@@ -4,6 +4,8 @@
 #                                  root GET      /                                                                  single_views#home
 #                           get_started GET      /get-started(.:format)                                             single_views#student_landing
 #                        become_a_tutor GET      /become-a-tutor(.:format)                                          single_views#tutor_landing
+#                          welcome_back GET      /welcome-back(.:format)                                            single_views#existing_tutor_landing
+#                 create_existing_tutor POST     /create-existing-tutor(.:format)                                   tutor_onboarding#create_existing_tutor_account
 #                                search GET      /search(.:format)                                                  single_views#search
 #                      search_from_home POST     /search(.:format)                                                  search#search_from_home
 #                     restricted_access GET      /restricted-access(.:format)                                       single_views#restricted_access
@@ -14,6 +16,7 @@
 #                     privacy_and_terms GET      /privacy-and-terms(.:format)                                       single_views#privacy_and_terms
 #                            set_school POST     /set-school(.:format)                                              cookies#set_school_id_cookie
 #                         change_school POST     /change-school(.:format)                                           cookies#change_school_id_cookie
+#                        public_profile GET      /tutors/:id(.:format)                                              checkout#select_course
 #                checkout_select_course GET      /tutors/:id/select_course(.:format)                                checkout#select_course
 #                checkout_set_course_id POST     /tutors/:id/set_course_id(.:format)                                checkout#set_course_id
 #                 checkout_select_times GET      /tutors/:id/select_times(.:format)                                 checkout#select_times
@@ -71,6 +74,7 @@
 #             appointment_history_tutor GET      /tutors/:id/settings/appointment_history(.:format)                 dashboard/tutor/settings#appointment_history
 #         tutor_payment_info_form_tutor GET      /tutors/:id/tutor_payment_info_form(.:format)                      tutors#tutor_payment_info_form
 #       update_tutor_payment_info_tutor PATCH    /tutors/:id/update_tutor_payment_info(.:format)                    tutors#update_tutor_payment_info
+#        application_for_existing_tutor GET      /tutors/:id/onboarding/existing_tutor(.:format)                    tutor_onboarding#application_for_existing_tutor
 #          onboarding_application_tutor GET      /tutors/:id/onboarding/application(.:format)                       tutor_onboarding#application
 #              onboarding_courses_tutor GET      /tutors/:id/onboarding/courses(.:format)                           tutor_onboarding#courses
 #             onboarding_schedule_tutor GET      /tutors/:id/onboarding/schedule(.:format)                          tutor_onboarding#schedule
@@ -219,6 +223,10 @@ Rails.application.routes.draw do
   # landing pages
   get '/get-started'          => 'single_views#student_landing'
   get '/become-a-tutor'       => 'single_views#tutor_landing'
+  
+  # landing page and post url for registering existing tutors
+  get '/welcome-back'         => 'single_views#existing_tutor_landing'
+  post '/create-existing-tutor'  => 'tutor_onboarding#create_existing_tutor_account'
 
   # other single_view pages
   get '/search'               => 'single_views#search'
@@ -278,6 +286,7 @@ Rails.application.routes.draw do
       patch 'update_tutor_payment_info' => 'tutors#update_tutor_payment_info', as: 'update_tutor_payment_info'
 
       # new tutor onboarding routes (for loading step-by-step instruction wizard)
+      get '/onboarding/existing_tutor'  => 'tutor_onboarding#application_for_existing_tutor', as: 'application_for_existing'
       get '/onboarding/application'     => 'tutor_onboarding#application'
       get '/onboarding/courses'         => 'tutor_onboarding#courses'
       get '/onboarding/schedule'        => 'tutor_onboarding#schedule'

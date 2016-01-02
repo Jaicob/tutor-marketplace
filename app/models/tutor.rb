@@ -42,7 +42,7 @@ class Tutor < ActiveRecord::Base
   has_many :charges, dependent: :destroy
   has_many :promotions
 
-  delegate :first_name, :last_name, :full_name, :sign_in_ip, :email, :password, :slug, to: :user
+  delegate :first_name, :last_name, :full_name, :sign_in_ip, :email, :password, to: :user
 
   validates :user, presence: true
 
@@ -64,7 +64,7 @@ class Tutor < ActiveRecord::Base
   after_create :change_user_role_to_tutor
   after_commit :update_application_status
 
-  # custom validation - prevents a tutor from changing school if tutor has courses at one school
+  # validation method used in controllers - prevents a tutor from changing school if tutor has courses at one school
   def school_change_allowed?
     self.courses.count > 0 ? false : true
   end
