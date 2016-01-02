@@ -16,7 +16,6 @@ source 'https://rubygems.org' do
     gem 'spring-commands-rspec', '~> 1.0'
     gem 'rack-mini-profiler', require: false
     gem 'flamegraph', require: false
-    gem "letter_opener"
   end
 
   group :test do
