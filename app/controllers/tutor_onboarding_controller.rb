@@ -6,13 +6,12 @@ class TutorOnboardingController < ApplicationController
   helper OnboardingLinksHelper
 
   def create_existing_tutor_account
-    puts "NEED TO CENSOR PASSWORD!"
     email = params[:existing_tutor][:email]
     password = params[:existing_tutor][:password]
     response = ExistingTutorOnboarding.new(email, password).create_user_and_tutor
     if response[:success] == true
       tutor = response[:tutor]
-      redirect_to application_for_existing_tutor_path(tutor.slug)
+      sign_in_and_redirect(tutor.user)
     else
       flash[:error] = response[:error]
       redirect_to welcome_back_path
@@ -28,6 +27,7 @@ class TutorOnboardingController < ApplicationController
 
   def submit_application
     if @tutor.update(tutor_params)
+      @tutor.update_onboarding_status(1)
       redirect_to onboarding_courses_tutor_path(@tutor.slug)
     else
       redirect_to :back
@@ -64,6 +64,7 @@ class TutorOnboardingController < ApplicationController
 
   def submit_courses
     @tutor.update(tutor_params)
+    @tutor.update_onboarding_status(2)
     redirect_to onboarding_schedule_tutor_path(@tutor.slug)
   end
 
@@ -74,7 +75,7 @@ class TutorOnboardingController < ApplicationController
   end
 
   def submit_schedule
-    @tutor.update(tutor_params)
+    @tutor.update_onboarding_status(3)
     redirect_to onboarding_payment_details_tutor_path(@tutor.slug)
   end
 
@@ -86,7 +87,8 @@ class TutorOnboardingController < ApplicationController
 
   def submit_payment_details
     if @tutor.update_attributes(tutor_params)
-      @tutor.update_attributes(last_4_acct: params[:last_4_acct], onboarding_status: 4)
+      @tutor.update_attributes(last_4_acct: params[:last_4_acct])
+      @tutor.update_onboarding_status(4)
       UpdateTutorAccount.call(tutor: @tutor, token: params[:stripeToken])
       respond_to do |format|
         format.js { render :payment_settings_updated }

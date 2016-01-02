@@ -180,6 +180,12 @@ class Tutor < ActiveRecord::Base
     end
   end
 
+  def update_onboarding_status(step_completed)
+    if step_completed > self.onboarding_status
+      self.update(onboarding_status: step_completed)
+    end
+  end
+
   def update_application_status
     # method called in after_commit hook to automatically update a tutor's application status and send application_completed email
     if self.complete_application? && self.application_status == 'Incomplete'

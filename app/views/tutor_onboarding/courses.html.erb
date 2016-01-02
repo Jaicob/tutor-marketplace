@@ -78,7 +78,6 @@
   </div>
   <div class="small-12 medium-4 columns">
     <%= form_for @tutor, url: submit_courses_tutor_path(@tutor.slug) do |f| %>
-      <%= f.hidden_field :onboarding_status, value: 2 %>
       <%= f.submit "Next Step", class: 'custom-button margin-bottom large full-width bold' %>
     <% end %>   
   </div>

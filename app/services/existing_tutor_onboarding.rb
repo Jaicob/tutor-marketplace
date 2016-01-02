@@ -14,10 +14,7 @@ class ExistingTutorOnboarding
         last_name: tutor_email_list.first[@email][:last]
       )
       if user.save
-        tutor = user.create_tutor!(
-          phone_number: params[:user][:tutor][:phone_number],
-          school_id: params[:user][:tutor][:school_id]
-        )
+        tutor = user.create_tutor!
         # send SPECIAL EXISTING TUTOR welcome email
         # TODO - create special welcome email for these tutors
         TutorManagementMailer.delay.existing_tutor_welcome_email(user.id)
