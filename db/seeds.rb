@@ -85,7 +85,7 @@ User.all.each do |user|
     extra_info_3: extra_info.sample,
     graduation_year: graduation_year.sample,
     phone_number: Faker::Number.number(10)
-    )
+  )
   x = Tutor.count
   if (x == 25) || (x == 50) || (x == 75)
     n += 1
