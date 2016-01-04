@@ -59,7 +59,6 @@ class TutorOnboardingController < ApplicationController
   end
 
   def submit_courses
-    @tutor.update(tutor_params)
     @tutor.update_onboarding_status(2)
     redirect_to onboarding_schedule_tutor_path(@tutor.slug)
   end
