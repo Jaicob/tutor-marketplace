@@ -45,7 +45,7 @@ class ExistingTutorOnboarding
   end
 
   def existing_tutor?
-    if tutors_by_email.keys.include?(@email)
+    if tutors_by_email.has_key?(@email)
       true
     else
       false
