@@ -14,7 +14,8 @@ module DashboardNavHelper
         'Home'      => home_tutor_path(@tutor.slug),
         'Schedule'  => schedule_tutor_path(@tutor.slug),
         'Courses'   => tutor_courses_path(@tutor.slug),
-        'Promotions' => tutor_promotions_path(@tutor.slug),
+          # 'Promotions' => tutor_promotions_path(@tutor.slug),
+          # TODO-JT - finish working on Tutor created Promotions and add this link back in
         'Profile'   => profile_tutor_path(@tutor.slug),
         'Settings'  => account_tutor_path(@tutor.slug)
       }

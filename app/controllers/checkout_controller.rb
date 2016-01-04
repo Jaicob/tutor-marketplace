@@ -84,7 +84,7 @@ class CheckoutController < ApplicationController
   private
 
     def set_tutor
-      @tutor = User.find(params[:id]).tutor
+      @tutor = Tutor.find(params[:id])
     end
 
     def back_to_search
