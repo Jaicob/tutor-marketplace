@@ -80,17 +80,17 @@ $(document).ready(function()
 
         <p class="prompt">1. What in your experience makes you a great tutor?</p>
         <div class="input statement-field">
-          <%= f.text_area :extra_info_1, placeholder: 'Statement #1', required: true %>
+          <%= f.text_area :extra_info_1, placeholder: 'Statement #1', maxlength: 100, required: true %>
         </div>
 
         <p class="prompt">2. What is your proudest academic achievement?</p>
         <div class="input statement-field">
-          <%= f.text_area :extra_info_2, placeholder: 'Statement #2', required: true %>
+          <%= f.text_area :extra_info_2, placeholder: 'Statement #2', maxlength: 100, required: true %>
         </div>
 
         <p class="prompt">3. What’s one fun fact you want to share with your students?</p>
         <div class="input statement-field">
-          <%= f.text_area :extra_info_3, placeholder: 'Statement #3', required: true %>
+          <%= f.text_area :extra_info_3, placeholder: 'Statement #3', maxlength: 100, required: true %>
         </div>
 
         <h4>File Upload</h4>
