@@ -10,8 +10,7 @@
                   <table class="twelve columns">
                     <tr>
                       <td class="panel text-pad body-container">
-                        <!-- <img width="580" height="100" src="http://placehold.it/580x100?text=Axon Logo"> -->
-                        <img width="580" height="100" src="https://www.dropbox.com/s/ay7xb7yhh73n350/Axon%20Letterhead.png?dl=1">
+                        <img width="600" height="198" src="http://axontutors.s3.amazonaws.com/axon_logo_color.png">
                         <table class="row">
                           <tr>
                             <td class="wrapper last center text-center">
@@ -24,22 +23,30 @@
                         <table class="row">
                           <table class="row">
                             <tr>
-                              <td class="wrapper last">
-                                <img width="580" height="387" src="https://www.dropbox.com/s/ud092urusq5irpy/Activation%20Cover%20Photo.jpg?dl=1">
-                              </td>
-                              <td class="expander"></td>
-                            </tr>
-                          </table>
-                          <table class="row">
-                            <tr>
                               <td class="wrapper last text-pad">
                                 <p class="lead message-content">
-                                  Hi <%= @user.full_name %>, <br><br>
+                                  Hi <%= @user.first_name.capitalize %>, <br><br>
 
-                                  We are pleased to inform you that your application to become an Axon Tutor has been accepted. We are very excited to have you on board.<br><br>
+                                  Congratulations! Your tutor profile has been approved for the <%= @user.school.name %> so you are all ready to get booked for tutoring appointments.  Now there’s just a few simple but important things to keep in mind:<br><br>
 
-                                  The campus manager for the University of Georgia is Katie Manrodt. She will reach out to you shortly to help you familiarize yourself with our system.<br><br>
+                                  <ol type="1">
+                                    <li>
+                                      Make sure your schedule is up to date and that you are comfortable with all the courses and prices that you have set.<br><br>
+                                    </li>
+                                    <li>
+                                      When a student books an appointment with you, you will get an email with the student’s name, the course they need help with, their preferred meeting place, and their contact information.<br><br>
+                                    </li>
+                                    <li>
+                                      All Axon appointments happen on or right around campus - this is to make it as easy as possible for you the tutor and the student. Student centers, libraries, and coffee shops on or near campus are the most popular locations.<br><br>
+                                    </li>
+                                    <li>
+                                      And finally, it is the tutor’s responsibility to reach out to students and decide where on the campus to meet as the final decision is yours.<br><br>
+                                    </li>
+                                  </ol>
 
+                                  <i>Handy Tip: On your tutor dashboard under “settings,” there is a place to add a blurb. There you can add a personal note to students that will be included in the email confirmation that they receive such as the ideal location where you would like to meet.</i><br><br>
+
+                                  We really want to make sure we help you grow your tutoring business so if you think that there is something that we could be doing better, please send us an email (info@axontutors.com) or give us a call (762-585-4850).<br><br>
                                   Thanks,<br><br>
 
                                   Axon Team
@@ -48,37 +55,6 @@
                             </tr>
                           </table>
                         </table>
-                      </td>
-                      <td class="expander"></td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-            </table>
-            <table class="row">
-              <tr>
-                <td class="wrapper last offset-by-three top-buffer-only">
-                  <table class="six columns">
-                    <tr>
-                      <td class="panel footer center middle">
-                        <center>Made with <span style="color: red">♥</span> from Athens, GA</center>
-                      </td>
-                      <td class="expander"></td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-              <tr>
-              <tr>
-                <td class="wrapper last">
-                  <table class="twelve columns">
-                    <tr>
-                      <td align="center">
-                        <center>
-                        <p style="text-align:center;">
-                          <a href="#">Unsubscribe</a>
-                        </p>
-                        </center>
                       </td>
                       <td class="expander"></td>
                     </tr>
