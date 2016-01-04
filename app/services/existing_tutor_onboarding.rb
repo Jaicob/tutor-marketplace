@@ -1,4 +1,11 @@
 class ExistingTutorOnboarding
+  require 'csv'
+
+  # x = ExistingTutorOnboarding.new('jtjobe@gmail.com', 'password')
+  # ExistingTutorOnboarding.new('jtjobe@gmail.com', 'password').create_user_and_tutor
+  
+  # x = ExistingTutorOnboarding.new('claire.france25@uga.edu', 'password')
+  # ExistingTutorOnboarding.new('claire.france25@uga.edu', 'password').create_user_and_tutor
 
   def initialize(email, password)
     @email = email
@@ -10,8 +17,8 @@ class ExistingTutorOnboarding
       user = User.create(
         email: @email,
         password: @password,
-        first_name: tutor_email_list.first[@email][:first],
-        last_name: tutor_email_list.first[@email][:last]
+        first_name: @tutors_by_email[@email][:first_name],
+        last_name: @tutors_by_email[@email][:last_name]
       )
       if user.save
         tutor = user.create_tutor!
@@ -38,27 +45,25 @@ class ExistingTutorOnboarding
   end
 
   def existing_tutor?
-    if tutor_email_list[0].keys.include?(@email)
+    if tutors_by_email.keys.include?(@email)
       true
     else
       false
     end
   end
 
-  def tutor_email_list
-    [
-      'jtjobe@gmail.com' => {
-        first: 'JT',
-        last: 'Jobe'
-      },
-      'bob123@unc.edu' => {
-        first: 'Bob',
-        last: 'Ross'
-      },
-      'rick@hotmail.com'=> {
-        first: 'Ricky',
-        last: 'Bobby'
+  def tutors_by_email
+    @tutors = CSV.read('lib/assets/existing-tutors-for-onboarding.csv')
+    # each tutor is represented by an array of info: [full_name, first_name, last_name, email]
+    @tutors_by_email = {}
+
+    @tutors.each do |tutor_info|
+      @tutors_by_email[tutor_info[3]] = {
+        first_name: tutor_info[1],
+        last_name: tutor_info[2]
       }
-    ]
+    end
+    return @tutors_by_email
   end
+
 end
