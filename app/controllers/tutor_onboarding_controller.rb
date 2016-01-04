@@ -5,6 +5,10 @@ class TutorOnboardingController < ApplicationController
 
   helper OnboardingLinksHelper
 
+
+  def application
+  end
+
   def create_existing_tutor_account
     email = params[:existing_tutor][:email]
     password = params[:existing_tutor][:password]
@@ -16,13 +20,6 @@ class TutorOnboardingController < ApplicationController
       flash[:error] = response[:error]
       redirect_to welcome_back_path
     end
-  end
-
-  def application_for_existing_tutor
-    # modified application for existing tutor, which submits to submit_application
-  end
-
-  def application
   end
 
   def submit_application
@@ -45,7 +42,6 @@ class TutorOnboardingController < ApplicationController
     @tutor_course = TutorCourse.new(tutor_course_params)
     if @tutor_course.save
       redirect_to onboarding_courses_tutor_path(@tutor.slug)
-      flash[:success] = "#{@tutor_course.course.friendly_name} was added to your course list"
     else
       redirect_to :back
       flash[:error] = "Course was not added to your course list!"

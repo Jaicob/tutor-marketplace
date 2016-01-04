@@ -38,7 +38,7 @@ module WebApp
     config.autoload_paths += Dir["#{Rails.root}/app/api/*"]
 
     # Auto-load data for Existing Tutor Onboarding
-    # TODO - remove this line and the file after existing tutor onboarding period is over
+    # TODO-JT - remove this line and the file after existing tutor onboarding period is over
     config.autoload_paths += Dir["#{Rails.root}/app/lib/assets/**"]
 
     # From http://funonrails.com/2014/03/building-restful-api-using-grape-in-rails/
