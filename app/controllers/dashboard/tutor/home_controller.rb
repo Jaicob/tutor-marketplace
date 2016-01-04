@@ -1,11 +1,6 @@
 class Dashboard::Tutor::HomeController < DashboardController
 
   def index
-    puts "current_user = #{current_user}"
-    puts "current_user.tutor = #{current_user.tutor}"
-    puts "current_user.tutor.id  = #{current_user.tutor.id}"
-    puts "@tutor = #{@tutor}"
-    puts "current_user.tutor.application_status = #{current_user.tutor.application_status}"
   end
 
   def cancel_appt
