@@ -30,6 +30,7 @@
 #  postal_code        :string
 #  ssn_last_4         :string
 #  acct_id            :string
+#  slug               :string
 #
 
 class Tutor < ActiveRecord::Base
@@ -64,7 +65,6 @@ class Tutor < ActiveRecord::Base
   after_create :change_user_role_to_tutor
   after_commit :update_application_status
 
-
   def slug_candidates
     if self.first_name.nil? || self.last_name.nil?
       puts "ERROR: First and last name can't be blank"
@@ -74,7 +74,7 @@ class Tutor < ActiveRecord::Base
     [ "#{first_name}#{last_name}", "#{first_name[0]}#{last_name}", "#{first_name}#{last_name[0]}", "#{first_name[0..1]}#{last_name}", "#{first_name}#{last_name[0..1]}", "#{first_name[0..2]}#{last_name}", "#{first_name}#{last_name[0..2]}", "#{first_name[0..3]}#{last_name}", "#{first_name}#{last_name[0..3]}"]
   end
 
-  # custom validation - prevents a tutor from changing school if tutor has courses at one school
+  # validation method used in controllers - prevents a tutor from changing school if tutor has courses at one school
   def school_change_allowed?
     self.courses.count > 0 ? false : true
   end
@@ -178,6 +178,12 @@ class Tutor < ActiveRecord::Base
     # method called in after_create hook to automatically change the default role of student to tutor
     if self.user.role == 'student'
       self.user.update(role: 'tutor')
+    end
+  end
+
+  def update_onboarding_status(step_completed)
+    if step_completed > self.onboarding_status
+      self.update(onboarding_status: step_completed)
     end
   end
 

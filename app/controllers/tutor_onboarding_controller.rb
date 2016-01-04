@@ -1,15 +1,30 @@
 class TutorOnboardingController < ApplicationController
-  before_action :set_user
-  before_action :set_tutor
+  before_action :set_user, except: [:create_existing_tutor_account]
+  before_action :set_tutor, except: [:create_existing_tutor_account]
   before_action :set_tutor_course, only: [:update_course, :delete_course]
 
   helper OnboardingLinksHelper
 
+
   def application
+  end
+
+  def create_existing_tutor_account
+    email = params[:existing_tutor][:email]
+    password = params[:existing_tutor][:password]
+    response = ExistingTutorOnboarding.new(email, password).create_user_and_tutor
+    if response[:success] == true
+      tutor = response[:tutor]
+      sign_in_and_redirect(tutor.user)
+    else
+      flash[:error] = response[:error]
+      redirect_to welcome_back_path
+    end
   end
 
   def submit_application
     if @tutor.update(tutor_params)
+      @tutor.update_onboarding_status(1)
       redirect_to onboarding_courses_tutor_path(@tutor.slug)
     else
       redirect_to :back
@@ -27,7 +42,6 @@ class TutorOnboardingController < ApplicationController
     @tutor_course = TutorCourse.new(tutor_course_params)
     if @tutor_course.save
       redirect_to onboarding_courses_tutor_path(@tutor.slug)
-      flash[:success] = "#{@tutor_course.course.friendly_name} was added to your course list"
     else
       redirect_to :back
       flash[:error] = "Course was not added to your course list!"
@@ -45,7 +59,7 @@ class TutorOnboardingController < ApplicationController
   end
 
   def submit_courses
-    @tutor.update(tutor_params)
+    @tutor.update_onboarding_status(2)
     redirect_to onboarding_schedule_tutor_path(@tutor.slug)
   end
 
@@ -56,7 +70,7 @@ class TutorOnboardingController < ApplicationController
   end
 
   def submit_schedule
-    @tutor.update(tutor_params)
+    @tutor.update_onboarding_status(3)
     redirect_to onboarding_payment_details_tutor_path(@tutor.slug)
   end
 
@@ -68,7 +82,8 @@ class TutorOnboardingController < ApplicationController
 
   def submit_payment_details
     if @tutor.update_attributes(tutor_params)
-      @tutor.update_attributes(last_4_acct: params[:last_4_acct], onboarding_status: 4)
+      @tutor.update_attributes(last_4_acct: params[:last_4_acct])
+      @tutor.update_onboarding_status(4)
       UpdateTutorAccount.call(tutor: @tutor, token: params[:stripeToken])
       respond_to do |format|
         format.js { render :payment_settings_updated }

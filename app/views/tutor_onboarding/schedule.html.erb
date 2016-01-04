@@ -21,12 +21,11 @@
 <div class="row">
   <div class="small-12 medium-8 columns next-step-instructions">
     <div class="box">
-      <p>Finished setting your intial courses? Click here to set your Available Hours<i class="fi-arrow-right"></i></p>
+      <p>Finished setting your availability? Click here to set up Direct Deposit<i class="fi-arrow-right"></i></p>
     </div>
   </div>
   <div class="small-12 medium-4 columns">
     <%= form_for @tutor, url: submit_schedule_tutor_path(@tutor.slug) do |f| %>
-      <%= f.hidden_field :onboarding_status, value: 3 %>
       <%= f.submit "Next Step", class: 'custom-button margin-bottom large full-width bold' %>
     <% end %>   
   </div>

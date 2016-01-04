@@ -19,6 +19,9 @@ class SingleViewsController < ApplicationController
   def tutor_landing
   end
 
+  def existing_tutor_landing
+  end
+
   def search
     puts "PARAMS!!!!!! = #{params}"
     if params[:course_id]
