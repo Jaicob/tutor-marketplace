@@ -22,9 +22,7 @@ class ExistingTutorOnboarding
       )
       if user.save
         tutor = user.create_tutor!
-        # send SPECIAL EXISTING TUTOR welcome email
-        # TODO - create special welcome email for these tutors
-        TutorManagementMailer.delay.existing_tutor_welcome_email(user.id)
+        ExistingTutorMailer.delay.welcome_email(user.id)
         response = {
           success: true,
           tutor: tutor

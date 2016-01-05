@@ -1,6 +1,6 @@
 class AppointmentMailerPreview < ActionMailer::Preview
 
-  before_action :set_tutor_and_student
+  # before_action :set_tutor_and_student
 
   def appointment_confirmation_for_tutor(appointment_id)
     AppointmentMailer.appointment_confirmation_for_tutor(Appointment.last.id)
@@ -46,12 +46,12 @@ class AppointmentMailerPreview < ActionMailer::Preview
     AppointmentMailer.appointment_cancellation_for_student(Appointment.last.id)
   end
 
-    private
+    # private
 
-    def set_tutor_and_student
-      @appt = Appointment.last.id
-      @tutor = @appt.tutor
-      @student = @appt.student 
-    end
+    # def set_tutor_and_student
+    #   @appt = Appointment.last.id
+    #   @tutor = @appt.tutor
+    #   @student = @appt.student 
+    # end
 
 end
