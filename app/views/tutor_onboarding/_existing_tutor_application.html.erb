@@ -28,15 +28,18 @@ $(document).ready(function()
 <div class="row">
   <div class="small-12 columns">
     <div class="box">
-      <h1>Welcome to the new site, <%= @tutor.first_name %></h1>
-      <p class="big-text">We've redesigned everything, built new scheduling software, set up quicker payments to you, and are still working on great new features to provide you with the best experience possible.</p>
-      <p class="big-text">To help you familiarize yourself with the new site, this setup wizard will guide you through four easy steps: creating your new profile, adding your courses, setting your schedule and linking your bank account for quicker direct deposit payments.</p>
+      <h1 class="letter-welcome">Welcome to the new Axon, <%= @tutor.first_name %></h1>
+      <p class="big-text letter-paragraph">We've been working hard to create a better experience for you with this new site.</p>
+      <p class="big-text letter-paragraph">It currently features new easier-to-use scheduling software, quicker payments to you via direct deposit, and an array of metrics to measure and maximize your business. And we're still working on more great features that are coming soon.</p>
+      <p class="big-text letter-paragraph">Since you're already an Axon approved tutor, you don't need to re-apply. But in order to get your account up-to-date, we've created this setup wizard to guide you through four easy steps: updating your profile, adding your courses, setting your schedule and linking your bank account for quicker direct deposit payments.</p>
+      <p class="big-text letter-paragraph">Please call us at (762) 585-4850 or email us at <%= link_to 'info@axontutors.com', 'mailto:info@axontutors.com', class: 'blue-link' %> if you have questions or need help updating your account.</p>
+      <p class="big-text letter-paragraph">Happy Tutoring,<br>The Axon Team</p>
     </div>
   </div>
 </div>
 <div class="row">
   <div class="small-12 columns">
-    <h2 class="onboarding-page-title">Step 1: Complete Your Profile</h2>
+    <h2 class="onboarding-page-title">Step 1: Update Your Profile</h2>
   </div>
 </div>
 <div class="row">

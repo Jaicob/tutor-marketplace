@@ -1,5 +1,5 @@
-<%= link_to 'Account Settings', account_tutor_path(current_user), class: 'account-settings-link' %>
-<%= link_to 'Payment Settings', payment_info_tutor_path(current_user), class: 'payment-settings-link' %>
-<%= link_to 'Profile Settings', edit_profile_tutor_path(current_user), class: 'profile-settings-link' %>
-<%= link_to 'Appointment Settings', appointment_settings_tutor_path(current_user), class: 'appt-settings-link' %>
-<%= link_to 'Appointment History', appointment_history_tutor_path(current_user), class: 'appt-history-link' %>
+<%= link_to 'Account Settings', account_tutor_path(current_user.tutor.slug), class: 'account-settings-link' %>
+<%= link_to 'Payment Settings', payment_info_tutor_path(current_user.tutor.slug), class: 'payment-settings-link' %>
+<%= link_to 'Profile Settings', edit_profile_tutor_path(current_user.tutor.slug), class: 'profile-settings-link' %>
+<%= link_to 'Appointment Settings', appointment_settings_tutor_path(current_user.tutor.slug), class: 'appt-settings-link' %>
+<%= link_to 'Appointment History', appointment_history_tutor_path(current_user.tutor.slug), class: 'appt-history-link' %>

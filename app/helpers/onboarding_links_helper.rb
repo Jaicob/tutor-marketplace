@@ -50,7 +50,7 @@ module OnboardingLinksHelper
     def style_links
       @links = {
         "step_one": {
-          text: 'Complete your application',
+          text: 'Complete your profile',
           path: "/tutors/#{@tutor.slug}/onboarding/application",
           circle: step_number_or_check_icon(@tutor, 0),
           classes: current_step_or_complete_step(@tutor, 0)
