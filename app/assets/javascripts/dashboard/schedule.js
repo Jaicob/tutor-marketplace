@@ -353,7 +353,7 @@ $(document).ready(function() {
     // store data so the calendar knows to render an event upon drop
 
     $(this).data('event', {
-      title: $.trim("Weekly"), // use the element's text as the event title
+      title: $.trim("Saving..."), // use the element's text as the event title
       overlap: false,
       stick: false, // maintain when user navigates (see docs on the renderEvent method)
       weeksToRepeat: function(){
@@ -378,7 +378,7 @@ $(document).ready(function() {
   $('.one-off-availability').each(function() {
     // store data so the calendar knows to render an event upon drop
     $(this).data('event', {
-      title: $.trim("One Time"), // use the element's text as the event title
+      title: $.trim("Saving..."), // use the element's text as the event title
       overlap: false,
       stick: false,
       weeksToRepeat: function(){
