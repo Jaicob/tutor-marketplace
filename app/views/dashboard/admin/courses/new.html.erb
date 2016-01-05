@@ -79,6 +79,40 @@
 </div>
 
 <div class="row">
+  <div class="large-12 columns">
+    <fieldset class="search-field-panel">
+      <legend class="search-field-legend">Upload CSV file</legend>
+      <div class="row">
+        <%= form_for :csv_course_list, url: '/admin/courses/csv_course_list', method: :post do |f| %>
+          <div class="large-3 columns">
+            <%= f.label :school_id, 'School' %>
+            <% if current_user.role == 'campus_manager' %>
+              <%= f.select(:school_id, options_for_select([["#{@school.name}", @school.id]])) %>
+            <% else %>
+              <%= f.collection_select(:school_id, School.all, :id, :name, include_blank: true) %>
+            <% end %>
+          </div>
+
+          <div class="large-3 columns">
+            <%= f.label :subject_id, 'Subject' %>
+            <%= f.collection_select(:subject_id, Subject.all, :id, :name, include_blank: true) %>
+          </div>
+
+          <div class="large-3 columns">
+            <%= f.label :subject_id, 'Subject' %>
+            <%= f.collection_select(:subject_id, Subject.all, :id, :name, include_blank: true) %>
+          </div>
+
+          <div class="large-3 columns">
+            <%= f.submit 'Start List', class: 'button expand success' %>
+          </div>
+        <% end %>
+      </div>
+    </fieldset>
+  </div>
+</div>
+
+<div class="row">
   <div class="small-12 columns">
     <%= link_to 'All Courses', admin_courses_path, class: 'button secondary' %>
   </div>
