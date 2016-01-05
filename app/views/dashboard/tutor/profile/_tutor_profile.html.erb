@@ -16,7 +16,6 @@
     <div class="tutor-qualifications medium-8 columns">
       <div class="tutor-profile-formal-education">
         <p class="ed-item">
-          <%# [X] TODO (AJ) Make these bullets into icons from Eugene %>
           <%= image_tag('https://s3-us-west-2.amazonaws.com/axontutors/booking/Degree.png', class: "icon") %>
           <%= @tutor.degree || "None" %>, <%= @tutor.graduation_year || "None" %>
         </p>
@@ -25,11 +24,11 @@
           <%= @tutor.major || "None" %>
         </p>
       </div>
-      <% if @tutor.additional_degrees.blank? %>
+      <% if !@tutor.additional_degrees.blank? %>
         <div class="tutor-profile-additional-degrees">
           <span class="ed-item">
             <i class="fi-plus" data-reactid=".0.1.0.2.0.0"></i> 
-             SO many degrees<%= @tutor.additional_degrees || "None" %>
+            <%= @tutor.additional_degrees || "None" %>
           </span>
         </div>
       <% end %>
