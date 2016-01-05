@@ -3,9 +3,9 @@
   <% if current_user.role == 'student' %>
     <div class="nav-links-right"><%= link_to 'Dashboard', home_student_path(current_user) %></div>
   <% elsif current_user.role == 'tutor' && current_user.tutor.onboarding_status == 4 %>
-    <div class="nav-links-right"><%= link_to 'Dashboard', home_tutor_path(current_user) %></div>
+    <div class="nav-links-right"><%= link_to 'Dashboard', home_tutor_path(current_user.tutor.slug) %></div>
   <% elsif current_user.role == 'tutor' && current_user.tutor.onboarding_status < 4 %>
-    <div class="nav-links-right"><%= link_to 'Account Setup', home_tutor_path(current_user) %></div>
+    <div class="nav-links-right"><%= link_to 'Account Setup', home_tutor_path(current_user.tutor.slug) %></div>
   <% elsif current_user.role == 'campus_manager' || current_user.role == 'admin' %>
     <div class="nav-links-right"><%= link_to 'Admin', admin_tutors_path %></div>
   <% end %>

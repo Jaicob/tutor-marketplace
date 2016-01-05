@@ -16,7 +16,6 @@
 #                     privacy_and_terms GET      /privacy-and-terms(.:format)                                       single_views#privacy_and_terms
 #                            set_school POST     /set-school(.:format)                                              cookies#set_school_id_cookie
 #                         change_school POST     /change-school(.:format)                                           cookies#change_school_id_cookie
-#                        public_profile GET      /tutors/:id(.:format)                                              checkout#select_course
 #                checkout_select_course GET      /tutors/:id/select_course(.:format)                                checkout#select_course
 #                checkout_set_course_id POST     /tutors/:id/set_course_id(.:format)                                checkout#set_course_id
 #                 checkout_select_times GET      /tutors/:id/select_times(.:format)                                 checkout#select_times
@@ -62,6 +61,7 @@
 #                                  user PATCH    /users/:id(.:format)                                               users#update
 #                                       PUT      /users/:id(.:format)                                               users#update
 #                                       DELETE   /users/:id(.:format)                                               users#destroy
+#                  public_profile_tutor GET      /tutors/:id(.:format)                                              tutors#show
 #                            home_tutor GET      /tutors/:id/home(.:format)                                         dashboard/tutor/home#index
 #                     cancel_appt_tutor PUT      /tutors/:id/cancel_appt/:appt_id(.:format)                         dashboard/tutor/home#cancel_appt
 #                        schedule_tutor GET      /tutors/:id/schedule(.:format)                                     dashboard/tutor/schedule#index
@@ -122,9 +122,8 @@
 #         new_course_list_admin_courses POST     /admin/courses/new_course_list(.:format)                           dashboard/admin/courses#new_course_list
 #  review_new_course_list_admin_courses POST     /admin/courses/review_new_course_list(.:format)                    dashboard/admin/courses#review_new_course_list
 #  create_new_course_list_admin_courses POST     /admin/courses/create_new_course_list(.:format)                    dashboard/admin/courses#create_new_course_list
-# preview_csv_course_list_admin_courses POST     /admin/courses/preview_csv_course_list(.:format)                   dashboard/admin/courses#preview_csv_course_list
+#  review_csv_course_list_admin_courses POST     /admin/courses/review_csv_course_list(.:format)                    dashboard/admin/courses#review_csv_course_list
 #  create_csv_course_list_admin_courses POST     /admin/courses/create_csv_course_list(.:format)                    dashboard/admin/courses#create_csv_course_list
-# destroy_csv_course_list_admin_courses POST     /admin/courses/destroy_csv_course_list(.:format)                   dashboard/admin/courses#destroy_csv_course_list
 #                         admin_courses GET      /admin/courses(.:format)                                           dashboard/admin/courses#index
 #                                       POST     /admin/courses(.:format)                                           dashboard/admin/courses#create
 #                      new_admin_course GET      /admin/courses/new(.:format)                                       dashboard/admin/courses#new
@@ -245,7 +244,6 @@ Rails.application.routes.draw do
 
   # checkout pages
   scope '/tutors/:id' do 
-    get   '/'    			  => 'checkout#select_course', as: 'public_profile'  
     get   '/select_course'    => 'checkout#select_course', as: 'checkout_select_course'
     post  '/set_course_id'    => 'checkout#set_course_id', as: 'checkout_set_course_id'
     get   '/select_times'     => 'checkout#select_times', as: 'checkout_select_times'
@@ -267,9 +265,13 @@ Rails.application.routes.draw do
   # user endpoints for update and destroy
   resources :users, only: [:update, :destroy]
 
+  # tutor show route for public_profile
+  get '/tutors/:id' => 'tutors#show', as: 'public_profile_tutor'
+
   # all dashboard routes for signed-in tutors
-  resources :tutors, only: [:show, :update, :destroy] do
+  resources :tutors, only: [:update, :destroy] do
     member do
+      # dashboard routes below
       get  '/home'                    => 'dashboard/tutor/home#index'
       put  '/cancel_appt/:appt_id'    => 'dashboard/tutor/home#cancel_appt', as: 'cancel_appt'
       get  '/schedule'                => 'dashboard/tutor/schedule#index'

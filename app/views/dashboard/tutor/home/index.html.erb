@@ -15,7 +15,7 @@
           <h5 class="no-appts-message">You currently have no scheduled appointments</h5>
           <p class="list-title">To recieve more bookings, try:</p>
           <p class="list-item">&#8226; Sharing your profile page link:</p>
-          <p class="list-item"><%= link_to public_profile_url, public_profile_url, class: 'blue-link' %></p>
+          <p class="list-item"><%= link_to public_profile_tutor_url, public_profile_tutor_path, class: 'blue-link' %></p>
           <p class="list-item">&#8226; Increasing your availability in your <%= link_to 'Schedule', schedule_tutor_path(@tutor.slug), class: 'blue-link' %></p>
           <p class="list-item">&#8226; Adding more courses in your <%= link_to 'Courses', tutor_courses_path(@tutor.slug), class: 'blue-link' %></p>
         </div>

@@ -1,0 +1,18 @@
+<!--  THIS VIEW IS ONLY USED WHEN A TUTOR IS INACTIVE
+      If a tutor is inactive, this page shows a message that explains the tutor has not been approved yet
+      Otherwise, the tutors#show action redirects to one of two steps in the checkout controller, either #select_course or #select_times (depending on whether the user can from search and already selected a course or not)
+-->
+<div class="row">
+  <div class="small-12 medium-8 medium-centered columns">
+    <div class="box margin-top-2em">
+      <h4 class="center">This tutor's account is still being reviewed and is not currently available for bookings.</h4>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="small-10 small-centered medium-4 medium-centered columns">
+    <div class="margin-top-2em">
+      <%= link_to 'Search Active Tutors', search_path, class: 'custom-button blue full-width' %>
+    </div>
+  </div>
+</div>

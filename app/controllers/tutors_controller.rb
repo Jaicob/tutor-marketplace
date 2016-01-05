@@ -5,11 +5,13 @@ class TutorsController < ApplicationController
   # TUTOR CREATION IS HANDLED THROUGH THE DEVISE REGISTRATION CONTROLLER - ONE FORM CREATES USER AND TUTOR
 
   def show
-    if params[:course]
-      session[:course_id] = params[:course]
-      redirect_to checkout_select_times_path(@tutor.slug)
-    else
-      redirect_to checkout_select_course_path(@tutor.slug)
+    if @tutor.active_status == 'Active'
+      if params[:course]
+        session[:course_id] = params[:course]
+        redirect_to checkout_select_times_path(@tutor.slug)
+      else
+        redirect_to checkout_select_course_path(@tutor.slug)
+      end
     end
   end
 
