@@ -83,28 +83,28 @@
     <fieldset class="search-field-panel">
       <legend class="search-field-legend">Upload CSV file</legend>
       <div class="row">
-        <%= form_for :csv_course_list, url: '/admin/courses/csv_course_list', method: :post do |f| %>
+        <%= form_for @csv_course_list, url: preview_csv_course_list_admin_courses_path, method: :post do |f| %>
           <div class="large-3 columns">
             <%= f.label :school_id, 'School' %>
             <% if current_user.role == 'campus_manager' %>
               <%= f.select(:school_id, options_for_select([["#{@school.name}", @school.id]])) %>
             <% else %>
-              <%= f.collection_select(:school_id, School.all, :id, :name, include_blank: true) %>
+              <%= f.collection_select(:school_id, School.all, :id, :name, include_blank: true, required: true) %>
             <% end %>
           </div>
 
           <div class="large-3 columns">
             <%= f.label :subject_id, 'Subject' %>
-            <%= f.collection_select(:subject_id, Subject.all, :id, :name, include_blank: true) %>
+            <%= f.collection_select(:subject_id, Subject.all, :id, :name, include_blank: true, required: true) %>
           </div>
 
           <div class="large-3 columns">
-            <%= f.label :subject_id, 'Subject' %>
-            <%= f.collection_select(:subject_id, Subject.all, :id, :name, include_blank: true) %>
+            <%= f.label :csv_file, 'CSV File' %>
+            <%= f.file_field :csv_file, required: true  %>
           </div>
 
           <div class="large-3 columns">
-            <%= f.submit 'Start List', class: 'button expand success' %>
+            <%= f.submit 'Upload CSV', class: 'button expand success' %>
           </div>
         <% end %>
       </div>

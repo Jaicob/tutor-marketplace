@@ -1,0 +1,55 @@
+<div class="row">
+  <div class="large-8 large-offset-2 columns">
+    <h5>Review course list for:</h5>
+    <h3><%= @subject.name %> at <%= @school.name %></h3>
+  </div>
+</div>
+
+<div class="row">
+  <div class="large-8 large-offset-2 columns">
+    <table>
+      <thead>
+        <tr>
+          <th>School</th>
+          <th>Subject</th>
+          <th>Call Number</th>
+          <th>Friendly Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @courses.each do |call_number, friendly_name| %>
+        <tr>
+          <td><%= @school.name %></td>
+          <td><%= @subject.name %></td>
+          <td><%= call_number %></td>
+          <td><%= friendly_name %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="row">
+  <div class="large-8 large-offset-2 columns">
+    <div class="row large-collapse">
+      <div class="large-5 columns">
+        <%= link_to 'Back', new_admin_course_path, class: 'custom-button full-width gray' %>
+      </div>
+      <div class="large-5 columns">
+        <%= form_for :create_course_list, url: create_csv_course_list_admin_courses_path, method: :post do |f| %>
+          <% n = 1 %>
+          <% @courses.each do |call_number, friendly_name| %>
+              <%= f.fields_for "course_#{n}" do |ff| %>
+                <%= ff.hidden_field :call_number, value: call_number %>
+                <%= ff.hidden_field :friendly_name, value: friendly_name %>
+                <% n += 1 %>
+              <% end %>
+          <% end %>
+          <%= hidden_field_tag(:school_id, @school.id) %>
+          <%= hidden_field_tag(:subject_id, @subject.id) %>
+          <%= f.submit 'Create Courses', class: 'custom-button full-width' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

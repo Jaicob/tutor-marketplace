@@ -122,6 +122,9 @@
 #         new_course_list_admin_courses POST     /admin/courses/new_course_list(.:format)                           dashboard/admin/courses#new_course_list
 #  review_new_course_list_admin_courses POST     /admin/courses/review_new_course_list(.:format)                    dashboard/admin/courses#review_new_course_list
 #  create_new_course_list_admin_courses POST     /admin/courses/create_new_course_list(.:format)                    dashboard/admin/courses#create_new_course_list
+# preview_csv_course_list_admin_courses POST     /admin/courses/preview_csv_course_list(.:format)                   dashboard/admin/courses#preview_csv_course_list
+#  create_csv_course_list_admin_courses POST     /admin/courses/create_csv_course_list(.:format)                    dashboard/admin/courses#create_csv_course_list
+# destroy_csv_course_list_admin_courses POST     /admin/courses/destroy_csv_course_list(.:format)                   dashboard/admin/courses#destroy_csv_course_list
 #                         admin_courses GET      /admin/courses(.:format)                                           dashboard/admin/courses#index
 #                                       POST     /admin/courses(.:format)                                           dashboard/admin/courses#create
 #                      new_admin_course GET      /admin/courses/new(.:format)                                       dashboard/admin/courses#new
@@ -330,6 +333,9 @@ Rails.application.routes.draw do
           post 'new_course_list' => 'courses#new_course_list'
           post 'review_new_course_list' => 'courses#review_new_course_list'
           post 'create_new_course_list' => 'courses#create_new_course_list'
+          post 'preview_csv_course_list' => 'courses#preview_csv_course_list'
+          post 'create_csv_course_list' => 'courses#create_csv_course_list'
+          post 'destroy_csv_course_list' => 'courses#destroy_csv_course_list'
         end
       end
       resources :tutors do collection { match 'search' => 'tutors#search', via: [:get, :post], as: :search } end

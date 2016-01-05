@@ -1,5 +1,6 @@
 class Dashboard::Admin::CoursesController < AdminController
   before_action :set_course, only: [:show, :edit, :update, :destroy]
+  require 'csv'
 
   def search
     index
@@ -13,6 +14,7 @@ class Dashboard::Admin::CoursesController < AdminController
 
   def new
     @course = Course.new
+    @csv_course_list = CsvCourseList.new
   end
 
   def create
@@ -75,6 +77,37 @@ class Dashboard::Admin::CoursesController < AdminController
     end
   end
 
+  #======================================================================================
+  #       Custom Actions for Adding Course Lists via CSV files
+  #======================================================================================
+
+  def preview_csv_course_list
+    @csv = CsvCourseList.new(csv_course_list_params)
+    if @csv.save
+      @school = School.find(@csv.school_id)
+      @subject = Subject.find(@csv.subject_id)
+      @courses = CsvCourseCreator.new(@csv).format_course_list
+      @csv_course_list = CsvCourseList.new
+    else
+      redirect_to :back
+      flash[:error] = @csv.errors.full_messages
+    end
+  end
+
+  def create_csv_course_list
+    if Course.create_course_list(params)
+      flash[:notice] = "Course list was succesfully created"
+      redirect_to admin_courses_path
+    else
+      flash[:error] = "Course list was not created"
+      redirect_to :back
+    end
+  end
+
+  # preview_csv_course_list_admin_courses POST     /admin/courses/preview_csv_course_list(.:format)                   dashboard/admin/courses#preview_csv_course_list
+  # create_csv_course_list_admin_courses POST     /admin/courses/create_csv_course_list(.:format)                    dashboard/admin/courses#create_csv_course_list
+  # destroy_csv_course_list_admin_courses POST     /admin/courses/destroy_csv_course_list(.:format) 
+
   private 
 
     def set_course
@@ -83,6 +116,10 @@ class Dashboard::Admin::CoursesController < AdminController
 
     def course_params
       params.require(:course).permit(:call_number, :friendly_name, :school_id, :subject_id)
+    end
+
+    def csv_course_list_params
+      params.require(:csv_course_list).permit(:school_id, :subject_id, :csv_file, :courses)
     end
 
 end
