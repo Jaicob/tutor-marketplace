@@ -5,6 +5,11 @@ $(document).ready(function() {
     $(".regular-availability").toggleClass("expanded");
   })
 
+  var tutor_id = $('#axoncalendar').data('tutor');
+  var originalStartTime;
+  var originalDuration;
+
+  // Configure Qtip
   var tooltip = $('#calendar').qtip({
     id: 'fullcalendar',
     prerender: false,
@@ -29,16 +34,15 @@ $(document).ready(function() {
     },
   }).qtip('api');
 
-  // Setup sweetalert
+  // Configure sweetalert
   swal.setDefaults({
     animation: false
   });
 
-  var tutor_id = $('#axoncalendar').data('tutor');
-  var originalStartTime;
-  var originalDuration;
-
-  
+  /*
+   * Does a batch update on slots, this is used for weekly slots. The original start time and
+   * duration are necessary for looking up the slots in the backend. 
+   */
   var multiSlotUpdate = function(originalStartTime, originalDuration, newStartTime, newDuration) {
     $.ajax({
       type: "POST",
@@ -62,6 +66,10 @@ $(document).ready(function() {
     });
   }
 
+  /*
+   * Similar to multi, but this uses a  slot id to lookup the slot as opposed to 
+   * a range of time.
+   */
   var singleSlotUpdate = function(slotID, newStartTime, originalDuration){
     $.ajax({
       type: "PUT",
@@ -84,6 +92,12 @@ $(document).ready(function() {
     });
   }
 
+  /*
+   * When we receive the data from the backend we want to make sure that
+   * all the times are formatted correctly. The times come in as 0 offset
+   * UTC strings and are converted to moment objects with is8601 format
+   * the other data is added to the event object
+   */
   var formatDataAsEvent = function(eventData) {
     end_time = moment(eventData.start_time, moment.ISO_8601);
     end_time = end_time.add(eventData.duration, 'seconds');
@@ -98,6 +112,10 @@ $(document).ready(function() {
     return postFormat;
   }
 
+  /*
+   * Defines a source for which event data is coming from and applies 
+   * the transform to format the incoming data correctly
+   */
   var eventSource = {
     url: API.endpoints.tutor_slots.get({
       tutor_id: tutor_id
@@ -105,13 +123,22 @@ $(document).ready(function() {
     eventDataTransform: formatDataAsEvent,
   }
 
+  /*
+   * These are events that need to happen before an update to slots
+   * we need to preserve the original start time and duration for looking
+   * up ranges of time.
+   */
   var beginSlotUpdate = function(event, jsEvent, ui, view) {
     originalStartTime = event.start.toISOString();
     originalDuration = moment.duration(event.end.diff(event.start)).asSeconds();
     tooltip.hide();
   }
 
-  var updateSlotDurationDrop = function(event, delta, revertFunc, jsEvent, ui, view) {
+  /*
+   * This is the update function used for when a slot is moved on the  
+   * calendar. 
+   */
+  var updateDrop = function(event, delta, revertFunc, jsEvent, ui, view) {
     if (event.slot_type === "OneTime") {
       singleSlotUpdate(event.slot_id, event.start.toISOString(), originalDuration);
     } else {
@@ -119,7 +146,11 @@ $(document).ready(function() {
     }
   }
 
-  var updateSlotDurationResize = function(event, delta, revertFunc, jsEvent, ui, view) {
+  /*
+   * This is the update function used for when a slot is resized on the  
+   * calendar. Enforces a min duration of one hour
+   */
+  var updateResize = function(event, delta, revertFunc, jsEvent, ui, view) {
     var newDuration = originalDuration + delta.asSeconds();
     
     if (newDuration < 3600){
@@ -134,6 +165,10 @@ $(document).ready(function() {
     }
   }
 
+  /*
+   * Attempts to add new slot(s) using the slot_creator service(endpoint) 
+   * if successful the ui is updated to show the new slots (called events by fullcalendar)
+   */
   var addSlot = function(event, jsEvent, ui) {
     event.end = moment(event.end);
     var duration = moment.duration(event.end.diff(event.start));
@@ -142,8 +177,8 @@ $(document).ready(function() {
       tutor_id: tutor_id
     });
 
-    request = $.post(endpoint, { //DateTime.iso8601('2001-02-03T04:05:06+07:00')
-      start_time: event.start.toISOString(), //end_time.add(eventData.duration, 'seconds');
+    request = $.post(endpoint, { 
+      start_time: event.start.toISOString(),
       duration: seconds,
       weeks_to_repeat: event.weeksToRepeat(),
       slot_type: event.slot_type,
@@ -160,6 +195,10 @@ $(document).ready(function() {
     })
   }
 
+  /*
+   * When you click on a slot/event a mini menu pops up this function
+   * routes the correct actions based on what you click
+   */
   var routeEvent = function(event) {
     tooltip.hide();
     $('div').off('click', '.cal-menu-item');
@@ -169,13 +208,16 @@ $(document).ready(function() {
         askToRemoveSlots(event);
         break;
       case 'btn-block-slot':
-        blockSlot(event);
+        toggleBlockSlot(event);
         break;
       default:
         swal('Invalid Selection', 'error')
     }
   }
 
+  /*
+   * This function presents a modal that confirms with the user before removing slots
+   */
   var askToRemoveSlots = function(event) {
     swal({
         title: "Are you sure?",
@@ -193,6 +235,11 @@ $(document).ready(function() {
       });
   }
 
+  /*
+   * This method sends a request to remove a batch of slots based off of the start time
+   * and duration. If succesful all slots removed are returned and the corresponding fullcalendar
+   * events are removed from the view.
+   */
   var removeSlots = function(event) {
     var duration = moment.duration(event.data.end.diff(event.data.start)).asSeconds();
     $.ajax({
@@ -220,7 +267,11 @@ $(document).ready(function() {
     swal.close();
   }
 
-  var blockSlot = function(event) {
+  /*
+   * Updates a slots status to be blocked if open, and open if blocked.
+   * If successful then the event is updated
+   */
+  var toggleBlockSlot = function(event) {
     var toggledStatus = event.data.status === 'Open' ? 'Blocked' : 'Open';
 
     $.ajax({
@@ -243,6 +294,10 @@ $(document).ready(function() {
     });
   }
 
+  /*
+   * Used to determine the appropriate styling of an event based on
+   * the status and type
+   */
   var eventRender = function(event, element, view) {
     if (event.status === 'Blocked') {
       element.css('background-color', '#E0E0E0');
@@ -260,6 +315,9 @@ $(document).ready(function() {
     }
   }
 
+  /*
+   * toggles the symbol used in the mini-menu to reflect the status of the slot
+   */  
   var setBlockUi = function(event) {
       if (event.status === 'Blocked') {
         $('#block-icon').addClass('fi-unlock').removeClass('fi-lock');
@@ -270,7 +328,11 @@ $(document).ready(function() {
       }
   }
 
-  var openEventEdit = function(event, jsEvent, view) {
+  /*
+   * Opens the mini-menu of the event/slot within a tooltip that appears to 
+   * the right of the slot.
+   */
+  var openEventMiniMenu = function(event, jsEvent, view) {
       $('div').off('click', '.cal-menu-item');
       $('div').on('click', '.cal-menu-item', event, routeEvent);
       setBlockUi(event);
@@ -356,10 +418,10 @@ $(document).ready(function() {
     droppable: true,
     eventReceive: addSlot,
     eventResizeStart: beginSlotUpdate,
-    eventResize: updateSlotDurationResize,
+    eventResize: updateResize,
     eventDragStart: beginSlotUpdate,
-    eventDrop: updateSlotDurationDrop,
-    eventClick: openEventEdit,
+    eventDrop: updateDrop,
+    eventClick: openEventMiniMenu,
     eventRender: eventRender,
     dayClick: function() {
       tooltip.hide()

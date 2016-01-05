@@ -246,8 +246,6 @@ GEM
     kgio (2.9.3)
     launchy (2.4.3)
       addressable (~> 2.3)
-    letter_opener (1.4.1)
-      launchy (~> 2.2)
     loofah (2.0.2)
       nokogiri (>= 1.5.9)
     mail (2.6.3)
@@ -451,7 +449,6 @@ DEPENDENCIES
   interactor (~> 3.0)!
   jbuilder (~> 2.3)!
   launchy (~> 2.4)!
-  letter_opener!
   nokogiri!
   pg (~> 0.18)!
   premailer-rails!
