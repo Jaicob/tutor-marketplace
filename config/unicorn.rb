@@ -29,8 +29,10 @@ end
 after_fork do |server, worker|
   Signal.trap 'TERM' do
     puts 'Unicorn worker intercepting TERM and doing nothing. Wait for master to send QUIT'
-  end
 
+  end
+  puts "LOOOOOOK HERE !!!!!!!!!! #{ENV['RDS_HOSTNAME']} !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+  sleep(30)
   defined?(ActiveRecord::Base) and ActiveRecord::Base.establish_connection
 
   Sidekiq.configure_client do |config|
