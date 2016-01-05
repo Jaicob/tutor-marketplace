@@ -124,6 +124,22 @@ $(document).ready(function() {
   }
 
   /*
+   * Responds to events starting and finishing loading 
+   */
+   var loading = function( isLoading, view ) {
+    if (isLoading) {
+      console.log("Loading");
+     $('#calendar').fadeTo(0.6);
+     $('#cal-loading').show();
+    } else {
+      console.log("Finished");
+      $('#cal-loading').hide();
+      $('#calendar').fadeTo(1);
+    }
+   }
+
+
+  /*
    * These are events that need to happen before an update to slots
    * we need to preserve the original start time and duration for looking
    * up ranges of time.
@@ -414,6 +430,7 @@ $(document).ready(function() {
       right: 'month,agendaWeek,agendaDay'
     },
     defaultView: 'agendaWeek',
+    loading: loading,
     editable: true,
     droppable: true,
     eventReceive: addSlot,

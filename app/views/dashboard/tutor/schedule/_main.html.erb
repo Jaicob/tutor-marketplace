@@ -54,6 +54,11 @@
   <div id="scheduling-container">
     
     <div id='wrap' class="columns medium-12">
+      <!-- <div id="cal-loading" class="row" style="position: absolute; z-index:10"> -->
+        <!-- <div class="columns medium-centered medium-6"> -->
+          <%= image_tag("default.svg", alt: "Lodaing...", id: "cal-loading", style: "left:40%; top: 30%; position: absolute; z-index:10") %>
+        <!-- </div> -->
+      <!-- </div> -->
       <div id='calendar'></div>
       <!-- dont move this, needs to be here for popovers to work -->
       <div id="slotpopover" hidden="true">
