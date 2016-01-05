@@ -24,6 +24,9 @@ button, .custom-button {
   &.no-margin {
     margin: 0;
   }
+  &.hover-dark-blue:hover {
+    background-color: #0095AC;
+  }
   &.blue {
     background-color: #0095AC;
   }
