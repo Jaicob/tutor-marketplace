@@ -148,11 +148,12 @@ class Tutor < ActiveRecord::Base
   end
 
   def send_active_status_change_email(tutor_params)
-    if ExistingTutorOnboarding.new(self.email, 'password_placeholder').existing_tutor? == false
+    if tutor_params[:active_status] == 'Active' && ExistingTutorOnboarding.new(self.email, 'password_placeholder').existing_tutor? == false
       # TODO-JT - remove this first statement after ETO period is over...
       ExistingTutorMailer.delay.activation_email(self.user.id)
       return
     end
+    
     if tutor_params[:active_status] == 'Active'
       TutorManagementMailer.delay.activation_email(self.user.id)
     end
