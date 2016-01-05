@@ -4,6 +4,12 @@ $blue2: #2BC2DE;
 $blue3: #0095AC;
 $green: #58AA4D;
 
+// TODO-JT - remove this class after Existing Tutor Registration is over
+p.already-registered {
+    margin-top: -1.5em;
+    color: #0095AC !important;
+}
+
 .tutor-form {
   margin-top: -2em;
   margin-bottom: 1em;

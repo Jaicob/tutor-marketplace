@@ -11,8 +11,8 @@ RUN sudo npm install -g bower && \
 	gem install bundler
 
 # Do this to cache our bundle install
-COPY Gemfile* /tmp/cache/
-WORKDIR /tmp/cache
+# COPY Gemfile* /tmp/cache/
+# WORKDIR /tmp/cache
 RUN bundle install
 
 WORKDIR /home/rails/my-app
