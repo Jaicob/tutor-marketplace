@@ -38,6 +38,7 @@ $(document).ready(function() {
   var originalStartTime;
   var originalDuration;
 
+  
   var multiSlotUpdate = function(originalStartTime, originalDuration, newStartTime, newDuration) {
     $.ajax({
       type: "POST",
@@ -164,9 +165,6 @@ $(document).ready(function() {
     $('div').off('click', '.cal-menu-item');
     var action = event.currentTarget.id;
     switch (action) {
-      case 'btn-show-slot':
-        showDetails(event);
-        break;
       case 'btn-rm-slots':
         askToRemoveSlots(event);
         break;
@@ -222,14 +220,6 @@ $(document).ready(function() {
     swal.close();
   }
 
-  var showDetails = function(event) {
-    swal({
-      title: "Details",
-      text: "Start: " + event.data.start.format('dddd HH:mm:ss') + "<br> End: " + event.data.end.format('dddd HH:mm:ss'),
-      html: true
-    });
-  }
-
   var blockSlot = function(event) {
     var toggledStatus = event.data.status === 'Open' ? 'Blocked' : 'Open';
 
@@ -240,7 +230,7 @@ $(document).ready(function() {
         slot_id: event.data.slot_id
       }),
       data: {
-        status: toggledStatus //Blocked TODO: make an enumeration in js for this?
+        status: toggledStatus 
       },
       dataType: "json",
       success: function(data) {
