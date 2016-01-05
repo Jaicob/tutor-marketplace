@@ -81,7 +81,7 @@ class Dashboard::Admin::CoursesController < AdminController
   #       Custom Actions for Adding Course Lists via CSV files
   #======================================================================================
 
-  def preview_csv_course_list
+  def review_csv_course_list
     @csv = CsvCourseList.new(csv_course_list_params)
     if @csv.save
       @school = School.find(@csv.school_id)
@@ -95,18 +95,15 @@ class Dashboard::Admin::CoursesController < AdminController
   end
 
   def create_csv_course_list
-    if Course.create_course_list(params)
+    create_courses = Course.create_course_list(params)
+    if create_courses[:success] == true
       flash[:notice] = "Course list was succesfully created"
       redirect_to admin_courses_path
     else
-      flash[:error] = "Course list was not created"
-      redirect_to :back
+      flash[:error] = "Course list was not created: #{create_courses[:message]}"
+      redirect_to new_admin_course_path
     end
-  end
-
-  # preview_csv_course_list_admin_courses POST     /admin/courses/preview_csv_course_list(.:format)                   dashboard/admin/courses#preview_csv_course_list
-  # create_csv_course_list_admin_courses POST     /admin/courses/create_csv_course_list(.:format)                    dashboard/admin/courses#create_csv_course_list
-  # destroy_csv_course_list_admin_courses POST     /admin/courses/destroy_csv_course_list(.:format) 
+  end 
 
   private 
 
