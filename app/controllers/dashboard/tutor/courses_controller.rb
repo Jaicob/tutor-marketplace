@@ -9,7 +9,6 @@ class Dashboard::Tutor::CoursesController < DashboardController
     @tutor_course = TutorCourse.create(tutor_course_params)
     if @tutor_course.save
       redirect_to tutor_courses_path(@tutor.slug)
-      flash[:success] = "#{@tutor_course.course.friendly_name} was added to your course list"
     else
       redirect_to :back
       flash[:error] = "Course was not added to your course list!"
@@ -21,7 +20,7 @@ class Dashboard::Tutor::CoursesController < DashboardController
 
   def update
     if @tutor_course.update(tutor_course_params)
-      redirect_to tutor_course_path(@tutor.slug, @tutor_course)
+      redirect_to tutor_courses_path(@tutor.slug)
     end
   end
 

@@ -5,7 +5,7 @@
     </div>
   </div>
   <div class="row medium-collapse">
-    <%= form_for @tutor_course, url: create_course_during_onboarding_tutor_path(@tutor) do |f| %>
+    <%= form_for @tutor_course, url: tutor_courses_path(@tutor) do |f| %>
       <div class="small-12 medium-3 columns">
         <%= render '/course_selector/subject' %>
       </div>          
@@ -93,7 +93,7 @@
     <div class="row">
       <div class="small-12 medium-3 columns">
         <h4>Change Rate</h4>
-        <%= form_for tutor_course, url: update_course_during_onboarding_tutor_path(@tutor, tutor_course), method: :put do |f| %>
+        <%= form_for tutor_course, url: tutor_course_path(@tutor, tutor_course), method: :put do |f| %>
           <%= f.label :rate, 'Hourly Rate' %>
           <%= f.text_field :rate, size: 5 %>
           <%= hidden_field_tag(:from_onboarding_courses_page, value: 'true') %>
@@ -102,7 +102,7 @@
       </div>
       <div class="small-12 medium-3 columns">
         <h4>Delete Course</h4>
-        <%= button_to('Delete Course', "/tutors/#{@tutor.id}/onboarding/courses/#{tutor_course.id}/destroy", method: :delete, class: 'custom-button danger') %>
+        <%= button_to('Delete Course', "/tutors/#{@tutor.id}/courses/#{tutor_course.id}", method: :delete, class: 'custom-button danger') %>
       </div>
     </div>
   </div>

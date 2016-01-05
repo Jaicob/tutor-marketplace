@@ -41,7 +41,7 @@ class TutorOnboardingController < ApplicationController
   def create_course
     @tutor_course = TutorCourse.new(tutor_course_params)
     if @tutor_course.save
-      redirect_to onboarding_courses_tutor_path(@tutor.slug)
+      redirect_to onboarding_courses_tutor_path(@tutor.slug, anchor: 'my-courses')
     else
       redirect_to :back
       flash[:error] = "Course was not added to your course list!"
@@ -50,12 +50,12 @@ class TutorOnboardingController < ApplicationController
 
   def update_course
     @tutor_course.update(tutor_course_params)
-    redirect_to onboarding_courses_tutor_path(@tutor.slug)
+    redirect_to onboarding_courses_tutor_path(@tutor.slug, anchor: 'my-courses')
   end
 
   def delete_course
     @tutor_course.destroy
-    redirect_to onboarding_courses_tutor_path(@tutor.slug)
+    redirect_to onboarding_courses_tutor_path(@tutor.slug, anchor: 'my-courses')
   end
 
   def submit_courses

@@ -42,9 +42,14 @@ class School < ActiveRecord::Base
 
   # This method is necessary for populating the drop-down menu of courses in the course selector form
   def courses_for_subject(subject_id)
+    courses = []
     self.courses.find_all do |course|
-      course.subject_id == subject_id.to_i
+      courses << course if course.subject_id == subject_id.to_i
     end
+    sorted_courses = courses.sort_by do |course|
+      course.call_number
+    end
+    return sorted_courses
   end
 
   def top_subjects

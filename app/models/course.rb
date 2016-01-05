@@ -37,15 +37,25 @@ class Course < ActiveRecord::Base
 
   def self.create_course_list(params)
     set_variables_for_create_course_list(params)
+    new_courses = []
     @course_list.length.to_i.times do
-      course = Course.create(
+      course = Course.new(
         school_id: @school_id,
         subject_id: @subject_id,
         call_number: @course_list["course_#{@n}"]['call_number'],
         friendly_name: @course_list["course_#{@n}"]['friendly_name']
-        ) 
-      @n += 1
+      ) 
+      if course.save
+        new_courses << course
+        @n += 1
+      else
+        new_courses.each do |course|
+          course.destroy
+        end
+        return {success: false, message: course.errors.full_messages.first}
+      end
     end
+    return {success: true}
   end
 
   def active_tutors

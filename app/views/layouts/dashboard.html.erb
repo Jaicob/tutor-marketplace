@@ -10,11 +10,4 @@
   <% end %>
 <% end %>
 
-<!-- Displays welcome/awaiting-approval message for new Tutors -->
-<% if current_user && current_user.tutor && current_user.tutor == @tutor && current_user.tutor.application_status != 'Approved' %>
-  <% content_for (:awaiting_approval_screen) do %>
-    <%= render 'layouts/partials/awaiting_approval_screen' %>
-  <% end %>
-<% end %>
-
 <%= render template: "layouts/application" %>

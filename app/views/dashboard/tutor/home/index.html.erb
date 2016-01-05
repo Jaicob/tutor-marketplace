@@ -1,4 +1,8 @@
 <section class="dashboard-content tutor-home-page">
+  <% if @tutor.application_status != 'Approved' %>
+  <!-- Displays welcome/awaiting-approval message for new Tutors -->
+    <%= render 'awaiting_approval_message' %>
+  <% end %>
   <div class="row">
     <div class="small-12 columns">
       <h2 class="dash-home-header">Upcoming Appointments</h2>
@@ -11,9 +15,9 @@
           <h5 class="no-appts-message">You currently have no scheduled appointments</h5>
           <p class="list-title">To recieve more bookings, try:</p>
           <p class="list-item">&#8226; Sharing your profile page link:</p>
-          <p class="list-item profile-link"><%= link_to public_profile_url %></p>
-          <p class="list-item">&#8226; Increasing your availability in your <%= link_to 'Schedule', schedule_tutor_path(@tutor.slug) %></p>
-          <p class="list-item">&#8226; Adding more courses in your <%= link_to 'Courses', tutor_courses_path(@tutor.slug) %></p>
+          <p class="list-item"><%= link_to public_profile_tutor_url, public_profile_tutor_path, class: 'blue-link' %></p>
+          <p class="list-item">&#8226; Increasing your availability in your <%= link_to 'Schedule', schedule_tutor_path(@tutor.slug), class: 'blue-link' %></p>
+          <p class="list-item">&#8226; Adding more courses in your <%= link_to 'Courses', tutor_courses_path(@tutor.slug), class: 'blue-link' %></p>
         </div>
       <% else %>
         <table class="no-top-margin no-top-border-radius">
