@@ -1,5 +1,5 @@
-<% if @tutor.phone_number && @tutor.school %>
-  <%= render '/tutor_onboarding/standard_application' %>
-<% else %>
+<% if @existing_tutor == true %>
   <%= render '/tutor_onboarding/existing_tutor_application' %>
+<% else %>
+  <%= render '/tutor_onboarding/standard_application' %>
 <% end %>
