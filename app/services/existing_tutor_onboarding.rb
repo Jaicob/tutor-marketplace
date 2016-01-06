@@ -1,14 +1,15 @@
 class ExistingTutorOnboarding
   require 'csv'
 
-  # x = ExistingTutorOnboarding.new('jtjobe@gmail.com', 'password')
+  # x = ExistingTutorOnboarding.new('jtjObE@gmail.com', 'password').existing_tutor?
+
   # ExistingTutorOnboarding.new('jtjobe@gmail.com', 'password').create_user_and_tutor
   
   # x = ExistingTutorOnboarding.new('claire.france25@uga.edu', 'password')
   # ExistingTutorOnboarding.new('claire.france25@uga.edu', 'password').create_user_and_tutor
 
   def initialize(email, password)
-    @email = email
+    @email = email.downcase
     @password = password
   end
 
@@ -56,7 +57,7 @@ class ExistingTutorOnboarding
     @tutors_by_email = {}
 
     @tutors.each do |tutor_info|
-      @tutors_by_email[tutor_info[3]] = {
+      @tutors_by_email[tutor_info[3].downcase] = {
         first_name: tutor_info[1],
         last_name: tutor_info[2]
       }
