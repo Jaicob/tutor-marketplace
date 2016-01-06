@@ -49,13 +49,6 @@ $(document).ready(function()
 
       <%= form_for @tutor, url: submit_application_tutor_path do |f| %>
 
-        <h4 class="first-subheader">Tutoring Campus</h4>
-
-        <p class="prompt">At which campus do you tutor?</p>
-          <%= f.collection_select(:school_id, School.all, :id, :name, {prompt: 'Select Campus'}, {required: true}) %>
-        <p class="fine-print">To ensure the best experience for tutors and students, tutors may only be listed online at one campus.</p>
-
-
         <h4 class="first-subheader">Education</h4>
 
         <p class="prompt">What is your degree type, major and graduation year?</p>

@@ -6,6 +6,7 @@
         <p class="center">Use the email you already have registered with Axon. Enter a password for your new account.</p>
 
         <%= form_for :existing_tutor, url: create_existing_tutor_path do |f| %>
+          <%= f.collection_select(:school_id, School.all, :id, :name, {prompt: 'Select Campus'}, {required: true}) %>
           <%= f.email_field :email, placeholder: 'Email' %>
           <%= f.password_field :password, placeholder: 'Password' %>
           <%= f.password_field :confirm_password, placeholder: 'Confirm Password' %>

@@ -8,9 +8,10 @@ class ExistingTutorOnboarding
   # x = ExistingTutorOnboarding.new('claire.france25@uga.edu', 'password')
   # ExistingTutorOnboarding.new('claire.france25@uga.edu', 'password').create_user_and_tutor
 
-  def initialize(email, password)
+  def initialize(email, password, school_id)
     @email = email.downcase
     @password = password
+    @school_id = school_id
   end
 
   def create_user_and_tutor
@@ -22,7 +23,7 @@ class ExistingTutorOnboarding
         last_name: @tutors_by_email[@email][:last_name]
       )
       if user.save
-        tutor = user.create_tutor!
+        tutor = user.create_tutor!(school_id: @school_id)
         ExistingTutorMailer.delay.welcome_email(user.id)
         response = {
           success: true,

@@ -7,7 +7,7 @@ class TutorOnboardingController < ApplicationController
 
 
   def application
-    response = ExistingTutorOnboarding.new(current_user.email, 'password').existing_tutor?
+    response = ExistingTutorOnboarding.new(current_user.email, 'password', 'school').existing_tutor?
     if response == true
       @existing_tutor = true
     end
@@ -16,7 +16,8 @@ class TutorOnboardingController < ApplicationController
   def create_existing_tutor_account
     email = params[:existing_tutor][:email]
     password = params[:existing_tutor][:password]
-    response = ExistingTutorOnboarding.new(email, password).create_user_and_tutor
+    school_id = params[:existing_tutor][:school_id]
+    response = ExistingTutorOnboarding.new(email, password, school_id).create_user_and_tutor
     if response[:success] == true
       tutor = response[:tutor]
       @existing_tutor = true
