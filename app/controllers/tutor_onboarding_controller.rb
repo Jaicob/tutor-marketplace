@@ -7,15 +7,9 @@ class TutorOnboardingController < ApplicationController
 
 
   def application
-    if current_user
-      if @tutor.phone_number.nil? == true
-        @existing_tutor = true
-        return
-      end
-      response = ExistingTutorOnboarding.new(current_user.email, 'password').existing_tutor?
-      if response == true
-        @existing_tutor = true
-      end
+    response = ExistingTutorOnboarding.new(current_user.email, 'password').existing_tutor?
+    if response == true
+      @existing_tutor = true
     end
   end
 
