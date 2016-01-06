@@ -127,10 +127,8 @@
       <h2 class="dash-home-header">Support</h2>
       <div class="box height-24em">
         <h5>Your Campus Manager</h5>
-        <% if @school.campus_manager %>
-          <h6 class="name"><%= @school.campus_manager.full_name %></h6>
-          <p><%= mail_to @school.campus_manager.email, nil, class: 'blue-link' %></p>
-        <% end %>
+        <p>Katie F.</p>
+        <p><%= mail_to 'katie@axontutors.com', nil, class: 'blue-link' %></p>
         <h5>Axon Headquarters</h5>
         <p>(762) 585-4850</p>
         <p><%= mail_to 'info@axontutors.com', nil, class: 'blue-link' %></p>
