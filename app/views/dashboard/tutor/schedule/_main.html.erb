@@ -2,6 +2,11 @@
 <%= stylesheet_link_tag 'fullcalendar/dist/fullcalendar.min' %>
 <%= stylesheet_link_tag 'overrides/schedule' %>
 <div class="row">
+  <div class="small-12 medium-6 columns">
+    <h2 class="dash-home-header">My Availability</h2>
+  </div>
+</div>
+<div class="row">
   <div class="medium-12 columns">
     <h3 class="subheader">Drag & Drop from options to create your schedule.</h3>
   </div>
@@ -24,7 +29,7 @@
               <span class="prefix"><h3>Repeat availability for </h3></span>
             </div>
             <div class="small-2 columns">
-              <input type="number" step="1" min="2" max="99" id="weeksToRepeat" required="true" placeholder="18" pattern="\d*" style="text-align: center; border-right-width: 0px;">
+              <input type="number" step="1" min="2" max="99" id="weeksToRepeat" required="true" placeholder="2" pattern="\d*" style="text-align: center; border-right-width: 0px;">
             </div>
             <div class="small-4 columns">
               <span class="postfix"> <h3> weeks</h3></span>
