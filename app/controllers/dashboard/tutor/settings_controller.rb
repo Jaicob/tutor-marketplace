@@ -17,7 +17,6 @@ class Dashboard::Tutor::SettingsController < DashboardController
   end
 
   def payment_info
-    @tutor = User.find(params[:id]).tutor
   end
 
   def edit_address

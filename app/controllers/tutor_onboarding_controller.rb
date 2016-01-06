@@ -7,6 +7,16 @@ class TutorOnboardingController < ApplicationController
 
 
   def application
+    if current_user
+      if @tutor.phone_number.nil? == true
+        @existing_tutor = true
+        return
+      end
+      response = ExistingTutorOnboarding.new(current_user.email, 'password').existing_tutor?
+      if response == true
+        @existing_tutor = true
+      end
+    end
   end
 
   def create_existing_tutor_account
@@ -15,6 +25,7 @@ class TutorOnboardingController < ApplicationController
     response = ExistingTutorOnboarding.new(email, password).create_user_and_tutor
     if response[:success] == true
       tutor = response[:tutor]
+      @existing_tutor = true
       sign_in_and_redirect(tutor.user)
     else
       flash[:error] = response[:error]
