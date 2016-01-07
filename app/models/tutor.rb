@@ -149,7 +149,7 @@ class Tutor < ActiveRecord::Base
   end
 
   def send_active_status_change_email(tutor_params)
-    if tutor_params[:active_status] == 'Active' && ExistingTutorOnboarding.new(self.email, 'password_placeholder').existing_tutor? == false
+    if tutor_params[:active_status] == 'Active' && ExistingTutorOnboarding.new(self.email).existing_tutor? == false
       # TODO-JT - remove this first statement after ETO period is over...
       ExistingTutorMailer.delay.activation_email(self.user.id)
       return
@@ -198,7 +198,7 @@ class Tutor < ActiveRecord::Base
     # method called in after_commit hook to automatically update a tutor's application status and send application_completed email
     if self.complete_application? && self.application_status == 'Incomplete'
       self.update(application_status: 'Complete')
-      if ExistingTutorOnboarding.new(self.email, 'password_placeholder').existing_tutor? == false
+      if ExistingTutorOnboarding.new(self.email).existing_tutor? == false
       # TODO-JT - remove this if statement after Existing Tutor Onboarding period is over 
         TutorManagementMailer.delay.application_completed_email(self.user.id)
       end

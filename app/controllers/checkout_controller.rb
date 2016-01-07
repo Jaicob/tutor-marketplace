@@ -68,6 +68,8 @@ class CheckoutController < ApplicationController
       session[:charge_id] = context.charge.id
       redirect_to checkout_confirmation_path(@tutor.slug)
     else
+      puts "HEY IM BEING CALLED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+      puts "data = #{data}"
       if data[:new_user] == true
         puts "HEY IM BEING CALLED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
         # undoes user and student account creation on failed checkout attempt
