@@ -8,7 +8,7 @@ class ExistingTutorOnboarding
   # x = ExistingTutorOnboarding.new('claire.france25@uga.edu', 'password')
   # ExistingTutorOnboarding.new('claire.france25@uga.edu', 'password').create_user_and_tutor
 
-  def initialize(email, password, school_id)
+  def initialize(email, password = nil, school_id = nil)
     @email = email.downcase
     @password = password
     @school_id = school_id

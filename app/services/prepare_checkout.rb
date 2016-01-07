@@ -43,7 +43,7 @@ class PrepareCheckout
     rescue Exception => e
       data = {
         success: false,
-        error: e.record.errors.full_messages.first
+        error: e
       }
       return data
     end
