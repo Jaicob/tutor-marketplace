@@ -22,6 +22,11 @@ module Processor
               state: tutor.state,
               postal_code: tutor.postal_code
             },
+            dob: {
+              day: tutor.dob.day,
+              month: tutor.dob.month,
+              year: tutor.dob.year
+            },
             first_name: tutor.first_name,
             last_name: tutor.last_name,
             ssn_last_4: tutor.ssn_last_4,

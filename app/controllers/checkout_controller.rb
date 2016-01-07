@@ -65,6 +65,7 @@ class CheckoutController < ApplicationController
   
     context = CheckoutOrganizer.call(data)
     if context.success?
+      session[:charge_id] = context.charge.id
       redirect_to checkout_confirmation_path(@tutor.slug)
     else
       if data[:new_user] == true
