@@ -106,7 +106,11 @@ class Tutor < ActiveRecord::Base
   end
 
   def complete_application?
-    fields = [:profile_pic, :transcript, :profile_info]
+    if ExistingTutorOnboarding.new(self.email).existing_tutor?
+      fields = [:profile_pic, :profile_info]
+    else
+      fields = [:profile_pic, :transcript, :profile_info]
+    end
     fields.each do |field|
       if account_has?(field) == false then return false end
     end

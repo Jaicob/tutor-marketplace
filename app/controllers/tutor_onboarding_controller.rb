@@ -87,8 +87,8 @@ class TutorOnboardingController < ApplicationController
   end
 
   def submit_payment_details
-    if @tutor.update_attributes(tutor_params)
-      @tutor.update_attributes(last_4_acct: params[:last_4_acct])
+    if @tutor.update(tutor_params)
+      # @tutor.update(last_4_acct: params[:last_4_acct])
       @tutor.update_onboarding_status(4)
       UpdateTutorAccount.call(tutor: @tutor, token: params[:stripeToken])
       respond_to do |format|
