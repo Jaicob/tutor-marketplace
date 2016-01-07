@@ -54,5 +54,10 @@ module ApplicationHelper
       ['Wisconsin', 'WI'],
       ['Wyoming', 'WY']
     ]
-end
+  end
+
+  def set_timezone(school, &block)
+    time_zone = school.try(:timezone) || 'UTC'
+    Time.use_zone(time_zone, &block)
+  end
 end
