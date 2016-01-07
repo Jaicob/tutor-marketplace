@@ -13,6 +13,9 @@
       <%= f.label :location %>
       <%= f.text_field :location %>
 
+      <%= f.label :timezone, "Timezone" %>
+      <%= f.select :timezone, @timezones %>
+
       <%= f.label :transaction_percentage, "Transaction Percentage (as an integer)" %>
       <%= f.text_field :transaction_percentage %>
 

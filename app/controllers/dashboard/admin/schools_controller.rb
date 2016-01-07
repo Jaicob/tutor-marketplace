@@ -1,6 +1,7 @@
 class Dashboard::Admin::SchoolsController < AdminController
   before_action :set_working_school, only: [:show, :update, :destroy]
   before_action :set_campus_manager, only: [:show, :update, :destroy]
+  before_action :set_timezones, only: [:new, :show]
 
   def index
     @schools = School.all
@@ -51,8 +52,18 @@ class Dashboard::Admin::SchoolsController < AdminController
       @campus_manager = @working_school.campus_manager 
     end
 
+    def set_timezones
+      @timezones = []
+
+      ActiveSupport::TimeZone.all.each do |zone|
+        @timezones << zone.name
+      end
+
+      return @timezones
+    end 
+
     def school_params
-      params.require(:school).permit(:name, :location, :transaction_percentage, :campus_pic)
+      params.require(:school).permit(:name, :location, :timezone, :transaction_percentage, :campus_pic)
     end
 
 end
