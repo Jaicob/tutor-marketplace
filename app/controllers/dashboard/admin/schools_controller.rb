@@ -1,7 +1,7 @@
 class Dashboard::Admin::SchoolsController < AdminController
   before_action :set_working_school, only: [:show, :update, :destroy]
   before_action :set_campus_manager, only: [:show, :update, :destroy]
-  before_action :set_timezones, only: [:new, :show]
+  before_action :get_time_zones, only: [:new, :show]
 
   def index
     @schools = School.all
@@ -52,10 +52,10 @@ class Dashboard::Admin::SchoolsController < AdminController
       @campus_manager = @working_school.campus_manager 
     end
 
-    def set_timezones
+    def get_time_zones
       @timezones = []
 
-      ActiveSupport::TimeZone.all.each do |zone|
+      ActiveSupport::TimeZone.us_zones.each do |zone|
         @timezones << zone.name
       end
 

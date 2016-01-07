@@ -1,13 +1,9 @@
 $(document).ready(function() {
 
-  $(".fi-widget").unbind().on("click", function(){
-    $("#repeating-options").slideToggle(200);
-    $(".regular-availability").toggleClass("expanded");
-  })
-
   var tutor_id = $('#axoncalendar').data('tutor');
   var originalStartTime;
   var originalDuration;
+  var moment = $.fullCalendar.moment
 
   // Configure Qtip
   var tooltip = $('#calendar').qtip({
@@ -99,16 +95,19 @@ $(document).ready(function() {
    * the other data is added to the event object
    */
   var formatDataAsEvent = function(eventData) {
-    end_time = moment(eventData.start_time, moment.ISO_8601);
+    console.log("1",eventData.start_time);
+    end_time = moment.parseZone(eventData.start_time, moment.parseZone.ISO_8601);
+    console.log("2: ",end_time);
     end_time = end_time.add(eventData.duration, 'seconds');
     var postFormat = {
       title: eventData.slot_type === 0 ? 'Weekly' : 'One Time',
-      start: moment(eventData.start_time, moment.ISO_8601),
+      start: moment.parseZone(eventData.start_time, moment.parseZone.ISO_8601),
       end: end_time,
       slot_id: eventData.id,
       status: eventData.status === 0 ? 'Open' : 'Blocked',//eventData.status
       slot_type: eventData.slot_type === 0 ? 'Weekly' : 'OneTime'
     };
+    console.log("3",postFormat.start);
     return postFormat;
   }
 
@@ -137,7 +136,6 @@ $(document).ready(function() {
       $('#calendar').fadeTo(1);
     }
    }
-
 
   /*
    * These are events that need to happen before an update to slots
@@ -315,6 +313,7 @@ $(document).ready(function() {
    * the status and type
    */
   var eventRender = function(event, element, view) {
+    console.log("4", event);
     if (event.status === 'Blocked') {
       element.css('background-color', '#E0E0E0');
       event.title = "Blocked";
@@ -416,7 +415,7 @@ $(document).ready(function() {
    */
   fcalendar =  $('#calendar').fullCalendar({
     eventSources: [eventSource],
-    timezone: 'local',
+    timezone: false,
     slotEventOverlap: false,
     eventOverlap: function(stillEvent, movingEvent) { return stillEvent.allDay && movingEvent.allDay },
     allDaySlot: false,
