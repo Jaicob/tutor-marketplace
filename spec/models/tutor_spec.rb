@@ -31,6 +31,7 @@
 #  ssn_last_4         :string
 #  acct_id            :string
 #  slug               :string
+#  dob                :date
 #
 
 require 'rails_helper'

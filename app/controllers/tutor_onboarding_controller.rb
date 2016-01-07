@@ -88,6 +88,7 @@ class TutorOnboardingController < ApplicationController
 
   def submit_payment_details
     if @tutor.update_attributes(tutor_params)
+      puts "TUTOR PARAMS = #{tutor_params}"
       @tutor.update_attributes(last_4_acct: params[:last_4_acct])
       @tutor.update_onboarding_status(4)
       UpdateTutorAccount.call(tutor: @tutor, token: params[:stripeToken])
@@ -105,8 +106,10 @@ class TutorOnboardingController < ApplicationController
   private
 
     def tutor_params
-      params.require(:tutor).permit(:onboarding_status, :school_id, :additional_degrees, :courses_approved, :rating, :application_status, :appt_notes, :birthdate, :degree, :major, :extra_info_1, :extra_info_2, :extra_info_3, :graduation_year, :phone_number, :profile_pic, :transcript, :active_status, :crop_x, :crop_y, :crop_w, :crop_h, :line1, :line2, :city, :state, :postal_code, :ssn_last_4, course: [:course_id], tutor_course: [:rate], user_attributes: [:first_name, :last_name, :email, :phone_number, :password, :password_confirmation])
+      params.require(:tutor).permit(:onboarding_status, :school_id, :additional_degrees, :courses_approved, :rating, :application_status, :appt_notes, :dob, :degree, :major, :extra_info_1, :extra_info_2, :extra_info_3, :graduation_year, :phone_number, :profile_pic, :transcript, :active_status, :crop_x, :crop_y, :crop_w, :crop_h, :line1, :line2, :city, :state, :postal_code, :ssn_last_4, course: [:course_id], tutor_course: [:rate], user_attributes: [:first_name, :last_name, :email, :phone_number, :password, :password_confirmation])
     end
+
+     # dob(1i), dob(2i), dob(3i),
 
     def tutor_course_params
       params.require(:tutor_course).permit(:tutor_id, :course_id, :rate)
