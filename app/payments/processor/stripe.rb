@@ -116,3 +116,14 @@ module Processor
 
   end
 end
+
+Stripe::Token.create(
+    :bank_account => {
+    :country => "CA",
+    :currency => "usd",
+    :name => "Jane Austen",
+    :account_holder_type => "individual",
+    :routing_number => "11000000",
+    :account_number => "000123456789",
+  },
+)

@@ -69,9 +69,16 @@ class CheckoutController < ApplicationController
       redirect_to checkout_confirmation_path(@tutor.slug)
     else
       if data[:new_user] == true
+        puts "HEY IM BEING CALLED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
         # undoes user and student account creation on failed checkout attempt
         @new_user = Student.find(data[:student_id]).user
+        puts "HEY IM BEING CALLED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+        puts "@new_user = #{@new_user}"
+        puts "@new_user.student = #{@new_user.student}"
         @new_user.student.destroy && @new_user.destroy
+        puts "@new_user = #{@new_user}"
+        puts "@new_user.student = #{@new_user.student}"
+        puts "HEY IM BEING CALLED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
       end
       flash[:alert] = context.error
       redirect_to checkout_review_booking_path(@tutor.slug)
