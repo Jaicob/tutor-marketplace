@@ -4,6 +4,7 @@ class CheckoutOrganizer
   # required_params
     # :tutor_id
     # :student_id
+    # :location
     # :stripe_token
     # :appts_info [{slot_id: x, course_id: x, start_time: xxx},{slot_id: x, course_id: x, start_time: xxx}]
     # :promotion_id (optional)

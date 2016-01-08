@@ -23,12 +23,9 @@ class SingleViewsController < ApplicationController
   end
 
   def search
-    puts "PARAMS!!!!!! = #{params}"
     if params[:course_id]
       @course = Course.find(params[:course_id])
-      puts "@course = #{@course.formatted_name}"
       @subject = @course.subject
-      puts "@subject = #{@subject.name}"
     end
     if @school.nil?
       redirect_to get_started_path

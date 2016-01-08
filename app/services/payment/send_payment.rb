@@ -5,7 +5,7 @@ class SendPayment
     begin 
       if context.charge.amount > 0
         processor = PaymentFactory.new.build
-        @stripe_create_charge_response = processor.send_charge(context.charge)
+        @stripe_create_charge_response = processor.send_charge(context.charge, context.charge_description, context.one_time_card)
         context.charge.update(stripe_charge_id: @stripe_create_charge_response.id)  
       else
         puts "No payment necessary"

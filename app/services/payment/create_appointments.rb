@@ -17,19 +17,14 @@ class CreateAppointments
           student_id: context.student_id,
           slot_id: appt_info[:slot_id],
           course_id: appt_info[:course_id],
-          start_time: appt_info[:start_time]
+          start_time: appt_info[:start_time],
+          location: context.location
         )
-        if !new_appt.save
-          raise "Appointment could not be saved #{new_appt.errors.full_messages.first}"
+        if new_appt.save
+          context.appointments << new_appt
+        else
+          raise "Appointment was not created: #{new_appt.errors.full_messages.first}"
         end
-        # if !new_appt.save
-        #   context.fail!(
-        #     message: new_appt.errors.full_messages,
-        #     failed_interactor: self.class
-        #   )
-        #   return
-        # end
-        context.appointments << new_appt
       end  
     rescue => error
       context.fail!(
