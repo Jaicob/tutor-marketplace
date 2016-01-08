@@ -1,7 +1,8 @@
 $(document).ready(function() {
 
   var tutor_id = $('#axoncalendar').data('tutor');
-  var timezone = $('#axoncalendar').data('timzone');
+  var utc_offset = $('#axoncalendar').data('utcoffset');
+  console.log("OFFSET", utc_offset);
   var originalStartTime;
   var originalDuration;
 
@@ -95,9 +96,10 @@ $(document).ready(function() {
    * the other data is added to the event object
    */
   var formatDataAsEvent = function(eventData) {
-    console.log("1",$('#calendar'));
     end_time = moment(eventData.start_time, moment.ISO_8601).utcOffset(-300);
-    console.log("2: ",end_time);
+    console.log("1: ",end_time.toISOString());
+    console.log("2: ",end_time.format());
+
     end_time = end_time.add(eventData.duration, 'seconds');
     var postFormat = {
       title: eventData.slot_type === 0 ? 'Weekly' : 'One Time',
@@ -107,7 +109,6 @@ $(document).ready(function() {
       status: eventData.status === 0 ? 'Open' : 'Blocked',//eventData.status
       slot_type: eventData.slot_type === 0 ? 'Weekly' : 'OneTime'
     };
-    console.log("3",postFormat.start);
     return postFormat;
   }
 
@@ -127,11 +128,9 @@ $(document).ready(function() {
    */
    var loading = function( isLoading, view ) {
     if (isLoading) {
-      console.log("Loading");
      $('#calendar').fadeTo(0.6);
      $('#cal-loading').show();
     } else {
-      console.log("Finished");
       $('#cal-loading').hide();
       $('#calendar').fadeTo(1);
     }
@@ -184,7 +183,9 @@ $(document).ready(function() {
    * if successful the ui is updated to show the new slots (called events by fullcalendar)
    */
   var addSlot = function(event, jsEvent, ui) {
-    event.end = moment(event.end);
+    end_time = moment(event.end).utcOffset(-300);
+    start_time = moment(event.start).utcOffset(-300);
+    console.log("Add Slot",event.start);
     var duration = moment.duration(event.end.diff(event.start));
     var seconds = duration.asSeconds();
     var endpoint = API.endpoints.tutor_slots.create({
@@ -192,7 +193,7 @@ $(document).ready(function() {
     });
 
     request = $.post(endpoint, { 
-      start_time: event.start.toISOString(),
+      start_time: start_time.format(),
       duration: seconds,
       weeks_to_repeat: event.weeksToRepeat(),
       slot_type: event.slot_type,
@@ -313,7 +314,6 @@ $(document).ready(function() {
    * the status and type
    */
   var eventRender = function(event, element, view) {
-    console.log("4", event);
     if (event.status === 'Blocked') {
       element.css('background-color', '#E0E0E0');
       event.title = "Blocked";
