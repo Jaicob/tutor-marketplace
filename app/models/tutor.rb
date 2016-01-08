@@ -66,12 +66,8 @@ class Tutor < ActiveRecord::Base
   after_create :change_user_role_to_tutor
   after_commit :update_application_status
 
+  # variations of a user's name to create unique slugs in case of duplicate names
   def slug_candidates
-    if self.first_name.nil? || self.last_name.nil?
-      puts "ERROR: First and last name can't be blank"
-      return
-    end
-    # variations of a user's name to create unique slugs in case of duplicate names
     [ "#{first_name}#{last_name}", "#{first_name[0]}#{last_name}", "#{first_name}#{last_name[0]}", "#{first_name[0..1]}#{last_name}", "#{first_name}#{last_name[0..1]}", "#{first_name[0..2]}#{last_name}", "#{first_name}#{last_name[0..2]}", "#{first_name[0..3]}#{last_name}", "#{first_name}#{last_name[0..3]}"]
   end
 
@@ -80,85 +76,54 @@ class Tutor < ActiveRecord::Base
     self.courses.count > 0 ? false : true
   end
 
+  # helper method for views
   def first_and_last_initial
     self.first_name + " " + self.last_name.slice(0) + "."
   end
 
+  # degrees to be displayed in degree select dropdown for tutors
   def self.degree_collection
     ["B.A.","B.S.","M.B.A.","M.S.","M.Ed.","PhD."]
   end
 
+  # called in update action of tutors_controller to re-create thumbnail of profile pic if :crop_x attribute is present in params
   def crop_profile_pic(tutor_params)
     profile_pic.recreate_versions! if tutor_params[:crop_x]
     profile_pic.delete_cache_id
-  end
-
-  def sign_up_date
-    self.created_at.to_date
   end
 
   def formatted_courses
     self.courses.map{ |course| course.formatted_name}.join("<br>").html_safe()
   end
 
-  def active?
-    self.active_status == 'Active' ? true : false
-  end
-
-  def complete_application?
-    if ExistingTutorOnboarding.new(self.email).existing_tutor?
-      fields = [:profile_pic, :profile_info]
-    else
-      fields = [:profile_pic, :transcript, :profile_info]
-    end
-    fields.each do |field|
-      if account_has?(field) == false then return false end
-    end
-    true
-  end
-
-  def account_has?(field)
-    case field
-    when :profile_pic
-      self.profile_pic.url == 'panda.png' ? false : true
-    when :transcript
-      self.transcript.url == nil ? false : true
-    when :profile_info
-      (self.degree.present? && self.major.present? && self.extra_info_1.present? && self.graduation_year.present?) ? true : false
+  # method called in after_commit hook to automatically update a tutor's application status and send application_completed email
+  def update_application_status
+    if (self.onboarding_status == 4) && (self.application_status == 'Incomplete')
+      self.update(application_status: 'Complete')
+      # TODO-JT - remove this if statement after Existing Tutor Onboarding period is over 
+      if ExistingTutorOnboarding.new(self.email).existing_tutor? == false
+        TutorManagementMailer.delay.application_completed_email(self.user.id)
+      end
     end
   end
 
-  def complete_payment_info_details?
-    (self.line1 && self.line2 && self.city && self.state && self.postal_code && self.acct_id && self.last_4_acct && self.ssn_last_4) ? true : false
+  # method for admin section - admin user taken as argument to determine whether or not to list tutors from all schools or just one school depending on if its a campus manager or regular admin
+  def self.applications_awaiting_approval(user) # get user to determine admin level
+    if user.role == 'campus_manager' # campus-mangers only see applications at their school
+      user.school.tutors.where(application_status: 1, active_status: 0)
+    else # super-admin can see all applications across all schools
+      Tutor.where(application_status: 1, active_status: 0)
+    end
   end
 
-  def awaiting_approval?
-    self.application_status == 'Complete' ? true : false
-  end
-
-  def zero_availability_set?
-    self.incomplete_profile? == false &&
-    self.awaiting_approval? == false &&
-    self.slots.count == 0 ?
-    true : false
-  end
-
-  def onboarding_complete?
-    self.complete_application? &&
-    self.application_status == 'Approved' &&
-    self.courses_approved? &&
-    self.slots.count > 0 &&
-    self.acct_id ?
-    true : false
-  end
-
+  # called in update action in Dashboard::Admin::TutorsController to trigger activation/deactivation email if :active_status param is present
   def send_active_status_change_email(tutor_params)
-    if tutor_params[:active_status] == 'Active' && ExistingTutorOnboarding.new(self.email).existing_tutor? == false
-      # TODO-JT - remove this first statement after ETO period is over...
+    # TODO-JT - remove this first statement after ETO period is over...
+    if tutor_params[:active_status] == 'Active' && ExistingTutorOnboarding.new(self.email).existing_tutor? == true
       ExistingTutorMailer.delay.activation_email(self.user.id)
       return
     end
-    
+    # end of temporary ETO method to delete - keep statements below
     if tutor_params[:active_status] == 'Active'
       TutorManagementMailer.delay.activation_email(self.user.id)
     end
@@ -171,6 +136,7 @@ class Tutor < ActiveRecord::Base
     self.slots.select{|slot| slot.start_time.to_date >= start_date.to_date && slot.start_time.to_date <= end_date.to_date }
   end
 
+  # used to redirect to the correct page based on different attributes being updated through the tutors_controller
   def update_action_redirect_path(tutor_params)
     if tutor_params[:birthdate] || tutor_params[:phone_number] || tutor_params[:transcript]
       "/tutors/#{self.slug}/settings/account"
@@ -185,45 +151,27 @@ class Tutor < ActiveRecord::Base
     end
   end
 
+  # method called in after_create hook to automatically change the default role of student to tutor
   def change_user_role_to_tutor
-    # method called in after_create hook to automatically change the default role of student to tutor
     if self.user.role == 'student'
       self.user.update(role: 'tutor')
     end
   end
 
+  # called in every post action of the tutor_onboarding controller to update status in onboarding process
   def update_onboarding_status(step_completed)
     if step_completed > self.onboarding_status
       self.update(onboarding_status: step_completed)
     end
   end
 
-  def update_application_status
-    # method called in after_commit hook to automatically update a tutor's application status and send application_completed email
-    if self.complete_application? && self.application_status == 'Incomplete'
-      self.update(application_status: 'Complete')
-      if ExistingTutorOnboarding.new(self.email).existing_tutor? == false
-      # TODO-JT - remove this if statement after Existing Tutor Onboarding period is over 
-        TutorManagementMailer.delay.application_completed_email(self.user.id)
-      end
-    end
-  end
-
-  def self.applications_awaiting_approval(user) # get user to determine admin level
-    if user.role == 'campus_manager' # campus-mangers only see applications at their school
-      user.school.tutors.where(application_status: 1, active_status: 0)
-    else # super-admin can see all applications across all schools
-      Tutor.where(application_status: 1, active_status: 0)
-    end
-  end
-
+  # returns limited information about a tutor's appointments for public API call for scheduler
   def appointments_with_times_only_for_public_scheduler
-    # returns limited information about a tutor's appointments for public API call for scheduler
     self.appointments.map{ |appt| {id: appt.id, start_time: appt.start_time, status: appt.status}}
   end
 
+  # returns all appointment details (including student_id) for logged-in tutor that owns appointment, returns only necessary details for scheduler for all others (only: id, start_time, status)
   def restricted_appointments_info(tutor, current_user)
-    # returns all appointment details (including student_id) for logged-in tutor that owns appointment, returns only necessary details for scheduler for all others (only: id, start_time, status)
     if current_user && current_user.tutor == self
       @appointments = self.appointments
     else
@@ -235,6 +183,7 @@ class Tutor < ActiveRecord::Base
     self.charges.map(&:tutor_fee).reduce(:+) || 0
   end
 
+  # used to format courses for easy display
   def course_list
     self.tutor_courses.map do |tc|
       tutor_course_info = {}
