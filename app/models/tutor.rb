@@ -63,12 +63,19 @@ class Tutor < ActiveRecord::Base
   # Dimensions for cropping profile pics
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
 
-  after_create :change_user_role_to_tutor
   after_commit :update_application_status
+  after_create :change_default_user_role_to_tutor
 
   # variations of a user's name to create unique slugs in case of duplicate names
   def slug_candidates
     [ "#{first_name}#{last_name}", "#{first_name[0]}#{last_name}", "#{first_name}#{last_name[0]}", "#{first_name[0..1]}#{last_name}", "#{first_name}#{last_name[0..1]}", "#{first_name[0..2]}#{last_name}", "#{first_name}#{last_name[0..2]}", "#{first_name[0..3]}#{last_name}", "#{first_name}#{last_name[0..3]}"]
+  end
+
+  # default user role is student so this method is called in after_create hook to automatically change user.role to tutor
+  def change_default_user_role_to_tutor
+    if self.user.role == 'student'
+      self.user.update(role: 'tutor')
+    end
   end
 
   # validation method used in controllers - prevents a tutor from changing school if tutor has courses at one school
@@ -132,32 +139,6 @@ class Tutor < ActiveRecord::Base
     end
   end
 
-  def get_slots_in_date_range(start_date, end_date)
-    self.slots.select{|slot| slot.start_time.to_date >= start_date.to_date && slot.start_time.to_date <= end_date.to_date }
-  end
-
-  # used to redirect to the correct page based on different attributes being updated through the tutors_controller
-  def update_action_redirect_path(tutor_params)
-    if tutor_params[:birthdate] || tutor_params[:phone_number] || tutor_params[:transcript]
-      "/tutors/#{self.slug}/settings/account"
-    elsif tutor_params[:appt_notes]
-      "/tutors/#{self.slug}/settings/appointment_settings"
-    elsif tutor_params[:line1] || tutor_params[:city] || tutor_params[:state] || tutor_params [:postal_code]
-      "/tutors/#{self.slug}/settings/payment_info"
-    elsif tutor_params[:courses_approved]
-      "/tutors/#{self.slug}/courses"
-    else
-      "/tutors/#{self.slug}/settings/edit_profile"
-    end
-  end
-
-  # method called in after_create hook to automatically change the default role of student to tutor
-  def change_user_role_to_tutor
-    if self.user.role == 'student'
-      self.user.update(role: 'tutor')
-    end
-  end
-
   # called in every post action of the tutor_onboarding controller to update status in onboarding process
   def update_onboarding_status(step_completed)
     if step_completed > self.onboarding_status
@@ -179,11 +160,12 @@ class Tutor < ActiveRecord::Base
     end
   end
 
+  # helper method for views
   def total_income
     self.charges.map(&:tutor_fee).reduce(:+) || 0
   end
 
-  # used to format courses for easy display
+  # helper method to format data for API controller for React Checkout
   def course_list
     self.tutor_courses.map do |tc|
       tutor_course_info = {}
@@ -212,6 +194,25 @@ class Tutor < ActiveRecord::Base
       data[tc.course.subject.name] << tc_info
     end
     return data
+  end
+
+  def get_slots_in_date_range(start_date, end_date)
+    self.slots.select{|slot| slot.start_time.to_date >= start_date.to_date && slot.start_time.to_date <= end_date.to_date }
+  end
+
+  # used to redirect to the correct page based on different attributes being updated through the tutors_controller
+  def update_action_redirect_path(tutor_params)
+    if tutor_params[:birthdate] || tutor_params[:phone_number] || tutor_params[:transcript]
+      "/tutors/#{self.slug}/settings/account"
+    elsif tutor_params[:appt_notes]
+      "/tutors/#{self.slug}/settings/appointment_settings"
+    elsif tutor_params[:line1] || tutor_params[:city] || tutor_params[:state] || tutor_params [:postal_code]
+      "/tutors/#{self.slug}/settings/payment_info"
+    elsif tutor_params[:courses_approved]
+      "/tutors/#{self.slug}/courses"
+    else
+      "/tutors/#{self.slug}/settings/edit_profile"
+    end
   end
 
 end

@@ -54,7 +54,7 @@ class AppointmentMailer < ApplicationMailer
   private
 
     def set_tutor_and_student
-      @appt = Appointment.find(params[:appointment_id])
+      @appt = Appointment.find(appointment_id)
       @tutor = @appt.tutor
       @student = @appt.student 
     end
