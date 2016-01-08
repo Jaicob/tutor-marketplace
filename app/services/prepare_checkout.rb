@@ -33,6 +33,7 @@ class PrepareCheckout
         success: true,
         tutor_id: @tutor.id,
         student_id: @student.id,
+        location: @location,
         stripe_token: @token,
         appts_info: appts_info,
         promotion_id: @promotion_id,

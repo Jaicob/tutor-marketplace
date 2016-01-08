@@ -76,11 +76,9 @@ class CheckoutController < ApplicationController
     else
 
       # for de-bugging CheckoutOrganizer, error details in server logs
-        puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-        puts "@context.error = #{@context.error}"
-        puts "@context.error.class = #{@context.error.class}"
-        puts "@context.failed_interactor = #{@context.failed_interactor}"
-        puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+        puts "Error Message     = #{@context.error}"
+        puts "Error Type        = #{@context.error.class}"
+        puts "Failed Interactor = #{@context.failed_interactor}"
       # end of error details
 
       # clean-up after failure - destroy new user if one was created
