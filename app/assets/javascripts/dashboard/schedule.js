@@ -1,9 +1,9 @@
 $(document).ready(function() {
 
   var tutor_id = $('#axoncalendar').data('tutor');
+  var timezone = $('#axoncalendar').data('timzone');
   var originalStartTime;
   var originalDuration;
-  var moment = $.fullCalendar.moment
 
   // Configure Qtip
   var tooltip = $('#calendar').qtip({
@@ -95,13 +95,13 @@ $(document).ready(function() {
    * the other data is added to the event object
    */
   var formatDataAsEvent = function(eventData) {
-    console.log("1",eventData.start_time);
-    end_time = moment.parseZone(eventData.start_time, moment.parseZone.ISO_8601);
+    console.log("1",$('#calendar'));
+    end_time = moment(eventData.start_time, moment.ISO_8601).utcOffset(-300);
     console.log("2: ",end_time);
     end_time = end_time.add(eventData.duration, 'seconds');
     var postFormat = {
       title: eventData.slot_type === 0 ? 'Weekly' : 'One Time',
-      start: moment.parseZone(eventData.start_time, moment.parseZone.ISO_8601),
+      start: moment(eventData.start_time, moment.ISO_8601).utcOffset(-300),
       end: end_time,
       slot_id: eventData.id,
       status: eventData.status === 0 ? 'Open' : 'Blocked',//eventData.status
@@ -415,7 +415,7 @@ $(document).ready(function() {
    */
   fcalendar =  $('#calendar').fullCalendar({
     eventSources: [eventSource],
-    timezone: false,
+    timezone: timezone,
     slotEventOverlap: false,
     eventOverlap: function(stillEvent, movingEvent) { return stillEvent.allDay && movingEvent.allDay },
     allDaySlot: false,

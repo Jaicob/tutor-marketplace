@@ -1,6 +1,7 @@
 <%= javascript_include_tag "dashboard/schedule" %>
 <%= stylesheet_link_tag 'fullcalendar/dist/fullcalendar.min' %>
 <%= stylesheet_link_tag 'overrides/schedule' %>
+
 <div class="row">
   <div class="small-12 medium-6 columns">
     <h2 class="dash-home-header">My Schedule</h2>
@@ -53,7 +54,7 @@
     </div>
   </div>
 </div>
-<%= content_tag "div", id: "axoncalendar", data: { tutor: @user.tutor.id } do %>
+<%= content_tag "div", id: "axoncalendar", data: { tutor: @user.tutor.id, timezone: @school.timezone } do %>
 
 <div class="row">
   <div id="scheduling-container">
