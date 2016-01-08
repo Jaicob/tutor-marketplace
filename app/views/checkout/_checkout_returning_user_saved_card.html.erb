@@ -17,10 +17,9 @@
             <h4>Payment Information</h4>
           </div>
         </div>
-
-          <form action="/tutors/<%= @tutor.slug %>/process_booking" method="POST" id="payment-form">
-
-
+        <!-- Beginning of Checkout form -->
+        <form action="/tutors/<%= @tutor.slug %>/process_booking" method="POST" id="payment-form">
+        
         <div class="row">
           <div class="small-12 medium-4 columns">
             <div class="margin-1em">
@@ -37,7 +36,6 @@
             <div class="box zero-padding vertical-margin-1em" id="new-card-form">
               <div class="row">
                 <div class="small-12 medium-6 columns">
-
                   <span class="checkout-card-errors"></span>
                   <label>
                     <span>Card Number</span>
@@ -93,27 +91,25 @@
                       </label>
                     </div>
                   </div>
-
                 </div>
                 <div class="small-12 medium-6 columns padding-1em">
-
                   <input type="radio" name="save_card" value="true" checked="true" class="card-form-input" disabled="true">
                   <span class="save-card-radio">Save this card as my default</span><br />
                   <input type="radio" name="save_card" value="false" class="card-form-input" disabled="true">
                   <span class="save-card-radio">Don't save this card</span>
                   <p class="small-font">Security Notice: We store all of our customers' card details on a secure PCI compliant server managed by <a href="https://stripe.com/about" target="_blank" class="blue-link">Stripe</a>.</p>
-      
-
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-
       <div class="row submit-bar">
         <div class="small-12 medium-6 medium-offset-6 columns">
+
           <button type="submit" class="custom-button full-width create-and-pay-btn">Complete Booking & Pay</button>
+          <!-- End of Checkout form -->
+
         </div>
       </div>
 

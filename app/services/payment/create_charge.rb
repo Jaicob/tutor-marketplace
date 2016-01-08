@@ -25,6 +25,8 @@ class CreateCharge
     begin 
       @tutor = Tutor.find(context.tutor_id)
       @student = Student.find(context.student_id)
+      @course = Course.find(context.appointments.first.course_id)
+      @appt_times = context.appointments.map{|appt| appt.start_time.strftime("%A, %B %e at %l:%M %p")}
 
       context.transaction_percentage = School.find(@tutor.school_id).transaction_percentage
       axon_fee_multiplier = ((context.transaction_percentage.to_f / 100) + 1)
@@ -50,8 +52,9 @@ class CreateCharge
         tutor_fee: tutor_fee,
         token: context.stripe_token
       )
-      
-      # TODO - error message for charge creation failure?
+      # TODO-JT - error message for charge creation failure?
+
+      context.charge_description = "Student: #{@student.full_name}, Tutor: #{@tutor.full_name}, Course: #{@course.formatted_name}, School: #{@course.school.name}, Appts: #{context.appointments.count}, Time(s): #{@appt_times}"
 
       context.appointments.each{|appt| appt.update_attributes(charge_id: charge.id)}
       context.charge = charge

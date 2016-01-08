@@ -38,7 +38,8 @@ class PrepareCheckout
         appts_info: appts_info,
         promotion_id: @promotion_id,
         new_user?: @new_user,
-        new_user_id: @new_user_id
+        new_user_id: @new_user_id,
+        one_time_card: @one_time_card
       }
       return data
 
@@ -56,7 +57,8 @@ class PrepareCheckout
     rescue Exception => e
       data = {
         success: false,
-        error: e.record.errors.full_messages.first,
+        # error: e.record.errors.full_messages.first,
+        error: e,
         new_user?: @new_user,
         new_user_id: @new_user_id
       }
@@ -90,6 +92,9 @@ class PrepareCheckout
     if @save_card
       # this method both creates a customer if none exists and updates the default card on an existing customer
       Processor::Stripe.new.update_customer(@student, @token)
+    else
+      # this serves as a flag to not use the default_card (and use a card token instead) when a customer chooses to use a different card and NOT save it
+      @one_time_card = true
     end
   end
 

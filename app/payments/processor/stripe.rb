@@ -50,26 +50,29 @@ module Processor
       end
     end
 
-    def send_charge(charge)
+    def send_charge(charge, description, one_time_card=nil)
       begin 
         @student = Student.find(charge.student_id)
-        if @student.customer_id.nil?
+        if @student.customer_id.nil? || one_time_card
           # creates charge with token if Student does not have a Stripe Customer
           @stripe_charge_object = ::Stripe::Charge.create(
             amount: charge.amount,
             currency: 'usd',
             source: charge.token,
             destination: charge.tutor.acct_id,
-            application_fee: charge.axon_fee
+            application_fee: charge.axon_fee,
+            description: description
           )
         else
+          puts "USED STUDENTS CUSTOMER ACCOUNT"
           # creates charge with Student's Customer and default source
           @stripe_charge_object = ::Stripe::Charge.create(
             amount: charge.amount,
             currency: 'usd',
             customer: Student.find(charge.student_id).customer_id,
             destination: charge.tutor.acct_id,
-            application_fee: charge.axon_fee
+            application_fee: charge.axon_fee,
+            description: description
           )
         end
         return @stripe_charge_object
@@ -81,31 +84,44 @@ module Processor
     end
 
     def update_customer(student, token)
-      if student.customer_id.nil?
-        # create Stripe customer
-        cust = ::Stripe::Customer.create(
-          card: token,
-          description: "#{student.full_name} - #{student.email}",
-          email: student.email
-        )
-        # save Stripe customer details on Student object
-        student.update_attributes(
-          customer_id: cust.id, 
-          last_4_digits: cust.sources.data.first.last4,
-          card_brand: cust.sources.data.first.brand
-        )
-      else
-        cust = ::Stripe::Customer.retrieve(student.customer_id)
-        # deletes customer's old card
-        cust.sources.data.first.delete()
-        # creates new card and then saves customer to refresh customer data with new card
-        cust.sources.create(source: token)
-        cust.save
-        # updates card info on Student object
-        student.update_attributes(
-          last_4_digits: cust.sources.data.first.last4,
-          card_brand: cust.sources.data.first.brand
-        )
+      begin 
+        puts "MADE IT HERE!!!!!!"
+        if student.customer_id.nil?
+          puts "AAAA!!!!!!!!!!!!!!!"
+          # create Stripe customer
+          cust = ::Stripe::Customer.create(
+            card: token,
+            description: "#{student.full_name} - #{student.email}",
+            email: student.email
+          )
+          puts "cust = #{cust}"
+          puts "cust.sources.data.first = #{cust.sources.data.first}"
+          # save Stripe customer details on Student object
+          student.update_attributes(
+            customer_id: cust.id, 
+            last_4_digits: cust.sources.data.first.last4,
+            card_brand: cust.sources.data.first.brand
+          )
+        else
+          puts "BBBB!!!!!!!!!!!!!!!"
+          cust = ::Stripe::Customer.retrieve(student.customer_id)
+          puts "cust = #{cust}"
+          # deletes customer's old card
+          puts "cust.sources.data.first = #{cust.sources.data.first}"
+          cust.sources.data.first.delete()
+          # creates new card and then saves customer to refresh customer data with new card
+          cust.sources.create(source: token)
+          cust.save
+          # updates card info on Student object
+          student.update_attributes(
+            last_4_digits: cust.sources.data.first.last4,
+            card_brand: cust.sources.data.first.brand
+          )
+        end
+      rescue ::Stripe::StripeError => e
+        puts "STRIPE ERROR!!!!!!"
+        puts "DETAILS: #{e}"
+        return e
       end
     end
 
