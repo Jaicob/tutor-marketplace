@@ -1,6 +1,6 @@
 class PrepareCheckout
 
-  def initialize(params, session, tutor_booked, student) # tutor_booked is supplied to determine school_id for new student
+  def initialize(params, session, tutor_booked, student=nil) # tutor_booked is supplied to determine school_id for new student
     # for user creation
     if params[:user]
       @first_name = params[:user][:first_name]
@@ -35,38 +35,60 @@ class PrepareCheckout
         student_id: @student.id,
         stripe_token: @token,
         appts_info: appts_info,
-        promotion_id: @promotion_id
+        promotion_id: @promotion_id,
+        new_user?: @new_user,
+        new_user_id: @new_user_id
       }
-      # if !@first_name.nil?
-      #   data[:new_user] = true
-      # end
+      return data
+
+    # error handling for Stripe errors
+    rescue ::Stripe::StripeError => e
+      data = {
+        success: false,
+        error: e.message,
+        new_user?: @new_user,
+        new_user_id: @new_user_id
+      }
+      return data
+
+    # error handling for ActiveRecord errors
     rescue Exception => e
       data = {
         success: false,
-        error: e
+        error: e.record.errors.full_messages.first,
+        new_user?: @new_user,
+        new_user_id: @new_user_id
       }
       return data
     end
   end
 
   def create_student_user
-    if !@first_name.nil?
+    if @student.nil?
+
       user = User.create!(
         first_name: @first_name,
         last_name: @last_name,
         email: @email,
         password: @password
       )
+
       @student = user.create_student!(
         school_id: @school_id
       )
-      # TODO - send welcome email to student!
+
+      @new_user = true
+      @new_user_id = user.id
+
+      # TODO-JT - send welcome email to student
+
     end
   end
 
   def save_card_on_stripe_customer
     if @save_card
-      Processor::Stripe.new.update_customer(@student, @token) # this method both creates a customer if none exists and updates the default card on an existing customer
+      # this method both creates a customer if none exists and updates the default card on an existing customer
+      Processor::Stripe.new.update_customer(@student, @token)
     end
   end
 

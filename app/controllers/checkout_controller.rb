@@ -56,24 +56,38 @@ class CheckoutController < ApplicationController
   end
 
   def process_booking
-    data = PrepareCheckout.new(params, session, @tutor, @student).prepare_data_for_checkout_organizer
-    if data[:success] == false
-      flash[:alert] = data[:error]
+    @checkout_data = PrepareCheckout.new(params, session, @tutor, @student).prepare_data_for_checkout_organizer
+    
+    if @checkout_data[:success] == false
+      # clean-up after failure - destroy new user if one was created
+        if @checkout_data[:new_user?] == true
+          User.find(@checkout_data[:new_user_id]).destroy
+        end
+      flash[:alert] = @checkout_data[:error]
       redirect_to checkout_review_booking_path
       return
     end
   
-    context = CheckoutOrganizer.call(data)
-    if context.success?
-      session[:charge_id] = context.charge.id
+    @context = CheckoutOrganizer.call(@checkout_data)
+
+    if @context.success?
+      session[:charge_id] = @context.charge.id
       redirect_to checkout_confirmation_path(@tutor.slug)
     else
-      if data[:new_user] == true
-        # undoes user and student account creation on failed checkout attempt
-        @new_user = Student.find(data[:student_id]).user
-        @new_user.student.destroy && @new_user.destroy
-      end
-      flash[:alert] = context.error
+
+      # for de-bugging CheckoutOrganizer, error details in server logs
+        puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+        puts "@context.error = #{@context.error}"
+        puts "@context.error.class = #{@context.error.class}"
+        puts "@context.failed_interactor = #{@context.failed_interactor}"
+        puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+      # end of error details
+
+      # clean-up after failure - destroy new user if one was created
+        if @checkout_data[:new_user?] == true
+          User.find(@checkout_data[:new_user_id]).destroy
+        end
+      flash[:alert] = 'Your booking was not processed due to a server error. You were not charged. Please try again and contact Axon at info@axontutors.com if you are still unable to complete your booking.'
       redirect_to checkout_review_booking_path(@tutor.slug)
     end
   end

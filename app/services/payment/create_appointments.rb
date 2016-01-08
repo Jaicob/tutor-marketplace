@@ -17,10 +17,10 @@ class CreateAppointments
           student_id: context.student_id,
           slot_id: appt_info[:slot_id],
           course_id: appt_info[:course_id],
-          start_time: appt_info[:start_time]
+          # start_time: appt_info[:start_time]
         )
         if !new_appt.save
-          raise "Appointment could not be saved #{new_appt.errors.full_messages.first}"
+          raise error
         end
         # if !new_appt.save
         #   context.fail!(
