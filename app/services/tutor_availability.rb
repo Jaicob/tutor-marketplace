@@ -54,12 +54,14 @@ class TutorAvailability
           data = {
             time: start_time.strftime('%l:%M %p'),
             datetime: start_time,
-            uniq_id: slot.id.to_s + uniq_id.to_s,
+            uniq_id: slot.id.to_s + sprintf('%02i', uniq_id).to_s, # have to add slot_id to make unique + sprintf adds zero-padding to numbers under 10 which allows the disabledNeigboringCheckboxes to function (otherwise the number jumps a whole tens place from id 9 to id 10)
             slot_id: slot.id,
             available: unavailable_times.include?(start_time) ? false : true
           }
           if unavailable_times.include?(start_time)
             data[:disabled] = true
+          else
+            data[:disabled] = false
           end
           appt_times << data
           uniq_id += 1
