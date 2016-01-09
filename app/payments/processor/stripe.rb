@@ -10,6 +10,20 @@ module Processor
     def update_managed_account(tutor, token)
       begin
         if tutor.acct_id.nil?
+          puts "CALLED OPTION 1!!!"
+          puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+          puts "tutor.line1 = #{tutor.line1}"
+          puts "tutor.line2 = #{tutor.line2}"
+          puts "tutor.city = #{tutor.city}"
+          puts "tutor.state = #{tutor.state}"
+          puts "tutor.postal_code = #{tutor.postal_code}"
+          puts "tutor.dob.day = #{tutor.dob.day}"
+          puts "tutor.dob.month = #{tutor.dob.month}"
+          puts "tutor.dob.year = #{tutor.dob.year}"
+          puts "tutor.dob = #{tutor.dob}"
+          puts "tutor.sign_in_ip = #{tutor.sign_in_ip}"
+          puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+
           acct = ::Stripe::Account.create(
             managed: true,
             country: 'US',
@@ -38,11 +52,23 @@ module Processor
               ip: tutor.sign_in_ip || ("75.137.2.212" if Rails.env.test? || Rails.env.development?)
             }
           )
+          puts "acct[:id]!!!!!!!!!!!! = #{acct[:id]}"
+          puts "before - tutor = #{tutor}"
           tutor.update_attributes(acct_id: acct[:id])
+          puts "after - tutor = #{tutor}"
         else
+          puts "CALLED OPTION 2!!!"
+          puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+
           acct = ::Stripe::Account.retrieve(tutor.acct_id)
         end
-        acct.external_accounts.create(:external_account => token)
+        puts "!!!!!!!!!!!!"
+        puts "acct = #{acct}"
+        puts "acct.external_accounts = #{acct.external_accounts}"
+
+        request = acct.external_accounts.create(:external_account => token)
+        puts "request = #{request}"
+
       rescue ::Stripe::StripeError => e
         puts "STRIPE ERROR!!!!!!"
         puts "DETAILS: #{e}"
