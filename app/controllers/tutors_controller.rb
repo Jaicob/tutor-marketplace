@@ -54,7 +54,17 @@ class TutorsController < ApplicationController
     @tutor = Tutor.find(params[:id])
     if @tutor.update_attributes(tutor_params)
       @tutor.update_attributes(last_4_acct: params[:last_4_acct])
-      UpdateTutorAccount.call(tutor: @tutor, token: params[:stripeToken])
+
+      @context = UpdateTutorAccount.call(tutor: @tutor, token: params[:stripeToken])
+
+      if @context.failure?
+        # for de-bugging CheckoutOrganizer, error details in server logs
+          puts "Error Message     = #{@context.error}"
+          puts "Error Type        = #{@context.error.class}"
+          puts "Failed Interactor = #{@context.failed_interactor}"
+        # end of error details
+      end
+
       respond_to do |format|
         format.js { render :payment_settings_updated }
         format.html { redirect_to payment_info_tutor_path(@tutor.slug) }
