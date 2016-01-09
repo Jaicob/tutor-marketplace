@@ -196,3 +196,28 @@ Checkout Controller
 
 
 4242424242424242
+
+
+
+window.onload = function setSelectedAndBookedAppts() {
+
+  if (gon.selected_appt_ids != null){
+    var selectedApptIds = gon.selected_appt_ids
+    var arrayLength = selectedApptIds.length;
+    for (var i = 0; i < arrayLength; i++) {
+      var checkbox = document.getElementById(selectedApptIds[i]);
+      checkbox.checked = true;
+      checkbox.onchange();
+    }
+  }
+
+  var bookedAppts = document.getElementByClassName("booked")
+  if (bookedAppts.length > 0) {
+    for (var i = 0; i < bookedAppts.length; i++) {
+      var checkbox = bookedAppts[i];
+      checkbox.onchange();
+      checkbox.disabled = true;
+      console.log('At least I got called!');
+    }
+  }
+};

@@ -59,9 +59,7 @@ class TutorAvailability
             available: unavailable_times.include?(start_time) ? false : true
           }
           if unavailable_times.include?(start_time)
-            data[:disabled] = true
-          else
-            data[:disabled] = false
+            data[:booked] = 'booked'
           end
           appt_times << data
           uniq_id += 1
