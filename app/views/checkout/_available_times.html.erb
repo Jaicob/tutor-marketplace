@@ -1,4 +1,3 @@
-<% checkbox_id = 1 %>
 <% 7.times do |count| %>
   <li>  
     <div class="calendar-column">
@@ -8,16 +7,14 @@
         <% @availability_data[count][:times].each do |data| %>
           <div class="appt-time-box">
             <label>
-              <input type="checkbox" name="appt_selection[<%= checkbox_id %>]" id="<%= checkbox_id %>" value="<%= data[:datetime].to_s + '----' + data[:slot_id].to_s %>" onchange="disableNeighborCheckboxes(this)">
+              <input type="checkbox" name="appt_selection[<%= data[:uniq_id] %>]" id="<%= data[:uniq_id] %>" value="<%= data[:datetime].to_s + '----' + data[:slot_id].to_s %>" onchange="disableNeighborCheckboxes(this)">
               <div class="appt-time"><%= data[:time] %></div>
             </label>
           </div>
-          <% checkbox_id += 1 %>
         <% end %>
       <% end %>
     </div>
   </li>
-  <% checkbox_id += 10 %>
 <% end %>
 
 <script>
@@ -31,46 +28,46 @@ window.onload = function setSelectedAppts() {
       checkbox.onchange();
     }
   }
-}
+};
 
-function disableNeighborCheckboxes(element)
-  {
-    var selected = parseInt(element.id);
-    checkboxTwoBeforeId = selected - 2;
-    checkboxBeforeId = selected - 1;
-    checkboxAfterId = selected + 1;
-    checkboxTwoAfterId = selected + 2;
-    
-    var checkboxTwoBefore = document.getElementById(checkboxTwoBeforeId);
-    var checkboxBefore = document.getElementById(checkboxBeforeId);
-    var checkboxAfter = document.getElementById(checkboxAfterId);
-    var checkboxTwoAfter = document.getElementById(checkboxTwoAfterId);
-    
-    if (element.checked) {
-      // element checked - triggered when click event MAKES IT checked
+
+function disableNeighborCheckboxes(element) {
+  var selected = parseInt(element.id);
+  checkboxTwoBeforeId = selected - 2;
+  checkboxBeforeId = selected - 1;
+  checkboxAfterId = selected + 1;
+  checkboxTwoAfterId = selected + 2;
+  
+  var checkboxTwoBefore = document.getElementById(checkboxTwoBeforeId);
+  var checkboxBefore = document.getElementById(checkboxBeforeId);
+  var checkboxAfter = document.getElementById(checkboxAfterId);
+  var checkboxTwoAfter = document.getElementById(checkboxTwoAfterId);
+  
+  if (element.checked) {
+    // element checked - triggered when click event MAKES IT checked
+    if (checkboxBefore != null) {
+      checkboxBefore.disabled = true;
+    }
+    if (checkboxAfter != null) {
+      checkboxAfter.disabled = true;
+    }
+  } else {
+    // element NOT checked - triggered when click event MAKES IT un-checked
+    if (checkboxAfter != null) {
+      checkboxAfter.disabled = false;
+    }
+    if (checkboxTwoBefore == null) {
       if (checkboxBefore != null) {
-        checkboxBefore.disabled = true;
-      }
-      if (checkboxAfter != null) {
-        checkboxAfter.disabled = true;
-      }
-    } else {
-      // element NOT checked - triggered when click event MAKES IT un-checked
-      if (checkboxAfter != null) {
-        checkboxAfter.disabled = false;
-      }
-      if (checkboxTwoBefore == null) {
-        if (checkboxBefore != null) {
-          checkboxBefore.disabled = false;
-        }
-      } else if (checkboxTwoBefore.checked != true) {
         checkboxBefore.disabled = false;
       }
-      if (checkboxTwoAfter != null) {
-        if (checkboxTwoAfter.checked) {
-          checkboxAfter.disabled = true;
-        }
+    } else if (checkboxTwoBefore.checked != true) {
+      checkboxBefore.disabled = false;
+    }
+    if (checkboxTwoAfter != null) {
+      if (checkboxTwoAfter.checked) {
+        checkboxAfter.disabled = true;
       }
     }
   }
+};
 </script>
