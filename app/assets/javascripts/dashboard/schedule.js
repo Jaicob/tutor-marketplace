@@ -1,8 +1,8 @@
 $(document).ready(function() {
 
   var tutor_id = $('#axoncalendar').data('tutor');
-  var utc_offset = $('#axoncalendar').data('utcoffset');
-  console.log("OFFSET", utc_offset);
+  var utc_offset = -360;//$('#axoncalendar').data('utcoffset');
+  console.log("Off_set",$('#axoncalendar').data('utcoffset'));
   var originalStartTime;
   var originalDuration;
 
@@ -96,14 +96,14 @@ $(document).ready(function() {
    * the other data is added to the event object
    */
   var formatDataAsEvent = function(eventData) {
-    end_time = moment(eventData.start_time, moment.ISO_8601).utcOffset(-300);
-    console.log("1: ",end_time.toISOString());
+    end_time = moment(eventData.start_time, moment.ISO_8601).utcOffset(utc_offset);
+    console.log("1: ",end_time.toISOString()); 
     console.log("2: ",end_time.format());
 
     end_time = end_time.add(eventData.duration, 'seconds');
     var postFormat = {
       title: eventData.slot_type === 0 ? 'Weekly' : 'One Time',
-      start: moment(eventData.start_time, moment.ISO_8601).utcOffset(-300),
+      start: moment(eventData.start_time, moment.ISO_8601).utcOffset(utc_offset),
       end: end_time,
       slot_id: eventData.id,
       status: eventData.status === 0 ? 'Open' : 'Blocked',//eventData.status
@@ -142,7 +142,7 @@ $(document).ready(function() {
    * up ranges of time.
    */
   var beginSlotUpdate = function(event, jsEvent, ui, view) {
-    originalStartTime = event.start.toISOString();
+    originalStartTime = event.start.format();
     originalDuration = moment.duration(event.end.diff(event.start)).asSeconds();
     tooltip.hide();
   }
@@ -172,9 +172,9 @@ $(document).ready(function() {
     } 
 
     if (event.slot_type === "OneTime") {
-      singleSlotUpdate(event.slot_id, event.start.toISOString(), originalDuration);
+      singleSlotUpdate(event.slot_id, event.start.utc().format(), originalDuration);//IsoString has no offset, format does
     } else {
-      multiSlotUpdate(originalStartTime, originalDuration, event.start.toISOString(), newDuration);
+      multiSlotUpdate(originalStartTime, originalDuration, event.start.utc().format(), newDuration);
     }
   }
 
@@ -183,17 +183,47 @@ $(document).ready(function() {
    * if successful the ui is updated to show the new slots (called events by fullcalendar)
    */
   var addSlot = function(event, jsEvent, ui) {
-    end_time = moment(event.end).utcOffset(-300);
-    start_time = moment(event.start).utcOffset(-300);
-    console.log("Add Slot",event.start);
+  //var start_time = moment(event.start).utcOffset(utc_offset);
+  // var end_time = moment(event.end).utcOffset(utc_offset);
+  var start_time = event.start.local(utc_offset);
+  var end_time = event.end.local(utc_offset);
+
+    
+
+    //Problem is that it is saveing as current time but with no offset then when 
+    //it is loaded again the offest is applied making it off by 5 hours
+    //Need to send it as the offset and when converted to UTC that offset is moved to the time
+    // console.log("start", start_time);
+     console.log("Iso", start_time.toISOString());
+     console.log("format", start_time.format());
+          console.log("Iso", end_time.toISOString());
+     console.log("format", end_time.format());
+   // console.log("UTC Iso",start_time.utc().toISOString());
+    // console.log("start_time",start_time.local().format());
+    // console.log("Iso", moment.parseZone(start_time.toISOString()));
+    // console.log("Iso", moment.parseZone(start_time.toISOString()));
+    // console.log("Iso", moment.parseZone(start_time.toISOString()));
+    // console.log("format", start_time.format());
+    // console.log("UTC Iso", start_time.utc().format());
+    // console.log("UTC format",start_time.utc().toISOString());
+
+    console.log("======EVENT.START_TIME======");
+     console.log("Iso", event.start.toISOString());
+     console.log("format", event.start.format());
+   // console.log("UTC Iso",event.start.utc().toISOString());
+
     var duration = moment.duration(event.end.diff(event.start));
     var seconds = duration.asSeconds();
     var endpoint = API.endpoints.tutor_slots.create({
       tutor_id: tutor_id
     });
 
+         console.log("d", duration);
+
+  
+    console.log("Event: ",event);
     request = $.post(endpoint, { 
-      start_time: start_time.format(),
+      start_time: start_time.toISOString(),
       duration: seconds,
       weeks_to_repeat: event.weeksToRepeat(),
       slot_type: event.slot_type,
@@ -415,7 +445,7 @@ $(document).ready(function() {
    */
   fcalendar =  $('#calendar').fullCalendar({
     eventSources: [eventSource],
-    timezone: timezone,
+    timezone: utc_offset,
     slotEventOverlap: false,
     eventOverlap: function(stillEvent, movingEvent) { return stillEvent.allDay && movingEvent.allDay },
     allDaySlot: false,
