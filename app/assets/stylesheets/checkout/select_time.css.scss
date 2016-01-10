@@ -56,3 +56,8 @@ li {
     background-color: #C3C3C3;
     color: #7D7D7D;
 }
+
+.appt-time-box input.second-half-of-appt:disabled + .appt-time  {
+  background-color: #58AA4D;
+  color: #58AA4D;
+}

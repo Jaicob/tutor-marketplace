@@ -69,11 +69,21 @@ function disableNeighborCheckboxes(element) {
     }
     if (checkboxAfter != null) {
       checkboxAfter.disabled = true;
+      checkboxAfter.classList.add("second-half-of-appt");
     }
   } else {
     // element NOT checked - triggered when click event MAKES IT un-checked
+    if (checkboxBefore != null && checkboxTwoBefore != null) {
+      if (!checkboxTwoBefore.classList.contains("booked")) {
+        checkboxBefore.disabled = false;
+      }
+      checkboxBefore.classList.remove("second-half-of-appt");
+    }
     if (checkboxAfter != null) {
-      checkboxAfter.disabled = false;
+      if (!checkboxAfter.classList.contains("booked") && !checkboxTwoAfter.classList.contains("booked")) {
+        checkboxAfter.disabled = false;
+      }
+      checkboxAfter.classList.remove("second-half-of-appt");
     }
     if (checkboxTwoBefore == null) {
       if (checkboxBefore != null) {
@@ -89,4 +99,6 @@ function disableNeighborCheckboxes(element) {
     }
   }
 }
+
+// if two-checkboxes-before has class 'booked', then don't disable checkbox before
 </script>
