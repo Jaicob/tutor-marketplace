@@ -36,7 +36,6 @@
 FactoryGirl.define do
 
   sequence(:email) { |n| "test#{n}@example.com" }
-  sequence(:slug) { |n| "userslug#{n}"}
 
   factory :user do
     confirmed_at Time.now
@@ -44,7 +43,6 @@ FactoryGirl.define do
     last_name "Dole"
     email
     password "please123"
-    slug
 
     trait :student do
       role 0

@@ -6,7 +6,7 @@
       <div class="checkout-step-title">
         <div class="row">
           <div class="small-12 columns">
-            <p>Select a Start Time</p>
+            <p>Select a Time</p>
           </div>
         </div>
       </div>
@@ -15,10 +15,11 @@
           <div class="small-12 columns">
             <div class="row small-collapse">
               <div class="small-12 medium-3 columns zero-padding">
-                <%= link_to "Previous Week", checkout_select_times_path(@tutor.slug, course: 1, current: @start_date.to_s, week: 0), class: 'checkout-button gray' %>
-              </div>
-              <div class="small-12 medium-6 columns">
-                <p class="center">All appointments are 1 hour in length</p>
+                <% if @start_date == Date.today %>
+                  <div class="checkout-button gray disabled-text-color">Previous Week</div>
+                <% else %>
+                  <%= link_to "Previous Week", checkout_select_times_path(@tutor.slug, course: 1, current: @start_date.to_s, week: 0), class: 'checkout-button gray' %>
+                <% end %>
               </div>
               <div class="small-12 medium-3 columns zero-padding">
                 <%= link_to "Next Week", checkout_select_times_path(@tutor.slug, course: 1, current: @start_date.to_s, week: 1), class: 'checkout-button gray' %>

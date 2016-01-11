@@ -18,8 +18,11 @@
 <% end %>
 
 <script>
-window.onload = function setSelectedAndBookedAppts() {
+window.onload = function start() { // calls 2 methods
+      // 1. Check appt times selected by current user during session
+      // 2. Disable reserved times due to existing bookings
 
+  // 1. Check appt times selected by current user during session
   if (gon.selected_appt_ids != null){
     var selectedApptIds = gon.selected_appt_ids
     var arrayLength = selectedApptIds.length;
@@ -30,6 +33,7 @@ window.onload = function setSelectedAndBookedAppts() {
     }
   }
 
+  // 2. Disable reserved times due to existing bookings
   var bookedAppts = document.getElementsByClassName("booked")
   if (bookedAppts.length > 0) {
     for (var i = 0; i < bookedAppts.length; i++) {
