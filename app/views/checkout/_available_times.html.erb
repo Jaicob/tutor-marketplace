@@ -49,6 +49,7 @@ window.onload = function start() { // calls 2 methods
       var checkboxAfter = document.getElementById(checkboxID + 1);
       if (checkboxAfter) {
         checkboxAfter.disabled = true;
+        checkboxAfter.classList.add('override-gray');
       }
     }
   }
@@ -100,9 +101,10 @@ function disableNeighborCheckboxes(element) {
     if (checkboxTwoBefore != null && checkboxTwoBefore.checked == true) { // (4:00 exists and is booked)
       checkboxBefore.disabled = true; // (disable 4:30)
     }
+    if (checkboxTwoAfter == null) {
+      checkboxAfter.diabled = false;
+      checkboxAfter.classList.remove("second-half-of-appt");
+    }
   }
 }
-
-// if two-checkboxes-before has class 'booked', then don't disable checkbox before
-// when checkbox is unselected, don't remove 'second-half' class of checkboxBefore, if checkboxTwoBefore is checked
 </script>
