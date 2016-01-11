@@ -8,10 +8,11 @@ class ExistingTutorOnboarding
   # x = ExistingTutorOnboarding.new('claire.france25@uga.edu', 'password')
   # ExistingTutorOnboarding.new('claire.france25@uga.edu', 'password').create_user_and_tutor
 
-  def initialize(email, password = nil, school_id = nil)
+  def initialize(email, password=nil, school_id=nil, sign_in_ip=nil)
     @email = email.downcase
     @password = password
     @school_id = school_id
+    @sign_in_ip = sign_in_ip
   end
 
   def create_user_and_tutor
@@ -20,7 +21,8 @@ class ExistingTutorOnboarding
         email: @email,
         password: @password,
         first_name: @tutors_by_email[@email][:first_name],
-        last_name: @tutors_by_email[@email][:last_name]
+        last_name: @tutors_by_email[@email][:last_name],
+        sign_in_ip: @sign_in_ip
       )
       if user.save
         tutor = user.create_tutor!(school_id: @school_id)

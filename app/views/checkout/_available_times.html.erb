@@ -1,4 +1,3 @@
-<% checkbox_id = 1 %>
 <% 7.times do |count| %>
   <li>  
     <div class="calendar-column">
@@ -8,20 +7,22 @@
         <% @availability_data[count][:times].each do |data| %>
           <div class="appt-time-box">
             <label>
-              <input type="checkbox" name="appt_selection[<%= checkbox_id %>]" id="<%= checkbox_id %>" value="<%= data[:datetime].to_s + '----' + data[:slot_id].to_s %>" onchange="disableNeighborCheckboxes(this)">
+              <input type="checkbox" id="<%=data[:uniq_id]%>" class="<%=data[:booked]%>" value="<%=data[:datetime].to_s+'----'+data[:slot_id].to_s%>" name="appt_selection[<%= data[:uniq_id] %>]" onchange="disableNeighborCheckboxes(this)">
               <div class="appt-time"><%= data[:time] %></div>
             </label>
           </div>
-          <% checkbox_id += 1 %>
         <% end %>
       <% end %>
     </div>
   </li>
-  <% checkbox_id += 10 %>
 <% end %>
 
 <script>
-window.onload = function setSelectedAppts() {
+window.onload = function start() { // calls 2 methods
+      // 1. Check appt times selected by current user during session
+      // 2. Disable reserved times due to existing bookings
+
+  // 1. Check appt times selected by current user during session
   if (gon.selected_appt_ids != null){
     var selectedApptIds = gon.selected_appt_ids
     var arrayLength = selectedApptIds.length;
@@ -31,46 +32,79 @@ window.onload = function setSelectedAppts() {
       checkbox.onchange();
     }
   }
-}
 
-function disableNeighborCheckboxes(element)
-  {
-    var selected = parseInt(element.id);
-    checkboxTwoBeforeId = selected - 2;
-    checkboxBeforeId = selected - 1;
-    checkboxAfterId = selected + 1;
-    checkboxTwoAfterId = selected + 2;
-    
-    var checkboxTwoBefore = document.getElementById(checkboxTwoBeforeId);
-    var checkboxBefore = document.getElementById(checkboxBeforeId);
-    var checkboxAfter = document.getElementById(checkboxAfterId);
-    var checkboxTwoAfter = document.getElementById(checkboxTwoAfterId);
-    
-    if (element.checked) {
-      // element checked - triggered when click event MAKES IT checked
-      if (checkboxBefore != null) {
+  // 2. Disable reserved times due to existing bookings
+  var bookedAppts = document.getElementsByClassName("booked")
+  if (bookedAppts.length > 0) {
+    for (var i = 0; i < bookedAppts.length; i++) {
+      // disable booked time
+      var checkbox = bookedAppts[i];
+      checkbox.disabled = true;
+      // disabled 30 mins before and after booked time (if those times exist)
+      var checkboxID = parseInt(checkbox.id);
+      var checkboxBefore = document.getElementById(checkboxID - 1);
+      if (checkboxBefore) {
         checkboxBefore.disabled = true;
       }
-      if (checkboxAfter != null) {
+      var checkboxAfter = document.getElementById(checkboxID + 1);
+      if (checkboxAfter) {
         checkboxAfter.disabled = true;
-      }
-    } else {
-      // element NOT checked - triggered when click event MAKES IT un-checked
-      if (checkboxAfter != null) {
-        checkboxAfter.disabled = false;
-      }
-      if (checkboxTwoBefore == null) {
-        if (checkboxBefore != null) {
-          checkboxBefore.disabled = false;
-        }
-      } else if (checkboxTwoBefore.checked != true) {
-        checkboxBefore.disabled = false;
-      }
-      if (checkboxTwoAfter != null) {
-        if (checkboxTwoAfter.checked) {
-          checkboxAfter.disabled = true;
-        }
+        checkboxAfter.classList.add('override-gray');
       }
     }
   }
+};
+
+function disableNeighborCheckboxes(element) {
+  var selected = parseInt(element.id);
+  checkboxTwoBeforeId = selected - 2;
+  checkboxBeforeId = selected - 1;
+  checkboxAfterId = selected + 1;
+  checkboxTwoAfterId = selected + 2;
+  
+  var checkboxTwoBefore = document.getElementById(checkboxTwoBeforeId);
+  var checkboxBefore = document.getElementById(checkboxBeforeId);
+  var checkboxAfter = document.getElementById(checkboxAfterId);
+  var checkboxTwoAfter = document.getElementById(checkboxTwoAfterId);
+  
+  if (element.checked) {
+    // element checked - triggered when click event makes it checked
+    if (checkboxBefore != null) {
+      checkboxBefore.disabled = true;
+    }
+    if (checkboxAfter != null) {
+      checkboxAfter.disabled = true;
+      checkboxAfter.classList.add("second-half-of-appt");
+    }
+  } else {
+    // when checkbox is un-checked...(ex: 5:00 is de-selected)
+    if (checkboxBefore != null && checkboxTwoBefore != null) { // (4:00 and 4:30 exist)
+      if (!checkboxTwoBefore.classList.contains("booked")) {    // (4:00 is not booked)
+        checkboxBefore.disabled = false;                        // (remove disabled state from 4:30)
+      }
+    }
+    if (checkboxAfter != null && checkboxTwoAfter != null) {                            // (5:30 exists)
+      if (!checkboxTwoAfter.classList.contains("booked")) {   // (6:00 is not booked)
+        checkboxAfter.disabled = false;                       // (removed disabled state from 5:30)
+      }
+      checkboxAfter.classList.remove("second-half-of-appt");  // (remove 'second-half' class from 5:30)
+    }
+    if (checkboxTwoBefore == null && checkboxBefore != null) {  // (4:00 does not exist, 4:30 does exist)
+      checkboxBefore.disabled = false;                          // (remove disabled state from 4:30)
+    } else if (checkboxTwoBefore != null && checkboxTwoBefore.checked != true && !checkboxTwoBefore.classList.contains("booked")) {
+      // (4:00 exists, 4:00 is not checked, 4:00 is not booked)
+      checkboxBefore.disabled = false; // (remove disabled state from 4:30)
+    }
+    if (checkboxTwoAfter != null && checkboxTwoAfter.checked) { // (6:00 exists, 6:00 is checked)
+      checkboxAfter.disabled = true;                            // (disable 5:30)
+    }
+    if (checkboxTwoBefore != null && checkboxTwoBefore.checked == true) { // (4:00 exists and is booked)
+      checkboxBefore.disabled = true; // (disable 4:30)
+    }
+    if (checkboxTwoAfter == null) {
+      checkboxAfter.disabled = false;
+      checkboxAfter.classList.remove("second-half-of-appt");
+    }
+  }
+}
 </script>

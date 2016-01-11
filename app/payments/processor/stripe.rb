@@ -10,20 +10,6 @@ module Processor
     def update_managed_account(tutor, token)
       begin
         if tutor.acct_id.nil?
-          puts "CALLED OPTION 1!!!"
-          puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-          puts "tutor.line1 = #{tutor.line1}"
-          puts "tutor.line2 = #{tutor.line2}"
-          puts "tutor.city = #{tutor.city}"
-          puts "tutor.state = #{tutor.state}"
-          puts "tutor.postal_code = #{tutor.postal_code}"
-          puts "tutor.dob.day = #{tutor.dob.day}"
-          puts "tutor.dob.month = #{tutor.dob.month}"
-          puts "tutor.dob.year = #{tutor.dob.year}"
-          puts "tutor.dob = #{tutor.dob}"
-          puts "tutor.sign_in_ip = #{tutor.sign_in_ip}"
-          puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-
           acct = ::Stripe::Account.create(
             managed: true,
             country: 'US',
@@ -52,23 +38,11 @@ module Processor
               ip: tutor.sign_in_ip || ("75.137.2.212" if Rails.env.test? || Rails.env.development?)
             }
           )
-          puts "acct[:id]!!!!!!!!!!!! = #{acct[:id]}"
-          puts "before - tutor = #{tutor}"
           tutor.update_attributes(acct_id: acct[:id])
-          puts "after - tutor = #{tutor}"
         else
-          puts "CALLED OPTION 2!!!"
-          puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-
           acct = ::Stripe::Account.retrieve(tutor.acct_id)
         end
-        puts "!!!!!!!!!!!!"
-        puts "acct = #{acct}"
-        puts "acct.external_accounts = #{acct.external_accounts}"
-
         request = acct.external_accounts.create(:external_account => token)
-        puts "request = #{request}"
-
       rescue ::Stripe::StripeError => e
         puts "STRIPE ERROR!!!!!!"
         puts "DETAILS: #{e}"
@@ -90,7 +64,6 @@ module Processor
             description: description
           )
         else
-          puts "USED STUDENTS CUSTOMER ACCOUNT"
           # creates charge with Student's Customer and default source
           @stripe_charge_object = ::Stripe::Charge.create(
             amount: charge.amount,
@@ -111,17 +84,13 @@ module Processor
 
     def update_customer(student, token)
       begin 
-        puts "MADE IT HERE!!!!!!"
         if student.customer_id.nil?
-          puts "AAAA!!!!!!!!!!!!!!!"
           # create Stripe customer
           cust = ::Stripe::Customer.create(
             card: token,
             description: "#{student.full_name} - #{student.email}",
             email: student.email
           )
-          puts "cust = #{cust}"
-          puts "cust.sources.data.first = #{cust.sources.data.first}"
           # save Stripe customer details on Student object
           student.update_attributes(
             customer_id: cust.id, 
@@ -129,11 +98,8 @@ module Processor
             card_brand: cust.sources.data.first.brand
           )
         else
-          puts "BBBB!!!!!!!!!!!!!!!"
           cust = ::Stripe::Customer.retrieve(student.customer_id)
-          puts "cust = #{cust}"
           # deletes customer's old card
-          puts "cust.sources.data.first = #{cust.sources.data.first}"
           cust.sources.data.first.delete()
           # creates new card and then saves customer to refresh customer data with new card
           cust.sources.create(source: token)

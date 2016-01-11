@@ -15,7 +15,17 @@
           <div class="small-12 columns">
             <div class="row">
               <div class="small-12 columns">
-                <h5 class="center no-max-width">Where do you want to meet your tutor?</h5>
+                <h5 class="center no-max-width">Your tutor will contact you to confirm a meeting place after your booking is complete.</h5>
+              </div>
+            </div>
+            <div class="row">
+              <div class="small-12 columns">
+                <p class="center margin-auto margin-top-1em margin-bottom-1em">Axon tutors are encouraged to meet students on campus, so great suggestions are your campus library, student center or a coffee shop on or very near campus.</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="small-12 columns">
+                <h5 class="center no-max-width">Suggest one or two meeting places that work well for you:</h5>
               </div>
             </div>
             <div class="row">
@@ -31,7 +41,7 @@
           <div class="small-12 columns">
             <div class="row small-collapse">
               <div class="small-3 columns zero-padding">
-                <%= link_to "Back to Available Times", checkout_select_times_path(@tutor.slug), class: 'checkout-button gray' %>
+                <%= link_to "Back to Set a Time", checkout_select_times_path(@tutor.slug), class: 'checkout-button gray' %>
               </div>
               <div class="small-3 columns zero-padding">
                 <%= f.submit "Next Step", class: 'custom-button full-width checkout-submit' %>

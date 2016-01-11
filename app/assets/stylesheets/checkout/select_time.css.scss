@@ -7,6 +7,11 @@
   }
 }
 
+.checkout-button.gray.disabled-text-color {
+  font-family: 'Lato';
+  color: #7D7D7D;
+}
+
 li {
   text-align: center;
 }
@@ -48,11 +53,21 @@ li {
 }
 
 .appt-time {
-    padding: 0.5em;
-    font-family: 'Lato';
+  padding: 0.5em;
+  font-family: 'Lato';
 }
 
 .appt-time-box input:disabled + .appt-time {
-    background-color: #C3C3C3;
-    color: #7D7D7D;
+  background-color: #C3C3C3;
+  color: #7D7D7D;
+}
+
+.appt-time-box input.second-half-of-appt:disabled + .appt-time  {
+  background-color: #58AA4D;
+  color: #58AA4D;
+}
+
+.appt-time-box input.second-half-of-appt.override-gray:disabled + .appt-time  {
+  background-color: #C3C3C3;
+  color: #7D7D7D;
 }

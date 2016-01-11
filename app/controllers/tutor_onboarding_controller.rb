@@ -10,7 +10,8 @@ class TutorOnboardingController < ApplicationController
     email = params[:existing_tutor][:email]
     password = params[:existing_tutor][:password]
     school_id = params[:existing_tutor][:school_id]
-    response = ExistingTutorOnboarding.new(email, password, school_id).create_user_and_tutor
+    sign_in_ip = request.env['REMOTE_ADDR'] 
+    response = ExistingTutorOnboarding.new(email, password, school_id, sign_in_ip).create_user_and_tutor
     if response[:success] == true
       tutor = response[:tutor]
       @existing_tutor = true

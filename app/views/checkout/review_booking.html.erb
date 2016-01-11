@@ -121,34 +121,34 @@
                       <p class="total-price-box"><span id="total-word">Total:</span>$ xx</p>
                     </div>
                     <%= form_for :apply_promo_code, url: checkout_apply_promo_code_path do |tt| %>
-                    <div class="small-12 medium-6 columns">
-                      <h5>Promo Code</h5>
-                      <div class="row small-collapse">
-                        <div class="small-12 medium-8 columns zero-padding">
-                          <%= tt.text_field :code, required: true, class: 'border-radius' %>
-                        </div>
-                        <div class="small-12 medium-4 columns">
-                          <%= tt.submit 'Apply', class: 'custom-button short-width' %>
+                      <div class="small-12 medium-6 columns">
+                        <h5>Promo Code</h5>
+                        <div class="row small-collapse">
+                          <div class="small-12 medium-8 columns zero-padding">
+                            <%= tt.text_field :code, required: true, class: 'border-radius' %>
+                          </div>
+                          <div class="small-12 medium-4 columns">
+                            <%= tt.submit 'Apply', class: 'custom-button short-width' %>
+                          </div>
                         </div>
                       </div>
-                    </div>
                     <% end %>
                   </div>
                 </div>
               </div>
             </div>
-          <% if current_user %>
-            <% if current_user.student && current_user.student.customer_id %>
-              <%= render '/checkout/checkout_returning_user_saved_card' %>
-            <% elsif current_user.student %>
-              <%= render '/checkout/checkout_returning_user_no_card' %>
-            <% elsif current_user.tutor %>
-              <%= render '/checkout/checkout_tutor_error_message' %>
+            <% if current_user %>
+              <% if current_user.student && current_user.student.customer_id %>
+                <%= render '/checkout/checkout_returning_user_saved_card' %>
+              <% elsif current_user.student %>
+                <%= render '/checkout/checkout_returning_user_no_card' %>
+              <% elsif current_user.tutor %>
+                <%= render '/checkout/checkout_tutor_error_message' %>
+              <% end %>
+            <% else %>
+              <%= render '/checkout/checkout_new_user' %>
             <% end %>
-          <% else %>
-            <%= render '/checkout/checkout_new_user' %>
-          <% end %>
-
+          </div>
         </div>
       </div>
     </div>
@@ -157,15 +157,12 @@
         <div class="small-12 columns">
           <div class="row small-collapse">
             <div class="small-12 medium-3 columns">
-              <%= link_to "Back to Search", search_path, class: 'checkout-button gray' %>
-            </div>
-            <div class="small-12 medium-6 columns">
-            </div>
-            <div class="small-12 medium-3 columns">
+              <%= link_to "Back to Set a Location", checkout_select_location_path(@tutor.slug), class: 'checkout-button gray' %>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
 </div>
