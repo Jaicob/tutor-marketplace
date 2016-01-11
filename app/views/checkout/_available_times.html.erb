@@ -63,7 +63,7 @@ function disableNeighborCheckboxes(element) {
   var checkboxTwoAfter = document.getElementById(checkboxTwoAfterId);
   
   if (element.checked) {
-    // element checked - triggered when click event MAKES IT checked
+    // element checked - triggered when click event makes it checked
     if (checkboxBefore != null) {
       checkboxBefore.disabled = true;
     }
@@ -72,33 +72,33 @@ function disableNeighborCheckboxes(element) {
       checkboxAfter.classList.add("second-half-of-appt");
     }
   } else {
-    // element NOT checked - triggered when click event MAKES IT un-checked
-    if (checkboxBefore != null && checkboxTwoBefore != null) {
-      if (!checkboxTwoBefore.classList.contains("booked")) {
-        checkboxBefore.disabled = false;
+    // when checkbox is un-checked...(ex: 5:00 is de-selected)
+    if (checkboxBefore != null && checkboxTwoBefore != null) { // (4:00 and 4:30 exist)
+      if (!checkboxTwoBefore.classList.contains("booked")) {    // (4:00 is not booked)
+        checkboxBefore.disabled = false;                        // (remove disabled state from 4:30)
       }
-      checkboxBefore.classList.remove("second-half-of-appt");
     }
-    if (checkboxAfter != null) {
-      if (!checkboxAfter.classList.contains("booked") && !checkboxTwoAfter.classList.contains("booked")) {
-        checkboxAfter.disabled = false;
+    if (checkboxAfter != null) {                            // (5:30 exists)
+      if (!checkboxTwoAfter.classList.contains("booked")) {   // (6:00 is not booked)
+        checkboxAfter.disabled = false;                       // (removed disabled state from 5:30)
       }
-      checkboxAfter.classList.remove("second-half-of-appt");
+      checkboxAfter.classList.remove("second-half-of-appt");  // (remove 'second-half' class from 5:30)
     }
-    if (checkboxTwoBefore == null) {
-      if (checkboxBefore != null) {
-        checkboxBefore.disabled = false;
-      }
-    } else if (checkboxTwoBefore.checked != true) {
-      checkboxBefore.disabled = false;
+    if (checkboxTwoBefore == null && checkboxBefore != null) {  // (4:00 does not exist, 4:30 does exist)
+      checkboxBefore.disabled = false;                          // (remove disabled state from 4:30)
+    } else if (checkboxTwoBefore != null && checkboxTwoBefore.checked != true && !checkboxTwoBefore.classList.contains("booked")) {
+      // (4:00 exists, 4:00 is not checked, 4:00 is not booked)
+      checkboxBefore.disabled = false; // (remove disabled state from 4:30)
     }
-    if (checkboxTwoAfter != null) {
-      if (checkboxTwoAfter.checked) {
-        checkboxAfter.disabled = true;
-      }
+    if (checkboxTwoAfter != null && checkboxTwoAfter.checked) { // (6:00 exists, 6:00 is checked)
+      checkboxAfter.disabled = true;                            // (disable 5:30)
+    }
+    if (checkboxTwoBefore != null && checkboxTwoBefore.checked == true) { // (4:00 exists and is booked)
+      checkboxBefore.disabled = true; // (disable 4:30)
     }
   }
 }
 
 // if two-checkboxes-before has class 'booked', then don't disable checkbox before
+// when checkbox is unselected, don't remove 'second-half' class of checkboxBefore, if checkboxTwoBefore is checked
 </script>
