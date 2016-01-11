@@ -200,3 +200,12 @@ Checkout Controller
 
 
 
+irb(main):015:0> worked
+=> #<Tutor id: 141, user_id: 180, school_id: 2, active_status: 0, application_status: 1, rating: nil, degree: 0, major: "Middle Grades Education", additional_degrees: "Minor: Linguistics", extra_info_1: "I've been tutoring students in a range of subjects...", extra_info_2: "Led a free creative writing camp for middle/high s...", extra_info_3: "My teaching license will be in social studies and ...", graduation_year: "2017", phone_number: "3364096221", profile_pic: "DSCN0122.JPG", transcript: "Axon_Tutoring_2016.doc", appt_notes: nil, onboarding_status: 4, created_at: "2016-01-08 22:18:49", updated_at: "2016-01-11 14:57:41", last_4_acct: "4556", line1: "120 Harper Ridge Court", line2: "", city: "Clemmons ", state: "NC", postal_code: "27012", ssn_last_4: "9284", acct_id: "acct_17S772LqJfQLNTGD", slug: "hannahmickey", dob: "1995-05-02">
+irb(main):016:0> no_work
+
+
+=> #<Tutor id: 154, user_id: 199, school_id: 7, active_status: 0, application_status: 1, rating: nil, degree: 1, major: "Mathematics", additional_degrees: "", extra_info_1: "Experienced tutoring Precalculus, Calculus, Econom...", extra_info_2: "Awarded the John G. Hollingsworth Mathematics Awar...", extra_info_3: "Host of a weekly radio show on WUOG 90.5 FM", graduation_year: "2016", phone_number: "6786727083", profile_pic: "JacksonHopper.jpg", transcript: nil, appt_notes: nil, onboarding_status: 4, created_at: "2016-01-11 04:19:18", updated_at: "2016-01-11 05:08:00", last_4_acct: "5940", line1: "170 Jonas Ave Unit 4", line2: "", city: "Athens", state: "GA", postal_code: "30601", ssn_last_4: "3243", acct_id: nil, slug: "jacksonhopper", dob: "1994-10-05">
+
+
+
