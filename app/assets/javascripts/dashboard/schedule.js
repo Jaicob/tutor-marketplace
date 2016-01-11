@@ -55,17 +55,12 @@ $(document).ready(function() {
    * the other data is added to the event object
    */
   var formatDataAsEvent = function(eventData) {
-    console.log("Format as Event 1: ",eventData.start_time);
     var start_time = moment(eventData.start_time).utcOffset(utc_offset);
-    // console.log("2: ",start_time.format());
-    // console.log("3: ",start_time.toISOString());
-
     var end_time = start_time.clone().add(eventData.duration, 'seconds');
-
     var postFormat = {
       title: eventData.slot_type === 0 ? 'Weekly' : 'One Time',
-      start: start_time,//moment(eventData.start_time),
-      end: end_time,//moment(eventData.start_time).add(eventData.duration, 'seconds'),
+      start: start_time,
+      end: end_time,
       slot_id: eventData.id,
       status: eventData.status === 0 ? 'Open' : 'Blocked',//eventData.status
       slot_type: eventData.slot_type === 0 ? 'Weekly' : 'OneTime'
@@ -122,7 +117,6 @@ $(document).ready(function() {
    */
   var beginSlotUpdate = function(event, jsEvent, ui, view) {
     originalStartTime = event.start.clone().subtract(utc_offset,'minutes').toISOString();
-    // console.log("Beging Update: OG Time ",originalStartTime);
     originalDuration = moment.duration(event.end.diff(event.start)).asSeconds();
     tooltip.hide();
   }
@@ -145,7 +139,7 @@ $(document).ready(function() {
       },
       dataType: "json",
       success: function(data) {
-        $('#calendar').fullCalendar('updateEvent', event);
+        $('#calendar').fullCalendar('refetchEvents', event);
       },
       error: function(data, status) {
         alert('failure', data, status);
@@ -171,7 +165,7 @@ $(document).ready(function() {
       },
       dataType: "json",
       success: function(data) {
-        $('#calendar').fullCalendar('updateEvent', event);
+        $('#calendar').fullCalendar('refetchEvents', event);
       },
       error: function(data, status) {
         alert('failure', data, status);
@@ -185,42 +179,25 @@ $(document).ready(function() {
    * if successful the ui is updated to show the new slots (called events by fullcalendar)
    */
   var addSlot = function(event, jsEvent, ui) {
-  //var start_time = moment(event.start).utcOffset(utc_offset);
-  // var end_time = moment(event.end).utcOffset(utc_offset);
-  var start_time = event.start.clone().subtract(utc_offset, 'minutes');//.utcOffset(utc_offset);
-  var end_time = event.end.clone().subtract(utc_offset, 'minutes');//.utcOffset(utc_offset);
-  // event.start.utcOffset(utc_offset);
-  // event.end.utcOffset(utc_offset);
-
-    //Problem is that it is saveing as current time but with no offset then when 
-    //it is loaded again the offest is applied making it off by 5 hours
-    //Need to send it as the offset and when converted to UTC that offset is moved to the time
-    // console.log("start", start_time);
-    // console.log("Iso", start_time.toISOString());
-    // console.log("format", start_time.format());
-
-    // console.log("Iso", event.start.toISOString());
-    // console.log("format", event.start.format());
-
+    var start_time = event.start.subtract(utc_offset, 'minutes').utcOffset(utc_offset);
+    var end_time = event.end.subtract(utc_offset, 'minutes').utcOffset(utc_offset);
     var duration = moment.duration(end_time.diff(start_time));
     var seconds = duration.asSeconds();
-    // console.log("Duration",seconds);
     var endpoint = API.endpoints.tutor_slots.create({
       tutor_id: tutor_id
     });
 
     request = $.post(endpoint, { 
-      start_time: start_time.toISOString(),
+      start_time: event.start.format(),
       duration: seconds,
       weeks_to_repeat: event.weeksToRepeat(),
       slot_type: event.slot_type,
     })
 
-    console.log("Added",event.start.format());
     request.success(function(data) {
       event.slot_id = data[0].id;
       event.status = data[0].status;
-      $('#calendar').fullCalendar('updateEvent', event);
+      $('#calendar').fullCalendar('refetchEvents', event);
     });
 
     request.error(function(data) {
@@ -232,7 +209,6 @@ $(document).ready(function() {
    * This function presents a modal that confirms with the user before removing slots
    */
   var askToRemoveSlots = function(event) {
-    console.log("Ask to Remove");
     swal({
         title: "Are you sure?",
         text: "This availability will be permanently deleted",
@@ -255,7 +231,6 @@ $(document).ready(function() {
    * events are removed from the view.
    */
   var removeSlots = function(event) {
-    console.log("Asking to remove");
     var duration = moment.duration(event.data.end.diff(event.data.start)).asSeconds();
     $.ajax({
       type: "POST",
@@ -268,15 +243,10 @@ $(document).ready(function() {
       },
       dataType: "json",
       success: function(data) {
-        console.log("Successful post to remove, the data:",data[0]);
-        console.log("original time", event.data.start.clone().subtract(utc_offset,'minutes').toISOString());
         $('#calendar').fullCalendar('removeEvents', function(event) {
-          console.log("Removing events from full calendar");
           var target = formatDataAsEvent(data[0]);
-          console.log("Target to remove",target.start.format('E HH:mm:ss'));
           var isStartMatch = (event.start.format('E HH:mm:ss') === target.start.format('E HH:mm:ss'));
           var isEndMatch = (event.end.format('E HH:mm:ss') === target.end.format('E HH:mm:ss'));
-          console.log("Comparing",target.start.format('E HH:mm:ss'),"to",event.start.format('E HH:mm:ss'));
           return (isStartMatch && isEndMatch) ? true : false;
         });
       },
@@ -326,7 +296,7 @@ $(document).ready(function() {
       dataType: "json",
       success: function(data) {
         event.data.status = data.status;
-        $('#calendar').fullCalendar('updateEvent', event.data);
+        $('#calendar').fullCalendar('refetchEvents', event.data);
       },
       error: function(data, status) {
         alert('failure', data, status);
