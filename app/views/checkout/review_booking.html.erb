@@ -58,10 +58,10 @@
         <div class="small-12 columns">      
           <div class="row">
             <div class="small-12 columns medium-6 columns">
-              <h3>Booking Details</h3>
+              <h5>Booking Details</h5>
             </div>
             <div class="small-12 columns medium-6 columns">
-              <h3>Appointments</h3>
+              <h5>Appointment Times</h5>
             </div>
           </div>
           <div class="row">
@@ -69,19 +69,19 @@
               <table>
                 <tbody>
                   <tr>
-                    <td><b>Tutor</b></td>
+                    <td>Tutor</td>
                     <td><%= @booking_preview[:tutor].first_and_last_initial %></td>
                   </tr>
                   <tr>
-                    <td><b>Course</b></td>
+                    <td>Course</td>
                     <td><%= @booking_preview[:course].formatted_name %></td>
                   </tr>
                   <tr>
-                    <td><b><b>Location</b></td>
+                    <td>Location Request</td>
                     <td><%= @booking_preview[:location] %></td>
                   </tr>
                   <tr>
-                    <td><b>Hourly Rate</b></td>
+                    <td>Hourly Rate</td>
                     <td>$<%= @booking_preview[:rate] %></td>
                   </tr>
                 </tbody>
@@ -103,40 +103,44 @@
             </div>
           </div>
           <div class="row">
-            <div class="small-12 columns">
-              <h3 class="margin-top-2em">Booking Summary</h3>
+            <div class="small-12 medium-6 columns">
+              <h5 class="margin-top-2em">Booking Summary</h5>
+            </div>
+            <div class="small-12 medium-6 columns">
+              <h5 class="margin-top-2em">Promotions</h5>
             </div>
           </div>
           <div class="row">
-            <div class="small-12 columns">
-               <div class="box">
-                  <div class="row">
-                    <div class="small-12 medium-6 columns">
-                      <p class="price-breakdown">
-                        <span id="1"><%= @booking_preview[:appointments].count %></span>
-                        <span id="2">x</span>
-                        <span id="3">1-Hour Tutoring Appointment</span>
-                        <span id="4">$<%= @booking_preview[:rate] %></span>
-                      </p>
-                      <p class="total-price-box"><span id="total-word">Total:</span>$ xx</p>
-                    </div>
-                    <%= form_for :apply_promo_code, url: checkout_apply_promo_code_path do |tt| %>
-                      <div class="small-12 medium-6 columns">
-                        <h5>Promo Code</h5>
-                        <div class="row small-collapse">
-                          <div class="small-12 medium-8 columns zero-padding">
-                            <%= tt.text_field :code, required: true, class: 'border-radius' %>
-                          </div>
-                          <div class="small-12 medium-4 columns">
-                            <%= tt.submit 'Apply', class: 'custom-button short-width' %>
-                          </div>
-                        </div>
-                      </div>
-                    <% end %>
+            <div class="small-12 medium-6 columns">
+              <table class="no-bottom-margin">
+                <tr>
+                  <td><%= @booking_preview[:appointments].count %> x</td>
+                  <td>1-Hour Tutoring Appointment</td>
+                  <td>$<%= @booking_preview[:rate] %></td>
+                </tr>
+                <tr>
+                  <td><span class="bold">Total Price</span></td>
+                  <td></td>
+                  <td><span class="bold">$<%= @booking_preview[:total_price] %></span></td>
+                </tr>
+              </table>
+            </div>
+            <%= form_for :apply_promo_code, url: checkout_apply_promo_code_path do |tt| %>
+              <div class="small-12 medium-6 columns">
+                <div class="row small-collapse">
+                  <div class="small-12 medium-8 columns">
+                    <%= tt.text_field :code, required: true, class: 'border-radius no-bottom-margin width-90' %>
+                  </div>
+                  <div class="small-12 medium-4 columns">
+                    <%= tt.submit 'Apply', class: 'custom-button short-width no-bottom-margin' %>
                   </div>
                 </div>
               </div>
-            </div>
+            <% end %>
+          </div>
+
+          <div class="checkout-form margin-top-3em">
+
             <% if current_user %>
               <% if current_user.student && current_user.student.customer_id %>
                 <%= render '/checkout/checkout_returning_user_saved_card' %>
@@ -148,10 +152,13 @@
             <% else %>
               <%= render '/checkout/checkout_new_user' %>
             <% end %>
+
           </div>
+
         </div>
       </div>
     </div>
+  </div>
     <div class="checkout-steps-nav">
       <div class="row small-collapse">
         <div class="small-12 columns">
