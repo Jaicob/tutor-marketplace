@@ -47,6 +47,11 @@ var TutorCard = React.createClass({
         )
       }
     }
+    var full_price = function(tutor_rate) {
+      return (
+        Math.round(tutor_rate * 1.15)
+      )
+    }
 
 		return (
         <div className="card">
@@ -59,7 +64,7 @@ var TutorCard = React.createClass({
             <div className="banner-box">
               <div className="banner-row">
                 <p className="name">{tutor.user.first_name + " " + tutor.user.last_name[0] + "."}</p>
-                <p className="price">${tutor.rate}</p>
+                <p className="price">${full_price(tutor.rate)}</p>
               </div>
               <div className="banner-row">
                 <i className="fi-book-bookmark"></i>

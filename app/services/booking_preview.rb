@@ -38,8 +38,9 @@ class BookingPreview
 
   def total_price
     number_of_appts = @appt_info.count
-    total_price = number_of_appts * @rate
-    return total_price
+    total_price = number_of_appts * @rate * 1.15
+    formatted_total_price = sprintf('%.2f', total_price)
+    return formatted_total_price
   end
 
 end

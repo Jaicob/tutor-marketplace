@@ -82,7 +82,7 @@
                   </tr>
                   <tr>
                     <td>Hourly Rate</td>
-                    <td>$<%= @booking_preview[:rate] %></td>
+                    <td>$<%= full_price(@booking_preview[:rate]) %></td>
                   </tr>
                 </tbody>
               </table>
@@ -116,7 +116,7 @@
                 <tr>
                   <td><%= @booking_preview[:appointments].count %> x</td>
                   <td>1-Hour Tutoring Appointment</td>
-                  <td>$<%= @booking_preview[:rate] %></td>
+                  <td>$<%= full_price(@booking_preview[:rate]) %></td>
                 </tr>
                 <tr>
                   <td><span class="bold">Total Price</span></td>
