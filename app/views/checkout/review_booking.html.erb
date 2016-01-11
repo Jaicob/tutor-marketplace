@@ -58,7 +58,7 @@
         <div class="small-12 columns">      
           <div class="row">
             <div class="small-12 columns medium-6 columns">
-              <h5>Booking Details</h5>
+              <h5>Appointment Summary</h5>
             </div>
             <div class="small-12 columns medium-6 columns">
               <h5>Appointment Times</h5>
@@ -66,40 +66,10 @@
           </div>
           <div class="row">
             <div class="small-12 medium-6 columns">
-              <table>
-                <tbody>
-                  <tr>
-                    <td>Tutor</td>
-                    <td><%= @booking_preview[:tutor].first_and_last_initial %></td>
-                  </tr>
-                  <tr>
-                    <td>Course</td>
-                    <td><%= @booking_preview[:course].formatted_name %></td>
-                  </tr>
-                  <tr>
-                    <td>Location Request</td>
-                    <td><%= @booking_preview[:location] %></td>
-                  </tr>
-                  <tr>
-                    <td>Hourly Rate</td>
-                    <td>$<%= full_price(@booking_preview[:rate]) %></td>
-                  </tr>
-                </tbody>
-              </table>
+              <%= render '/checkout/review_and_confirm_partials/appointment_summary' %>
             </div>
             <div class="small-12 medium-6 columns">
-              <table>
-                <tbody>
-                  <% appt_count = 1 %>
-                  <% @booking_preview[:appointments].each do |k,v| %>
-                    <tr>
-                      <td class="center">#<%= appt_count %></td>
-                      <td><%= v[:start_time].to_datetime.strftime('%B %e, %Y at %l:%M %p') %></td>
-                    </tr>
-                    <% appt_count += 1 %>
-                  <% end %>
-                </tbody>
-              </table>
+              <%= render '/checkout/review_and_confirm_partials/appointment_times' %>
             </div>
           </div>
           <div class="row">
@@ -112,53 +82,32 @@
           </div>
           <div class="row">
             <div class="small-12 medium-6 columns">
-              <table class="no-bottom-margin">
-                <tr>
-                  <td><%= @booking_preview[:appointments].count %> x</td>
-                  <td>1-Hour Tutoring Appointment</td>
-                  <td>$<%= full_price(@booking_preview[:rate]) %></td>
-                </tr>
-                <tr>
-                  <td><span class="bold">Total Price</span></td>
-                  <td></td>
-                  <td><span class="bold">$<%= @booking_preview[:total_price] %></span></td>
-                </tr>
-              </table>
+              <%= render '/checkout/review_and_confirm_partials/price_summary' %>
             </div>
-            <%= form_for :apply_promo_code, url: checkout_apply_promo_code_path do |tt| %>
-              <div class="small-12 medium-6 columns">
-                <div class="row small-collapse">
-                  <div class="small-12 medium-8 columns">
-                    <%= tt.text_field :code, required: true, class: 'border-radius no-bottom-margin width-90' %>
-                  </div>
-                  <div class="small-12 medium-4 columns">
-                    <%= tt.submit 'Apply', class: 'custom-button short-width no-bottom-margin' %>
-                  </div>
-                </div>
-              </div>
-            <% end %>
+            <div class="small-12 medium-6 columns">
+              <%= render '/checkout/review_and_confirm_partials/promotions' %>
+            </div>
           </div>
 
           <div class="checkout-form margin-top-3em">
 
             <% if current_user %>
               <% if current_user.student && current_user.student.customer_id %>
-                <%= render '/checkout/checkout_returning_user_saved_card' %>
+                <%= render '/checkout/payment_screens/returning_user_saved_card' %>
               <% elsif current_user.student %>
-                <%= render '/checkout/checkout_returning_user_no_card' %>
+                <%= render '/checkout/payment_screens/returning_user_no_card' %>
               <% elsif current_user.tutor %>
-                <%= render '/checkout/checkout_tutor_error_message' %>
+                <%= render '/checkout/payment_screens/tutor_error_message' %>
               <% end %>
             <% else %>
-              <%= render '/checkout/checkout_new_user' %>
+              <%= render '/checkout/payment_screens/new_user' %>
             <% end %>
 
+            </div>
           </div>
-
         </div>
       </div>
     </div>
-  </div>
     <div class="checkout-steps-nav">
       <div class="row small-collapse">
         <div class="small-12 columns">
