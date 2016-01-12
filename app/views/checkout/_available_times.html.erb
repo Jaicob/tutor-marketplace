@@ -7,7 +7,7 @@
         <% @availability_data[count][:times].each do |data| %>
           <div class="appt-time-box">
             <label>
-              <input type="checkbox" id="<%=data[:uniq_id]%>" class="<%=data[:booked]%>" value="<%=data[:datetime].to_s+'----'+data[:slot_id].to_s%>" name="appt_selection[<%= data[:uniq_id] %>]" onchange="disableNeighborCheckboxes(this)">
+              <input type="checkbox" id="<%=data[:uniq_id]%>" class="<%=data[:reserved]%>" value="<%=data[:datetime].to_s+'----'+data[:slot_id].to_s%>" name="appt_selection[<%= data[:uniq_id] %>]" onchange="disableNeighborCheckboxes(this)">
               <div class="appt-time"><%= data[:datetime].in_time_zone(@school.timezone).strftime('%l:%M %p') %></div>
             </label>
           </div>
@@ -33,14 +33,14 @@ window.onload = function start() { // calls 2 methods
     }
   }
 
-  // 2. Disable reserved times due to existing bookings
-  var bookedAppts = document.getElementsByClassName("booked")
-  if (bookedAppts.length > 0) {
-    for (var i = 0; i < bookedAppts.length; i++) {
-      // disable booked time
-      var checkbox = bookedAppts[i];
+  // 2. Disable reserved times due to existing bookings or booking_buffer
+  var reservedAppts = document.getElementsByClassName("reserved")
+  if (reservedAppts.length > 0) {
+    for (var i = 0; i < reservedAppts.length; i++) {
+      // disable reserved time
+      var checkbox = reservedAppts[i];
       checkbox.disabled = true;
-      // disabled 30 mins before and after booked time (if those times exist)
+      // disabled 30 mins before and after reserved time (if those times exist)
       var checkboxID = parseInt(checkbox.id);
       var checkboxBefore = document.getElementById(checkboxID - 1);
       if (checkboxBefore) {
@@ -79,26 +79,26 @@ function disableNeighborCheckboxes(element) {
   } else {
     // when checkbox is un-checked...(ex: 5:00 is de-selected)
     if (checkboxBefore != null && checkboxTwoBefore != null) { // (4:00 and 4:30 exist)
-      if (!checkboxTwoBefore.classList.contains("booked")) {    // (4:00 is not booked)
+      if (!checkboxTwoBefore.classList.contains("reserved")) {    // (4:00 is not reserved)
         checkboxBefore.disabled = false;                        // (remove disabled state from 4:30)
       }
     }
     if (checkboxAfter != null && checkboxTwoAfter != null) {                            // (5:30 exists)
-      if (!checkboxTwoAfter.classList.contains("booked")) {   // (6:00 is not booked)
+      if (!checkboxTwoAfter.classList.contains("reserved")) {   // (6:00 is not reserved)
         checkboxAfter.disabled = false;                       // (removed disabled state from 5:30)
       }
       checkboxAfter.classList.remove("second-half-of-appt");  // (remove 'second-half' class from 5:30)
     }
     if (checkboxTwoBefore == null && checkboxBefore != null) {  // (4:00 does not exist, 4:30 does exist)
       checkboxBefore.disabled = false;                          // (remove disabled state from 4:30)
-    } else if (checkboxTwoBefore != null && checkboxTwoBefore.checked != true && !checkboxTwoBefore.classList.contains("booked")) {
-      // (4:00 exists, 4:00 is not checked, 4:00 is not booked)
+    } else if (checkboxTwoBefore != null && checkboxTwoBefore.checked != true && !checkboxTwoBefore.classList.contains("reserved")) {
+      // (4:00 exists, 4:00 is not checked, 4:00 is not reserved)
       checkboxBefore.disabled = false; // (remove disabled state from 4:30)
     }
     if (checkboxTwoAfter != null && checkboxTwoAfter.checked) { // (6:00 exists, 6:00 is checked)
       checkboxAfter.disabled = true;                            // (disable 5:30)
     }
-    if (checkboxTwoBefore != null && checkboxTwoBefore.checked == true) { // (4:00 exists and is booked)
+    if (checkboxTwoBefore != null && checkboxTwoBefore.checked == true) { // (4:00 exists and is reserved)
       checkboxBefore.disabled = true; // (disable 4:30)
     }
     if (checkboxTwoAfter == null) {

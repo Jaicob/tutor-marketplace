@@ -72,16 +72,10 @@ class Appointment < ActiveRecord::Base
   def outside_booking_buffer
     buffer = (self.tutor.booking_buffer * 3600) # hours * 3600 = seconds
     earliest_avail_booking = Time.now + buffer 
-    puts "Time.now = #{Time.now}"
-    puts "buffer = #{buffer}"
-    puts "start_time = #{start_time}"
-    puts "earliest_avail_booking = #{earliest_avail_booking}"
     if start_time < earliest_avail_booking
       errors.add(:start_time, "is too soon and does not meet minimum notice requirment for tutor")
     end
   end
-
-  # x = Appointment.new(student_id: 101, slot_id: 1891, course_id: 1, start_time: '2016-01-12 20:00:00')
 
   # This sets the delivery time for reminder emails as 12 hours before the appointment, except in the case where the appointment is tomorrow and no reminder is needed
   def appt_reminder_email_date
