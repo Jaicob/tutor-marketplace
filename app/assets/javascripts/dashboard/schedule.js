@@ -1,11 +1,7 @@
 $(document).ready(function() {
 
-  $(".fi-widget").unbind().on("click", function(){
-    $("#repeating-options").slideToggle(200);
-    $(".regular-availability").toggleClass("expanded");
-  })
-
   var tutor_id = $('#axoncalendar').data('tutor');
+  var utc_offset = $('#axoncalendar').data('utcoffset');
   var originalStartTime;
   var originalDuration;
 
@@ -40,6 +36,92 @@ $(document).ready(function() {
   });
 
   /*
+   * Responds to events starting and finishing loading 
+   */
+   var loading = function( isLoading, view ) {
+    if (isLoading) {
+     $('#calendar').fadeTo(0.6);
+     $('#cal-loading').show();
+    } else {
+      $('#cal-loading').hide();
+      $('#calendar').fadeTo(1);
+    }
+   }
+
+  /*
+   * When we receive the data from the backend we want to make sure that
+   * all the times are formatted correctly. The times come in as 0 offset
+   * UTC strings and are converted to moment objects with is8601 format
+   * the other data is added to the event object
+   */
+  var formatDataAsEvent = function(eventData) {
+    var start_time = moment(eventData.start_time).utcOffset(utc_offset);
+    var end_time = start_time.clone().add(eventData.duration, 'seconds');
+    var postFormat = {
+      title: eventData.slot_type === 0 ? 'Weekly' : 'One Time',
+      start: start_time,
+      end: end_time,
+      slot_id: eventData.id,
+      status: eventData.status === 0 ? 'Open' : 'Blocked',//eventData.status
+      slot_type: eventData.slot_type === 0 ? 'Weekly' : 'OneTime'
+    };
+    return postFormat;
+  }
+
+  /*
+   * Defines a source for which event data is coming from and applies 
+   * the transform to format the incoming data correctly
+   */
+  var eventSource = {
+    url: API.endpoints.tutor_slots.get({
+      tutor_id: tutor_id
+    }),
+    eventDataTransform: formatDataAsEvent,
+  }
+
+  /*
+   * This is the update function used for when a slot is moved on the  
+   * calendar. 
+   */
+  var updateDrop = function(event, delta, revertFunc, jsEvent, ui, view) {
+    if (event.slot_type === "OneTime") {
+      singleSlotUpdate(event.slot_id, event.start.clone().subtract(utc_offset,'minutes').toISOString(), originalDuration);
+    } else {
+      multiSlotUpdate(originalStartTime, originalDuration, event.start.clone().subtract(utc_offset,'minutes').toISOString(), originalDuration);
+    }
+  }
+
+  /*
+   * This is the update function used for when a slot is resized on the  
+   * calendar. Enforces a min duration of one hour
+   */
+  var updateResize = function(event, delta, revertFunc, jsEvent, ui, view) {
+    var newDuration = originalDuration + delta.asSeconds();
+    
+    if (newDuration < 3600){
+      revertFunc();
+      return;
+    } 
+
+    if (event.slot_type === "OneTime") {
+      singleSlotUpdate(event.slot_id, event.start.clone().subtract(utc_offset,'minutes').toISOString(), newDuration);//IsoString has no offset, format does
+    } else {
+      multiSlotUpdate(originalStartTime, originalDuration, event.start.clone().subtract(utc_offset,'minutes').toISOString(), newDuration);
+    }
+  }
+
+  /*
+   * These are events that need to happen before an update to slots
+   * we need to preserve the original start time and duration for looking
+   * up ranges of time.
+   */
+  var beginSlotUpdate = function(event, jsEvent, ui, view) {
+    originalStartTime = event.start.clone().subtract(utc_offset,'minutes').toISOString();
+    originalDuration = moment.duration(event.end.diff(event.start)).asSeconds();
+    tooltip.hide();
+  }
+
+  /*
    * Does a batch update on slots, this is used for weekly slots. The original start time and
    * duration are necessary for looking up the slots in the backend. 
    */
@@ -57,7 +139,7 @@ $(document).ready(function() {
       },
       dataType: "json",
       success: function(data) {
-        $('#calendar').fullCalendar('updateEvent', event);
+        $('#calendar').fullCalendar('refetchEvents', event);
       },
       error: function(data, status) {
         alert('failure', data, status);
@@ -83,7 +165,7 @@ $(document).ready(function() {
       },
       dataType: "json",
       success: function(data) {
-        $('#calendar').fullCalendar('updateEvent', event);
+        $('#calendar').fullCalendar('refetchEvents', event);
       },
       error: function(data, status) {
         alert('failure', data, status);
@@ -93,108 +175,20 @@ $(document).ready(function() {
   }
 
   /*
-   * When we receive the data from the backend we want to make sure that
-   * all the times are formatted correctly. The times come in as 0 offset
-   * UTC strings and are converted to moment objects with is8601 format
-   * the other data is added to the event object
-   */
-  var formatDataAsEvent = function(eventData) {
-    end_time = moment(eventData.start_time, moment.ISO_8601);
-    end_time = end_time.add(eventData.duration, 'seconds');
-    var postFormat = {
-      title: eventData.slot_type === 0 ? 'Weekly' : 'One Time',
-      start: moment(eventData.start_time, moment.ISO_8601),
-      end: end_time,
-      slot_id: eventData.id,
-      status: eventData.status === 0 ? 'Open' : 'Blocked',//eventData.status
-      slot_type: eventData.slot_type === 0 ? 'Weekly' : 'OneTime'
-    };
-    return postFormat;
-  }
-
-  /*
-   * Defines a source for which event data is coming from and applies 
-   * the transform to format the incoming data correctly
-   */
-  var eventSource = {
-    url: API.endpoints.tutor_slots.get({
-      tutor_id: tutor_id
-    }),
-    eventDataTransform: formatDataAsEvent,
-  }
-
-  /*
-   * Responds to events starting and finishing loading 
-   */
-   var loading = function( isLoading, view ) {
-    if (isLoading) {
-      console.log("Loading");
-     $('#calendar').fadeTo(0.6);
-     $('#cal-loading').show();
-    } else {
-      console.log("Finished");
-      $('#cal-loading').hide();
-      $('#calendar').fadeTo(1);
-    }
-   }
-
-
-  /*
-   * These are events that need to happen before an update to slots
-   * we need to preserve the original start time and duration for looking
-   * up ranges of time.
-   */
-  var beginSlotUpdate = function(event, jsEvent, ui, view) {
-    originalStartTime = event.start.toISOString();
-    originalDuration = moment.duration(event.end.diff(event.start)).asSeconds();
-    tooltip.hide();
-  }
-
-  /*
-   * This is the update function used for when a slot is moved on the  
-   * calendar. 
-   */
-  var updateDrop = function(event, delta, revertFunc, jsEvent, ui, view) {
-    if (event.slot_type === "OneTime") {
-      singleSlotUpdate(event.slot_id, event.start.toISOString(), originalDuration);
-    } else {
-      multiSlotUpdate(originalStartTime, originalDuration, event.start.toISOString(), originalDuration);
-    }
-  }
-
-  /*
-   * This is the update function used for when a slot is resized on the  
-   * calendar. Enforces a min duration of one hour
-   */
-  var updateResize = function(event, delta, revertFunc, jsEvent, ui, view) {
-    var newDuration = originalDuration + delta.asSeconds();
-    
-    if (newDuration < 3600){
-      revertFunc();
-      return;
-    } 
-
-    if (event.slot_type === "OneTime") {
-      singleSlotUpdate(event.slot_id, event.start.toISOString(), originalDuration);
-    } else {
-      multiSlotUpdate(originalStartTime, originalDuration, event.start.toISOString(), newDuration);
-    }
-  }
-
-  /*
    * Attempts to add new slot(s) using the slot_creator service(endpoint) 
    * if successful the ui is updated to show the new slots (called events by fullcalendar)
    */
   var addSlot = function(event, jsEvent, ui) {
-    event.end = moment(event.end);
-    var duration = moment.duration(event.end.diff(event.start));
+    var start_time = event.start.subtract(utc_offset, 'minutes').utcOffset(utc_offset);
+    var end_time = event.end.subtract(utc_offset, 'minutes').utcOffset(utc_offset);
+    var duration = moment.duration(end_time.diff(start_time));
     var seconds = duration.asSeconds();
     var endpoint = API.endpoints.tutor_slots.create({
       tutor_id: tutor_id
     });
 
     request = $.post(endpoint, { 
-      start_time: event.start.toISOString(),
+      start_time: event.start.format(),
       duration: seconds,
       weeks_to_repeat: event.weeksToRepeat(),
       slot_type: event.slot_type,
@@ -203,32 +197,12 @@ $(document).ready(function() {
     request.success(function(data) {
       event.slot_id = data[0].id;
       event.status = data[0].status;
-      $('#calendar').fullCalendar('updateEvent', event);
+      $('#calendar').fullCalendar('refetchEvents', event);
     });
 
     request.error(function(data) {
       alert("Error!");
     })
-  }
-
-  /*
-   * When you click on a slot/event a mini menu pops up this function
-   * routes the correct actions based on what you click
-   */
-  var routeEvent = function(event) {
-    tooltip.hide();
-    $('div').off('click', '.cal-menu-item');
-    var action = event.currentTarget.id;
-    switch (action) {
-      case 'btn-rm-slots':
-        askToRemoveSlots(event);
-        break;
-      case 'btn-block-slot':
-        toggleBlockSlot(event);
-        break;
-      default:
-        swal('Invalid Selection', 'error')
-    }
   }
 
   /*
@@ -284,6 +258,26 @@ $(document).ready(function() {
   }
 
   /*
+   * When you click on a slot/event a mini menu pops up this function
+   * routes the correct actions based on what you click
+   */
+  var routeEvent = function(event) {
+    tooltip.hide();
+    $('div').off('click', '.cal-menu-item');
+    var action = event.currentTarget.id;
+    switch (action) {
+      case 'btn-rm-slots':
+        askToRemoveSlots(event);
+        break;
+      case 'btn-block-slot':
+        toggleBlockSlot(event);
+        break;
+      default:
+        swal('Invalid Selection', 'error')
+    }
+  }
+
+  /*
    * Updates a slots status to be blocked if open, and open if blocked.
    * If successful then the event is updated
    */
@@ -302,7 +296,7 @@ $(document).ready(function() {
       dataType: "json",
       success: function(data) {
         event.data.status = data.status;
-        $('#calendar').fullCalendar('updateEvent', event.data);
+        $('#calendar').fullCalendar('refetchEvents', event.data);
       },
       error: function(data, status) {
         alert('failure', data, status);
@@ -416,7 +410,7 @@ $(document).ready(function() {
    */
   fcalendar =  $('#calendar').fullCalendar({
     eventSources: [eventSource],
-    timezone: 'local',
+    timezone: false,
     slotEventOverlap: false,
     eventOverlap: function(stillEvent, movingEvent) { return stillEvent.allDay && movingEvent.allDay },
     allDaySlot: false,

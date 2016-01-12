@@ -75,11 +75,19 @@ class ApplicationController < ActionController::Base
     def set_school
       if current_user
         @school = current_user.school
+      elsif @tutor 
+        @school = School.find(@tutor.school_id)
       elsif !cookies[:school_id].blank?
         @school = School.find(cookies[:school_id].to_i)
       else
         @school = nil
       end
+    end
+
+    # Set the time_zone based off the school
+    def set_time_zone(&block)
+      timezone = @school.try(:timezone) || 'UTC'
+      Time.use_zone(timezone, &block)
     end
 
 end

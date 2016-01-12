@@ -15,6 +15,11 @@
     </div>
 
     <div class="small-12 columns">
+      <%= f.label :timezone, "Timezone" %>
+      <%= f.select :timezone, @timezones %>
+    </div>
+
+    <div class="small-12 columns">
       <%= f.label :transaction_percentage %>
       <%= f.text_field :transaction_percentage %>
     </div>

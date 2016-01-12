@@ -10,6 +10,7 @@
 #  updated_at             :datetime         not null
 #  slug                   :string
 #  transaction_percentage :float
+#  timezone               :string
 #
 
 require 'rails_helper'

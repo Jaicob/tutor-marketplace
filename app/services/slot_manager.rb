@@ -17,6 +17,7 @@ class SlotManager
 
     # Required
     @tutor = Tutor.find(params[:tutor_id])
+    @school = @tutor.school
 
     @original_start_time = DateTime.iso8601(params[:original_start_time])#params[:original_start_time].to_datetime # DateTime.iso8601(params[:start_time])
     @original_duration = params[:original_duration]
@@ -38,11 +39,9 @@ class SlotManager
     @tutor.slots.each do |slot|
       @slot_start_DOW_time = slot.start_time.strftime('%a %T')
       @slot_duration = slot.duration
-      puts "DOW MATHCES "
       puts @slot_start_DOW_time
       puts @original_start_DOW_time
       puts @slot_start_DOW_time == @original_start_DOW_time
-      puts "DURATION MATHCES"
       puts @slot_duration == @original_duration.to_i
       if @slot_start_DOW_time == @original_start_DOW_time && @slot_duration == @original_duration.to_i
         @slots << slot

@@ -4,7 +4,7 @@
     <% @booking_preview[:appointments].each do |k,v| %>
       <tr>
         <td class="center">#<%= appt_count %></td>
-        <td><%= v[:start_time].to_datetime.strftime('%B %e, %Y at %l:%M %p') %></td>
+        <td><%= v[:start_time].to_datetime.in_time_zone(@school.timezone).strftime('%B %e, %Y at %l:%M %p') %></td>
       </tr>
       <% appt_count += 1 %>
     <% end %>
