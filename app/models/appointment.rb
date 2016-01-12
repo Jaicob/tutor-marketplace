@@ -81,7 +81,7 @@ class Appointment < ActiveRecord::Base
     end
   end
 
-  # x = Appointment.new(student_id: 101, slot_id: 1873, course_id: 1, start_time: '2016-01-12 23:30:00')
+  # x = Appointment.new(student_id: 101, slot_id: 1891, course_id: 1, start_time: '2016-01-12 20:00:00')
 
   # This sets the delivery time for reminder emails as 12 hours before the appointment, except in the case where the appointment is tomorrow and no reminder is needed
   def appt_reminder_email_date
