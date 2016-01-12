@@ -14,7 +14,7 @@ class CheckoutController < ApplicationController
       session[:course_id] = params[:course_selection][:course_id]
     end
     session[:tutor_id] = @tutor.id
-    if session[:course_id].blank? || session[:tutor_id].blank?
+    if session[:course_id] == nil || session[:tutor_id] == nil
       redirect_to checkout_select_course_path(@tutor.slug)
       flash[:alert] = 'Please select a course'
     else
@@ -37,7 +37,7 @@ class CheckoutController < ApplicationController
   def set_times 
     # recieves step 2 input, saves it to session & redirects to step 3
     session[:appt_info] = params[:appt_selection]
-    if session[:appt_info].blank?
+    if session[:appt_info] == nil
       redirect_to checkout_select_times_path(@tutor.slug)
       flash[:alert] = 'Please select a meeting time'
     else
