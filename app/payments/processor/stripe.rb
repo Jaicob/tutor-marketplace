@@ -134,5 +134,15 @@ module Processor
       end
     end
 
+    def get_charge_details(stripe_charge_id)
+      charge = ::Stripe::Charge.retrieve(stripe_charge_id) 
+      card_info = {
+        brand: charge.source.brand,
+        last4: charge.source.last4,
+        exp_date: charge.source.exp_month.to_s + "/" + charge.source.exp_year.to_s
+      }
+      return card_info
+    end
+
   end
 end

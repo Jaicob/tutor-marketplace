@@ -1,0 +1,12 @@
+<table class="no-bottom-margin">
+  <tr>
+    <td><%= @booking_preview[:appointments].count %> x</td>
+    <td>1-Hour Tutoring Appointment</td>
+    <td>$<%= full_price(@booking_preview[:rate]) %></td>
+  </tr>
+  <tr>
+    <td><span class="bold">Total Price</span></td>
+    <td></td>
+    <td><span class="bold">$<%= @booking_preview[:total_price] %></span></td>
+  </tr>
+</table>

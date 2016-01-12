@@ -30,9 +30,17 @@ class BookingPreview
       course: @course,
       rate: @rate,
       location: @location,
-      appointments: @appt_hash
+      appointments: @appt_hash,
+      total_price: total_price
     }
     return data
+  end
+
+  def total_price
+    number_of_appts = @appt_info.count
+    total_price = number_of_appts * @rate * 1.15
+    formatted_total_price = sprintf('%.2f', total_price)
+    return formatted_total_price
   end
 
 end

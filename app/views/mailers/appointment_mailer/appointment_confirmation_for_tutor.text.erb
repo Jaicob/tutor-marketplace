@@ -1,12 +1,13 @@
-Hi <%= @tutor.full_name %>
+Hi <%= @tutor.first_name %>
 
 Thanks for choosing to book with Axon Tutors. Here are some details regarding your upcoming tutoring appointment.
 
-Your Student: <%= @student.full_name %>
-Subject: <%# @appt.subject %>
-Date/Time: <%= @appt.strftime("%b %e, %l:%M %p") %>
+Your Student: <%= public_name(@student) %>
+Course: <%= @appt.course.formatted_name %>
+Date/Time: <%= @appt.start_time.strftime("%b %e, %l:%M %p") %>
 
-<%# @tutor.blurb %>
+<%= tutor_blurb %>
+
 If you have any questions or concerns, or would like to cancel or reschedule, please contact info@axontutors.com.
 
 Thanks,

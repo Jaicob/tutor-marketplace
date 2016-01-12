@@ -1,0 +1,10 @@
+<%= form_for :apply_promo_code, url: checkout_apply_promo_code_path do |tt| %>
+  <div class="row small-collapse">
+    <div class="small-12 medium-8 columns">
+      <%= tt.text_field :code, required: true, class: 'border-radius no-bottom-margin width-90' %>
+    </div>
+    <div class="small-12 medium-4 columns">
+      <%= tt.submit 'Apply', class: 'custom-button short-width no-bottom-margin' %>
+    </div>
+  </div>
+<% end %>

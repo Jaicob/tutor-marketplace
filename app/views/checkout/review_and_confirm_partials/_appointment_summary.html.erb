@@ -1,0 +1,20 @@
+<table>
+  <tbody>
+    <tr>
+      <td>Tutor</td>
+      <td><%= @booking_preview[:tutor].first_and_last_initial %></td>
+    </tr>
+    <tr>
+      <td>Course</td>
+      <td><%= @booking_preview[:course].formatted_name %></td>
+    </tr>
+    <tr>
+      <td>Location Request</td>
+      <td><%= @booking_preview[:location] %></td>
+    </tr>
+    <tr>
+      <td>Hourly Rate</td>
+      <td>$<%= full_price(@booking_preview[:rate]) %></td>
+    </tr>
+  </tbody>
+</table>
