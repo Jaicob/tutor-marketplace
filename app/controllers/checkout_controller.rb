@@ -10,50 +10,60 @@ class CheckoutController < ApplicationController
 
   def set_course_id 
     # recieves step 1 input, saves it to session & redirects to step 2
-    session[:course_id] = params[:course_selection][:course_id]
+    if params[:course_selection] && params[:course_selection][:course_id]
+      session[:course_id] = params[:course_selection][:course_id]
+    end
     session[:tutor_id] = @tutor.id
-    redirect_to checkout_select_times_path(@tutor.slug)
+    if session[:course_id].blank? || session[:tutor_id].blank?
+      redirect_to checkout_select_course_path(@tutor.slug)
+      flash[:alert] = 'Please select a course'
+    else
+      redirect_to checkout_select_times_path(@tutor.slug)
+    end
   end
 
   def select_times
-    if session[:course_id] == nil || session[:tutor_id] == nil
-      redirect_to checkout_select_course_path(@tutor.slug)
-      flash[:alert] = 'Please select a course'
-    end 
     # step 2
     service = TutorAvailability.new(@tutor.id, params[:current], params[:week])
     @start_date = service.set_week
     @availability_data = service.get_times
     if session[:appt_info] && session[:tutor_id] == @tutor.id
       gon.selected_appt_ids = session[:appt_info].keys
+    else
+      gon.selected_appt_ids = nil
     end
   end
 
   def set_times 
     # recieves step 2 input, saves it to session & redirects to step 3
     session[:appt_info] = params[:appt_selection]
-    redirect_to checkout_select_location_path(@tutor.slug)
+    if session[:appt_info].blank?
+      redirect_to checkout_select_times_path(@tutor.slug)
+      flash[:alert] = 'Please select a meeting time'
+    else
+      redirect_to checkout_select_location_path(@tutor.slug)
+    end
   end
 
   def select_location 
-    if session[:appt_info] == nil
-      redirect_to checkout_select_times_path(@tutor.slug)
-      flash[:alert] = 'Please select a meeting time'
-    end 
     # step 3
     # - view page with input for setting location
   end
 
   def set_location
     # recieves step 3 input, saves it to session & redirects to step 4
-    session[:location] = params[:location_selection][:location]
-    redirect_to checkout_review_booking_path(@tutor.slug)
+    if params[:location_selection] && params[:location_selection][:location]
+      session[:location] = params[:location_selection][:location]
+    end
+    if session[:location].blank?
+      redirect_to checkout_select_location_path(@tutor.slug)
+      flash[:alert] = 'Please enter a location preference'
+    else
+      redirect_to checkout_review_booking_path(@tutor.slug)
+    end
   end
 
   def review_booking
-    if session[:location] == nil
-      redirect_to checkout_select_location_path(@tutor.slug)
-    end
     # step 4, all booking information is set and shown to customer here
     # - if logged in, customer has option to use saved card (if one exists) or use a new card (with an option to save it)
     # - if NOT logged in, a customer has the option to sign in (moves to above step) or sign up and use a new card (with an option to save it)
