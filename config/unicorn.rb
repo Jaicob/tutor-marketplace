@@ -3,9 +3,9 @@ shared_dir = "#{app_dir}/shared"
 working_directory app_dir
 
 # Set unicorn options
-worker_processes 3
+worker_processes 5
 preload_app true
-timeout 20
+timeout 30
 
 # Set up socket location
 listen "#{shared_dir}/sockets/unicorn.my-app.sock",  :backlog => 1024
@@ -31,8 +31,7 @@ after_fork do |server, worker|
     puts 'Unicorn worker intercepting TERM and doing nothing. Wait for master to send QUIT'
 
   end
-  puts "LOOOOOOK HERE !!!!!!!!!! #{ENV['RDS_HOSTNAME']} !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-  sleep(5)
+  puts "LOOOOOOK HERE !!!!!!!!!! #{ENV['RDS_HOSTNAME']}  |  #{ENV['RAILS_ENV']}!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
   defined?(ActiveRecord::Base) and ActiveRecord::Base.establish_connection
 
   Sidekiq.configure_client do |config|
