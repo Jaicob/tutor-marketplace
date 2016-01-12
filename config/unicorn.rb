@@ -32,7 +32,7 @@ after_fork do |server, worker|
 
   end
   puts "LOOOOOOK HERE !!!!!!!!!! #{ENV['RDS_HOSTNAME']} !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-  sleep(30)
+  sleep(5)
   defined?(ActiveRecord::Base) and ActiveRecord::Base.establish_connection
 
   Sidekiq.configure_client do |config|
