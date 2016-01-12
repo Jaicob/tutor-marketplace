@@ -127,6 +127,7 @@ ActiveRecord::Schema.define(version: 20160112173829) do
     t.datetime "updated_at",             null: false
     t.string   "slug"
     t.float    "transaction_percentage"
+    t.string   "timezone"
   end
 
   add_index "schools", ["slug"], name: "index_schools_on_slug", unique: true, using: :btree

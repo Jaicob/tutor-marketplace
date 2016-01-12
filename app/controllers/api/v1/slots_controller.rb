@@ -1,12 +1,17 @@
 class API::V1::SlotsController < API::V1::Defaults
   before_action :set_tutor
+  before_action :set_school
   before_action :restrict_to_resource_owner, except: [:index]
   before_action :set_slot, only: [:show, :update, :destroy]
+
+  # around_action :set_time_zone, only: [:index]
+
 
   def index
     @slots = @tutor.slots
     @slots_array = []
     @slots.map do |slot|
+      slot.start_time = slot.start_time.iso8601(1)
       # can't add non-attribute 'unavailable_times' to object, so converting slot to hash of attributes instead
       slot_hash = slot.attributes
       slot_hash['unavailable_times'] = slot.appointments.map { |appt| appt.start_time }

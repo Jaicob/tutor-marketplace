@@ -30,6 +30,8 @@ class Appointment < ActiveRecord::Base
   validate :tutor_and_student_at_same_school
   validate :outside_booking_buffer
 
+  before_validation :format_datetime
+
   enum status: ['Scheduled', 'Cancelled', 'Completed']
 
   attr_accessor :appt_reminder_email_date
@@ -86,6 +88,11 @@ class Appointment < ActiveRecord::Base
     if self.start_time.to_date > (self.created_at.to_date + 1)
       (self.start_time.to_time - 43200).to_datetime
     end
+  end
+
+  # Ensure that datetimes are always saved as UTC 
+  def format_datetime
+    self.start_time = self.start_time.in_time_zone("UTC")
   end
 
   def formatted_start_time
