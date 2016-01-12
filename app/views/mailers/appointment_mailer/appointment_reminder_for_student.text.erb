@@ -4,7 +4,7 @@ Your tutoring appointment is coming up soon.
 
 Your Tutor: <%= @tutor.full_name %>
 Subject: <%# @appt.subject %>
-Date/Time: <%= @appt.strftime("%b %e, %l:%M %p") %>
+Date/Time: <%= @appt.start_time.strftime("%b %e, %l:%M %p") %>
 
 <%# @tutor.blurb %>
 Please bring any notes, homework, or slides related to what you’d like to be tutored on. I usually tutor at the MLC, but I can meet anywhere on-campus. You can contact me at 404-123-2234.

@@ -10,12 +10,19 @@ class CheckoutController < ApplicationController
 
   def set_course_id 
     # recieves step 1 input, saves it to session & redirects to step 2
+    puts "called!"
     session[:course_id] = params[:course_selection][:course_id]
+    puts "session[:course_id]!!!!!!!!!!!!!!!!! = #{session[:course_id]}"
     session[:tutor_id] = @tutor.id
     redirect_to checkout_select_times_path(@tutor.slug)
   end
 
   def select_times 
+        puts "session[:course_id]!!!!!!!!!!!!!!!!! = #{session[:course_id]}"
+        puts "session[:tutor_id]!!!!!!!!!!!!!!!!! = #{session[:tutor_id]}"
+        puts "session[:appt_info]!!!!!!!!!!!!!!!!! = #{session[:appt_info]}"
+        puts "session[:location]!!!!!!!!!!!!!!!!! = #{session[:location]}"
+
     # step 2
     service = TutorAvailability.new(@tutor.id, params[:current], params[:week])
     @start_date = service.set_week
@@ -26,23 +33,39 @@ class CheckoutController < ApplicationController
   end
 
   def set_times 
+        puts "session[:course_id]!!!!!!!!!!!!!!!!! = #{session[:course_id]}"
+        puts "session[:tutor_id]!!!!!!!!!!!!!!!!! = #{session[:tutor_id]}"
+        puts "session[:appt_info]!!!!!!!!!!!!!!!!! = #{session[:appt_info]}"
+        puts "session[:location]!!!!!!!!!!!!!!!!! = #{session[:location]}"
     # recieves step 2 input, saves it to session & redirects to step 3
     session[:appt_info] = params[:appt_selection]
     redirect_to checkout_select_location_path(@tutor.slug)
   end
 
   def select_location 
+        puts "session[:course_id]!!!!!!!!!!!!!!!!! = #{session[:course_id]}"
+        puts "session[:tutor_id]!!!!!!!!!!!!!!!!! = #{session[:tutor_id]}"
+        puts "session[:appt_info]!!!!!!!!!!!!!!!!! = #{session[:appt_info]}"
+        puts "session[:location]!!!!!!!!!!!!!!!!! = #{session[:location]}"
     # step 3
     # - view page with input for setting location
   end
 
   def set_location
+        puts "session[:course_id]!!!!!!!!!!!!!!!!! = #{session[:course_id]}"
+        puts "session[:tutor_id]!!!!!!!!!!!!!!!!! = #{session[:tutor_id]}"
+        puts "session[:appt_info]!!!!!!!!!!!!!!!!! = #{session[:appt_info]}"
+        puts "session[:location]!!!!!!!!!!!!!!!!! = #{session[:location]}"
     # recieves step 3 input, saves it to session & redirects to step 4
     session[:location] = params[:location_selection][:location]
     redirect_to checkout_review_booking_path(@tutor.slug)
   end
 
   def review_booking
+        puts "session[:course_id]!!!!!!!!!!!!!!!!! = #{session[:course_id]}"
+        puts "session[:tutor_id]!!!!!!!!!!!!!!!!! = #{session[:tutor_id]}"
+        puts "session[:appt_info]!!!!!!!!!!!!!!!!! = #{session[:appt_info]}"
+        puts "session[:location]!!!!!!!!!!!!!!!!! = #{session[:location]}"
     # step 4, all booking information is set and shown to customer here
     # - if logged in, customer has option to use saved card (if one exists) or use a new card (with an option to save it)
     # - if NOT logged in, a customer has the option to sign in (moves to above step) or sign up and use a new card (with an option to save it)

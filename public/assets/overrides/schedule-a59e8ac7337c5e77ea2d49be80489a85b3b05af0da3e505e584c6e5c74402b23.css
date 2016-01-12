@@ -1,0 +1,245 @@
+/* line 1, /home/rails/my-app/app/assets/stylesheets/overrides/schedule.sass */
+#wrap, #options-header {
+  background: #EAEAEA;
+}
+
+/* line 3, /home/rails/my-app/app/assets/stylesheets/overrides/schedule.sass */
+#axoncalendar {
+  margin-bottom: 20px;
+}
+
+/* line 5, /home/rails/my-app/app/assets/stylesheets/overrides/schedule.sass */
+#wrap {
+  border-radius: 0px 3px;
+}
+
+/* line 7, /home/rails/my-app/app/assets/stylesheets/overrides/schedule.sass */
+#options-header {
+  padding: 20px 0;
+  border-radius: 3px 3px 0px 0px;
+}
+
+/* line 10, /home/rails/my-app/app/assets/stylesheets/overrides/schedule.sass */
+#scheduling-container {
+  text-align: center;
+  font-size: 14px;
+  font-family: "Lucida Grande", Helvetica, Arial, Verdana, Sans-Serif;
+  margin-top: 0px;
+}
+
+/* line 15, /home/rails/my-app/app/assets/stylesheets/overrides/schedule.sass */
+#calendar {
+  width: 100%;
+}
+
+/* line 17, /home/rails/my-app/app/assets/stylesheets/overrides/schedule.sass */
+#calendar-divider {
+  border: 3px solid #dddddd;
+}
+
+/* line 19, /home/rails/my-app/app/assets/stylesheets/overrides/schedule.sass */
+#availability-slots-section {
+  padding: 0 15px;
+}
+/* line 21, /home/rails/my-app/app/assets/stylesheets/overrides/schedule.sass */
+#availability-slots-section h4 {
+  font-size: 16px;
+  margin-top: 0;
+  padding-top: 1em;
+  text-align: center;
+}
+/* line 26, /home/rails/my-app/app/assets/stylesheets/overrides/schedule.sass */
+#availability-slots-section p {
+  margin: 1.5em 0;
+  font-size: 11px;
+  color: #666;
+}
+/* line 30, /home/rails/my-app/app/assets/stylesheets/overrides/schedule.sass */
+#availability-slots-section p input {
+  margin: 0;
+  vertical-align: middle;
+}
+/* line 33, /home/rails/my-app/app/assets/stylesheets/overrides/schedule.sass */
+#availability-slots-section .regular-availability, #availability-slots-section .one-off-availability {
+  text-align: center;
+}
+/* line 35, /home/rails/my-app/app/assets/stylesheets/overrides/schedule.sass */
+#availability-slots-section .regular-availability {
+  background: #009688;
+}
+/* line 37, /home/rails/my-app/app/assets/stylesheets/overrides/schedule.sass */
+#availability-slots-section .one-off-availability {
+  background: #FF9100;
+  border: none;
+}
+/* line 40, /home/rails/my-app/app/assets/stylesheets/overrides/schedule.sass */
+#availability-slots-section .fc-event {
+  position: relative;
+  height: 50px;
+  display: table;
+  width: 165px;
+  padding-top: 5px;
+  font-weight: bold;
+  transition-duration: 0.4s;
+  transition: box-shadow, transform;
+}
+/* line 49, /home/rails/my-app/app/assets/stylesheets/overrides/schedule.sass */
+#availability-slots-section .fc-event h4 {
+  color: white;
+  padding: 0;
+}
+/* line 52, /home/rails/my-app/app/assets/stylesheets/overrides/schedule.sass */
+#availability-slots-section .fc-event.ui-draggable {
+  cursor: -webkit-grab;
+}
+/* line 54, /home/rails/my-app/app/assets/stylesheets/overrides/schedule.sass */
+#availability-slots-section .fc-event.ui-draggable-dragging {
+  cursor: -webkit-grabbing;
+}
+/* line 56, /home/rails/my-app/app/assets/stylesheets/overrides/schedule.sass */
+#availability-slots-section .fc-event i.fi-widget {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  padding: 2px 5px 2px 5px;
+  font-size: 16px;
+  color: #0095AC;
+  background: #0095AC;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+}
+/* line 70, /home/rails/my-app/app/assets/stylesheets/overrides/schedule.sass */
+#availability-slots-section .fc-event:hover {
+  box-shadow: 4px 4px 3px #888888;
+  transform: scale(1.05, 1.05);
+}
+
+/* line 75, /home/rails/my-app/app/assets/stylesheets/overrides/schedule.sass */
+#repeating-options .prefix:first-of-type {
+  text-align: left;
+  background: #EAEAEA;
+  border: none;
+}
+/* line 79, /home/rails/my-app/app/assets/stylesheets/overrides/schedule.sass */
+#repeating-options .postfix:first-of-type {
+  color: #FFFFFF;
+  background: #EAEAEA;
+  border: none;
+  text-align: left;
+}
+/* line 84, /home/rails/my-app/app/assets/stylesheets/overrides/schedule.sass */
+#repeating-options #weeksToRepeat:first-of-type {
+  border-radius: 4px !important;
+  text-align: center;
+  border-right-width: 1px !important;
+  width: 60px;
+}
+
+/* line 92, /home/rails/my-app/app/assets/stylesheets/overrides/schedule.sass */
+.fc-toolbar {
+  background: #607D8B;
+  margin-bottom: 0;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  padding-bottom: 15px;
+}
+
+/* line 100, /home/rails/my-app/app/assets/stylesheets/overrides/schedule.sass */
+.fc-head {
+  background: #607D8B;
+  margin-bottom: 0;
+}
+
+/* line 105, /home/rails/my-app/app/assets/stylesheets/overrides/schedule.sass */
+.fc-body {
+  margin-top: 0;
+}
+
+/* line 109, /home/rails/my-app/app/assets/stylesheets/overrides/schedule.sass */
+.fc-today {
+  opacity: 0;
+  border: none;
+}
+
+/* line 113, /home/rails/my-app/app/assets/stylesheets/overrides/schedule.sass */
+.fc-widget-header {
+  background: #607D8B;
+  color: white;
+}
+
+/* line 118, /home/rails/my-app/app/assets/stylesheets/overrides/schedule.sass */
+.fc-ltr .fc-axis {
+  font-weight: bolder;
+  color: #424242;
+}
+
+/* line 123, /home/rails/my-app/app/assets/stylesheets/overrides/schedule.sass */
+.fc-minor {
+  background: #F5F5F5;
+}
+
+/* line 127, /home/rails/my-app/app/assets/stylesheets/overrides/schedule.sass */
+.fc-time-grid-event.fc-v-event.fc-event {
+  border-radius: 3px;
+  border: none;
+  padding: 5px;
+  left: 5% !important;
+  right: 5% !important;
+}
+
+/* line 135, /home/rails/my-app/app/assets/stylesheets/overrides/schedule.sass */
+.fc th, .fc-head-container, .fc-widget-header {
+  border: none !important;
+}
+
+/* line 139, /home/rails/my-app/app/assets/stylesheets/overrides/schedule.sass */
+.fc-axis .fc-time .fc-widget-content {
+  border-style: solid;
+  border-width: 1px;
+  padding: 0;
+  vertical-align: top;
+  border-right: 3px solid blue;
+  border-left: 3px solid red;
+  border-top: none;
+  border-bottom: none !important;
+}
+
+/* line 151, /home/rails/my-app/app/assets/stylesheets/overrides/schedule.sass */
+.fc-view table:first-child {
+  border: none;
+  margin-top: 0;
+}
+
+/* line 156, /home/rails/my-app/app/assets/stylesheets/overrides/schedule.sass */
+.fc-time-grid-event .fc-time {
+  font-weight: normal !important;
+}
+
+/* line 160, /home/rails/my-app/app/assets/stylesheets/overrides/schedule.sass */
+.fc-button {
+  border-radius: 3px !important;
+  border-color: #607D8B;
+  border-width: 0;
+  margin: 4px !important;
+  width: 50px !important;
+  color: white;
+  background: #607D8B !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+/* line 170, /home/rails/my-app/app/assets/stylesheets/overrides/schedule.sass */
+.fc-button .fc-state-default {
+  border-radius: 3px;
+  margin: 4px;
+}
+/* line 173, /home/rails/my-app/app/assets/stylesheets/overrides/schedule.sass */
+.fc-button.fc-state-hover {
+  background-color: #E0E0E0 !important;
+  color: #607D8B;
+}
+/* line 176, /home/rails/my-app/app/assets/stylesheets/overrides/schedule.sass */
+.fc-button.fc-state-active {
+  border-bottom: 1px white solid !important;
+  border-radius: 0 !important;
+}
