@@ -21,6 +21,10 @@ a.appt-settings-link {
     </div>
     <div class="small-7 medium-4 medium-offset-1 columns end">
       <%= form_for @tutor do |f| %>
+        <%= f.label :booking_buffer, 'Booking Buffer' %>
+        <p>This is the minimum amount of time before an appointment starts that a student may book you.</p>
+        <%= f.select(:booking_buffer, options_for_select([['1 hour', 1],['2 hours', 2],['3 hours', 3],['4 hours', 4],['5 hours',5],['6 hours',6],['8 hours', 8],['12 hours',12],['24 hours',24],['36 hours',36],['48 hours',48]], selected: [@tutor.booking_buffer.to_s + " hours", @tutor.booking_buffer])) %>
+
         <%= f.label :appt_notes, 'Personal Note to Students' %>
         <p>This note will be sent to your students in the appointment confirmation email. You can supply a general greeting or request for your students here.</p>
         <%= f.text_area :appt_notes, rows: 10 %>
