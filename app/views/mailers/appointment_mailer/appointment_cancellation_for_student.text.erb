@@ -1,12 +1,11 @@
-Hi <%= @student.full_name %>
+Hi <%= @student.first_name %>
 
 Your appointment with the following details has been canceled.
 
-Your Tutor: <%= @tutor.full_name %>
-Subject: <%# @appt.subject %>
+Your Tutor: <%= public_name(@tutor) %>
+Course: <%= @appt.course.formatted_name %>
 Date/Time: <%= @appt.start_time.strftime("%b %e, %l:%M %p") %>
 
-<%# @tutor.blurb %>
 If you have any questions or concerns, please contact info@axontutors.com.
 
 Thanks,

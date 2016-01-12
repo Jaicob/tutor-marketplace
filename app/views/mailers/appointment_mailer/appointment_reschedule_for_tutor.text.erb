@@ -1,9 +1,9 @@
-Hi <%= @tutor.full_name %>
+Hi <%= @tutor.first_name %>
 
 This is to inform you that there has been a change to your appointment.
 
-Your Student: <%= @student.full_name %>
-Subject: <%# @appt.subject %>
+Your Student: <%= public_name(@student.user) %>
+Course: <%= @appt.course.formatted_name %>
 Date/Time: <%= @appt.start_time.strftime("%b %e, %l:%M %p") %>
 
 If you have any questions or concerns, or would like to cancel or reschedule, please contact info@axontutors.com.
