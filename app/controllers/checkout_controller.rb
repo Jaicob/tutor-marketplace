@@ -92,6 +92,8 @@ class CheckoutController < ApplicationController
 
   def confirmation # step 4
     @booking_preview = BookingPreview.new(session, @tutor).format_info
+    @charge = Charge.find(session[:charge_id])
+    @card_info = Processor::Stripe.new.get_charge_details(@charge.stripe_charge_id)
   end
 
   private

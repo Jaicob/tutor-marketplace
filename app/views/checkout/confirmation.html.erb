@@ -9,12 +9,12 @@
         </div>
       </div>
     </div>
-    <div class="checkout-step-body padding-1em">
+    <div class="checkout-step-body">
       <div class="row small-collapse">
         <div class="small-12 columns"> 
           <div class="row">
             <div class="small-12 columns">
-              <h5 class="center margin-auto margin-top-1em margin-bottom-1em">Your booking is complete and your confirmation number is 6879879</h5>
+              <h5 class="center margin-auto margin-top-1em margin-bottom-1em">Your booking is complete!</h5>
               <p class="center margin-auto">Your tutor will contact you soon to confirm a meeting location.</p>
               <p class="center margin-auto">If you have any questions or concerns, please <%= link_to 'contact us here.', contact_path, class: 'blue-link' %></p>
               <p class="center margin-auto margin-bottom-1em">Thank you for using Axon!</p>
@@ -48,6 +48,16 @@
           <div class="row">
             <div class="small-12 medium-6 medium-centered columns">
               <%= render '/checkout/review_and_confirm_partials/price_summary' %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="small-12 medium-6 medium-centered columns">
+              <h5 class="payment-info-title">Payment Info</h5>
+            </div>
+          </div>
+          <div class="row">
+            <div class="small-12 medium-6 medium-centered columns">
+              <%= render '/checkout/review_and_confirm_partials/card_info' %>
             </div>
           </div>
         </div>
