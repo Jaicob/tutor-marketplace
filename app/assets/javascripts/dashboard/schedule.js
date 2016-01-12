@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
   var tutor_id = $('#axoncalendar').data('tutor');
-  var utc_offset = -120;//$('#axoncalendar').data('utcoffset');
+  var utc_offset = $('#axoncalendar').data('utcoffset');
   var originalStartTime;
   var originalDuration;
 

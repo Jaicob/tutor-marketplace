@@ -8,7 +8,7 @@
           <div class="appt-time-box">
             <label>
               <input type="checkbox" id="<%=data[:uniq_id]%>" class="<%=data[:booked]%>" value="<%=data[:datetime].to_s+'----'+data[:slot_id].to_s%>" name="appt_selection[<%= data[:uniq_id] %>]" onchange="disableNeighborCheckboxes(this)">
-              <div class="appt-time"><%= data[:time] %></div>
+              <div class="appt-time"><%= data[:datetime].in_time_zone(@school.timezone).strftime('%l:%M %p') %></div>
             </label>
           </div>
         <% end %>

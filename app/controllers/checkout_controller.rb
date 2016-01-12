@@ -1,6 +1,7 @@
 class CheckoutController < ApplicationController
   before_action :set_tutor
   before_action :set_student
+  before_action :set_school
   before_action :back_to_search, only: [:available_times]
 
   def select_course 
