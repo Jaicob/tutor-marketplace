@@ -22,6 +22,7 @@ class PrepareCheckout
     @appt_info = session[:appt_info]
     @location = session[:location]
     # for charge creation
+    @default_or_new_card = params[:default_or_new_card]
     @token = params[:stripeToken]
     @tutor = tutor_booked
     @promotion_id = session[:promotion_id]
@@ -97,7 +98,9 @@ class PrepareCheckout
       Processor::Stripe.new.update_customer(@student, @token)
     else
       # this serves as a flag to not use the default_card (and use a card token instead) when a customer chooses to use a different card and NOT save it
-      @one_time_card = true
+      if @default_or_new_card != 'default-card'
+        @one_time_card = true
+      end
     end
   end
 
