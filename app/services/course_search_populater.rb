@@ -19,7 +19,6 @@ class CourseSearchPopulater
     return courses
   end
 
-
   def subjects_with_active_tutors
     subjects = []
     @school.tutors.where(active_status: 1).all.each do |tutor| # loop through 'Active' tutors
