@@ -165,7 +165,7 @@ $(document).ready(function() {
       },
       dataType: "json",
       success: function(data) {
-        $('#calendar').fullCalendar('refetchEvents', event);
+        $('#calendar').fullCalendar('updateEvents', event);
       },
       error: function(data, status) {
         alert('failure', data, status);

@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
         when 'student'
           home_student_path(resource)
         when 'tutor'
-          home_tutor_path(resource)
+          home_tutor_path(resource.tutor.slug)
         when 'campus_manager'
           admin_school_path(resource.campus_manager.school)
         when 'admin'

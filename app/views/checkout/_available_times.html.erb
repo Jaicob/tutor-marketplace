@@ -7,7 +7,7 @@
         <% @availability_data[count][:times].each do |data| %>
           <div class="appt-time-box">
             <label>
-              <input type="checkbox" id="<%=data[:uniq_id]%>" class="<%=data[:booked]%>" value="<%=data[:datetime].to_s+'----'+data[:slot_id].to_s%>" name="appt_selection[<%= data[:uniq_id] %>]" onchange="disableNeighborCheckboxes(this)">
+              <input type="checkbox" id="<%=data[:uniq_id]%>" class="<%=data[:reserved]%>" value="<%=data[:datetime].to_s+'----'+data[:slot_id].to_s%>" name="appt_selection[<%= data[:uniq_id] %>]" onchange="disableNeighborCheckboxes(this)">
               <div class="appt-time"><%= data[:datetime].in_time_zone(@school.timezone).strftime('%l:%M %p') %></div>
             </label>
           </div>
@@ -33,14 +33,14 @@ window.onload = function start() { // calls 2 methods
     }
   }
 
-  // 2. Disable reserved times due to existing bookings
-  var bookedAppts = document.getElementsByClassName("booked")
-  if (bookedAppts.length > 0) {
-    for (var i = 0; i < bookedAppts.length; i++) {
-      // disable booked time
-      var checkbox = bookedAppts[i];
+  // 2. Disable reserved times due to existing bookings or booking_buffer
+  var reservedAppts = document.getElementsByClassName("reserved")
+  if (reservedAppts.length > 0) {
+    for (var i = 0; i < reservedAppts.length; i++) {
+      // disable reserved time
+      var checkbox = reservedAppts[i];
       checkbox.disabled = true;
-      // disabled 30 mins before and after booked time (if those times exist)
+      // disabled 30 mins before and after reserved time (if those times exist)
       var checkboxID = parseInt(checkbox.id);
       var checkboxBefore = document.getElementById(checkboxID - 1);
       if (checkboxBefore) {

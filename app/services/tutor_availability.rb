@@ -55,19 +55,33 @@ class TutorAvailability
             time: start_time.strftime('%l:%M %p'),
             datetime: start_time,
             uniq_id: slot.id.to_s + sprintf('%02i', uniq_id).to_s, # have to add slot_id to make unique + sprintf adds zero-padding to numbers under 10 which allows the disabledNeigboringCheckboxes to function (otherwise the number jumps a whole tens place from id 9 to id 10)
-            slot_id: slot.id,
-            available: unavailable_times.include?(start_time) ? false : true
+            slot_id: slot.id
           }
           if unavailable_times.include?(start_time)
-            data[:booked] = 'booked'
+            data[:reserved] = 'reserved'
           end
           appt_times << data
           uniq_id += 1
           start_time += 1800 # adds a 1/2 hour to the start_time each iteration
         end
+        # if date is today's date, pass to extra method to add 'unavailable' class to start times that have been passed and/or are inside a tutor's booked_buffer unavailability
+        if date == Date.today
+          mark_unavailable_times(appt_times)
+        end
       end
     end
     return appt_times
+  end
+
+  def mark_unavailable_times(appt_times)
+    buffer = Tutor.find(@tutor_id).booking_buffer * 3600 
+    earliest_avail_appt_time = Time.now + buffer
+
+    appt_times.each do |data|
+      if data[:datetime].to_datetime < earliest_avail_appt_time
+        data[:reserved] = 'reserved'
+      end
+    end
   end
 
   def reserved_times_for_existing_appts(tutor_id, date)

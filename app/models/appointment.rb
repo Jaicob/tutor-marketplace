@@ -28,6 +28,7 @@ class Appointment < ActiveRecord::Base
   validate :one_hour_appointment_buffer
   validate :inside_slot_availability
   validate :tutor_and_student_at_same_school
+  validate :outside_booking_buffer
 
   before_validation :format_datetime
 
@@ -64,6 +65,15 @@ class Appointment < ActiveRecord::Base
       if !(tutor.school.name == course.school.name && student.school.name == course.school.name)
         errors.add(:school_id, "is not the same for tutor, student and course: \ntutor and course = #{student.school.name == course.school.name}\nstudent and course = #{tutor.school.name == course.school.name}")
       end
+    end
+  end
+
+  # custom validation
+  def outside_booking_buffer
+    buffer = (self.tutor.booking_buffer * 3600) # hours * 3600 = seconds
+    earliest_avail_booking = Time.now + buffer 
+    if start_time < earliest_avail_booking
+      errors.add(:start_time, "is too soon and does not meet minimum notice requirment for tutor")
     end
   end
 
