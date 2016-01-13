@@ -61,6 +61,10 @@
 .vertical-margin-1em {
   margin: 1em 0 !important;
 }
+.vertical-margin-2em {
+  margin-top: 2em !important;
+  margin-bottom: 2em !important;
+}
 .margin-top-1em {
   margin-top: 1em !important;
 }
@@ -126,6 +130,13 @@
 .margin-auto {
   display: block;
   margin: auto;
+}
+.vertical-padding-2em {
+  padding-top: 2em !important;
+  padding-bottom: 2em !important;
+}
+.margin-right-1em {
+  margin-right: 1em;
 }
 
 
