@@ -62,6 +62,9 @@ class TutorAvailability
           if unavailable_times.include?(start_time)
             data[:reserved] = 'reserved'
           end
+          if slot.status == 'Blocked'
+            data[:reserved] = 'reserved'
+          end
           appt_times << data
           uniq_id += 1
           start_time += 1800 # adds a 1/2 hour to the start_time each iteration
