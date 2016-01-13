@@ -61,8 +61,10 @@ $(document).ready(function() {
       title: eventData.slot_type === 0 ? 'Weekly' : 'One Time',
       start: start_time,
       end: end_time,
+      protected_start: start_time.clone(),
+      protected_end: end_time.clone(),
       slot_id: eventData.id,
-      status: eventData.status === 0 ? 'Open' : 'Blocked',//eventData.status
+      status: eventData.status === 0 ? 'Open' : 'Blocked',
       slot_type: eventData.slot_type === 0 ? 'Weekly' : 'OneTime'
     };
     return postFormat;
@@ -84,10 +86,14 @@ $(document).ready(function() {
    * calendar. 
    */
   var updateDrop = function(event, delta, revertFunc, jsEvent, ui, view) {
+    var newStartTime = event.start.hasZone() ? event.start.clone() : event.protected_start.clone();
+    newStartTime.date(event.start.date());
+    newStartTime = newStartTime.toISOString();
+
     if (event.slot_type === "OneTime") {
-      singleSlotUpdate(event.slot_id, event.start.clone().subtract(utc_offset,'minutes').toISOString(), originalDuration);
+      singleSlotUpdate(event, event.slot_id, newStartTime, originalDuration);
     } else {
-      multiSlotUpdate(originalStartTime, originalDuration, event.start.clone().subtract(utc_offset,'minutes').toISOString(), originalDuration);
+      multiSlotUpdate(event, originalStartTime, originalDuration, newStartTime, originalDuration);
     }
   }
 
@@ -97,6 +103,8 @@ $(document).ready(function() {
    */
   var updateResize = function(event, delta, revertFunc, jsEvent, ui, view) {
     var newDuration = originalDuration + delta.asSeconds();
+    var newStartTime = event.start.hasZone() ? event.start.clone() : event.protected_start.clone();
+    newStartTime = newStartTime.toISOString();
     
     if (newDuration < 3600){
       revertFunc();
@@ -104,9 +112,9 @@ $(document).ready(function() {
     } 
 
     if (event.slot_type === "OneTime") {
-      singleSlotUpdate(event.slot_id, event.start.clone().subtract(utc_offset,'minutes').toISOString(), newDuration);//IsoString has no offset, format does
+      singleSlotUpdate(event, event.slot_id, newStartTime, newDuration);//IsoString has no offset, format does
     } else {
-      multiSlotUpdate(originalStartTime, originalDuration, event.start.clone().subtract(utc_offset,'minutes').toISOString(), newDuration);
+      multiSlotUpdate(event, originalStartTime, originalDuration, newStartTime, newDuration);
     }
   }
 
@@ -116,8 +124,10 @@ $(document).ready(function() {
    * up ranges of time.
    */
   var beginSlotUpdate = function(event, jsEvent, ui, view) {
-    originalStartTime = event.start.clone().subtract(utc_offset,'minutes').toISOString();
-    originalDuration = moment.duration(event.end.diff(event.start)).asSeconds();
+    var og = event.start.hasZone() ? event.start.clone() : event.protected_start.clone();
+
+    originalStartTime = og.toISOString();
+    originalDuration  = moment.duration(event.end.diff(event.start)).asSeconds();
     tooltip.hide();
   }
 
@@ -125,7 +135,8 @@ $(document).ready(function() {
    * Does a batch update on slots, this is used for weekly slots. The original start time and
    * duration are necessary for looking up the slots in the backend. 
    */
-  var multiSlotUpdate = function(originalStartTime, originalDuration, newStartTime, newDuration) {
+  var multiSlotUpdate = function(event, originalStartTime, originalDuration, newStartTime, newDuration) {
+    console.log("M Event",event,"\n",originalStartTime);
     $.ajax({
       type: "POST",
       url: API.endpoints.tutor_slots.update_slot_group({
@@ -139,11 +150,13 @@ $(document).ready(function() {
       },
       dataType: "json",
       success: function(data) {
-        $('#calendar').fullCalendar('refetchEvents', event);
+        var target = formatDataAsEvent(data[0]);         
+        event.protected_start = target.protected_start;
+        event.protected_end = target.protected_end;
+        $('#calendar').fullCalendar('updateEvent', event);
       },
       error: function(data, status) {
-        alert('failure', data, status);
-        revertFunc();
+        swal('failure', data, status);
       }
     });
   }
@@ -152,7 +165,7 @@ $(document).ready(function() {
    * Similar to multi, but this uses a  slot id to lookup the slot as opposed to 
    * a range of time.
    */
-  var singleSlotUpdate = function(slotID, newStartTime, originalDuration){
+  var singleSlotUpdate = function(event, slotID, newStartTime, originalDuration){
     $.ajax({
       type: "PUT",
       url: API.endpoints.tutor_slots.update({
@@ -165,11 +178,14 @@ $(document).ready(function() {
       },
       dataType: "json",
       success: function(data) {
-        $('#calendar').fullCalendar('updateEvents', event);
+        console.log("S",data);
+        var target = formatDataAsEvent(data);         
+        event.protected_start = target.protected_start;
+        event.protected_end = target.protected_end;
+        $('#calendar').fullCalendar('updateEvent', event);
       },
       error: function(data, status) {
-        alert('failure', data, status);
-        revertFunc();
+        swal('failure', data, status);
       }
     });
   }
@@ -195,13 +211,18 @@ $(document).ready(function() {
     })
 
     request.success(function(data) {
-      event.slot_id = data[0].id;
-      event.status = data[0].status;
-      $('#calendar').fullCalendar('refetchEvents', event);
+      var formattedEvent = formatDataAsEvent(data[0]);
+      event.start = formattedEvent.start;
+      event.end = formattedEvent.end;
+      event.slot_id = formattedEvent.slot_id;
+      event.protected_start = formattedEvent.protected_start;
+      event.protected_end = formattedEvent.protected_end;
+      event.status = 'Open';
+      $('#calendar').fullCalendar('updateEvent', event);
     });
 
     request.error(function(data) {
-      alert("Error!");
+      swal("Error!");
     })
   }
 
@@ -232,20 +253,22 @@ $(document).ready(function() {
    */
   var removeSlots = function(event) {
     var duration = moment.duration(event.data.end.diff(event.data.start)).asSeconds();
+    var og = event.data.start.hasZone() ? event.data.start.clone() : event.data.protected_start.clone();
+ 
     $.ajax({
       type: "POST",
       url: API.endpoints.tutor_slots.destroy_slot_group({
         tutor_id: tutor_id
       }),
       data: {
-        original_start_time: event.data.start.toISOString(),
+        original_start_time: og.toISOString(),
         original_duration: duration
       },
       dataType: "json",
       success: function(data) {
         $('#calendar').fullCalendar('removeEvents', function(event) {
           var target = formatDataAsEvent(data[0]);
-          var isStartMatch = (event.start.format('E HH:mm:ss') === target.start.format('E HH:mm:ss'));
+          var isStartMatch = ( event.start.format('E HH:mm:ss') === target.start.format('E HH:mm:ss'));
           var isEndMatch = (event.end.format('E HH:mm:ss') === target.end.format('E HH:mm:ss'));
           return (isStartMatch && isEndMatch) ? true : false;
         });
@@ -296,10 +319,10 @@ $(document).ready(function() {
       dataType: "json",
       success: function(data) {
         event.data.status = data.status;
-        $('#calendar').fullCalendar('refetchEvents', event.data);
+        $('#calendar').fullCalendar('updateEvent', event.data);
       },
       error: function(data, status) {
-        alert('failure', data, status);
+        swal('failure', data, status);
       }
     });
   }
@@ -343,6 +366,7 @@ $(document).ready(function() {
    * the right of the slot.
    */
   var openEventMiniMenu = function(event, jsEvent, view) {
+    console.log("OPEN ",event);
       $('div').off('click', '.cal-menu-item');
       $('div').on('click', '.cal-menu-item', event, routeEvent);
       setBlockUi(event);
