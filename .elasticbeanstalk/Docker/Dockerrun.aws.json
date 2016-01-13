@@ -20,16 +20,9 @@
 					"containerPort":443
 				}
 			],
-			"environment": [
-       			{
-        			"name": "REDIS_PRODUCTION_ADDR",
-          			"value": "axon-prod.he9z8n.0001.use1.cache.amazonaws.com"
-        		},
-        		{
-        			"name": "REDIS_PRODUCTION_PORT",
-          			"value": "6379"
-        		}
-     		],
+			"links" : [
+				"sidekiq"
+			],
 			"mountPoints":[
 				{
 					"sourceVolume" :"awseb-logs-web",
