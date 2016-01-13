@@ -9,7 +9,7 @@ class Dashboard::Student::HomeController < DashboardController
     if @appt.update(appt_params)
       AppointmentMailer.delay.appointment_cancellation_for_tutor(@appt.id)               
       AppointmentMailer.delay.appointment_cancellation_for_student(@appt.id)
-      redirect_to home_student_path(@student.slug)
+      redirect_to home_student_path(@student)
     else
       redirect_to :back
       flash[:alert] = 'Appointment was not cancelled'

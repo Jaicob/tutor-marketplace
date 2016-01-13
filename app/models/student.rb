@@ -19,7 +19,7 @@ class Student < ActiveRecord::Base
   has_many :charges, dependent: :destroy
   has_many :appointments, dependent: :destroy
 
-  delegate :full_name, :first_name, :last_name, :email, :password, :slug, to: :user
+  delegate :full_name, :first_name, :last_name, :email, :password, to: :user
 
   def subjects
     # returns subjects that a student makes appointments for, only used in Admin section for analytics
