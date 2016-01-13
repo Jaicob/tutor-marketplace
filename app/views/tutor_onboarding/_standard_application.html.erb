@@ -55,7 +55,7 @@ $(document).ready(function()
             <%= f.select(:degree, options_for_select(Tutor.degree_collection, selected: 'Degree', disabled: 'Degree'), {required: true}) %>
           </div>
           <div class="small-12 medium-6 columns">
-            <%= f.text_field :major, placeholder: 'Major', required: true %>
+            <%= f.text_field :major, placeholder: 'Major', maxlength: 20, required: true %>
           </div>
           <div class="small-12 medium-4 columns">
             <%= f.text_field :graduation_year, placeholder: 'Graduation Year', required: true %>
@@ -66,7 +66,7 @@ $(document).ready(function()
 
         <p class="prompt">Do you have a second major or any additional degrees?</p>
         <p>If so, please summarize this information in one line (optional field)</p>
-        <%= f.text_field :additional_degrees, placeholder: 'Second Major: Chemistry', class: 'border-radius' %>
+        <%= f.text_field :additional_degrees, placeholder: 'Second Major: Chemistry', maxlength: 35, class: 'border-radius' %>
 
         <h4>Personal Statements</h4>
 

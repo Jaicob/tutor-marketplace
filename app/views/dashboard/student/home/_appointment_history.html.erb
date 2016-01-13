@@ -1,0 +1,32 @@
+<h4 class="dash-home-header">Appointment History</h4>
+<% if @student.appointments.count == 0 %>
+  <div class="box height-22em">
+    <div class="no-appts">
+      <h5 class="no-appts-message no-appt-history-message">You currently have no appointment history.</h5>
+    </div>
+  </div>
+<% else %>
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Subject</th>
+        <th>Status</th>
+        <th>Tutor</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @student.appointments.each do |appt| %>
+        <tr>
+          <td><%= appt.start_time.strftime("%b %-d") %></td>
+          <td><%= appt.start_time.strftime("%l:%M%P") %></td>
+          <td><%= Course.find(appt.course_id).formatted_name %></td>
+          <td><%= appt.status %></td>
+          <td><%= link_to appt.tutor.full_name, tutor_path(appt.tutor.slug) %></td>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
