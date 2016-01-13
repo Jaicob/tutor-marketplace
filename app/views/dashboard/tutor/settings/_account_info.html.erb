@@ -1,4 +1,4 @@
-<%= simple_form_for( @tutor, url: update_tutor_payment_info_tutor_path, remote: true, html: {class: 'payment-form'}) do |pf| %>
+<%= simple_form_for(@tutor, url: update_tutor_payment_info_tutor_path, remote: true, html: {class: 'payment-form'}) do |pf| %>
   <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
   <h5>Address</h5>
   <%= pf.input :line1, label: 'Line 1' %>
@@ -7,6 +7,10 @@
   <%= label_tag 'State' %>
   <%= pf.select :state, options_for_select(us_states), default: @tutor.state %>
   <%= pf.input :postal_code, label: 'Zip Code' %>
+  <h5>Birthdate</h5>
+  <%= pf.input :dob, as: :date, start_year: Date.today.year - 40,
+                              end_year: Date.today.year - 18,
+                              order: [:month, :day, :year] %>
   <h5>Bank Information</h5>
   <h5 class="bank-errors"></h5>
   <p>Note: Your bank account information will not be stored on our servers, it will only be used to create an account with our secure merchant service, <%= link_to 'Stripe', url: 'https://stripe.com/' %>.</p>
