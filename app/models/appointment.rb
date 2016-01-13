@@ -24,7 +24,8 @@ class Appointment < ActiveRecord::Base
 
   validates :slot_id, presence: true
   validates :course_id, presence: true
-  validates :start_time, presence: true, uniqueness: { scope: :slot_id }
+  # validates :start_time, presence: true, uniqueness: { scope: :slot_id }
+  validate :start_time_uniqueness # needed custom validation here b/c built in validations cannot handle allowing a non-unique appt start_time/slot_id as long as any duplicates have a status of 'cancelled'
   validate :one_hour_appointment_buffer
   validate :inside_slot_availability
   validate :tutor_and_student_at_same_school
@@ -37,11 +38,24 @@ class Appointment < ActiveRecord::Base
   attr_accessor :appt_reminder_email_date
 
   # custom validation
+  def start_time_uniqueness
+    Slot.find(slot_id).appointments.each do |appt|
+      if appt.start_time == start_time && appt != self
+        if appt.status != 'Cancelled'
+          errors.add(:start_time, "is already booked")
+        end
+      end
+    end
+  end
+
+  # custom validation
   def one_hour_appointment_buffer
     Slot.find(slot_id).appointments.each do |appt|
-      start_time_diff = (appt.start_time - start_time).abs
-      if start_time_diff < ( 3600 ) && start_time_diff != 0
-        errors.add(:start_time, "can't be within an hour of another appointment")
+      if appt.status != 'Cancelled'
+        start_time_diff = (appt.start_time - start_time).abs
+        if start_time_diff < ( 3600 ) && start_time_diff != 0
+          errors.add(:start_time, "can't be within an hour of another appointment")
+        end
       end
     end
   end

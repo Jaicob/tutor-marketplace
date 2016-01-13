@@ -1,5 +1,8 @@
 class PrepareCheckout
 
+  # {"default_or_new_card"=>"new-card", "save_card"=>"true", "stripeToken"=>"tok_17Sqid4Iy02hWvBEW7nqQAZr", "id"=>"jjobe"}
+  # {"default_or_new_card"=>"default-card", "id"=>"jjobe"}
+
   def initialize(params, session, tutor_booked, student=nil) # tutor_booked is supplied to determine school_id for new student
     # for user creation
     if params[:user]
@@ -19,6 +22,7 @@ class PrepareCheckout
     @appt_info = session[:appt_info]
     @location = session[:location]
     # for charge creation
+    @default_or_new_card = params[:default_or_new_card]
     @token = params[:stripeToken]
     @tutor = tutor_booked
     @promotion_id = session[:promotion_id]
@@ -57,8 +61,7 @@ class PrepareCheckout
     rescue Exception => e
       data = {
         success: false,
-        # error: e.record.errors.full_messages.first,
-        error: e,
+        error: e.record.errors.full_messages.first,
         new_user?: @new_user,
         new_user_id: @new_user_id
       }
@@ -94,7 +97,9 @@ class PrepareCheckout
       Processor::Stripe.new.update_customer(@student, @token)
     else
       # this serves as a flag to not use the default_card (and use a card token instead) when a customer chooses to use a different card and NOT save it
-      @one_time_card = true
+      if @default_or_new_card != 'default-card'
+        @one_time_card = true
+      end
     end
   end
 
