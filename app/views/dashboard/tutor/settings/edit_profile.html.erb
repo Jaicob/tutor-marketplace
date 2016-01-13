@@ -39,19 +39,22 @@ a.profile-settings-link {
         <%= f.select(:degree, options_for_select(Tutor.degree_collection, ["#{@tutor.degree}"])) %>
         
         <%= f.label :major %>
-        <%= f.text_field :major %>
+        <%= f.text_field :major, maxlength: 20 %>
+
+        <%= f.label :additional_degrees, 'Additional Degrees' %>
+        <%= f.text_field :additional_degrees, maxlength: 35 %>
 
         <%= f.label :graduation_year, 'Graduation Year' %>
         <%= f.number_field :graduation_year %>
 
         <%= f.label :extra_info_1, 'Profile Info 1' %>
-        <%= f.text_area :extra_info_1 %>
+        <%= f.text_area :extra_info_1, maxlength: 250 %>
 
         <%= f.label :extra_info_2, 'Profile Info 2' %>
-        <%= f.text_area :extra_info_2 %>
+        <%= f.text_area :extra_info_2, maxlength: 250 %>
         
         <%= f.label :extra_info_3, 'Profile Info 3' %>
-        <%= f.text_area :extra_info_3 %>
+        <%= f.text_area :extra_info_3, maxlength: 250 %>
 
         <%= f.submit 'Save', class: 'custom-button' %>
 

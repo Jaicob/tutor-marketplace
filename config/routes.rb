@@ -102,11 +102,12 @@
 #                                       PATCH    /tutors/:tutor_id/promotions/:id(.:format)                         dashboard/tutor/promotions#update
 #                                       PUT      /tutors/:tutor_id/promotions/:id(.:format)                         dashboard/tutor/promotions#update
 #                                       DELETE   /tutors/:tutor_id/promotions/:id(.:format)                         dashboard/tutor/promotions#destroy
-#                                 tutor GET      /tutors/:id(.:format)                                              tutors#show
-#                                       PATCH    /tutors/:id(.:format)                                              tutors#update
+#                                 tutor PATCH    /tutors/:id(.:format)                                              tutors#update
 #                                       PUT      /tutors/:id(.:format)                                              tutors#update
 #                                       DELETE   /tutors/:id(.:format)                                              tutors#destroy
 #                          home_student GET      /students/:id/home(.:format)                                       dashboard/student/home#index
+#       view_reschedule_options_student GET      /students/:id/reschedule/:appt_id(.:format)                        dashboard/student/home#view_reschedule_options
+#               reschedule_appt_student PUT      /students/:id/reschedule/:appt_id(.:format)                        dashboard/student/home#reschedule_appt
 #                   cancel_appt_student PUT      /students/:id/cancel_appt/:appt_id(.:format)                       dashboard/student/home#cancel_appt
 #                        search_student GET      /students/:id/search(.:format)                                     single_views#tutor_search
 #                       account_student GET      /students/:id/settings/account(.:format)                           dashboard/student/settings#account
@@ -313,6 +314,8 @@ Rails.application.routes.draw do
   resources :students, only: [:update, :destroy] do
     member do
       get  '/home'                 => 'dashboard/student/home#index'
+      get  '/reschedule/:appt_id'  => 'dashboard/student/home#view_reschedule_options', as: 'view_reschedule_options'
+      put  '/reschedule/:appt_id'  => 'dashboard/student/home#reschedule_appt', as: 'reschedule_appt'
       put  '/cancel_appt/:appt_id' => 'dashboard/student/home#cancel_appt', as: 'cancel_appt'
       get  '/search'               => 'single_views#tutor_search'
       scope 'settings' do

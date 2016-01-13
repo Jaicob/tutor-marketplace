@@ -3,5 +3,5 @@
 <% else %>
   <p>You have a default card saved:</p>
   <p><%= @student.card_brand %> **** **** **** <%= @student.last_4_digits %></p>
-  <%= link_to 'Change Default Card', edit_payment_info_student_path(@student), class: 'btn' %>
+  <%= link_to 'Change Default Card', edit_payment_info_student_path(@student), class: 'custom-button' %>
 <% end %>

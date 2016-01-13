@@ -1,16 +1,26 @@
-<section class="dashboard tutor">
-  <div class="wrapper">
-    <div class="wrapper__text">
-      <h2 class="title">Setttings Manager</h2>
+<style>
+/* Do not remove! This must be in the view for it to only highlight the correct selected link in the settings vertical sub-menu */
+a.payment-settings-link {
+  color: white;
+  font-weight: 100;
+  background-color: #0095AC;
+  padding: 0.5em 1em;
+  border-radius: 4px;
+  border: 1px solid #0095AC;
+}
+</style>
+<section class="dashboard-content">
+  <div class="row">
+    <div class="small-12 columns">
+      <h2 class="dashboard-title">Settings Manager</h2>
     </div>
-    <div class="g g-3up">
-      <div class="gi">
-        <%= render 'vertical_sub_menu' %>
-      </div>
-      <div class="gi">
-        <%= render 'card_form' %>    
-      </div>
-      <div class="gi"></div>
+  </div>
+  <div class="row">
+    <div class="small-5 medium-3 columns sub-menu">
+      <%= render 'vertical_sub_menu' %>
+    </div>
+    <div class="small-7 medium-4 medium-offset-1 columns end">
+      <%= render 'card_form' %>    
     </div>
   </div>
 </section>
