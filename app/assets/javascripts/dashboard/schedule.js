@@ -87,6 +87,7 @@ $(document).ready(function() {
     var newStartTime = event.start.hasZone() ? event.start.clone() : event.protected_start.clone();
     newStartTime.date(event.start.date());
     newStartTime.hour(event.start.hour());
+    newStartTime.minute(event.start.minute());
     newStartTime = newStartTime.toISOString();
     if (event.slot_type === "OneTime") {
       singleSlotUpdate(event, event.slot_id, newStartTime, originalDuration);
