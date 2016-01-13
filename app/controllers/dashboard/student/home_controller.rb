@@ -22,6 +22,7 @@ class Dashboard::Student::HomeController < DashboardController
     @start_date = service.set_week
     @availability_data = service.get_times
     gon.selected_appt_ids = nil
+    gon.rescheduling_calendar = true
   end
 
   # reschedule_appt_student_path
