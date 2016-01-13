@@ -10,7 +10,12 @@ class CourseSearchPopulater
   end
 
   def courses_with_active_tutors
-    courses = @subject.courses.where(school_id: @school.id)
+    courses = []
+    @subject.tutor_courses.each do |tc|
+      if tc.tutor.school == @school && tc.tutor.active_status == 'Active'
+        courses << tc.course unless courses.include?(tc.course)
+      end
+    end
     return courses
   end
 
