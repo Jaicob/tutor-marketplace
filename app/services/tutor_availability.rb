@@ -43,7 +43,9 @@ class TutorAvailability
         # find unavailable times due to existing appointments
         unavailable_times = []
         slot.appointments.each do |appt|
-          unavailable_times << appt.start_time
+          if appt.status != 'Cancelled'
+            unavailable_times << appt.start_time
+          end
         end
         # create array for holding possible appt_times
         appt_times = []
