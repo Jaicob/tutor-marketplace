@@ -1,44 +1,26 @@
-<%# [ ] TODO (AJ) Refactor this into a profile.scss %>
-<%# Currently, we still need controller-specific stylesheets. %>
-
-<section class="tutor-profile">
-  <div class="row">
-    <div class="medium-12 columns">
-      <h1 class="title"><%= public_name(@tutor) %></h1>
-    </div>
-    <div class="tutor-image medium-4 columns">
-      <%= image_tag(@tutor.profile_pic_url(:thumb), class: 'profile-pic') %>
-      <div class="where-i-tutor medium-12 columns">
-        Tutor at<br>
-        <b><%= @tutor.school && @tutor.school.name %></b>
-      </div>
-    </div>
-    <div class="tutor-qualifications medium-8 columns">
-      <div class="tutor-profile-formal-education">
-        <p class="ed-item">
-          <%= image_tag('https://s3-us-west-2.amazonaws.com/axontutors/booking/Degree.png', class: "icon") %>
-          <%= @tutor.degree || "None" %>, <%= @tutor.graduation_year || "None" %>
-        </p>
-        <p class="ed-item">
-          <%= image_tag('https://s3-us-west-2.amazonaws.com/axontutors/booking/Graduation.png', class: "icon") %>
-          <%= @tutor.major || "None" %>
-        </p>
-      </div>
-      <% if !@tutor.additional_degrees.blank? %>
-        <div class="tutor-profile-additional-degrees">
-          <span class="ed-item">
-            <i class="fi-plus" data-reactid=".0.1.0.2.0.0"></i> 
-            <%= @tutor.additional_degrees || "None" %>
-          </span>
+<div class="row small-collapse">
+  <div class="small-12 columns">
+    <div class="row">
+      <div class="small-12 columns">
+        <div class="box vertical-margin-2em vertical-padding-2em">
+          <div class="row">
+            <div class="small-12 medium-4 columns">
+              <%= image_tag(@tutor.profile_pic_url(:thumb), class: 'border-radius') %>
+              <h2 class="center"><%= public_name(@tutor) %></h2>
+              <p class="center no-bottom-margin">Tutor at</p>
+              <h5 class="center"><%= @tutor.school.name %></h5>
+            </div>
+            <div class="small-12 medium-8 columns">
+              <h5>Education</h5>
+              <p><i class="fi-book-bookmark margin-right-1em"></i><%= @tutor.degree %> <%= @tutor.major %>, <%= @tutor.graduation_year %></p>
+              <h5>Experience</h5>
+              <p><%= @tutor.extra_info_1 %></p>
+              <p><%= @tutor.extra_info_2 %></p>
+              <p><%= @tutor.extra_info_2 %></p>
+            </div>
+          </div>
         </div>
-      <% end %>
-      <div class="tutor-profile-description">
-        <%= @tutor.extra_info_1 %></li>
-        <hr>
-        <%= @tutor.extra_info_2 %></li>
-        <hr>
-        <%= @tutor.extra_info_3 %></li>
       </div>
     </div>
   </div>
-</section>
+</div>

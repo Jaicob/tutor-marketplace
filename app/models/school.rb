@@ -18,6 +18,7 @@ class School < ActiveRecord::Base
   has_many :users
   has_many :tutors
   has_many :students
+  has_many :tutor_courses, through: :tutors, dependent: :destroy
   has_many :appointments, through: :courses, dependent: :destroy
   has_many :slots, through: :tutors, dependent: :destroy
   has_one  :campus_manager, dependent: :destroy
