@@ -61,7 +61,7 @@ class PrepareCheckout
     rescue Exception => e
       data = {
         success: false,
-        error: e.record.errors.full_messages.first,
+        error: @user_create_error || e,
         new_user?: @new_user,
         new_user_id: @new_user_id
       }
@@ -71,23 +71,26 @@ class PrepareCheckout
 
   def create_student_user
     if @student.nil?
-
-      user = User.create!(
+       
+      user = User.new(
         first_name: @first_name,
         last_name: @last_name,
         email: @email,
         password: @password
       )
 
-      @student = user.create_student!(
-        school_id: @school_id
-      )
+      if !user.save
+        @user_create_error = user.errors.full_messages.first
+        @new_user = false
+      else      
+        @student = user.create_student!(
+          school_id: @school_id
+        )
+        @new_user = true
+        @new_user_id = user.id
 
-      @new_user = true
-      @new_user_id = user.id
-
-      # TODO-JT - send welcome email to student
-
+        # TODO-JT - send welcome email to student
+      end
     end
   end
 
