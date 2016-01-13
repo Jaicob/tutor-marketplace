@@ -61,8 +61,8 @@ class PrepareCheckout
     rescue Exception => e
       data = {
         success: false,
-        # error: e.record.errors.full_messages.first,
-        error: e,
+        error: e.record.errors.full_messages.first,
+        # error: e,
         new_user?: @new_user,
         new_user_id: @new_user_id
       }
