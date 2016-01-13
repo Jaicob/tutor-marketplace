@@ -69,7 +69,7 @@ class AppointmentMailer < ApplicationMailer
 
     def set_tutor_and_student
       @tutor = @appt.tutor
-      @student = @appt.student 
+      @student = @appt.student
     end
     
 end
