@@ -23,7 +23,7 @@
 
     if (response.error) {
       // Show the errors on the form
-      $form.find('.payment-errors').text(response.error.message);
+      $form.find('.checkout-card-errors').text(response.error.message);
       $form.find('button').prop('disabled', false);
     } else {
       // response contains id and card, which contains additional card details
@@ -38,28 +38,60 @@
 </script>
 
 <form action="" method="POST" id="payment-form">
-  <span class="payment-errors"></span>
-
-  <div class="form-row">
-    <label>
-      <span>Card Number</span>
-      <input type="text" size="20" data-stripe="number"/>
-    </label>
-  </div>
-
+  <span class="checkout-card-errors"></span>
+  <label>
+    <span>Card Number</span>
+    <input type="text" class="border-radius" data-stripe="number" required="true"/>
+  </label>
+  <div class="row small-collapse">
+    <div class="small-6 medium-3 columns zero-padding">
+      <label>
+        <span>Month</span>
+        <select required="true" data-stripe="exp-month">
+          <option value="1" selected="true">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
+        </select>
+      </label>
+    </div>
+    <div class="small-6 medium-3 medium-offset-1 columns zero-padding">
+      <label>
+        <span>Year</span>
+        <select required="true" data-stripe="exp-year">
+          <option value="2015">2015</option>
+          <option value="2016" selected="true">2016</option>
+          <option value="2017">2017</option>
+          <option value="2018">2018</option>
+          <option value="2019">2019</option>
+          <option value="2020">2020</option>
+          <option value="2021">2021</option>
+          <option value="2022">2022</option>
+          <option value="2023">2023</option>
+          <option value="2024">2024</option>
+          <option value="2025">2025</option>
+          <option value="2026">2026</option>
+          <option value="2027">2027</option>
+          <option value="2028">2028</option>
+          <option value="2029">2029</option>
+          <option value="2030">2030</option>
+        </select>
+      </label>
+    </div>
+    <div class="small-6 medium-3 medium-offset-2 columns zero-padding">
       <label>
         <span>CVC</span>
-        <input type="text" size="4" data-stripe="cvc"/>
+        <input type="text" class="border-radius" data-stripe="cvc" required="true"/>
       </label>
-
-      <label>
-        <span>Expiration (MM)</span>
-        <input type="text" size="2" data-stripe="exp-month"/>
-      </label>
-
-
-      <span>(YYYY)</span>
-      <input type="text" size="4" data-stripe="exp-year"/>
-
-  <button type="submit">Save Card</button>
+    </div>
+  </div>
+  <button type="submit" class="custom-button">Save Card</button>
 </form>

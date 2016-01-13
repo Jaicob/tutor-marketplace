@@ -1,7 +1,7 @@
 <h4 class="dash-home-header">Upcoming Appointments</h4>
 <% if @student.appointments.where(status: 0).count == 0 %>
   <div class="box no-appts">
-    <h5 class="no-appts-message">You currently have no scheduled appointments</h5>
+    <h5 class="center margin-auto">You currently have no scheduled appointments</h5>
   </div>
 <% else %>
   <table>
