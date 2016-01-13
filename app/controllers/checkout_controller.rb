@@ -107,7 +107,8 @@ class CheckoutController < ApplicationController
         if @checkout_data[:new_user?] == true
           User.find(@checkout_data[:new_user_id]).destroy
         end
-      flash[:alert] = 'Your booking was not processed due to a server error. You were not charged. Please try again and if you are still unable to complete your booking contact Axon at info@axontutors.com.'
+      flash[:alert] = "Your booking was not processed: #{@context.error}"
+      # flash[:alert] = 'Your booking was not processed due to a server error. You were not charged. Please try again and if you are still unable to complete your booking contact Axon at info@axontutors.com.'
       redirect_to checkout_review_booking_path(@tutor.slug)
     end
   end

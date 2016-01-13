@@ -1,0 +1,87 @@
+<section class="dashboard-content student-home-page">
+  <div class="row">
+    <div class="small-12 columns">
+      <h1>Rescheduling Options</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="small-12 columns">
+      <h4 class="margin-top-1em">Current Details</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="small-12 columns">
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Subject</th>
+            <th>Tutor</th>
+            <th>Contact</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><%= @appt.start_time.strftime("%b %-d") %></td>
+            <td><%= @appt.start_time.strftime("%l:%M%P") %></td>
+            <td><%= Course.find(@appt.course_id).formatted_name %></td>
+            <td><%= @appt.tutor.full_name %></td>
+            <td><%= @appt.tutor.email %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="small-12 columns">
+      <%= form_for :reschedule_appt, url: reschedule_appt_student_path(@student, @appt), method: :put do |f| %>
+        <div class="checkout-step-title">
+          <div class="row">
+            <div class="small-12 columns">
+              <p>Select a New Time</p>
+            </div>
+          </div>
+        </div>
+        <div class="calendar-header">
+          <div class="row small-collapse">
+            <div class="small-12 columns">
+              <div class="row small-collapse">
+                <div class="small-12 medium-3 columns zero-padding">
+                  <% if @start_date == Date.today %>
+                    <div class="checkout-button gray disabled-text-color">Previous Week</div>
+                  <% else %>
+                    <%= link_to "Previous Week",  view_reschedule_options_student_path(@student, @appt, current: @start_date.to_s, week: 0), class: 'checkout-button gray' %>
+                  <% end %>
+                </div>
+                <div class="small-12 medium-3 columns zero-padding">
+                  <%= link_to "Next Week",  view_reschedule_options_student_path(@student, @appt, current: @start_date.to_s, week: 1), class: 'checkout-button gray' %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="checkout-step-body">
+          <div class="row">
+            <div class="small-12 columns">
+              <div class="small-block-grid-1 medium-block-grid-7">
+                <%= render '/checkout/available_times', week_start_date: Date.today %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="checkout-steps-nav">
+          <div class="row small-collapse">
+            <div class="small-12 columns">
+              <div class="row small-collapse">
+                <div class="small-12 medium-3 medium-offset-9 columns zero-padding">
+                  <%= f.submit "Reschedule", class: 'custom-button full-width checkout-submit' %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>

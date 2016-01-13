@@ -141,7 +141,7 @@
 
 <% @tutor.appointments.where(status: 'Scheduled').each do |appt| %>
   <div id="confirm-cancel-appt-<%= appt.id %>" class="reveal-modal medium" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
-    <h6 id="modalTitle">Are you sure you want to cancel this appointment?</h6>
+    <h3 id="modalTitle" class="margin-bottom-1em">Are you sure you want to cancel this appointment?</h3>
           <table>
             <thead>
               <tr>
@@ -164,10 +164,16 @@
             </tbody>
           </table>
     <p>As soon as you cancel, the student will be notified and refunded.</p>
-    <a class="close-reveal-modal custom-button override-foundation" aria-label="Close">No, don't cancel</a>
-    <%= form_for appt, url: cancel_appt_tutor_path(@tutor.slug, appt.id), class: 'cancel-appt-form-button', method: :put do |f| %>
-      <%= f.hidden_field :status, value: 'Cancelled' %>
-      <%= f.submit 'Yes, cancel', class: 'custom-button blue' %>
-    <% end %>
+    <div class="row">
+      <div class="small-12 medium-4 columns">
+          <a class="close-reveal-modal custom-button override-foundation" aria-label="Close">Don't cancel</a>
+      </div>
+      <div class="small-12 medium-4 columns">
+        <%= form_for appt, url: cancel_appt_tutor_path(@tutor.slug, appt.id), class: 'cancel-appt-form-button', method: :put do |f| %>
+          <%= f.hidden_field :status, value: 'Cancelled' %>
+          <%= f.submit 'Cancel', class: 'custom-button danger' %>
+        <% end %>
+      </div>
+    </div>
   </div>
 <% end %>

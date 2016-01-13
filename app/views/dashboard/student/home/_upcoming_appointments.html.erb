@@ -1,0 +1,68 @@
+<h4 class="dash-home-header">Upcoming Appointments</h4>
+<% if @student.appointments.where(status: 0).count == 0 %>
+  <div class="box no-appts">
+    <h5 class="center margin-auto">You currently have no scheduled appointments</h5>
+  </div>
+<% else %>
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Subject</th>
+        <th>Tutor</th>
+        <th>Contact</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @student.appointments.where(status: 0).each do |appt| %>
+        <tr>
+          <td><%= appt.start_time.strftime("%b %-d") %></td>
+          <td><%= appt.start_time.strftime("%l:%M%P") %></td>
+          <td><%= Course.find(appt.course_id).formatted_name %></td>
+          <td><%= appt.tutor.full_name %></td>
+          <td><%= appt.tutor.email %></td>
+          <td>
+            <%= link_to 'Reschedule', view_reschedule_options_student_path(@student, appt.id), class: 'custom-button full-width blue' %>
+            <a href="#" data-reveal-id="confirm-cancel-appt-<%= appt.id %>" class="custom-button full-width danger">Cancel</a>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
+
+
+<!-- Reveal modals for confirming Appointment cancellation -->
+
+<% @student.appointments.where(status: 'Scheduled').each do |appt| %>
+  <div id="confirm-cancel-appt-<%= appt.id %>" class="reveal-modal medium" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+    <h3 id="modalTitle">Are you sure you want to cancel this appointment?</h6>
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Subject</th>
+          <th>Tutor</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><%= appt.start_time.strftime("%b %-d") %></td>
+          <td><%= appt.start_time.strftime("%l:%M%P") %></td>
+          <td><%= Course.find(appt.course_id).formatted_name %></td>
+          <td><%= appt.tutor.full_name %></td>
+        </tr>
+      </tbody>
+    </table>
+    <p>As soon as you cancel, the tutor will be notified.</p>
+    <p>Cancellations within 24 hours of the scheduled appointment, will not recieve refunds.</p>
+    <a class="close-reveal-modal custom-button override-foundation" aria-label="Close">Don't cancel</a>
+    <%= form_for appt, url: cancel_appt_student_path(@student.id, appt.id), class: 'cancel-appt-form-button', method: :put do |f| %>
+      <%= f.hidden_field :status, value: 'Cancelled' %>
+      <%= f.submit 'Cancel', class: 'custom-button danger' %>
+    <% end %>
+  </div>
+<% end %>

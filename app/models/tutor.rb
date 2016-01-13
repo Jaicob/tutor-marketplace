@@ -32,6 +32,7 @@
 #  acct_id            :string
 #  slug               :string
 #  dob                :date
+#  booking_buffer     :integer          default(6)
 #
 
 class Tutor < ActiveRecord::Base

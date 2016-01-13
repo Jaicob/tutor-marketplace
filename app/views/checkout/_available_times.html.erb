@@ -66,44 +66,79 @@ function disableNeighborCheckboxes(element) {
   var checkboxBefore = document.getElementById(checkboxBeforeId);
   var checkboxAfter = document.getElementById(checkboxAfterId);
   var checkboxTwoAfter = document.getElementById(checkboxTwoAfterId);
+
+  var reschedulingCalendar = gon.rescheduling_calendar
   
-  if (element.checked) {
-    // element checked - triggered when click event makes it checked
-    if (checkboxBefore != null) {
-      checkboxBefore.disabled = true;
-    }
-    if (checkboxAfter != null) {
-      checkboxAfter.disabled = true;
-      checkboxAfter.classList.add("second-half-of-appt");
-    }
-  } else {
-    // when checkbox is un-checked...(ex: 5:00 is de-selected)
-    if (checkboxBefore != null && checkboxTwoBefore != null) { // (4:00 and 4:30 exist)
-      if (!checkboxTwoBefore.classList.contains("booked")) {    // (4:00 is not booked)
-        checkboxBefore.disabled = false;                        // (remove disabled state from 4:30)
+  if (reschedulingCalendar == true) { // this top portion is only for the rescheduling calendar (when only one time can be selected)
+
+    var allInputs = document.getElementsByTagName('input');
+
+    if (element.checked) {
+      // 1. disable all checkboxes
+      for(i = 0; i < allInputs.length; i++){
+        if(allInputs[i].type == 'checkbox'){
+          allInputs[i].disabled = true;
+        }
+      }
+      // 2. un-disable the selecte checkbox
+      element.disabled = false;
+      // 3. turn second half of appt green
+      if (checkboxAfter != null) {
+        checkboxAfter.classList.add("second-half-of-appt");
+      }
+    } else {
+      // 1. disable all checkboxes
+      for(i = 0; i < allInputs.length; i++){
+        if(allInputs[i].type == 'checkbox'){
+          allInputs[i].disabled = false;
+        }
+      }
+      // 2. turn second half of appt green
+      if (checkboxAfter != null) {
+        checkboxAfter.classList.remove("second-half-of-appt");
       }
     }
-    if (checkboxAfter != null && checkboxTwoAfter != null) {                            // (5:30 exists)
-      if (!checkboxTwoAfter.classList.contains("booked")) {   // (6:00 is not booked)
-        checkboxAfter.disabled = false;                       // (removed disabled state from 5:30)
+
+  } else {  // normal checkout behavior below - multiple times can be selected
+
+    if (element.checked) {
+      // element checked - triggered when click event makes it checked
+      if (checkboxBefore != null) {
+        checkboxBefore.disabled = true;
       }
-      checkboxAfter.classList.remove("second-half-of-appt");  // (remove 'second-half' class from 5:30)
-    }
-    if (checkboxTwoBefore == null && checkboxBefore != null) {  // (4:00 does not exist, 4:30 does exist)
-      checkboxBefore.disabled = false;                          // (remove disabled state from 4:30)
-    } else if (checkboxTwoBefore != null && checkboxTwoBefore.checked != true && !checkboxTwoBefore.classList.contains("booked")) {
-      // (4:00 exists, 4:00 is not checked, 4:00 is not booked)
-      checkboxBefore.disabled = false; // (remove disabled state from 4:30)
-    }
-    if (checkboxTwoAfter != null && checkboxTwoAfter.checked) { // (6:00 exists, 6:00 is checked)
-      checkboxAfter.disabled = true;                            // (disable 5:30)
-    }
-    if (checkboxTwoBefore != null && checkboxTwoBefore.checked == true) { // (4:00 exists and is booked)
-      checkboxBefore.disabled = true; // (disable 4:30)
-    }
-    if (checkboxTwoAfter == null) {
-      checkboxAfter.disabled = false;
-      checkboxAfter.classList.remove("second-half-of-appt");
+      if (checkboxAfter != null) {
+        checkboxAfter.disabled = true;
+        checkboxAfter.classList.add("second-half-of-appt");
+      }
+    } else {
+      // when checkbox is un-checked...(ex: 5:00 is de-selected)
+      if (checkboxBefore != null && checkboxTwoBefore != null) { // (4:00 and 4:30 exist)
+        if (!checkboxTwoBefore.classList.contains("booked")) {    // (4:00 is not booked)
+          checkboxBefore.disabled = false;                        // (remove disabled state from 4:30)
+        }
+      }
+      if (checkboxAfter != null && checkboxTwoAfter != null) {                            // (5:30 exists)
+        if (!checkboxTwoAfter.classList.contains("booked")) {   // (6:00 is not booked)
+          checkboxAfter.disabled = false;                       // (removed disabled state from 5:30)
+        }
+        checkboxAfter.classList.remove("second-half-of-appt");  // (remove 'second-half' class from 5:30)
+      }
+      if (checkboxTwoBefore == null && checkboxBefore != null) {  // (4:00 does not exist, 4:30 does exist)
+        checkboxBefore.disabled = false;                          // (remove disabled state from 4:30)
+      } else if (checkboxTwoBefore != null && checkboxTwoBefore.checked != true && !checkboxTwoBefore.classList.contains("booked")) {
+        // (4:00 exists, 4:00 is not checked, 4:00 is not booked)
+        checkboxBefore.disabled = false; // (remove disabled state from 4:30)
+      }
+      if (checkboxTwoAfter != null && checkboxTwoAfter.checked) { // (6:00 exists, 6:00 is checked)
+        checkboxAfter.disabled = true;                            // (disable 5:30)
+      }
+      if (checkboxTwoBefore != null && checkboxTwoBefore.checked == true) { // (4:00 exists and is booked)
+        checkboxBefore.disabled = true; // (disable 4:30)
+      }
+      if (checkboxTwoAfter == null) {
+        checkboxAfter.disabled = false;
+        checkboxAfter.classList.remove("second-half-of-appt");
+      }
     }
   }
 }
