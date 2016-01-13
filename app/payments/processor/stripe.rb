@@ -53,7 +53,7 @@ module Processor
     def send_charge(charge, description, one_time_card=nil)
       begin 
         @student = Student.find(charge.student_id)
-        if @student.customer_id.nil? || one_time_card
+        if @student.customer_id.nil? || one_time_card == true
           # creates charge with token if Student does not have a Stripe Customer
           @stripe_charge_object = ::Stripe::Charge.create(
             amount: charge.amount,
