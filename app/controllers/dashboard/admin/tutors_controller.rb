@@ -28,9 +28,14 @@ class Dashboard::Admin::TutorsController < AdminController
   end
 
   def destroy
-    TutorDestroyer.new.obliterate(@tutor)
-    flash[:notice] = "Tutor was succesfully deleted."
-    redirect_to admin_tutors_path
+    response = TutorDestroyer.new.obliterate(@tutor)
+    if response[:success] = true
+      flash[:success] = "Tutor was succesfully deleted (including all files)."
+      redirect_to admin_tutors_path
+    else
+      render :show
+      flash[:alert] = "Tutor was not deleted: #{response[:error]}"
+    end
   end
 
   private

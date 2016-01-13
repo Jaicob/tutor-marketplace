@@ -6,7 +6,12 @@ class TutorDestroyer
 
   def obliterate
     delete_all_files
-    @tutor.user.destroy
+    if @tutor.user.destroy
+      response = {success: true}
+    else
+      response = {success: false, error: @tutor.errors.full_messages.first}
+    end
+    return response
   end
 
   def delete_all_files
