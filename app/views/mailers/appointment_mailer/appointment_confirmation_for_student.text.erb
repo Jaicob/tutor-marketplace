@@ -1,13 +1,21 @@
 Hi <%= @student.first_name %>
 
-Thanks for choosing to book with Axon Tutors. Here are some details regarding your upcoming tutoring appointment.
+Thanks for choosing to book with Axon! Here are the details for your appointment: 
 
 Your Tutor: <%= @tutor.public_name %>
 Course: <%= @appt.course.formatted_name %>
 Date/Time: <%= @appt.start_time.in_time_zone(@school.timezone).strftime("%b %e, %l:%M %p") %>
 
-If you have any questions or concerns, or would like to cancel or reschedule, please contact info@axontutors.com.
+So what's next? 
+
+Your tutor will be contacting you shortly to arrange a meeting place. Typically tutors will get in touch at least four hours before the appointment. If you do not hear from your tutor by that time, please contact us at info@axontutors.com or call us at (762) 585-4850. 
+If you need to reschedule or cancel this appointment, you can do that directly from your student dashboard on Axon’s site. 
+Finally, please note that our tutors are encouraged to follow your school’s honor code, which means they do not do homework, take quizzes, complete timed progress checks, or take tests for students. 
+
+Still have questions? 
+
+Send us an email (info@axontutors.com) or give us a call (762-585-4850).
 
 Thanks,
 
-Axon Team
+The Axon Team

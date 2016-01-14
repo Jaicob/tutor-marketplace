@@ -4,7 +4,7 @@ class ExistingTutorMailer < ApplicationMailer
   def welcome_email(user_id)
     @user = User.find(user_id)
     @tutor = @user.tutor
-    mail(to: @user.email, subject: "Thanks for Signing In/New Axon")
+    mail(to: @user.email, subject: "Thanks for Signing In to the New Axon")
   end
 
   def activation_email(user_id)
