@@ -19,7 +19,7 @@ class CheckoutController < ApplicationController
       redirect_to checkout_select_course_path(@tutor.slug)
       flash[:alert] = 'Please select a course'
     else
-      redirect_to checkout_select_times_path(@tutor.slug)
+      redirect_to checkout_select_times_path(@tutor.slug, anchor: 'select-times')
     end
   end
 
@@ -42,7 +42,7 @@ class CheckoutController < ApplicationController
       redirect_to checkout_select_times_path(@tutor.slug)
       flash[:alert] = 'Please select a meeting time'
     else
-      redirect_to checkout_select_location_path(@tutor.slug)
+      redirect_to checkout_select_location_path(@tutor.slug, anchor: 'set-location')
     end
   end
 
@@ -60,7 +60,7 @@ class CheckoutController < ApplicationController
       redirect_to checkout_select_location_path(@tutor.slug)
       flash[:alert] = 'Please enter a location preference'
     else
-      redirect_to checkout_review_booking_path(@tutor.slug)
+      redirect_to checkout_review_booking_path(@tutor.slug, anchor: 'review-booking')
     end
   end
 

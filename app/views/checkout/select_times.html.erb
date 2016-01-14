@@ -1,6 +1,7 @@
 <%= render '/dashboard/tutor/profile/tutor_profile' %>
 
 <div class="checkout-process-screen">
+  <a id="select-times"></a>
   <div class="row">
     <div class="small-12 columns">
       <%= form_for :appt_selection, url: checkout_set_times_path, method: :post do |f| %>
@@ -22,7 +23,6 @@
           </div>
         </div>
         <div class="checkout-step-body">
-          <a id="appt_selector"></a>
           <div class="small-block-grid-1 medium-block-grid-7">
             <%= render '/checkout/available_times', week_start_date: Date.today %>
           </div>
