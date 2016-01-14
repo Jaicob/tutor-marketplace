@@ -39,6 +39,7 @@ class TutorOnboardingController < ApplicationController
   end
 
   def courses
+    @all_options_for_tutor = true && gon.all_options_for_tutor = true
     if @tutor.onboarding_status < 1
       redirect_to onboarding_application_tutor_path(@tutor.slug)
     end

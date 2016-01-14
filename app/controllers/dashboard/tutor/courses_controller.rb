@@ -2,6 +2,7 @@ class Dashboard::Tutor::CoursesController < DashboardController
   before_action :set_tutor_course, only: [:show, :update, :destroy]
 
   def index
+    @all_options_for_tutor = true 
     @tutor_course = TutorCourse.new
   end
 

@@ -1,16 +1,33 @@
 <!-- Place immediately inside of parent div with correct grid sizing -->
-<% if @course %>
-  <select name="course[course_id]" id="course" required="true">
-    <% @school.courses_for_subject(@subject.id).each do |course| %>
-      <% if course[:id] == @course.id %>
-        <option selected="true" value="<%= @course.id %>"><%= @course.friendly_name %></option>
-      <% else %>
-        <option value="<%= course[:id] %>"><%= course[:name] %></option>
-      <% end %>
-    <% end %>
-  </select>
+
+<% if @all_options_for_tutor %>
+
+    <!-- course select for tutors only (this show all courses in the DB, not just those with active tutors) -->
+    <select name="course[course_id]" id="courses-for-tutors" required="true">
+      <option disabled="true" selected="true" value="">Select Course TEST</option>
+    </select>
+
 <% else %>
-  <select name="course[course_id]" id="course" required="true">
-    <option disabled="true" selected="true" value="">Select Course</option>
-  </select>
+
+  <% if @course %>
+
+    <!-- special course dropdown for search page when search was initiated from home page (carries over selection in @course variable) -->
+    <select name="course[course_id]" id="course" required="true">
+      <% @school.courses_for_subject(@subject.id).each do |course| %>
+        <% if course[:id] == @course.id %>
+          <option selected="true" value="<%= @course.id %>"><%= @course.friendly_name %></option>
+        <% else %>
+          <option value="<%= course[:id] %>"><%= course[:name] %></option>
+        <% end %>
+      <% end %>
+    </select>
+
+  <% else %>
+
+    <!-- normal dynamically populated course select for students (only courses with active tutors show) -->
+    <select name="course[course_id]" id="course" required="true">
+      <option disabled="true" selected="true" value="">Select Course NOPE</option>
+    </select>
+
+  <% end %>
 <% end %>

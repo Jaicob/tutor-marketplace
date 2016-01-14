@@ -2,11 +2,21 @@ var API_LOCATION = "/api/v1"
 
 var API = {
     endpoints: {
-        subjects: function (data) { // { school_id }
-            return API_LOCATION + "/schools/" + data["school_id"] + "/subjects/";
+        subjects: function (data, all) { // { school_id }
+            if (all) {
+              API_LOCATION + "/schools/" + data["school_id"] + "/subjects?all=true";
+            } else {
+              return API_LOCATION + "/schools/" + data["school_id"] + "/subjects/";
+            }    
         },
         courses: function (data) { // { school_id, subject_id }
             return API_LOCATION + "/schools/" + data["school_id"] + "/subjects/" + data["subject_id"] + "/courses/";
+        },
+        subjects_for_tutors: function (data) { // { school_id, subject_id }
+            return API_LOCATION + "/schools/" + data["school_id"] + "/subjects-all-options/"
+        },
+        courses_for_tutors: function (data) { // { school_id, subject_id }
+            return API_LOCATION + "/schools/" + data["school_id"] + "/subjects/" + data["subject_id"] + "/courses-all-options/";
         },
         tutor_slots: {
             get: function (data) { // { tutor_id }
