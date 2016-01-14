@@ -9,7 +9,7 @@ $(document).ready(function(){
     url: function(){
       return API.endpoints.subjects({
         school_id: $("#school").val()
-      },all)
+      })
     },
     data_formatter: function(data){
       if (typeof data == 'string') {
