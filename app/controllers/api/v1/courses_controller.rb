@@ -1,7 +1,7 @@
 class API::V1::CoursesController < API::V1::Defaults
 
   def index
-    @courses = CourseSearchPopulater.new(params[:school_id], params[:subject_id], params[:all_options]).courses_with_active_tutors
+    @courses = CourseSearchPopulater.new(params[:school_id], params[:subject_id]).courses_with_active_tutors
     respond_with(@courses)
   end
 
