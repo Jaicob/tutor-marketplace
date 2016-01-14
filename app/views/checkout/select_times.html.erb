@@ -30,7 +30,7 @@
         <div class="checkout-steps-nav">
           <div class="row small-collapse">
             <div class="small-12 medium-3 columns zero-padding">
-              <%= link_to "Back to Select a Course", checkout_select_course_path(@tutor.slug), class: 'checkout-button gray' %>
+              <%= link_to "Back to Select a Course", checkout_select_course_path(@tutor.slug, anchor: 'select-course'), class: 'checkout-button gray' %>
             </div>
             <div class="small-12 medium-3 columns zero-padding">
               <%= f.submit "Next Step", class: 'custom-button full-width checkout-submit' %>

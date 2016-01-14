@@ -7,14 +7,12 @@
     <div class="small-12 columns">
       <%= form_for :location_selection, url: checkout_set_location_path, method: :post do |f| %>
         <div class="checkout-step-title">
-
-              <p>Suggest a Meeting Place</p>
-
+          <p>Suggest a Meeting Place</p>
         </div>
         <div class="checkout-step-body">
           <h5 class="center no-max-width margin-top-2em">Your tutor will contact you to confirm a meeting place after your booking is complete.</h5>
           <p class="center margin-auto margin-top-1em margin-bottom-1em">Axon tutors are encouraged to meet students on campus, so great suggestions are your campus library, student center or a coffee shop on or very near campus.</p>
-          <h5 class="center no-max-width">Suggest one or two meeting places that work well for you:</h5>
+          <h5 class="center no-max-width margin-bottom-2em">Suggest one or two meeting places that work well for you:</h5>
           <div class="row">
             <div class="small-12 medium-4 medium-centered columns">
               <%= f.text_field :location, value: session[:location], class: 'margin-bottom-3em' %>
@@ -24,7 +22,7 @@
         <div class="checkout-steps-nav">
           <div class="row small-collapse">
             <div class="small-12 medium-3 columns zero-padding">
-              <%= link_to "Back to Set a Time", checkout_select_times_path(@tutor.slug), class: 'checkout-button gray' %>
+              <%= link_to "Back to Set a Time", checkout_select_times_path(@tutor.slug, anchor: 'select-times'), class: 'checkout-button gray' %>
             </div>
             <div class="small-12 medium-3 columns zero-padding">
               <%= f.submit "Next Step", class: 'custom-button full-width checkout-submit' %>

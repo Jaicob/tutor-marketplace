@@ -1,6 +1,7 @@
 <%= render '/dashboard/tutor/profile/tutor_profile' %>
 
 <div class="checkout-process-screen">
+  <a id="select-course"></a>
   <div class="row">
     <div class="small-12 columns">
       <%= form_for :course_selection, url: checkout_set_course_id_path, method: :post do |f| %>
