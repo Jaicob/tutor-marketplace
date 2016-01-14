@@ -1,11 +1,10 @@
 .row.sign-in-bar {
   background-color: #2bc2de;
-  padding: 1em;
+  padding-top: 1em;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   p.already-registered-booking {
     color: white;
-    margin: 0 !important;
     font-size: 1.2em;
     line-height: 1.8em;
     text-align: center;
@@ -47,5 +46,6 @@ span.checkout-card-errors {
 
 .create-and-pay-btn {
   margin: 0 !important;
+  padding: 1em 0 !important;
   font-size: 1.2em !important;
 }

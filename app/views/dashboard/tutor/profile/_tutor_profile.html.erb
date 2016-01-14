@@ -1,33 +1,41 @@
-<div class="row small-collapse">
-  <div class="small-12 columns">
-    <div class="row">
-      <div class="small-12 columns">
-        <div class="box vertical-margin-2em vertical-padding-2em">
+<div id="tutor-profile">
+  <div class="row">
+    <div class="small-12 medium-4 columns">
+      <div class="vertical-padding-1em">
+        <%= image_tag(@tutor.profile_pic_url(:thumb), class: 'border-radius') %>
+        <div class="name-box">
+          <h2 class="center"><%= @tutor.public_name %></h2>
+        </div>
+        <div class="school-box">
+          <p class="center no-bottom-margin">Tutor at</p>
+          <h5 class="center"><%= @tutor.school.name %></h5>
+        </div>
+      </div>
+    </div>
+    <div class="small-12 medium-8 columns">
+      <div class="vertical-padding-1em">
+        <div class="section-heading">
+          <h4>Education</h4>
+        </div>
+        <div class="profile-text">
           <div class="row">
-            <div class="small-12 medium-4 columns">
-              <%= image_tag(@tutor.profile_pic_url(:thumb), class: 'border-radius') %>
-              <h2 class="center"><%= @tutor.public_name %></h2>
-              <p class="center no-bottom-margin">Tutor at</p>
-              <h5 class="center"><%= @tutor.school.name %></h5>
+            <div class="small-12 medium-6 columns">
+              <p class="degree"><i class="fi-book-bookmark margin-right-1em"></i><%= @tutor.degree %> <%= @tutor.major %>, <%= @tutor.graduation_year %></p>
             </div>
-            <div class="small-12 medium-8 columns">
-              <h4>Education</h4>
-              <div class="row">
-                <div class="small-12 medium-6 columns">
-                  <p><i class="fi-book-bookmark margin-right-1em"></i><%= @tutor.degree %> <%= @tutor.major %>, <%= @tutor.graduation_year %></p>
-                </div>
-                <div class="small-12 medium-6 columns">
-                  <% if @tutor.additional_degrees? && !@tutor.additional_degrees.blank? %>
-                    <p><i class="fi-book-bookmark margin-right-1em"></i><%= @tutor.additional_degrees %></p>
-                  <% end %>
-                </div>
-              </div>
-              <h4>Experience</h4>
-              <p><%= @tutor.extra_info_1 %></p>
-              <p><%= @tutor.extra_info_2 %></p>
-              <p><%= @tutor.extra_info_3 %></p>
+            <div class="small-12 medium-6 columns">
+              <% if @tutor.additional_degrees? && !@tutor.additional_degrees.blank? %>
+                <p class="degree"><i class="fi-book-bookmark margin-right-1em"></i><%= @tutor.additional_degrees %></p>
+              <% end %>
             </div>
           </div>
+        </div>
+        <div class="section-heading">
+          <h4>Experience</h4>
+        </div>
+        <div class="profile-text">
+          <p><%= @tutor.extra_info_1 %></p>
+          <p><%= @tutor.extra_info_2 %></p>
+          <p><%= @tutor.extra_info_3 %></p>
         </div>
       </div>
     </div>

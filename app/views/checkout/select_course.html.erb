@@ -1,27 +1,19 @@
 <%= render '/dashboard/tutor/profile/tutor_profile' %>
 
-<div class="row">
-  <div class="small-12 columns">
-    <%= form_for :course_selection, url: checkout_set_course_id_path, method: :post do |f| %>
-      <div class="checkout-step-title">
-        <div class="row">
-          <div class="small-12 columns">
-            <p>Select a Course</p>
-          </div>
+<div class="checkout-process-screen">
+  <div class="row">
+    <div class="small-12 columns">
+      <%= form_for :course_selection, url: checkout_set_course_id_path, method: :post do |f| %>
+        <div class="checkout-step-title">
+          <p>Select a Course</p>
         </div>
-      </div>
-      <div class="checkout-step-body course-select-bg">
-        <div class="row small-collapse">
-          <div class="small-12 columns">
-            
-            <% @tutor.course_list_by_subject.each do |subject, tutor_courses| %>
-
-              <div class="row medium-collapse subject-row">
-                <div class="small-12 medium-3 columns">
-                  <p class="subject-title"><%= subject %></p>
-                </div>
-                <div class="small-12 medium-9 columns">
-                
+        <div class="checkout-step-body course-select-bg">
+          <% @tutor.course_list_by_subject.each do |subject, tutor_courses| %>
+            <div class="row medium-collapse subject-row">
+              <div class="small-12 medium-3 columns">
+                <p class="subject-title"><%= subject %></p>
+              </div>
+              <div class="small-12 medium-9 columns">
                 <% tutor_courses.each do |tutor_course| %>
                   <div class="course-box">
                     <label>
@@ -40,35 +32,27 @@
                     </label>
                   </div>      
                 <% end %>
-
-                </div>
-              </div>
-            <% end %>
-
-          </div>
-        </div>
-      </div>
-      <div class="checkout-steps-nav">
-        <div class="row small-collapse">
-          <div class="small-12 columns">
-            <div class="row small-collapse">
-              <div class="small-12 medium-3 columns zero-padding">
-                <%= link_to "Back to Search", search_path, class: 'checkout-button gray' %>
-              </div>
-              <div class="small-12 medium-6 columns">
-                <p id="selected-course"></p>
-              </div>
-              <div class="small-12 medium-3 columns zero-padding">
-                <%= f.submit 'Next Step', class: 'custom-button full-width checkout-submit' %>
-              </div>
+              <% end %>
             </div>
           </div>
         </div>
-      </div>
-    <% end %>
+        <div class="checkout-steps-nav">
+          <div class="row small-collapse">
+            <div class="small-12 medium-3 columns zero-padding">
+              <%= link_to "Back to Search", search_path, class: 'checkout-button gray' %>
+            </div>
+            <div class="small-12 medium-6 columns">
+              <p id="selected-course"></p>
+            </div>
+            <div class="small-12 medium-3 columns zero-padding">
+              <%= f.submit 'Next Step', class: 'custom-button full-width checkout-submit' %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>
-
 
 <script>
 $(document).ready(function(){

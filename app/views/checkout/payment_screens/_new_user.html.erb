@@ -1,5 +1,5 @@
 <!-- Partial for bottom 'Complete Your Booking' box for new users who need to create an account and input card information -->
-<div class="row">
+<div class="row small-collapse medium-uncollapse">
   <div class="small-12 columns">
     <div class="row sign-in-bar">
       <div class="small-12 medium-3 columns">
@@ -7,20 +7,20 @@
       </div>
       <div class="small-12 medium-3 columns">
         <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |ff| %>
-          <%= ff.text_field :email, placeholder: 'Email', required: true, class: 'border-radius no-bottom-margin' %>
+          <%= ff.text_field :email, placeholder: 'Email', required: true, class: 'border-radius' %>
       </div>
       <div class="small-12 medium-3 columns">
-          <%= ff.password_field :password, placeholder: 'Password', required: true, class: 'border-radius no-bottom-margin' %>
+          <%= ff.password_field :password, placeholder: 'Password', required: true, class: 'border-radius' %>
           <%= ff.hidden_field :checkout_login_redirect, value: @tutor.slug %>
       </div>
       <div class="small-12 medium-3 columns">
-          <%= ff.submit 'Sign in', class: 'custom-button full-width blue-green no-bottom-margin' %>
+          <%= ff.submit 'Sign in', class: 'custom-button full-width blue-green' %>
         <% end %>
       </div>
     </div>
   </div>
 </div>
-<div class="row">
+<div class="row small-collapse medium-uncollapse">
   <div class="small-12 columns">
     <div class="box zero-padding no-top-border-radius margin-bottom-4em">
       <form action="/tutors/<%= @tutor.slug %>/process_booking" method="POST" id="payment-form">
@@ -97,20 +97,24 @@
                   <input type="text" class="border-radius" data-stripe="cvc" required="true"/>
                 </label>
               </div>
-
-              <input type="radio" name="save_card" value="true" checked="true">
-              <span class="save-card-radio">Save this card for easy checkouts</span><br />
-
-              <input type="radio" name="save_card" value="false">
-              <span class="save-card-radio">Don't save this card</span>
-
-              <p class="small-font">Security Notice: We store all of our customers' card details on a secure PCI compliant server managed by <a href="https://stripe.com/about" target="_blank" class="blue-link">Stripe</a>.</p>
-
-            </div>       
+            </div>
+            <div class="row small-collapse">
+              <div class="small-12 columns">
+                <input type="radio" name="save_card" value="true" checked="true">
+                <span class="save-card-radio">Save this card for easy checkouts</span>
+              </div>
+            </div>
+            <div class="row small-collapse">
+              <div class="small-12 columns">
+                <input type="radio" name="save_card" value="false">
+                <span class="save-card-radio">Don't save this card</span>
+              </div>
+            </div>
+            <p class="small-font">Security Notice: We store all of our customers' card details on a secure PCI compliant server managed by <a href="https://stripe.com/about" target="_blank" class="blue-link">Stripe</a>.</p>      
           </div>
         </div>
       </div>
-      <div class="row submit-bar">
+      <div class="row small-collapse medium-uncollapse submit-bar">
         <div class="small-12 medium-6 medium-offset-6 columns">
           <button type="submit" class="custom-button full-width create-and-pay-btn">Create Account & Pay</button>
         </div>
