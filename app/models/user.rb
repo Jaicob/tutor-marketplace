@@ -97,4 +97,8 @@ class User < ActiveRecord::Base
     end
   end
 
+  def public_name
+    self.first_name.capitalize + " " + self.last_name.capitalize.slice(0) + "."
+  end
+
 end

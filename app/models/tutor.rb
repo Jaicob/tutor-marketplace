@@ -45,7 +45,7 @@ class Tutor < ActiveRecord::Base
   has_many :charges, dependent: :destroy
   has_many :promotions
 
-  delegate :first_name, :last_name, :full_name, :sign_in_ip, :email, :password, to: :user
+  delegate :first_name, :last_name, :full_name, :public_name, :sign_in_ip, :email, :password, to: :user
 
   validates :user, presence: true
 

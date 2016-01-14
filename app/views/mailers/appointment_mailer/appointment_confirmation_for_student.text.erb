@@ -2,7 +2,7 @@ Hi <%= @student.first_name %>
 
 Thanks for choosing to book with Axon Tutors. Here are some details regarding your upcoming tutoring appointment.
 
-Your Tutor: <%= public_name(@tutor) %>
+Your Tutor: <%= @tutor.public_name %>
 Course: <%= @appt.course.formatted_name %>
 Date/Time: <%= @appt.start_time.in_time_zone(@school.timezone).strftime("%b %e, %l:%M %p") %>
 
