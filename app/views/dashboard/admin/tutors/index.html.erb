@@ -119,7 +119,7 @@
           <td><%= tutor.active_status %></td>
           <td><%= tutor.user.full_name %></td>
           <td><%= tutor.user.email %></td>
-          <td><%= tutor.school.name %></td>
+          <td><%= tutor.school.name if tutor.school %></td>
           <td><%= tutor.appointments.count %></td>
           <td></td>
           <td><%= tutor.application_status %></td>

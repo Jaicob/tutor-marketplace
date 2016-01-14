@@ -19,6 +19,8 @@ class Student < ActiveRecord::Base
   has_many :charges, dependent: :destroy
   has_many :appointments, dependent: :destroy
 
+  validates :school_id, presence: true
+
   delegate :full_name, :first_name, :last_name, :public_name, :email, :password, to: :user
 
   def subjects

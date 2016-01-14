@@ -27,14 +27,14 @@
         <% @schools.each do |school| %>
         <tr>
           <td><%= link_to school.id, admin_school_path(school), class: 'blue-link' %></td>
-          <td><%= school.name %></td>
-          <td><%= school.location %></td>
+          <td><%= school.name if school.name %></td>
+          <td><%= school.location if school.location %></td>
           <td><%= school.courses.count %></td>
           <td><%= school.tutors.count %></td>
           <td><%= school.students.count %></td>
           <td><%= school.appointments.count %></td>
           <td>--</td>
-          <td><%= school.campus_manager.full_name unless !school.campus_manager %></td>
+          <td><%= school.campus_manager.full_name if school.campus_manager %></td>
         </tr>
         <% end %>
       </tbody>
