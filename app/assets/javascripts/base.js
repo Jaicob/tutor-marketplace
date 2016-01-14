@@ -8,6 +8,12 @@ var API = {
         courses: function (data) { // { school_id, subject_id }
             return API_LOCATION + "/schools/" + data["school_id"] + "/subjects/" + data["subject_id"] + "/courses/";
         },
+        subjects_for_tutors: function (data) { // { school_id, subject_id }
+            return API_LOCATION + "/schools/" + data["school_id"] + "/subjects-all-options/"
+        },
+        courses_for_tutors: function (data) { // { school_id, subject_id }
+            return API_LOCATION + "/schools/" + data["school_id"] + "/subjects/" + data["subject_id"] + "/courses-all-options/";
+        },
         tutor_slots: {
             get: function (data) { // { tutor_id }
                 return API_LOCATION + "/tutors/" + data["tutor_id"] + "/slots.json";
