@@ -1,13 +1,12 @@
-Hi <%= @student.first_name %>
+Hi <%= @student.first_name %>,
 
-Your appointment with the following details has been canceled.
+Your appointment has been cancelled. The details of the cancelled appointment are below:
 
 Your Tutor: <%= @tutor.public_name %>
 Course: <%= @appt.course.formatted_name %>
 Date/Time: <%= @appt.start_time.in_time_zone(@school.timezone).strftime("%b %e, %l:%M %p") %>
 
-If you have any questions or concerns, please contact info@axontutors.com.
+If you have any questions or concerns, send us an email (info@axontutors.com) or give us a call (762-585-4850).
 
 Thanks,
-
-Axon Team
+The Axon Team

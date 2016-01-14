@@ -1,13 +1,14 @@
-Hi <%= @student.first_name %>
+Hi <%= @student.first_name %>,
 
-This is to inform you that there has been a change to your appointment.
+Your appointment has been succesfully rescheduled! The new details for your appointment are below:
 
 Your Tutor: <%= @tutor.public_name %>
 Course: <%= @appt.course.formatted_name %>
 Date/Time: <%= @appt.start_time.in_time_zone(@school.timezone).strftime("%b %e, %l:%M %p") %>
 
-If you have any questions or concerns, or would like to cancel or reschedule, please contact info@axontutors.com.
+Still have questions? 
+
+Send us an email (info@axontutors.com) or give us a call (762-585-4850).
 
 Thanks,
-
-Axon Team
+The Axon Team

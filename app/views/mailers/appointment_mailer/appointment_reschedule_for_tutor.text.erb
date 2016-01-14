@@ -1,13 +1,17 @@
-Hi <%= @tutor.first_name %>
+Hi <%= @tutor.first_name %>,
 
-This is to inform you that there has been a change to your appointment.
+An appointment with one of your students has been rescheduled. The new details for your appointment are below:
 
-Your Student: <%= @student.public_name %>
+Student Name: <%= @student.public_name %>
+Student Contact Info: <%= @student.email %>
 Course: <%= @appt.course.formatted_name %>
 Date/Time: <%= @appt.start_time.in_time_zone(@school.timezone).strftime("%b %e, %l:%M %p") %>
+Student’s Preferred Location: <%= @appt.location %>
 
-If you have any questions or concerns, or would like to cancel or reschedule, please contact info@axontutors.com.
+If you haven’t already, please reach out the student as soon as possible to pick a place to meet up. Public, on-campus locations like the library, student center, or coffee shops are best! 
 
-Thanks,
+Still have questions? Send us an email (info@axontutors.com) or give us a call (762-585-4850).
 
-Axon Team
+Happy Tutoring,
+
+The Axon Team

@@ -1,13 +1,18 @@
-Hi <%= @tutor.first_name %>
+Hi <%= @tutor.first_name %>,
 
-Just a friendly reminder about your upcoming appointment:
+Your tutoring appointment is coming up soon! In case you forgot, here are the details:
 
-Your Student: <%= @student.public_name %>
+Student Name: <%= @student.public_name %>
+Student Contact Info: <%= @student.email %>
 Course: <%= @appt.course.formatted_name %>
 Date/Time: <%= @appt.start_time.in_time_zone(@school.timezone).strftime("%b %e, %l:%M %p") %>
+Student’s Preferred Location: <%= @appt.location %>
 
-If you have any questions or concerns, or would like to cancel or reschedule, please contact info@axontutors.com.
+If you haven’t already, please reach out the student right now to pick a place to meet up. When students don’t hear back from their tutors quickly, they often are not sure whether the appointment will happen or not and often try to cancel the appointment. 
 
-Thanks,
+Remember - public, on-campus locations like the library, student center, or coffee shops are the best spots for tutoring sessions. 
 
-Axon Team
+Still have questions? Send us an email (info@axontutors.com) or give us a call (762-585-4850).
+
+Happy Tutoring,
+The Axon Team

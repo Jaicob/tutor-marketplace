@@ -94,6 +94,7 @@ class CheckoutController < ApplicationController
 
     if @context.success?
       session[:charge_id] = @context.charge.id
+      StudentManagementMailer.delay.welcome_email(@context.charge.student.email)
       redirect_to checkout_confirmation_path(@tutor.slug)
     else
 
