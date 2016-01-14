@@ -1,14 +1,64 @@
-<nav>
-  <div class="nav-bar-wrapper clear-nav">
-    <div class="row nav-row">
-      <div class="nav-logo-box nav-link-box">
+<div id="mobile-nav">
+  <nav class="top-bar" data-topbar role="navigation">
+    <ul class="title-area">
+      <li class="name">
         <%= link_to '/' do %>
           <%= image_tag('logo_white.png', class: 'nav-logo') %>
         <% end %>
-      </div>
-      <div class="nav-links-right-container nav-link-box">
-        <div class="nav-links-right"><%= link_to 'Login', new_user_session_path, class: 'become-a-tutor-button' %></div>
+      </li>
+       <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+      <li class="toggle-topbar menu-icon"><a href="#"><span></span></a></li>
+    </ul>
+
+    <section class="top-bar-section">
+      <!-- Right Nav Section -->
+      <ul class="right">
+        <% if user_signed_in? %>
+          <% if current_user.role == 'student' %>
+            <li><%= link_to 'Dashboard', home_student_path(current_user) %></li>
+          <% elsif current_user.role == 'tutor' && current_user.tutor.onboarding_status == 4 %>
+            <li><%= link_to 'Dashboard', home_tutor_path(current_user.tutor.slug) %></li>
+          <% elsif current_user.role == 'tutor' && current_user.tutor.onboarding_status < 4 %>
+            <li><%= link_to 'Account Setup', home_tutor_path(current_user.tutor.slug) %></li>
+          <% elsif current_user.role == 'campus_manager' || current_user.role == 'admin' %>
+            <li><%= link_to 'Admin', admin_tutors_path %></li>
+          <% end %>
+          <li><%= link_to 'Sign out', destroy_user_session_path, method: 'delete' %></li>
+        <% else %>
+          <li><%= link_to 'Login', new_user_session_path %></li>
+          <li><%= link_to 'Become a Tutor', become_a_tutor_path, class: 'become-a-tutor-button' %></li>
+        <% end %>
+      </ul>
+
+      <!-- Left Nav Section -->
+      <ul class="left">
+        <li class="has-dropdown">
+          <%= link_to(@school.name, change_school_path(school_id: @school.id), method: :post) %>
+          <ul class="dropdown">
+            <% School.all.each do |school| %>
+              <li><%= link_to(school.name, change_school_path(school_id: school.id), method: :post) %></li>
+            <% end %>
+          </ul>
+        </li>
+      </ul>
+    </section>
+  </nav>
+</div>
+
+
+<div id="standard-nav">
+  <nav>
+    <div class="nav-bar-wrapper clear-nav">
+      <div class="row nav-row">
+        <div class="nav-logo-box nav-link-box">
+          <%= link_to '/' do %>
+            <%= image_tag('logo_white.png', class: 'nav-logo') %>
+          <% end %>
+        </div>
+        <div class="nav-links-right-container nav-link-box">
+          <div class="nav-links-right"><%= link_to 'Login', new_user_session_path, class: 'become-a-tutor-button' %></div>
+        </div>
       </div>
     </div>
-  </div>
-</nav>
+  </nav>
+</div>
