@@ -2,7 +2,7 @@ Hi <%= @tutor.first_name %>
 
 This is to inform you that there has been a change to your appointment.
 
-Your Student: <%= public_name(@student.user) %>
+Your Student: <%= @student.public_name %>
 Course: <%= @appt.course.formatted_name %>
 Date/Time: <%= @appt.start_time.in_time_zone(@school.timezone).strftime("%b %e, %l:%M %p") %>
 
