@@ -23,10 +23,7 @@
           <td><%= Course.find(appt.course_id).formatted_name %></td>
           <td><%= appt.tutor.full_name %></td>
           <td><%= appt.tutor.email %></td>
-          <td>
-            <%= link_to 'Reschedule', view_reschedule_options_student_path(@student, appt.id), class: 'custom-button full-width blue' %>
-            <a href="#" data-reveal-id="confirm-cancel-appt-<%= appt.id %>" class="custom-button full-width danger">Cancel</a>
-          </td>
+          <td><a href="#" data-reveal-id="confirm-cancel-appt-<%= appt.id %>" class="custom-button full-width danger">Cancel</a></td>
         </tr>
       <% end %>
     </tbody>
