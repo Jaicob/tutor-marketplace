@@ -56,13 +56,13 @@ class AppointmentMailer < ApplicationMailer
   def appointment_cancellation_for_tutor(appointment_id)
     @appt = Appointment.find(appointment_id)
     set_appt_variables
-    mail(to: @tutor.email, subject: "One of your Axon appointments has been canceled")
+    mail(to: @tutor.email, subject: "One of your Axon appointments has been cancelled")
   end
 
   def appointment_cancellation_for_student(appointment_id)  
     @appt = Appointment.find(appointment_id)
     set_appt_variables
-    mail(to: @student.email, subject: "Your appointment has been canceled")
+    mail(to: @student.email, subject: "Your appointment has been cancelled")
   end
 
   private
