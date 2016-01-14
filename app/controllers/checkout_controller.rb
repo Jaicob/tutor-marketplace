@@ -16,10 +16,10 @@ class CheckoutController < ApplicationController
     end
     session[:tutor_id] = @tutor.id
     if session[:course_id] == nil || session[:tutor_id] == nil
-      redirect_to checkout_select_course_path(@tutor.slug)
+      redirect_to checkout_select_course_path(@tutor.slug, anchor: 'select-course')
       flash[:alert] = 'Please select a course'
     else
-      redirect_to checkout_select_times_path(@tutor.slug)
+      redirect_to checkout_select_times_path(@tutor.slug, anchor: 'select-times')
     end
   end
 
@@ -39,10 +39,10 @@ class CheckoutController < ApplicationController
     # recieves step 2 input, saves it to session & redirects to step 3
     session[:appt_info] = params[:appt_selection]
     if session[:appt_info] == nil
-      redirect_to checkout_select_times_path(@tutor.slug)
+      redirect_to checkout_select_times_path(@tutor.slug, anchor: 'select-times')
       flash[:alert] = 'Please select a meeting time'
     else
-      redirect_to checkout_select_location_path(@tutor.slug)
+      redirect_to checkout_select_location_path(@tutor.slug, anchor: 'set-location')
     end
   end
 
@@ -57,10 +57,10 @@ class CheckoutController < ApplicationController
       session[:location] = params[:location_selection][:location]
     end
     if session[:location].blank?
-      redirect_to checkout_select_location_path(@tutor.slug)
+      redirect_to checkout_select_location_path(@tutor.slug, anchor: 'set-location')
       flash[:alert] = 'Please enter a location preference'
     else
-      redirect_to checkout_review_booking_path(@tutor.slug)
+      redirect_to checkout_review_booking_path(@tutor.slug, anchor: 'review-booking')
     end
   end
 
@@ -74,7 +74,7 @@ class CheckoutController < ApplicationController
   def apply_promo_code
     # recieves promo_code, saves it in session variable and redirects back to review_booking page
     session[:promo_code] = params[:apply_promo_code][:code]
-    redirect_to checkout_review_booking_path
+    redirect_to checkout_review_booking_path(@tutor.slug)
   end
 
   def process_booking
@@ -86,7 +86,7 @@ class CheckoutController < ApplicationController
           User.find(@checkout_data[:new_user_id]).destroy
         end
       flash[:alert] = @checkout_data[:error]
-      redirect_to checkout_review_booking_path
+      redirect_to checkout_review_booking_path(@tutor.slug, anchor: 'review-booking')
       return
     end
   
@@ -95,7 +95,7 @@ class CheckoutController < ApplicationController
     if @context.success?
       session[:charge_id] = @context.charge.id
       StudentManagementMailer.delay.welcome_email(@context.charge.student.email)
-      redirect_to checkout_confirmation_path(@tutor.slug)
+      redirect_to checkout_confirmation_path(@tutor.slug, anchor: 'confirmation')
     else
 
       # for de-bugging CheckoutOrganizer, error details in server logs
@@ -110,7 +110,7 @@ class CheckoutController < ApplicationController
         end
       flash[:alert] = "Your booking was not processed: #{@context.error}"
       # flash[:alert] = 'Your booking was not processed due to a server error. You were not charged. Please try again and if you are still unable to complete your booking contact Axon at info@axontutors.com.'
-      redirect_to checkout_review_booking_path(@tutor.slug)
+      redirect_to checkout_review_booking_path(@tutor.slug, anchor: 'review-booking')
     end
   end
 

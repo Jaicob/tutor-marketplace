@@ -94,13 +94,13 @@
     <tbody>
       <tr>
         <td><%= link_to(appt.id, "/admin/appointments/#{appt.id}") %></td>
-        <td><%= appt.slot.tutor.full_name %></td>
-        <td><%= appt.student.full_name %></td>
+        <td><%= appt.slot.tutor.full_name if appt.slot.tutor %></td>
+        <td><%= appt.student.full_name if appt.student %></td>
         <td><%= appt.course.formatted_name %></td>
         <td><%= appt.date %>
         <td><%= appt.time %></td>
         <td><%= appt.status %></td>
-        <td><%= appt.slot.tutor.school.name %></td>
+        <td><%= appt.slot.tutor.school.name if appt.slot.tutor %></td>
       </tr>
     </tbody>
   <% end %>

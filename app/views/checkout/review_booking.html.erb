@@ -41,84 +41,66 @@
   };
 
 </script>
-
 <%= render '/dashboard/tutor/profile/tutor_profile' %>
-
-<div class="row">
-  <div class="small-12 columns">
-    <div class="checkout-step-title">
-      <div class="row">
-        <div class="small-12 columns">
-          <p>Checkout</p>
-        </div>
+<div class="checkout-process-screen">
+  <a= id="review-booking"></a>
+  <div class="row small-collapse medium-uncollapse">
+    <div class="small-12 columns">
+      <div class="checkout-step-title">
+        <p>Checkout</p>
       </div>
-    </div>
-    <div class="checkout-step-body">
-      <div class="row small-collapse">
-        <div class="small-12 columns">      
-          <div class="row">
-            <div class="small-12 columns medium-6 columns">
+      <div class="checkout-step-body">
+        <div class="row">
+          <div class="small-12 columns medium-6 columns">
+            <div class="margin-top-1em">
               <h5>Appointment Summary</h5>
-            </div>
-            <div class="small-12 columns medium-6 columns">
-              <h5>Appointment Times</h5>
-            </div>
-          </div>
-          <div class="row">
-            <div class="small-12 medium-6 columns">
               <%= render '/checkout/review_and_confirm_partials/appointment_summary' %>
             </div>
-            <div class="small-12 medium-6 columns">
+          </div>
+          <div class="small-12 columns medium-6 columns">
+            <div class="margin-top-1em">
+              <h5>Appointment Times</h5>
               <%= render '/checkout/review_and_confirm_partials/appointment_times' %>
             </div>
           </div>
-          <div class="row">
-            <div class="small-12 medium-6 columns">
+        </div>
+        <div class="row">
+          <div class="small-12 medium-6 columns">
+            <div class="margin-top-1em">
               <h5 class="margin-top-2em">Booking Summary</h5>
-            </div>
-            <div class="small-12 medium-6 columns">
-              <h5 class="margin-top-2em">Promotions</h5>
-            </div>
-          </div>
-          <div class="row">
-            <div class="small-12 medium-6 columns">
               <%= render '/checkout/review_and_confirm_partials/price_summary' %>
             </div>
-            <div class="small-12 medium-6 columns">
+          </div>
+          <div class="small-12 medium-6 columns">
+            <div class="margin-top-1em">
+              <h5 class="margin-top-2em">Promotions</h5>
               <%= render '/checkout/review_and_confirm_partials/promotions' %>
             </div>
           </div>
-
-          <div class="checkout-form margin-top-3em">
-
-            <% if current_user %>
-              <% if current_user.student && current_user.student.customer_id %>
-                <%= render '/checkout/payment_screens/returning_user_saved_card' %>
-              <% elsif current_user.student %>
-                <%= render '/checkout/payment_screens/returning_user_no_card' %>
-              <% elsif current_user.tutor %>
-                <%= render '/checkout/payment_screens/tutor_error_message' %>
-              <% end %>
-            <% else %>
-              <%= render '/checkout/payment_screens/new_user' %>
+        </div>
+        <div class="checkout-form margin-top-3em">
+          <% if current_user %>
+            <% if current_user.student && current_user.student.customer_id %>
+              <%= render '/checkout/payment_screens/returning_user_saved_card' %>
+            <% elsif current_user.student %>
+              <%= render '/checkout/payment_screens/returning_user_no_card' %>
+            <% elsif current_user.tutor %>
+              <%= render '/checkout/payment_screens/tutor_error_message' %>
             <% end %>
-
-            </div>
-          </div>
+          <% else %>
+            <%= render '/checkout/payment_screens/new_user' %>
+          <% end %>
         </div>
       </div>
     </div>
     <div class="checkout-steps-nav">
       <div class="row small-collapse">
-        <div class="small-12 columns">
-          <div class="row small-collapse">
-            <div class="small-12 medium-3 columns">
-              <%= link_to "Back to Set a Location", checkout_select_location_path(@tutor.slug), class: 'checkout-button gray' %>
-            </div>
-          </div>
+        <div class="small-12 medium-3 columns">
+          <%= link_to "Back to Set a Location", checkout_select_location_path(@tutor.slug, anchor: 'set-location'), class: 'checkout-button gray' %>
         </div>
       </div>
     </div>
   </div>
+</div>
 </div>
 </div>

@@ -18,8 +18,8 @@
           <td><%= @tutor.active_status %></td>
           <td><%= @tutor.user.full_name %></td>
           <td><%= @tutor.user.email %></td>
-          <td><%= @tutor.phone_number %></td>
-          <td><%= @tutor.school.name %></td>
+          <td><%= @tutor.phone_number if @tutor.phone_number %></td>
+          <td><%= @tutor.school.name if @tutor.school %></td>
           <td></td>
         </tr>
       </tbody>
@@ -115,19 +115,21 @@
     <fieldset>
       <legend class="admin-panel">Appointment Settings</legend>
       <p><strong>Personal Note to Students</strong></p>
-      <p><%= @tutor.appt_notes %></p>
+      <p><%= @tutor.appt_notes if @tutor.appt_notes %></p>
     </fieldset>
   </div>
 </div>
 
-<div class="row">
-  <div class="large-12 columns">
-    <fieldset>
-      <legend class="admin-panel">Transcript</legend>
-      <%= image_tag(@tutor.transcript_url) %>
-    </fieldset>
+<% if @tutor.transcript_url %>
+  <div class="row">
+    <div class="large-12 columns">
+      <fieldset>
+        <legend class="admin-panel">Transcript</legend>
+        <%= image_tag(@tutor.transcript_url) %>
+      </fieldset>
+    </div>
   </div>
-</div>
+<% end %>
 
 <!-- Confirmation model for destroying a Tutor account -->
 
