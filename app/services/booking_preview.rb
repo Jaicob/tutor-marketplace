@@ -6,6 +6,7 @@ class BookingPreview
     @course = Course.find(session[:course_id])
     @tutor = tutor
     @rate = TutorCourse.where(tutor_id: tutor.id, course_id: @course.id).first.rate
+    @promotion = Promotion.find_by(code: session[:promo_code]) if session[:promo_code]
   end
 
   def extract_appt_times_and_slot

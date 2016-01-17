@@ -31,16 +31,18 @@
       </ul>
 
       <!-- Left Nav Section -->
-      <ul class="left">
-        <li class="has-dropdown">
-          <%= link_to(@school.name, change_school_path(school_id: @school.id), method: :post) %>
-          <ul class="dropdown">
-            <% School.all.each do |school| %>
-              <li><%= link_to(school.name, change_school_path(school_id: school.id), method: :post) %></li>
-            <% end %>
-          </ul>
-        </li>
-      </ul>
+      <% if @school %>
+        <ul class="left">
+          <li class="has-dropdown">
+            <%= link_to(@school.name, change_school_path(school_id: @school.id), method: :post) %>
+            <ul class="dropdown">
+              <% School.all.each do |school| %>
+                <li><%= link_to(school.name, change_school_path(school_id: school.id), method: :post) %></li>
+              <% end %>
+            </ul>
+          </li>
+        </ul>
+      <% end %>
     </section>
   </nav>
 </div>
