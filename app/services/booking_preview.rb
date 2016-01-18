@@ -32,7 +32,9 @@ class BookingPreview
       rate: @rate,
       location: @location,
       appointments: @appt_hash,
-      total_price: total_price
+      total_price: total_price,
+      valid_promo: is_promo_valid?,
+      promo_discount: promo_discount if is_promo_valid? == true
     }
     return data
   end
@@ -44,6 +46,38 @@ class BookingPreview
     return formatted_total_price
   end
 
-end
+  def is_promo_valid?
+    if (@promotion.redemption_count >= @promotion.redemption_limit) || (Date.today > @promotion.valid_until)
+      return false
+    else
+      return true
+    end
+  end
 
-# info = {"11"=>"2015-12-16 12:00:00 UTC-!-164", "13"=>"2015-12-16 13:00:00 UTC-!-164"}
+  def promo_discount
+    case @promotion.category
+    when 'free_from_axon' # 0
+      prefix = 'AXONFREE'
+    when 'free_from_tutor' # 1
+      prefix = 'TUTORFREE'
+    when 'percent_off_from_axon' # 2
+      prefix = 'AXONPER'
+    when 'percent_off_from_tutor' # 3
+      prefix = 'TUTORPER'
+    when 'dollar_amount_off_from_axon' # 4
+      prefix = 'AXONDLR'
+    when 'dollar_amount_off_from_tutor' # 5
+      prefix = 'TUTORDLR'
+    when 'repeating_percent_off_from_tutor' # 6
+      prefix = 'TUTORPACKPER'
+    when 'repeating_dollar_amount_off_from_tutor' # 7
+      prefix = 'TUTORPACKDLR'
+    end
+  end
+
+  # free from Axon requires no payment and Stripe transfer from Axon to Tutor to cover fee
+  # free from Tutor requires a charge for 0 to be created (only in our DB, no need to involve Stripe)
+  # percent off from Axon requires lowering price of booking an entire 
+
+
+end

@@ -66,7 +66,6 @@ class Promotion < ActiveRecord::Base
       end
     end
 
-
     return self.redemption_count < self.redemption_limit &&
            self.valid_from.to_date <= Date.today &&
            Date.today <= self.valid_until.to_date
