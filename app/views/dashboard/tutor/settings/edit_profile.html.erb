@@ -39,7 +39,7 @@ a.profile-settings-link {
         <%= f.select(:degree, options_for_select(Tutor.degree_collection, ["#{@tutor.degree}"])) %>
         
         <%= f.label :major %>
-        <%= f.text_field :major, maxlength: 20 %>
+        <%= f.text_field :major, maxlength: 18 %>
 
         <%= f.label :additional_degrees, 'Additional Degrees' %>
         <%= f.text_field :additional_degrees, maxlength: 35 %>

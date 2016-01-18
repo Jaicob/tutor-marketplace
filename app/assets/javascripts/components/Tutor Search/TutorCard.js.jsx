@@ -8,6 +8,31 @@ var TutorCard = React.createClass({
 		var tutor = this.props.tutor;
     var profile_pic_url = tutor.profile_pic.thumb.url;
 
+
+    var degree = function (degree, major, graduation_year) {
+      if(major.length > 18) {
+        var major = major.slice(0, 18);
+      }
+      return (
+        <p className="degree">{degree + ', ' + major + " '" + String(graduation_year).substr(graduation_year.length - 2)}</p>
+      )
+    }
+
+    var additional_degrees = function (additional_degrees) {
+      if(additional_degrees != null){
+        var adjustButtonPosition = true;
+        if(additional_degrees.length > 35) {
+            var additional_degrees = additional_degrees.slice(0, 35);
+        }
+        return (
+            <p>
+              <i className="fi-plus"></i>
+              {additional_degrees}
+            </p>
+        )
+      }
+    }
+
     var desc = function (tutor, extra_info, last_line) {
       if(tutor.additional_degrees) {
         if(extra_info.length > 100){
@@ -44,17 +69,6 @@ var TutorCard = React.createClass({
         }
       }
     }
-    var additional_degrees = function (tutor) {
-      if(tutor.additional_degrees){
-        var adjustButtonPosition = true;
-        return (
-            <p>
-              <i className="fi-plus"></i>
-              {tutor.additional_degrees}
-            </p>
-        )
-      }
-    }
     var full_price = function(tutor_rate) {
       return (
         Math.round(tutor_rate * 1.15)
@@ -76,11 +90,11 @@ var TutorCard = React.createClass({
               </div>
               <div className="banner-row">
                 <i className="fi-book-bookmark"></i>
-                <p className="degree">{tutor.degree + ', ' + tutor.major + " '" + String(tutor.graduation_year).substr(tutor.graduation_year.length - 2)}</p>
+                <p className="degree">{degree(tutor.degree, tutor.major, tutor.graduation_year)}</p>
               </div>
             </div>
             <div className="additional_degrees">
-                {additional_degrees(tutor)}
+                {additional_degrees(tutor.additional_degrees)}
               </div>
             <div className="statements-box">
               <div className="statement">
