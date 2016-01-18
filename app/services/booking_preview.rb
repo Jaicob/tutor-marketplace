@@ -6,7 +6,7 @@ class BookingPreview
     @course = Course.find(session[:course_id])
     @tutor = tutor
     @rate = TutorCourse.where(tutor_id: tutor.id, course_id: @course.id).first.rate
-    @promotion = Promotion.find_by(code: session[:promo_code]) if session[:promo_code]
+    @promo_code = session[:promo_code]
   end
 
   def extract_appt_times_and_slot
@@ -25,7 +25,9 @@ class BookingPreview
 
   def format_info
     extract_appt_times_and_slot
-
+    
+    promo_applied = redeem_promo(@promo_code)
+    if promo_applied[:success] == true
     data = {
       tutor: @tutor,
       course: @course,
@@ -33,8 +35,6 @@ class BookingPreview
       location: @location,
       appointments: @appt_hash,
       total_price: total_price,
-      valid_promo: is_promo_valid?,
-      promo_discount: promo_discount if is_promo_valid? == true
     }
     return data
   end
@@ -46,34 +46,39 @@ class BookingPreview
     return formatted_total_price
   end
 
-  def is_promo_valid?
-    if (@promotion.redemption_count >= @promotion.redemption_limit) || (Date.today > @promotion.valid_until)
-      return false
-    else
-      return true
-    end
+  def redeem_promo
+    
   end
 
-  def promo_discount
-    case @promotion.category
-    when 'free_from_axon' # 0
-      prefix = 'AXONFREE'
-    when 'free_from_tutor' # 1
-      prefix = 'TUTORFREE'
-    when 'percent_off_from_axon' # 2
-      prefix = 'AXONPER'
-    when 'percent_off_from_tutor' # 3
-      prefix = 'TUTORPER'
-    when 'dollar_amount_off_from_axon' # 4
-      prefix = 'AXONDLR'
-    when 'dollar_amount_off_from_tutor' # 5
-      prefix = 'TUTORDLR'
-    when 'repeating_percent_off_from_tutor' # 6
-      prefix = 'TUTORPACKPER'
-    when 'repeating_dollar_amount_off_from_tutor' # 7
-      prefix = 'TUTORPACKDLR'
-    end
-  end
+  # def is_promo_valid?
+  #   if (@promotion.redemption_count >= @promotion.redemption_limit) || (Date.today > @promotion.valid_until)
+  #     return false
+  #   else
+  #     return true
+  #   end
+  # end
+
+  # def promo_discount
+  #   case @promotion.category
+  #   when 'free_from_axon' # 0
+  #     prefix = 'AXONFREE'
+  #   when 'free_from_tutor' # 1
+  #     prefix = 'TUTORFREE'
+  #   when 'percent_off_from_axon' # 2
+  #     prefix = 'AXONPER'
+  #   when 'percent_off_from_tutor' # 3
+  #     prefix = 'TUTORPER'
+  #   when 'dollar_amount_off_from_axon' # 4
+  #     prefix = 'AXONDLR'
+  #   when 'dollar_amount_off_from_tutor' # 5
+  #     prefix = 'TUTORDLR'
+  #   when 'repeating_percent_off_from_tutor' # 6
+  #     prefix = 'TUTORPACKPER'
+  #   when 'repeating_dollar_amount_off_from_tutor' # 7
+  #     prefix = 'TUTORPACKDLR'
+  #   end
+  #   return prefix
+  # end
 
   # free from Axon requires no payment and Stripe transfer from Axon to Tutor to cover fee
   # free from Tutor requires a charge for 0 to be created (only in our DB, no need to involve Stripe)
