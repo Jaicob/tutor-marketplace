@@ -106,7 +106,7 @@ class Tutor < ActiveRecord::Base
 
   # method called in after_commit hook to automatically update a tutor's application status and send application_completed email
   def update_application_status
-    if (self.onboarding_status == 4) && (self.application_status == 'Incomplete')
+    if (self.onboarding_status == 4) && (self.acct_id != nil) && (self.application_status == 'Incomplete')
       self.update(application_status: 'Complete')
       # TODO-JT - remove this if statement after Existing Tutor Onboarding period is over 
       if ExistingTutorOnboarding.new(self.email).existing_tutor? == false

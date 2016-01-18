@@ -80,6 +80,7 @@
   <table>
     <thead>
       <tr>
+        <th>#</th>
         <th>ID</th>
         <th>Tutor</th>
         <th>Student</th>
@@ -90,9 +91,11 @@
         <th>School</th>
       </tr>
     </thead>
+  <% n = 1 %>
   <% @appointments.each do |appt| %>
     <tbody>
       <tr>
+        <td><%= n %>
         <td><%= link_to(appt.id, "/admin/appointments/#{appt.id}") %></td>
         <td><%= appt.slot.tutor.full_name if appt.slot.tutor %></td>
         <td><%= appt.student.full_name if appt.student %></td>
@@ -103,6 +106,7 @@
         <td><%= appt.slot.tutor.school.name if appt.slot.tutor %></td>
       </tr>
     </tbody>
+    <% n += 1 %>
   <% end %>
   </table>
 </div>
