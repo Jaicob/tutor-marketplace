@@ -10,6 +10,7 @@
     <table>
       <thead>
         <tr>
+          <th>#</th>
           <th>ID</th>
           <th>School</th>
           <th>Name</th>
@@ -20,8 +21,10 @@
         </tr>
       </thead>
       <tbody>
+      <% n = 1 %>
       <% @students.each do |student| %>
         <tr>
+          <td><%= n %>
           <td><%= student.id %></td>
           <td><%= student.school.name %></td>
           <td><%= student.full_name %></td>
@@ -30,6 +33,7 @@
           <td><%= student.appointments.count %></td>
           <td><%= student.user.created_at.strftime('%-m-%d-%y') %></td>
         </tr>
+        <% n += 1 %>
       <% end %>
       </tbody>
     </table>
