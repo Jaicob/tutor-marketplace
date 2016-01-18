@@ -39,7 +39,6 @@ var TutorCard = React.createClass({
           return (
             <p>&#8226;
               {extra_info.slice(0, 100) + "..."}
-              <a href={"/tutors/" + tutor.slug} className="see-more">See More</a>
             </p>
             )
         }
@@ -53,14 +52,12 @@ var TutorCard = React.createClass({
           return (
             <p>&#8226;
               {extra_info.slice(0, 140) + "..."}
-              <a href={"/tutors/" + tutor.slug} className="see-more">See More</a>
             </p>
             )
           }
           return (
             <p>&#8226;
               {extra_info.slice(0, 100) + "..."}
-              <a href={"/tutors/" + tutor.slug} className="see-more">See More</a>
             </p>
             )
         }
