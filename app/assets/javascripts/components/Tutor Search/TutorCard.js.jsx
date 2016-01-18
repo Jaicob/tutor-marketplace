@@ -37,35 +37,30 @@ var TutorCard = React.createClass({
       if(tutor.additional_degrees) {
         if(extra_info.length > 100){
           return (
-            <p>&#8226;
-              {extra_info.slice(0, 100) + "..."}
-              <a href={"/tutors/" + tutor.slug} className="see-more">See More</a>
-            </p>
-            )
+            <p>{extra_info.slice(0, 100) + "..."}</p>
+          )
         }
         else {
-            return <p>&#8226; {extra_info}</p>
+          return (
+            <p>&#8226; {extra_info}</p>
+          )
         }
       }
       else {
         if(extra_info.length > 100){
           if(last_line != null) {
           return (
-            <p>&#8226;
-              {extra_info.slice(0, 140) + "..."}
-              <a href={"/tutors/" + tutor.slug} className="see-more">See More</a>
-            </p>
+            <p>{extra_info.slice(0, 140) + "..."}</p>
             )
           }
           return (
-            <p>&#8226;
-              {extra_info.slice(0, 100) + "..."}
-              <a href={"/tutors/" + tutor.slug} className="see-more">See More</a>
-            </p>
+            <p>{extra_info.slice(0, 100) + "..."}</p>
             )
         }
         else {
-            return <p>&#8226; {extra_info}</p>
+          return (
+            <p>{extra_info}</p>
+          )
         }
       }
     }
@@ -97,15 +92,17 @@ var TutorCard = React.createClass({
                 {additional_degrees(tutor.additional_degrees)}
               </div>
             <div className="statements-box">
-              <div className="statement">
-                {desc(tutor, tutor.extra_info_1)}
-              </div>
-              <div className="statement">
-                {desc(tutor, tutor.extra_info_2)}
-              </div>
-              <div className="statement">
-                {desc(tutor, tutor.extra_info_3, tutor.id)}
-              </div>
+              <a href={"/tutors/" + tutor.slug} className="see-more">
+                <div className="statement">
+                  {desc(tutor, tutor.extra_info_1)}
+                </div>
+                <div className="statement">
+                  {desc(tutor, tutor.extra_info_2)}
+                </div>
+                <div className="statement">
+                  {desc(tutor, tutor.extra_info_3, tutor.id)}
+                </div>
+              </a>
             </div>
           </div>
           <a href={"/tutors/" + tutor.slug + search + "#select-times"} data={"from-search"}>
