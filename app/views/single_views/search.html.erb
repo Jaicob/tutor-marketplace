@@ -2,8 +2,8 @@
 <%= javascript_include_tag "single_views/search" %>
 
 <div class="search-header-bg">
-  <div class="row">
-    <div class="small-12 medium-4 columns">
+  <div class="row small-collapse">
+    <div class="small-12 small-offset-1 medium-4 columns">
       <h2 class="search-title">Find Your Tutor</h2>
     </div>
     <div class="small-12 medium-7 end columns">
@@ -23,7 +23,7 @@
     </div>
   </div>
 </div>
-<div class="row">
+<div class="row small-collapse">
   <div class="small-12 columns">
     <div id="tutorCardContainer" class="cards">
       <p>Find your local <%= @school.name %> tutor.</p>

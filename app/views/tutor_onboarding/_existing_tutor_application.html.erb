@@ -57,7 +57,7 @@ $(document).ready(function()
             <%= f.select(:degree, options_for_select(Tutor.degree_collection, selected: 'Degree', disabled: 'Degree'), {required: true}) %>
           </div>
           <div class="small-12 medium-6 columns">
-            <%= f.text_field :major, placeholder: 'Major', maxlength: 20, required: true %>
+            <%= f.text_field :major, placeholder: 'Major', maxlength: 18, required: true %>
           </div>
           <div class="small-12 medium-4 columns">
             <%= f.text_field :graduation_year, placeholder: 'Graduation Year', required: true %>
