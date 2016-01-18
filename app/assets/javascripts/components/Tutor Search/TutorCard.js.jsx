@@ -19,51 +19,36 @@ var TutorCard = React.createClass({
     }
 
     var additional_degrees = function (additional_degrees) {
-      if(additional_degrees != null && additional_degrees.length > 0){
-        var adjustButtonPosition = true;
-        if(additional_degrees.length > 35) {
-            var additional_degrees = additional_degrees.slice(0, 35);
-        }
+      var adjustButtonPosition = true;
+      if(additional_degrees != null && additional_degrees.length > 35) {
+          var additional_degrees = additional_degrees.slice(0, 35);
         return (
             <p>
               <i className="fi-plus"></i>
               {additional_degrees}
             </p>
         )
+      } else {
+         // returns without plus sign if there is nothing to display
+        return (
+            <p className="hidden-filler-text">X</p>
+        )
       }
     }
 
-    var desc = function (tutor, extra_info, last_line) {
-      if(tutor.additional_degrees) {
-        if(extra_info.length > 100){
-          return (
-            <p>{extra_info.slice(0, 100) + "..."}</p>
-          )
-        }
-        else {
-          return (
-            <p>&#8226; {extra_info}</p>
-          )
-        }
+    var desc = function (tutor, extra_info) {
+      if(extra_info.length > 100){
+        return (
+          <p>{extra_info.slice(0, 100) + "..."}</p>
+        )
       }
       else {
-        if(extra_info.length > 100){
-          if(last_line != null) {
-          return (
-            <p>{extra_info.slice(0, 140) + "..."}</p>
-            )
-          }
-          return (
-            <p>{extra_info.slice(0, 100) + "..."}</p>
-            )
-        }
-        else {
-          return (
-            <p>{extra_info}</p>
-          )
-        }
+        return (
+          <p>{extra_info}</p>
+        )
       }
     }
+
     var full_price = function(tutor_rate) {
       return (
         Math.round(tutor_rate * 1.15)
@@ -106,7 +91,7 @@ var TutorCard = React.createClass({
             </div>
           </div>
           <a href={"/tutors/" + tutor.slug + search + "#select-times"} data={"from-search"}>
-            <div className="custom-button full-width adust-position{adjustButtonPosition}">Book Now
+            <div className="custom-button full-width">Book Now
             </div>
           </a>
         </div>
