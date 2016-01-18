@@ -28,6 +28,12 @@
           <li><%= link_to 'Login', new_user_session_path %></li>
           <li><%= link_to 'Become a Tutor', become_a_tutor_path, class: 'become-a-tutor-button' %></li>
         <% end %>
+        <% if @school %>
+          <% if @school.name == 'University of Georgia' %>
+            <a href="http://examreview.axontutors.com/" >Exam Review</a>
+          <% end %>
+        <% end %>
+          
       </ul>
 
       <!-- Left Nav Section -->
@@ -74,6 +80,11 @@
           </ul>
         </div>
         <div class="nav-links-right-container nav-link-box">
+          <% if @school %>
+            <% if @school.name == 'University of Georgia' %>
+              <div class="nav-links-right"><a href="http://examreview.axontutors.com/" >Exam Review</a></div>
+            <% end %>
+          <% end %>
           <% if user_signed_in? %>
             <% if current_user.role == 'student' %>
               <div class="nav-links-right"><%= link_to 'Dashboard', home_student_path(current_user) %></div>
