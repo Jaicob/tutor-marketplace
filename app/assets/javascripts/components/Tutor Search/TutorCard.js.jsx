@@ -20,8 +20,12 @@ var TutorCard = React.createClass({
 
     var additional_degrees = function (additional_degrees) {
       var adjustButtonPosition = true;
+      
       if(additional_degrees != null && additional_degrees.length > 35) {
-          var additional_degrees = additional_degrees.slice(0, 35);
+        var additional_degrees = additional_degrees.slice(0, 35);
+      }
+
+      if(additional_degrees != null && additional_degrees.length > 0) {
         return (
             <p>
               <i className="fi-plus"></i>
