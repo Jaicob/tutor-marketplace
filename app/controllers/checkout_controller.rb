@@ -72,9 +72,16 @@ class CheckoutController < ApplicationController
   end
 
   def apply_promo_code
-    # recieves promo_code, saves it in session variable and redirects back to review_booking page
+    # recieves promo_code, tries to retrieve promotion and redirects back to review_booking page with success or failure message
     session[:promo_code] = params[:apply_promo_code][:code]
-    redirect_to checkout_review_booking_path(@tutor.slug)
+    check_promo = BookingPreview.new(session, @tutor).is_promo_code_valid
+    if check_promo[:success] == true
+      flash[:success] = "Promo code was succesfully applied!"
+      redirect_to checkout_review_booking_path(@tutor.slug)
+    else
+      flash[:alert] = check_promo[:error]
+      redirect_to checkout_review_booking_path(@tutor.slug)
+    end
   end
 
   def process_booking

@@ -4,6 +4,13 @@
     <td>1-Hour Tutoring Appointment</td>
     <td>$<%= full_price(@booking_preview[:rate]) %></td>
   </tr>
+  <% if @booking_preview[:valid_promotion] %>
+    <tr>
+      <td>PROMO</td>
+      <td><%= @booking_preview[:promo_description] %></td>
+      <td>-$<%= @booking_preview[:promo_discount_value] %></td>
+    </tr>
+  <% end %>
   <tr>
     <td><span class="bold">Total Price</span></td>
     <td></td>
