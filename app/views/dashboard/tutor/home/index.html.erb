@@ -35,8 +35,8 @@
             <% @tutor.appointments.where(status: 'Scheduled').each do |appt| %>
             <% student = Student.find(appt.student_id) %>
               <tr>
-                <td><%= appt.start_time.in_time_zone(@school.timezone).strftime("%b %-d") %></td>
-                <td><%= appt.start_time.in_time_zone(@school.timezone).strftime("%l:%M%P") %></td>
+                <td><%= appt.date %></td>
+                <td><%= appt.time %></td>
                 <td><%= Course.find(appt.course_id).formatted_name %></td>
                 <td><%= student.full_name %></td>
                 <td><%= student.email %></td>
@@ -111,8 +111,8 @@
           <tbody>
             <% @tutor.appointments.each do |appt| %>
               <tr>
-                <td><%= appt.start_time.in_time_zone(@school.timezone).strftime("%b %-d") %></td>
-                <td><%= appt.start_time.in_time_zone(@school.timezone).strftime("%l:%M%P") %></td>
+                <td><%= appt.date %></td>
+                <td><%= appt.time %></td>
                 <td><%= Course.find(appt.course_id).formatted_name %></td>
                 <td><%= appt.status %></td>
                 <td><%= appt.student.full_name %></td>

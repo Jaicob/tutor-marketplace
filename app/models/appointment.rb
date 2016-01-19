@@ -103,16 +103,13 @@ class Appointment < ActiveRecord::Base
     self.start_time = self.start_time.in_time_zone("UTC")
   end
 
-  def formatted_start_time
-    self.start_time.strftime('%-m-%d-%y %l:%M %p')
-  end
-
+  # the next 3 helper methods format the start_time accordingly and apply the school's timezone
   def date
-    self.start_time.strftime('%-m-%d-%y')
+    self.start_time.in_time_zone(self.school.timezone).strftime('%A -  %-m/%d/%y')
   end
 
   def time
-    self.start_time.strftime('%l:%M %p')
+    self.start_time.in_time_zone(self.school.timezone).strftime('%l:%M %p')
   end
 
   # sends appropriate email based on changes made to an appt in Admin section
