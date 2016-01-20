@@ -19,16 +19,35 @@
 class Promotion < ActiveRecord::Base
   belongs_to :tutor # or if tutor_id is blank, is an Axon HQ coupon
 
+  validates :code, presence: true, uniqueness: true
   validates :redemption_limit, presence: true
   validates :valid_from, presence: true
   validates :valid_until, presence: true
   validates :description, presence: true
+  validate  :tutor_issued_must_have_tutor_id
+
 
   enum issuer: [:axon, :tutor]
   enum single_use: [:true, :false]  # single_use default is :true, meaning a promotion only discounts one appt in a booking with multiple appointments
                                     # if single_use is set to false, a promotion will discount all sessions in a booking (if redemption limit permits x number of redemptions) - this is useful for semester packages from tutors
 
-  def self.redeem_promo_code(promo_code, appt_rate, number_of_appts, tutor_id, course_id) # this assumes that multiple appts in one booking are all for the same tutor_course (i.e. the rate is the same for each appt)
+  def tutor_issued_must_have_tutor_id
+    if issuer == 'tutor'
+      if tutor_id.nil?
+        errors.add(:tutor_id, "cannot be blank for Tutor-issued coupon")
+      end
+    end
+  end
+
+  def course_and_tutor_at_same_school
+    tutor_school_id = Tutor.find(tutor_id).school.id
+    course_school_id = Course.find(course_id).school.id
+    if tutor_school_id != course_school_id
+      errors.add(:tutor, "cannot add courses from different school")
+    end
+  end
+
+  def self.redeem_promo_code(promo_code, tc_rate, number_of_appts, tutor_id, course_id) # this assumes that multiple appts in one booking are all for the same tutor_course (i.e. the rate is the same for each appt)
     promotion = Promotion.find_by(code: promo_code)
     if promotion.nil?
       return {success: false, error: 'Promo code was not found. Please try again or contact support at info@axontutors.com.'}
@@ -37,7 +56,7 @@ class Promotion < ActiveRecord::Base
       if validity_check[:success] == false
         return {success: false, error: validity_check[:error]}
       else
-        return promotion.process_discount(appt_rate, number_of_appts)
+        promotion.process_discount(tc_rate, number_of_appts)
       end
     end
   end
@@ -57,27 +76,27 @@ class Promotion < ActiveRecord::Base
     return {success: true}
   end
 
-  def process_discount(appt_rate, number_of_appts)
+  def process_discount(tc_rate, number_of_appts)
     if self.issuer == 'axon'
-      self.process_axon_discount(appt_rate, number_of_appts)
+      self.process_axon_discount(tc_rate, number_of_appts)
     else
-      self.process_tutor_discount(appt_rate, number_of_appts)
+      self.process_tutor_discount(tc_rate, number_of_appts)
     end
   end
 
-  def process_axon_discount(appt_rate, number_of_appts)
+  def process_axon_discount(tc_rate, number_of_appts)
     # normal prices for one appt
-    single_appt_tutor_fee = appt_rate * 100 
+    single_appt_tutor_fee = tc_rate * 100 
     single_appt_full_price = single_appt_tutor_fee * 1.15
     
     # normal prices for all appts in booking
-    tutor_fee = appt_rate * number_of_appts * 100
+    tutor_fee = tc_rate * number_of_appts * 100
     full_price =  (tutor_fee * 1.15).round   # TODO-JT - add in school transaction percentage if we need to be able to change for different schools
     
     # discount calculations
     discount = (1 - (self.amount.to_f / 100)) # if promo amount is 10 (i.e. 10%), then discount equals 0.9 (i.e. 90% of normal price)
-    if self.single_use == true
-      discount_price = (full_price - (appt_rate * 1.15) + (appt_rate * 1.15 * discount)).round
+    if self.single_use.to_sym == :true
+      discount_price = (full_price - (tc_rate * 1.15) + (tc_rate * 1.15 * discount)).round
     else
       discount_price = (full_price * discount).round
     end
@@ -88,6 +107,7 @@ class Promotion < ActiveRecord::Base
     discount_axon_fee = full_axon_fee - discount_value
     
     return {
+      success: true,
       full_price: full_price,
       discount_price: discount_price,
       discount_value: discount_value,
@@ -99,9 +119,9 @@ class Promotion < ActiveRecord::Base
     }
   end
 
-  def process_tutor_discount(appt_rate, number_of_appts)
+  def process_tutor_discount(tc_rate, number_of_appts)
     # normal prices for one appt
-    single_appt_tutor_fee = appt_rate * 100 
+    single_appt_tutor_fee = tc_rate * 100 
     tutor_fee = single_appt_tutor_fee * number_of_appts
     
     # discount calculations
@@ -118,6 +138,7 @@ class Promotion < ActiveRecord::Base
     discount_axon_fee = discount_price - discount_tutor_fee
 
     return {
+      success: true,
       full_price: full_price,
       discount_price: discount_price,
       discount_value: discount_value,
