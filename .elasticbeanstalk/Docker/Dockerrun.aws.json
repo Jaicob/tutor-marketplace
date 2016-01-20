@@ -20,9 +20,6 @@
 					"containerPort":443
 				}
 			],
-			"links" : [
-				"sidekiq"
-			],
 			"mountPoints":[
 				{
 					"sourceVolume" :"awseb-logs-web",

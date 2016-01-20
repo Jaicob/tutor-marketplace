@@ -7,6 +7,7 @@ usage: $0 options -v [VERSION] -e [ENVIRONMENT]
 eg. ./deploy -v 2.5.1 -e production
 
 This script builds pushes and deploys to either staging or production.
+Make sure to run this from the app root directory.
 
 OPTIONS:
    -h      Show this message
@@ -29,9 +30,13 @@ build()
 deploy()
 {
   echo "Building jaicob/web-app:$1-$2"
-  sed -i "" -e "s/.*ENV AWS_EB_ENV.*/ENV AWS_EB_ENV $1/" ./Dockerfile
-  sed -i "" -e 's/.*      "image" : "jaicob/web-app:.*/      "image" : "jaicob/web-app:staging-0.2.4",/' ./.elasticbeanstalk/Docker/Dockerrun.aws.json
-  docker build --build-arg AWS_EB_ENV=$1 -t jaicob/web-app:$1-$2 .
+  sed -i '' -e "s/.*ENV AWS_EB_ENV.*/ENV AWS_EB_ENV $1/"  ./Dockerfile
+  search=""
+  replace=""
+  # sed -i '' -e 's|.*"image" : "jaicob/web-app:.*|            "image" : "jaicob/web-app:$1-$2",|' ./.elasticbeanstalk/Docker/Dockerrun.aws.json
+  sed -i '' -e 's|.*"image" : "jaicob/web-app:.*|            "image" : "jaicob/web-app:'"$1"'-'"$2"'",|' ./.elasticbeanstalk/Docker/Dockerrun.aws.json
+
+  docker build -t jaicob/web-app:$1-$2 .
   if [ $? -eq 0 ]; then
     echo OK
     echo "Pushing jaicob/web-app:$1-$2"
@@ -39,13 +44,13 @@ deploy()
     if [ $? -eq 0 ]; then
       echo OK
       # (cd ./../.elasticbeanstalk/Docker/ && echo "eb deploy $1 $(pwd)/Dockerrun.aws.json")
-      
-      # if [ $? -eq 0 ]; then
-      #   echo "Deployment completed at $(date)"
-      # else
-      #   echo FAIL
-      #   exit 
-      # fi
+       eb deploy -l $1-$2 
+      if [ $? -eq 0 ]; then
+        echo "Deployment completed at $(date)"
+      else
+        echo FAIL
+        exit 
+      fi
     else
       echo FAIL
       exit 1

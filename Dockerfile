@@ -1,8 +1,8 @@
 FROM jaicob/rails-nginx-unicorn
 MAINTAINER jaicob(jaicob@icloud.com)
 
-# Set environment
-ENV AWS_EB_ENV=staging
+# Environment set in deploy script 
+ENV AWS_EB_ENV staging
 
 # Install tools needed
 RUN sudo npm install -g bower && \
