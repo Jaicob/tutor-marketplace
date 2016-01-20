@@ -126,6 +126,7 @@
       <fieldset>
         <legend class="admin-panel">Transcript</legend>
         <%= image_tag(@tutor.transcript_url) %>
+        <%= link_to 'View in new window',@tutor.transcript_url, target: '_blank', class: 'blue-link' %>
       </fieldset>
     </div>
   </div>
