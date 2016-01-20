@@ -1,0 +1,110 @@
+#!/bin/bash 
+
+usage()
+{
+cat << EOF
+usage: $0 options -v [VERSION] -e [ENVIRONMENT]
+eg. ./deploy -v 2.5.1 -e production
+
+This script builds pushes and deploys to either staging or production.
+
+OPTIONS:
+   -h      Show this message
+   -b      Build only
+   -v      Required: Version     
+   -e      Required: Environment, should be production or staging
+EOF
+}
+
+build() 
+{ 
+  echo "docker build -t jaicob/web-app:$1-$2 ."
+  if [ $? -eq 0 ]; then
+    echo OK
+  else
+    echo FAIL
+  fi
+}
+
+deploy()
+{
+  echo "docker build -t jaicob/web-app:$1-$2 ."
+  if [ $? -eq 0 ]; then
+    echo OK
+    echo "docker push jaicob/web-app:$1-$2"
+    if [ $? -eq 0 ]; then
+      echo OK
+      (cd ./../.elasticbeanstalk/Docker/ && echo "eb deploy $1 $(pwd)/Dockerrun.aws.json")
+      
+      if [ $? -eq 0 ]; then
+        echo "Deployment completed at $(date)"
+      else
+        echo FAIL
+        exit 
+      fi
+    else
+      echo FAIL
+      exit 1
+    fi
+  else
+    echo FAIL
+    exit 1
+  fi
+}
+
+bflag=false
+eflag=false
+vflag=false
+
+while getopts ":e:v:b" opt; do
+  case $opt in
+    e)
+      eflag=true
+      evalue=$OPTARG
+      ;;
+    v)
+      vflag=true
+      vvalue=$OPTARG
+      ;;
+    b)
+      bflag=true
+      ;;
+    h)
+      usage
+      exit 1
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      usage
+      exit 1
+      ;;
+    :)
+      echo "Option -$OPTARG requires an argument." >&2
+      exit 1
+      ;;
+  esac
+done
+
+if $eflag && $vflag; then
+  if $bflag; then
+    echo $bflag
+    build $evalue $vvalue
+    exit 1
+  fi
+  if [ "$evalue" == "production" ]; then
+    echo "Deploying to production"
+    deploy $evalue $vvalue
+    exit 1
+  elif [ "$evalue" == "staging" ]; then
+    echo "Deploying to staging"
+    deploy $evalue $vvalue
+    exit 1
+  else
+    echo "Invalid environment"
+    exit 1
+  fi
+else
+  echo "The environtment and version must be supplied"
+  usage
+  exit 1
+fi

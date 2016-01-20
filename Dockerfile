@@ -19,7 +19,7 @@ WORKDIR /home/rails/my-app
 
 # Place custom unicorn configs/scripts here
 COPY config/unicorn.rb /etc/my-app/config/unicorn.rb
-COPY unicorn_init.sh /etc/init.d/unicorn
+COPY scripts/unicorn_init.sh /etc/init.d/unicorn
 
 # Place custom nginx configs here
 COPY config/nginx-app-site.conf /etc/nginx/sites-enabled/default
@@ -30,7 +30,7 @@ COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Add and Run setup script. This sets up the tmp folder and symlinks it to shared
 # as well as sets up the database if necessary
-COPY setup.sh /etc/my-app/setup.sh
+COPY scripts/setup.sh /etc/my-app/setup.sh
 RUN /etc/my-app/setup.sh
 
 # Expose port 80
