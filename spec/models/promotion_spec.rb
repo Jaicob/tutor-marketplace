@@ -106,6 +106,36 @@ RSpec.describe Promotion, type: :model do
       expect(response[:description]).to eq @promotion.description
     end
 
+    it 'correctly calculates discount for booking with 3 appts and multiple-use 10% off Axon coupon' do
+      @promotion = create(:promotion, code: 'AXON10%OFF', single_use: 1)
+
+      response = Promotion.redeem_promo_code('AXON10%OFF',20,3,nil,nil)
+      expect(response[:success]).to eq true
+      expect(response[:full_price]).to eq 6900
+      expect(response[:discount_price]).to eq 6210
+      expect(response[:discount_value]).to eq 690
+      expect(response[:full_tutor_fee]).to eq 6000
+      expect(response[:full_axon_fee]).to eq 900
+      expect(response[:discount_axon_fee]).to eq 210
+      expect(response[:promotion_id]).to eq @promotion.id
+      expect(response[:description]).to eq @promotion.description
+    end
+
+    it 'correctly calculates discount for booking with 2 appts and single-use 50% off Axon coupon' do
+      @promotion = create(:promotion, code: 'AXON10%OFF', single_use: 0, amount: 50)
+
+      response = Promotion.redeem_promo_code('AXON10%OFF',20,3,nil,nil)
+      expect(response[:success]).to eq true
+      expect(response[:full_price]).to eq 6900
+      expect(response[:discount_price]).to eq 6670
+      expect(response[:discount_value]).to eq 230
+      expect(response[:full_tutor_fee]).to eq 6000
+      expect(response[:full_axon_fee]).to eq 900
+      expect(response[:discount_axon_fee]).to eq 670
+      expect(response[:promotion_id]).to eq @promotion.id
+      expect(response[:description]).to eq @promotion.description
+    end
+
 
 
 
