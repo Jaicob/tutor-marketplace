@@ -4,7 +4,7 @@
 #
 #  id               :integer          not null, primary key
 #  code             :string
-#  category         :integer
+#  issuer           :integer
 #  amount           :integer
 #  valid_from       :date
 #  valid_until      :date
@@ -13,6 +13,7 @@
 #  description      :text
 #  tutor_id         :integer
 #  course_id        :integer
+#  single_use       :integer          default(0)
 #
 
 require 'rails_helper'

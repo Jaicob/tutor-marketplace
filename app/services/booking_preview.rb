@@ -33,7 +33,7 @@ class BookingPreview
       rate: @rate,
       location: @location,
       appointments: @appt_hash,
-      total_price: total_price
+      total_price: total_price,
     }
 
     if @promotion
@@ -54,65 +54,8 @@ class BookingPreview
     return formatted_total_price
   end
 
-  def is_promo_code_valid
-    @promotion = Promotion.find_by(code: @promo_code)
-    # step 1: check if promo code matches up with a promotion (i.e. can the above line find a promotion)
-    if @promotion.nil?
-      response = {
-        success: false,
-        error: "Promo code was not found. Please check that you entered the code correctly. If you continue to have problems, please contact support at info@axontutors.com"
-      }
-    else
-      # (step 2: check if promotion has expired) && (step 3: check if promo still has reached redemption limit)
-      if (Date.today > @promotion.valid_until) || (@promotion.redemption_count >= @promotion.redemption_limit)
-        response = {
-          success: false,
-          error: "Promo code has expired."
-        }
-      else
-        response = {
-          success: true
-        }
-      end
-    end
-    return response
-  end
-
-  def format_discount_info
-    # figure out amount of discount and save to @discount_value
-    promo_category = @promotion.category.to_sym
-
-    case promo_category
-      
-      when :free_from_axon
-        @discount_value = total_price
-      
-      # when :free_from_tutor
-      #   @method = apply_free_from_tutor_promo
-      
-      when :percent_off_from_axon
-        @discount_value = total_price.to_i * @promotion.amount
-      
-      # when :percent_off_from_tutor
-      #   @method = apply_percentage_off_from_tutor_promo
-      
-      # when :dollar_amount_off_from_axon
-      #   @method = apply_dollar_amount_off_from_axon_promo
-      
-      # when :dollar_amount_off_from_tutor
-      #   @method = apply_dollar_amount_off_from_tutor_promo
-
-      # when :repeating_percent_off_from_tutor
-      #   @method = apply_repeating_percent_off_from_tutor_promo
-
-      # when :repeating_dollar_amount_off_from_tutor
-      #   @method = apply_repeating_dollar_amount_off_from_tutor_promo
-
-    end
-
-
+  def redeem_promo_code
+    Promotion.redeem()
   end
 
 end
-
-# info = {"11"=>"2015-12-16 12:00:00 UTC-!-164", "13"=>"2015-12-16 13:00:00 UTC-!-164"}

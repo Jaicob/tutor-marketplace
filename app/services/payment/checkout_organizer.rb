@@ -9,7 +9,7 @@ class CheckoutOrganizer
     # :appts_info [{slot_id: x, course_id: x, start_time: xxx},{slot_id: x, course_id: x, start_time: xxx}]
     # :promotion_id (optional)
 
-  organize CreateAppointments, CreateCharge, ApplyPromoCode, ReconcileCouponDifference, SendPayment, SendEmails
+  organize CreateAppointments, CreateCharge, ApplyPromoCode, SendPayment, ReconcileCouponDifference, SendEmails
 
 end
 

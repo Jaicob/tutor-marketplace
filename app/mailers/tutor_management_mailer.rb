@@ -4,7 +4,7 @@ class TutorManagementMailer < ApplicationMailer
   def welcome_email(user_id)
     @user = User.find(user_id)
     @tutor = @user.tutor
-    mail(to: @user.email, subject: "Thanks for signing up to become an Axon Tutor")
+    mail(to: @user.email, subject: "Welcome! :) Plus a quick question...")
   end
 
   def application_completed_email(user_id)
