@@ -90,29 +90,30 @@ class Promotion < ActiveRecord::Base
     single_appt_full_price = single_appt_tutor_fee * 1.15
     
     # normal prices for all appts in booking
-    tutor_fee = tc_rate * number_of_appts * 100
-    full_price =  (tutor_fee * 1.15).round   # TODO-JT - add in school transaction percentage if we need to be able to change for different schools
+    regular_tutor_fee = tc_rate * number_of_appts * 100
+    regular_price =  (regular_tutor_fee * 1.15).round   # TODO-JT - add in school transaction percentage if we need to be able to change for different schools
     
     # discount calculations
     discount = (1 - (self.amount.to_f / 100)) # if promo amount is 10 (i.e. 10%), then discount equals 0.9 (i.e. 90% of normal price)
     if self.single_use == 'true'
-      discount_price = (full_price - (single_appt_full_price) + (single_appt_full_price * discount)).round
+      discount_price = (regular_price - (single_appt_full_price) + (single_appt_full_price * discount)).round
     else
-      discount_price = (full_price * discount).round
+      discount_price = (regular_price * discount).round
     end
-    discount_value = full_price - discount_price
+    discount_value = regular_price - discount_price
 
     # axon fees before and after discount
-    full_axon_fee = full_price - tutor_fee
-    discount_axon_fee = full_axon_fee - discount_value
+    regular_axon_fee = regular_price - regular_tutor_fee
+    discount_axon_fee = regular_axon_fee - discount_value
     
     return {
       success: true,
-      full_price: full_price,
+      regular_price: regular_price,
       discount_price: discount_price,
       discount_value: discount_value,
-      full_tutor_fee: tutor_fee,
-      full_axon_fee: full_axon_fee,
+      regular_tutor_fee: regular_tutor_fee,
+      discount_tutor_fee: regular_tutor_fee, # supposed to be the same here, bc Axon is paying for discount, but still included to keep response data uniform for both promo types
+      regular_axon_fee: regular_axon_fee,
       discount_axon_fee: discount_axon_fee,
       promotion_id: self.id,
       description: self.description
@@ -122,29 +123,30 @@ class Promotion < ActiveRecord::Base
   def process_tutor_discount(tc_rate, number_of_appts)
     # normal prices for one appt
     single_appt_tutor_fee = tc_rate * 100 
-    tutor_fee = single_appt_tutor_fee * number_of_appts
+    regular_tutor_fee = single_appt_tutor_fee * number_of_appts
     
     # discount calculations
     discount = (1 - (self.amount.to_f / 100)) # if promo amount is 10 (i.e. 10%), then discount equals 0.9 (i.e. 90% of normal price)
     if self.single_use == 'true'
-      discount_tutor_fee = (tutor_fee - single_appt_tutor_fee + (single_appt_tutor_fee * discount)).round
+      discount_tutor_fee = (regular_tutor_fee - single_appt_tutor_fee + (single_appt_tutor_fee * discount)).round
     else
-      discount_tutor_fee = (tutor_fee * discount).round
+      discount_tutor_fee = (regular_tutor_fee * discount).round
     end
 
-    full_price = (tutor_fee * 1.15).round
+    regular_price = (regular_tutor_fee * 1.15).round
     discount_price = (discount_tutor_fee * 1.15).round
-    discount_value = full_price - discount_price
+    discount_value = regular_price - discount_price
     discount_axon_fee = discount_price - discount_tutor_fee
 
     return {
       success: true,
-      full_price: full_price,
+      regular_price: regular_price,
       discount_price: discount_price,
       discount_value: discount_value,
-      full_tutor_fee: tutor_fee,
+      regular_tutor_fee: regular_tutor_fee,
       discount_tutor_fee: discount_tutor_fee,
-      axon_fee: discount_axon_fee,
+      regular_axon_fee: regular_price - regular_tutor_fee,
+      discount_axon_fee: discount_axon_fee,
       promotion_id: self.id,
       description: self.description
     }

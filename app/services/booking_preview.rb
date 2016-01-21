@@ -25,7 +25,6 @@ class BookingPreview
 
   def format_info
     extract_appt_times_and_slot
-    is_promo_code_valid if !@promo_code.nil?
 
     data = {
       tutor: @tutor,
@@ -36,12 +35,26 @@ class BookingPreview
       total_price: total_price,
     }
 
-    if @promotion
-      format_discount_info
-      data[:valid_promotion] = true
-      data[:promo_description] = @promotion.description
-      data[:promo_discount_value] = @discount_value
-      data[:total_price] = total_price.to_i - @discount_value.to_i
+    if !@promo_code.nil?
+      @promo = redeem_promo_code
+      if @promo[:success] == true
+        data[:promo_data] = {
+          success: @promo[:success],
+          full_price: @promo[:full_price],
+          discount_price: @promo[:discount_price],
+          discount_value: @promo[:discount_value],
+          full_tutor_fee: @promo[:full_tutor_fee],
+          # full_axon_fee: @promo[:full_axon_fee,
+          discount_axon_fee: @promo[:discount_axon_fee],
+          promotion_id: @promo[:promotion_id],
+          # description: @promo[:description],
+        }
+      else 
+        data[:promo_data] = {
+          success: false,
+          error: submit_promo[:error]
+        }
+      end
     end
 
     return data
@@ -54,8 +67,12 @@ class BookingPreview
     return formatted_total_price
   end
 
+  def recalculate_total_price_with_discount
+    total_price - data[:promo_data][:discount_value]
+  end
+
   def redeem_promo_code
-    Promotion.redeem()
+    Promotion.redeem_promo_code(@promo_code, @rate, @appt_info.count, @tutor, @course.id)
   end
 
 end

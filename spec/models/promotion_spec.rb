@@ -81,11 +81,11 @@ RSpec.describe Promotion, type: :model do
 
       response = Promotion.redeem_promo_code('AXON10%OFF',20,1,nil,nil)
       expect(response[:success]).to eq true
-      expect(response[:full_price]).to eq 2300
+      expect(response[:regular_price]).to eq 2300
       expect(response[:discount_price]).to eq 2070
       expect(response[:discount_value]).to eq 230
-      expect(response[:full_tutor_fee]).to eq 2000
-      expect(response[:full_axon_fee]).to eq 300
+      expect(response[:regular_tutor_fee]).to eq 2000
+      expect(response[:regular_axon_fee]).to eq 300
       expect(response[:discount_axon_fee]).to eq 70
       expect(response[:promotion_id]).to eq @promotion.id
       expect(response[:description]).to eq @promotion.description
@@ -96,11 +96,11 @@ RSpec.describe Promotion, type: :model do
 
       response = Promotion.redeem_promo_code('AXON10%OFF',20,3,nil,nil)
       expect(response[:success]).to eq true
-      expect(response[:full_price]).to eq 6900
+      expect(response[:regular_price]).to eq 6900
       expect(response[:discount_price]).to eq 6670
       expect(response[:discount_value]).to eq 230
-      expect(response[:full_tutor_fee]).to eq 6000
-      expect(response[:full_axon_fee]).to eq 900
+      expect(response[:regular_tutor_fee]).to eq 6000
+      expect(response[:regular_axon_fee]).to eq 900
       expect(response[:discount_axon_fee]).to eq 670
       expect(response[:promotion_id]).to eq @promotion.id
       expect(response[:description]).to eq @promotion.description
@@ -111,11 +111,11 @@ RSpec.describe Promotion, type: :model do
 
       response = Promotion.redeem_promo_code('AXON10%OFF',20,3,nil,nil)
       expect(response[:success]).to eq true
-      expect(response[:full_price]).to eq 6900
+      expect(response[:regular_price]).to eq 6900
       expect(response[:discount_price]).to eq 6210
       expect(response[:discount_value]).to eq 690
-      expect(response[:full_tutor_fee]).to eq 6000
-      expect(response[:full_axon_fee]).to eq 900
+      expect(response[:regular_tutor_fee]).to eq 6000
+      expect(response[:regular_axon_fee]).to eq 900
       expect(response[:discount_axon_fee]).to eq 210
       expect(response[:promotion_id]).to eq @promotion.id
       expect(response[:description]).to eq @promotion.description
@@ -126,11 +126,11 @@ RSpec.describe Promotion, type: :model do
 
       response = Promotion.redeem_promo_code('AXON10%OFF',20,2,nil,nil)
       expect(response[:success]).to eq true
-      expect(response[:full_price]).to eq 4600
+      expect(response[:regular_price]).to eq 4600
       expect(response[:discount_price]).to eq 3450
       expect(response[:discount_value]).to eq 1150
-      expect(response[:full_tutor_fee]).to eq 4000
-      expect(response[:full_axon_fee]).to eq 600
+      expect(response[:regular_tutor_fee]).to eq 4000
+      expect(response[:regular_axon_fee]).to eq 600
       expect(response[:discount_axon_fee]).to eq -550
       expect(response[:promotion_id]).to eq @promotion.id
       expect(response[:description]).to eq @promotion.description
@@ -144,12 +144,12 @@ RSpec.describe Promotion, type: :model do
 
       response = Promotion.redeem_promo_code('TUTOR50%OFF',20,1,@tutor.id,@tutor_course.course.id)
       expect(response[:success]).to eq true
-      expect(response[:full_price]).to eq 2300
+      expect(response[:regular_price]).to eq 2300
       expect(response[:discount_price]).to eq 1150
       expect(response[:discount_value]).to eq 1150
-      expect(response[:full_tutor_fee]).to eq 2000
+      expect(response[:regular_tutor_fee]).to eq 2000
       expect(response[:discount_tutor_fee]).to eq 1000
-      expect(response[:axon_fee]).to eq 150
+      expect(response[:discount_axon_fee]).to eq 150
       expect(response[:promotion_id]).to eq @promotion.id
       expect(response[:description]).to eq @promotion.description
     end
@@ -159,12 +159,12 @@ RSpec.describe Promotion, type: :model do
 
       response = Promotion.redeem_promo_code('TUTOR25%OFF',20,2,@tutor.id,@tutor_course.course.id)
       expect(response[:success]).to eq true
-      expect(response[:full_price]).to eq 4600
+      expect(response[:regular_price]).to eq 4600
       expect(response[:discount_price]).to eq 4025
       expect(response[:discount_value]).to eq 575
-      expect(response[:full_tutor_fee]).to eq 4000
+      expect(response[:regular_tutor_fee]).to eq 4000
       expect(response[:discount_tutor_fee]).to eq 3500
-      expect(response[:axon_fee]).to eq 525
+      expect(response[:discount_axon_fee]).to eq 525
       expect(response[:promotion_id]).to eq @promotion.id
       expect(response[:description]).to eq @promotion.description
     end
@@ -174,12 +174,12 @@ RSpec.describe Promotion, type: :model do
 
       response = Promotion.redeem_promo_code('TUTOR10%0FFSEMESTER',20,5,@tutor.id,@tutor_course.course.id)
       expect(response[:success]).to eq true
-      expect(response[:full_price]).to eq 11500
+      expect(response[:regular_price]).to eq 11500
       expect(response[:discount_price]).to eq 10350
       expect(response[:discount_value]).to eq 1150
-      expect(response[:full_tutor_fee]).to eq 10000
+      expect(response[:regular_tutor_fee]).to eq 10000
       expect(response[:discount_tutor_fee]).to eq 9000
-      expect(response[:axon_fee]).to eq 1350
+      expect(response[:discount_axon_fee]).to eq 1350
       expect(response[:promotion_id]).to eq @promotion.id
       expect(response[:description]).to eq @promotion.description
     end
