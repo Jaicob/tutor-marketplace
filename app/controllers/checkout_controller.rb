@@ -65,16 +65,31 @@ class CheckoutController < ApplicationController
   end
 
   def review_booking
+    if session[:location].blank?
+      redirect_to checkout_select_course_path(@tutor.slug, anchor: 'select-course')
+    end
     # step 4, all booking information is set and shown to customer here
     # - if logged in, customer has option to use saved card (if one exists) or use a new card (with an option to save it)
     # - if NOT logged in, a customer has the option to sign in (moves to above step) or sign up and use a new card (with an option to save it)
     @booking_preview = BookingPreview.new(session, @tutor).format_info
+    puts "@booking_preview!!!!!! = #{@booking_preview}"
   end
 
   def apply_promo_code
-    # recieves promo_code, saves it in session variable and redirects back to review_booking page
+    # recieves promo_code, tries to retrieve promotion and redirects back to review_booking page with success or failure message
     session[:promo_code] = params[:apply_promo_code][:code]
-    redirect_to checkout_review_booking_path(@tutor.slug)
+    preview = BookingPreview.new(session, @tutor).format_info
+    if preview[:promo_data][:success] == true
+      flash[:success] = "Promo code was succesfully applied!"
+      puts "regular tutor fee = #{preview[:promo_data][:regular_tutor_fee]}"
+      puts "discount tutor fee = #{preview[:promo_data][:discount_tutor_fee]}"
+      puts "regular axon fee = #{preview[:promo_data][:regular_axon_fee]}"
+      puts "discount axon fee = #{preview[:promo_data][:discount_axon_fee]}"
+      redirect_to checkout_review_booking_path(@tutor.slug, anchor: 'review-booking')
+    else
+      flash[:alert] = preview[:promo_data][:error]
+      redirect_to checkout_review_booking_path(@tutor.slug, anchor: 'review-booking')
+    end
   end
 
   def process_booking
@@ -118,6 +133,7 @@ class CheckoutController < ApplicationController
     @booking_preview = BookingPreview.new(session, @tutor).format_info
     @charge = Charge.find(session[:charge_id])
     @card_info = Processor::Stripe.new.get_charge_details(@charge.stripe_charge_id)
+    delete_all_session_variables
   end
 
   private
@@ -128,6 +144,14 @@ class CheckoutController < ApplicationController
 
     def back_to_search
       @from_search = true if request.referer && request.referer.split(/[^[:alpha:]]+/).include?('search')
+    end
+
+    def delete_all_session_variables
+      # session[:course_id] = nil
+      # session[:appt_info] = nil
+      # session[:location] = nil
+      # session[:charge_id] = nil
+      # session[:promo_code] = nil
     end
 
 end

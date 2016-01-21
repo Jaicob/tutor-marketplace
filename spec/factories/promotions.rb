@@ -4,7 +4,7 @@
 #
 #  id               :integer          not null, primary key
 #  code             :string
-#  category         :integer
+#  issuer           :integer
 #  amount           :integer
 #  valid_from       :date
 #  valid_until      :date
@@ -13,19 +13,22 @@
 #  description      :text
 #  tutor_id         :integer
 #  course_id        :integer
+#  single_use       :integer          default(0)
 #
 
 FactoryGirl.define do
   factory :promotion do
-    code 'TestPromo'
-    category 'Free'
-    amount 10
-    valid_from "2015-09-21"
-    valid_until "2020-01-01"
+    code 'AXON10%OFF'
+    issuer 0       # 0 = Axon, 1 = Tutor
+    amount 10      # Percent off as integer
+    valid_from Date.today
+    valid_until Date.today + 100
     redemption_limit 100
     redemption_count 0
+    description '10% off one session'
     tutor
     course_id 1
+    single_use 0    # 0 = true, 1 = false
   end
 
 end
