@@ -6,11 +6,6 @@ class SendPayment
       charge = context.charge
       if context.charge.amount > 0
         processor = PaymentFactory.new.build
-        puts "CHARGE!!!!!!!!!!!!!"
-        puts "CHARGE!!!!!!!!!!!!!"
-        puts "charge = #{charge.attributes}"
-        puts "CHARGE!!!!!!!!!!!!!"
-        puts "CHARGE!!!!!!!!!!!!!"
         if charge.axon_fee < 0
           context.tutor_compensation_by_axon_required = true
           context.tutor_compensation_amount = charge.axon_fee.abs

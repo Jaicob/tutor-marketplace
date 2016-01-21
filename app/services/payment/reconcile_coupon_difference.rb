@@ -11,30 +11,9 @@ class ReconcileCouponDifference
       if context.tutor_compensation_by_axon_required == true
         processor = PaymentFactory.new.build
         tutor = context.charge.tutor
-        puts "context.charge.axon_fee = #{context.charge.axon_fee}"
-        puts "context.charge.axon_fee.abs = #{context.charge.axon_fee.abs}"
-        puts "context.charge.axon_fee.abs.class = #{context.charge.axon_fee.abs.class}"
-        puts "context.charge.axon_fee.abs.to_i = #{context.charge.axon_fee.abs.to_i}"
         transfer_amount = context.tutor_compensation_amount
         promotion = Promotion.find_by(code: context.promo_code)
         processor.reconcile_coupon_difference(tutor, transfer_amount, promotion)
-        puts "RECONCILE COUPON WAS CALLED!!!!!!!!!!!"
-        puts "RECONCILE COUPON WAS CALLED!!!!!!!!!!!"
-        puts "RECONCILE COUPON WAS CALLED!!!!!!!!!!!"
-        puts "RECONCILE COUPON WAS CALLED!!!!!!!!!!!"
-        puts "RECONCILE COUPON WAS CALLED!!!!!!!!!!!"
-        puts "RECONCILE COUPON WAS CALLED!!!!!!!!!!!"
-        puts "context.charge.axon_fee = #{context.charge.axon_fee}"
-        puts "context.charge.axon_fee < 0 = #{context.charge.axon_fee < 0}"
-      else
-        puts "RECONCILE COUPON WAS nooooooot CALLED!!!!!!!!!!!"
-        puts "RECONCILE COUPON WAS nooooooot CALLED!!!!!!!!!!!"
-        puts "RECONCILE COUPON WAS nooooooot CALLED!!!!!!!!!!!"
-        puts "RECONCILE COUPON WAS nooooooot CALLED!!!!!!!!!!!"
-        puts "RECONCILE COUPON WAS nooooooot CALLED!!!!!!!!!!!"
-        puts "RECONCILE COUPON WAS nooooooot CALLED!!!!!!!!!!!"
-        puts "context.charge.axon_fee = #{context.charge.axon_fee}"
-        puts "context.charge.axon_fee < 0 = #{context.charge.axon_fee < 0}"
       end
     rescue => error
       context.fail!(
