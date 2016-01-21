@@ -126,7 +126,7 @@ class Promotion < ActiveRecord::Base
     
     # discount calculations
     discount = (1 - (self.amount.to_f / 100)) # if promo amount is 10 (i.e. 10%), then discount equals 0.9 (i.e. 90% of normal price)
-    if self.single_use == true
+    if self.single_use == 'true'
       discount_tutor_fee = (tutor_fee - single_appt_tutor_fee + (single_appt_tutor_fee * discount)).round
     else
       discount_tutor_fee = (tutor_fee * discount).round
@@ -142,11 +142,12 @@ class Promotion < ActiveRecord::Base
       full_price: full_price,
       discount_price: discount_price,
       discount_value: discount_value,
+      full_tutor_fee: tutor_fee,
       discount_tutor_fee: discount_tutor_fee,
-      discount_axon_fee: discount_axon_fee,
+      axon_fee: discount_axon_fee,
       promotion_id: self.id,
       description: self.description
     }
   end
-  
+
 end
