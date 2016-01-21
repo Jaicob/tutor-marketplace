@@ -1,8 +1,8 @@
 module CheckoutHelper
 
-  def full_price(tutor_course_rate)
-    full_price = (tutor_course_rate * 1.15)
-    sprintf('%.2f', full_price)
+  def display_price(any_amount_in_cents)
+    amount_in_dollars = any_amount_in_cents / 100.to_f
+    sprintf('%.2f', amount_in_dollars)
   end
 
 end

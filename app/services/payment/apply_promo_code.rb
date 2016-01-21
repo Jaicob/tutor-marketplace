@@ -1,18 +1,30 @@
 class ApplyPromoCode
   include Interactor
 
-  before do
-    # Determines the type of a promo code (if one exists) and calls the appropriate method to evaluate that promo code category
-    if context.promotion_id != nil
-      promo_category = Promotion.find(context.promotion_id).category.to_sym
-    else
-      @method = nil
-    end
-  end
-
   def call
     begin
-      @method
+    if context.promo_code != nil
+
+      promo_code = context.promo_code
+      tc_rate_in_cents = context.rates.first * 100
+      appt_count = context.appointments.count
+      tutor_id = context.tutor_id
+      course_id = context.appointments.first.course_id
+
+      promo = Promotion.redeem_promo_code(promo_code, tc_rate_in_cents, appt_count, tutor_id, course_id)
+      if promo[:success] == true
+        charge = context.charge
+        charge.update(
+          amount: promo[:discount_price],
+          axon_fee: promo[:discount_axon_fee],
+          tutor_fee: promo[:discount_tutor_fee],
+          promotion_id: promo[:promotion_id]
+        )
+      else
+        raise 'PROMOTION ERROR'
+      end
+    end
+
     rescue => error
       context.fail!(
         error: error,

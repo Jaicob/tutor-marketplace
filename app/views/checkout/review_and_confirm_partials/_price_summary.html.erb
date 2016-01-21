@@ -2,31 +2,31 @@
   <tr>
     <td><%= @booking_preview[:appointments].count %> x</td>
     <td>1-Hour Tutoring Appointment</td>
-    <td>$<%= @booking_preview[:rate] %></td>
+    <td>$<%= display_price(@booking_preview[:full_rate]) %></td>
   </tr>
   <tr>
     <td>Total Price</td>
     <td></td>
-    <td>$<%= @booking_preview[:total_price] %></td>
+    <td>$<%= display_price(@booking_preview[:total_price]) %></td>
   </tr>
   <% if @booking_preview[:promo_data] && @booking_preview[:promo_data][:success] == true %>
     <!-- Amount Due line + Promo line when Promo code is applied -->
     <tr>
       <td>PROMO</td>
       <td><%= @booking_preview[:promo_data][:description] %></td>
-      <td>-$<%= @booking_preview[:promo_data][:discount_value] %></td>
+      <td>-$<%= display_price(@booking_preview[:promo_data][:discount_value]) %></td>
     </tr>
     <tr>
-      <td><span class="bold">Amount Due</span></td>
+      <td><span class="bold">Total</span></td>
       <td></td>
-      <td><span class="bold">$<%= @booking_preview[:promo_data][:discount_price] %></span></td>
+      <td><span class="bold">$<%= display_price(@booking_preview[:promo_data][:discount_price]) %></span></td>
     </tr>
   <% else %>
     <!-- Amount Due line when no Promo Code is applied -->
     <tr>
-      <td><span class="bold">Amount Due</span></td>
+      <td><span class="bold">Total</span></td>
       <td></td>
-      <td><span class="bold">$<%= @booking_preview[:total_price] %></span></td>
+      <td><span class="bold">$<%= display_price(@booking_preview[:total_price]) %></span></td>
     </tr>
   <% end %>
 </table>

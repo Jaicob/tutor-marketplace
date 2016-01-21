@@ -27,6 +27,11 @@ class Promotion < ActiveRecord::Base
   validate  :tutor_issued_must_have_tutor_id
 
 
+
+  # x = Promotion.create(code: 'AXON50%OFF', issuer: 0, amount: 50, valid_from: Date.today - 10, valid_until: Date.today + 10, redemption_limit: 2, redemption_count: 0, description: '50% off one session', tutor_id: nil, course_id: nil, single_use: 0)
+  # t = Promotion.create(code: 'TUTOR50%OFF', issuer: 1, amount: 50, valid_from: Date.today - 10, valid_until: Date.today + 10, redemption_limit: 2, redemption_count: 0, description: '50% off one session', tutor_id: Tutor.last.id, course_id: Tutor.last.courses.first.id, single_use: 0)
+
+
   enum issuer: [:axon, :tutor]
   enum single_use: [:true, :false]  # single_use default is :true, meaning a promotion only discounts one appt in a booking with multiple appointments
                                     # if single_use is set to false, a promotion will discount all sessions in a booking (if redemption limit permits x number of redemptions) - this is useful for semester packages from tutors
@@ -47,6 +52,7 @@ class Promotion < ActiveRecord::Base
     end
   end
 
+  # IMPORTANT - PASS IN TC_RATE in CENTS!
   def self.redeem_promo_code(promo_code, tc_rate, number_of_appts, tutor_id, course_id) # this assumes that multiple appts in one booking are all for the same tutor_course (i.e. the rate is the same for each appt)
     promotion = Promotion.find_by(code: promo_code)
     if promotion.nil?
@@ -68,7 +74,7 @@ class Promotion < ActiveRecord::Base
       return {success: false, error: "We're sorry but this promo code has expired. It has reached its set redemption limit."}
     elsif self.issuer == 'tutor'
       if self.tutor_id != tutor_id
-        return {success: false, error: "This promo code is only valid for appointments with the following tutor: #{Tutor.find(tutor_id).public_name}"}
+        return {success: false, error: "This promo code is only valid for appointments with the following tutor: #{Tutor.find(tutor.id).public_name}"}
       elsif self.course_id && self.course_id != course_id
         return {success: false, error: "This promo code is only valid with #{Tutor.find(tutor_id).public_name} for the following course: #{Course.find(course_id).formatted_name}"}
       end  
@@ -91,14 +97,14 @@ class Promotion < ActiveRecord::Base
     
     # normal prices for all appts in booking
     regular_tutor_fee = tc_rate * number_of_appts
-    regular_price =  (regular_tutor_fee * 1.15).round   # TODO-JT - add in school transaction percentage if we need to be able to change for different schools
+    regular_price =  (regular_tutor_fee * 1.15)   # TODO-JT - add in school transaction percentage if we need to be able to change for different schools
     
     # discount calculations
     discount = (1 - (self.amount.to_f / 100)) # if promo amount is 10 (i.e. 10%), then discount equals 0.9 (i.e. 90% of normal price)
     if self.single_use == 'true'
-      discount_price = (regular_price - (single_appt_full_price) + (single_appt_full_price * discount)).round
+      discount_price = (regular_price - (single_appt_full_price) + (single_appt_full_price * discount))
     else
-      discount_price = (regular_price * discount).round
+      discount_price = (regular_price * discount)
     end
     discount_value = regular_price - discount_price
 
@@ -108,13 +114,13 @@ class Promotion < ActiveRecord::Base
     
     return {
       success: true,
-      regular_price: regular_price,
-      discount_price: discount_price,
-      discount_value: discount_value,
-      regular_tutor_fee: regular_tutor_fee,
-      discount_tutor_fee: regular_tutor_fee, # supposed to be the same here, bc Axon is paying for discount, but still included to keep response data uniform for both promo types
-      regular_axon_fee: regular_axon_fee,
-      discount_axon_fee: discount_axon_fee,
+      regular_price: regular_price.round,
+      discount_price: discount_price.round,
+      discount_value: discount_value.round,
+      regular_tutor_fee: regular_tutor_fee.round,
+      discount_tutor_fee: regular_tutor_fee.round, # supposed to be the same here, bc Axon is paying for discount, but still included to keep response data uniform for both promo types
+      regular_axon_fee: regular_axon_fee.round,
+      discount_axon_fee: discount_axon_fee.round,
       promotion_id: self.id,
       description: self.description
     }
@@ -128,25 +134,25 @@ class Promotion < ActiveRecord::Base
     # discount calculations
     discount = (1 - (self.amount.to_f / 100)) # if promo amount is 10 (i.e. 10%), then discount equals 0.9 (i.e. 90% of normal price)
     if self.single_use == 'true'
-      discount_tutor_fee = (regular_tutor_fee - single_appt_tutor_fee + (single_appt_tutor_fee * discount)).round
+      discount_tutor_fee = (regular_tutor_fee - single_appt_tutor_fee + (single_appt_tutor_fee * discount))
     else
-      discount_tutor_fee = (regular_tutor_fee * discount).round
+      discount_tutor_fee = (regular_tutor_fee * discount)
     end
 
-    regular_price = (regular_tutor_fee * 1.15).round
-    discount_price = (discount_tutor_fee * 1.15).round
+    regular_price = (regular_tutor_fee * 1.15)
+    discount_price = (discount_tutor_fee * 1.15)
     discount_value = regular_price - discount_price
     discount_axon_fee = discount_price - discount_tutor_fee
 
     return {
       success: true,
-      regular_price: regular_price,
-      discount_price: discount_price,
-      discount_value: discount_value,
-      regular_tutor_fee: regular_tutor_fee,
-      discount_tutor_fee: discount_tutor_fee,
-      regular_axon_fee: regular_price - regular_tutor_fee,
-      discount_axon_fee: discount_axon_fee,
+      regular_price: regular_price.round,
+      discount_price: discount_price.round,
+      discount_value: discount_value.round,
+      regular_tutor_fee: regular_tutor_fee.round,
+      discount_tutor_fee: discount_tutor_fee.round,
+      regular_axon_fee: (regular_price - regular_tutor_fee).round,
+      discount_axon_fee: discount_axon_fee.round,
       promotion_id: self.id,
       description: self.description
     }

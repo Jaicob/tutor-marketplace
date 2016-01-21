@@ -25,7 +25,7 @@ class PrepareCheckout
     @default_or_new_card = params[:default_or_new_card]
     @token = params[:stripeToken]
     @tutor = tutor_booked
-    @promotion_id = session[:promotion_id]
+    @promo_code = session[:promo_code]
   end
 
   def prepare_data_for_checkout_organizer
@@ -40,7 +40,7 @@ class PrepareCheckout
         location: @location,
         stripe_token: @token,
         appts_info: appts_info,
-        promotion_id: @promotion_id,
+        promo_code: @promo_code,
         new_user?: @new_user,
         new_user_id: @new_user_id,
         one_time_card: @one_time_card

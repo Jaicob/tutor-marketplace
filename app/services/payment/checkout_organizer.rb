@@ -7,7 +7,7 @@ class CheckoutOrganizer
     # :location
     # :stripe_token
     # :appts_info [{slot_id: x, course_id: x, start_time: xxx},{slot_id: x, course_id: x, start_time: xxx}]
-    # :promotion_id (optional)
+    # :promo_code (optional)
 
   organize CreateAppointments, CreateCharge, ApplyPromoCode, SendPayment, ReconcileCouponDifference, SendEmails
 

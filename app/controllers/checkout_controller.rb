@@ -65,6 +65,9 @@ class CheckoutController < ApplicationController
   end
 
   def review_booking
+    if session[:location].blank?
+      redirect_to checkout_select_course_path(@tutor.slug, anchor: 'select-course')
+    end
     # step 4, all booking information is set and shown to customer here
     # - if logged in, customer has option to use saved card (if one exists) or use a new card (with an option to save it)
     # - if NOT logged in, a customer has the option to sign in (moves to above step) or sign up and use a new card (with an option to save it)
@@ -78,6 +81,10 @@ class CheckoutController < ApplicationController
     preview = BookingPreview.new(session, @tutor).format_info
     if preview[:promo_data][:success] == true
       flash[:success] = "Promo code was succesfully applied!"
+      puts "regular tutor fee = #{preview[:promo_data][:regular_tutor_fee]}"
+      puts "discount tutor fee = #{preview[:promo_data][:discount_tutor_fee]}"
+      puts "regular axon fee = #{preview[:promo_data][:regular_axon_fee]}"
+      puts "discount axon fee = #{preview[:promo_data][:discount_axon_fee]}"
       redirect_to checkout_review_booking_path(@tutor.slug, anchor: 'review-booking')
     else
       flash[:alert] = preview[:promo_data][:error]
@@ -140,11 +147,11 @@ class CheckoutController < ApplicationController
     end
 
     def delete_all_session_variables
-      session[:course_id] = nil
-      session[:appt_info] = nil
-      session[:location] = nil
-      session[:charge_id] = nil
-      session[:promo_code] = nil
+      # session[:course_id] = nil
+      # session[:appt_info] = nil
+      # session[:location] = nil
+      # session[:charge_id] = nil
+      # session[:promo_code] = nil
     end
 
 end

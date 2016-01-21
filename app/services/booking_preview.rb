@@ -6,6 +6,7 @@ class BookingPreview
     @course = Course.find(session[:course_id])
     @tutor = tutor
     @tc_rate = TutorCourse.where(tutor_id: tutor.id, course_id: @course.id).first.rate * 100
+    @full_rate = (@tc_rate * 1.15).round
     @promo_code = session[:promo_code]
   end
 
@@ -29,7 +30,8 @@ class BookingPreview
     data = {
       tutor: @tutor,
       course: @course,
-      rate: @tc_rate,
+      tutor_rate: @tc_rate,
+      full_rate: @full_rate,
       location: @location,
       appointments: @appt_hash,
       total_price: total_price,
@@ -63,12 +65,12 @@ class BookingPreview
 
   def total_price
     number_of_appts = @appt_info.count
-    total_price = (number_of_appts * @tc_rate * 1.15).round
+    total_price = (number_of_appts * @full_rate).round
     return total_price
   end
 
   def redeem_promo_code
-    Promotion.redeem_promo_code(@promo_code, @tc_rate, @appt_info.count, @tutor, @course.id)
+    Promotion.redeem_promo_code(@promo_code, @tc_rate, @appt_info.count, @tutor.id, @course.id)
   end
 
 end
