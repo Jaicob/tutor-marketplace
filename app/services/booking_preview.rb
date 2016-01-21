@@ -5,7 +5,7 @@ class BookingPreview
     @location = session[:location]
     @course = Course.find(session[:course_id])
     @tutor = tutor
-    @rate = TutorCourse.where(tutor_id: tutor.id, course_id: @course.id).first.rate
+    @tc_rate = TutorCourse.where(tutor_id: tutor.id, course_id: @course.id).first.rate * 100
     @promo_code = session[:promo_code]
   end
 
@@ -29,30 +29,31 @@ class BookingPreview
     data = {
       tutor: @tutor,
       course: @course,
-      rate: @rate,
+      rate: @tc_rate,
       location: @location,
       appointments: @appt_hash,
       total_price: total_price,
     }
 
     if !@promo_code.nil?
-      @promo = redeem_promo_code
-      if @promo[:success] == true
+      promo = redeem_promo_code
+      if promo[:success] == true
         data[:promo_data] = {
-          success: @promo[:success],
-          full_price: @promo[:full_price],
-          discount_price: @promo[:discount_price],
-          discount_value: @promo[:discount_value],
-          full_tutor_fee: @promo[:full_tutor_fee],
-          # full_axon_fee: @promo[:full_axon_fee,
-          discount_axon_fee: @promo[:discount_axon_fee],
-          promotion_id: @promo[:promotion_id],
-          # description: @promo[:description],
+          success: promo[:success],
+          regular_price: promo[:regular_price],
+          discount_price: promo[:discount_price],
+          discount_value: promo[:discount_value],
+          regular_tutor_fee: promo[:regular_tutor_fee],
+          discount_tutor_fee: promo[:discount_tutor_fee],
+          regular_axon_fee: promo[:regular_axon_fee],
+          discount_axon_fee: promo[:discount_axon_fee],
+          promotion_id: promo[:promotion_id],
+          description: promo[:description]
         }
       else 
         data[:promo_data] = {
           success: false,
-          error: submit_promo[:error]
+          error: promo[:error]
         }
       end
     end
@@ -62,17 +63,12 @@ class BookingPreview
 
   def total_price
     number_of_appts = @appt_info.count
-    total_price = number_of_appts * @rate * 1.15
-    formatted_total_price = sprintf('%.2f', total_price)
-    return formatted_total_price
-  end
-
-  def recalculate_total_price_with_discount
-    total_price - data[:promo_data][:discount_value]
+    total_price = (number_of_appts * @tc_rate * 1.15).round
+    return total_price
   end
 
   def redeem_promo_code
-    Promotion.redeem_promo_code(@promo_code, @rate, @appt_info.count, @tutor, @course.id)
+    Promotion.redeem_promo_code(@promo_code, @tc_rate, @appt_info.count, @tutor, @course.id)
   end
 
 end

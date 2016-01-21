@@ -86,11 +86,11 @@ class Promotion < ActiveRecord::Base
 
   def process_axon_discount(tc_rate, number_of_appts)
     # normal prices for one appt
-    single_appt_tutor_fee = tc_rate * 100 
+    single_appt_tutor_fee = tc_rate
     single_appt_full_price = single_appt_tutor_fee * 1.15
     
     # normal prices for all appts in booking
-    regular_tutor_fee = tc_rate * number_of_appts * 100
+    regular_tutor_fee = tc_rate * number_of_appts
     regular_price =  (regular_tutor_fee * 1.15).round   # TODO-JT - add in school transaction percentage if we need to be able to change for different schools
     
     # discount calculations
@@ -122,7 +122,7 @@ class Promotion < ActiveRecord::Base
 
   def process_tutor_discount(tc_rate, number_of_appts)
     # normal prices for one appt
-    single_appt_tutor_fee = tc_rate * 100 
+    single_appt_tutor_fee = tc_rate
     regular_tutor_fee = single_appt_tutor_fee * number_of_appts
     
     # discount calculations

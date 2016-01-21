@@ -78,10 +78,10 @@ class CheckoutController < ApplicationController
     preview = BookingPreview.new(session, @tutor).format_info
     if preview[:promo_data][:success] == true
       flash[:success] = "Promo code was succesfully applied!"
-      redirect_to checkout_review_booking_path(@tutor.slug)
+      redirect_to checkout_review_booking_path(@tutor.slug, anchor: 'review-booking')
     else
       flash[:alert] = preview[:promo_data][:error]
-      redirect_to checkout_review_booking_path(@tutor.slug)
+      redirect_to checkout_review_booking_path(@tutor.slug, anchor: 'review-booking')
     end
   end
 
