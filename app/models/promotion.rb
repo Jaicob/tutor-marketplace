@@ -28,9 +28,10 @@ class Promotion < ActiveRecord::Base
 
 
 
-  # x = Promotion.create(code: 'AXON50%OFF', issuer: 0, amount: 50, valid_from: Date.today - 10, valid_until: Date.today + 10, redemption_limit: 2, redemption_count: 0, description: '50% off one session', tutor_id: nil, course_id: nil, single_use: 0)
-  # t = Promotion.create(code: 'TUTOR50%OFF', issuer: 1, amount: 50, valid_from: Date.today - 10, valid_until: Date.today + 10, redemption_limit: 2, redemption_count: 0, description: '50% off one session', tutor_id: Tutor.last.id, course_id: Tutor.last.courses.first.id, single_use: 0)
-
+  # x = Promotion.create(code: 'tikigolf!-AXON10%OFF', issuer: 0, amount: 10, valid_from: Date.today - 10, valid_until: Date.today + 10, redemption_limit: 100, redemption_count: 0, description: '10% off one session', tutor_id: nil, course_id: nil, single_use: 0)
+  #  x = Promotion.create(code: 'tikigolf!-AXON25%OFF', issuer: 0, amount: 25, valid_from: Date.today - 10, valid_until: Date.today + 10, redemption_limit: 100, redemption_count: 0, description: '25% off one session', tutor_id: nil, course_id: nil, single_use: 0)
+  # x = Promotion.create(code: 'tikigolf!-AXON50%OFF', issuer: 0, amount: 50, valid_from: Date.today - 10, valid_until: Date.today + 10, redemption_limit: 100, redemption_count: 0, description: '50% off one session', tutor_id: nil, course_id: nil, single_use: 0)
+  # x = Promotion.create(code: 'tikigolf!-AXON10%OFFUNLIMITED', issuer: 0, amount: 10, valid_from: Date.today - 10, valid_until: Date.today + 10, redemption_limit: 100, redemption_count: 0, description: '10% off unlimited sessions', tutor_id: nil, course_id: nil, single_use: 1)
 
   enum issuer: [:axon, :tutor]
   enum single_use: [:true, :false]  # single_use default is :true, meaning a promotion only discounts one appt in a booking with multiple appointments

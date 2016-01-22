@@ -5,4 +5,8 @@ module CheckoutHelper
     sprintf('%.2f', amount_in_dollars)
   end
 
+  def full_price(tutor_course_rate)
+    tutor_course_rate * 100 * 1.15
+  end
+
 end
