@@ -27,7 +27,7 @@
                           <p class="course-text"><%= tutor_course[:friendly_name] %></p>
                         </div>
                         <div class="small-12 medium-1 columns">
-                          <p class="course-text">$<%= display_price(tutor_course[:rate] * 100) %></p>
+                          <p class="course-text">$<%= display_price(full_price(tutor_course[:rate])) %></p>
                         </div>
                       </div>
                     </label>
