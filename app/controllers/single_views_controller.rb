@@ -20,6 +20,7 @@ class SingleViewsController < ApplicationController
   end
 
   def existing_tutor_landing
+    redirect_to become_a_tutor_path
   end
 
   def search
