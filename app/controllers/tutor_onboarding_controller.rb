@@ -5,28 +5,7 @@ class TutorOnboardingController < ApplicationController
 
   helper OnboardingLinksHelper
 
-  # this action accepts the existing tutor registration form and either creates a tutor and user if the email matches the CSV of existing tutors - or - redirects back to the welcome back page if the email is not recognized
-  def create_existing_tutor_account
-    email = params[:existing_tutor][:email]
-    password = params[:existing_tutor][:password]
-    school_id = params[:existing_tutor][:school_id]
-    sign_in_ip = request.env['REMOTE_ADDR'] 
-    response = ExistingTutorOnboarding.new(email, password, school_id, sign_in_ip).create_user_and_tutor
-    if response[:success] == true
-      tutor = response[:tutor]
-      @existing_tutor = true
-      sign_in_and_redirect(tutor.user)
-    else
-      flash[:error] = response[:error]
-      redirect_to welcome_back_path
-    end
-  end
-
   def application
-    response = ExistingTutorOnboarding.new(current_user.email).existing_tutor?
-    if response == true
-      @existing_tutor = true
-    end
   end
 
   def submit_application
