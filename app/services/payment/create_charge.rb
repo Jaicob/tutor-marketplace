@@ -52,6 +52,7 @@ class CreateCharge
         tutor_fee: tutor_fee,
         token: context.stripe_token
       )
+
       # TODO-JT - error message for charge creation failure?
 
       context.charge_description = "Student: #{@student.full_name}, Tutor: #{@tutor.full_name}, Course: #{@course.formatted_name}, School: #{@course.school.name}, Appts: #{context.appointments.count}, Time(s): #{@appt_times}"

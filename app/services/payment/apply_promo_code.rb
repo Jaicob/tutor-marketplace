@@ -4,7 +4,6 @@ class ApplyPromoCode
   def call
     begin
     if context.promo_code != nil
-
       promo_code = context.promo_code
       tc_rate_in_cents = context.rates.first * 100
       appt_count = context.appointments.count
@@ -21,7 +20,9 @@ class ApplyPromoCode
           promotion_id: promo[:promotion_id]
         )
       else
-        raise 'PROMOTION ERROR'
+        # previously raised error here, but customer gets flash alert that promo code failed when they hit apply after entering it.
+        # raising an error here prevented checkout success after invalid promo attempt bc promo code is saved in session variable
+        # for that reason, the 'raise' here has been removed to allow this interactor to fail silently
       end
     end
 
