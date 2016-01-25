@@ -52,9 +52,6 @@ class CreateCharge
         tutor_fee: tutor_fee,
         token: context.stripe_token
       )
-      puts "CHARGE DETAILS!!!!!!!!!!!!!!!!!!!!"
-      puts charge.attributes
-      puts "CHARGE DETAILS!!!!!!!!!!!!!!!!!!!!"
 
       # TODO-JT - error message for charge creation failure?
 
