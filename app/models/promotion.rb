@@ -24,6 +24,7 @@ class Promotion < ActiveRecord::Base
   validates :valid_from, presence: true
   validates :valid_until, presence: true
   validates :description, presence: true
+  validates :issuer, presence: true
   validate  :tutor_issued_must_have_tutor_id
 
 
@@ -112,6 +113,8 @@ class Promotion < ActiveRecord::Base
     # axon fees before and after discount
     regular_axon_fee = regular_price - regular_tutor_fee
     discount_axon_fee = regular_axon_fee - discount_value
+    puts "CALLED A!!!!!!!!"
+    puts "CALLED A!!!!!!!!"
     
     return {
       success: true,
@@ -144,6 +147,8 @@ class Promotion < ActiveRecord::Base
     discount_price = (discount_tutor_fee * 1.15)
     discount_value = regular_price - discount_price
     discount_axon_fee = discount_price - discount_tutor_fee
+    puts "CALLED B!!!!!!!!"
+    puts "CALLED B!!!!!!!!"
 
     return {
       success: true,

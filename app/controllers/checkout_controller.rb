@@ -72,7 +72,7 @@ class CheckoutController < ApplicationController
     # - if logged in, customer has option to use saved card (if one exists) or use a new card (with an option to save it)
     # - if NOT logged in, a customer has the option to sign in (moves to above step) or sign up and use a new card (with an option to save it)
     @booking_preview = BookingPreview.new(session, @tutor).format_info
-    if @booking_preview[:promo_data][:free_session] == true
+    if @booking_preview[:no_payment_due] == true
       gon.free_session = true
     else
       gon.free_session = nil
@@ -132,7 +132,7 @@ class CheckoutController < ApplicationController
   def confirmation # step 4
     @booking_preview = BookingPreview.new(session, @tutor).format_info
     @charge = Charge.find(session[:charge_id])
-    if @booking_preview[:promo_data][:free_session] != true
+    if @booking_preview[:no_payment_due] != true
       @card_info = Processor::Stripe.new.get_charge_details(@charge.stripe_charge_id)
     end
     delete_all_session_variables

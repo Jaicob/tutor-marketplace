@@ -23,12 +23,12 @@
         <div class="row">
           <div class="small-12 medium-4 columns">
             <div class="margin-1em">
-              <input type="radio" name="default_or_new_card" id="default-card" value="default-card" checked="true" onclick="toggleCardFormDisabled(this)">
+              <input type="radio" name="default_or_new_card" id="default-card" class="payment-field" value="default-card" checked="true" onclick="toggleCardFormDisabled(this)">
               <span class="save-card-radio">Use my saved card</span><br />
               <p><%= @student.card_brand %> **** <%= @student.last_4_digits %></p>
             </div>
             <div class="margin-1em">
-              <input type="radio" name="default_or_new_card" id="new-card" value="new-card" onclick="toggleCardFormDisabled(this)">
+              <input type="radio" name="default_or_new_card" id="new-card" class="payment-field" value="new-card" onclick="toggleCardFormDisabled(this)">
               <span class="save-card-radio">Use a different card</span>
             </div>
           </div>

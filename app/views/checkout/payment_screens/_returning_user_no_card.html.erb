@@ -28,13 +28,13 @@
                   <span class="checkout-card-errors"></span>
                   <label>
                     <span>Card Number</span>
-                    <input type="text" class="card-form-input border-radius" data-stripe="number" required="true"/>
+                    <input type="text" class="card-form-input border-radius payment-field" data-stripe="number" required="true"/>
                   </label>
                   <div class="row small-collapse">
                     <div class="small-6 medium-3 columns zero-padding">
                       <label>
                         <span>Month</span>
-                        <select required="true" data-stripe="exp-month" class="card-form-input">
+                        <select required="true" data-stripe="exp-month" class="card-form-input payment-field">
                           <option value="1" selected="true">1</option>
                           <option value="2">2</option>
                           <option value="3">3</option>
@@ -53,7 +53,7 @@
                     <div class="small-6 medium-3 medium-offset-1 columns zero-padding">
                       <label>
                         <span>Year</span>
-                        <select required="true" data-stripe="exp-year" class="card-form-input">
+                        <select required="true" data-stripe="exp-year" class="card-form-input payment-field">
                           <option value="2015">2015</option>
                           <option value="2016" selected="true">2016</option>
                           <option value="2017">2017</option>
@@ -76,15 +76,15 @@
                     <div class="small-6 medium-3 medium-offset-2 columns zero-padding">
                       <label>
                         <span>CVC</span>
-                        <input type="text" class="card-form-input border-radius" data-stripe="cvc" required="true"/>
+                        <input type="text" class="card-form-input border-radius payment-field" data-stripe="cvc" required="true"/>
                       </label>
                     </div>
                   </div>
                 </div>
                 <div class="small-12 medium-6 columns padding-1em">
-                  <input type="radio" name="save_card" value="true" checked="true" class="card-form-input">
+                  <input type="radio" name="save_card" value="true" checked="true" class="card-form-input payment-field">
                   <span class="save-card-radio">Save this card as my default</span><br />
-                  <input type="radio" name="save_card" value="false" class="card-form-input">
+                  <input type="radio" name="save_card" value="false" class="card-form-input payment-field">
                   <span class="save-card-radio">Don't save this card</span>
                   <p class="small-font">Security Notice: We store all of our customers' card details on a secure PCI compliant server managed by <a href="https://stripe.com/about" target="_blank" class="blue-link">Stripe</a>.</p>
                 </div>

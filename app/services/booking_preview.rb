@@ -53,7 +53,7 @@ class BookingPreview
           description: promo[:description]
         }
         if promo[:discount_price] == 0
-          data[:promo_data][:free_session] = true
+          data[:no_payment_due] = true
         end
       else 
         data[:promo_data] = {
