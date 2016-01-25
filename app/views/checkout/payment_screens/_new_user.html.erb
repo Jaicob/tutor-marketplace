@@ -28,16 +28,14 @@
         <div class="small-12 medium-6 columns">
           <div class="max-width-16em">
             <h5>Create Your Account</h5>
-
-              <label for="user_first_name">First name</label>
-              <input class="border-radius" required="required" type="text" name="user[first_name]" id="user_first_name" />
-              <label for="user_last_name">Last name</label>
-              <input class="border-radius" required="required" type="text" name="user[last_name]" id="user_last_name" />
-              <label for="user_email">Email</label>
-              <input class="border-radius" required="required" type="email" value="" name="user[email]" id="user_email" />
-              <label for="user_password">Password</label>
-              <input class="border-radius" required="required" type="password" name="user[password]" id="user_password" />
-
+            <label for="user_first_name">First name</label>
+            <input class="border-radius" required="required" type="text" name="user[first_name]" id="user_first_name" />
+            <label for="user_last_name">Last name</label>
+            <input class="border-radius" required="required" type="text" name="user[last_name]" id="user_last_name" />
+            <label for="user_email">Email</label>
+            <input class="border-radius" required="required" type="email" value="" name="user[email]" id="user_email" />
+            <label for="user_password">Password</label>
+            <input class="border-radius" required="required" type="password" name="user[password]" id="user_password" />
           </div>
         </div>
         <div class="small-12 medium-6 columns">
@@ -46,13 +44,13 @@
             <span class="checkout-card-errors"></span>
             <label>
               <span>Card Number</span>
-              <input type="text" class="border-radius" data-stripe="number" required="true"/>
+              <input type="text" class="border-radius payment-field" data-stripe="number" required="true"/>
             </label>
             <div class="row small-collapse">
               <div class="small-6 medium-3 columns zero-padding">
                 <label>
                   <span>Month</span>
-                  <select required="true" data-stripe="exp-month">
+                  <select required="true" data-stripe="exp-month" class="payment-field">
                     <option value="1" selected="true">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -71,7 +69,7 @@
               <div class="small-6 medium-3 medium-offset-1 columns zero-padding">
                 <label>
                   <span>Year</span>
-                  <select required="true" data-stripe="exp-year">
+                  <select required="true" data-stripe="exp-year" class="payment-field">
                     <option value="2015">2015</option>
                     <option value="2016" selected="true">2016</option>
                     <option value="2017">2017</option>
@@ -94,20 +92,20 @@
               <div class="small-6 medium-3 medium-offset-2 columns zero-padding">
                 <label>
                   <span>CVC</span>
-                  <input type="text" class="border-radius" data-stripe="cvc" required="true"/>
+                  <input type="text" class="border-radius payment-field" data-stripe="cvc" required="true"/>
                 </label>
               </div>
             </div>
           </div>
           <div class="row small-collapse">
             <div class="small-12 columns">
-              <input type="radio" name="save_card" value="true" checked="true">
+              <input type="radio" name="save_card" value="true" checked="true" class="payment-field">
               <span class="save-card-radio">Save this card for easy checkouts</span>
             </div>
           </div>
           <div class="row small-collapse">
             <div class="small-12 columns">
-              <input type="radio" name="save_card" value="false">
+              <input type="radio" name="save_card" value="false" class="payment-field">
               <span class="save-card-radio">Don't save this card</span>
             </div>
           </div>
@@ -123,4 +121,5 @@
       </form>
     </div>
   </div>
+</div>
 </div>

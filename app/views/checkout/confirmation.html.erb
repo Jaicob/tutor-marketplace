@@ -10,7 +10,7 @@
         </div>
       </div>
     </div>
-    <div class="checkout-step-body">
+    <div class="checkout-step-body padding-bottom-3em">
       <div class="row small-collapse">
         <div class="small-12 columns"> 
           <div class="row">
@@ -51,16 +51,18 @@
               <%= render '/checkout/review_and_confirm_partials/price_summary' %>
             </div>
           </div>
-          <div class="row">
-            <div class="small-12 medium-6 medium-centered columns">
-              <h5 class="payment-info-title">Payment Info</h5>
+          <% if @card_info %>
+            <div class="row">
+              <div class="small-12 medium-6 medium-centered columns">
+                <h5 class="payment-info-title">Payment Info</h5>
+              </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="small-12 medium-6 medium-centered columns">
-              <%= render '/checkout/review_and_confirm_partials/card_info' %>
+            <div class="row">
+              <div class="small-12 medium-6 medium-centered columns">
+                <%= render '/checkout/review_and_confirm_partials/card_info' %>
+              </div>
             </div>
-          </div>
+          <% end %>
         </div>
       </div>
     </div>

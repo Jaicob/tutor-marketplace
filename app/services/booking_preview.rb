@@ -52,6 +52,9 @@ class BookingPreview
           promotion_id: promo[:promotion_id],
           description: promo[:description]
         }
+        if promo[:discount_price] == 0
+          data[:promo_data][:free_session] = true
+        end
       else 
         data[:promo_data] = {
           success: false,
