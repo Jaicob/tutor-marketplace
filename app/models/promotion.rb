@@ -27,13 +27,6 @@ class Promotion < ActiveRecord::Base
   validates :issuer, presence: true
   validate  :tutor_issued_must_have_tutor_id
 
-
-
-  # x = Promotion.create(code: 'tikigolf!-AXON10%OFF', issuer: 0, amount: 10, valid_from: Date.today - 10, valid_until: Date.today + 10, redemption_limit: 100, redemption_count: 0, description: '10% off one session', tutor_id: nil, course_id: nil, single_use: 0)
-  #  x = Promotion.create(code: 'tikigolf!-AXON25%OFF', issuer: 0, amount: 25, valid_from: Date.today - 10, valid_until: Date.today + 10, redemption_limit: 100, redemption_count: 0, description: '25% off one session', tutor_id: nil, course_id: nil, single_use: 0)
-  # x = Promotion.create(code: 'tikigolf!-AXON50%OFF', issuer: 0, amount: 50, valid_from: Date.today - 10, valid_until: Date.today + 10, redemption_limit: 100, redemption_count: 0, description: '50% off one session', tutor_id: nil, course_id: nil, single_use: 0)
-  # x = Promotion.create(code: 'tikigolf!-AXON10%OFFUNLIMITED', issuer: 0, amount: 10, valid_from: Date.today - 10, valid_until: Date.today + 10, redemption_limit: 100, redemption_count: 0, description: '10% off unlimited sessions', tutor_id: nil, course_id: nil, single_use: 1)
-
   enum issuer: [:axon, :tutor]
   enum single_use: [:true, :false]  # single_use default is :true, meaning a promotion only discounts one appt in a booking with multiple appointments
                                     # if single_use is set to false, a promotion will discount all sessions in a booking (if redemption limit permits x number of redemptions) - this is useful for semester packages from tutors
@@ -113,8 +106,6 @@ class Promotion < ActiveRecord::Base
     # axon fees before and after discount
     regular_axon_fee = regular_price - regular_tutor_fee
     discount_axon_fee = regular_axon_fee - discount_value
-    puts "CALLED A!!!!!!!!"
-    puts "CALLED A!!!!!!!!"
     
     return {
       success: true,
@@ -147,8 +138,6 @@ class Promotion < ActiveRecord::Base
     discount_price = (discount_tutor_fee * 1.15)
     discount_value = regular_price - discount_price
     discount_axon_fee = discount_price - discount_tutor_fee
-    puts "CALLED B!!!!!!!!"
-    puts "CALLED B!!!!!!!!"
 
     return {
       success: true,

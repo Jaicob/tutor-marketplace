@@ -19,9 +19,6 @@ class ApplyPromoCode
           tutor_fee: promo[:discount_tutor_fee],
           promotion_id: promo[:promotion_id]
         )
-        puts "UPDATED CHARGE!!!!!!!!!!!!!!!!!!!!!"
-        puts charge.reload.attributes
-        puts "UPDATED CHARGE!!!!!!!!!!!!!!!!!!!!!"
       else
         # previously raised error here, but customer gets flash alert that promo code failed when they hit apply after entering it.
         # raising an error here prevented checkout success after invalid promo attempt bc promo code is saved in session variable
