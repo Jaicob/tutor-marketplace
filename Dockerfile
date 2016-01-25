@@ -23,7 +23,7 @@ COPY config/unicorn.rb /etc/my-app/config/unicorn.rb
 COPY scripts/unicorn_init.sh /etc/init.d/unicorn
 
 # Place custom nginx configs here
-COPY config/nginx-${AWS_EB_ENV}-site.conf /etc/nginx/sites-enabled/${AWS_EB_ENV}.axontutors.com
+COPY config/nginx-${AWS_EB_ENV}-site.conf /etc/nginx/sites-enabled/default
 COPY config/nginx.conf /etc/nginx/nginx.conf
 
 # Configure supervisor

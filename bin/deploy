@@ -33,7 +33,6 @@ deploy()
   sed -i '' -e "s/.*ENV AWS_EB_ENV.*/ENV AWS_EB_ENV $1/"  ./Dockerfile
   search=""
   replace=""
-  # sed -i '' -e 's|.*"image" : "jaicob/web-app:.*|            "image" : "jaicob/web-app:$1-$2",|' ./.elasticbeanstalk/Docker/Dockerrun.aws.json
   sed -i '' -e 's|.*"image" : "jaicob/web-app:.*|            "image" : "jaicob/web-app:'"$1"'-'"$2"'",|' ./.elasticbeanstalk/Docker/Dockerrun.aws.json
 
   docker build -t jaicob/web-app:$1-$2 .
@@ -43,7 +42,6 @@ deploy()
     docker push jaicob/web-app:$1-$2
     if [ $? -eq 0 ]; then
       echo OK
-      # (cd ./../.elasticbeanstalk/Docker/ && echo "eb deploy $1 $(pwd)/Dockerrun.aws.json")
        eb deploy -l $1-$2 
       if [ $? -eq 0 ]; then
         echo "Deployment completed at $(date)"
