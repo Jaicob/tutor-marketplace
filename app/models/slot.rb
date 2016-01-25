@@ -34,21 +34,3 @@ class Slot < ActiveRecord::Base
   end
 
 end
-
-# slot.tutor.school.timezone
-
-#     self.start_time.in_time_zone(self.school.timezone).strftime('%A -  %-m/%d/%y - %l:%M %p')
-#   end
-
-#   def time
-#     self.start_time.in_time_zone(self.school.timezone).strftime('%l:%M %p')
-
-
-# 7138
-# Wednesday -  2/03/16 -  9:00 AM
-# 14400
-# =======
-
-# 2857
-# Wednesday -  2/03/16 -  3:00 PM
-# 10800
