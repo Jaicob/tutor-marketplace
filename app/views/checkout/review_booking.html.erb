@@ -1,5 +1,19 @@
 <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 <script type="text/javascript">
+
+  window.onload = function() {
+    if (gon.free_session != null && gon.free_session == true){
+      console.log('FREE SESSION DISABLER!');
+      var paymentFields = document.getElementsByClassName("payment-field");
+      var arrayLength = paymentFields.length;
+      for (var i = 0; i < arrayLength; i++) {
+        var field = paymentFields[i];
+        field.required = false;
+        field.disabled = true;
+      }
+    }
+  }
+
   // This identifies your website in the createToken call below
   Stripe.setPublishableKey("<%= ENV['stripe_public_key'] %>");
   // ...
@@ -12,8 +26,9 @@
       $form.find('button').prop('disabled', true);
 
       if($('input#default-card').is(':checked')) {
-        console.log('CHECKED!');
         $form.get(0).submit();
+      } else if (gon.free_session != null && gon.free_session == true) { 
+        console.log('IT WORKED!');
       } else {
         Stripe.card.createToken($form, stripeResponseHandler);
         // Prevent the form from submitting with the default action
@@ -92,15 +107,14 @@
           <% end %>
         </div>
       </div>
-    </div>
-    <div class="checkout-steps-nav">
-      <div class="row small-collapse">
-        <div class="small-12 medium-3 columns">
-          <%= link_to "Back to Set a Location", checkout_select_location_path(@tutor.slug, anchor: 'set-location'), class: 'checkout-button gray' %>
+      <div class="checkout-steps-nav">
+        <div class="row small-collapse">
+          <div class="small-12 medium-3 columns">
+              <%= link_to "Back to Set a Location", checkout_select_location_path(@tutor.slug, anchor: 'set-location'), class: 'checkout-button gray' %>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-</div>
 </div>

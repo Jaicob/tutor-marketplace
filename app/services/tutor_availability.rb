@@ -36,6 +36,7 @@ class TutorAvailability
     # necessary to reset to nil since this is called in succession and times will carry over in array
     appt_times = nil 
     # find any slots for given date and tutor
+    appt_times = []
     Slot.where(tutor_id: tutor_id).each do |slot|
       if slot.start_time.to_date == date
         # get number of start_times to put in array - (subtract one bc last 30 minutes of availability isn't a possible start time)
@@ -48,7 +49,6 @@ class TutorAvailability
           end
         end
         # create array for holding possible appt_times
-        appt_times = []
         # set start_time for all possible appt_times (incremented by '1800' or 30 min. at end of x.times loop)
         start_time = slot.start_time
         uniq_id = 0 # id for potential start time to allow for selecting and disabled correct times
@@ -75,7 +75,8 @@ class TutorAvailability
         end
       end
     end
-    return appt_times
+    ordered_appt_times = appt_times.sort_by{|data| data[:datetime]}
+    return ordered_appt_times
   end
 
   def mark_unavailable_times(appt_times)
