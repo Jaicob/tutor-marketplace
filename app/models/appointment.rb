@@ -87,7 +87,7 @@ class Appointment < ActiveRecord::Base
     buffer = (self.tutor.booking_buffer * 3600) # hours * 3600 = seconds
     earliest_avail_booking = Time.now + buffer 
     if start_time < earliest_avail_booking
-      errors.add(:start_time, "is too soon and does not meet minimum notice requirment for tutor")
+      errors.add(:start_time, "is too soon and does not meet minimum notice requirement for tutor")
     end
   end
 

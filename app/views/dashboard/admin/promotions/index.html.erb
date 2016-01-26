@@ -1,31 +1,40 @@
-<section class="secondary-content main" role="main">
-  <div class="wrapper">
-
-    <div class="g g-3up">
-      <div class="gi">
-        <h3>Promotions</h3>
-      </div>
-      <div class="gi">
-      </div>
-      <div class="gi">
-        <%= link_to 'New Promotion', new_admin_promotion_path, class: 'btn' %>
-      </div>
-    </div>
-
-    <% @promotions.each do |promotion| %>
-    <div class="g g-1up">
-      <div class="gi">
-        <p><%= "Promotion ##{promotion.id}"%></p>
-        <p>Code: <%= promotion.code %></p>
-        <p>Category: <%= promotion.category.humanize.gsub(/[A-Za-z']+/,&:capitalize) %></p>
-        <p>Amount: <%= promotion.amount %></p>
-        <p>Valid from: <%= promotion.valid_from %></p>
-        <p>Valid until: <%= promotion.valid_until %></p>
-        <p>Redemption limit: <%= promotion.redemption_limit %></p>
-        <p>Redemption count: <%= promotion.redemption_count %></p>
-      </div>
-    </div>
-    <% end %>
-
+<div class="row">
+  <div class="small-12 medium-6 columns">
+    <h3>Promotions</h3>
   </div>
-</section>
+  <div class="small-12 medium-4 columns">
+    <%= link_to 'New Promotion', new_admin_promotion_path, class: 'custom-button full-width' %>
+  </div>
+</div>
+<div class="row">
+  <div class="small-12">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Code</th>
+          <th>% Off</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+          <th>Redemption Limit</th>
+          <th>Redemption Count</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @promotions.where(issuer: 0).each do |promotion| %>
+        <tr>
+          <td><%= promotion.id %></td>
+          <td><%= promotion.code %></td>
+          <td><%= promotion.amount %></td>
+          <td><%= promotion.valid_from %></td>
+          <td><%= promotion.valid_until %></td>
+          <td><%= promotion.redemption_limit %></td>
+          <td><%= promotion.redemption_count %></td>
+          <td><%= promotion.description %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
