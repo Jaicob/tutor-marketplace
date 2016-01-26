@@ -17,7 +17,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @student.appointments.each do |appt| %>
+      <% @student.appointments.sort_by{|appt| appt.start_time}.each do |appt| %>
         <tr>
           <td><%= appt.date %></td>
           <td><%= appt.time %></td>

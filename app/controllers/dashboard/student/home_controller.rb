@@ -6,13 +6,13 @@ class Dashboard::Student::HomeController < DashboardController
 
   def cancel_appt
     @appt = Appointment.find(params[:appt_id])
-    if @appt.update(appt_params)
+    if @appt.update_attribute('status', 'Cancelled')
       AppointmentMailer.delay.appointment_cancellation_for_tutor(@appt.id)               
       AppointmentMailer.delay.appointment_cancellation_for_student(@appt.id)
       redirect_to home_student_path(@student)
     else
+      flash[:alert] = "Appointment was not cancelled: #{@appt.errors.full_messages.first}"
       redirect_to :back
-      flash[:alert] = 'Appointment was not cancelled'
     end
   end
 

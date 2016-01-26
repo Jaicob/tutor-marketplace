@@ -1,52 +1,45 @@
-<section class="secondary-content main" role="main">
-  <div class="wrapper">
-
-    <div class="g g-3up">
-      <div class="gi">
-        <h3>Create a New Promotion</h3>
-      </div>
-      <div class="gi">
-      </div>
-      <div class="gi">
-        <%= link_to 'All Promotions', new_admin_promotion_path, class: 'btn' %>
-      </div>
-    </div>
-
-    <div class="g g-1up">
-      <div class="gi">
-        <%= form_for :promotion, url: admin_promotions_path do |f| %>
-          <%= f.label :category %>
-          <%= f.select(:category,
-            options_for_select([
-              ['Free from Axon', :free_from_axon],
-              ['Free from Tutor', :free_from_tutor], 
-              ['Percent off from Axon', :percent_off_from_axon],
-              ['Percent off from Tutor', :percent_off_from_tutor],
-              ['Dollar Amount off from Axon', :dollar_amount_off_from_axon],
-              ['Dollar Amount off from Tutor', :dollar_amount_off_from_tutor],
-              ['Repeating Percent off from Tutor', :repeating_percent_off_from_tutor], 
-              ['Repeating Dollar Amount off from Tutor', :repeating_dollar_amount_off_from_tutor]
-            ]), include_blank: true)  %>
-
-          <%= f.label :amount %>
-          <%= f.number_field :amount %>
-
-          <%= f.label :valid_from %>
-          <%= f.date_select :valid_from %>
-
-          <%= f.label :valid_until %>
-          <%= f.date_select :valid_until %>
-
-          <%= f.label :redemption_limit %>
-          <%= f.number_field :redemption_limit %>
-
-          <%= f.label :description %>
-          <%= f.text_area :description %>
-          
-          <%= f.submit 'Create Promotion' %>
-        <% end %>
-      </div>
-    </div>
-
+<div class="row">
+  <div class="small-12 medium-6 columns">
+    <h3>Create a New Promotion</h3>
   </div>
-</section>
+  <div class="small-12 medium-4 columns">
+    <%= link_to 'Back to All Promotions', admin_promotions_path, class: 'custom-button full-width blue' %>
+  </div>
+</div>
+<div class="row">
+  <div class="small-12 medium-4 columns">
+    <%= form_for :promotion, url: admin_promotions_path do |f| %>
+
+      <%= f.label :code %>
+      <%= f.text_field :code %>
+
+      <%= f.label :amount, 'Percent Off' %>
+      <p class="fine-print">Numbers only. Do not include percent sign.</p>
+      <p class="fine-print">Enter '100' for a free session, '10' for 10% off, etc.</p>
+      <%= f.text_field :amount, required: true %>
+
+      <%= f.label :valid_from, "Valid From:" %>
+      <%= f.date_select :valid_from, order: [:month, :day, :year], start_year: Date.today.year, end_year: Date.today.year + 1, required: true %>
+
+      <%= f.label :valid_until, "Valid Until:" %>
+      <%= f.date_select :valid_until, order: [:month, :day, :year], start_year: Date.today.year, end_year: Date.today.year + 1, required: true %>
+
+
+      <%= f.label :redemption_limit, 'Redemption Limit' %>
+      <p class="fine-print">How many times can this promo code be redeemed?</p>
+      <%= f.number_field :redemption_limit, required: true %>
+
+      <%= f.label :single_use, 'Single Use Per Booking' %>
+      <p class="fine-print">Default is true. Setting to false means that a booking with multiple appointments can have the discount applied multiple times.</p>
+      <%= f.select(:single_use, options_for_select({'True' => true, 'False'=> :false})) %>
+
+      <%= f.label :description %>
+      <p class="fine-print">This description will appear on Review Booking page to customer. Make sure it is descriptive and appropriate for public use.</p>
+      <%= f.text_area :description, required: true %>
+
+      <%= f.hidden_field :issuer, value: 'axon' %>
+      
+      <%= f.submit 'Create Promotion', class: 'custom-button' %>
+    <% end %>
+  </div>
+</div>

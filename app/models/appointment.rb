@@ -32,6 +32,7 @@ class Appointment < ActiveRecord::Base
   validate :outside_booking_buffer
 
   before_validation :format_datetime
+  after_find :update_status_for_complete_appts
 
   enum status: ['Scheduled', 'Cancelled', 'Completed']
 
@@ -87,7 +88,13 @@ class Appointment < ActiveRecord::Base
     buffer = (self.tutor.booking_buffer * 3600) # hours * 3600 = seconds
     earliest_avail_booking = Time.now + buffer 
     if start_time < earliest_avail_booking
-      errors.add(:start_time, "is too soon and does not meet minimum notice requirment for tutor")
+      errors.add(:start_time, "is too soon and does not meet minimum notice requirement for tutor")
+    end
+  end
+
+  def update_status_for_complete_appts
+    if self.start_time < DateTime.now && self.status == 'Scheduled'
+      self.update_attribute('status', 2)
     end
   end
 
