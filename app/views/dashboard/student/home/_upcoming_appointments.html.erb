@@ -24,8 +24,7 @@
           <td><%= appt.tutor.full_name %></td>
           <td><%= appt.tutor.email %></td>
           <td>
-            <%= link_to 'Reschedule', view_reschedule_options_student_path(@student, appt.id), class: 'custom-button full-width' %>
-            <a href="#" data-reveal-id="confirm-cancel-appt-<%= appt.id %>" class="custom-button full-width gray">Cancel</a>
+            <a href="#" data-reveal-id="confirm-cancel-appt-<%= appt.id %>" class="custom-button full-width ">Cancel</a>
           </td>
         </tr>
       <% end %>
