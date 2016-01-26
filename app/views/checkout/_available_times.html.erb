@@ -113,19 +113,19 @@ function disableNeighborCheckboxes(element) {
     } else {
       // when checkbox is un-checked...(ex: 5:00 is de-selected)
       if (checkboxBefore != null && checkboxTwoBefore != null) { // (4:00 and 4:30 exist)
-        if (!checkboxTwoBefore.classList.contains("booked")) {    // (4:00 is not booked)
+        if (!checkboxTwoBefore.classList.contains("reserved")) {    // (4:00 is not booked)
           checkboxBefore.disabled = false;                        // (remove disabled state from 4:30)
         }
       }
       if (checkboxAfter != null && checkboxTwoAfter != null) {                            // (5:30 exists)
-        if (!checkboxTwoAfter.classList.contains("booked")) {   // (6:00 is not booked)
+        if (!checkboxTwoAfter.classList.contains("reserved")) {   // (6:00 is not booked)
           checkboxAfter.disabled = false;                       // (removed disabled state from 5:30)
         }
         checkboxAfter.classList.remove("second-half-of-appt");  // (remove 'second-half' class from 5:30)
       }
       if (checkboxTwoBefore == null && checkboxBefore != null) {  // (4:00 does not exist, 4:30 does exist)
         checkboxBefore.disabled = false;                          // (remove disabled state from 4:30)
-      } else if (checkboxTwoBefore != null && checkboxTwoBefore.checked != true && !checkboxTwoBefore.classList.contains("booked")) {
+      } else if (checkboxTwoBefore != null && checkboxTwoBefore.checked != true && !checkboxTwoBefore.classList.contains("reserved")) {
         // (4:00 exists, 4:00 is not checked, 4:00 is not booked)
         checkboxBefore.disabled = false; // (remove disabled state from 4:30)
       }

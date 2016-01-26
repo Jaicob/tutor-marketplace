@@ -23,7 +23,9 @@
           <td><%= Course.find(appt.course_id).formatted_name %></td>
           <td><%= appt.tutor.full_name %></td>
           <td><%= appt.tutor.email %></td>
-          <td><a href="#" data-reveal-id="confirm-cancel-appt-<%= appt.id %>" class="custom-button full-width danger">Cancel</a></td>
+          <td>
+            <a href="#" data-reveal-id="confirm-cancel-appt-<%= appt.id %>" class="custom-button full-width ">Cancel</a>
+          </td>
         </tr>
       <% end %>
     </tbody>
