@@ -3,13 +3,13 @@
 
   window.onload = function() {
     if (gon.free_session != null && gon.free_session == true){
-      console.log('FREE SESSION DISABLER!');
       var paymentFields = document.getElementsByClassName("payment-field");
       var arrayLength = paymentFields.length;
       for (var i = 0; i < arrayLength; i++) {
         var field = paymentFields[i];
         field.required = false;
         field.disabled = true;
+        field.checked = false;
       }
     }
   }
@@ -28,7 +28,7 @@
       if($('input#default-card').is(':checked')) {
         $form.get(0).submit();
       } else if (gon.free_session != null && gon.free_session == true) { 
-        console.log('IT WORKED!');
+        $form.get(0).submit();
       } else {
         Stripe.card.createToken($form, stripeResponseHandler);
         // Prevent the form from submitting with the default action

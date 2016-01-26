@@ -14,6 +14,8 @@ class ReconcileCouponDifference
         transfer_amount = context.tutor_compensation_amount
         promotion = Promotion.find_by(code: context.promo_code)
         processor.reconcile_coupon_difference(tutor, transfer_amount, promotion)
+        # update amount Axon lost on charge after creating charge and making transfer (negative value sooner results in error)
+        context.charge.update(axon_fee: transfer_amount * -1)
       end
     rescue => error
       context.fail!(
