@@ -3,15 +3,15 @@
 
 # Info for 4 schools
 school_list = [
-  [ "University of North Carolina", "Chapel Hill, NC", 15 ],
-  [ "University of Georgia", "Athens, GA", 15 ],
-  [ "Duke University", "Durham, NC", 15 ],
-  [ "Clemson University", "Clemson, SC", 15 ]
+  [ "University of North Carolina", "Chapel Hill, NC", 15, "Eastern Time (US & Canada)"],
+  [ "University of Georgia", "Athens, GA", 15, "Eastern Time (US & Canada)"],
+  [ "Duke University", "Durham, NC", 15, "Eastern Time (US & Canada)"],
+  [ "Clemson University", "Clemson, SC", 15, "Eastern Time (US & Canada)"]
 ]
 
 # Create Schools out of the school_list
-school_list.each do |name, location, tp|
-  School.create(name: name, location: location, transaction_percentage: tp)
+school_list.each do |name, location, tp, timezone|
+  School.create(name: name, location: location, transaction_percentage: tp, timezone: timezone)
 end
 
 subject_list = %w(Biology Chemistry Math Computer\ Science Physics)

@@ -14,11 +14,11 @@
               <% if @start_date == Date.today %>
                 <div class="checkout-button gray disabled-text-color">Previous Week</div>
               <% else %>
-                <%= link_to "Previous Week", checkout_select_times_path(@tutor.slug, course: 1, current: @start_date.to_s, week: 0), class: 'checkout-button gray' %>
+                <%= link_to "Previous Week", checkout_select_times_path(@tutor.slug, course: 1, current: @start_date.to_s, week: 0, anchor: 'select-times'), class: 'checkout-button gray' %>
               <% end %>
             </div>
             <div class="small-12 medium-3 columns zero-padding">
-              <%= link_to "Next Week", checkout_select_times_path(@tutor.slug, course: 1, current: @start_date.to_s, week: 1), class: 'checkout-button gray' %>
+              <%= link_to "Next Week", checkout_select_times_path(@tutor.slug, course: 1, current: @start_date.to_s, week: 1, anchor: 'select-times'), class: 'checkout-button gray' %>
             </div>
           </div>
         </div>

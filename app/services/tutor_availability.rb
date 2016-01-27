@@ -2,7 +2,9 @@ class TutorAvailability
 
   def initialize(tutor_id, start_date, week_change)
     @tutor_id = tutor_id
-    @start_date = if start_date then start_date.to_date else Date.today end
+    @tutor = Tutor.find(tutor_id)
+    @timezone = @tutor.school.timezone
+    @start_date = if start_date then start_date.to_date else Date.today.in_time_zone(@timezone).to_date end
     @week_change = week_change
   end
 
@@ -38,7 +40,7 @@ class TutorAvailability
     # find any slots for given date and tutor
     appt_times = []
     Slot.where(tutor_id: tutor_id).each do |slot|
-      if slot.start_time.to_date == date
+      if slot.start_time.in_time_zone(@timezone).to_date == date
         # get number of start_times to put in array - (subtract one bc last 30 minutes of availability isn't a possible start time)
         x = ((slot.duration / 1800) - 1 )
         # find unavailable times due to existing appointments
