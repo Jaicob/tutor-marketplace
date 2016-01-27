@@ -4,7 +4,7 @@ class TutorAvailability
     @tutor_id = tutor_id
     @tutor = Tutor.find(tutor_id)
     @timezone = @tutor.school.timezone
-    @start_date = if start_date then start_date.to_date else Date.today.in_time_zone(@timezone) end
+    @start_date = if start_date then start_date.to_date else Date.today.in_time_zone(@timezone).to_date end
     @week_change = week_change
   end
 
