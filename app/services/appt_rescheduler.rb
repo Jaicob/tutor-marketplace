@@ -6,8 +6,8 @@ class ApptRescheduler
   end
 
   def format_new_time
-    if @raw_data != nil && @raw_data.to_unsafe_hash.values.count == 1
-      x = @raw_data.to_unsafe_hash.values[0].split("----")
+    if @raw_data != nil && @raw_data.to_hash.values.count == 1
+      x = @raw_data.to_hash.values[0].split("----")
       @start_time = x.first
       @slot_id = x.second
       @valid_new_time = true
@@ -23,6 +23,8 @@ class ApptRescheduler
           start_time: @start_time, 
           slot_id: @slot_id
         )
+        AppointmentMailer.delay.appointment_reschedule_for_tutor(@appt.id)
+        AppointmentMailer.delay.appointment_reschedule_for_student(@appt.id)
         response = {success: true}
       else
         response = {success: false, error: @appt.errors.full_messages.first}
