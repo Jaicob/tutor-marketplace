@@ -11,4 +11,3 @@ global:
   default_region: us-east-1
   profile: null
   sc: git
-

@@ -1,0 +1,34 @@
+# For Sendgrid
+sendgrid_username: 'axon-dev'
+sendgrid_password: 'axon4lyfe'
+sendgrid_domain:   '@axontutors.com'
+#For AWS
+AWS_ACCESS_KEY: 'AKIAI5LEGKJIVHEO3XCQ'
+AWS_SECRET_ACCESS_KEY: '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'
+AWS_REGION: 'us-west-2'
+AWS_HOST: 's3-us-west-2.amazonaws.com'
+AWS_ENDPOINT: 'https://s3-us-west-2.amazonaws.com:8080'
+# For Amazon RDS
+RDS_USERNAME: 'axon'
+RDS_DB_NAME:  'ebdb'
+RDS_PASSWORD: 'axon2lyfe'
+RDS_HOSTNAME: 'aa1xvem16uaoddz.cgkxqsmu9rpy.us-east-1.rds.amazonaws.com'
+RDS_PORT:     '5432'
+# For Elasticache Redis
+REDIS_PRODUCTION_PORT: '6379'
+REDIS_PRODUCTION_ADDR: 'axon-prod.he9z8n.0001.use1.cache.amazonaws.com'
+REDIS_PROVIDER: 'axon-prod.he9z8n.0001.use1.cache.amazonaws.com'
+development:
+  domain_name:     'dockerhost:3000'
+  secret_key_base: '576d7ba01941468e4ce0cc67662a6faebfbb84c8295d033210a07fc3d7a8490e0496570ff48b77bac78e914daa2c160d6df39a5c901513a1686c1766e7bb2014'
+  stripe_secret_key: 'sk_test_4VObNRAiXCBixyd9lpO2sdeP'
+  stripe_public_key: 'pk_test_4VObdz0T8dwNAdD0ZPcU8amz'
+test:
+  domain_name:     'localhost'
+  secret_key_base: '7556ddd93d6ce4fc453c8a7fc4f3fb1b16ba459af209766cbf3bc47033fa3383809e95f6c83f5ef930a1484856b3d4d6f21c2b91ad3688f0c718ec10d5527f6e'
+production:
+  rails_env:       'production'
+  domain_name:     'localhost'
+  secret_key_base: '576d7ba01941468e4ce0cc67662a6fa0934028340295d033210a07fc3d7a8490e0496570fs97bac78e914daa2c160d6df39a5c901513a1686c1766e7bb2014'
+  stripe_secret_key: 'sk_live_4VObBC0lTFCgGWONlLXvEHdz'
+  stripe_public_key: 'pk_live_4VObmIGFAgYLg4E7xySQqJA8'
