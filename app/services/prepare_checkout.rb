@@ -10,6 +10,7 @@ class PrepareCheckout
       @last_name = params[:user][:last_name]
       @email = params[:user][:email]
       @password = params[:user][:password]
+      @phone_number = params[:user][:student][:phone_number]
     else 
       @student = student
     end
@@ -84,7 +85,8 @@ class PrepareCheckout
         @new_user = false
       else      
         @student = user.create_student!(
-          school_id: @school_id
+          school_id: @school_id,
+          phone_number: @phone_number
         )
         @new_user = true
         @new_user_id = user.id
