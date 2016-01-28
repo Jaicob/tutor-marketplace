@@ -14,7 +14,7 @@
           <%= ff.hidden_field :checkout_login_redirect, value: @tutor.slug %>
       </div>
       <div class="small-12 medium-3 columns">
-          <%= ff.submit 'Sign in', class: 'custom-button full-width blue-green' %>
+          <%= ff.submit 'Sign in', class: 'custom-button full-width blue-green', data: {disable_with: 'WAIT A SECOND!'} %>
         <% end %>
       </div>
     </div>
@@ -116,7 +116,7 @@
       </div>
       <div class="row small-collapse medium-uncollapse submit-bar">
         <div class="small-12 medium-6 medium-offset-6 columns">
-          <button type="submit" class="custom-button full-width create-and-pay-btn">Create Account & Complete Booking</button>
+          <input type="submit" id="submit-payment" name="commit" class="custom-button full-width create-and-pay-btn" value="Create Account & Complete Booking" />
         </div>
       </form>
     </div>
