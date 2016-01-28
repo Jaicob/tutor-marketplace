@@ -130,15 +130,6 @@ class CheckoutController < ApplicationController
     end
   end
 
-  def confirmation # step 4
-    @booking_preview = BookingPreview.new(session, @tutor).format_info
-    @charge = Charge.find(session[:charge_id])
-    if @booking_preview[:no_payment_due] != true
-      @card_info = Processor::Stripe.new.get_charge_details(@charge.stripe_charge_id)
-    end
-    delete_all_session_variables
-  end
-
   private
 
     def set_tutor
@@ -147,14 +138,6 @@ class CheckoutController < ApplicationController
 
     def back_to_search
       @from_search = true if request.referer && request.referer.split(/[^[:alpha:]]+/).include?('search')
-    end
-
-    def delete_all_session_variables
-      # session[:course_id] = nil
-      # session[:appt_info] = nil
-      # session[:location] = nil
-      # session[:charge_id] = nil
-      # session[:promo_code] = nil
     end
 
 end
