@@ -2,7 +2,15 @@ class Dashboard::Student::HomeController < DashboardController
   before_action :set_appt, only: [:view_reschedule_options, :reschedule_appt]
 
   def index
-    @charge = params[:charge]
+    if params[:charge]
+      @charge = Charge.find(params[:charge])
+      @booking_preview = BookingPreview.new(session, @charge.tutor).format_info
+      @charge = Charge.find(session[:charge_id])
+      if @booking_preview[:no_payment_due] != true
+        @card_info = Processor::Stripe.new.get_charge_details(@charge.stripe_charge_id)
+      end
+      # delete_all_session_variables
+    end
   end
 
   def cancel_appt

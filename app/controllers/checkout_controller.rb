@@ -109,7 +109,8 @@ class CheckoutController < ApplicationController
 
     if @context.success?
       session[:charge_id] = @context.charge.id
-      sign_in_and_redirect(@context.charge.student.user, charge: @context.charge)
+      sign_in(@context.charge.student.user)
+      redirect_to home_student_path(@context.charge.student, charge: @context.charge.id)
       StudentManagementMailer.delay.welcome_email(@context.charge.student.email)
     else
 
