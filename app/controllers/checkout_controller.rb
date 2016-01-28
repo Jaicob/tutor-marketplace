@@ -109,8 +109,8 @@ class CheckoutController < ApplicationController
 
     if @context.success?
       session[:charge_id] = @context.charge.id
+      sign_in_and_redirect(@context.charge.student.user, charge: @context.charge)
       StudentManagementMailer.delay.welcome_email(@context.charge.student.email)
-      redirect_to checkout_confirmation_path(@tutor.slug, anchor: 'confirmation')
     else
 
       # for de-bugging CheckoutOrganizer, error details in server logs

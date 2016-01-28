@@ -2,6 +2,7 @@ class Dashboard::Student::HomeController < DashboardController
   before_action :set_appt, only: [:view_reschedule_options, :reschedule_appt]
 
   def index
+    @charge = params[:charge]
   end
 
   def cancel_appt

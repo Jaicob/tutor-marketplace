@@ -1,4 +1,11 @@
 <section class="dashboard-content student-home-page">
+  <% if @charge %>
+    <div class="row">
+      <div class="small-12 columns">
+        <h1><%= @charge %></h1>
+      </div>
+    </div>
+  <% end %>
   <div class="row">
     <div class="small-12 medium-8 columns">
       <%= render 'search_bar' %>

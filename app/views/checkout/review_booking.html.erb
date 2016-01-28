@@ -23,7 +23,9 @@
       var $form = $(this);
 
       // Disable the submit button to prevent repeated clicks
-      $form.find('#submit-payment').prop('disabled', true);
+      $('#submit-payment').prop('disabled', true);
+      $('#submit-payment-b').prop('disabled', true);
+      $('#submit-payment-c').prop('disabled', true);
 
       if($('input#default-card').is(':checked')) {
         $form.get(0).submit();
@@ -44,7 +46,9 @@
     if (response.error) {
       // Show the errors on the form
       $form.find('.checkout-card-errors').text(response.error.message);
-      $form.find('#submit-payment').prop('disabled', false);
+      $('#submit-payment').prop('disabled', false);
+      $('#submit-payment-b').prop('disabled', false);
+      $('#submit-payment-c').prop('disabled', false);
     } else {
       // response contains id and card, which contains additional card details
       var token = response.id;
