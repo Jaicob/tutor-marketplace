@@ -1,0 +1,25 @@
+<div class="box">
+  <div class="row">
+    <div class="small-12 medium-4 columns">
+      <h2>Your Receipt</h2>
+      <h6 class="margin-top-1em margin-bottom-1em">Your booking is complete!</h6>
+      <p>Your tutor will contact you soon to confirm a meeting location.</p>
+      <p>If you have any questions or concerns, please <%= link_to 'contact us here.', contact_path, class: 'blue-link' %></p>
+      <p class="margin-bottom-1em">Happy Studying,</br>The Axon Team :)</p>
+    </div>
+    <div class="small-12 medium-4 columns">
+      <h6>Appointment Details</h6>
+      <%= render '/checkout/review_and_confirm_partials/appointment_summary' %>
+      <h6>Appointment Times</h6>
+      <%= render '/checkout/review_and_confirm_partials/appointment_times' %>
+    </div>
+    <div class="small-12 medium-4 columns">
+      <h6>Payment Details</h6>
+      <%= render '/checkout/review_and_confirm_partials/price_summary' %>
+      <% if @card_info %>
+        <h6>Payment Card</h6>
+        <%= render '/checkout/review_and_confirm_partials/card_info' %>
+      <% end %>
+    </div>
+  </div>
+</div>

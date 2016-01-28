@@ -28,8 +28,10 @@ window.onload = function start() { // calls 2 methods
     var arrayLength = selectedApptIds.length;
     for (var i = 0; i < arrayLength; i++) {
       var checkbox = document.getElementById(selectedApptIds[i]);
-      checkbox.checked = true;
-      checkbox.onchange();
+      if(checkbox != null) {
+        checkbox.checked = true;
+        checkbox.onchange();
+      }
     }
   }
 

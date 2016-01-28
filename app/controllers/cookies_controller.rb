@@ -23,20 +23,25 @@ class CookiesController < ApplicationController
 
   # Sets the school from the nav dropdown school list
   def change_school_id_cookie
-    school_id = params[:school_id]
+    school_id = params[:school_id] || params[:change_school][:school_id]
     if @tutor
       if @tutor.school_change_allowed?
         @tutor.update(school_id: school_id)
-      else
+        cookies[:school_id] = { value: @school_id, expires: 2.months.from_now }
         redirect_to :back
+      else
         flash[:alert] = "You cannot switch your campus with active course listings at your current campus."
-        return
+        redirect_to :back
       end
     elsif @student
-      @student.update(school_id: school_id)
+      if @student.update(school_id: school_id)
+        cookies[:school_id] = { value: @school_id, expires: 2.months.from_now }
+        redirect_to :back
+      else
+        flash[:alert] = "School change failed: #{@student.errors.full_messages.first}"
+        redirect_to :back
+      end
     end
-    cookies[:school_id] = { value: @school_id, expires: 2.months.from_now }
-    redirect_to :back
   end
 
   private
