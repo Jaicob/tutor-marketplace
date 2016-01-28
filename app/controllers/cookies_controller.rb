@@ -41,6 +41,9 @@ class CookiesController < ApplicationController
         flash[:alert] = "School change failed: #{@student.errors.full_messages.first}"
         redirect_to :back
       end
+    else
+      cookies[:school_id] = { value: @school_id, expires: 2.months.from_now }
+      redirect_to :back
     end
   end
 

@@ -13,7 +13,7 @@
 		},
 		{
 			"name":"web",
-			"image" : "jaicob/web-app:production-0.2.13",
+			"image" : "jaicob/web-app:production-0.2.16",
 			"essential": true,
 			"memory": 1024,
 			"portMappings" : [

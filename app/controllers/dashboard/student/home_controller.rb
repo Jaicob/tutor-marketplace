@@ -37,11 +37,11 @@ class Dashboard::Student::HomeController < DashboardController
   def reschedule_appt
     response = ApptRescheduler.new(@appt.id, params).reschedule_appt
     if response[:success] == true
-      redirect_to home_student_path(@student)
       flash[:success] = 'Your appointment was successfully rescheduled'
+      redirect_to home_student_path(@student)
     else
-      redirect_to :back
       flash[:alert] = "Your appointment was not rescheduled: #{response[:error]}"
+      redirect_to :back
     end
   end
                                  
