@@ -89,6 +89,7 @@ pickle-email-*.html
 
 # Ignore application configuration
 /config/application.yml
+/config/application.*
 .ruby-version
 
 # My personal notes & to-do list
