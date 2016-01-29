@@ -53,8 +53,8 @@ class User < ActiveRecord::Base
       phone_number: params[:user][:tutor][:phone_number],
       school_id: params[:user][:tutor][:school_id]
     )
-    # send welcome email
-    TutorManagementMailer.delay.welcome_email(user.id)
+    # send welcome email in 24 hours
+    TutorManagementMailer.delay_for(24.hours).welcome_email(user.id)
   end
 
   def create_student_account(user, params)
@@ -65,9 +65,9 @@ class User < ActiveRecord::Base
     # additional logic for sign-up during checkout below, creates a Stripe customer and saves default_card
     # - used for checkout via AJ's React component only
     # - checkout via JT's forms does not use Devise controllers and handle student and Stripe customer creation through Checkout controller and CheckoutRegistration service class
-    if params[:stripe_token] && params[:save_card] == 'true'
-      Processor::Stripe.new.update_customer(self, params[:stripe_token])
-    end
+    # if params[:stripe_token] && params[:save_card] == 'true'
+    #   Processor::Stripe.new.update_customer(self, params[:stripe_token])
+    # end
   end
 
   def full_name
