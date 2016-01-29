@@ -1,0 +1,46 @@
+<div class="row">
+  <div class="small-12 columns">
+    <h1 class="main-header">Meet Your Personal Campus Tutor</h1>
+    <h3 class="second-header">Choose Your Campus</h3>
+  </div>
+</div>
+<%= form_for 'visitor', url: set_school_path do |f| %>
+<div class="row medium-collapse school-select-box">
+  <div class="small-12 medium-9 columns">
+    <%= f.collection_select(:school_id, School.all, :id, :name, {prompt: 'Select School'}, {required: true}) %>
+  </div>
+  <div class="small-12 medium-3 columns">
+    <%= f.submit 'Go', class: 'custom-button full-width', id: 'submit-school-selection' %>
+  </div>
+</div>
+<% end %>
+<div class="row">
+  <div class="small-12 columns">
+    <h5 class="header-text">Book your in-person & on-campus tutor in just two minutes</h5>
+  </div>
+</div>
+<div class="row numbers-layover">
+  <div class="small-12 medium-3 columns">
+    <p class="big-number">2,000+</p>
+    <p class="fine-print numbers">Students using Axon</p>
+  </div>
+  <div class="small-12 medium-3 columns">
+    <p class="big-number">6,000+</p>
+    <p class="fine-print numbers">Tutoring sessions</p>
+  </div>
+  <div class="small-12 medium-6 columns">
+    <div class="row">
+      <div class="small-12 columns">
+        <p class="fine-print logos">Featured in:</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="small-12 medium-6 columns">
+        <%= image_tag('https://s3-us-west-2.amazonaws.com/rails-axon-uploads/miscellaneous/odyssey.png', class: 'odyssey-logo') %>
+      </div>
+      <div class="small-12 medium-6 columns">
+        <%= image_tag('https://s3-us-west-2.amazonaws.com/rails-axon-uploads/miscellaneous/red-n-black.png', class: 'red-black-logo') %>
+      </div>
+    </div>
+  </div>
+</div>

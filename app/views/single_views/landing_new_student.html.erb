@@ -1,0 +1,36 @@
+<style>
+/* Do NOT remove this CSS! It must be in the view to dynamically select the correct campus picture to use as the background image */
+.picture-background {
+  background: url('https://s3-us-west-2.amazonaws.com/rails-axon-uploads/miscellaneous/default-campus.jpg') no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  z-index: -1;
+}
+</style>
+
+<% content_for (:special_nav) do %>
+  <%= render 'layouts/partials/special_navs/student_landing_nav' %>
+<% end %>
+
+<div class="landing-page">
+  <div class="section picture-background">
+    <%= render '/single_views/landing_page_partials/select_a_school' %>
+  </div>
+  <div class="section blue-banner">
+    <%= render '/single_views/landing_page_partials/student_blue_banner' %>
+  </div>
+  <div class="section how-it-works">
+    <%= render '/single_views/landing_page_partials/student_steps' %>
+  </div>
+  <div class="section axon-differences">
+    <%= render '/single_views/landing_page_partials/student_differences' %>
+  </div>
+  <div class="section student-testimonials">
+    <%= render '/single_views/landing_page_partials/student_testimonials' %>
+  </div>
+  <div class="section newspaper-quotes"> 
+    <%= render '/single_views/landing_page_partials/newspaper_quotes' %>
+  </div>
+</div>

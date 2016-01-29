@@ -1,0 +1,20 @@
+<div class="row">
+  <div class="small-12 columns">
+    <h1 class="main-header">Meet Your Personal Campus Tutor</h1>
+    <h3 class="second-header">Choose Your Course</h3>
+  </div>
+</div>
+<div class="row medium-collapse course-search-box">
+  <div class="small-12 medium-5 columns">
+    <%= form_for :search, url: search_from_home_path, method: :post do |f| %>
+      <%= render '/course_selector/subject' %>
+  </div>
+  <div class="small-12 medium-5 columns">
+      <%= render '/course_selector/course' %>
+  </div>
+  <div class="small-12 medium-2 columns">
+      <%= f.submit 'Search', class: 'custom-button full-width', id: 'course-search-submit' %>
+    <% end %>
+  </div>
+</div>
+<h5 class="header-text push-down">Book your in-person & on-campus tutor in just two minutes</h5>

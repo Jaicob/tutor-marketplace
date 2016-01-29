@@ -223,11 +223,11 @@
 Rails.application.routes.draw do
 
   # home_page
-  root                         'single_views#home'
+  root                         'single_views#landing_home'
 
   # landing pages
-  get '/get-started'          => 'single_views#student_landing'
-  get '/become-a-tutor'       => 'single_views#tutor_landing'
+  get '/get-started'          => 'single_views#landing_new_student'
+  get '/become-a-tutor'       => 'single_views#landing_new_tutor'
   
   # landing page and post url for registering existing tutors
   get '/welcome-back'         => 'single_views#existing_tutor_landing'

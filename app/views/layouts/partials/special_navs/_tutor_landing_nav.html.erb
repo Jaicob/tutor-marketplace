@@ -25,7 +25,7 @@
           <% end %>
           <li><%= link_to 'Sign out', destroy_user_session_path, method: 'delete' %></li>
         <% else %>
-          <li><%= link_to 'Login', new_user_session_path %></li>
+          <li><%= link_to 'Sign in', new_user_session_path %></li>
           <li><%= link_to 'Become a Tutor', become_a_tutor_path, class: 'become-a-tutor-button' %></li>
         <% end %>
       </ul>
@@ -58,7 +58,7 @@
           <% end %>
         </div>
         <div class="nav-links-right-container nav-link-box">
-          <div class="nav-links-right"><%= link_to 'Login', new_user_session_path, class: 'become-a-tutor-button' %></div>
+          <div class="nav-links-right"><%= link_to 'Sign in', new_user_session_path, class: 'become-a-tutor-button' %></div>
         </div>
       </div>
     </div>
