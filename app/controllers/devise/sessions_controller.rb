@@ -17,7 +17,9 @@ class Devise::SessionsController < DeviseController
           errors: flash.alert
         }
       }
-      format.html {} # keep blank
+      format.html {
+        flash[:alert] = flash.alert.html_safe()
+      } # keep blank
     end
   end
 
