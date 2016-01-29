@@ -26,7 +26,7 @@ source 'https://rubygems.org' do
     gem 'launchy', '~> 2.4'
   end
 
-  group :production do
+  group :staging, :production do
     gem 'unicorn', '~> 4.9'
     gem 'unicorn-rails', '~> 2.2'
   end
