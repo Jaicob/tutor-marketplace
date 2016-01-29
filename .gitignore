@@ -89,6 +89,7 @@ pickle-email-*.html
 
 # Ignore application configuration
 /config/application.yml
+/config/application*
 .ruby-version
 
 # My personal notes & to-do list
@@ -109,3 +110,7 @@ npm-debug.*
 
 # Certs
 /config/certs/ssl/*
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
