@@ -12,17 +12,17 @@
 <% content_for (:special_nav) do %>
   <%= render 'layouts/partials/special_navs/student_landing_nav' %>
 <% end %>
-<div class="landing-page lp-first-section">
+<div class="landing-page">
   <div class="row">
     <div class="small-12 columns">
-      <h1 class="center white shadow top-padding headline">Meet Your Personal Campus Tutor</h1>
-      <h3 class="center white shadow bottom-margin headline">Choose Your Campus:</h3>
+      <h1>Meet Your Personal Campus Tutor</h1>
+      <h3>Choose Your Campus:</h3>
     </div>
   </div>
   <div class="row">
     <div class="small-12 medium-6 medium-centered columns">
       <%= form_for 'visitor', url: set_school_path do |f| %>
-      <div class="row medium-collapse student-landing-search">
+      <div class="row medium-collapse">
         <div class="small-12 medium-9 columns">
             <%= f.collection_select(:school_id, School.all, :id, :name, {prompt: 'Select School'}, {required: true}) %>
         </div>
@@ -35,7 +35,7 @@
   </div>
   <div class="row">
     <div class="small-12 columns">
-      <p class="center white shadow book-two-mins">Book your in-person & on-campus tutor in just two minutes</p>
+      <p>Book your in-person & on-campus tutor in just two minutes</p>
     </div>
   </div>
   <div class="row">
