@@ -2,7 +2,7 @@ FROM jaicob/rails-nginx-unicorn
 MAINTAINER jaicob(jaicob@icloud.com)
 
 # Environment set in deploy script 
-ENV AWS_EB_ENV staging
+ENV AWS_EB_ENV test
 
 # Install tools needed
 RUN sudo npm install -g bower && \
@@ -11,12 +11,10 @@ RUN sudo npm install -g bower && \
 	yes | sudo apt-get install dbus --fix-missing && \
 	gem install bundler
 
-# Do this to cache our bundle install
-# COPY Gemfile* /tmp/cache/
-# WORKDIR /tmp/cache
-RUN bundle install
+# Place correct Application.yml
+COPY config/application.${AWS_EB_ENV}.yml /home/rails/my-app/config/application.yml
 
-WORKDIR /home/rails/my-app
+RUN bundle install
 
 # Place custom unicorn configs/scripts here
 COPY config/unicorn.rb /etc/my-app/config/unicorn.rb
