@@ -1,27 +1,129 @@
 .landing-page {
   .section {
 
+    // genric section title for each section
     h4.section-title {
       font-size: 2.6em;
       font-weight: 100;
       text-align: center;
       margin: 0.5em auto 1em;
     }
-    padding: 1em;
-    text-align: center;
     p {
       max-width: 20em;
       margin: auto;
     }
+    padding: 1em;
+    padding-bottom: 3em;
+    text-align: center;
 
+    &.picture-background {
+      // headers for all 3 landing pages
+      .main-header, .second-header, .header-text {
+        color: white;
+        text-shadow: 1px 1px 1px black;
+      }
+      .main-header {
+        padding-top: 1.5em;
+      }
+      .second-header {
+        margin: 1em;
+      }
+      .push-down { // used on select a course landing page to push blue banner down
+        padding-bottom: 4em;
+      }
+
+      // school-select-box is on initial landing page where users select school
+      .school-select-box {
+        max-width: 30em;
+        select#visitor_school_id, input#submit-school-selection {
+          font-size: 1em;
+          font-weight: 100;
+          height: 2.5em;
+        }
+        select#visitor_school_id {
+          border-top-left-radius: 3px !important;
+          border-bottom-left-radius: 3px !important;
+        }
+        input#submit-school-selection {
+          border-top-left-radius: 0 !important;
+          border-bottom-left-radius: 0 !important;
+        }
+      }
+
+      // numbers-layover is on initial landing page where users select school
+      .numbers-layover {
+        margin-top: 6em;
+        background-color: rgba(0,0,0,0.8);
+        border-radius: 4px;
+        p {
+          color: white;
+          margin-bottom: 1em;
+        }
+        p.big-number {
+          font-size: 1.9em;
+          margin: 0.2em auto 0;
+        }
+        p.fine-print.logos {
+          margin: 0.2em auto;
+        }
+        img.odyssey-logo {
+          margin-top: 0.8em;
+        }
+        img.red-black-logo {
+          max-height: 2.5em;
+        }
+      }
+
+      // .course-search-box is on normal landing page for returning users
+      .course-search-box {
+        max-width: 40em;
+        select#subject {
+          border-top-left-radius: 3px !important;
+          border-bottom-left-radius: 3px !important;
+        }
+        select#course {
+          border-radius: 0;
+        }
+        input#course-search-submit {
+          padding: 0;
+          border-top-left-radius: 0 !important;
+          border-bottom-left-radius: 0 !important;
+        }
+        select#subject, select#course, input#course-search-submit {
+          font-size: 1em;
+          font-weight: 100;
+          height: 2.5em;
+        }
+      }
+
+      // tutor sign up form is on become a tutor page
+      &.tutor-landing-top {
+        padding-bottom: 0;
+        .sign-up-form-box {
+          width: 20em;
+          padding: 2em;
+          border-radius: 4px;
+          background-color: #E4E4E4;
+          margin: 3em 0 1em;
+          .sign-up-title {
+            font-weight: 900;
+            margin-bottom: 1em;
+          }
+        }
+      }
+    }
+
+    // blue banner section
     &.blue-banner {
       background-color: #0095AC;
+      padding-bottom: 1em;
       h4 {
         color: white;
         font-weight: 100;
       }
     }
 
+    // how axon works section
     &.how-it-works {
       background-color: #e4e4e4;
       p.number {
@@ -38,20 +140,24 @@
       }
     }
 
+    // what makes axon different section
     &.axon-differences {
-      i {
-        color: #58AA4D;
-        font-size: 3em;
+      .difference-box {
+        max-width: 18em;
+        margin: 0.5em auto;
+        i {
+          color: #58AA4D;
+          font-size: 3em;
+        }
       }
     }
 
-    &.testimonials {
+    // student testimonials section
+    &.student-testimonials {
       background-color: #e4e4e4;
       img.testimonial-pic {
+        height: 10em;
         border-radius: 100%;
-        width: 100%;
-        max-width: 10em;
-        margin-top: 1em;
       }
       .blurb {
         margin: 1em auto;
@@ -62,6 +168,27 @@
       }
     }
 
+    // tutor testimonial section
+    &.tutor-testimonials {
+      background-color: #e4e4e4;
+      img.tutor-pic {
+        height: 10em;
+        border-radius: 100%;
+      }
+      .blurb {
+        .money {
+          font-size: 1.2em;
+          font-weight: 700;
+        }
+        margin: 1em auto;
+        .name {
+          font-size: 0.8em;
+          font-weight: 400;
+        }
+      }
+    }
+
+    // newspaper quote section
     &.newspaper-quotes {
       background-color: #4F5252;
       padding: 4em 0;
@@ -85,24 +212,4 @@
 }
 
 
-
-// .course-search-box {
-//   max-width: 40em !important;
-//   select#subject {
-//     border-radius: 0;
-//   }
-//   select#course {
-//     border-radius: 0;
-//   }
-//   #course-search-submit {
-//     border-radius: 0 !important;
-//     height: 2.36em;
-//     padding: 0;
-//   }
-//   select#subject, select#course, #course-search-submit {
-//     font-size: 1em;
-//     font-weight: 100;
-//     height: 2.5em;
-//   }
-// }
 

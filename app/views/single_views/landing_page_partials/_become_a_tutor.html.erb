@@ -1,1 +1,45 @@
-_become_a_tutor.html.erb
+<script>
+$(document).ready(function()
+  {
+    $('#user_input').change(function () {  
+      var input = document.getElementById('user_input').value;
+      if (input.length < 8){
+        $('#input-error').removeClass("no-show").addClass("show");
+        $('#tutor-submit-btn').prop("disabled", true)
+      } else {
+        $('#input-error').removeClass("show").addClass("no-show");
+        $('#tutor-submit-btn').prop("disabled", false)
+      }
+    });
+});
+</script>
+
+<div class="row">
+  <div class="small-12 medium-5 medium-offset-1 columns">
+    <div class="sign-up-form-box">
+      <h3 class="sign-up-title">Sign up with Axon</h3>
+      <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :role => 'form'}) do |f| %>
+        <%= f.text_field :first_name, placeholder: 'First Name', required: true  %>
+        <%= f.text_field :last_name, placeholder: 'Last Name', required: true  %>
+        <%= f.email_field :email, placeholder: 'Email', required: true %>
+        <%= f.password_field :password, placeholder: 'Password', required: true, id: 'user_input' %>
+        <p id="input-error" class="no-show">Password must be at least 8 characters</p>
+        <%= f.fields_for :tutor do |tt| %>
+          <%= tt.text_field :phone_number, placeholder: 'Phone Number', required: true %>
+          <select name="user[tutor][school_id]" required="true">
+            <option value="" disabled="true" selected="true">Select Campus</option>
+            <% School.all.each do |school| %>
+              <option value="<%= school.id %>"><%= school.name %></option>
+            <% end %>
+          </select>
+        <% end %>
+        <%= f.submit "Get Started", class: 'custom-button full-width no-margin', id: 'tutor-submit-btn',disabled: true %>
+      <% end %>
+    </div>
+  </div>
+  <div class="small-12 medium-6 columns">
+    <div class="tutor-headline">
+      <h1 class="main-header">Axon gives you the tools to build your own tutoring business</h1>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,6 @@
 class SingleViewsController < ApplicationController
 
-  def home
+  def landing_home
     if current_user && current_user.admin then redirect_to admin_schools_path end
     if cookies[:school_id].blank? && !@school # redirects to student_landing page if no school set
       if current_user && current_user.admin
@@ -11,14 +11,14 @@ class SingleViewsController < ApplicationController
     end
   end
 
-  def student_landing
+  def landing_new_student
     if current_user && current_user.admin then redirect_to admin_schools_path end
     if current_user # this page is only for new visitors, so redirect to home if session exists
       redirect_to root_path
     end
   end
 
-  def tutor_landing
+  def landing_new_tutor
     if current_user && current_user.admin then redirect_to admin_schools_path end
   end
 

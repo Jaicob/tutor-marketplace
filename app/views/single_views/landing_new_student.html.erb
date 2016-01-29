@@ -1,29 +1,25 @@
 <style>
 /* Do NOT remove this CSS! It must be in the view to dynamically select the correct campus picture to use as the background image */
-@media screen and (min-width: 768px) {
-  .picture-background {
-    background: url("<%= (@school && @school.campus_pic_url) ? @school.campus_pic_url : 'https://s3-us-west-2.amazonaws.com/rails-axon-uploads/miscellaneous/default-campus.jpg' %>") no-repeat center center fixed; 
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    z-index: -1;
-  }
+.picture-background {
+  background: url('https://s3-us-west-2.amazonaws.com/rails-axon-uploads/miscellaneous/default-campus.jpg') no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  z-index: -1;
 }
 </style>
 
-<%= javascript_include_tag "single_views/search" %>
-
 <% content_for (:special_nav) do %>
-  <%= render 'layouts/partials/special_navs/home_nav' %>
+  <%= render 'layouts/partials/special_navs/student_landing_nav' %>
 <% end %>
 
 <div class="landing-page">
   <div class="section picture-background">
-    <%= render '/single_views/landing_page_partials/home_course_search' %>
+    <%= render '/single_views/landing_page_partials/select_a_school' %>
   </div>
   <div class="section blue-banner">
-    <%= render '/single_views/landing_page_partials/blue_banner' %>
+    <%= render '/single_views/landing_page_partials/student_blue_banner' %>
   </div>
   <div class="section how-it-works">
     <%= render '/single_views/landing_page_partials/student_steps' %>
@@ -31,7 +27,7 @@
   <div class="section axon-differences">
     <%= render '/single_views/landing_page_partials/student_differences' %>
   </div>
-  <div class="section testimonials">
+  <div class="section student-testimonials">
     <%= render '/single_views/landing_page_partials/student_testimonials' %>
   </div>
   <div class="section newspaper-quotes"> 
