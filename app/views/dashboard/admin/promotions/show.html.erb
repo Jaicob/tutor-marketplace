@@ -40,12 +40,9 @@
   </div>
 </div>
 <div class="row">
-  <div class="small-12 columns">
-    <h3>Update Promotion</h3>
-  </div>
-</div>
-<div class="row">
   <div class="small-12 medium-4 columns">
+    <h3>Update Promotion</h3>
+
     <%= form_for :promotion, url: admin_promotion_path(@promotion), method: :put do |f| %>
 
       <%= f.label :code %>
@@ -79,5 +76,10 @@
       
       <%= f.submit 'Update Promotion', class: 'custom-button' %>
     <% end %>
+  </div>
+  <div class="small-12 medium-4 columns">
+    <h3>Destroy Promotion</h3>
+    <p class="fine-print bottom-margin">This cannot be undone. You should only destroy a promotion that was made in error or for test purposes. Promotions that have come to an end should be disabled by updating the Redemption Limit or Valid Until date to prevent further redemptions. This way we retain a record of past promotions for information purposes.</p>
+    <%= button_to('Delete Promotion', admin_promotion_path(@promotion), method: :delete, class: 'custom-button danger') %>
   </div>
 </div>
