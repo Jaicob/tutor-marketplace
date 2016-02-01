@@ -1,12 +1,12 @@
 require "fog/rackspace/storage"
 require "carrierwave"
 
-if Rails.env.test? or Rails.env.cucumber? or Rails.env.development?
-  CarrierWave.configure do |config|
-    config.storage = :file
-    config.enable_processing = false
-  end
-else
+# if Rails.env.test? or Rails.env.cucumber? or Rails.env.development?
+#   CarrierWave.configure do |config|
+#     config.storage = :file
+#     config.enable_processing = false
+#   end
+# else
   CarrierWave.configure do |config|
     config.storage = :fog
     config.fog_credentials = {
@@ -18,5 +18,5 @@ else
     config.fog_directory  = ENV['S3_BUCKET']
     config.fog_public     = true
     config.fog_attributes = { 'Cache-Control' => "max-age=#{2.day.to_i}" }
-  end  
+  # end  
 end

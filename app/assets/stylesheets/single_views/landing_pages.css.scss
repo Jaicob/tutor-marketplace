@@ -17,6 +17,9 @@
     text-align: center;
 
     &.picture-background {
+      // bg color for small screens, 768 px + has image bg which is dynamically set in views (landing pages only)
+      background-color: #4F5252;
+
       // headers for all 3 landing pages
       .main-header, .second-header, .header-text {
         color: white;
@@ -24,6 +27,9 @@
       }
       .main-header {
         padding-top: 1.5em;
+        &.tutor-header {
+          margin-top: 1em;
+        }
       }
       .second-header {
         margin: 1em;
@@ -100,14 +106,19 @@
       &.tutor-landing-top {
         padding-bottom: 0;
         .sign-up-form-box {
-          width: 20em;
+          max-width: 20em;
           padding: 2em;
           border-radius: 4px;
           background-color: #E4E4E4;
-          margin: 3em 0 1em;
+          margin: 3em auto 1em;
           .sign-up-title {
             font-weight: 900;
             margin-bottom: 1em;
+          }
+        }
+        @media screen and (max-width: 1000px) {
+          .sign-up-form-box { 
+            padding: 1em;
           }
         }
       }
