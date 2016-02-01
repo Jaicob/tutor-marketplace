@@ -48,13 +48,13 @@ a.profile-settings-link {
         <%= f.number_field :graduation_year %>
 
         <%= f.label :extra_info_1, 'Profile Info 1' %>
-        <%= f.text_area :extra_info_1, maxlength: 250 %>
+        <%= f.text_area :extra_info_1, size: '30x10', maxlength: 250 %>
 
         <%= f.label :extra_info_2, 'Profile Info 2' %>
-        <%= f.text_area :extra_info_2, maxlength: 250 %>
+        <%= f.text_area :extra_info_2, size: '30x10', maxlength: 250 %>
         
         <%= f.label :extra_info_3, 'Profile Info 3' %>
-        <%= f.text_area :extra_info_3, maxlength: 250 %>
+        <%= f.text_area :extra_info_3, size: '30x10', maxlength: 250 %>
 
         <%= f.submit 'Save', class: 'custom-button' %>
 

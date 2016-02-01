@@ -1,12 +1,14 @@
 <style>
 /* Do NOT remove this CSS! It must be in the view to dynamically select the correct campus picture to use as the background image */
-.picture-background {
-  background: url('https://s3-us-west-2.amazonaws.com/rails-axon-uploads/miscellaneous/default-campus.jpg') no-repeat center center fixed; 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  z-index: -1;
+@media screen and (min-width: 768px) {
+  .picture-background {
+    background: url('https://s3-us-west-2.amazonaws.com/rails-axon-uploads/miscellaneous/default-campus.jpg') no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    z-index: -1;
+  }
 }
 </style>
 
