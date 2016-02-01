@@ -49,114 +49,114 @@ course_list.each do |school_id, subject_id, call_number, friendly_name|
   x = Course.create!(school_id: school_id, subject_id: subject_id, call_number: call_number, friendly_name: friendly_name)
 end
 
-# Create 100 Users to become Tutors
-100.times{
-  User.create!(
-    first_name: Faker::Name.first_name,
-    last_name: Faker::Name.last_name,
-    email:  "#{SecureRandom.hex(8).to_s}@sink.sendgrid.net",
-    password: 'password',
-    password_confirmation: 'password')
-}
+# # Create 100 Users to become Tutors
+# 100.times{
+#   User.create!(
+#     first_name: Faker::Name.first_name,
+#     last_name: Faker::Name.last_name,
+#     email:  "#{SecureRandom.hex(8).to_s}@sink.sendgrid.net",
+#     password: 'password',
+#     password_confirmation: 'password')
+# }
 
-# Create a Tutor profile for each User
-## Arrays for calling the sample method on below to have nice mock tutor cards
-extra_info = ['This is a short extra info example for showing different possibilities.', "This is a long extra info example for showing the possiblity of having a long enough statement that some is hidden and must be viewed on the actual profile."]
-degree = [0,1,2,3,4,5]
-major = ['Chemistry', 'Biology', 'Business', 'English', 'Micro-Biology', 'Computer Science', 'Accounting']
-graduation_year = [2015, 2016, 2017, 2018, 2019]
-additional_degrees = [
-  'B.A. Accounting, B.S. Finance',
-  'M.F.A English, B.S. Spanish',
-  'B.S. Biology, B.A. Marine Biology',
-  'B.S. Chemistry, B.S. Micro-Biology'
-]
+# # Create a Tutor profile for each User
+# ## Arrays for calling the sample method on below to have nice mock tutor cards
+# extra_info = ['This is a short extra info example for showing different possibilities.', "This is a long extra info example for showing the possiblity of having a long enough statement that some is hidden and must be viewed on the actual profile."]
+# degree = [0,1,2,3,4,5]
+# major = ['Chemistry', 'Biology', 'Business', 'English', 'Micro-Biology', 'Computer Science', 'Accounting']
+# graduation_year = [2015, 2016, 2017, 2018, 2019]
+# additional_degrees = [
+#   'B.A. Accounting, B.S. Finance',
+#   'M.F.A English, B.S. Spanish',
+#   'B.S. Biology, B.A. Marine Biology',
+#   'B.S. Chemistry, B.S. Micro-Biology'
+# ]
 
-n = 1
-User.all.each do |user|
-  user.create_tutor!(
-    school_id: n,
-    rating: 5,
-    degree: degree.sample,
-    major: major.sample,
-    additional_degrees: additional_degrees.sample,
-    extra_info_1: extra_info.sample,
-    extra_info_2: extra_info.sample,
-    extra_info_3: extra_info.sample,
-    graduation_year: graduation_year.sample,
-    phone_number: Faker::Number.number(10)
-  )
-  x = Tutor.count
-  if (x == 25) || (x == 50) || (x == 75)
-    n += 1
-  end
-end
+# n = 1
+# User.all.each do |user|
+#   user.create_tutor!(
+#     school_id: n,
+#     rating: 5,
+#     degree: degree.sample,
+#     major: major.sample,
+#     additional_degrees: additional_degrees.sample,
+#     extra_info_1: extra_info.sample,
+#     extra_info_2: extra_info.sample,
+#     extra_info_3: extra_info.sample,
+#     graduation_year: graduation_year.sample,
+#     phone_number: Faker::Number.number(10)
+#   )
+#   x = Tutor.count
+#   if (x == 25) || (x == 50) || (x == 75)
+#     n += 1
+#   end
+# end
 
-# Remove additional degrees from every second and third tutor
-Tutor.all.each do |tutor|
-  if tutor.id % 2 == 0 || tutor.id % 3 == 0
-    tutor.additional_degrees = nil
-    tutor.save
-  end
-end
+# # Remove additional degrees from every second and third tutor
+# Tutor.all.each do |tutor|
+#   if tutor.id % 2 == 0 || tutor.id % 3 == 0
+#     tutor.additional_degrees = nil
+#     tutor.save
+#   end
+# end
 
-# Create 3 TutorCourses for each Tutor
-rates =[15,18,20,22,25,26,30,31]
-Tutor.all.each do |tutor|
-  tutor.tutor_courses.create(course_id: tutor.school.courses.first.id, rate: rates.sample)
-  tutor.tutor_courses.create(course_id: tutor.school.courses.second.id, rate: rates.sample)
-  tutor.tutor_courses.create(course_id: tutor.school.courses.third.id, rate: rates.sample)
-  tutor.tutor_courses.create(course_id: tutor.school.courses.fourth.id, rate: rates.sample)
-end
+# # Create 3 TutorCourses for each Tutor
+# rates =[15,18,20,22,25,26,30,31]
+# Tutor.all.each do |tutor|
+#   tutor.tutor_courses.create(course_id: tutor.school.courses.first.id, rate: rates.sample)
+#   tutor.tutor_courses.create(course_id: tutor.school.courses.second.id, rate: rates.sample)
+#   tutor.tutor_courses.create(course_id: tutor.school.courses.third.id, rate: rates.sample)
+#   tutor.tutor_courses.create(course_id: tutor.school.courses.fourth.id, rate: rates.sample)
+# end
 
-# Create Slots for each Tutor
-Tutor.all.each do |tutor|
-  start_time = Date.today.to_s + ' 12:00'
-  slot_creator = SlotCreator.new(tutor_id: tutor.id, start_time: start_time, duration: 7200, weeks_to_repeat: 18, slot_type:0)
-  slot_creator.create_slots
-end
+# # Create Slots for each Tutor
+# Tutor.all.each do |tutor|
+#   start_time = Date.today.to_s + ' 12:00'
+#   slot_creator = SlotCreator.new(tutor_id: tutor.id, start_time: start_time, duration: 7200, weeks_to_repeat: 18, slot_type:0)
+#   slot_creator.create_slots
+# end
 
-# Activate tutors
-Tutor.all.each do |tutor|
-  tutor.update(active_status: 1)
-end
+# # Activate tutors
+# Tutor.all.each do |tutor|
+#   tutor.update(active_status: 1)
+# end
 
-# Create 100 Users to become Students, 25 for each school
-100.times{
-  User.create!(
-    first_name: Faker::Name.first_name,
-    last_name: Faker::Name.last_name,
-    email: "#{SecureRandom.hex(8).to_s}@sink.sendgrid.net",
-    password: 'password',
-    password_confirmation: 'password')
-}
+# # Create 100 Users to become Students, 25 for each school
+# 100.times{
+#   User.create!(
+#     first_name: Faker::Name.first_name,
+#     last_name: Faker::Name.last_name,
+#     email: "#{SecureRandom.hex(8).to_s}@sink.sendgrid.net",
+#     password: 'password',
+#     password_confirmation: 'password')
+# }
 
-new_users = []
+# new_users = []
 
-User.all.each do |user|
-  new_users << user if user.tutor == nil
-end
+# User.all.each do |user|
+#   new_users << user if user.tutor == nil
+# end
 
-n = 1
-new_users.each do |new_user|
-  new_user.create_student!(school_id: n)
-  x = Student.count
-  if (x == 25) || (x == 50) || (x == 75)
-    n += 1
-  end
-end
+# n = 1
+# new_users.each do |new_user|
+#   new_user.create_student!(school_id: n)
+#   x = Student.count
+#   if (x == 25) || (x == 50) || (x == 75)
+#     n += 1
+#   end
+# end
 
-# Create an appointment for each student and tutor at each school
-School.all.each do |school|
-  @students = school.students
-  @tutors = school.tutors
-  @start_time = Date.today.to_s + ' 12:00'
-  25.times { |ordinal|
-    Appointment.create(
-      student_id: @students[ordinal].id,
-      slot_id: @tutors[ordinal].slots.first.id,
-      course_id: @tutors[ordinal].courses.first.id,
-      start_time: @start_time
-    )
-  }
-end
+# # Create an appointment for each student and tutor at each school
+# School.all.each do |school|
+#   @students = school.students
+#   @tutors = school.tutors
+#   @start_time = Date.today.to_s + ' 12:00'
+#   25.times { |ordinal|
+#     Appointment.create(
+#       student_id: @students[ordinal].id,
+#       slot_id: @tutors[ordinal].slots.first.id,
+#       course_id: @tutors[ordinal].courses.first.id,
+#       start_time: @start_time
+#     )
+#   }
+# end

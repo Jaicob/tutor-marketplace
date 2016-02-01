@@ -1,23 +1,31 @@
 <%= javascript_include_tag "single_views/indirect_search" %>
 <%= javascript_include_tag "single_views/search" %>
 
-<div class="search-header-bg">
+<div class="search-header">
   <div class="row small-collapse">
-    <div class="small-12 small-offset-1 medium-4 columns">
-      <h2 class="search-title">Find Your Tutor</h2>
-    </div>
-    <div class="small-12 medium-7 end columns">
-      <div id="search-page-selectors" class="row medium-collapse course-search-box">
-        <div class="small-12 medium-5 columns">
-          <%= form_for :search, url: search_from_home_path, method: :post do |f| %>
-            <%= render '/course_selector/subject' %>
+    <div class="small-12 medium-11 medium-centered columns">
+      <div class="row">
+        <div class="small-12 medium-4 columns">
+          <div class="row">
+            <div class="small-12 columns">
+              <h4 class="find-your-tutor">Find Your Tutor</h4>
+            </div>
+          </div>
         </div>
-        <div class="small-12 medium-5 columns">
-            <%= render '/course_selector/course' %>
-        </div>
-        <div class="small-12 medium-2 columns">
-            <%= f.submit 'Search', class: 'custom-button full-width hover-dark-blue', id: 'course-search-submit' %>
-          <% end %>
+        <div class="small-12 medium-8 columns">
+          <div class="row medium-collapse course-search-box">
+            <div class="small-12 medium-5 columns">
+              <%= form_for :search, url: search_from_home_path, method: :post do |f| %>
+                <%= render '/course_selector/subject' %>
+            </div>
+            <div class="small-12 medium-5 columns">
+                <%= render '/course_selector/course' %>
+            </div>
+            <div class="small-12 medium-2 columns">
+                <%= f.submit 'Search', class: 'custom-button full-width hover-dark-blue', id: 'course-search-submit' %>
+              <% end %>
+            </div>
+          </div>
         </div>
       </div>
     </div>

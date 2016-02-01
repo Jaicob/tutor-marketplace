@@ -24,6 +24,9 @@
       }
       .main-header {
         padding-top: 1.5em;
+        &.tutor-header {
+          margin-top: 1em;
+        }
       }
       .second-header {
         margin: 1em;
