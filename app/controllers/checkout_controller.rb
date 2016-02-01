@@ -111,7 +111,7 @@ class CheckoutController < ApplicationController
       session[:charge_id] = @context.charge.id
       sign_in(@context.charge.student.user)
       redirect_to home_student_path(@context.charge.student, charge: @context.charge.id)
-      StudentManagementMailer.delay.welcome_email(@context.charge.student.email)
+      StudentManagementMailer.delay.welcome_email(@context.charge.student.user.id)
     else
 
       # for de-bugging CheckoutOrganizer, error details in server logs
