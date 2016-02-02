@@ -3,20 +3,20 @@
     <h3 class="admin-title"><%= @school.blank? ? 'Admin Panel' : 'Campus Manager Panel' %></h3>
     <h3 class="school-name"><%= @school.blank? ? 'All Schools' : "#{@school.name}" %></h3>
   </div>
-</div>
-<section class="admin-nav">
-  <nav>
+  <nav class="admin-nav">
     <div class="row">
-      <ul class="breadcrumbs">
-        <li><%= link_to 'Tutors', admin_tutors_path %></li>
-        <li><%= link_to 'Students', admin_students_path %></li>
-        <li><%= link_to 'Appointments', admin_appointments_path %></li>
-        <li><%= link_to 'Courses', admin_courses_path %></li>
-        <li><%= link_to 'Promotions', admin_promotions_path %></li>
-        <% if current_user.role == 'admin' %>
-          <li><%= link_to 'Schools', admin_schools_path %></li>
-        <% end %>
-      </ul>
-    </div>     
+      <div class="small-12 columns">
+        <dl class="sub-nav">
+          <% generate_admin_nav_links %> <!-- calls AdminNavHelper.generate_admin_nav_links to set @admin_links -->
+          <% @admin_links.each do |name, link| %>
+            <% if @current == name %>
+              <dd class="active"><%= link_to name, link %></dd>
+            <% else %>
+              <dd><%= link_to name, link %></dd>
+            <% end %>
+          <% end %>
+        </dl>
+      </div>
+    </div>
   </nav>
-</section>
+</div>

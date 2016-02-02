@@ -1,9 +1,3 @@
-<style>
-.campus_manager_pic {
-  width: 10em;
-}
-</style>
-
 <div class="row">
   <div class="large-8 columns">
     <h3>School Details</h3>
@@ -13,9 +7,11 @@
     <h6>Fee: <%= @working_school.transaction_percentage if @working_school.transaction_percentage %>%</h6>
     <a href="#" data-reveal-id="editSchool" class="custom-button">Edit</a>
   </div>
-  <div class="large-4 columns">
-    <%= link_to 'Back to All Schools', admin_schools_path, class: 'custom-button full-width margin-top-1em blue' %>
-  </div>
+  <% if current_user.role == 'admin' %>
+    <div class="large-4 columns">
+      <%= link_to 'Back to All Schools', admin_schools_path, class: 'custom-button full-width blue' %>
+    </div>
+  <% end %>
 </div>
 
 <div class="row">
@@ -75,11 +71,6 @@
       <h3>Campus Manager</h3>
         <% if @working_school.campus_manager %>
           <div class="row">		     
-           <div class="small-12 medium-6 columns">		
-              <% if @working_school.campus_manager.profile_pic_url %>
-                <%= image_tag(@working_school.campus_manager.profile_pic_url, class: 'campus_manager_pic') %>		
-              <% end %>
-           </div>		
            <div class="small-12 medium-6 columns">		
              <h6><%= @working_school.campus_manager.full_name %></h6>		
              <p><%= @working_school.campus_manager.email %></p>		

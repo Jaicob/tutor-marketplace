@@ -1,0 +1,48 @@
+div.admin-header {
+  .admin-title, .school-name {
+    color: #4F5252;
+    text-align: center;
+    max-width: none;
+  }
+  .admin-title {
+    padding: 0.7em;
+    font-size: 1.5em;
+    font-weight: 800;
+    margin-bottom: 0;
+  }
+  .school-name {
+    padding-bottom: 1em;
+    margin-bottom: 0;
+  }
+  nav.admin-nav {
+    background-color: #DEDEDE;
+    padding-top: 1em;
+    margin-bottom: 1em;
+    dl.sub-nav {
+      dd {
+        a {
+          color: #4F5252 !important;
+        }
+      }
+      dd.active {
+        a {
+          color: white !important;
+        }
+      }
+    }
+  }
+}
+
+// makes IDs of objects in Admin sections more clearly clickable links
+a.id-link-for-admin {
+  background-color: #58AA4D;
+  color: white;
+  padding: 0.3em;
+  border-radius: 10px;
+  display: block;
+  text-align: center;
+}
+a.id-link-for-admin:hover {
+  color: white;
+  background-color: #2BC2DE;
+}

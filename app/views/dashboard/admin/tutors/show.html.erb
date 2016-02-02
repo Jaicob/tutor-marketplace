@@ -1,64 +1,66 @@
 <div class="row">
-  <div class="large-12 columns">
+  <div class="small-12 columns">
+    <h3>Tutor Details</h3>
+    <h1><%= @tutor.user.full_name %></h1>
+  </div>
+</div>
+<div class="row">
+  <div class="medium-12 columns">
     <table>
       <thead>
         <tr>
-          <th class="id">ID</th>
-          <th class="active-status">Status</th>
-          <th class="name">Name</th>
-          <th class="email">Email</th>
-          <th class="phone">Phone</th>
-          <th class="school">School</th>
-          <th class="application-status">Rating</th>
+          <th>ID</th>
+          <th>Active Status</th>
+          <th>School</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Total Bookings</th>
+          <th>Joined</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td><%= @tutor.id %></td>
           <td><%= @tutor.active_status %></td>
-          <td><%= @tutor.user.full_name %></td>
+          <td><%= @tutor.school.name %></td>
           <td><%= @tutor.user.email %></td>
-          <td><%= @tutor.phone_number if @tutor.phone_number %></td>
-          <td><%= @tutor.school.name if @tutor.school %></td>
-          <td></td>
+          <td><%= @tutor.phone_number %></td>
+          <td><%= @tutor.appointments.count %></td>
+          <td><%= @tutor.created_at.strftime('%-m-%d-%y') %></td>
         </tr>
       </tbody>
     </table>
   </div>
 </div>
-
 <div class="row">
-  <div class="large-12 columns">
+  <div class="medium-12 columns">
+    <h4>Courses</h4>
     <table>
       <thead>
         <tr>
-          <th class="courses">Courses</th>
-          <th class="appointments">Total Appts</th>
-          <th class="average-avail">Avg. Weekly Availability</th>
-          <th class="availability">Availabilty Booked</th>
-          <th class="applied">Applied</th>
-          <th class="approved">Approved</th>
+          <th>Subject</th>
+          <th>Call Number</th>
+          <th>Friendly Name</th>
+          <th>Hourly Rate</th>
         </tr>
       </thead>
       <tbody>
+        <% @tutor.tutor_courses.each do |tc| %>
         <tr>
-          <td><%= @tutor.formatted_courses %></td>
-          <td><%= @tutor.appointments.count %></td>
-          <td></td>
-          <td></td>
-          <td><%= @tutor.created_at.strftime('%-m-%d-%y') %></td>
-          <td></td>
+          <td><%= tc.course.subject.name %></td>
+          <td><%= tc.course.call_number %></td>
+          <td><%= tc.course.friendly_name %></td>
+          <td>$<%= tc.rate %></td>
         </tr>
+        <% end %>
       </tbody>
     </table>
   </div>
 </div>
-
 <div class="row">
-  <div class="large-12 columns">
-    <fieldset class="admin-panel">
-      <legend class="admin-panel">Actions</legend>
-      
+  <div class="medium-12 columns">
+    <h4>Actions</h4>
+    <div class="box margin-bottom-1em">
       <div class="row">
         <div class="medium-3 columns">
           <% if @tutor.active_status == 'Inactive' && @tutor.application_status != 'Approved' %>
@@ -66,68 +68,75 @@
           <% elsif @tutor.active_status == 'Inactive' && @tutor.application_status == 'Approved' %>
             <%= form_for :tutor, url: admin_tutor_path(@tutor), method: 'patch' do |f| %>
                 <%= f.hidden_field :active_status, value: 'Active' %>
-                <%= f.submit 'Activate Tutor', class: 'button tiny expand success' %>
+                <%= f.submit 'Activate Tutor', class: 'custom-button short-width' %>
             <% end %>
           <% else %>
             <%= form_for :tutor, url: admin_tutor_path(@tutor), method: 'patch' do |f| %>
                 <%= f.hidden_field :active_status, value: 'Inactive' %>
-                <%= f.submit 'Deactivate Tutor', class: 'button tiny expand alert' %>
+                <%= f.submit 'Deactivate Tutor', class: 'custom-button short-width danger' %>
             <% end %>
           <% end %>
         </div>
-
         <div class="medium-3 columns">
           <% if @tutor.application_status == 'Complete' %>
             <%= form_for :tutor, url: admin_tutor_path(@tutor), method: 'patch' do |f| %>
               <%= f.hidden_field :application_status, value: 'Approved' %>
-              <%= f.submit 'Approve Application', class: 'button tiny default expand' %>
+              <%= f.submit 'Approve Application', class: 'custom-button short-width' %>
             <% end %>
           <% else %>
-            <button class="button tiny secondary expand" disabled="true">Application <%= @tutor.application_status %></button>
+            <button class="custom-button short-width gray" disabled="true">Application <%= @tutor.application_status %></button>
           <% end %>
         </div>
-
         <div class="medium-3 columns">
-          <%= mail_to @tutor.email, 'Email Tutor', class: 'button tiny expand secondary' %>
+          <%= mail_to @tutor.email, 'Email Tutor', class: 'custom-button short-width blue' %>
         </div>
-
-        <div class="medium-3 columns">
-          <a href="#" data-reveal-id="confirmTutorDestroy" class='button tiny expand secondary'>Destroy Tutor</a>
-        </div>
-
+        <% if current_user.role == 'admin' %> <!-- dont allow Campus Managers to destroy tutor records -->
+          <div class="medium-3 columns">
+            <a href="#" data-reveal-id="confirmTutorDestroy" class='custom-button short-width danger'>Destroy Tutor</a>
+          </div>
+        <% end %>
       </div>
-
-    </fieldset>
+    </div>
   </div>
 </div>
 
 <div class="row">
-  <div class="large-12 columns">
-    <fieldset>
-      <legend class="admin-panel">Profile</legend>
+  <div class="medium-12 columns">
+    <h4>Profile</h4>
+    <div class="box margin-bottom-1em">
       <%= render '/dashboard/tutor/profile/tutor_profile' %>
-    </fieldset>
+    </div>
   </div>
 </div>
 
 <div class="row">
-  <div class="large-12 columns">
-    <fieldset>
-      <legend class="admin-panel">Appointment Settings</legend>
-      <p><strong>Personal Note to Students</strong></p>
-      <p><%= @tutor.appt_notes if @tutor.appt_notes %></p>
-    </fieldset>
+  <div class="medium-12 columns">
+    <h4>Appointment Settings</h4>
+    <table>
+      <thead>
+        <tr>
+          <th>Personal Note to Students</th>
+          <th>Booking Buffer</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><%= @tutor.appt_notes.blank? ? 'None' : @tutor.appt_notes %></td>
+          <td><%= @tutor.booking_buffer %> hours</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 
 <% if @tutor.transcript_url %>
   <div class="row">
-    <div class="large-12 columns">
-      <fieldset>
-        <legend class="admin-panel">Transcript</legend>
+    <div class="medium-12 columns">
+      <h4>Transcript</h4>
+      <div class="box margin-bottom-1em">
         <%= image_tag(@tutor.transcript_url) %>
-        <%= link_to 'View in new window',@tutor.transcript_url, target: '_blank', class: 'blue-link' %>
-      </fieldset>
+        <%= link_to 'View in new window', @tutor.transcript_url, target: '_blank', class: 'blue-link' %>
+      </div>
     </div>
   </div>
 <% end %>

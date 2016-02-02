@@ -9,7 +9,7 @@ module DashboardNavHelper
     # user must be signed in to view dashboard pages
     return false unless user_signed_in?
     
-    if current_user.role.to_sym == :tutor
+    if current_user.role == 'tutor'
       @dashboard_links = {
         'Home'      => home_tutor_path(@tutor.slug),
         'Schedule'  => schedule_tutor_path(@tutor.slug),
