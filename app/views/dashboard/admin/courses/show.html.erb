@@ -1,11 +1,14 @@
 <div class="row">
-  <div class="large-12 columns">
-    <h1>Course Details</h1>
+  <div class="medium-8 columns">
+    <h3>Course Details</h3>
+  </div>
+  <div class="medium-4 columns">
+    <%= link_to 'Back to Course List', admin_courses_path, class: 'custom-button full-width gray' %>
   </div>
 </div>
 
 <div class="row">
-  <div class="large-12 columns">
+  <div class="medium-12 columns">
     <table>
       <thead>
         <tr>
@@ -27,23 +30,17 @@
           <td><%= @course.call_number %></td>
           <td><%= @course.friendly_name %></td>
           <td><%= @course.tutors.count %></td>
-          <td><%= link_to 'Edit', edit_admin_course_path(@course) %>
-          <td><a href="#" data-reveal-id="confirmDeleteCourse">Delete</a></td>
+          <td><%= link_to 'Edit', edit_admin_course_path(@course), class: 'custom-button short-width blue' %>
+          <td><a href="#" data-reveal-id="confirmDeleteCourse" class="custom-button short-width danger">Delete</a></td>
         </tr>
       </tbody>
     </table>
   </div>
 </div>
 
-  <!-- Modal for deleting course -->
-  <div id="confirmDeleteCourse" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
-      <%= render 'confirm_delete' %>
-    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
-  </div>
-  <!-- End of modal -->
-
-<div class="row">
-  <div class="small-12 columns">
-    <%= link_to 'All Courses', admin_courses_path, class: 'button secondary' %>
-  </div>
+<!-- Modal for deleting course -->
+<div id="confirmDeleteCourse" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+    <%= render 'confirm_delete' %>
+  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
 </div>
+<!-- End of modal -->

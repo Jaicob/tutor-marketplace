@@ -20,5 +20,4 @@ class Charge < ActiveRecord::Base
   belongs_to :student
   has_many :appointments, dependent: :destroy
   has_one :promotion
-
 end

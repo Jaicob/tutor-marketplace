@@ -5,6 +5,9 @@ class Dashboard::Admin::SchoolsController < AdminController
 
   def index
     @schools = School.all
+    if current_user.role == 'campus_manager'
+      redirect_to admin_school_path(current_user.school)
+    end
   end
 
   def new

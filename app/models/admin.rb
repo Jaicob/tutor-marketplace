@@ -11,6 +11,8 @@
 class Admin < ActiveRecord::Base
   belongs_to :user
 
+  delegate :first_name, :last_name, :full_name, :email, to: :user
+
   after_create :change_user_role_to_admin
 
   def change_user_role_to_admin

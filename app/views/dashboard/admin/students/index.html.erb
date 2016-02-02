@@ -1,12 +1,10 @@
 <div class="row">
-  <div class="large-4 columns">
-    <h3>Students</h3>
+  <div class="small-12 medium-6 columns">
+    <h3>Student List</h3>
   </div>
 </div>
-
-
 <div class="row">
-  <div class="large-12 columns">
+  <div class="medium-12 columns">
     <table>
       <thead>
         <tr>
@@ -15,7 +13,7 @@
           <th>School</th>
           <th>Name</th>
           <th>Email</th>
-          <th>Subjects</th>
+          <th>Phone</th>
           <th>Appointments</th>
           <th>Joined</th>
         </tr>
@@ -29,7 +27,7 @@
           <td><%= student.school.name %></td>
           <td><%= student.full_name %></td>
           <td><%= student.email %></td>
-          <td><%= student.subjects %></td>
+          <td><%= student.phone_number %></td>
           <td><%= student.appointments.count %></td>
           <td><%= student.user.created_at.strftime('%-m-%d-%y') %></td>
         </tr>

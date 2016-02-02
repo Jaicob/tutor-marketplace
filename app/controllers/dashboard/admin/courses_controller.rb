@@ -17,17 +17,6 @@ class Dashboard::Admin::CoursesController < AdminController
     @csv_course_list = CsvCourseList.new
   end
 
-  def create
-    @course = Course.create(course_params)
-    if @course.save
-      flash[:notice] = "Course was succesfully created"
-      redirect_to admin_course_path(@course)
-    else
-      flash[:alert] = "Course was not created: #{@course.errors.full_messages}"
-      render :new
-    end
-  end
-
   def show 
   end
 
@@ -44,10 +33,17 @@ class Dashboard::Admin::CoursesController < AdminController
   end
 
   def destroy
-    if @course.destroy
+    if @course.tutors.count > 0 || @course.tutor_courses.count > 0 || @course.appointments.count > 0
+      flash[:error] = "Course cannot be deleted, it is currently listed by one or more tutors"
       redirect_to admin_courses_path
     else
-      render :show
+      if @course.destroy
+        flash[:success] = "Course was succesfully deleted."
+        redirect_to admin_courses_path
+      else 
+        flash[:error] = "Course was not deleted: #{@course.errors.full_messages}"
+        render :show
+      end
     end
   end
 
