@@ -76,11 +76,6 @@
         <% if @working_school.campus_manager %>
           <div class="row">		     
            <div class="small-12 medium-6 columns">		
-              <% if @working_school.campus_manager.profile_pic_url %>
-                <%= image_tag(@working_school.campus_manager.profile_pic_url, class: 'campus_manager_pic') %>		
-              <% end %>
-           </div>		
-           <div class="small-12 medium-6 columns">		
              <h6><%= @working_school.campus_manager.full_name %></h6>		
              <p><%= @working_school.campus_manager.email %></p>		
              <p><%= @working_school.campus_manager.phone_number %></p>		

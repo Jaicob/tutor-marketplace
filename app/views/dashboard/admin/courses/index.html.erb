@@ -16,7 +16,7 @@
         <div class="large-4 columns">
           <%= f.label :school_id_eq, 'School' %>
           <% if current_user.role == 'campus_manager' %>
-            <%= f.select(:school_id_eq, options_for_select(["#{@school.name}"])) %>
+            <%= f.select(:school_id_eq, options_for_select([[@school.name, @school.id]])) %>
           <% else %>
             <%= f.collection_select(:school_id_eq, School.all, :id, :name, include_blank: true) %>
           <% end %>
