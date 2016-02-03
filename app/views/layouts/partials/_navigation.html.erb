@@ -30,10 +30,12 @@
         <% end %>
         <% if @school %>
           <% if @school.name == 'University of Georgia' %>
-            <a href="http://examreview.axontutors.com/" >Exam Review</a>
+            <li><a href="http://examreview.axontutors.com/" >Exam Review</a></li>
           <% end %>
         <% end %>
+        <li> <a href="https://medium.com/@axontutors">Blog</a></li>
       </ul>
+
 
       <!-- Left Nav Section -->
       <ul class="left">
@@ -82,6 +84,7 @@
               <div class="nav-links-right"><a href="http://examreview.axontutors.com/" >Exam Review</a></div>
             <% end %>
           <% end %>
+          <div class="nav-links-right"><a href="https://medium.com/@axontutors">Blog</a></div>
           <% if user_signed_in? %>
             <% if current_user.role == 'student' %>
               <div class="nav-links-right"><%= link_to 'Dashboard', home_student_path(current_user) %></div>

@@ -42,7 +42,7 @@ deploy()
     docker push jaicob/web-app:$1-$2
     if [ $? -eq 0 ]; then
       echo OK
-       eb deploy -l $2 
+       eb deploy -l $1-$2 
       if [ $? -eq 0 ]; then
         echo "Deployment completed at $(date)"
       else
