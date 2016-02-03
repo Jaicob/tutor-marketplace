@@ -418,7 +418,8 @@ $(document).ready(function() {
     height: "auto",
     header: {
       left: 'prev,next today',
-      right: 'month,agendaWeek,agendaDay'
+      right: 'month,agendaWeek,agendaDay',
+      center: 'title'
     },
     defaultView: 'agendaWeek',
     loading: loading,
