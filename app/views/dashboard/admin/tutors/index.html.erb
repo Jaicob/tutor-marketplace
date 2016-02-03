@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="medium-6 columns">
+  <div class="medium-6 medium-offset-6 columns">
     <% if Tutor.applications_awaiting_approval(current_user).count > 0 %>
       <%= search_form_for @q, url: search_admin_tutors_path, html: { method: :post } do |f| %> 
         <%= f.hidden_field :active_status_eq, value: '0' %>
