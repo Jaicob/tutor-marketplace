@@ -83,11 +83,16 @@ class PrepareCheckout
       if !user.save
         @user_create_error = user.errors.full_messages.first
         @new_user = false
+        return
       else      
         @student = user.create_student!(
           school_id: @school_id,
           phone_number: @phone_number
         )
+        if !@student.save
+          @user_create_error = @student.errors.full_messages.first
+          return
+        end
         @new_user = true
         @new_user_id = user.id
 

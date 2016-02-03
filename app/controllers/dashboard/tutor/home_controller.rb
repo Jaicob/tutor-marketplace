@@ -8,6 +8,8 @@ class Dashboard::Tutor::HomeController < DashboardController
     if @appt.update_attribute('status', 'Cancelled')
       AppointmentMailer.delay.appointment_cancellation_for_tutor(@appt.id)               
       AppointmentMailer.delay.appointment_cancellation_for_student(@appt.id)
+      refund_status = CancelledApptRefunder.new(@appt, current_user).issue_valid_refund
+      flash[:info] = refund_status
       redirect_to home_tutor_path(@tutor.slug)
     else
       flash[:alert] = "Appointment was not updated: #{@appt.errors.full_messages.first}"

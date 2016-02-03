@@ -22,7 +22,7 @@
           <td><%= appt.date %></td>
           <td><%= appt.time %></td>
           <td><%= Course.find(appt.course_id).formatted_name %></td>
-          <td><%= appt.tutor.full_name %></td>
+          <td><%= appt.tutor.public_name %></td>
           <td><%= appt.tutor.email %></td>
           <td>
             <%= link_to 'Reschedule', view_reschedule_options_student_path(@student, appt.id), class: 'custom-button full-width blue' %>
@@ -60,7 +60,7 @@
         </tr>
       </tbody>
     </table>
-    <p>As soon as you cancel, the tutor will be notified.</p>
+    <p>As soon as you cancel, the tutor will be notified and the time will be open for booking by other students.</p>
     <p>IMPORTANT: Cancellations within 24 hours of the scheduled appointment will not recieve refunds.</p>
     <a class="close-reveal-modal custom-button override-foundation" aria-label="Close">Don't cancel</a>
     <%= form_for appt, url: cancel_appt_student_path(@student.id, appt.id), class: 'cancel-appt-form-button', method: :put do |f| %>

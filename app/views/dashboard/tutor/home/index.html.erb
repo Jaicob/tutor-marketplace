@@ -27,7 +27,8 @@
               <th>Time</th>
               <th>Subject</th>
               <th>Student</th>
-              <th>Contact</th>
+              <th>Phone</th>
+              <th>Email</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -38,7 +39,8 @@
                 <td><%= appt.date %></td>
                 <td><%= appt.time %></td>
                 <td><%= Course.find(appt.course_id).formatted_name %></td>
-                <td><%= student.full_name %></td>
+                <td><%= student.public_name %></td>
+                <td><%= student.phone_number %></td>
                 <td><%= student.email %></td>
                 <td><a href="#" data-reveal-id="confirm-cancel-appt-<%= appt.id %>" class="custom-button blue">Cancel</a>
                 </td>
@@ -161,7 +163,7 @@
               </tr>
             </tbody>
           </table>
-    <p>As soon as you cancel, the student will be notified and refunded.</p>
+    <p>IMPORTANT: As soon as you cancel, the student will be notified and refunded. If you have already received payment, the amount paid for this appointment will be withdrawn from your bank account.</p>
     <div class="row">
       <div class="small-12 medium-4 columns">
           <a class="close-reveal-modal custom-button override-foundation" aria-label="Close">Don't cancel</a>
