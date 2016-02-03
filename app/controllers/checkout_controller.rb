@@ -96,7 +96,6 @@ class CheckoutController < ApplicationController
         if @checkout_data[:new_user?] == true
           User.find(@checkout_data[:new_user_id]).destroy
         end
-      puts "@checkout_data!!!!!!!!!!! = #{@checkout_data}"
       flash[:alert] = @checkout_data[:error]
       redirect_to checkout_review_booking_path(@tutor.slug, anchor: 'review-booking')
       return
