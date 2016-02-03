@@ -147,7 +147,14 @@ $(document).ready(function() {
         var target = formatDataAsEvent(data[0]);         
         event.protected_start = target.protected_start;
         event.protected_end = target.protected_end;
-        $('#calendar').fullCalendar('updateEvent', event);
+        var view = $('#calendar').fullCalendar('getView');
+        console.log("View ",view.name);
+        if (view.name == 'month') {
+          $('#calendar').fullCalendar('refetchEvents', event);
+        } else {
+          $('#calendar').fullCalendar('updateEvent', event);
+        }
+        
       },
       error: function(data, status) {
         swal('failure', data, status);
@@ -207,7 +214,12 @@ $(document).ready(function() {
       event.protected_start = formattedEvent.protected_start;
       event.protected_end = formattedEvent.protected_end;
       event.status = 'Open';
-      $('#calendar').fullCalendar('updateEvent', event);
+      var view = $('#calendar').fullCalendar('getView');
+      if (view.name == 'month') {
+          $('#calendar').fullCalendar('refetchEvents', event);
+      } else {
+          $('#calendar').fullCalendar('updateEvent', event);
+      }
     });
     request.error(function(data) {
       swal("Error!");
