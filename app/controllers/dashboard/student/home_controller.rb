@@ -9,7 +9,6 @@ class Dashboard::Student::HomeController < DashboardController
       if @booking_preview[:no_payment_due] != true
         @card_info = Processor::Stripe.new.get_charge_details(@charge.stripe_charge_id)
       end
-      delete_all_session_variables
     end
   end
 
@@ -18,6 +17,8 @@ class Dashboard::Student::HomeController < DashboardController
     if @appt.update_attribute('status', 'Cancelled')
       AppointmentMailer.delay.appointment_cancellation_for_tutor(@appt.id)               
       AppointmentMailer.delay.appointment_cancellation_for_student(@appt.id)
+      refund_status = CancelledApptRefunder.new(@appt, current_user).issue_valid_refund
+      flash[:info] = refund_status
       redirect_to home_student_path(@student)
     else
       flash[:alert] = "Appointment was not cancelled: #{@appt.errors.full_messages.first}"
@@ -54,14 +55,6 @@ class Dashboard::Student::HomeController < DashboardController
 
     def set_appt
       @appt = Appointment.find(params[:appt_id])
-    end
-
-    def delete_all_session_variables
-      session[:course_id] = nil
-      session[:appt_info] = nil
-      session[:location] = nil
-      session[:charge_id] = nil
-      session[:promo_code] = nil
     end
 
 end

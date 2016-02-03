@@ -144,5 +144,20 @@ module Processor
       return card_info
     end
 
+    def issue_refund(stripe_charge_id, desc)
+      begin
+        refund = ::Stripe::Refund.create(
+          charge: stripe_charge_id,
+          metadata: {
+            description: desc,
+          }
+        )
+      rescue ::Stripe::StripeError => e
+        puts "STRIPE ERROR!!!!!!"
+        puts "DETAILS: #{e}"
+        return e
+      end
+    end
+
   end
 end

@@ -6,19 +6,23 @@
     <div class="small-12 columns">
       <%= form_for :appt_selection, url: checkout_set_times_path, method: :post do |f| %>
         <div class="checkout-step-title">
-          <p>Select a Time</p>
-        </div>
-        <div class="calendar-header">
-          <div class="row small-collapse">
-            <div class="small-12 medium-3 columns zero-padding">
-              <% if @start_date == Date.today %>
-                <div class="checkout-button gray disabled-text-color">Previous Week</div>
-              <% else %>
-                <%= link_to "Previous Week", checkout_select_times_path(@tutor.slug, course: 1, current: @start_date.to_s, week: 0, anchor: 'select-times'), class: 'checkout-button gray' %>
+          <div class="row">
+            <div class="small-12 medium-3 columns">
+              <%= link_to checkout_select_times_path(@tutor.slug, course: 1, current: @start_date.to_s, week: 0, anchor: 'select-times') do %>
+                <div class="week-nav-link left">
+                  <p><i class="fi-arrow-left"></i>Previous Week</p>
+                </div>
               <% end %>
             </div>
-            <div class="small-12 medium-3 columns zero-padding">
-              <%= link_to "Next Week", checkout_select_times_path(@tutor.slug, course: 1, current: @start_date.to_s, week: 1, anchor: 'select-times'), class: 'checkout-button gray' %>
+            <div class="small-12 medium-6 columns">
+              <p>Select a Time</p>
+            </div>
+            <div class="small-12 medium-3 columns">
+              <%= link_to checkout_select_times_path(@tutor.slug, course: 1, current: @start_date.to_s, week: 1, anchor: 'select-times') do %>
+                <div class="week-nav-link right">
+                  <p>Next Week<i class="fi-arrow-right"></i></p>
+                </div>
+              <% end %>
             </div>
           </div>
         </div>
@@ -38,6 +42,11 @@
           </div>
         </div>
       <% end %>
+      <p>* All times are in local campus time</p>
     </div>
+  </div>
+</div>
+<div class="row">
+  <div class="small-12 columns">
   </div>
 </div>

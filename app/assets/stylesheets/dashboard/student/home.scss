@@ -10,7 +10,25 @@
   }
 }
 
-.home-search-field-container {
-  overflow: hidden;
-  height: 2em;
+#student-dashboard-search-form {
+  .course-search-box {
+    max-width: 40em;
+    select#subject {
+      border-top-left-radius: 3px !important;
+      border-bottom-left-radius: 3px !important;
+    }
+    select#course {
+      border-radius: 0;
+    }
+    input#course-search-submit {
+      padding: 0;
+      border-top-left-radius: 0 !important;
+      border-bottom-left-radius: 0 !important;
+    }
+    select#subject, select#course, input#course-search-submit {
+      font-size: 1em;
+      font-weight: 100;
+      height: 2.5em;
+    }
+  }
 }

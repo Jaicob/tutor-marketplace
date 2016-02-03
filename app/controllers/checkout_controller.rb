@@ -72,11 +72,7 @@ class CheckoutController < ApplicationController
     # - if logged in, customer has option to use saved card (if one exists) or use a new card (with an option to save it)
     # - if NOT logged in, a customer has the option to sign in (moves to above step) or sign up and use a new card (with an option to save it)
     @booking_preview = BookingPreview.new(session, @tutor).format_info
-    if @booking_preview[:no_payment_due] == true
-      gon.free_session = true
-    else
-      gon.free_session = nil
-    end
+    @booking_preview[:no_payment_due] == true ? (gon.free_session = true) : (gon.free_session = nil)
   end
 
   def apply_promo_code

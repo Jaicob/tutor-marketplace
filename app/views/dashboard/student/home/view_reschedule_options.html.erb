@@ -38,26 +38,22 @@
       <%= form_for :reschedule_appt, url: reschedule_appt_student_path(@student, @appt), method: :put do |f| %>
         <div class="checkout-step-title">
           <div class="row">
-            <div class="small-12 columns">
-              <p>Select a New Time</p>
+            <div class="small-12 medium-3 columns">
+              <%= link_to view_reschedule_options_student_path(@student, @appt, current: @start_date.to_s, week: 0) do %>
+                <div class="week-nav-link left">
+                  <p><i class="fi-arrow-left"></i>Previous Week</p>
+                </div>
+              <% end %>
             </div>
-          </div>
-        </div>
-        <div class="calendar-header">
-          <div class="row small-collapse">
-            <div class="small-12 columns">
-              <div class="row small-collapse">
-                <div class="small-12 medium-3 columns zero-padding">
-                  <% if @start_date == Date.today %>
-                    <div class="checkout-button gray disabled-text-color">Previous Week</div>
-                  <% else %>
-                    <%= link_to "Previous Week", view_reschedule_options_student_path(@student, @appt, current: @start_date.to_s, week: 0), class: 'checkout-button gray' %>
-                  <% end %>
+            <div class="small-12 medium-6 columns">
+              <p>Select a Time</p>
+            </div>
+            <div class="small-12 medium-3 columns">
+              <%= link_to view_reschedule_options_student_path(@student, @appt, current: @start_date.to_s, week: 1) do %>
+                <div class="week-nav-link right">
+                  <p>Next Week<i class="fi-arrow-right"></i></p>
                 </div>
-                <div class="small-12 medium-3 columns zero-padding">
-                  <%= link_to "Next Week", view_reschedule_options_student_path(@student, @appt, current: @start_date.to_s, week: 1), class: 'checkout-button gray' %>
-                </div>
-              </div>
+              <% end %>
             </div>
           </div>
         </div>
