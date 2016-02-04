@@ -1,46 +1,163 @@
-<div class="row">
-  <div class="small-12 medium-6 columns">
-    <h3>School List</h3>
+<div class="admin-schools-overview">
+  <div class="row">
+    <div class="small-12 medium-6 columns">
+      <h1>Campus Overviews</h1>
+    </div>
+    <div class="small-12 medium-4 columns">
+      <%= link_to 'Add New School', new_admin_school_path, class: 'custom-button full-width' %>
+    </div>
   </div>
-  <div class="small-12 medium-4 columns">
-    <%= link_to 'Add New School', new_admin_school_path, class: 'custom-button full-width' %>
+
+  <div class="row">
+    <div class="medium-12 columns">
+      <h3>General Information</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Location</th>
+            <th>Campus Manager</th>
+            <th>Active Tutors</th>
+            <th>Active Students*</th>
+            <th>Recently Booked Appts*</th>
+            <th>Total Appts</th>
+            <th>Revenue</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% n = 1 %>
+          <% @schools.each do |school| %>
+          <tr>
+            <td><%= n %>
+            <td><%= link_to school.id, admin_school_path(school), class: 'id-link-for-admin' %></td>
+            <td><%= school.name %></td>
+            <td><%= school.location %></td>
+            <td><%= school.campus_manager.full_name if school.campus_manager %></td>
+            <td><%= school.tutors.where(active_status: 1).count %></td>
+            <td><%= AdminDataCruncher.new(school.students).active_students.count %></td>
+            <td><%= AdminDataCruncher.new(school.appointments).appts_booked_this_week.count %></td>
+            <td><%= school.appointments.count %></td>
+            <td>$<%= display_price(school.revenue) %></td>
+          </tr>
+          <% n += 1 %>
+          <% end %>
+        </tbody>
+      </table>
+      <p class="fine-print no-max-width">* Active Students counts the number of students who have logged in to their accounts at least once in the last 2 months.</p>
+      <p class="fine-print no-max-width">* Recently Booked Appts counts the number of appointments that were booked in the last 7 days regardless of when the appointments are scheduled to occur.</p>
+    </div>
   </div>
-</div>
-<div class="row">
-  <div class="medium-12 columns">
-    <table>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Location</th>
-          <th>Courses</th>
-          <th>Tutors</th>
-          <th>Students</th>
-          <th>Appts</th>
-          <th>Total Revenue</th>
-          <th>Campus Manager</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% n = 1 %>
-        <% @schools.each do |school| %>
-        <tr>
-          <td><%= n %>
-          <td><%= link_to school.id, admin_school_path(school), class: 'id-link-for-admin' %></td>
-          <td><%= school.name if school.name %></td>
-          <td><%= school.location if school.location %></td>
-          <td><%= school.courses.count %></td>
-          <td><%= school.tutors.count %></td>
-          <td><%= school.students.count %></td>
-          <td><%= school.appointments.count %></td>
-          <td>--</td>
-          <td><%= school.campus_manager.full_name if school.campus_manager %></td>
-        </tr>
-        <% n += 1 %>
-        <% end %>
-      </tbody>
-    </table>
+
+  <div class="row">
+    <div class="medium-12 columns">
+      <h3>Appointments Overview</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Avg. Appt Rate</th>
+            <th>Avg. Appt Fee</th>
+            <th>Avg. Appts/Week</th>
+            <th>Today's Appts*</th>
+            <th>Appts Booked Today</th>
+            <th>Recently Booked Appts*</th>
+            <th>Total Appointments</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @schools.each do |school| %>
+          <tr>
+            <td><%= link_to school.id, admin_school_path(school), class: 'id-link-for-admin' %></td>
+            <td><%= school.name %></td>
+            <td><% if school.appointments.count == 0 %>--<% else %>$<%= display_price(AdminDataCruncher.new(school.appointments).avg_appt_rate) %><% end %></td>
+            <td><% if school.appointments.count == 0 %>--<% else %>$<%= display_price(AdminDataCruncher.new(school.appointments).avg_appt_fee) %><% end %></td>
+            <td>--</td>
+            <td><%= AdminDataCruncher.new(school.appointments).todays_appts.count %></td>
+            <td><%= AdminDataCruncher.new(school.appointments).appts_booked_today.count %></td>
+            <td><%= AdminDataCruncher.new(school.appointments).appts_booked_this_week.count %></td>
+            <td><%= school.appointments.count %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <p class="fine-print no-max-width">* Today's Appts counts the number of appointments that are scheduled to occur today.</p>
+      <p class="fine-print no-max-width">* Recently Booked Appts counts the number of appointments that were booked in the last 7 days regardless of when the appointments are scheduled to occur.</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="medium-12 columns">
+      <h3>Tutors Overview</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Incomplete Applications</th>
+            <th>Complete Applications</th>
+            <th>Approved Tutors</th>
+            <th>Avg. Rate</th>
+            <th>Avg. Availablity*</th>
+            <th>Avg. Appts*</th>
+            <th>Avg. Income*</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @schools.each do |school| %>
+          <tr>
+            <td><%= link_to school.id, admin_school_path(school), class: 'id-link-for-admin' %></td>
+            <td><%= school.name %></td>
+            <td><%= school.tutors.where(application_status: 0).count %></td>
+            <td><%= school.tutors.where(application_status: 1).count %></td>
+            <td><%= school.tutors.where(application_status: 2).count %></td>
+            <td>$<%= display_price(AdminDataCruncher.new(school.tutors).avg_tutor_rate_for_all_tutors) %></td>
+            <td>--</td>
+            <td>--</td>
+            <td>--</td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+       <p class="fine-print no-max-width">* Avg. Availaibility, Avg. Appts & Avg. Income are all averages for the past 7 days only.</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="medium-12 columns">
+      <h3>Students Overview</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Total Students</th>
+            <th>Students with Only 1 Booking</th>
+            <th>Students with Multiple Bookings</th>
+            <th>Avg. Number of Bookings per Student</th>
+            <th>Avg. Number of Appointments per Booking</th>
+            <th>Avg. Lifetime Value</th>
+            <th>Avg. Lifetime Length</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @schools.each do |school| %>
+          <tr>
+            <td><%= link_to school.id, admin_school_path(school), class: 'id-link-for-admin' %></td>
+            <td><%= school.name %></td>
+            <td><%= school.students.count %></td>
+            <td><%= AdminDataCruncher.new(school.students).students_with_only_one_booking.count %></td>
+            <td><%= AdminDataCruncher.new(school.students).students_with_multiple_bookings.count %></td>
+            <td><%= sprintf('%.2f', AdminDataCruncher.new(school.students).avg_num_of_bookings_per_student) %></td>
+            <td><%= AdminDataCruncher.new(school.students).avg_num_of_appts_per_booking %></td>
+            <td>--</td>
+            <td>--</td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
