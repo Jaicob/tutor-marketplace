@@ -26,7 +26,8 @@ class CreateCharge
       @tutor = Tutor.find(context.tutor_id)
       @student = Student.find(context.student_id)
       @course = Course.find(context.appointments.first.course_id)
-      @appt_times = context.appointments.map{|appt| appt.start_time.strftime("%A, %B %e at %l:%M %p")}
+      @timezone = @course.school.timezone
+      @appt_times = context.appointments.map{|appt| appt.start_time.in_time_zone(@timezone).strftime("%A, %B %e at %l:%M %p")}
 
       context.transaction_percentage = School.find(@tutor.school_id).transaction_percentage
       axon_fee_multiplier = ((context.transaction_percentage.to_f / 100) + 1)
