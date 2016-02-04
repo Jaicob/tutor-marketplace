@@ -78,4 +78,10 @@ class School < ActiveRecord::Base
     self.create_campus_manager(user: campus_manager)
   end
 
+  def revenue
+    charge_amounts = self.appointments.map{|appt| appt.charge}
+    revenue = charge_amounts.map(&:amount).reduce(:+) || 0
+    return revenue
+  end
+
 end

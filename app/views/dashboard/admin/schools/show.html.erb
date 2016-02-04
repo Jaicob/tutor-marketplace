@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="large-8 columns">
+  <div class="medium-8 columns">
     <h3>School Details</h3>
     <h2><%= @working_school.name if @working_school.name %></h2>
     <h6><%= @working_school.location if @working_school.location %></h6>
@@ -8,14 +8,14 @@
     <a href="#" data-reveal-id="editSchool" class="custom-button">Edit</a>
   </div>
   <% if current_user.role == 'admin' %>
-    <div class="large-4 columns">
+    <div class="medium-4 columns">
       <%= link_to 'Back to All Schools', admin_schools_path, class: 'custom-button full-width blue' %>
     </div>
   <% end %>
 </div>
 
 <div class="row">
-  <div class="large-12 columns">
+  <div class="medium-12 columns">
     <table>
       <thead>
         <tr>
@@ -50,7 +50,7 @@
 </div>
 
 <div class="row margin-bottom-3em">
-  <div class="large-12 columns">
+  <div class="medium-12 columns">
     <div class="box">
       <h3>Background Image</h3>
       <% if @working_school.campus_pic.url %>
@@ -66,7 +66,7 @@
 </div>
 
 <div class="row margin-bottom-3em">
-  <div class="large-12 columns">
+  <div class="medium-12 columns">
     <div class="box">
       <h3>Campus Manager</h3>
         <% if @working_school.campus_manager %>
@@ -82,16 +82,20 @@
   </div>
 </div>
 
-  <!-- Modal for uploading campus_pic -->
-  <div id="uploadCampusPicture" class="reveal-modal small" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
-      <%= render 'edit_campus_pic' %>
-    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
-  </div>
-  <!-- End of modal -->
 
-  <!-- Modal for editing school -->
-  <div id="editSchool" class="reveal-modal small" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
-      <%= render 'edit_school' %>
-    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
-  </div>
-  <!-- End of modal -->
+
+
+
+<!-- Modal for uploading campus_pic -->
+<div id="uploadCampusPicture" class="reveal-modal small" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+    <%= render 'edit_campus_pic' %>
+  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+</div>
+<!-- End of modal -->
+
+<!-- Modal for editing school -->
+<div id="editSchool" class="reveal-modal small" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+    <%= render 'edit_school' %>
+  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+</div>
+<!-- End of modal -->
