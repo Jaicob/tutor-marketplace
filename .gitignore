@@ -93,8 +93,7 @@ pickle-email-*.html
 .ruby-version
 
 # My personal notes & to-do list
-Z-notes.rb
-Z-notes.txt
+z-notes.txt
 
 # Ignore file uploads
 /public/uploads/
