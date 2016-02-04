@@ -12,7 +12,7 @@
   <% if @booking_preview[:promo_data] && @booking_preview[:promo_data][:success] == true %>
     <!-- Amount Due line + Promo line when Promo code is applied -->
     <tr>
-      <td>PROMO</td>
+      <td>Discount</td>
       <td><%= @booking_preview[:promo_data][:description] %></td>
       <td>-$<%= display_price(@booking_preview[:promo_data][:discount_value]) %></td>
     </tr>

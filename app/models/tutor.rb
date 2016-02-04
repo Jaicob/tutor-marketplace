@@ -100,10 +100,6 @@ class Tutor < ActiveRecord::Base
     profile_pic.delete_cache_id
   end
 
-  def formatted_courses
-    self.courses.map{ |course| course.formatted_name}.join("<br>").html_safe()
-  end
-
   # method called in after_commit hook to automatically update a tutor's application status and send application_completed email
   def update_application_status
     if (self.onboarding_status == 4) && (self.acct_id != nil) && (self.application_status == 'Incomplete')
@@ -113,6 +109,35 @@ class Tutor < ActiveRecord::Base
         TutorManagementMailer.delay.application_completed_email(self.user.id)
       end
     end
+  end
+
+  # method for Admin section, to show what an incomplete Tutor account is missing
+  def missing_application_fields
+    missing_fields = []
+    fields = ['degree','major','extra_info_1','extra_info_2','extra_info_3','graduation_year','phone_number','profile_pic','transcript','last_4_acct','line1','city','state','postal_code','ssn_last_4','acct_id','dob']
+    profile_fields = ['degree','major','extra_info_1','extra_info_2','extra_info_3','graduation_year']
+    address_fields = ['line1','city','state','postal_code','ssn_last_4']
+    bank_acct_fields = ['acct_id','last_4_acct']
+    fields.each do |field|
+      if self.send(field).blank?
+        if profile_fields.include?(field)
+          missing_fields << 'Profile Needs Completion (See Preview Below)'
+        elsif address_fields.include?(field)
+          missing_fields << 'Address Missing'
+        elsif bank_acct_fields.include?(field)
+          missing_fields << 'Bank Account Not Connected'
+        elsif field == 'phone_number'
+          missing_fields << 'Phone Number Missing'
+        elsif field == 'profile_pic'
+          missing_fields << 'Profile Picture Missing'
+        elsif field == 'transcript'
+          missing_fields << 'Transcript Missing'
+        elsif field == 'dob'
+          missing_fields << "DOB Missing"
+        end
+      end
+    end
+    return missing_fields.uniq{|x| x}
   end
 
   # method for admin section - admin user taken as argument to determine whether or not to list tutors from all schools or just one school depending on if its a campus manager or regular admin

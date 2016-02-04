@@ -1,7 +1,10 @@
 <div class="row">
-  <div class="small-12 columns">
+  <div class="medium-9 columns">
     <h3>Tutor Details</h3>
     <h1><%= @tutor.user.full_name %></h1>
+  </div>
+  <div class="medium-3 columns">
+    <%= link_to 'Back to Tutor List', admin_tutors_path, class: 'custom-button full-width blue' %>
   </div>
 </div>
 <div class="row">
@@ -64,7 +67,7 @@
       <div class="row">
         <div class="medium-3 columns">
           <% if @tutor.active_status == 'Inactive' && @tutor.application_status != 'Approved' %>
-              <button class="button tiny secondary expand" disabled="true">Can't Activate Until Approved</button>
+              <button class="custom-button short-width disabled" disabled="true">Can't Activate - Unapproved</button>
           <% elsif @tutor.active_status == 'Inactive' && @tutor.application_status == 'Approved' %>
             <%= form_for :tutor, url: admin_tutor_path(@tutor), method: 'patch' do |f| %>
                 <%= f.hidden_field :active_status, value: 'Active' %>
@@ -84,7 +87,7 @@
               <%= f.submit 'Approve Application', class: 'custom-button short-width' %>
             <% end %>
           <% else %>
-            <button class="custom-button short-width gray" disabled="true">Application <%= @tutor.application_status %></button>
+            <button class="custom-button short-width gray disabled" disabled="true">Application <%= @tutor.application_status %></button>
           <% end %>
         </div>
         <div class="medium-3 columns">
@@ -99,6 +102,21 @@
     </div>
   </div>
 </div>
+
+<% if @tutor.application_status == 'Incomplete' %>
+  <div class="row">
+    <div class="medium-12 columns">
+      <h4>Missing Application Fields</h4>
+      <div class="box margin-bottom-1em">
+        <ul>
+        <% @tutor.missing_application_fields.each do |field| %>
+          <li class="left-align"><%= field %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+<% end %>
 
 <div class="row">
   <div class="medium-12 columns">

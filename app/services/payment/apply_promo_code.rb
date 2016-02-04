@@ -19,10 +19,14 @@ class ApplyPromoCode
           tutor_fee: promo[:discount_tutor_fee],
           promotion_id: promo[:promotion_id]
         )
+        @promo = Promotion.find_by(code: context.promo_code)
+        @promo.redemption_count += 1
+        @promo.save
       else
         # previously raised error here, but customer gets flash alert that promo code failed when they hit apply after entering it.
         # raising an error here prevented checkout success after invalid promo attempt bc promo code is saved in session variable
-        # for that reason, the 'raise' here has been removed to allow this interactor to fail silently
+        # for that reason, the 'raise' here has been removed to allow this interactor to fail silently 
+        # (otherwise, the checkout flow would be unable to complete if a student enters an invalid promo code and then does not change the promo code to a valid one)
       end
     end
 
@@ -35,8 +39,8 @@ class ApplyPromoCode
   end
 
   def rollback
-    if context.promotion_id
-      promo = Promotion.find(context.promotion_id)
+    if context.promo_code
+      promo = Promotion.find_by(code: context.promo_code)
       promo.redemption_count -= 1
       promo.save
     end
