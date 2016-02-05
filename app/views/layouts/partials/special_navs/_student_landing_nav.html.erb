@@ -28,6 +28,7 @@
           <li><%= link_to 'Sign in', new_user_session_path %></li>
           <li><%= link_to 'Become a Tutor', become_a_tutor_path, class: 'become-a-tutor-button' %></li>
         <% end %>
+        <li> <a href="https://medium.com/@axontutors">Blog</a></li>
       </ul>
 
       <!-- Left Nav Section -->
@@ -56,6 +57,7 @@
           <% end %>
         </div>
         <div class="nav-links-right-container nav-link-box">
+          <div class="nav-links-right"><a href="https://medium.com/@axontutors">Blog</a></div>
           <% if user_signed_in? %>
             <% if current_user.role == 'student' %>
               <div class="nav-links-right"><%= link_to 'Dashboard', home_student_path(current_user) %></div>
