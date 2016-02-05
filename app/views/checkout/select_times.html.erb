@@ -8,8 +8,8 @@
         <div class="checkout-step-title">
           <div class="row">
             <div class="small-12 medium-3 columns">
-              <%= link_to checkout_select_times_path(@tutor.slug, course: 1, current: @start_date.to_s, week: 0, anchor: 'select-times') do %>
-                <div class="week-nav-link left">
+              <%= link_to_if @start_date != Date.today, checkout_select_times_path(@tutor.slug, course: 1, current: @start_date.to_s, week: 0, anchor: 'select-times') do %>
+                <div class="week-nav-link left <%= 'disabled' if @start_date == Date.today %>">
                   <p><i class="fi-arrow-left"></i>Previous Week</p>
                 </div>
               <% end %>

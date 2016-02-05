@@ -7,7 +7,7 @@
   "containerDefinitions" : [
     {
       "name":"web",
-            "image" : "jaicob/web-app:production-0.5.6",
+            "image" : "jaicob/web-app:staging-0.5.7",
       "essential": true,
       "memory": 1536,
       "portMappings" : [

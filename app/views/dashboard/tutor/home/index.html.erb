@@ -62,27 +62,27 @@
       <div class="box metrics-box">
         <div class="row metrics-row">
           <div class="small-12 medium-2 columns">
+            <h3><%= TutorAnalyzer.new(@tutor).availability_next_7_days %> hrs</h3>
+            <p>Availability</br>(next 7 days)</p>
+          </div>
+          <div class="small-12 medium-2 columns">
+            <h3><%= TutorAnalyzer.new(@tutor).appts_next_7_days.count %></h3>
+            <p>Appointments</br>(next 7 days)</p>
+          </div>
+          <div class="small-12 medium-2 columns">
             <h3><%= @tutor.courses.count %></h3>
             <p>Total Courses</p>
           </div>
           <div class="small-12 medium-2 columns">
-            <h3>--</h3>
+            <h3><%= TutorAnalyzer.new(@tutor).students.count %></h3>
             <p>Total Students</p>
           </div>
           <div class="small-12 medium-2 columns">
-            <h3>-</h3>
-            <p>Avg. Weekly Availability</p>
-          </div>
-          <div class="small-12 medium-2 columns">
-            <h3>--</h3>
-            <p>Avg. Weekly Revenue</p>
-          </div>
-          <div class="small-12 medium-2 columns">
-            <h3>--</h3>
+            <h3><%= TutorAnalyzer.new(@tutor).total_appts.count %></h3>
             <p>Total Appointments</p>
           </div>
           <div class="small-12 medium-2 columns">
-            <h3>--</h3>
+            <h3>$<%= display_price(TutorAnalyzer.new(@tutor).total_income) %></h3>
             <p>Total Revenue YTD</p>
           </div>
         </div>
@@ -163,7 +163,7 @@
               </tr>
             </tbody>
           </table>
-    <p>IMPORTANT: As soon as you cancel, the student will be notified and refunded. If you have already received payment, the amount paid for this appointment will be withdrawn from your bank account.</p>
+    <p><b>IMPORTANT:</b> As soon as you cancel, the student will be notified and refunded. If you have already received payment, the amount paid for this appointment will be withdrawn from your bank account. Please make a note of this to avoid potential overdrafts.</p>
     <div class="row">
       <div class="small-12 medium-4 columns">
           <a class="close-reveal-modal custom-button override-foundation" aria-label="Close">Don't cancel</a>

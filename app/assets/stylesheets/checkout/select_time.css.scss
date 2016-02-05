@@ -19,11 +19,20 @@ div.week-nav-link {
       // no margin-left needed, seems to automatically have some following text
     }
   }
+  &.disabled {
+    p,i {
+      color: #6B6B6B;
+    }
+  }
+  &.disabled:hover {
+    background-color: #A3A5A5;
+  }
 }
 
 div.week-nav-link:hover {
   background-color: #2BC2DE;
 }
+
 
 .checkout-button.gray.disabled-text-color {
   font-family: 'Lato';
