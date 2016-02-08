@@ -23,7 +23,7 @@ class School < ActiveRecord::Base
   has_many :slots, through: :tutors, dependent: :destroy
   has_one  :campus_manager, dependent: :destroy
 
-  validates :name, :location, :transaction_percentage, presence: true
+  validates :name, :location, :transaction_percentage, :timezone, presence: true
 
   after_create :make_campus_manager
 
