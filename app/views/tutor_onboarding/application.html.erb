@@ -36,6 +36,37 @@ $(document).ready(function()
           $('#picture-name-target').addClass("invalid-file-type"); 
         }
     });
+
+  $('#education-section').on('ajax:success', function(event, xhr, status, error) {
+    $('#education-not-saved').hide();
+    $('#education-saved').show().css("display", "inline-block");; 
+  });
+
+  $('#education-section').change(function(){
+    $('#education-saved').hide(); 
+    $('#education-not-saved').show().css("display", "inline-block");;
+  });
+
+
+  $('#statements-section').on('ajax:success', function(event, xhr, status, error) {
+    $('#statements-not-saved').hide();
+    $('#statements-saved').show().css("display", "inline-block");; 
+  });
+
+  $('#statements-section').change(function(){
+    $('#statements-saved').hide(); 
+    $('#statements-not-saved').show().css("display", "inline-block");;
+  });
+
+  $('#files-section').on('ajax:success', function(event, xhr, status, error) {
+    $('#files-not-saved').hide();
+    $('#files-saved').show().css("display", "inline-block");; 
+  });
+
+  $('#files-section').change(function(){
+    $('#files-saved').hide(); 
+    $('#files-not-saved').show().css("display", "inline-block");;
+  });
 });
 </script>
 <%= render '/tutor_onboarding/progress_bar' %>
@@ -84,96 +115,141 @@ $(document).ready(function()
   </div>
 </div>
 <div class="row">
-  <div class="small-12 medium-8 columns">
+  <div class="small-12 medium-6 columns">
     <a name="application"></a>
     <div class="application">
 
-      <%= form_for @tutor, url: submit_application_tutor_path do |f| %>
-
-        <h4 class="first-subheader">Education</h4>
-
+      <h4 class="first-subheader">Education</h4>
+      <%= form_for @tutor, remote: true, html: {id: 'education-section'} do |f| %>
         <p class="prompt">What is your degree type, major and graduation year?</p>
         <div class="row medium-collapse">
           <div class="small-12 medium-2 columns">
-            <%= f.select(:degree, options_for_select(Tutor.degree_collection, selected: 'Degree', disabled: 'Degree'), {required: true}) %>
+            <%= f.select(:degree, options_for_select(Tutor.degree_collection, selected: 'Degree', disabled: 'Degree', class: 'education-input'), {required: true}) %>
           </div>
           <div class="small-12 medium-6 columns">
-            <%= f.text_field :major, placeholder: 'Major', maxlength: 18, required: true %>
+            <%= f.text_field :major, placeholder: 'Major', maxlength: 18, class: 'education-input', required: true %>
           </div>
           <div class="small-12 medium-4 columns">
-            <%= f.text_field :graduation_year, placeholder: 'Graduation Year', required: true %>
+            <%= f.text_field :graduation_year, placeholder: 'Graduation Year', class: 'education-input', required: true %>
           </div>
         </div>
         <p class="fine-print">If you have not graduated yet, select your expected degree type and graduation year.</p>
-
-
         <p class="prompt">Optional: Do you have a second major or any additional degrees?</p>
         <p>If so, please summarize this information in one line</p>
-        <%= f.text_field :additional_degrees, placeholder: 'Second Major: Chemistry', maxlength: 35, class: 'border-radius' %>
+        <%= f.text_field :additional_degrees, placeholder: 'Second Major: Chemistry', class: 'education-input', maxlength: 35 %>
+        <div class="row medium-collapse">
+          <div class="small-12 medium-9 columns">
 
-        <h4>Personal Statements</h4>
+            <div id='education-not-saved' class="application-section-status not-saved">
+              <p class='no-bottom-margin'><i class='fi-minus-circle'></i>Section not saved</p>
+            </div>
+            <div id='education-saved' class="application-section-status">
+              <p class='no-bottom-margin'><i class='fi-checkbox'></i>Section saved</p>
+            </div>
 
+          </div>
+          <div class="small-12 medium-3 columns">
+            <%= f.submit 'Save', class: 'custom-button short-width' %>
+          </div>
+        </div>
+      <% end %>
+
+      <h4>Personal Statements</h4>
+      <%= form_for @tutor, remote: true, html: {id: 'statements-section'} do |f| %>
         <p class="prompt">Share three facts about yourself that you want potential students to see.</p>
-
         <p>Optional: If you're not sure what to write, try following one of these prompts:</p>
         <ul>
           <li>What in your experience makes you a great tutor?</li>
           <li>What is your proudest academic achievement?</li>
           <li>What’s one fun fact you want to share with your students?</li>
         </ul>
-
         <p class="fine-print">Maximum length for each statement is 250 characters.</p>
-        
         <div class="input statement-field">
           <%= f.text_area :extra_info_1, placeholder: 'Statement #1', size: '30x10', maxlength: 250, required: true %>
         </div>
-
         <div class="input statement-field">
           <%= f.text_area :extra_info_2, placeholder: 'Statement #2', size: '30x10',  maxlength: 250, required: true %>
         </div>
-
         <div class="input statement-field">
           <%= f.text_area :extra_info_3, placeholder: 'Statement #3',  size: '30x10', maxlength: 250, required: true %>
         </div>
+        <div class="row medium-collapse">
+          <div class="small-12 medium-9 columns">
 
-        <h4>File Uploads and Profile Picture</h4>
+            <div id='statements-not-saved' class="application-section-status not-saved">
+              <p class='no-bottom-margin'><i class='fi-minus-circle'></i>Section not saved</p>
+            </div>
+            <div id='statements-saved' class="application-section-status">
+              <p class='no-bottom-margin'><i class='fi-checkbox'></i>Section saved</p>
+            </div>
 
+          </div>
+          <div class="small-12 medium-3 columns">
+            <%= f.submit 'Save', class: 'custom-button short-width' %>
+          </div>
+        </div>      
+      <% end %>
+
+      <h4>File Uploads and Profile Picture</h4>
+      <%= form_for @tutor, remote: true, html: {id: 'files-section'} do |f| %>
         <p class="fine-print">In order to provide a great experience for tutors and students, we want to ensure that all tutor profiles are accurate and that tutors can effectively tutor the subjects which they list on their profiles. Please upload your unofficial academic transcript, resume, or CV.</p>
-
         <h6>Upload your unofficial transcript or resume</h6>
         <p class="fine-print">Acceptable file types: .jpg, .jpeg, .png, .txt, .rtf, .doc, .docx, .pdf</p>
-
-        <div class="file-input-box">
-          <div class="file-input-button">
-            <p>Transcript or Resume</p>
+        <div class="row small-collapse">
+          <div class="small-12 medium-6 columns">
+            <div class="file-input-box">
+              <div class="file-input-button">
+                <p>Transcript or Resume</p>
+              </div>
+              <%= f.file_field :transcript, id: 'transcript-input', class: 'file-input', required: true %>
+            </div>
           </div>
-          <%= f.file_field :transcript, id: 'transcript-input', class: 'file-input', required: true %>
         </div>
         <p id="transcript-name-target" class="file-name"></p>
-
         <h6>Upload a profile picture</h6>
         <p class="fine-print">Acceptable file types: .jpg, .jpeg, .png</p>
-
-        <div class="file-input-box">
-          <div class="file-input-button">
-            <p>Profile Picture</p>
+        <div class="row small-collapse">
+          <div class="small-12 medium-6 columns">
+            <div class="file-input-box">
+              <div class="file-input-button">
+                <p>Profile Picture</p>
+              </div>
+              <%= f.file_field :profile_pic, id: 'picture-input', class: 'file-input', required: true  %>
+            </div>
           </div>
-          <%= f.file_field :profile_pic, id: 'picture-input', class: 'file-input', required: true  %>
         </div>
         <p id="picture-name-target" class="file-name"></p>
+        <div class="row medium-collapse">
+          <div class="small-12 medium-9 columns">
 
-        <h4 class="thats-it">That's it for the first step!</h4>
+            <div id='files-not-saved' class="application-section-status not-saved">
+              <p class='no-bottom-margin'><i class='fi-minus-circle'></i>Section not saved</p>
+            </div>
+            <div id='files-saved' class="application-section-status">
+              <p class='no-bottom-margin'><i class='fi-checkbox'></i>Section saved</p>
+            </div>
+
+          </div>
+          <div class="small-12 medium-3 columns">
+            <%= f.submit 'Save', class: 'custom-button short-width' %>
+          </div>
+        </div>
+      <% end %>
+
+      <h4 class="thats-it">That's it for the first step!</h4>
     </div>
   </div>
-</div>
-<div class="row">
-  <div class="small-12 medium-8 columns next-step-instructions">
-    <div class="box">
-      <p>Finished with your profile? Review it then click here to set your courses! <i class="fi-arrow-right"></i></p>
+  <div class="row">
+    <div class="small-12 medium-8 columns next-step-instructions">
+      <div class="box">
+        <p>Finished with your profile? Review it then click here to set your courses! <i class="fi-arrow-right"></i></p>
+      </div>
     </div>
-  </div>
-  <div class="small-12 medium-4 columns">   
-    <%= f.submit 'Next Step', class: 'custom-button margin-bottom large full-width bold', data: { disable_with: "Uploading, please wait..." }  %>
-    <% end %>
+    <div class="small-12 medium-4 columns"> 
+      <%= form_for @tutor, url: submit_application_tutor_path do |f| %>
+        <%= f.hidden_field :onboarding_status, value: 1 %>
+      <%= f.submit 'Next Step', class: 'custom-button margin-bottom large full-width bold', data: { disable_with: "Uploading, please wait..." }  %>
+      <% end %>
+    </div>
   </div>
 </div>

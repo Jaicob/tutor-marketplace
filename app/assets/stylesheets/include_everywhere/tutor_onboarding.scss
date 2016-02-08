@@ -98,6 +98,26 @@ i.fi-arrow-right {
   .prompt {
     font-weight: 400;
   }
+  .application-section-status {
+    background-color: #DADADA;
+    display: inline-block;
+    padding: 0.5em 1em;
+    border-radius: 4px;
+    color: #383A3A;
+    display: none;
+    i {
+      margin-right: 1em;
+    }
+    i.fi-checkbox {
+      color: green;
+    }
+    &.not-saved {
+      background-color: #DE6328;
+      p, i {
+        color: white;
+      }
+    }
+  }
   #tutor_degree {
     border-top-right-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
