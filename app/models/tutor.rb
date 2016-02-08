@@ -186,11 +186,6 @@ class Tutor < ActiveRecord::Base
     end
   end
 
-  # helper method for views
-  def total_income
-    self.charges.map(&:tutor_fee).reduce(:+) || 0
-  end
-
   # helper method to format data for API controller for React Checkout
   def course_list
     self.tutor_courses.map do |tc|

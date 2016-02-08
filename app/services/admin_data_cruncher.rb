@@ -4,12 +4,12 @@ class AdminDataCruncher
     @collection = collection # can be any AR collection (i.e. school.students, school.appointments, tutor.courses, etc.)
   end
 
-
   #===========================================================================================
   # Calculations on TUTORS
   #===========================================================================================
 
   def avg_tutor_rate_for_all_tutors # collection is AR collection of tutors
+    return 0 if @collection.empty?
     tutors = @collection
     avg_rates = []
     tutors.each do |tutor|
@@ -42,13 +42,12 @@ class AdminDataCruncher
     # TODO-JT tutors = @collection
   end
 
-
-
   #===========================================================================================
   # Calculations on STUDENTS
   #===========================================================================================
 
   def active_students  # collection is AR collection of students
+    return [] if @collection.empty?
     students = @collection
     active_students = []
     students.each do |student|
@@ -62,6 +61,7 @@ class AdminDataCruncher
   end
 
   def students_with_only_one_booking  # collection is AR collection of students
+    return [] if @collection.empty?
     students = @collection
     student_list = []
     students.each do |student|
@@ -71,7 +71,8 @@ class AdminDataCruncher
   end
 
   def students_with_multiple_bookings  # collection is AR collection of students
-    students = @collection
+    return [] if @collection.empty?
+    students = @collection 
     student_list = []
     students.each do |student|
       student_list << student if student.appointments.count > 1
@@ -80,6 +81,7 @@ class AdminDataCruncher
   end
   
   def avg_num_of_bookings_per_student  # collection is AR collection of students
+    return 0 if @collection.empty?
     students = @collection
     school = students.first.school
     avg = school.appointments.count.to_f / school.students.count
@@ -87,6 +89,7 @@ class AdminDataCruncher
   end
   
   def avg_num_of_appts_per_booking  # collection is AR collection of students
+    return 0 if @collection.empty?
     students = @collection
     school = students.first.school
     unique_charge_ids = [] # essentially the same as unique bookings
@@ -94,10 +97,8 @@ class AdminDataCruncher
       unique_charge_ids << appt.charge_id unless unique_charge_ids.include?(appt.charge_id)
     end
     avg = school.appointments.count.to_f / unique_charge_ids.count
-    return avg
+    if !avg.nan? then return avg else return 0 end
   end
-
-
 
 
   #===========================================================================================
@@ -105,6 +106,7 @@ class AdminDataCruncher
   #===========================================================================================
 
   def appts_booked_this_week # collection is AR collection of appointments
+    return [] if @collection.empty?
     appts = @collection
     appts_this_week = []
     appts.each do |appt|
@@ -116,23 +118,21 @@ class AdminDataCruncher
   end
 
   def avg_appt_rate # collection is AR collection of appointments
+    return 0 if @collection.empty?
     appts = @collection
-    if appts.count > 0
-      rates = appts.map{|appt| appt.charge.amount}
-      total = rates.reduce(:+)
-      avg = total.to_f / appts.count 
-      return avg
-    end
+    rates = appts.map{|appt| appt.charge.amount}
+    total = rates.reduce(:+)
+    avg = total.to_f / appts.count 
+    return avg
   end
 
   def avg_appt_fee # collection is AR collection of appointments
+    return 0 if @collection.empty?
     appts = @collection
-    if appts.count > 0
-      rates = appts.map{|appt| appt.charge.axon_fee}
-      total = rates.reduce(:+)
-      avg = total.to_f / appts.count 
-      return avg
-    end
+    rates = appts.map{|appt| appt.charge.axon_fee}
+    total = rates.reduce(:+)
+    avg = total.to_f / appts.count 
+    return avg
   end
   
   def avg_appts_per_week # collection is AR collection of appointments
@@ -140,6 +140,7 @@ class AdminDataCruncher
   end
   
   def todays_appts # collection is AR collection of appointments
+    return [] if @collection.empty?
     appts = @collection
     appt_list = []
     appts.each do |appt|
@@ -151,6 +152,7 @@ class AdminDataCruncher
   end
   
   def appts_booked_today # collection is AR collection of appointments
+    return [] if @collection.empty?
     appts = @collection
     appt_list = []
     appts.each do |appt|
@@ -162,13 +164,12 @@ class AdminDataCruncher
   end
 
 
-
-
   #===========================================================================================
   # Calculations on COURSES
   #===========================================================================================
 
   def top_5_courses  # collection is AR collection of courses
+    return [] if @collection.empty?
     courses = @collection
     course_list = []
     courses.each do |course|
