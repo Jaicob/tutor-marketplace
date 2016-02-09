@@ -1,9 +1,9 @@
 # == Route Map
 #
 #                                Prefix Verb     URI Pattern                                                                   Controller#Action
-#                                  root GET      /                                                                             single_views#home
-#                           get_started GET      /get-started(.:format)                                                        single_views#student_landing
-#                        become_a_tutor GET      /become-a-tutor(.:format)                                                     single_views#tutor_landing
+#                                  root GET      /                                                                             single_views#landing_home
+#                           get_started GET      /get-started(.:format)                                                        single_views#landing_new_student
+#                        become_a_tutor GET      /become-a-tutor(.:format)                                                     single_views#landing_new_tutor
 #                          welcome_back GET      /welcome-back(.:format)                                                       single_views#existing_tutor_landing
 #                 create_existing_tutor POST     /create-existing-tutor(.:format)                                              tutor_onboarding#create_existing_tutor_account
 #                                search GET      /search(.:format)                                                             single_views#search
@@ -79,7 +79,8 @@
 #              onboarding_courses_tutor GET      /tutors/:id/onboarding/courses(.:format)                                      tutor_onboarding#courses
 #             onboarding_schedule_tutor GET      /tutors/:id/onboarding/schedule(.:format)                                     tutor_onboarding#schedule
 #      onboarding_payment_details_tutor GET      /tutors/:id/onboarding/payment_details(.:format)                              tutor_onboarding#payment_details
-#              submit_application_tutor PATCH    /tutors/:id/onboarding/application(.:format)                                  tutor_onboarding#submit_application
+#            save_profile_section_tutor PATCH    /tutors/:id/onboarding/save_profile_section(.:format)                         tutor_onboarding#save_profile_section
+#         submit_finished_profile_tutor PATCH    /tutors/:id/onboarding/submit_finished_profile(.:format)                      tutor_onboarding#submit_finished_profile
 #                  submit_courses_tutor PATCH    /tutors/:id/onboarding/courses(.:format)                                      tutor_onboarding#submit_courses
 #                 submit_schedule_tutor PATCH    /tutors/:id/onboarding/schedule(.:format)                                     tutor_onboarding#submit_schedule
 #          submit_payment_details_tutor PATCH    /tutors/:id/onboarding/payment_details(.:format)                              tutor_onboarding#submit_payment_details
@@ -299,7 +300,8 @@ Rails.application.routes.draw do
       get '/onboarding/courses'         => 'tutor_onboarding#courses'
       get '/onboarding/schedule'        => 'tutor_onboarding#schedule'
       get '/onboarding/payment_details' => 'tutor_onboarding#payment_details'
-      patch '/onboarding/application'      => 'tutor_onboarding#submit_application', as: 'submit_application'
+      patch '/onboarding/save_profile_section'    => 'tutor_onboarding#save_profile_section', as: 'save_profile_section'
+      patch '/onboarding/submit_finished_profile' => 'tutor_onboarding#submit_finished_profile', as: 'submit_finished_profile'
       patch '/onboarding/courses'          => 'tutor_onboarding#submit_courses', as: 'submit_courses'
       patch '/onboarding/schedule'         => 'tutor_onboarding#submit_schedule', as: 'submit_schedule'
       patch '/onboarding/payment_details'  => 'tutor_onboarding#submit_payment_details', as: 'submit_payment_details'

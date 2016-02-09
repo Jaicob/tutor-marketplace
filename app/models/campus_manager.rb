@@ -16,7 +16,7 @@ class CampusManager < ActiveRecord::Base
   belongs_to :user
   belongs_to :school
 
-  validates :school_id, presence: true
+  validates :school_id, :user_id, presence: true
 
   delegate :first_name, :last_name, :full_name, :email, to: :user
 

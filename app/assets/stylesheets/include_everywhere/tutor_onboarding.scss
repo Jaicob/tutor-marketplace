@@ -98,6 +98,26 @@ i.fi-arrow-right {
   .prompt {
     font-weight: 400;
   }
+  .application-section-status {
+    background-color: #DADADA;
+    display: inline-block;
+    padding: 0.5em 1em;
+    border-radius: 4px;
+    color: #383A3A;
+    display: none;
+    i {
+      margin-right: 1em;
+    }
+    i.fi-checkbox {
+      color: green;
+    }
+    &.not-saved {
+      background-color: #DE6328;
+      p, i {
+        color: white;
+      }
+    }
+  }
   #tutor_degree {
     border-top-right-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
@@ -142,6 +162,10 @@ i.fi-arrow-right {
       line-height: 3em;
       color: white;
       font-weight: 400;
+      i {
+        font-size: 0.9em;
+        margin-right: 1em;
+      }
     }
   }
   .file-name, .invalid-file-type {
@@ -150,6 +174,10 @@ i.fi-arrow-right {
   }
   .file-name {
     text-align: right;
+    i {
+      color: #58AA4D;
+      margin-left: 1em;
+    }
   }
   .invalid-file-type {
     color: #DE6328;
@@ -157,6 +185,10 @@ i.fi-arrow-right {
   }
   .margin-bottom {
     margin-bottom: 4em;
+  }
+  .box.missing-fields {
+    margin-top: 3em;
+    background-color: #E8E8E8;
   }
   .thats-it {
     text-align: center;
