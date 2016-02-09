@@ -6,15 +6,28 @@ class TutorOnboardingController < ApplicationController
   helper OnboardingLinksHelper
 
   def application
+    @tutor.major.blank? ? gon.missing_education = true : gon.missing_education = false
+    @tutor.extra_info_1.blank? ? gon.missing_statements = true : gon.missing_statements = false
+    @tutor.transcript.file.nil? ? gon.missing_transcript = true : gon.missing_transcript = false
+    @tutor.profile_pic.file.nil? ? gon.missing_profile_pic = true : gon.missing_profile_pic = false
   end
 
-  def submit_application
+  def save_profile_section
     if @tutor.update(tutor_params)
-      @tutor.update_onboarding_status(1)
-      redirect_to onboarding_courses_tutor_path(@tutor.slug)
+      if tutor_params.include?(:profile_pic) || tutor_params.include?(:transcript)
+        redirect_to onboarding_application_tutor_path(@tutor, anchor: 'files')
+      else
+        redirect_to :back
+      end
     else
+      flash[:error] = 'Information was not saved. Please try again.' 
       redirect_to :back
     end
+  end
+
+  def submit_finished_profile
+    @tutor.update_onboarding_status(1)
+    redirect_to onboarding_courses_tutor_path(@tutor.slug)
   end
 
   def courses

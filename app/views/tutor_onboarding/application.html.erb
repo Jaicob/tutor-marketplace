@@ -1,74 +1,153 @@
 <style>
-p.big-text.list {
-  line-height: 0.5em;
-}
-li.big-text {
+  p.big-text.list {
+    line-height: 0.5em;
+  }
+  li.big-text {
     font-size: 1.2em;
     font-weight: 100;
     text-align: left;
     margin-left: 1em;
-}
-li {
+  }
+  li {
     font-weight: 100;
     text-align: left;
-}
+  }
 </style>
+
 <script>
-$(document).ready(function()
-  {
-    $('#transcript-input').change(function () {
-        acceptable_filetypes = ["jpg", "jpeg", "png", "txt", "rtf", "doc", "docx", "pdf"]
-        if (acceptable_filetypes.indexOf($('#transcript-input').val().toLowerCase().split(".").pop()) > -1) {
-          $('#transcript-name-target').html($('#transcript-input').val().split("\\").pop()); 
-          $('#transcript-name-target').removeClass("invalid-file-type"); 
-        } else {
-          $('#transcript-name-target').html("Invalid file type! Please upload a file with one of the following extensions: .jpg, .jpeg, .png, .txt, .rtf, .doc, .docx, .pdf");
-          $('#transcript-name-target').addClass("invalid-file-type"); 
-        }
-    });
-    $('#picture-input').change(function () {
-        acceptable_filetypes = ["jpg", "jpeg", "png"]
-        if (acceptable_filetypes.indexOf($('#picture-input').val().toLowerCase().split(".").pop()) > -1) {
-          $('#picture-name-target').html($('#picture-input').val().split("\\").pop()); 
-          $('#picture-name-target').removeClass("invalid-file-type"); 
-        } else {
-          $('#picture-name-target').html("Invalid file type! Please upload a file with one of the following extensions: .jpg, .jpeg, .png");
-          $('#picture-name-target').addClass("invalid-file-type"); 
-        }
-    });
+  $(document).ready(function(){
+    //
+    // the following functions display file names for uploaders and display error messages if file type is invalid
+      $('#transcript-input').change(function () {
+          acceptable_filetypes = ["jpg", "jpeg", "png", "txt", "rtf", "doc", "docx", "pdf"]
+          if (acceptable_filetypes.indexOf($('#transcript-input').val().toLowerCase().split(".").pop()) > -1) {
+            $('#transcript-name-target').html($('#transcript-input').val().split("\\").pop()); 
+            $('#transcript-name-target').removeClass("invalid-file-type"); 
+          } else {
+            $('#transcript-name-target').html("Invalid file type! Please upload a file with one of the following extensions: .jpg, .jpeg, .png, .txt, .rtf, .doc, .docx, .pdf");
+            $('#transcript-name-target').addClass("invalid-file-type"); 
+          }
+      });
+      $('#picture-input').change(function () {
+          acceptable_filetypes = ["jpg", "jpeg", "png"]
+          if (acceptable_filetypes.indexOf($('#picture-input').val().toLowerCase().split(".").pop()) > -1) {
+            $('#picture-name-target').html($('#picture-input').val().split("\\").pop()); 
+            $('#picture-name-target').removeClass("invalid-file-type"); 
+          } else {
+            $('#picture-name-target').html("Invalid file type! Please upload a file with one of the following extensions: .jpg, .jpeg, .png");
+            $('#picture-name-target').addClass("invalid-file-type"); 
+          }
+      });
 
-  $('#education-section').on('ajax:success', function(event, xhr, status, error) {
-    $('#education-not-saved').hide();
-    $('#education-saved').show().css("display", "inline-block");; 
+    //
+    // this section handles hiding bullet points at the bottom for info that has previously been saved via the gon gem (see class TutorOnboardingController's application action)
+      
+      var missingEducation = gon.missing_education;
+      var missingStatements = gon.missing_statements;
+      var missingTranscript = gon.missing_transcript;
+      var missingProfilePic = gon.missing_profile_pic;
+
+      console.log(missingEducation);
+      console.log(missingStatements);
+      console.log(missingTranscript);
+      console.log(missingProfilePic);
+
+      if (missingEducation == false) {
+        $('#missing-education').hide();
+      };
+      
+      if (missingStatements == false) {
+        $('#missing-statements').hide();
+      };
+      
+      if (missingTranscript == false) {
+        $('#missing-transcript').hide();
+      };
+
+      if (missingProfilePic == false) {
+        $('#missing-profile-pic').hide();
+      };
+      
+      if (missingEducation == false && missingStatements == false && missingTranscript == false && missingProfilePic == false) {
+        $('#missing-info').hide();
+        $('#submit-finished-profile-button').prop('disabled', false).removeClass('disabled');
+      };
+
+    //
+    // this does something
+
+      function checkApplicationCompletion() {
+        if (missingEducation == false && missingStatements == false && missingTranscript == false && missingProfilePic == false) {
+          $('#missing-info').hide();
+          $('#submit-finished-profile-button').prop('disabled', false).removeClass('disabled');
+        };
+      }
+
+    //
+    // the following 4 functions show the saved changes boxes for the 4 different sections
+
+      // displays success box (and hides unsaved changes box) when submitted succesfully
+      $('#education-section').on('ajax:success', function(event, xhr, status, error) {
+        $('#education-not-saved').hide();
+        $('#education-saved').show().css("display", "inline-block");
+        $('#missing-education').hide(); // this takes away the bullet point at the bottom
+        missingEducation = false;
+        checkApplicationCompletion();
+      });
+
+      // displays success box (and hides unsaved changes box) when submitted succesfully
+      $('#statements-section').on('ajax:success', function(event, xhr, status, error) {
+        $('#statements-not-saved').hide();
+        $('#statements-saved').show().css("display", "inline-block"); 
+        $('#missing-statements').hide(); // this takes away the bullet point at the bottom
+        missingStatements = false;
+        checkApplicationCompletion();
+      });
+
+      // displays success box (and hides unsaved changes box) when submitted succesfully
+      $('#transcript-section').on('ajax:success', function(event, xhr, status, error) {
+        $('#transcript-not-saved').hide();
+        $('#missing-transcript').hide(); // this takes away the bullet point at the bottom
+        missingTranscript = false;
+        checkApplicationCompletion();
+      });
+
+      // displays success box (and hides unsaved changes box) when submitted succesfully
+      $('#profile-pic-section').on('ajax:success', function(event, xhr, status, error) {
+        $('#profile-pic-not-saved').hide();
+        $('#missing-profile-pic').hide(); // this takes away the bullet point at the bottom
+        missingProfilePic = false;
+        checkApplicationCompletion();
+      });
+
+    //
+    // the following 4 functions show the unsaved changes box for the 4 different sections
+
+      // displays unsaved changes box when input is changed (and hide success box)
+      $('#statements-section').change(function(){
+        $('#statements-saved').hide(); 
+        $('#statements-not-saved').show().css("display", "inline-block");
+      });
+
+      // displays unsaved changes box when input is changed (and hide success box)
+      $('#education-section').change(function(){
+        $('#education-saved').hide(); 
+        $('#education-not-saved').show().css("display", "inline-block");
+      });
+
+      // displays unsaved changes box when input is changed (and hide success box)
+      $('#transcript-section').change(function(){
+        $('#transcript-not-saved').show().css("display", "inline-block");
+      });
+
+      // displays unsaved changes box when input is changed (and hide success box)
+      $('#profile-pic-section').change(function(){
+        $('#profile-pic-not-saved').show().css("display", "inline-block");
+      });
+
   });
-
-  $('#education-section').change(function(){
-    $('#education-saved').hide(); 
-    $('#education-not-saved').show().css("display", "inline-block");;
-  });
-
-
-  $('#statements-section').on('ajax:success', function(event, xhr, status, error) {
-    $('#statements-not-saved').hide();
-    $('#statements-saved').show().css("display", "inline-block");; 
-  });
-
-  $('#statements-section').change(function(){
-    $('#statements-saved').hide(); 
-    $('#statements-not-saved').show().css("display", "inline-block");;
-  });
-
-  $('#files-section').on('ajax:success', function(event, xhr, status, error) {
-    $('#files-not-saved').hide();
-    $('#files-saved').show().css("display", "inline-block");; 
-  });
-
-  $('#files-section').change(function(){
-    $('#files-saved').hide(); 
-    $('#files-not-saved').show().css("display", "inline-block");;
-  });
-});
 </script>
+
 <%= render '/tutor_onboarding/progress_bar' %>
 
 <div class="row">
@@ -119,8 +198,9 @@ $(document).ready(function()
     <a name="application"></a>
     <div class="application">
 
+      <a id="education"></a>
       <h4 class="first-subheader">Education</h4>
-      <%= form_for @tutor, remote: true, html: {id: 'education-section'} do |f| %>
+      <%= form_for @tutor, url: save_profile_section_tutor_path(@tutor), remote: true, html: {id: 'education-section'} do |f| %>
         <p class="prompt">What is your degree type, major and graduation year?</p>
         <div class="row medium-collapse">
           <div class="small-12 medium-2 columns">
@@ -134,8 +214,8 @@ $(document).ready(function()
           </div>
         </div>
         <p class="fine-print">If you have not graduated yet, select your expected degree type and graduation year.</p>
-        <p class="prompt">Optional: Do you have a second major or any additional degrees?</p>
-        <p>If so, please summarize this information in one line</p>
+        <p class="prompt margin-top-1em no-bottom-margin">Optional: Do you have a second major or any additional degrees?</p>
+        <p class="fine-print margin-bottom-1em">If so, please summarize this information in one line</p>
         <%= f.text_field :additional_degrees, placeholder: 'Second Major: Chemistry', class: 'education-input', maxlength: 35 %>
         <div class="row medium-collapse">
           <div class="small-12 medium-8 columns">
@@ -152,9 +232,10 @@ $(document).ready(function()
         </div>
       <% end %>
 
+      <a id="statements"></a>
       <h4>Personal Statements</h4>
-      <%= form_for @tutor, remote: true, html: {id: 'statements-section'} do |f| %>
-        <p class="prompt">Share three facts about yourself that you want potential students to see.</p>
+      <%= form_for @tutor, url: save_profile_section_tutor_path(@tutor), remote: true, html: {id: 'statements-section'} do |f| %>
+        <p class="prompt">Share three facts about yourself that you want potential students to see on your public profile.</p>
         <p>Optional: If you're not sure what to write, try following one of these prompts:</p>
         <ul>
           <li>What in your experience makes you a great tutor?</li>
@@ -163,13 +244,13 @@ $(document).ready(function()
         </ul>
         <p class="fine-print">Maximum length for each statement is 250 characters.</p>
         <div class="input statement-field">
-          <%= f.text_area :extra_info_1, placeholder: 'Your first statment goes here. It should include your qualifications, your experience or any other fun facts. The max length of each statement is 250 characters. So you can fill it up with about this much text, because this is almost 250 characters.', size: '30x10', maxlength: 250, required: true %>
+          <%= f.text_area :extra_info_1, placeholder: 'Your first statment goes here. It should include your qualifications, your experience or any other fun facts. The max length of each statement is 250 characters. So you can fill it up with about this much text, because this is almost 250 characters.', size: '30x6', maxlength: 250, required: true %>
         </div>
         <div class="input statement-field">
-          <%= f.text_area :extra_info_2, placeholder: 'Your second statment goes here. It should include your qualifications, your experience or any other fun facts. The max length of each statement is 250 characters. So you can fill it up with about this much text, because this is almost 250 characters.', size: '30x10',  maxlength: 250, required: true %>
+          <%= f.text_area :extra_info_2, placeholder: 'Your second statment goes here. It should include your qualifications, your experience or any other fun facts. The max length of each statement is 250 characters. So you can fill it up with about this much text, because this is almost 250 characters.', size: '30x6',  maxlength: 250, required: true %>
         </div>
         <div class="input statement-field">
-          <%= f.text_area :extra_info_3, placeholder: 'Your third statment goes here. It should include your qualifications, your experience or any other fun facts. The max length of each statement is 250 characters. So you can fill it up with about this much text, because this is almost 250 characters.',  size: '30x10', maxlength: 250, required: true %>
+          <%= f.text_area :extra_info_3, placeholder: 'Your third statment goes here. It should include your qualifications, your experience or any other fun facts. The max length of each statement is 250 characters. So you can fill it up with about this much text, because this is almost 250 characters.',  size: '30x6', maxlength: 250, required: true %>
         </div>
         <div class="row medium-collapse">
           <div class="small-12 medium-8 columns">
@@ -186,45 +267,72 @@ $(document).ready(function()
         </div>      
       <% end %>
 
+      <a id="files"></a>
       <h4>File Uploads and Profile Picture</h4>
-      <%= form_for @tutor, remote: true, html: {id: 'files-section'} do |f| %>
-        <p class="fine-print">In order to provide a great experience for tutors and students, we want to ensure that all tutor profiles are accurate and that tutors can effectively tutor the subjects which they list on their profiles. Please upload your unofficial academic transcript, resume, or CV.</p>
-        <h6>Upload your unofficial transcript or resume</h6>
+        <p>In order to provide a great experience for tutors and students, we want to ensure that all tutor profiles are accurate and that tutors can effectively tutor the subjects which they list on their profiles. Please upload your unofficial academic transcript, resume, or CV.</p>
+        
+        <h6 class="margin-top-3em">Upload Your Unofficial Transcript or Resume</h6>
         <p class="fine-print">Acceptable file types: .jpg, .jpeg, .png, .txt, .rtf, .doc, .docx, .pdf</p>
-        <div class="file-input-box">
-          <div class="file-input-button">
-            <p><i class='fi-plus'></i>Transcript or Resume</p>
+        <%= form_for @tutor, url: save_profile_section_tutor_path(@tutor),remote: true, html: {id: 'transcript-section'} do |f| %>
+          <div class="file-input-box">
+            <div class="file-input-button">
+              <p><i class='fi-plus'></i>Transcript or Resume</p>
+            </div>
+            <%= f.file_field :transcript, id: 'transcript-input', class: 'file-input', required: true %>
           </div>
-          <%= f.file_field :transcript, id: 'transcript-input', class: 'file-input', required: true %>
-        </div>
-        <p id="transcript-name-target" class="file-name">
-          <%= @tutor.transcript.file.filename if @tutor.transcript.file %>
-        </p>
-        <h6>Upload a profile picture</h6>
+          <p id="transcript-name-target" class="file-name">
+            <% if @tutor.transcript.file %>
+              <%= @tutor.transcript.file.filename %> was uploaded & saved<i class='fi-check upload-success'></i>
+            <% end %>
+          </p>
+          <div class="row medium-collapse">
+            <div class="small-12 medium-6 columns">
+              <div id='transcript-not-saved' class="application-section-status not-saved">
+                <p class='no-bottom-margin'><i class='fi-minus-circle'></i>Section not saved</p>
+              </div>
+            </div>
+            <div class="small-12 medium-6 columns">
+              <%= f.submit 'Upload & Save', class: 'custom-button full-width', data: { disable_with: "Uploading..." } %>
+            </div>
+          </div>        
+        <% end %>
+
+        <h6 class="margin-top-3em">Upload a Profile Picture</h6>
         <p class="fine-print">Acceptable file types: .jpg, .jpeg, .png</p>
-        <div class="file-input-box">
-          <div class="file-input-button">
-            <p><i class='fi-plus'></i>Profile Picture</p>
-          </div>
-          <%= f.file_field :profile_pic, id: 'picture-input', class: 'file-input', required: true  %>
-        </div>
-        <p id="picture-name-target" class="file-name">
-          <%= @tutor.profile_pic.file.filename if @tutor.profile_pic.file %>
-        </p>
-        <div class="row medium-collapse">
-          <div class="small-12 medium-6 columns">
-            <div id='files-not-saved' class="application-section-status not-saved">
-              <p class='no-bottom-margin'><i class='fi-minus-circle'></i>Section not saved</p>
+        <%= form_for @tutor, url: save_profile_section_tutor_path(@tutor),remote: true, html: {id: 'profile-pic-section'} do |f| %>
+          <div class="file-input-box">
+            <div class="file-input-button">
+              <p><i class='fi-plus'></i>Profile Picture</p>
             </div>
-            <div id='files-saved' class="application-section-status">
-              <p class='no-bottom-margin'><i class='fi-checkbox'></i>Section saved</p>
+            <%= f.file_field :profile_pic, id: 'picture-input', class: 'file-input', required: true  %>
+          </div>
+          <p id="picture-name-target" class="file-name">
+            <% if @tutor.profile_pic.file %>
+              <%= @tutor.profile_pic.file.filename %> was uploaded & saved<i class='fi-check upload-success'></i>
+            <% end %>
+          </p>
+          <div class="row medium-collapse">
+            <div class="small-12 medium-6 columns">
+              <div id='profile-pic-not-saved' class="application-section-status not-saved">
+                <p class='no-bottom-margin'><i class='fi-minus-circle'></i>Section not saved</p>
+              </div>
+            </div>
+            <div class="small-12 medium-6 columns">
+              <%= f.submit 'Upload & Save', class: 'custom-button full-width', data: { disable_with: "Uploading..." } %>
             </div>
           </div>
-          <div class="small-12 medium-6 columns">
-            <%= f.submit 'Upload & Save', class: 'custom-button full-width', data: { disable_with: "Uploading..." } %>
-          </div>
-        </div>
-      <% end %>
+        <% end %>
+
+
+      <div id="missing-info" class="box missing-fields">
+        <h6>To finish this step, please enter and save your:</h6>
+        <ul>
+          <li id="missing-education"><a href="#education" class="blue-link">Education Summary</a></li>
+          <li id="missing-statements"><a href="#statements" class="blue-link">Personal Statements</a></li>
+          <li id="missing-transcript"><a href="#files" class="blue-link">Unofficial Transcript or Resume</a></li>
+          <li id="missing-profile-pic"><a href="#files" class="blue-link">Profile Picture</a></li>
+        </ul>
+      </div>
       <h4 class="thats-it">That's it for the first step!</h4>
     </div>
   </div>
@@ -234,11 +342,8 @@ $(document).ready(function()
         <p>Finished with your profile? Review it then click here to set your courses! <i class="fi-arrow-right"></i></p>
       </div>
     </div>
-    <div class="small-12 medium-4 columns"> 
-      <%= form_for @tutor, url: submit_application_tutor_path do |f| %>
-        <%= f.hidden_field :onboarding_status, value: 1 %>
-      <%= f.submit 'Next Step', class: 'custom-button margin-bottom large full-width bold'  %>
-      <% end %>
+    <div class="small-12 medium-4 columns">
+      <%= button_to 'Next Step', submit_finished_profile_tutor_path(@tutor), id: 'submit-finished-profile-button', class: 'custom-button margin-bottom large full-width bold disabled', disabled: true, method: :patch %>
     </div>
   </div>
 </div>
