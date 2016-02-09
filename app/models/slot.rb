@@ -25,7 +25,7 @@ class Slot < ActiveRecord::Base
 
   before_validation :format_datetime
 
-  enum status: ['Open', 'Blocked']
+  enum status: ['Open', 'Blocked', 'Zombie']
   enum slot_type: ['Weekly', 'OneTime']
 
   # Ensure that datetimes are always saved as UTC 
