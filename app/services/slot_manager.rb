@@ -67,8 +67,10 @@ class SlotManager
     @slots = get_slots_for_range
     @slot_ids = []
     @slots.each do |slot|
-      @slot_ids << slot
-      slot.destroy
+      if slot.appointments.empty? || slot.appointments.where(status: 0).empty?
+        @slot_ids << slot
+        slot.destroy
+      end
     end
     @slot_ids
   end
