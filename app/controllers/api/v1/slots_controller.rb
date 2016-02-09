@@ -11,11 +11,13 @@ class API::V1::SlotsController < API::V1::Defaults
     @slots = @tutor.slots
     @slots_array = []
     @slots.map do |slot|
-      slot.start_time = slot.start_time.iso8601(1)
-      # can't add non-attribute 'unavailable_times' to object, so converting slot to hash of attributes instead
-      slot_hash = slot.attributes
-      slot_hash['unavailable_times'] = slot.appointments.map { |appt| appt.start_time }
-      @slots_array << slot_hash
+      if slot.status != 'Zombie'
+        slot.start_time = slot.start_time.iso8601(1)
+        # can't add non-attribute 'unavailable_times' to object, so converting slot to hash of attributes instead
+        slot_hash = slot.attributes
+        slot_hash['unavailable_times'] = slot.appointments.map { |appt| appt.start_time }
+        @slots_array << slot_hash
+      end
     end
     respond_with(@slots_array)
   end
