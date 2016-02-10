@@ -19,5 +19,5 @@ $(document).ready(function(){
 	$("#subject")[0].selectedIndex = 0;
 	$("#course")[0].selectedIndex = 0;
 
-	$("#tutorSearchButton").on("click", updateReactComponents);
+	$("#course-search-submit").on("click", updateReactComponents);
 });

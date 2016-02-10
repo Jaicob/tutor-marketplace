@@ -37,7 +37,9 @@ var TutorCardContainer = React.createClass({
 		}.bind(this));
 	},
 	showLoadingScreen: function(){
-		return "Loading...";
+		return (
+			<p className="margin-top-2em">Loading...</p>
+		);
 		// return <TutorCardContainerLoadingScreen />;
 	},
 	showNoTutorsError: function(){

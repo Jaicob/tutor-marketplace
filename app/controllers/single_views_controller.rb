@@ -33,7 +33,7 @@ class SingleViewsController < ApplicationController
   end
 
   def search
-    if current_user && current_user.admin then redirect_to admin_schools_path end
+    if current_user && current_user.admin then redirect_to admin_schools_path && return end
     if params[:course_id]
       @course = Course.find(params[:course_id])
       @subject = @course.subject

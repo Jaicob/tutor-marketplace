@@ -13,7 +13,7 @@
     <!-- special subject select for tutors adding courses (b/c it shows ALL subjects and courses, not just those with active tutors) -->
     <select name="course[subject_id]" id="subjects-for-tutors" required="true">
       <option disabled="true" selected="true" value="">Select Subject</option>
-      <% @school.subjects.each do |subject| %>
+      <% @school.subjects.sort_by{|subj| subj[:name]}.each do |subject| %>
         <option data-all="true" value="<%= subject[:id] %>"><%= subject[:name] %></option>
       <% end %>
     </select>

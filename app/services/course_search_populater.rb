@@ -16,7 +16,8 @@ class CourseSearchPopulater
         courses << tc.course unless courses.include?(tc.course)
       end
     end
-    return courses
+    sorted_courses = courses.sort_by{|course| course.call_number}
+    return sorted_courses
   end
 
   def subjects_with_active_tutors
@@ -28,7 +29,8 @@ class CourseSearchPopulater
         end
       end
     end
-    return subjects
+    sorted_subjects = subjects.sort_by{|subj| subj.name}
+    return sorted_subjects
   end
 
 end
