@@ -24,7 +24,6 @@ class Appointment < ActiveRecord::Base
 
   validates :slot_id, presence: true
   validates :course_id, presence: true
-  # validates :start_time, presence: true, uniqueness: { scope: :slot_id }
   validate :start_time_uniqueness # needed custom validation here b/c built in validations cannot handle allowing a non-unique appt start_time/slot_id as long as any duplicates have a status of 'cancelled'
   validate :one_hour_appointment_buffer
   validate :inside_slot_availability
@@ -156,6 +155,10 @@ class Appointment < ActiveRecord::Base
         start_time: data[:start_time]
       )
     end
+  end
+
+  def no_reschedule_allowed?
+    ((self.start_time.to_time - Time.now) / 24.hours) < 1 ? true : false
   end
 
 end

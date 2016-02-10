@@ -28,6 +28,11 @@ class Dashboard::Student::HomeController < DashboardController
 
   # view_reschedule_options_student_path
   def view_reschedule_options
+    if @appt.no_reschedule_allowed?
+      flash[:info] = 'Due to our 24-hour policy, this appointment can no longer be rescheduled.'
+      redirect_to :back
+      return
+    end
     service = TutorAvailability.new(@appt.tutor.id, params[:current], params[:week])
     @start_date = service.set_week
     @availability_data = service.get_times
@@ -42,10 +47,13 @@ class Dashboard::Student::HomeController < DashboardController
       redirect_to home_student_path(@student)
     else
       flash[:alert] = "Your appointment was not rescheduled: #{response[:error]}"
-      redirect_to :back
+      if response[:error_type] = '24-hour-policy'
+        redirect_to home_student_path(@student)
+      else
+        redirect_to :back
+      end
     end
   end
-                                 
 
   private 
 
