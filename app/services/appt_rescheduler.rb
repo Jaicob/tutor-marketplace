@@ -2,6 +2,7 @@ class ApptRescheduler
 
   def initialize(appt_id, params)
     @appt = Appointment.find(appt_id)
+    @original_appt = Appointment.find(appt_id)
     @raw_data = params[:appt_selection]
   end
 
@@ -27,8 +28,8 @@ class ApptRescheduler
           start_time: @start_time, 
           slot_id: @slot_id
         )
-        AppointmentMailer.delay.appointment_reschedule_for_tutor(@appt.id)
-        AppointmentMailer.delay.appointment_reschedule_for_student(@appt.id)
+        AppointmentMailer.delay.appointment_reschedule_for_tutor(@appt.id, @original_appt.id)
+        AppointmentMailer.delay.appointment_reschedule_for_student(@appt.id, @original_appt.id)
         response = {success: true}
       else
         response = {success: false, error: @appt.errors.full_messages.first}
