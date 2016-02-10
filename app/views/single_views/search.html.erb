@@ -15,7 +15,7 @@
         <div class="small-12 medium-8 columns">
           <div class="row medium-collapse course-search-box">
             <div class="small-12 medium-5 columns">
-              <%= form_for :search, url: search_from_home_path, method: :post do |f| %>
+              <%= form_for :search, url: search_path, method: :post do |f| %>
                 <%= render '/course_selector/subject' %>
             </div>
             <div class="small-12 medium-5 columns">

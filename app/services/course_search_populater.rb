@@ -16,7 +16,10 @@ class CourseSearchPopulater
         courses << tc.course unless courses.include?(tc.course)
       end
     end
-    return courses
+    sorted_courses = courses.sort_by do |course|
+      course.call_number
+    end
+    return sorted_courses
   end
 
   def subjects_with_active_tutors
