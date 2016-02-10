@@ -17,6 +17,10 @@ class ApptRescheduler
   end
 
   def reschedule_appt
+    if @appt.no_reschedule_allowed?
+      response = {success: false, error: 'Due to our 24-hour policy, this appointment can no longer be rescheduled', error_type: '24-hour-policy'}
+      return response
+    end
     format_new_time
     if @valid_new_time == true
       if @appt.update(

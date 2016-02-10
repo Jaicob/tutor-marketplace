@@ -157,4 +157,8 @@ class Appointment < ActiveRecord::Base
     end
   end
 
+  def no_reschedule_allowed?
+    ((self.start_time.to_time - Time.now) / 2400.hours) < 1 ? true : false
+  end
+
 end

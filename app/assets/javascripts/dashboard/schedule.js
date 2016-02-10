@@ -277,6 +277,7 @@ $(document).ready(function() {
     });
     swal.close();
   }
+
   /*
    * When you click on a slot/event a mini menu pops up this function
    * routes the correct actions based on what you click
@@ -296,6 +297,7 @@ $(document).ready(function() {
         swal('Invalid Selection', 'error')
     }
   }
+  
   /*
    * Updates a slots status to be blocked if open, and open if blocked.
    * If successful then the event is updated

@@ -64,12 +64,11 @@ class SlotManager
     @slot_ids = []
     @slots.each do |slot|
       @slot_ids << slot
-      # if slot.appointments.empty? || slot.appointments.where(status: 0).empty?
+      if slot.appointments.empty? || slot.appointments.where(status: 0).empty?
         slot.destroy
-      # else
-      #   slot.update(status: 'Zombie')
-      # end
-
+      else
+        slot.update(status: 'Zombie')
+      end
     end
     @slot_ids
   end
