@@ -37,16 +37,16 @@ class AppointmentMailer < ApplicationMailer
   #   Appointment Rescheduled Emails
   # ================================
 
-  def appointment_reschedule_for_tutor(appointment_id, original_appointment_id)
+  def appointment_reschedule_for_tutor(appointment_id, original_time)
     @appt = Appointment.find(appointment_id)
-    @original_appt = Appointment.find(original_appointment_id)
+    @original_time = original_time
     set_appt_variables
     mail(to: @tutor.email, subject: "Your Axon tutoring appointment has changed")
   end
 
-  def appointment_reschedule_for_student(appointment_id, original_appointment_id)
+  def appointment_reschedule_for_student(appointment_id, original_time)
     @appt = Appointment.find(appointment_id)
-    @original_appt = Appointment.find(original_appointment_id)
+    @original_time = original_time
     set_appt_variables
     mail(to: @student.email, subject: "Your Axon tutoring appointment has changed")
   end

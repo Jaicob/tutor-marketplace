@@ -1,6 +1,6 @@
 Hi <%= @tutor.first_name %>,
 
-Your appointment scheduled for <%= @original_appt.start_time.in_time_zone(@school.timezone).strftime("%b %e, %l:%M %p") %> has been rescheduled. The new details for your appointment are below:
+Your appointment scheduled for <%= @original_time.in_time_zone(@school.timezone).strftime("%b %e, %l:%M %p") %> has been rescheduled. The new details for your appointment are below:
 
 Student Name: <%= @student.public_name %>
 Student Contact Info: <%= @student.email %>
