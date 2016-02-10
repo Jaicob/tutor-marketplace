@@ -5,9 +5,9 @@
   <select name="course[course_id]" id="course" required="true">
     <% CourseSearchPopulater.new(@school.id, @subject.id).courses_with_active_tutors.each do |course| %>
       <% if course[:id] == @course.id %>
-        <option selected="true" value="<%= @course.id %>"><%= @course.friendly_name %></option>
+        <option selected="true" value="<%= @course.id %>">(<%= @course.call_number %>) <%= @course.friendly_name %></option>
       <% else %>
-        <option value="<%= course[:id] %>"><%= course[:friendly_name] %></option>
+        <option value="<%= course[:id] %>">(<%= course[:call_number] %>) <%= course[:friendly_name] %></option>
       <% end %>
     <% end %>
   </select>
