@@ -5,7 +5,7 @@
   <% end %>
   <div class="row">
     <div class="small-12 columns">
-      <h2 class="dash-home-header">Upcoming Appointments</h2>
+      <h4 class="dash-home-header">Upcoming Appointments</h2>
     </div>
   </div>
   <div class="row">
@@ -54,7 +54,7 @@
 
   <div class="row">
     <div class="small-12 columns">
-      <h2 class="dash-home-header">Metrics</h2>
+      <h4 class="dash-home-header">Metrics</h2>
     </div>
   </div>
   <div class="row">
@@ -62,27 +62,27 @@
       <div class="box metrics-box">
         <div class="row metrics-row">
           <div class="small-12 medium-2 columns">
-            <h3><%= TutorAnalyzer.new(@tutor).availability_next_7_days %> hrs</h3>
+            <h4 class="center"><%= TutorAnalyzer.new(@tutor).availability_next_7_days %> hrs</h4>
             <p>Availability</br>(next 7 days)</p>
           </div>
           <div class="small-12 medium-2 columns">
-            <h3><%= TutorAnalyzer.new(@tutor).appts_next_7_days.count %></h3>
+            <h4 class="center"><%= TutorAnalyzer.new(@tutor).appts_next_7_days.count %></h4>
             <p>Appointments</br>(next 7 days)</p>
           </div>
           <div class="small-12 medium-2 columns">
-            <h3><%= @tutor.courses.count %></h3>
+            <h4 class="center"><%= @tutor.courses.count %></h4>
             <p>Total Courses</p>
           </div>
           <div class="small-12 medium-2 columns">
-            <h3><%= TutorAnalyzer.new(@tutor).students.count %></h3>
+            <h4 class="center"><%= TutorAnalyzer.new(@tutor).students.count %></h4>
             <p>Total Students</p>
           </div>
           <div class="small-12 medium-2 columns">
-            <h3><%= TutorAnalyzer.new(@tutor).total_appts.count %></h3>
+            <h4 class="center"><%= TutorAnalyzer.new(@tutor).total_appts.count %></h4>
             <p>Total Appointments</p>
           </div>
           <div class="small-12 medium-2 columns">
-            <h3>$<%= display_price(TutorAnalyzer.new(@tutor).total_income) %></h3>
+            <h4 class="center">$<%= display_price(TutorAnalyzer.new(@tutor).total_income) %></h4>
             <p>Total Revenue YTD</p>
           </div>
         </div>
@@ -92,7 +92,7 @@
 
   <div class="row">
     <div class="small-8 columns">
-      <h2 class="dash-home-header">Appointment History</h2>
+      <h4 class="dash-home-header">Appointment History</h2>
       <% if @tutor.appointments.count == 0 %>
         <div class="box height-24em">
           <div class="no-appts">
@@ -126,7 +126,7 @@
       <% end %>
     </div>
     <div class="small-4 columns">  
-      <h2 class="dash-home-header">Support</h2>
+      <h4 class="dash-home-header">Support</h2>
       <div class="box height-24em">
         <h5>Your Campus Manager</h5>
         <p>Katie F.</br><%= mail_to 'katie@axontutors.com', nil, class: 'blue-link' %></p>
