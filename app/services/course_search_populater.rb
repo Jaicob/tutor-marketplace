@@ -16,9 +16,7 @@ class CourseSearchPopulater
         courses << tc.course unless courses.include?(tc.course)
       end
     end
-    sorted_courses = courses.sort_by do |course|
-      course.call_number
-    end
+    sorted_courses = courses.sort_by{|course| course.call_number}
     return sorted_courses
   end
 
@@ -31,7 +29,8 @@ class CourseSearchPopulater
         end
       end
     end
-    return subjects
+    sorted_subjects = subjects.sort_by{|subj| subj.name}
+    return sorted_subjects
   end
 
 end
