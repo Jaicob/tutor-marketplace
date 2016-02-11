@@ -13,7 +13,8 @@
 #  description      :text
 #  tutor_id         :integer
 #  course_id        :integer
-#  single_use       :integer          default(0)
+#  single_appt      :integer          default(0)
+#  student_uniq     :integer          default(0)
 #
 
 FactoryGirl.define do

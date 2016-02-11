@@ -56,7 +56,7 @@ class Dashboard::Admin::PromotionsController < AdminController
     end
 
     def promotion_params
-      params.require(:promotion).permit(:code, :category, :amount, :valid_from, :valid_until, :redemption_limit, :description, :issuer, :single_use)
+      params.require(:promotion).permit(:code, :category, :amount, :valid_from, :valid_until, :redemption_limit, :description, :issuer, :single_appt, :student_uniq)
     end
     
 end

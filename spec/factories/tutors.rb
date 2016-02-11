@@ -48,6 +48,7 @@ FactoryGirl.define do
     extra_info_1 "Default Extra Info 1"
     appt_notes "Default Appt Notes"
     school
+    dob Date.today - 10000
 
       trait :invalid_tutor do
         extra_info_1 nil

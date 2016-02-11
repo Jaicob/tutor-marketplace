@@ -13,11 +13,17 @@
 #  description      :text
 #  tutor_id         :integer
 #  course_id        :integer
-#  single_use       :integer          default(0)
+#  single_appt      :integer          default(0)
+#  student_uniq     :integer          default(0)
 #
+
+  # promo code can only be applied to one appt in a booking with multiple appts - single_appt
+  # promo code can only be redeemed once per student - uniq_student, student_limit, per_student, student_uniq
 
 class Promotion < ActiveRecord::Base
   belongs_to :tutor # or if tutor_id is blank, is an Axon HQ coupon
+  has_many :promotion_redemptions
+  has_many :students, through: :promotion_redemptions
 
   validates :code, presence: true, uniqueness: true
   validates :redemption_limit, presence: true
@@ -28,8 +34,11 @@ class Promotion < ActiveRecord::Base
   validate  :tutor_issued_must_have_tutor_id
 
   enum issuer: [:axon, :tutor]
-  enum single_use: [:true, :false]  # single_use default is :true, meaning a promotion only discounts one appt in a booking with multiple appointments
-                                    # if single_use is set to false, a promotion will discount all sessions in a booking (if redemption limit permits x number of redemptions) - this is useful for semester packages from tutors
+  enum single_appt: [:true, :false] # default is true - true means that it is only good for discounting one appt (when a booking has multiple appts)
+                                    # false is useful for a tutor giving a student a discount all semester long via one promo code, etc.
+  
+  enum student_uniq: [:uniq_enforced, :uniq_not_enforced]   # default is :uniq_enforced which means a student can only use the promo code once 
+                                                            # :uniq_not_enforced is useful for packages sold to groups where any member can use the code and its OK if a student redeems a promo code more than once
 
   def tutor_issued_must_have_tutor_id
     if issuer == 'tutor'
@@ -96,7 +105,7 @@ class Promotion < ActiveRecord::Base
     
     # discount calculations
     discount = (1 - (self.amount.to_f / 100)) # if promo amount is 10 (i.e. 10%), then discount equals 0.9 (i.e. 90% of normal price)
-    if self.single_use == 'true'
+    if self.single_appt == 'true'
       discount_price = (regular_price - (single_appt_full_price) + (single_appt_full_price * discount))
     else
       discount_price = (regular_price * discount)
@@ -128,7 +137,7 @@ class Promotion < ActiveRecord::Base
     
     # discount calculations
     discount = (1 - (self.amount.to_f / 100)) # if promo amount is 10 (i.e. 10%), then discount equals 0.9 (i.e. 90% of normal price)
-    if self.single_use == 'true'
+    if self.single_appt == 'true'
       discount_tutor_fee = (regular_tutor_fee - single_appt_tutor_fee + (single_appt_tutor_fee * discount))
     else
       discount_tutor_fee = (regular_tutor_fee * discount)

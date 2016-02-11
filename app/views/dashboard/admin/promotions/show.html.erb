@@ -21,6 +21,8 @@
           <th>End Date</th>
           <th>Redemption Limit</th>
           <th>Redemption Count</th>
+          <th>Single Appt/Booking</th>
+          <th>Single Use/Student</th>
           <th>Description</th>
         </tr>
       </thead>
@@ -33,6 +35,8 @@
           <td><%= @promotion.valid_until %></td>
           <td><%= @promotion.redemption_limit %></td>
           <td><%= @promotion.redemption_count %></td>
+          <td><%= @promotion.single_appt == 'true' ? 'True' : 'False' %></td>
+          <td><%= @promotion.student_uniq == 'uniq_enforced' ? 'True' : 'False' %></td>
           <td><%= @promotion.description %></td>
         </tr>
       </tbody>
@@ -64,9 +68,13 @@
       <p class="fine-print">How many times can this promo code be redeemed?</p>
       <%= f.number_field :redemption_limit, required: true %>
 
-      <%= f.label :single_use, 'Single Use Per Booking' %>
-      <p class="fine-print">Default is true. Setting to false means that a booking with multiple appointments can have the discount applied multiple times.</p>
-      <%= f.select(:single_use, options_for_select({'True' => true, 'False'=> :false})) %>
+      <%= f.label :single_appt, 'Single Appointment Per Booking' %>
+      <p class="fine-print">In a booking with three appointments, this promo code will only discount one of the appointments.</p>
+      <%= f.select(:single_appt, options_for_select({'True' => :true, 'False'=> :false})) %>
+
+      <%= f.label :student_uniq, 'Single Redemption Per Student' %>
+      <p class="fine-print">A specific student account can only use this promo code once.</p>
+      <%= f.select(:student_uniq, options_for_select({'True' => :uniq_enforced, 'False'=> :uniq_not_enforced})) %>
 
       <%= f.label :description %>
       <p class="fine-print">This description will appear on Review Booking page to customer. Make sure it is descriptive and appropriate for public use.</p>

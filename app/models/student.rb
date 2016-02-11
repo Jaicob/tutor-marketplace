@@ -18,6 +18,8 @@ class Student < ActiveRecord::Base
   belongs_to :school
   has_many :charges, dependent: :destroy
   has_many :appointments, dependent: :destroy
+  has_many :promotion_redemptions
+  has_many :promotions, through: :promotion_redemptions
 
   validates :school_id, presence: true
 

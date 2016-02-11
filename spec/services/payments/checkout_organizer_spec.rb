@@ -14,7 +14,7 @@ RSpec.describe CheckoutOrganizer do
         :currency => "usd",
         :name => "Jane Austen",
         :account_holder_type => "individual",
-        :routing_number => "110000000",
+        :routing_number => "11000000",
         :account_number => "000123456789",
       }
     )
@@ -48,6 +48,7 @@ RSpec.describe CheckoutOrganizer do
         promotion_id: nil
       }
       context = CheckoutOrganizer.call(params)
+      expect(context.error).to eq nil
       expect(context.success?).to eq(true)
       expect(context.charge.tutor_id).to eq(@tutor.id)
       expect(context.charge.student_id).to eq(@student.id)
