@@ -8,7 +8,7 @@ class Dashboard::Admin::PromotionsController < AdminController
 
   def index
     @q = current_user.admin_scope(:promotions).ransack(params[:q])
-    @promotions = @q.result
+    @promotions = @q.result.page(params[:page])
   end
 
   def new

@@ -243,6 +243,9 @@ GEM
       activesupport (>= 3.0.0, < 5)
       multi_json (~> 1.2)
     json (1.8.3)
+    kaminari (0.16.3)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
     kgio (2.9.3)
     launchy (2.4.3)
       addressable (~> 2.3)
@@ -448,6 +451,7 @@ DEPENDENCIES
   headless!
   interactor (~> 3.0)!
   jbuilder (~> 2.3)!
+  kaminari!
   launchy (~> 2.4)!
   nokogiri!
   pg (~> 0.18)!

@@ -53,6 +53,7 @@ source 'https://rubygems.org' do
   gem 'sidekiq' # for info on redis, which must be running for sidekiq: http://redis.io/topics/quickstart
   gem 'sinatra', require: false
   gem 'uglifier', '~> 2.7' 
+  gem 'kaminari'
 
   # Payments through Stripe
   gem 'stripe'

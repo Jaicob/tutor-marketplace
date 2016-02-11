@@ -8,7 +8,7 @@ class Dashboard::Admin::AppointmentsController < AdminController
 
   def index
     @q = current_user.admin_scope(:appointments).ransack(params[:q])
-    @appointments = @q.result.includes(:slot, :student, :course)
+    @appointments = @q.result.includes(:slot, :student, :course).page(params[:page])
   end
 
   def show
