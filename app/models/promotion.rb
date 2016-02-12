@@ -57,12 +57,12 @@ class Promotion < ActiveRecord::Base
   end
 
   # IMPORTANT - PASS IN TC_RATE in CENTS!
-  def self.redeem_promo_code(promo_code, tc_rate, number_of_appts, tutor_id, course_id) # this assumes that multiple appts in one booking are all for the same tutor_course (i.e. the rate is the same for each appt)
+  def self.redeem_promo_code(promo_code, tc_rate, number_of_appts, tutor_id, course_id, student_id=nil) # this assumes that multiple appts in one booking are all for the same tutor_course (i.e. the rate is the same for each appt)
     promotion = Promotion.find_by(code: promo_code)
     if promotion.nil?
       return {success: false, error: 'Promo code was not found. Please try again or contact support at info@axontutors.com.'}
     else
-      validity_check = promotion.check_validity(tutor_id, course_id)
+      validity_check = promotion.check_validity(tutor_id, course_id, student_id)
       if validity_check[:success] == false
         return {success: false, error: validity_check[:error]}
       else
@@ -71,12 +71,21 @@ class Promotion < ActiveRecord::Base
     end
   end
 
-  def check_validity(tutor_id, course_id)
+  def check_validity(tutor_id, course_id, student_id=nil)
     if Date.today > self.valid_until
       return {success: false, error: "We're sorry but this promo code expired on #{self.valid_until}"}
-    elsif self.redemption_count >= self.redemption_limit
+    end
+    
+    if self.redemption_count >= self.redemption_limit
+      student = St
       return {success: false, error: "We're sorry but this promo code has expired. It has reached its set redemption limit."}
-    elsif self.issuer == 'tutor'
+    end
+
+    if self.student_uniq == 'uniq_enforced'
+      return {success: false, error: "We're sorry but this promo code only allows you to use it once. According to our records you have already redeemed it."}
+    end
+    
+    if self.issuer == 'tutor'
       if self.tutor_id != tutor_id
         return {success: false, error: "This promo code is only valid for appointments with the following tutor: #{Tutor.find(tutor.id).public_name}"}
       elsif self.course_id && self.course_id != course_id

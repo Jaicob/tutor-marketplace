@@ -73,7 +73,7 @@ class BookingPreview
   end
 
   def redeem_promo_code
-    Promotion.redeem_promo_code(@promo_code, @tc_rate, @appt_info.count, @tutor.id, @course.id)
+    Promotion.redeem_promo_code(@promo_code, @tc_rate, @appt_info.count, @tutor.id, @course.id, @student.id=nil)
   end
 
 end
