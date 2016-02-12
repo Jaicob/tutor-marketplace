@@ -7,32 +7,40 @@ RSpec.describe CheckoutOrganizer do
     @tutor = create(:tutor, :with_tutor_course_and_slot)
     @tutor_course = @tutor.tutor_courses.first
     @student = create(:student)
+
     # Creates a managed account for a Tutor
-    token = Stripe::Token.create(
-        :bank_account => {
-        :country => "CA",
-        :currency => "usd",
-        :name => "Jane Austen",
-        :account_holder_type => "individual",
-        :routing_number => "11000000",
-        :account_number => "000123456789",
-      }
-    )
+    VCR.use_cassette('get bank_account token for tutor') do
+      @token = Stripe::Token.create(
+          :bank_account => {
+          :country => "CA",
+          :currency => "usd",
+          :name => "Jane Austen",
+          :account_holder_type => "individual",
+          :routing_number => "11000000",
+          :account_number => "000123456789",
+        }
+      )
+    end
+
     # Attaches managed account to a Tutor
-    Processor::Stripe.new.update_managed_account(@tutor, token)
+    VCR.use_cassette('create managed account with bank_account token') do
+      Processor::Stripe.new.update_managed_account(@tutor, @token)
+    end
   end
 
   # Runs before every example
   before(:each) do 
     # Creates a card token for mock Student payment
-    @token_object = Stripe::Token.create(
-      :card => {
-        :number => "4242424242424242",
-        :exp_month => 12,
-        :exp_year => 2016,
-        :cvc => "314"
-      }
-    )
+    VCR.use_cassette('get card token for student') do
+      @token_object = Stripe::Token.create(
+        :card => {
+          :number => "4242424242424242",
+          :exp_month => 12,
+          :exp_year => 2016,
+          :cvc => "314"
+        }
+      )
+    end
     @token = @token_object.id
   end
 

@@ -54,6 +54,8 @@ source 'https://rubygems.org' do
   gem 'sinatra', require: false
   gem 'uglifier', '~> 2.7' 
   gem 'kaminari'
+  gem 'vcr'
+  gem 'webmock'
 
   # Payments through Stripe
   gem 'stripe'
