@@ -52,7 +52,7 @@ RSpec.describe CheckoutOrganizer do
         student_id: @student.id,
         stripe_token: @token,
         appts_info: [{slot_id: @tutor.slots.first.id, course_id: @tutor_course.course_id, start_time: @tutor.slots.first.start_time}],
-        promotion_id: nil
+        promo_code: nil
       }
       context = CheckoutOrganizer.call(params)
       expect(context.error).to eq nil
@@ -74,7 +74,7 @@ RSpec.describe CheckoutOrganizer do
         student_id: @student.id,
         stripe_token: @token,
         appts_info: [{slot_id: @tutor.slots.first.id, course_id: @tutor_course.course_id, start_time: @tutor.slots.first.start_time}],
-        promotion_id: nil
+        promo_code: nil
       }
       context = CheckoutOrganizer.call(params)
       expect(context.success?).to eq(true)
@@ -95,7 +95,7 @@ RSpec.describe CheckoutOrganizer do
         student_id: @student.id,
         stripe_token: @token,
         appts_info: [{slot_id: @tutor.slots.first.id, course_id: @tutor_course.course_id, start_time: @tutor.slots.first.start_time}],
-        promotion_id: nil
+        promo_code: nil
       }
       context = CheckoutOrganizer.call(params)
       expect(context.success?).to eq(true)
@@ -122,7 +122,7 @@ RSpec.describe CheckoutOrganizer do
           {slot_id: @tutor.slots.first.id, course_id: @tutor_course.course_id, start_time: @tutor.slots.first.start_time},
           {slot_id: @tutor.slots.first.id, course_id: @tutor_course.course_id, start_time: @tutor.slots.first.start_time.to_date.to_s + " 13:00"}
         ],
-        promotion_id: nil
+        promo_code: nil
       }
       context = CheckoutOrganizer.call(params)
       expect(context.success?).to eq(true)
@@ -150,7 +150,7 @@ RSpec.describe CheckoutOrganizer do
           {slot_id: @tutor.slots.first.id, course_id: @tutor_course.course_id, start_time: @tutor.slots.first.start_time.to_date.to_s + " 16:00"},
           {slot_id: @tutor.slots.first.id, course_id: @tutor_course.course_id, start_time: @tutor.slots.first.start_time.to_date.to_s + " 17:00"}
         ],
-        promotion_id: nil
+        promo_code: nil
       }
       context = CheckoutOrganizer.call(params)
       expect(context.success?).to eq(true)
@@ -165,7 +165,7 @@ RSpec.describe CheckoutOrganizer do
     end
   end
 
-  describe 'with customer default_source' do
+  describe 'with saved_card and customer_id' do
 
     it 'creates charge correctly for two $23 sessions' do 
       # Creates a Stripe customer for Student
@@ -181,7 +181,7 @@ RSpec.describe CheckoutOrganizer do
           {slot_id: @tutor.slots.first.id, course_id: @tutor_course.course_id, start_time: @tutor.slots.first.start_time},
           {slot_id: @tutor.slots.first.id, course_id: @tutor_course.course_id, start_time: @tutor.slots.first.start_time.to_date.to_s + " 13:00"}
         ],
-        promotion_id: nil
+        promo_code: nil
       }
       context = CheckoutOrganizer.call(params)
       expect(context.success?).to eq(true)
@@ -209,7 +209,7 @@ RSpec.describe CheckoutOrganizer do
           {slot_id: @tutor.slots.first.id, course_id: @tutor_course.course_id, start_time: @tutor.slots.first.start_time},
           {slot_id: @tutor.slots.first.id, course_id: @tutor_course.course_id, start_time: @tutor.slots.first.start_time.to_date.to_s + " 13:00"}
         ],
-        promotion_id: nil
+        promo_code: nil
       }
       context = CheckoutOrganizer.call(params)
       expect(context.success?).to eq(true)
@@ -220,6 +220,87 @@ RSpec.describe CheckoutOrganizer do
       expect(context.charge.tutor_fee).to eq(4600)
       expect(context.charge.token).to eq(nil)
       expect(context.charge.promotion_id).to eq(nil)
+      expect(context.charge.stripe_charge_id).to_not eq(nil)
+    end
+  end
+
+  describe 'with card tokens & promotions' do
+
+    it 'creates charge correctly for free session from Axon' do      
+      @tutor_course.update(rate: 20)
+
+      @promo = create(:promotion, :free_from_axon)
+
+      params = {
+        tutor_id: @tutor.id,
+        student_id: @student.id,
+        stripe_token: nil,
+        appts_info: [
+          {slot_id: @tutor.slots.first.id, course_id: @tutor_course.course_id, start_time: @tutor.slots.first.start_time},
+        ],
+        promo_code: @promo.code
+      }
+      context = CheckoutOrganizer.call(params)
+      expect(context.success?).to eq(true)
+      expect(context.charge.tutor_id).to eq(@tutor.id)
+      expect(context.charge.student_id).to eq(@student.id)
+      expect(context.charge.amount).to eq(0)
+      expect(context.charge.axon_fee).to eq(-2000)
+      expect(context.charge.tutor_fee).to eq(2000)
+      expect(context.charge.token).to eq(nil)
+      expect(context.charge.promotion_id).to eq(@promo.id)
+      expect(context.charge.stripe_charge_id).to eq(nil)
+    end
+
+    it 'creates charge correctly for 10% off promo from Axon' do 
+      @tutor_course.update(rate: 20)
+
+      @promo = create(:promotion, :ten_percent_off_from_axon)
+
+      params = {
+        tutor_id: @tutor.id,
+        student_id: @student.id,
+        stripe_token: @token,
+        appts_info: [
+          {slot_id: @tutor.slots.first.id, course_id: @tutor_course.course_id, start_time: @tutor.slots.first.start_time},
+        ],
+        promo_code: @promo.code
+      }
+      context = CheckoutOrganizer.call(params)
+      expect(context.success?).to eq(true)
+      expect(context.charge.tutor_id).to eq(@tutor.id)
+      expect(context.charge.student_id).to eq(@student.id)
+      expect(context.charge.amount).to eq(2070)
+      expect(context.charge.axon_fee).to eq(70)
+      expect(context.charge.tutor_fee).to eq(2000)
+      expect(context.charge.token).to eq(@token)
+      expect(context.charge.promotion_id).to eq(@promo.id)
+      expect(context.charge.stripe_charge_id).to_not eq(nil)
+    end
+
+    it 'creates charge correctly for 10% off promo from Tutor' do 
+      @tutor_course.update(rate: 20)
+
+      @promo = create(:promotion, :ten_percent_off_from_tutor, tutor_id: @tutor.id)
+
+      params = {
+        tutor_id: @tutor.id,
+        student_id: @student.id,
+        stripe_token: @token,
+        appts_info: [
+          {slot_id: @tutor.slots.first.id, course_id: @tutor_course.course_id, start_time: @tutor.slots.first.start_time},
+        ],
+        promo_code: @promo.code
+      }
+      context = CheckoutOrganizer.call(params)
+      expect(context.success?).to eq(true)
+      expect(context.charge.tutor_id).to eq(@tutor.id)
+      expect(context.charge.student_id).to eq(@student.id)
+      expect(context.charge.amount).to eq(2070)
+      expect(context.charge.axon_fee).to eq(270)
+      expect(context.charge.tutor_fee).to eq(1800)
+      expect(context.charge.token).to eq(@token)
+      expect(context.charge.promotion_id).to eq(@promo.id)
       expect(context.charge.stripe_charge_id).to_not eq(nil)
     end
   end

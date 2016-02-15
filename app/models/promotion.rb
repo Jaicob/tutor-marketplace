@@ -73,17 +73,17 @@ class Promotion < ActiveRecord::Base
 
   def check_validity(tutor_id, course_id, student_id=nil)
     if Date.today > self.valid_until
-      return {success: false, error: "We're sorry but this promo code expired on #{self.valid_until}"}
+      return {success: false, error: "This promo code expired on #{self.valid_until}"}
     end
     
     if self.redemption_count >= self.redemption_limit
-      return {success: false, error: "We're sorry but this promo code has expired. It has reached its set redemption limit."}
+      return {success: false, error: "This promo code has expired. It has reached its set redemption limit."}
     end
 
     if self.student_uniq == 'uniq_enforced' && !student_id.nil? # student_id may not be present if promo code is applied before signing it, this is OK though because when this is run again during the CheckoutOrganizer the student will be signed in by then and this validation will run then and prevent duplicate redemption if applicable
       student = Student.find(student_id)
       if student.promotion_redemptions.where(promotion_id: self.id).any?
-        return {success: false, error: "We're sorry but this promo code only allows you to use it once. According to our records you have already redeemed it."}
+        return {success: false, error: "This promo code only allows you to use it once. According to our records you have already redeemed it."}
       end
     end
     

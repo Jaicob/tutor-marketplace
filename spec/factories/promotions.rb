@@ -19,17 +19,33 @@
 
 FactoryGirl.define do
   factory :promotion do
-    code 'AXON10%OFF'
-    issuer 0       # 0 = Axon, 1 = Tutor
-    amount 10      # Percent off as integer
-    valid_from Date.today
-    valid_until Date.today + 100
-    redemption_limit 100
-    redemption_count 0
-    description '10% off one session'
+    code              'AXON10%OFF'
+    issuer            0       # 0 = Axon, 1 = Tutor
+    amount            10      # Percent off as integer
+    valid_from        Date.today
+    valid_until       Date.today + 100
+    redemption_limit  100
+    redemption_count  0
+    description       '10% off one session'
     tutor
-    course_id 1
-    single_use 0    # 0 = true, 1 = false
-  end
+    course_id         nil
+    single_appt       0
+    student_uniq      :uniq_enforced
 
+    trait :free_from_axon do 
+      amount 100
+      description 'Free Session from Axon'
+    end
+
+    trait :ten_percent_off_from_axon do 
+      amount 10
+      description '10% Off from Axon'
+    end
+
+    trait :ten_percent_off_from_tutor do 
+      issuer 1
+      amount 10
+      description '10% Off from Tutor'
+    end
+  end
 end
