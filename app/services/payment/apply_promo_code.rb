@@ -13,15 +13,20 @@ class ApplyPromoCode
       promo = Promotion.redeem_promo_code(promo_code, tc_rate_in_cents, appt_count, tutor_id, course_id)
       if promo[:success] == true
         charge = context.charge
+        # update charge
         charge.update(
           amount: promo[:discount_price],
           axon_fee: promo[:discount_axon_fee],
           tutor_fee: promo[:discount_tutor_fee],
           promotion_id: promo[:promotion_id]
         )
+        # update promo redemption_count
         @promo = Promotion.find_by(code: context.promo_code)
         @promo.redemption_count += 1
         @promo.save
+        # update student's promotions
+        @student = Student.find(context.student_id)
+        @student.promotion_redemptions.create(promotion_id: @promo.id)
       else
         # previously raised error here, but customer gets flash alert that promo code failed when they hit apply after entering it.
         # raising an error here prevented checkout success after invalid promo attempt bc promo code is saved in session variable
@@ -40,9 +45,12 @@ class ApplyPromoCode
 
   def rollback
     if context.promo_code
+      # rollback promotion's redemption_count increment
       promo = Promotion.find_by(code: context.promo_code)
       promo.redemption_count -= 1
       promo.save
+      # rollback student's promotion_redemption record
+      @student.promotion_redemptions.where(promotion_id: @promo.id).last.destroy
     end
   end
 

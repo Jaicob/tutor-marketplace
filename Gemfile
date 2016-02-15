@@ -24,6 +24,8 @@ source 'https://rubygems.org' do
     gem 'database_cleaner', '~> 1.4'
     gem 'headless'
     gem 'launchy', '~> 2.4'
+    gem 'vcr'
+    gem 'webmock'
   end
 
   group :staging, :production do
@@ -54,8 +56,6 @@ source 'https://rubygems.org' do
   gem 'sinatra', require: false
   gem 'uglifier', '~> 2.7' 
   gem 'kaminari'
-  gem 'vcr'
-  gem 'webmock'
 
   # Payments through Stripe
   gem 'stripe'

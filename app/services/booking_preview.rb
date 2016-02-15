@@ -1,6 +1,6 @@
 class BookingPreview
 
-  def initialize(session, tutor)
+  def initialize(session, tutor, current_user)
     @appt_info = session[:appt_info]
     @location = session[:location]
     @course = Course.find(session[:course_id])
@@ -8,6 +8,7 @@ class BookingPreview
     @tc_rate = TutorCourse.where(tutor_id: tutor.id, course_id: @course.id).first.rate * 100
     @full_rate = (@tc_rate * 1.15).round
     @promo_code = session[:promo_code]
+    @student_id = current_user.student.id if !current_user.nil?
   end
 
   def extract_appt_times_and_slot
@@ -73,7 +74,7 @@ class BookingPreview
   end
 
   def redeem_promo_code
-    Promotion.redeem_promo_code(@promo_code, @tc_rate, @appt_info.count, @tutor.id, @course.id, @student.id=nil)
+    Promotion.redeem_promo_code(@promo_code, @tc_rate, @appt_info.count, @tutor.id, @course.id, @student_id)
   end
 
 end

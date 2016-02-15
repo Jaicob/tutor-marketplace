@@ -4,7 +4,7 @@ class Dashboard::Student::HomeController < DashboardController
   def index
     if params[:charge]
       @charge = Charge.find(params[:charge])
-      @booking_preview = BookingPreview.new(session, @charge.tutor).format_info
+      @booking_preview = BookingPreview.new(session, @charge.tutor, current_user).format_info
       @charge = Charge.find(session[:charge_id])
       if @booking_preview[:no_payment_due] != true
         @card_info = Processor::Stripe.new.get_charge_details(@charge.stripe_charge_id)

@@ -24,7 +24,7 @@ RSpec.describe CheckoutOrganizer do
 
     # Attaches managed account to a Tutor
     # VCR.use_cassette('create managed account with bank_account token') do
-      Processor::Stripe.new.update_managed_account(@tutor, @token)
+      Processor::Stripe.new.update_managed_account(@tutor, @token.id)
     # end
   end
 

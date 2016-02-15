@@ -65,20 +65,27 @@ class CheckoutController < ApplicationController
   end
 
   def review_booking
+
+    puts "session[:location] = #{session[:location]}"
+    puts "session[:appt_info] = #{session[:appt_info]}"
+    puts "session[:course_id] = #{session[:course_id]}"
+    puts "session[:promo_code] = #{session[:promo_code]}"
+    puts "session[:tutor_id] = #{session[:tutor_id]}"
+
     if session[:location].blank?
       redirect_to checkout_select_course_path(@tutor.slug, anchor: 'select-course')
     end
     # step 4, all booking information is set and shown to customer here
     # - if logged in, customer has option to use saved card (if one exists) or use a new card (with an option to save it)
     # - if NOT logged in, a customer has the option to sign in (moves to above step) or sign up and use a new card (with an option to save it)
-    @booking_preview = BookingPreview.new(session, @tutor).format_info
+    @booking_preview = BookingPreview.new(session, @tutor, current_user).format_info
     @booking_preview[:no_payment_due] == true ? (gon.free_session = true) : (gon.free_session = nil)
   end
 
   def apply_promo_code
     # recieves promo_code, tries to retrieve promotion and redirects back to review_booking page with success or failure message
     session[:promo_code] = params[:apply_promo_code][:code]
-    preview = BookingPreview.new(session, @tutor).format_info
+    preview = BookingPreview.new(session, @tutor, current_user).format_info
     if preview[:promo_data][:success] == true
       flash[:success] = "Promo code was succesfully applied!"
       redirect_to checkout_review_booking_path(@tutor.slug, anchor: 'review-booking')
