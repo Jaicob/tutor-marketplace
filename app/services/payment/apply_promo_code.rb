@@ -10,7 +10,7 @@ class ApplyPromoCode
       tutor_id = context.tutor_id
       course_id = context.appointments.first.course_id
 
-      promo = Promotion.redeem_promo_code(promo_code, tc_rate_in_cents, appt_count, tutor_id, course_id)
+      promo = Promotion.redeem_promo_code(promo_code, tc_rate_in_cents, appt_count, tutor_id, course_id, context.student_id)
       if promo[:success] == true
         charge = context.charge
         # update charge

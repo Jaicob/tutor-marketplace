@@ -12,7 +12,7 @@
 FactoryGirl.define do
   factory :promotion_redemption do
     student_id 1
-promotion_id 1
+    promotion_id 1
   end
 
 end

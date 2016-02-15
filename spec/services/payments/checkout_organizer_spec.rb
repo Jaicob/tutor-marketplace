@@ -303,5 +303,30 @@ RSpec.describe CheckoutOrganizer do
       expect(context.charge.promotion_id).to eq(@promo.id)
       expect(context.charge.stripe_charge_id).to_not eq(nil)
     end
+
+    it 'correctly keeps charge at full price for a second attempt at redemption on a uniq_enforced promo' do 
+      @tutor_course.update(rate: 20)
+      @promo = create(:promotion)
+      @promo_redemption = create(:promotion_redemption, student: @student, promotion: @promo)
+      params = {
+        tutor_id: @tutor.id,
+        student_id: @student.id,
+        stripe_token: @token,
+        appts_info: [
+          {slot_id: @tutor.slots.first.id, course_id: @tutor_course.course_id, start_time: @tutor.slots.first.start_time},
+        ],
+        promo_code: @promo.code
+      }
+      context = CheckoutOrganizer.call(params)
+      expect(context.success?).to eq(true)
+      expect(context.charge.tutor_id).to eq(@tutor.id)
+      expect(context.charge.student_id).to eq(@student.id)
+      expect(context.charge.amount).to eq(2300)
+      expect(context.charge.axon_fee).to eq(300)
+      expect(context.charge.tutor_fee).to eq(2000)
+      expect(context.charge.token).to eq(@token)
+      expect(context.charge.promotion_id).to eq(nil)
+      expect(context.charge.stripe_charge_id).to_not eq(nil)
+    end
   end
 end

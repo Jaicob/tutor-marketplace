@@ -30,7 +30,7 @@ FactoryGirl.define do
     tutor
     course_id         nil
     single_appt       0
-    student_uniq      :uniq_enforced
+    student_uniq      0
 
     trait :free_from_axon do 
       amount 100
