@@ -22,7 +22,6 @@ class SendPayment
       
     rescue => error
       context.fail!(
-        # error: 'go fuck yourself',
         error: @stripe_create_charge_response.message,
         failed_interactor: self.class
       )

@@ -17,9 +17,6 @@
 #  student_uniq     :integer          default(0)
 #
 
-  # promo code can only be applied to one appt in a booking with multiple appts - single_appt
-  # promo code can only be redeemed once per student - uniq_student, student_limit, per_student, student_uniq
-
 class Promotion < ActiveRecord::Base
   belongs_to :tutor # or if tutor_id is blank, is an Axon HQ coupon
   has_many :promotion_redemptions
