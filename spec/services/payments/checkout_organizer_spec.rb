@@ -9,7 +9,7 @@ RSpec.describe CheckoutOrganizer do
     @student = create(:student)
 
     # Creates a managed account for a Tutor
-    # VCR.use_cassette('get bank_account token for tutor') do
+    VCR.use_cassette('get bank_account token for tutor') do
       @token = Stripe::Token.create(
           :bank_account => {
           :country => "CA",
@@ -20,18 +20,18 @@ RSpec.describe CheckoutOrganizer do
           :account_number => "000123456789",
         }
       )
-    # end
+    end
 
     # Attaches managed account to a Tutor
-    # VCR.use_cassette('create managed account with bank_account token') do
+    VCR.use_cassette('create managed account with bank_account token') do
       Processor::Stripe.new.update_managed_account(@tutor, @token.id)
-    # end
+    end
   end
 
   # Runs before every example
   before(:each) do 
     # Creates a card token for mock Student payment
-    # VCR.use_cassette('get card token for student') do
+    VCR.use_cassette('get card token for student') do
       @token_object = Stripe::Token.create(
         :card => {
           :number => "4242424242424242",
@@ -40,7 +40,7 @@ RSpec.describe CheckoutOrganizer do
           :cvc => "314"
         }
       )
-    # end
+    end
     @token = @token_object.id
   end
 
