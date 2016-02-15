@@ -24,6 +24,7 @@
             <th>Recently Booked Appts*</th>
             <th>Total Appts</th>
             <th>Revenue</th>
+            <th>Profit</th>
           </tr>
         </thead>
         <tbody>
@@ -40,6 +41,7 @@
             <td><%= AdminDataCruncher.new(school.appointments).appts_booked_this_week.count %></td>
             <td><%= school.appointments.count %></td>
             <td>$<%= display_price(school.revenue) %></td>
+            <td>$<%= display_price(school.profit) %></td>
           </tr>
           <% n += 1 %>
           <% end %>
