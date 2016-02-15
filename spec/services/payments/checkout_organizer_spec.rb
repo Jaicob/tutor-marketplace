@@ -5,8 +5,6 @@ RSpec.describe CheckoutOrganizer do
   # Runs once before all examples
   before(:context) do
     @tutor = create(:tutor, :with_tutor_course_and_slot)
-    @tutor_course = @tutor.tutor_courses.first
-    @student = create(:student)
 
     # Creates a managed account for a Tutor
     VCR.use_cassette('get bank_account token for tutor') do
@@ -31,7 +29,6 @@ RSpec.describe CheckoutOrganizer do
   # Runs before every example
   before(:each) do 
     # Creates a card token for mock Student payment
-    VCR.use_cassette('get card token for student') do
       @token_object = Stripe::Token.create(
         :card => {
           :number => "4242424242424242",
@@ -40,8 +37,10 @@ RSpec.describe CheckoutOrganizer do
           :cvc => "314"
         }
       )
-    end
     @token = @token_object.id
+
+    @student = create(:student)
+    @tutor_course = @tutor.tutor_courses.first
   end
 
   describe 'with card token, one appointment, no promotion, various prices' do
@@ -52,7 +51,7 @@ RSpec.describe CheckoutOrganizer do
         tutor_id: @tutor.id,
         student_id: @student.id,
         stripe_token: @token,
-        appts_info: [{slot_id: @tutor.slots.first.id, course_id: @tutor.courses.first.id, start_time: @tutor.slots.first.start_time}],
+        appts_info: [{slot_id: @tutor.slots.first.id, course_id: @tutor_course.course_id, start_time: @tutor.slots.first.start_time}],
         promotion_id: nil
       }
       context = CheckoutOrganizer.call(params)
@@ -74,7 +73,7 @@ RSpec.describe CheckoutOrganizer do
         tutor_id: @tutor.id,
         student_id: @student.id,
         stripe_token: @token,
-        appts_info: [{slot_id: @tutor.slots.first.id, course_id: @tutor.courses.first.id, start_time: @tutor.slots.first.start_time}],
+        appts_info: [{slot_id: @tutor.slots.first.id, course_id: @tutor_course.course_id, start_time: @tutor.slots.first.start_time}],
         promotion_id: nil
       }
       context = CheckoutOrganizer.call(params)
@@ -95,7 +94,7 @@ RSpec.describe CheckoutOrganizer do
         tutor_id: @tutor.id,
         student_id: @student.id,
         stripe_token: @token,
-        appts_info: [{slot_id: @tutor.slots.first.id, course_id: @tutor.courses.first.id, start_time: @tutor.slots.first.start_time}],
+        appts_info: [{slot_id: @tutor.slots.first.id, course_id: @tutor_course.course_id, start_time: @tutor.slots.first.start_time}],
         promotion_id: nil
       }
       context = CheckoutOrganizer.call(params)
@@ -120,8 +119,8 @@ RSpec.describe CheckoutOrganizer do
         student_id: @student.id,
         stripe_token: @token,
         appts_info: [
-          {slot_id: @tutor.slots.first.id, course_id: @tutor.courses.first.id, start_time: @tutor.slots.first.start_time},
-          {slot_id: @tutor.slots.first.id, course_id: @tutor.courses.first.id, start_time: @tutor.slots.first.start_time.to_date.to_s + " 13:00"}
+          {slot_id: @tutor.slots.first.id, course_id: @tutor_course.course_id, start_time: @tutor.slots.first.start_time},
+          {slot_id: @tutor.slots.first.id, course_id: @tutor_course.course_id, start_time: @tutor.slots.first.start_time.to_date.to_s + " 13:00"}
         ],
         promotion_id: nil
       }
@@ -144,12 +143,12 @@ RSpec.describe CheckoutOrganizer do
         student_id: @student.id,
         stripe_token: @token,
         appts_info: [
-          {slot_id: @tutor.slots.first.id, course_id: @tutor.courses.first.id, start_time: @tutor.slots.first.start_time},
-          {slot_id: @tutor.slots.first.id, course_id: @tutor.courses.first.id, start_time: @tutor.slots.first.start_time.to_date.to_s + " 13:00"},
-          {slot_id: @tutor.slots.first.id, course_id: @tutor.courses.first.id, start_time: @tutor.slots.first.start_time.to_date.to_s + " 14:00"},
-          {slot_id: @tutor.slots.first.id, course_id: @tutor.courses.first.id, start_time: @tutor.slots.first.start_time.to_date.to_s + " 15:00"},
-          {slot_id: @tutor.slots.first.id, course_id: @tutor.courses.first.id, start_time: @tutor.slots.first.start_time.to_date.to_s + " 16:00"},
-          {slot_id: @tutor.slots.first.id, course_id: @tutor.courses.first.id, start_time: @tutor.slots.first.start_time.to_date.to_s + " 17:00"}
+          {slot_id: @tutor.slots.first.id, course_id: @tutor_course.course_id, start_time: @tutor.slots.first.start_time},
+          {slot_id: @tutor.slots.first.id, course_id: @tutor_course.course_id, start_time: @tutor.slots.first.start_time.to_date.to_s + " 13:00"},
+          {slot_id: @tutor.slots.first.id, course_id: @tutor_course.course_id, start_time: @tutor.slots.first.start_time.to_date.to_s + " 14:00"},
+          {slot_id: @tutor.slots.first.id, course_id: @tutor_course.course_id, start_time: @tutor.slots.first.start_time.to_date.to_s + " 15:00"},
+          {slot_id: @tutor.slots.first.id, course_id: @tutor_course.course_id, start_time: @tutor.slots.first.start_time.to_date.to_s + " 16:00"},
+          {slot_id: @tutor.slots.first.id, course_id: @tutor_course.course_id, start_time: @tutor.slots.first.start_time.to_date.to_s + " 17:00"}
         ],
         promotion_id: nil
       }
@@ -173,13 +172,14 @@ RSpec.describe CheckoutOrganizer do
       Processor::Stripe.new.update_customer(@student, @token)
 
       @tutor_course.update(rate: 23)
+
       params = {
         tutor_id: @tutor.id,
         student_id: @student.id,
         stripe_token: nil,
         appts_info: [
-          {slot_id: @tutor.slots.first.id, course_id: @tutor.courses.first.id, start_time: @tutor.slots.first.start_time},
-          {slot_id: @tutor.slots.first.id, course_id: @tutor.courses.first.id, start_time: @tutor.slots.first.start_time.to_date.to_s + " 13:00"}
+          {slot_id: @tutor.slots.first.id, course_id: @tutor_course.course_id, start_time: @tutor.slots.first.start_time},
+          {slot_id: @tutor.slots.first.id, course_id: @tutor_course.course_id, start_time: @tutor.slots.first.start_time.to_date.to_s + " 13:00"}
         ],
         promotion_id: nil
       }
@@ -194,22 +194,20 @@ RSpec.describe CheckoutOrganizer do
       expect(context.charge.promotion_id).to eq(nil)
       expect(context.charge.stripe_charge_id).to_not eq(nil)
     end
-  end
-
-  describe 'with customer default_source' do
 
     it 'creates charge correctly for two $23 sessions' do 
       # Creates a Stripe customer for Student
       Processor::Stripe.new.update_customer(@student, @token)
-
+     
       @tutor_course.update(rate: 23)
+
       params = {
         tutor_id: @tutor.id,
         student_id: @student.id,
         stripe_token: nil,
         appts_info: [
-          {slot_id: @tutor.slots.first.id, course_id: @tutor.courses.first.id, start_time: @tutor.slots.first.start_time},
-          {slot_id: @tutor.slots.first.id, course_id: @tutor.courses.first.id, start_time: @tutor.slots.first.start_time.to_date.to_s + " 13:00"}
+          {slot_id: @tutor.slots.first.id, course_id: @tutor_course.course_id, start_time: @tutor.slots.first.start_time},
+          {slot_id: @tutor.slots.first.id, course_id: @tutor_course.course_id, start_time: @tutor.slots.first.start_time.to_date.to_s + " 13:00"}
         ],
         promotion_id: nil
       }
@@ -225,11 +223,4 @@ RSpec.describe CheckoutOrganizer do
       expect(context.charge.stripe_charge_id).to_not eq(nil)
     end
   end
-
-
 end
-
-# payment_source: card_token v. customer default_source, 
-# appointments: # of appts and variable costs of each, 
-# promo_codes: 8 different types, 
-# emails: sending correctly?

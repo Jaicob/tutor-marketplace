@@ -19,12 +19,14 @@ class SendPayment
         puts "No payment necessary"
         return
       end
+      
     rescue => error
       context.fail!(
+        # error: 'go fuck yourself',
         error: @stripe_create_charge_response.message,
         failed_interactor: self.class
       )
     end
   end
-  
+
 end
