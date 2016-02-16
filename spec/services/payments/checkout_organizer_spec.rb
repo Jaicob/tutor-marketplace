@@ -307,7 +307,7 @@ RSpec.describe CheckoutOrganizer do
     it 'correctly keeps charge at full price for a second attempt at redemption on a uniq_enforced promo' do 
       @tutor_course.update(rate: 20)
       @promo = create(:promotion)
-      @promo_redemption = create(:promotion_redemption, student: @student, promotion: @promo)
+      @student_promotion = create(:students_promotion, student: @student, promotion: @promo)
       params = {
         tutor_id: @tutor.id,
         student_id: @student.id,

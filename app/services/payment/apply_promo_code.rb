@@ -26,7 +26,7 @@ class ApplyPromoCode
         @promo.save
         # update student's promotions
         @student = Student.find(context.student_id)
-        @student.promotion_redemptions.create(promotion_id: @promo.id)
+        @student.students_promotions.create(promotion_id: @promo.id)
       else
         # previously raised error here, but customer gets flash alert that promo code failed when they hit apply after entering it.
         # raising an error here prevented checkout success after invalid promo attempt bc promo code is saved in session variable
@@ -50,7 +50,7 @@ class ApplyPromoCode
       promo.redemption_count -= 1
       promo.save
       # rollback student's promotion_redemption record
-      @student.promotion_redemptions.where(promotion_id: @promo.id).last.destroy
+      @student.students_promotions.where(promotion_id: @promo.id).last.destroy
     end
   end
 

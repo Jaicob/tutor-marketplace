@@ -2,20 +2,21 @@
 #
 # Table name: promotions
 #
-#  id                    :integer          not null, primary key
-#  code                  :string
-#  issuer                :integer
-#  amount                :integer
-#  valid_from            :date
-#  valid_until           :date
-#  redemption_limit      :integer
-#  redemption_count      :integer          default(0)
-#  description           :text
-#  tutor_id              :integer
-#  course_id             :integer
-#  reedemer_restrictions :integer          default(0)
-#  student_group_id      :integer
-#  student_id            :integer
+#  id               :integer          not null, primary key
+#  code             :string
+#  category         :integer
+#  amount           :integer
+#  valid_from       :date
+#  valid_until      :date
+#  redemption_limit :integer
+#  redemption_count :integer          default(0)
+#  description      :text
+#  tutor_id         :integer
+#  course_id        :integer
+#  student_id       :integer
+#  single_appt      :integer
+#  repeat_use       :integer
+#  redeemer         :integer
 #
 
 FactoryGirl.define do
@@ -30,8 +31,10 @@ FactoryGirl.define do
     description       '10% off one session'
     tutor
     course_id         nil
+    redeemer_restrictions 0
+    student_group_id  nil
+    student_id        nil
     single_appt       0
-    student_uniq      0
 
     trait :free_from_axon do 
       amount 100
@@ -47,6 +50,48 @@ FactoryGirl.define do
       issuer 1
       amount 10
       description '10% Off from Tutor'
+    end
+
+    trait :expired do 
+      valid_until Date.today - 1
+    end
+
+    trait :reached_redemption_limit do
+      redemption_limit  1
+      redemption_count  1
+    end
+
+    trait :tutor_issued do
+      issuer 1
+      tutor_id 1
+      redeemer_restrictions 1
+      student_id 1
+    end
+
+    trait :tutor_and_course_specific do
+      issuer 1
+      tutor_id 1
+      course_id 1
+      redeemer_restrictions 1
+      student_id 1
+    end
+
+    trait :tutor_multiple_appts do 
+      issuer 1
+      single_appt 1
+      tutor_id 1
+    end
+    
+    trait :tutor_single_appt_50 do
+      issuer 1
+      tutor_id 1
+      amount 50
+    end
+
+    trait :tutor_single_appt_25 do
+      issuer 1
+      tutor_id 1
+      amount 25
     end
   end
 end
