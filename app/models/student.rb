@@ -2,20 +2,22 @@
 #
 # Table name: students
 #
-#  id            :integer          not null, primary key
-#  user_id       :integer
-#  school_id     :integer
-#  phone_number  :string
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  customer_id   :string
-#  last_4_digits :string
-#  card_brand    :string
+#  id               :integer          not null, primary key
+#  user_id          :integer
+#  school_id        :integer
+#  phone_number     :string
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  customer_id      :string
+#  last_4_digits    :string
+#  card_brand       :string
+#  student_group_id :integer
 #
 
 class Student < ActiveRecord::Base
   belongs_to :user
   belongs_to :school
+  belongs_to :student_group
   has_many :charges, dependent: :destroy
   has_many :appointments, dependent: :destroy
   has_many :promotion_redemptions

@@ -2,19 +2,20 @@
 #
 # Table name: promotions
 #
-#  id               :integer          not null, primary key
-#  code             :string
-#  issuer           :integer
-#  amount           :integer
-#  valid_from       :date
-#  valid_until      :date
-#  redemption_limit :integer
-#  redemption_count :integer          default(0)
-#  description      :text
-#  tutor_id         :integer
-#  course_id        :integer
-#  single_appt      :integer          default(0)
-#  student_uniq     :integer          default(0)
+#  id                    :integer          not null, primary key
+#  code                  :string
+#  issuer                :integer
+#  amount                :integer
+#  valid_from            :date
+#  valid_until           :date
+#  redemption_limit      :integer
+#  redemption_count      :integer          default(0)
+#  description           :text
+#  tutor_id              :integer
+#  course_id             :integer
+#  reedemer_restrictions :integer          default(0)
+#  student_group_id      :integer
+#  student_id            :integer
 #
 
 FactoryGirl.define do

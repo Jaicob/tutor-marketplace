@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160215225356) do
+ActiveRecord::Schema.define(version: 20160216161641) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -118,12 +118,13 @@ ActiveRecord::Schema.define(version: 20160215225356) do
     t.date    "valid_from"
     t.date    "valid_until"
     t.integer "redemption_limit"
-    t.integer "redemption_count", default: 0
+    t.integer "redemption_count",      default: 0
     t.text    "description"
     t.integer "tutor_id"
     t.integer "course_id"
-    t.integer "single_appt",      default: 0
-    t.integer "single_use",       default: 0
+    t.integer "reedemer_restrictions", default: 0
+    t.integer "student_group_id"
+    t.integer "student_id"
   end
 
   add_index "promotions", ["tutor_id"], name: "index_promotions_on_tutor_id", using: :btree
@@ -155,18 +156,30 @@ ActiveRecord::Schema.define(version: 20160215225356) do
 
   add_index "slots", ["tutor_id"], name: "index_slots_on_tutor_id", using: :btree
 
+  create_table "student_groups", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "status"
+    t.integer  "school_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "student_groups", ["school_id"], name: "index_student_groups_on_school_id", using: :btree
+
   create_table "students", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "school_id"
     t.string   "phone_number"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
     t.string   "customer_id"
     t.string   "last_4_digits"
     t.string   "card_brand"
+    t.integer  "student_group_id"
   end
 
   add_index "students", ["school_id"], name: "index_students_on_school_id", using: :btree
+  add_index "students", ["student_group_id"], name: "index_students_on_student_group_id", using: :btree
   add_index "students", ["user_id"], name: "index_students_on_user_id", using: :btree
 
   create_table "students_promotions", force: :cascade do |t|

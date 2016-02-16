@@ -2,45 +2,58 @@
 #
 # Table name: promotions
 #
-#  id               :integer          not null, primary key
-#  code             :string
-#  issuer           :integer
-#  amount           :integer
-#  valid_from       :date
-#  valid_until      :date
-#  redemption_limit :integer
-#  redemption_count :integer          default(0)
-#  description      :text
-#  tutor_id         :integer
-#  course_id        :integer
-#  single_appt      :integer          default(0)
-#  student_uniq     :integer          default(0)
+#  id                    :integer          not null, primary key
+#  code                  :string
+#  issuer                :integer
+#  amount                :integer
+#  valid_from            :date
+#  valid_until           :date
+#  redemption_limit      :integer
+#  redemption_count      :integer          default(0)
+#  description           :text
+#  tutor_id              :integer
+#  course_id             :integer
+#  reedemer_restrictions :integer          default(0)
+#  student_group_id      :integer
+#  student_id            :integer
 #
 
 class Promotion < ActiveRecord::Base
-  belongs_to :tutor # or if tutor_id is blank, is an Axon HQ coupon
+  belongs_to :tutor # nil is OK, if nil, then promo is Axon-issed
+  belongs_to :student_group # nil is OK, if nil, then promo is not for a student_group
   has_many :promotion_redemptions
   has_many :students, through: :students_promotions
 
   validates :code, presence: true, uniqueness: true
-  validates :redemption_limit, presence: true
-  validates :valid_from, presence: true
-  validates :valid_until, presence: true
-  validates :description, presence: true
-  validates :issuer, presence: true
+  validates :redemption_limit, :valid_from, :valid_until, :description, :issuer, presence: true
   validate  :tutor_issued_must_have_tutor_id
+  validate  :one_student_promo_must_have_student_id
+  validate  :student_group_promo_must_have_student_group_id
 
   enum issuer: [:axon, :tutor]
-  enum single_appt: [:true, :false] # default is true - true means that it is only good for discounting one appt (when a booking has multiple appts)
-                                    # false is useful for a tutor giving a student a discount all semester long via one promo code, etc.
-  
-  enum student_uniq: [:uniq_enforced, :uniq_not_enforced]   # default is :uniq_enforced which means a student can only use the promo code once 
-                                                            # :uniq_not_enforced is useful for packages sold to groups where any member can use the code and its OK if a student redeems a promo code more than once
+  enum redeemer_restrictions: [:any_student_once, :one_student_multiple, :student_group_multiple] # for detailed description of different types, see Promotions Requirements doc in Google Drive Dev/Requirements folder
+  # may potentially add two more later => :one_student_once, :any_student_multiple
 
   def tutor_issued_must_have_tutor_id
     if issuer == 'tutor'
       if tutor_id.nil?
-        errors.add(:tutor_id, "cannot be blank for Tutor-issued coupon")
+        errors.add(:tutor_id, "cannot be blank for Tutor issued promotion")
+      end
+    end
+  end
+
+  def one_student_promo_must_have_student_id
+    if redeemer_restrictions == 'one_student_multiple'
+      if student_id.nil?
+        errors.add(:student_id, "cannot be blank for Student specific promotion")
+      end
+    end
+  end
+
+  def student_group_promo_must_have_student_group_id
+    if redeemer_restrictions == 'student_group_multiple'
+      if student_group_id.nil?
+        errors.add(:student_group_id, "cannot be blank for StudentGroup promotion")
       end
     end
   end
@@ -69,27 +82,38 @@ class Promotion < ActiveRecord::Base
   end
 
   def check_validity(tutor_id, course_id, student_id=nil)
+    # check if code is past expiration date
     if Date.today > self.valid_until
       return {success: false, error: "This promo code expired on #{self.valid_until}"}
     end
     
+    # check if code is past redemption_limit
     if self.redemption_count >= self.redemption_limit
       return {success: false, error: "This promo code has expired. It has reached its set redemption limit."}
     end
-
-    if self.student_uniq == 'uniq_enforced' && !student_id.nil? # student_id may not be present if promo code is applied before signing it, this is OK though because when this is run again during the CheckoutOrganizer the student will be signed in by then and this validation will run then and prevent duplicate redemption if applicable
-      student = Student.find(student_id)
-      if student.students_redemptions.where(promotion_id: self.id).any?
-        return {success: false, error: "This promo code only allows you to use it once. According to our records you have already redeemed it."}
-      end
-    end
     
-    if self.issuer == 'tutor'
-      if self.tutor_id != tutor_id
-        return {success: false, error: "This promo code is only valid for appointments with the following tutor: #{Tutor.find(tutor.id).public_name}"}
-      elsif self.course_id && self.course_id != course_id
-        return {success: false, error: "This promo code is only valid with #{Tutor.find(tutor_id).public_name} for the following course: #{Course.find(course_id).formatted_name}"}
-      end  
+    # check specific redeemer_restrictions
+    if !student_id.nil? # these methods can only be run when a student is signed in, if an error should rise and prevent promo redemption, it will once they sign in
+      if self.redeemer_restrictions == 'any_student_once'
+        # check if student checking out has redeemed this promo code before
+        if Student.find(student_id).students_promotions.where(promotion_id: self.id).any?
+          return {success: false, error: "This promo code only allows you to use it once. According to our records you have already redeemed it."}
+        end
+      elsif self.redeemer_restrictions == 'one_student_multiple'
+        # check if student checking out matches student_id on promotion
+        if self.issuer == 'tutor'
+          # check if tutor_id matches tutor being booked
+          if self.tutor_id != tutor_id
+            return {success: false, error: "This promo code is only valid for appointments with the following tutor: #{Tutor.find(tutor.id).public_name}"}
+          end
+          # check if course_id matches course being booked
+          if self.course_id && self.course_id != course_id
+            return {success: false, error: "This promo code is only valid with #{Tutor.find(tutor_id).public_name} for the following course: #{Course.find(course_id).formatted_name}"}
+          end
+        end
+      elsif self.redeemer_restrictions == 'student_group_multiple'
+        # TODO-JT - create current StudentGroups and add student_group_id to associated student records
+      end
     end
     return {success: true}
   end
