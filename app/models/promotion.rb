@@ -20,7 +20,7 @@
 class Promotion < ActiveRecord::Base
   belongs_to :tutor # or if tutor_id is blank, is an Axon HQ coupon
   has_many :promotion_redemptions
-  has_many :students, through: :promotion_redemptions
+  has_many :students, through: :students_promotions
 
   validates :code, presence: true, uniqueness: true
   validates :redemption_limit, presence: true
@@ -79,7 +79,7 @@ class Promotion < ActiveRecord::Base
 
     if self.student_uniq == 'uniq_enforced' && !student_id.nil? # student_id may not be present if promo code is applied before signing it, this is OK though because when this is run again during the CheckoutOrganizer the student will be signed in by then and this validation will run then and prevent duplicate redemption if applicable
       student = Student.find(student_id)
-      if student.promotion_redemptions.where(promotion_id: self.id).any?
+      if student.students_redemptions.where(promotion_id: self.id).any?
         return {success: false, error: "This promo code only allows you to use it once. According to our records you have already redeemed it."}
       end
     end

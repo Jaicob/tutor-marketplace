@@ -1,6 +1,6 @@
-class CreatePromotionRedemptions < ActiveRecord::Migration
+class CreateStudentsPromotions < ActiveRecord::Migration
   def change
-    create_table :promotion_redemptions do |t|
+    create_table :students_promotions do |t|
       t.integer :student_id, null: false
       t.integer :promotion_id, null: false
 

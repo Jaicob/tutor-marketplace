@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: promotion_redemptions
+# Table name: students_promotions
 #
 #  id           :integer          not null, primary key
 #  student_id   :integer          not null
@@ -9,8 +9,7 @@
 #  updated_at   :datetime         not null
 #
 
-require 'rails_helper'
-
-RSpec.describe PromotionRedemption, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+class StudentsPromotion < ActiveRecord::Base
+  belongs_to :student
+  belongs_to :promotion
 end

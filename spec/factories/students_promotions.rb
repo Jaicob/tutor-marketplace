@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: promotion_redemptions
+# Table name: students_promotions
 #
 #  id           :integer          not null, primary key
 #  student_id   :integer          not null
@@ -9,7 +9,10 @@
 #  updated_at   :datetime         not null
 #
 
-class PromotionRedemption < ActiveRecord::Base
-  belongs_to :student
-  belongs_to :promotion
+FactoryGirl.define do
+  factory :students_promotion do
+    student_id 1
+promotion_id 1
+  end
+
 end
