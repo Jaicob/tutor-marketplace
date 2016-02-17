@@ -51,7 +51,7 @@ module Processor
     end
 
     def send_charge(charge, description, one_time_card=nil)
-      begin 
+      begin
         @student = Student.find(charge.student_id)
         if @student.customer_id.nil? || one_time_card == true
           # creates charge with token if Student does not have a Stripe Customer
@@ -83,7 +83,7 @@ module Processor
     end
 
     def update_customer(student, token)
-      begin 
+      begin
         if student.customer_id.nil?
           # create Stripe customer
           cust = ::Stripe::Customer.create(
@@ -93,7 +93,7 @@ module Processor
           )
           # save Stripe customer details on Student object
           student.update_attributes(
-            customer_id: cust.id, 
+            customer_id: cust.id,
             last_4_digits: cust.sources.data.first.last4,
             card_brand: cust.sources.data.first.brand
           )
@@ -135,7 +135,7 @@ module Processor
     end
 
     def get_charge_details(stripe_charge_id)
-      charge = ::Stripe::Charge.retrieve(stripe_charge_id) 
+      charge = ::Stripe::Charge.retrieve(stripe_charge_id)
       card_info = {
         brand: charge.source.brand,
         last4: charge.source.last4,
@@ -150,7 +150,9 @@ module Processor
           charge: stripe_charge_id,
           metadata: {
             description: desc,
-          }
+          },
+          refund_application_fee: true,
+          reverse_transfer: true,
         )
       rescue ::Stripe::StripeError => e
         puts "STRIPE ERROR!!!!!!"
