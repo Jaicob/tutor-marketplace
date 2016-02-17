@@ -37,10 +37,10 @@
           <td><%= promotion.redemption_count %></td>
           <td><%= promotion.single_appt == 'true' ? 'True' : 'False' %></td>
           <td><%= promotion.repeat_use == 'repeat' ? 'True' : 'False' %></td>
-          <td><%= promotion.redeemer.humanize %></td>
-          <td><%= promotion.student_id %></td>
-          <td><%= promotion.course_id %></td>
-          <td><%= promotion.tutor_id %></td>
+          <td><%= promotion.redeemer.humanize if promotion.redeemer %></td>
+          <td><%= promotion.student_id if promotion.student_id %></td>
+          <td><%= promotion.course_id if promotion.course_id %></td>
+          <td><%= promotion.tutor_id if promotion.tutor_id %></td>
           <td><%= promotion.description %></td>
           <td><%= link_to 'Edit/Destroy', admin_promotion_path(promotion), class: 'custom-button blue' %></td>
         </tr>

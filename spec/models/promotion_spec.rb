@@ -22,7 +22,7 @@
 require 'rails_helper'
 
 RSpec.describe Promotion, type: :model do
-  
+
   # Runs once before all examples
   before(:context) do
     @tutor = create(:tutor, :with_tutor_course_and_slot)
@@ -33,25 +33,25 @@ RSpec.describe Promotion, type: :model do
   end
 
   describe 'redeem_promo_code class method' do
-  # Promotion.redeem_promo_code(promo_code, tc_rate, number_of_appts, tutor_id, course_id, student_id=nil) 
+    # Promotion.redeem_promo_code(promo_code, tc_rate, number_of_appts, tutor_id, course_id, student_id=nil)
 
-  ##
-  # EXPECTED FAILURES
+    ##
+    # EXPECTED FAILURES
 
-    it 'fails and sends error message for unknown promo code' do 
+    it 'fails and sends error message for unknown promo code' do
       @promo = create(:promotion)
 
       response = Promotion.redeem_promo_code('INCORRECTCODE', 2000, 1, 1, 1, 1)
       expect(response[:success]).to eq false
       expect(response[:error]).to include 'code was not found'
     end
-  
-    it 'fails and sends error message for an expired promo code' do 
+
+    it 'fails and sends error message for an expired promo code' do
       @promo = create(:promotion, :expired)
-      
+
       response = Promotion.redeem_promo_code(@promo.code, 2000, 1, 1, 1, 1)
       expect(response[:success]).to eq false
-      expect(response[:error]).to include 'promo code expired on'
+      expect(response[:error]).to include 'promo code has expired'
     end
 
     it 'fails and sends error message for promo code that has reached redemption limit' do
@@ -59,7 +59,7 @@ RSpec.describe Promotion, type: :model do
 
       response = Promotion.redeem_promo_code(@promo.code, 2000, 1, 1, 1, 1)
       expect(response[:success]).to eq false
-      expect(response[:error]).to include 'has reached its set redemption limit'
+      expect(response[:error]).to include 'promo code has expired'
     end
 
     it 'fails and sends error message for Tutor promo code entered for wrong tutor' do
