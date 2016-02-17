@@ -22,7 +22,6 @@
 
 class Promotion < ActiveRecord::Base
   belongs_to :tutor # nil is OK, if nil, then promo is Axon-issed
-  belongs_to :student_group # nil is OK, if nil, then promo is not for a student_group
   has_many :students_promotions, class_name: StudentsPromotions
   has_many :students, through: :students_promotions
 
@@ -114,11 +113,8 @@ class Promotion < ActiveRecord::Base
       if student_id.present?
         # check if student checking out has redeemed this promo code before
         # currently only returns and raises error if student has used promo code before, otherwise does nothing
-        puts "HEY"
         if self.repeat_use == 'no_repeat'
-          puts "HEY AGAIN"
           if Student.find(student_id).students_promotions.where(promotion_id: self.id).any?
-            puts "HEY A THIRD TIME"
             return {success: false, error: "This promo code only allows you to use it once. According to our records you have already redeemed it."}
           end
         end

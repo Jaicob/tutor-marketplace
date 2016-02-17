@@ -4,7 +4,7 @@ class Dashboard::Student::HomeController < DashboardController
   def index
     if params[:charge]
       @charge = Charge.find(params[:charge])
-      @receipt_only = true
+      @receipt_only = true # this is only set in the Student Dashboard controller home action when a receipt is diplayed, flag is necessary to bypass validations (because after the checkout has been completed a StudentsPromotions record exists and if promo is a no_repeat type then it won't pass the validation and display the formatted pricescorrectly)
       @booking_preview = BookingPreview.new(session, @charge.tutor, current_user, @receipt_only).format_info
       puts "@booking_preview = #{@booking_preview}"
       @charge = Charge.find(session[:charge_id])

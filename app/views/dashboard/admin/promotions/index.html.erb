@@ -16,13 +16,17 @@
           <th>Redemption Limit</th>
           <th>Redemption Count</th>
           <th>Single Appt/Booking</th>
-          <th>Single Use/Student</th>
+          <th>Single Redemption/Student</th>
+          <th>Redeemer</th>
+          <th>Student ID</th>
+          <th>Course ID</th>
+          <th>Tutor ID</th>
           <th>Description</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        <% @promotions.where(issuer: 0).each do |promotion| %>
+        <% @promotions.each do |promotion| %>
         <tr>
           <td><%= link_to promotion.id, admin_promotion_path(promotion), class: 'id-link-for-admin' %></td>
           <td><%= promotion.code %></td>
@@ -32,7 +36,11 @@
           <td><%= promotion.redemption_limit %></td>
           <td><%= promotion.redemption_count %></td>
           <td><%= promotion.single_appt == 'true' ? 'True' : 'False' %></td>
-          <td><%= promotion.student_uniq == 'uniq_enforced' ? 'True' : 'False' %></td>
+          <td><%= promotion.repeat_use == 'repeat' ? 'True' : 'False' %></td>
+          <td><%= promotion.redeemer.humanize %></td>
+          <td><%= promotion.student_id %></td>
+          <td><%= promotion.course_id %></td>
+          <td><%= promotion.tutor_id %></td>
           <td><%= promotion.description %></td>
           <td><%= link_to 'Edit/Destroy', admin_promotion_path(promotion), class: 'custom-button blue' %></td>
         </tr>
@@ -41,6 +49,10 @@
     </table>
   </div>
 </div>
+
+
+
+
 
 <div class="row">
   <div class="small-12 columns">

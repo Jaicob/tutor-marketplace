@@ -28,13 +28,29 @@
       <p class="fine-print">How many times can this promo code be redeemed in total?</p>
       <%= f.number_field :redemption_limit, required: true %>
 
+      <%= f.label :repeat_use, 'Single Redemption Per Student' %>
+      <p class="fine-print">An eligible student account can only redeem this promo code once.</p>
+      <%= f.select(:repeat_use, options_for_select({'True' => :no_repeat, 'False'=> :repeat, })) %>
+
       <%= f.label :single_appt, 'Single Appointment Per Booking' %>
       <p class="fine-print">In a booking with three appointments, this promo code will only discount one of the appointments.</p>
       <%= f.select(:single_appt, options_for_select({'True' => :true, 'False'=> :false})) %>
 
-      <%= f.label :student_uniq, 'Single Redemption Per Student' %>
-      <p class="fine-print">A specific student account can only use this promo code once.</p>
-      <%= f.select(:student_uniq, options_for_select({'True' => :uniq_enforced, 'False'=> :uniq_not_enforced})) %>
+      <%= f.label :redeemer, 'Eligible Redeemers' %>
+      <p class="fine-print">What student accounts are eligible to redeem this promo code?</p>
+      <%= f.select(:redeemer, options_for_select({'Any Student' => :any_student, 'One Specific Student' => :specific_student, 'A Student Group' => :student_group})) %>
+  
+      <%= f.label :student_id, 'Student ID' %>
+      <p class="fine-print">If this promo code is only redeemable by a specific student, enter the Student ID here</p>
+      <%= f.text_field :student_id %>
+
+      <%= f.label :course_id, 'Course ID' %>
+      <p class="fine-print">If this promo code is only redeemable for a specific course, enter the Course ID here</p>
+      <%= f.text_field :course_id %>
+
+      <%= f.label :tutor_id, 'Tutor ID' %>
+      <p class="fine-print">If this promo code is only redeemable for a specific tutor, enter the Tutor ID here</p>
+      <%= f.text_field :tutor_id %>
 
       <%= f.label :description %>
       <p class="fine-print">This description will appear on Review Booking page to customer. Make sure it is descriptive and appropriate for public use.</p>

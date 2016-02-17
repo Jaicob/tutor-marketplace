@@ -9,7 +9,7 @@ class BookingPreview
     @full_rate = (@tc_rate * 1.15).round
     @promo_code = session[:promo_code]
     @student_id = current_user.student.id if !current_user.nil?
-    @receipt_only = receipt_only
+    @receipt_only = receipt_only # this is only set in the Student Dashboard controller home action when a receipt is diplayed, flag is necessary to bypass validations (because after the checkout has been completed a StudentsPromotions record exists and if promo is a no_repeat type then it won't pass the validation and display the formatted pricescorrectly)
   end
 
   def extract_appt_times_and_slot
