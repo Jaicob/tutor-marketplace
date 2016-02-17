@@ -4,7 +4,7 @@
 #
 #  id               :integer          not null, primary key
 #  code             :string
-#  category         :integer
+#  issuer           :integer
 #  amount           :integer
 #  valid_from       :date
 #  valid_until      :date
@@ -13,9 +13,9 @@
 #  description      :text
 #  tutor_id         :integer
 #  course_id        :integer
+#  repeat_use       :integer          default(0)
 #  student_id       :integer
 #  single_appt      :integer
-#  repeat_use       :integer
 #  redeemer         :integer
 #
 
@@ -85,6 +85,7 @@ RSpec.describe Promotion, type: :model do
       @promo = create(:promotion)
 
       response = Promotion.redeem_promo_code(@promo.code,2000,1,nil,nil)
+      expect(response[:error]).to eq nil
       expect(response[:success]).to eq true
       expect(response[:regular_price]).to eq 2300
       expect(response[:discount_price]).to eq 2070
@@ -100,6 +101,7 @@ RSpec.describe Promotion, type: :model do
       @promo = create(:promotion)
 
       response = Promotion.redeem_promo_code(@promo.code,2000,3,nil,nil)
+      expect(response[:error]).to eq nil
       expect(response[:success]).to eq true
       expect(response[:regular_price]).to eq 6900
       expect(response[:discount_price]).to eq 6670
@@ -115,6 +117,7 @@ RSpec.describe Promotion, type: :model do
       @promo = create(:promotion, single_appt: 1)
 
       response = Promotion.redeem_promo_code(@promo.code,2000,3,nil,nil)
+      expect(response[:error]).to eq nil
       expect(response[:success]).to eq true
       expect(response[:regular_price]).to eq 6900
       expect(response[:discount_price]).to eq 6210
@@ -130,6 +133,7 @@ RSpec.describe Promotion, type: :model do
       @promo = create(:promotion, amount: 50)
 
       response = Promotion.redeem_promo_code(@promo.code,2000,2,nil,nil)
+      expect(response[:error]).to eq nil
       expect(response[:success]).to eq true
       expect(response[:regular_price]).to eq 4600
       expect(response[:discount_price]).to eq 3450
@@ -147,7 +151,8 @@ RSpec.describe Promotion, type: :model do
     it 'correctly calculates discount for booking with 1 appt and 50% off single-appt Tutor coupon' do
       @promo = create(:promotion, :tutor_single_appt_50)
 
-      response = Promotion.redeem_promo_code(@promo.code,2000,1,@tutor.id,@tutor_course.course.id)
+      response = Promotion.redeem_promo_code(@promo.code,2000,1,@tutor.id,@tutor_course.course.id,@student.id)
+      expect(response[:error]).to eq nil
       expect(response[:success]).to eq true
       expect(response[:regular_price]).to eq 2300
       expect(response[:discount_price]).to eq 1150
@@ -162,7 +167,8 @@ RSpec.describe Promotion, type: :model do
     it 'correctly calculates discount for booking with 2 appts and 25% off single-appt Tutor coupon' do
       @promo = create(:promotion, :tutor_single_appt_25)
 
-      response = Promotion.redeem_promo_code(@promo.code,2000,2,@tutor.id,@tutor_course.course.id)
+      response = Promotion.redeem_promo_code(@promo.code,2000,2,@tutor.id,@tutor_course.course.id,@student.id)
+      expect(response[:error]).to eq nil
       expect(response[:success]).to eq true
       expect(response[:regular_price]).to eq 4600
       expect(response[:discount_price]).to eq 4025
@@ -178,6 +184,7 @@ RSpec.describe Promotion, type: :model do
       @promo = create(:promotion, :tutor_multiple_appts)
 
       response = Promotion.redeem_promo_code(@promo.code,2000,5,1,1,1)
+      expect(response[:error]).to eq nil
       expect(response[:success]).to eq true
       expect(response[:regular_price]).to eq 11500
       expect(response[:discount_price]).to eq 10350
@@ -196,6 +203,7 @@ RSpec.describe Promotion, type: :model do
       @promo = create(:promotion)
 
       response = Promotion.redeem_promo_code(@promo.code,2000,1,@tutor.id,@tutor_course.course.id)
+      expect(response[:error]).to eq nil
       expect(response[:success]).to eq true
       expect(response[:regular_price]).to eq 2300
       expect(response[:discount_price]).to eq 2070
@@ -208,9 +216,9 @@ RSpec.describe Promotion, type: :model do
     end
 
     it 'correctly succeeds applying uniq_enforced promo for student on first use' do
-      @promo = create(:promotion)
+      @promo = create(:promotion, tutor_id: @tutor.id)
 
-      StudentsPromotion.create(student_id: @student.id, promotion_id: @promo.id)
+      StudentsPromotions.create(student_id: @student.id, promotion_id: @promo.id)
 
       response = Promotion.redeem_promo_code(@promo.code, 2000, 1, @tutor.id,@tutor_course.course.id, @student.id)
       expect(response[:success]).to eq false

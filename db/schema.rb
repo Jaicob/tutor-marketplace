@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160216224531) do
+ActiveRecord::Schema.define(version: 20160217153425) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -106,7 +106,7 @@ ActiveRecord::Schema.define(version: 20160216224531) do
 
   create_table "promotions", force: :cascade do |t|
     t.string  "code"
-    t.integer "category"
+    t.integer "issuer"
     t.integer "amount"
     t.date    "valid_from"
     t.date    "valid_until"
@@ -115,9 +115,9 @@ ActiveRecord::Schema.define(version: 20160216224531) do
     t.text    "description"
     t.integer "tutor_id"
     t.integer "course_id"
+    t.integer "repeat_use",       default: 0
     t.integer "student_id"
     t.integer "single_appt"
-    t.integer "repeat_use"
     t.integer "redeemer"
   end
 

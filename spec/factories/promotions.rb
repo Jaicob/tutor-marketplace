@@ -4,7 +4,7 @@
 #
 #  id               :integer          not null, primary key
 #  code             :string
-#  category         :integer
+#  issuer           :integer
 #  amount           :integer
 #  valid_from       :date
 #  valid_until      :date
@@ -13,9 +13,9 @@
 #  description      :text
 #  tutor_id         :integer
 #  course_id        :integer
+#  repeat_use       :integer          default(0)
 #  student_id       :integer
 #  single_appt      :integer
-#  repeat_use       :integer
 #  redeemer         :integer
 #
 
@@ -29,12 +29,12 @@ FactoryGirl.define do
     redemption_limit  100
     redemption_count  0
     description       '10% off one session'
-    tutor
+    tutor_id          nil
     course_id         nil
-    redeemer_restrictions 0
-    student_group_id  nil
+    redeemer          0
     student_id        nil
     single_appt       0
+    repeat_use        0
 
     trait :free_from_axon do 
       amount 100
@@ -64,7 +64,7 @@ FactoryGirl.define do
     trait :tutor_issued do
       issuer 1
       tutor_id 1
-      redeemer_restrictions 1
+      # redeemer_restrictions 1
       student_id 1
     end
 
@@ -72,7 +72,7 @@ FactoryGirl.define do
       issuer 1
       tutor_id 1
       course_id 1
-      redeemer_restrictions 1
+      # redeemer_restrictions 1
       student_id 1
     end
 
