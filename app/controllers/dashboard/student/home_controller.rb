@@ -4,7 +4,9 @@ class Dashboard::Student::HomeController < DashboardController
   def index
     if params[:charge]
       @charge = Charge.find(params[:charge])
-      @booking_preview = BookingPreview.new(session, @charge.tutor, current_user).format_info
+      @receipt_only = true
+      @booking_preview = BookingPreview.new(session, @charge.tutor, current_user, @receipt_only).format_info
+      puts "@booking_preview = #{@booking_preview}"
       @charge = Charge.find(session[:charge_id])
       if @booking_preview[:no_payment_due] != true
         @card_info = Processor::Stripe.new.get_charge_details(@charge.stripe_charge_id)
@@ -15,7 +17,7 @@ class Dashboard::Student::HomeController < DashboardController
   def cancel_appt
     @appt = Appointment.find(params[:appt_id])
     if @appt.update_attribute('status', 'Cancelled')
-      AppointmentMailer.delay.appointment_cancellation_for_tutor(@appt.id)               
+      AppointmentMailer.delay.appointment_cancellation_for_tutor(@appt.id)
       AppointmentMailer.delay.appointment_cancellation_for_student(@appt.id)
       refund_status = CancelledApptRefunder.new(@appt, current_user).issue_valid_refund
       flash[:info] = refund_status
@@ -55,14 +57,14 @@ class Dashboard::Student::HomeController < DashboardController
     end
   end
 
-  private 
+  private
 
-    def appt_params
-      params.require(:appointment).permit(:status)
-    end
+  def appt_params
+    params.require(:appointment).permit(:status)
+  end
 
-    def set_appt
-      @appt = Appointment.find(params[:appt_id])
-    end
+  def set_appt
+    @appt = Appointment.find(params[:appt_id])
+  end
 
 end

@@ -68,13 +68,13 @@ class Promotion < ActiveRecord::Base
   end
 
   # IMPORTANT - PASS IN TC_RATE in CENTS!
-  def self.redeem_promo_code(promo_code, tc_rate, number_of_appts, tutor_id, course_id, student_id=nil) # this assumes that multiple appts in one booking are all for the same tutor_course (i.e. the rate is the same for each appt)
+  def self.redeem_promo_code(promo_code, tc_rate, number_of_appts, tutor_id, course_id, student_id=nil, receipt_only=nil) # this assumes that multiple appts in one booking are all for the same tutor_course (i.e. the rate is the same for each appt)
     promotion = Promotion.find_by(code: promo_code)
     if promotion.nil?
       return {success: false, error: 'Promo code was not found. Please try again or contact support at info@axontutors.com.'}
     else
       validity_check = promotion.check_validity(tutor_id, course_id, student_id)
-      if validity_check[:success] == false
+      if validity_check[:success] == false && receipt_only != true
         return {success: false, error: validity_check[:error]}
       else
         promotion.process_discount(tc_rate, number_of_appts)
@@ -83,14 +83,14 @@ class Promotion < ActiveRecord::Base
   end
 
   def check_validity(tutor_id, course_id, student_id=nil)
-    # check if code is past expiration date
-    if Date.today > self.valid_until
-      return {success: false, error: "This promo code expired on #{self.valid_until}"}
+    # check if code is past expiration date, after start_date
+    if Date.today > self.valid_until || Date.today < self.valid_from
+      return {success: false, error: "This promo code has expired."}
     end
-    
+
     # check if code is past redemption_limit
     if self.redemption_count >= self.redemption_limit
-      return {success: false, error: "This promo code has expired. It has reached its set redemption limit."}
+      return {success: false, error: "This promo code has expired."}
     end
 
     # check if course being booked matches course_id on any promo with a course restriction
@@ -103,38 +103,41 @@ class Promotion < ActiveRecord::Base
 
     # if promo code is tutor-issued, raise error if tutor being booked does not match tutor_id on promo code
     if self.tutor_id.present? && self.tutor_id != tutor_id
-      return {success: false, error: "This promo code is only valid for appointments with the following tutor: #{Tutor.find(tutor.id).public_name}"}
+      return {success: false, error: "This promo code is not valid for this tutor."}
     end
-    
+
     # check specific redeemer restrictons
     case self.redeemer
-    
-      when 'any_student'
-        # student must be logged in for check to work
-        if student_id.present?
+
+    when 'any_student'
+      # student must be logged in for check to work
+      if student_id.present?
         # check if student checking out has redeemed this promo code before
         # currently only returns and raises error if student has used promo code before, otherwise does nothing
-          if self.repeat_use == 'no_repeat'
-            if Student.find(student_id).students_promotions.where(promotion_id: self.id).any?
-              return {success: false, error: "This promo code only allows you to use it once. According to our records you have already redeemed it."}
-            end
-          end
-        end
-      
-      when 'specific_student'
-        # student must be logged in + check if student correct student for student specific promo code
-        if student_id.present? && self.student_id == student_id 
-          # if promo code is only good for one use, raise error if student has already used before
-          if self.repeat_use == 'no_repeat'
+        puts "HEY"
+        if self.repeat_use == 'no_repeat'
+          puts "HEY AGAIN"
+          if Student.find(student_id).students_promotions.where(promotion_id: self.id).any?
+            puts "HEY A THIRD TIME"
             return {success: false, error: "This promo code only allows you to use it once. According to our records you have already redeemed it."}
           end
-        else
-          # error message for two cases: 1) student is not yet logged in, 2) student is logged in and is trying to use promo code intended for another student
-          return {success: false, error: "This promo code is intended for use by a specific student. You must log in to the correct student account for this promo code to be applied."}
         end
+      end
 
-      when 'student_group'
-        # TODO-JT - create current StudentGroups and add student_group_id to associated student records
+    when 'specific_student'
+      # student must be logged in + check if student correct student for student specific promo code
+      if student_id.present? && self.student_id == student_id
+        # if promo code is only good for one use, raise error if student has already used before
+        if self.repeat_use == 'no_repeat'
+          return {success: false, error: "This promo code only allows you to use it once. According to our records you have already redeemed it."}
+        end
+      else
+        # error message for two cases: 1) student is not yet logged in, 2) student is logged in and is trying to use promo code intended for another student
+        return {success: false, error: "This promo code is intended for use by a specific student. You must log in to the correct student account for this promo code to be applied."}
+      end
+
+    when 'student_group'
+      # TODO-JT - create current StudentGroups and add student_group_id to associated student records
     end
 
     return {success: true}
@@ -152,11 +155,11 @@ class Promotion < ActiveRecord::Base
     # normal prices for one appt
     single_appt_tutor_fee = tc_rate
     single_appt_full_price = single_appt_tutor_fee * 1.15
-    
+
     # normal prices for all appts in booking
     regular_tutor_fee = tc_rate * number_of_appts
     regular_price =  (regular_tutor_fee * 1.15)   # TODO-JT - add in school transaction percentage if we need to be able to change for different schools
-    
+
     # discount calculations
     discount = (1 - (self.amount.to_f / 100)) # if promo amount is 10 (i.e. 10%), then discount equals 0.9 (i.e. 90% of normal price)
     if self.single_appt == 'true'
@@ -169,7 +172,7 @@ class Promotion < ActiveRecord::Base
     # axon fees before and after discount
     regular_axon_fee = regular_price - regular_tutor_fee
     discount_axon_fee = regular_axon_fee - discount_value
-    
+
     return {
       success: true,
       regular_price: regular_price.round,
@@ -188,7 +191,7 @@ class Promotion < ActiveRecord::Base
     # normal prices for one appt
     single_appt_tutor_fee = tc_rate
     regular_tutor_fee = single_appt_tutor_fee * number_of_appts
-    
+
     # discount calculations
     discount = (1 - (self.amount.to_f / 100)) # if promo amount is 10 (i.e. 10%), then discount equals 0.9 (i.e. 90% of normal price)
     if self.single_appt == 'true'

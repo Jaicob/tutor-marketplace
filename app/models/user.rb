@@ -44,7 +44,7 @@ class User < ActiveRecord::Base
 
   enum role: [:student, :tutor, :campus_manager, :admin]
 
-  devise :async, :invitable, :database_authenticatable, :registerable, :confirmable,
+  devise :async, :invitable, :database_authenticatable, :registerable,
     :recoverable, :rememberable, :trackable, :validatable
 
   def create_tutor_account(user, params)
