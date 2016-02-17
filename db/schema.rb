@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160119213055) do
+ActiveRecord::Schema.define(version: 20160217153425) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -115,9 +115,13 @@ ActiveRecord::Schema.define(version: 20160119213055) do
     t.text    "description"
     t.integer "tutor_id"
     t.integer "course_id"
-    t.integer "single_use",       default: 0
+    t.integer "repeat_use",       default: 0
+    t.integer "student_id"
+    t.integer "single_appt"
+    t.integer "redeemer"
   end
 
+  add_index "promotions", ["student_id"], name: "index_promotions_on_student_id", using: :btree
   add_index "promotions", ["tutor_id"], name: "index_promotions_on_tutor_id", using: :btree
 
   create_table "schools", force: :cascade do |t|
@@ -160,6 +164,16 @@ ActiveRecord::Schema.define(version: 20160119213055) do
 
   add_index "students", ["school_id"], name: "index_students_on_school_id", using: :btree
   add_index "students", ["user_id"], name: "index_students_on_user_id", using: :btree
+
+  create_table "students_promotions", force: :cascade do |t|
+    t.integer  "student_id",   null: false
+    t.integer  "promotion_id", null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "students_promotions", ["promotion_id"], name: "index_students_promotions_on_promotion_id", using: :btree
+  add_index "students_promotions", ["student_id"], name: "index_students_promotions_on_student_id", using: :btree
 
   create_table "subjects", force: :cascade do |t|
     t.string   "name"

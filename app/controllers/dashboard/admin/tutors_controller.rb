@@ -8,7 +8,7 @@ class Dashboard::Admin::TutorsController < AdminController
 
   def index
     @q = current_user.admin_scope(:tutors).ransack(params[:q])
-    @tutors = @q.result.includes(:user, :courses, :appointments, :slots)
+    @tutors = @q.result.includes(:user, :courses, :appointments, :slots).page(params[:page])
   end
 
   def show

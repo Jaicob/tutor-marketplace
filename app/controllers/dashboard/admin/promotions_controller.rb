@@ -8,7 +8,7 @@ class Dashboard::Admin::PromotionsController < AdminController
 
   def index
     @q = current_user.admin_scope(:promotions).ransack(params[:q])
-    @promotions = @q.result
+    @promotions = @q.result.page(params[:page])
   end
 
   def new
@@ -51,12 +51,12 @@ class Dashboard::Admin::PromotionsController < AdminController
 
   private
 
-    def set_promotion
-      @promotion = Promotion.find(params[:id])
-    end
+  def set_promotion
+    @promotion = Promotion.find(params[:id])
+  end
 
-    def promotion_params
-      params.require(:promotion).permit(:code, :category, :amount, :valid_from, :valid_until, :redemption_limit, :description, :issuer, :single_use)
-    end
-    
+  def promotion_params
+    params.require(:promotion).permit(:code, :category, :amount, :valid_from, :valid_until, :redemption_limit, :description, :issuer, :single_appt, :redeemer, :repeat_use)
+  end
+
 end

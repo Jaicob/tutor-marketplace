@@ -19,7 +19,7 @@ FactoryGirl.define do
   factory :slot do
     tutor
     status              0
-    start_time          Date.today.to_s + " 12:00"
+    start_time          (Date.today + 2).to_s + " 12:00"
     duration            21600 # 6 hours
   end
 

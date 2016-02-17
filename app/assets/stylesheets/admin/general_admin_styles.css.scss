@@ -46,3 +46,28 @@ a.id-link-for-admin:hover {
   color: white;
   background-color: #2BC2DE;
 }
+
+// styling for pagination links
+nav.pagination {
+  display: block;
+  margin-bottom: 2em;
+  margin: 0 auto 2em;
+  text-align: center;
+  width: 100%;
+  border: 1px solid #EFF1F3;
+  padding: 1em;
+  border-radius: 4px;
+  background-color: #DEDEDE;
+  span, span a {
+    color: #4F5252;
+    padding: 1em;
+    margin-bottom: 2em;
+  }
+  span.page.current {
+    background-color: #008CBA;
+    color: white;
+    padding: 0.5em;
+    padding-left: 0.6em;
+    border-radius: 10px;
+  }
+}

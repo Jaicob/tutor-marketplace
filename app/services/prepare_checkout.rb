@@ -29,6 +29,7 @@ class PrepareCheckout
     @promo_code = session[:promo_code]
   end
 
+  # public method
   def prepare_data_for_checkout_organizer
     begin 
       create_student_user
@@ -70,6 +71,7 @@ class PrepareCheckout
     end
   end
 
+  # private method
   def create_student_user
     if @student.nil?
        
@@ -101,6 +103,7 @@ class PrepareCheckout
     end
   end
 
+  # private method
   def save_card_on_stripe_customer
     if @save_card
       # this method both creates a customer if none exists and updates the default card on an existing customer
@@ -113,6 +116,7 @@ class PrepareCheckout
     end
   end
 
+  # private method
   def format_appt_info
     formatted_appts_array = []
     @appt_info.each do |checkbox_id, appt_data|

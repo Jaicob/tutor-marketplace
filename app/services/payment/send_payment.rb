@@ -19,6 +19,7 @@ class SendPayment
         puts "No payment necessary"
         return
       end
+      
     rescue => error
       context.fail!(
         error: @stripe_create_charge_response.message,
@@ -26,5 +27,5 @@ class SendPayment
       )
     end
   end
-  
+
 end

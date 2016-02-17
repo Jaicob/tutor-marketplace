@@ -1,6 +1,6 @@
 class BookingPreview
 
-  def initialize(session, tutor)
+  def initialize(session, tutor, current_user, receipt_only=nil)
     @appt_info = session[:appt_info]
     @location = session[:location]
     @course = Course.find(session[:course_id])
@@ -8,6 +8,8 @@ class BookingPreview
     @tc_rate = TutorCourse.where(tutor_id: tutor.id, course_id: @course.id).first.rate * 100
     @full_rate = (@tc_rate * 1.15).round
     @promo_code = session[:promo_code]
+    @student_id = current_user.student.id if !current_user.nil?
+    @receipt_only = receipt_only # this is only set in the Student Dashboard controller home action when a receipt is diplayed, flag is necessary to bypass validations (because after the checkout has been completed a StudentsPromotions record exists and if promo is a no_repeat type then it won't pass the validation and display the formatted pricescorrectly)
   end
 
   def extract_appt_times_and_slot
@@ -55,7 +57,7 @@ class BookingPreview
         if promo[:discount_price] == 0
           data[:no_payment_due] = true
         end
-      else 
+      else
         data[:promo_data] = {
           success: false,
           error: promo[:error]
@@ -73,7 +75,7 @@ class BookingPreview
   end
 
   def redeem_promo_code
-    Promotion.redeem_promo_code(@promo_code, @tc_rate, @appt_info.count, @tutor.id, @course.id)
+    Promotion.redeem_promo_code(@promo_code, @tc_rate, @appt_info.count, @tutor.id, @course.id, @student_id, @receipt_only)
   end
 
 end

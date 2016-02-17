@@ -13,7 +13,10 @@
 #  description      :text
 #  tutor_id         :integer
 #  course_id        :integer
-#  single_use       :integer          default(0)
+#  repeat_use       :integer          default(0)
+#  student_id       :integer
+#  single_appt      :integer
+#  redeemer         :integer
 #
 
 require 'rails_helper'
@@ -23,52 +26,54 @@ RSpec.describe Promotion, type: :model do
   # Runs once before all examples
   before(:context) do
     @tutor = create(:tutor, :with_tutor_course_and_slot)
-    @wrong_tutor = create(:tutor)
+    @wrong_tutor = create(:tutor, :with_tutor_course_and_slot)
     @tutor_course = @tutor.tutor_courses.first
+    @wrong_tutor_course = @wrong_tutor.tutor_courses.first
+    @student = create(:student)
   end
 
   describe 'redeem_promo_code class method' do
-  # Promotion.redeem_promo_code(promo_code, tc_rate, number_of_appts, tutor_id, course_id) 
+  # Promotion.redeem_promo_code(promo_code, tc_rate, number_of_appts, tutor_id, course_id, student_id=nil) 
 
   ##
   # EXPECTED FAILURES
 
     it 'fails and sends error message for unknown promo code' do 
-      @promotion = create(:promotion, code: 'COUPONCODE')
+      @promo = create(:promotion)
 
-      response = Promotion.redeem_promo_code('INCORRECTCODE',2000,2,1,1)
+      response = Promotion.redeem_promo_code('INCORRECTCODE', 2000, 1, 1, 1, 1)
       expect(response[:success]).to eq false
       expect(response[:error]).to include 'code was not found'
     end
   
     it 'fails and sends error message for an expired promo code' do 
-      @promotion = create(:promotion, valid_until: Date.today - 1)
+      @promo = create(:promotion, :expired)
       
-      response = Promotion.redeem_promo_code('AXON10%OFF',2000,2,1,1)
+      response = Promotion.redeem_promo_code(@promo.code, 2000, 1, 1, 1, 1)
       expect(response[:success]).to eq false
-      expect(response[:error]).to include 'this promo code expired on'
+      expect(response[:error]).to include 'promo code expired on'
     end
 
     it 'fails and sends error message for promo code that has reached redemption limit' do
-      @promotion = create(:promotion, redemption_limit: 1, redemption_count: 1)
+      @promo = create(:promotion, :reached_redemption_limit)
 
-      response = Promotion.redeem_promo_code('AXON10%OFF',2000,2,1,1)
+      response = Promotion.redeem_promo_code(@promo.code, 2000, 1, 1, 1, 1)
       expect(response[:success]).to eq false
       expect(response[:error]).to include 'has reached its set redemption limit'
     end
 
     it 'fails and sends error message for Tutor promo code entered for wrong tutor' do
-      @promotion = create(:promotion, code: 'TUTOR20%OFF', issuer: 1, tutor_id: @tutor.id)
+      @promo = create(:promotion, :tutor_issued)
 
-      response = Promotion.redeem_promo_code('TUTOR20%OFF',2000,2,@wrong_tutor.id,1)
+      response = Promotion.redeem_promo_code(@promo.code, 2000, 1, 99, 1, 1)
       expect(response[:success]).to eq false
       expect(response[:error]).to include 'tutor'
     end
 
     it 'fails and sends error message for Tutor promo code with course restriction entered for wrong course' do
-      @promotion = create(:promotion, code: 'TUTOR20%OFF', issuer: 1, course_id: 99, tutor_id: @tutor.id)
+      @promo = create(:promotion, :tutor_and_course_specific)
 
-      response = Promotion.redeem_promo_code('TUTOR20%OFF',2000,2,@tutor.id,1)
+      response = Promotion.redeem_promo_code(@promo.code, 2000, 1, 1, @wrong_tutor_course.id, 1)
       expect(response[:success]).to eq false
       expect(response[:error]).to include 'course'
     end
@@ -76,10 +81,11 @@ RSpec.describe Promotion, type: :model do
     ##
     # Expected Successes with Axon-issued codes
 
-    it 'correctly calculates discount for booking with 1 appt and single-use 10% off Axon coupon' do
-      @promotion = create(:promotion, code: 'AXON10%OFF', single_use: 0)
+    it 'correctly calculates discount for booking with 1 appt and 10% off single-appt Axon coupon' do
+      @promo = create(:promotion)
 
-      response = Promotion.redeem_promo_code('AXON10%OFF',2000,1,nil,nil)
+      response = Promotion.redeem_promo_code(@promo.code,2000,1,nil,nil)
+      expect(response[:error]).to eq nil
       expect(response[:success]).to eq true
       expect(response[:regular_price]).to eq 2300
       expect(response[:discount_price]).to eq 2070
@@ -87,14 +93,15 @@ RSpec.describe Promotion, type: :model do
       expect(response[:regular_tutor_fee]).to eq 2000
       expect(response[:regular_axon_fee]).to eq 300
       expect(response[:discount_axon_fee]).to eq 70
-      expect(response[:promotion_id]).to eq @promotion.id
-      expect(response[:description]).to eq @promotion.description
+      expect(response[:promotion_id]).to eq @promo.id
+      expect(response[:description]).to eq @promo.description
     end
 
-    it 'correctly calculates discount for booking with 3 appts and single-use 10% off Axon coupon' do
-      @promotion = create(:promotion, code: 'AXON10%OFF', single_use: 0)
+    it 'correctly calculates discount for booking with 3 appts and 10% off single-appt Axon coupon' do
+      @promo = create(:promotion)
 
-      response = Promotion.redeem_promo_code('AXON10%OFF',2000,3,nil,nil)
+      response = Promotion.redeem_promo_code(@promo.code,2000,3,nil,nil)
+      expect(response[:error]).to eq nil
       expect(response[:success]).to eq true
       expect(response[:regular_price]).to eq 6900
       expect(response[:discount_price]).to eq 6670
@@ -102,14 +109,15 @@ RSpec.describe Promotion, type: :model do
       expect(response[:regular_tutor_fee]).to eq 6000
       expect(response[:regular_axon_fee]).to eq 900
       expect(response[:discount_axon_fee]).to eq 670
-      expect(response[:promotion_id]).to eq @promotion.id
-      expect(response[:description]).to eq @promotion.description
+      expect(response[:promotion_id]).to eq @promo.id
+      expect(response[:description]).to eq @promo.description
     end
 
-    it 'correctly calculates discount for booking with 3 appts and multiple-use 10% off Axon coupon' do
-      @promotion = create(:promotion, code: 'AXON10%OFF', single_use: 1)
+    it 'correctly calculates discount for booking with 3 appts and 10% off multiple-appts Axon coupon' do
+      @promo = create(:promotion, single_appt: 1)
 
-      response = Promotion.redeem_promo_code('AXON10%OFF',2000,3,nil,nil)
+      response = Promotion.redeem_promo_code(@promo.code,2000,3,nil,nil)
+      expect(response[:error]).to eq nil
       expect(response[:success]).to eq true
       expect(response[:regular_price]).to eq 6900
       expect(response[:discount_price]).to eq 6210
@@ -117,14 +125,15 @@ RSpec.describe Promotion, type: :model do
       expect(response[:regular_tutor_fee]).to eq 6000
       expect(response[:regular_axon_fee]).to eq 900
       expect(response[:discount_axon_fee]).to eq 210
-      expect(response[:promotion_id]).to eq @promotion.id
-      expect(response[:description]).to eq @promotion.description
+      expect(response[:promotion_id]).to eq @promo.id
+      expect(response[:description]).to eq @promo.description
     end
 
-    it 'correctly calculates discount for booking with 2 appts and single-use 50% off Axon coupon' do
-      @promotion = create(:promotion, code: 'AXON10%OFF', single_use: 0, amount: 50)
+    it 'correctly calculates discount for booking with 2 appts and 50% off single-appt Axon coupon' do
+      @promo = create(:promotion, amount: 50)
 
-      response = Promotion.redeem_promo_code('AXON10%OFF',2000,2,nil,nil)
+      response = Promotion.redeem_promo_code(@promo.code,2000,2,nil,nil)
+      expect(response[:error]).to eq nil
       expect(response[:success]).to eq true
       expect(response[:regular_price]).to eq 4600
       expect(response[:discount_price]).to eq 3450
@@ -132,17 +141,18 @@ RSpec.describe Promotion, type: :model do
       expect(response[:regular_tutor_fee]).to eq 4000
       expect(response[:regular_axon_fee]).to eq 600
       expect(response[:discount_axon_fee]).to eq -550
-      expect(response[:promotion_id]).to eq @promotion.id
-      expect(response[:description]).to eq @promotion.description
+      expect(response[:promotion_id]).to eq @promo.id
+      expect(response[:description]).to eq @promo.description
     end
 
     ###
     # Expected successes with Tutor-issed codes
 
-    it 'correctly calculates discount for booking with 1 appt and single-use 50% off Tutor coupon' do
-      @promotion = create(:promotion, code: 'TUTOR50%OFF', issuer: 1, tutor_id: @tutor.id, amount: 50, single_use: 0)
+    it 'correctly calculates discount for booking with 1 appt and 50% off single-appt Tutor coupon' do
+      @promo = create(:promotion, :tutor_single_appt_50)
 
-      response = Promotion.redeem_promo_code('TUTOR50%OFF',2000,1,@tutor.id,@tutor_course.course.id)
+      response = Promotion.redeem_promo_code(@promo.code,2000,1,@tutor.id,@tutor_course.course.id,@student.id)
+      expect(response[:error]).to eq nil
       expect(response[:success]).to eq true
       expect(response[:regular_price]).to eq 2300
       expect(response[:discount_price]).to eq 1150
@@ -150,14 +160,15 @@ RSpec.describe Promotion, type: :model do
       expect(response[:regular_tutor_fee]).to eq 2000
       expect(response[:discount_tutor_fee]).to eq 1000
       expect(response[:discount_axon_fee]).to eq 150
-      expect(response[:promotion_id]).to eq @promotion.id
-      expect(response[:description]).to eq @promotion.description
+      expect(response[:promotion_id]).to eq @promo.id
+      expect(response[:description]).to eq @promo.description
     end
 
-    it 'correctly calculates discount for booking with 2 appts and single-use 25% off Tutor coupon' do
-      @promotion = create(:promotion, code: 'TUTOR25%OFF', issuer: 1, tutor_id: @tutor.id, amount: 25, single_use: 0)
+    it 'correctly calculates discount for booking with 2 appts and 25% off single-appt Tutor coupon' do
+      @promo = create(:promotion, :tutor_single_appt_25)
 
-      response = Promotion.redeem_promo_code('TUTOR25%OFF',2000,2,@tutor.id,@tutor_course.course.id)
+      response = Promotion.redeem_promo_code(@promo.code,2000,2,@tutor.id,@tutor_course.course.id,@student.id)
+      expect(response[:error]).to eq nil
       expect(response[:success]).to eq true
       expect(response[:regular_price]).to eq 4600
       expect(response[:discount_price]).to eq 4025
@@ -165,14 +176,15 @@ RSpec.describe Promotion, type: :model do
       expect(response[:regular_tutor_fee]).to eq 4000
       expect(response[:discount_tutor_fee]).to eq 3500
       expect(response[:discount_axon_fee]).to eq 525
-      expect(response[:promotion_id]).to eq @promotion.id
-      expect(response[:description]).to eq @promotion.description
+      expect(response[:promotion_id]).to eq @promo.id
+      expect(response[:description]).to eq @promo.description
     end
 
-    it 'correctly calculates discount for booking with 5 appts and multiple-use 10% off Tutor coupon' do
-      @promotion = create(:promotion, code: 'TUTOR10%0FFSEMESTER', issuer: 1, single_use: 1, amount: 10, tutor_id: @tutor.id)
+    it 'correctly calculates discount for booking with 5 appts and 10% off multiple-appts Tutor coupon' do
+      @promo = create(:promotion, :tutor_multiple_appts)
 
-      response = Promotion.redeem_promo_code('TUTOR10%0FFSEMESTER',2000,5,@tutor.id,@tutor_course.course.id)
+      response = Promotion.redeem_promo_code(@promo.code,2000,5,1,1,1)
+      expect(response[:error]).to eq nil
       expect(response[:success]).to eq true
       expect(response[:regular_price]).to eq 11500
       expect(response[:discount_price]).to eq 10350
@@ -180,8 +192,37 @@ RSpec.describe Promotion, type: :model do
       expect(response[:regular_tutor_fee]).to eq 10000
       expect(response[:discount_tutor_fee]).to eq 9000
       expect(response[:discount_axon_fee]).to eq 1350
-      expect(response[:promotion_id]).to eq @promotion.id
-      expect(response[:description]).to eq @promotion.description
+      expect(response[:promotion_id]).to eq @promo.id
+      expect(response[:description]).to eq @promo.description
+    end
+
+    ###
+    # Expected responses for codes that are limited to one use per student
+
+    it 'correctly succeeds applying uniq_enforced promo for student on first use' do
+      @promo = create(:promotion)
+
+      response = Promotion.redeem_promo_code(@promo.code,2000,1,@tutor.id,@tutor_course.course.id)
+      expect(response[:error]).to eq nil
+      expect(response[:success]).to eq true
+      expect(response[:regular_price]).to eq 2300
+      expect(response[:discount_price]).to eq 2070
+      expect(response[:discount_value]).to eq 230
+      expect(response[:regular_tutor_fee]).to eq 2000
+      expect(response[:discount_tutor_fee]).to eq 2000
+      expect(response[:regular_axon_fee]).to eq 300
+      expect(response[:discount_axon_fee]).to eq 70
+      expect(response[:promotion_id]).to eq @promo.id
+    end
+
+    it 'correctly succeeds applying uniq_enforced promo for student on first use' do
+      @promo = create(:promotion, tutor_id: @tutor.id)
+
+      StudentsPromotions.create(student_id: @student.id, promotion_id: @promo.id)
+
+      response = Promotion.redeem_promo_code(@promo.code, 2000, 1, @tutor.id,@tutor_course.course.id, @student.id)
+      expect(response[:success]).to eq false
+      expect(response[:error]).to eq 'This promo code only allows you to use it once. According to our records you have already redeemed it.'
     end
 
   end

@@ -18,6 +18,7 @@ class School < ActiveRecord::Base
   has_many :users
   has_many :tutors
   has_many :students
+  has_many :student_groups
   has_many :tutor_courses, through: :tutors, dependent: :destroy
   has_many :appointments, through: :courses, dependent: :destroy
   has_many :slots, through: :tutors, dependent: :destroy
@@ -79,9 +80,15 @@ class School < ActiveRecord::Base
   end
 
   def revenue
-    charge_amounts = self.appointments.map{|appt| appt.charge}
-    revenue = charge_amounts.map(&:amount).reduce(:+) || 0
+    charges = self.appointments.map{|appt| appt.charge}
+    revenue = charges.map(&:amount).reduce(:+) || 0
     return revenue
+  end
+
+  def profit
+    charges = self.appointments.map{|appt| appt.charge}
+    profit = charges.map(&:axon_fee).reduce(:+) || 0
+    return profit
   end
 
 end

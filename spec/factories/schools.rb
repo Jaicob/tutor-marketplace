@@ -19,6 +19,7 @@ FactoryGirl.define do
     name  "University of Georgia"
     location  "Athens, GA"
     transaction_percentage 15
+    timezone "Eastern Time (US & Canada)"
 
     trait :invalid do
       name nil

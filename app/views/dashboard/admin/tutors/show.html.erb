@@ -44,7 +44,8 @@
           <th>Subject</th>
           <th>Call Number</th>
           <th>Friendly Name</th>
-          <th>Hourly Rate</th>
+          <th>Tutor Rate</th>
+          <th>Full Price</th>
         </tr>
       </thead>
       <tbody>
@@ -53,7 +54,8 @@
           <td><%= tc.course.subject.name %></td>
           <td><%= tc.course.call_number %></td>
           <td><%= tc.course.friendly_name %></td>
-          <td>$<%= tc.rate %></td>
+          <td>$<%= display_price(tc.rate * 100) %></td>
+          <td>$<%= display_price(full_price(tc.rate)) %></td>
         </tr>
         <% end %>
       </tbody>
