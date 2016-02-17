@@ -104,10 +104,7 @@ class Tutor < ActiveRecord::Base
   def update_application_status
     if (self.onboarding_status == 4) && (self.acct_id != nil) && (self.application_status == 'Incomplete')
       self.update(application_status: 'Complete')
-      # TODO-JT - remove this if statement after Existing Tutor Onboarding period is over 
-      if ExistingTutorOnboarding.new(self.email).existing_tutor? == false
-        TutorManagementMailer.delay.application_completed_email(self.user.id)
-      end
+      TutorManagementMailer.delay.application_completed_email(self.user.id)
     end
   end
 
