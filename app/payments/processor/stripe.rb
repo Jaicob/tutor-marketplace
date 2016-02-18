@@ -144,10 +144,11 @@ module Processor
       return card_info
     end
 
-    def issue_refund(stripe_charge_id, desc)
+    def issue_refund(stripe_charge_id, amount, desc)
       begin
         refund = ::Stripe::Refund.create(
           charge: stripe_charge_id,
+          amount: amount,
           metadata: {
             description: desc,
           },
