@@ -6,6 +6,13 @@
       </div>
     </div>
   <% end %>
+  <% if @reviews_needed %>
+    <div class="row">
+      <div class="small-12 columns">
+        <%= render 'review_form' %>
+      </div>
+    </div>
+  <% end %>
   <div class="row">
     <div class="small-12 medium-8 columns">
       <%= render 'search_bar' %>

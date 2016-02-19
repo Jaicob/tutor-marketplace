@@ -19,6 +19,7 @@ class Appointment < ActiveRecord::Base
   belongs_to :slot
   belongs_to :course
   belongs_to :charge
+  has_one :review, dependent: :destroy
   delegate :tutor, to: :slot
   delegate :school, to: :course
 
@@ -85,7 +86,7 @@ class Appointment < ActiveRecord::Base
   # custom validation
   def outside_booking_buffer
     buffer = (self.tutor.booking_buffer * 3600) # hours * 3600 = seconds
-    earliest_avail_booking = Time.now + buffer 
+    earliest_avail_booking = Time.now + buffer
     if start_time < earliest_avail_booking
       errors.add(:start_time, "is too soon and does not meet minimum notice requirement for tutor")
     end
@@ -104,7 +105,7 @@ class Appointment < ActiveRecord::Base
     end
   end
 
-  # Ensure that datetimes are always saved as UTC 
+  # Ensure that datetimes are always saved as UTC
   def format_datetime
     self.start_time = self.start_time.in_time_zone("UTC")
   end

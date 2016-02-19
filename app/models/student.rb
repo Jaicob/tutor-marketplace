@@ -18,6 +18,7 @@ class Student < ActiveRecord::Base
   belongs_to :school
   has_many :charges, dependent: :destroy
   has_many :appointments, dependent: :destroy
+  has_many :reviews, through: :appointments
   has_many :students_promotions, class_name: StudentsPromotions
   has_many :promotions, through: :students_promotions
 
@@ -28,7 +29,7 @@ class Student < ActiveRecord::Base
   def subjects
     # returns subjects that a student makes appointments for, only used in Admin section for analytics
     subjects = []
-    self.appointments.map{ |appt| 
+    self.appointments.map{ |appt|
       subjects << appt.course.subject[:name] unless subjects.include?(appt.course.subject[:name])
     }
   end
