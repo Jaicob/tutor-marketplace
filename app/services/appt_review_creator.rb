@@ -33,9 +33,11 @@ class ApptReviewCreator
     get_appts_to_review.each do |appt|
       appt_data[n] = {
         appt_id: appt.id,
+        tutor_pic_url: appt.tutor.profile_pic_url(:thumb),
         tutor: appt.tutor.public_name,
         course: appt.course.formatted_name,
-        time: appt.start_time.in_time_zone(appt.school.timezone)
+        time: appt.time,
+        date: appt.date,
       }
       n += 1
     end

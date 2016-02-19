@@ -125,12 +125,12 @@ ActiveRecord::Schema.define(version: 20160219194852) do
   add_index "promotions", ["tutor_id"], name: "index_promotions_on_tutor_id", using: :btree
 
   create_table "reviews", force: :cascade do |t|
-    t.integer  "appointment_id", null: false
+    t.integer  "appointment_id",             null: false
     t.integer  "rating"
     t.text     "comment"
-    t.integer  "follow_up"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.integer  "follow_up",      default: 0
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   add_index "reviews", ["appointment_id"], name: "index_reviews_on_appointment_id", using: :btree

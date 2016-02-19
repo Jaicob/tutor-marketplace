@@ -13,4 +13,6 @@
 
 class Review < ActiveRecord::Base
   belongs_to :appointment
+
+  enum rating: ['Positive', 'Negative']
 end

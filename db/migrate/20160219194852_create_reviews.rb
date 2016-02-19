@@ -4,7 +4,7 @@ class CreateReviews < ActiveRecord::Migration
       t.belongs_to  :appointment, index: true, null: false
       t.integer     :rating
       t.text        :comment
-      t.integer     :follow_up
+      t.integer     :follow_up, default: 0
 
       t.timestamps null: false
     end
