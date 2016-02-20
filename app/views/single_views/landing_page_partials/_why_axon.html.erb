@@ -9,6 +9,10 @@
   vertical-align: top;
   padding: 0 1em;
 }
+.book-button {
+  height: 3em;
+  margin: 3em auto 1em;
+}
 </style>
 
 <div class="row small-collapse medium-uncollapse">
@@ -16,14 +20,14 @@
     <h4 class="section-title">Why Axon?</h4>
   </div>
 </div>
-<div class="row small-collapse medium-uncollapse">
-  <div class="small-12 large-8 large-centered columns">
+<div class="row small-collapse">
+  <div class="small-12 medium-8 medium-centered columns">
     <%= image_tag('two_thirds.svg', class: 'fraction') %>
     <h3 class="inline dark-gray left-align">of students who book a tutor 2+ times</br> report a whole letter grade improvement</h4>
   </div>
 </div>
-<div class="row small-collapse medium-uncollapse">
-  <div class="small-12 large-8 large-centered columns">
+<div class="row small-collapse">
+  <div class="small-12 medium-8 medium-centered columns">
     <%= image_tag('c_to_b_graph.svg', class: 'vertical-margin-1em') %>
     <%= image_tag('dotted_line.svg', class: 'vertical-margin-1em') %>
   </div>
@@ -48,5 +52,12 @@
     <%= image_tag('axon_star.svg', class: 'vertical-margin-1em') %>
     <h5>Hurting Application Process</h5>
     <p>We help position students in the top percentage of applicants for jobs and academic programs</p>
+  </div>
+</div>
+<div class="row small-collapse">
+  <div class="small-12 medium-6 medium-centered columns">
+    <a href="#landing-search">
+      <button class="custom-button full-width book-button">Book a Tutor</button>
+    </a>
   </div>
 </div>

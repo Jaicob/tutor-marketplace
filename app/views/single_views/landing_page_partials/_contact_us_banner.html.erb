@@ -1,0 +1,21 @@
+<style>
+.contact-us-icon {
+  color: white;
+  font-size: 2em;
+}
+</style>
+<h4 class="margin-bottom-1em">Contact our team to learn more about how we can help</h4>
+<div class="row">
+  <div class="small-12 medium-4 medium-offset-2 columns">
+    <i class="fi-telephone contact-us-icon"></i>
+    <%= link_to 'tel:14042169854' do %>
+      <button class="custom-button light-blue full-width">404-216-9854</button>
+    <% end %>
+  </div>
+  <div class="small-12 medium-4 end columns">
+    <i class="fi-mail contact-us-icon"></i>
+    <%= mail_to('info@axontutors.com') do %>
+      <button class="custom-button light-blue full-width">info@axontutors.com</button>
+    <% end %>
+  </div>
+</div>
