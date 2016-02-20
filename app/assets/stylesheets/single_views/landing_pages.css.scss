@@ -138,7 +138,33 @@
         color: white;
         font-weight: 100;
       }
+      &.contact-banner {
+        padding: 3em 0;
+        .contact-us-icon {
+          color: white;
+          font-size: 2em;
+        }
+      }
     }
+
+    // why axon section
+    &.why-axon {
+      .inline {
+        display: inline-block;
+      }
+      .dark-gray {
+        color: #6B6B6B;
+      }
+      .fraction {
+        vertical-align: top;
+        padding: 0 1em;
+      }
+      .book-button {
+        height: 3em;
+        margin: 3em auto 1em;
+      }
+    }
+  
 
     // how axon works section
     &.how-it-works {

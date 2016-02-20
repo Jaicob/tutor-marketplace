@@ -32,6 +32,9 @@ button, .custom-button {
   }
   &.light-blue {
     background-color: #2BC2DE;
+    &:hover {
+      background-color: #58AA4D;
+    }
   }
   &.blue-green {
     background-color: #0095AC;
