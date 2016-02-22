@@ -67,12 +67,20 @@
         <div class="profile-text">
           <div class="row">
 
+          <% if @tutor_analyzer.students.count < 1 %> <!-- TODO: Change this to reviews once that is merged -->
+            <div class="columns small-12">
+              <div data-alert class="alert-box success radius">
+                This tutor is new to Axon!
+              </div>
+            </div>
+          <% else %>
+
             <!-- Students box -->
             <div class="columns medium-4">
               <div class="stat-box">
                 <div class="row">
                   <div class="small-centered columns small-12">
-                    <p class="text-center">13</p>
+                    <p class="text-center"><%= @tutor_analyzer.students.count %></p>
                   </div>
                 </div>
                 <div class="row">
@@ -83,11 +91,12 @@
               </div>
             </div>
 
+            <!-- Appointments box -->
             <div class="columns medium-4">
               <div class="stat-box">
                 <div class="row">
                   <div class="small-centered columns small-12">
-                    <p class="text-center">143</p>
+                    <p class="text-center"><%= @tutor_analyzer.total_appts.count %></p>
                   </div>
                 </div>
                 <div class="row">
@@ -98,11 +107,12 @@
               </div>
             </div>
 
+            <!-- Approval box -->
             <div class="columns medium-4">
               <div class="stat-box">
                 <div class="row">
                   <div class="small-centered columns small-12">
-                    <p class="text-center">89%</p>
+                    <p class="text-center"><%= @tutor_analyzer.approval %>%</p>
                   </div>
                 </div>
                 <div class="row">
@@ -112,30 +122,7 @@
                 </div>
               </div>
             </div>
-         <!--  <div class="row ">
-            <div class="columns small-8 ">
-              <span data-tooltip aria-haspopup="true" class="has-tip" data-disable-hover='false' tabindex=1 title="Students Tutored"><i class="icon fi-torsos-female-male margin-right-1em"></i>Students</span>
-            </div>
-            <div class="columns small-4 ">
-              <span class="label">13</span>
-            </div>
-          </div>
-          <div class="row">
-             <div class="columns small-8 ">
-               <span data-tooltip aria-haspopup="true" class="has-tip" data-disable-hover='false' tabindex=2 title="Number of sessions tutored"><i class="icon fi-pencil margin-right-1em"></i>Appointments</span>
-            </div>
-            <div class="columns small-4 ">
-              <span class="[round radius] label">433</span>
-            </div>
-          </div>
-          <div class="row">
-             <div class="columns small-8 ">
-              <span data-tooltip aria-haspopup="true" class="has-tip" data-disable-hover='false' tabindex=3 title="Percent who found their session helpful"><i class="icon fi-like margin-right-1em"></i>Approval </span>
-            </div>
-            <div class="columns small-4 ">
-              <span class="label">%89</span>
-            </div>
-          </div> -->
+            <% end %>
           </div>
         </div>
 
