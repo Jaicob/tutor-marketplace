@@ -13,7 +13,9 @@
 
 FactoryGirl.define do
   factory :review do
-    
+    appointment
+    rating  0
+    comment 'This is a test comment'
   end
 
 end
