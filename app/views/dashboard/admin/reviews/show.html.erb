@@ -1,0 +1,46 @@
+<div class="row">
+  <div class="small-12">
+    <h3>Review Details: #<%= @review.id %></h3>
+  </div>
+</div>
+<div class="row">
+  <div class="small-12">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Appt. ID</th>
+          <th>Tutor</th>
+          <th>Student</th>
+          <th>Rating</th>
+          <th>Comment</th>
+          <th>Submitted</th>
+          <th>Save Updates</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><%= @review.id %></td>
+          <td><%= @review.appointment_id %></td>
+          <td><%= @review.tutor.full_name %></td>
+          <td><%= @review.student.full_name %></td>
+          <td><%= @review.rating %></td>
+          <td><%= @review.comment %></td>
+          <td><%= @review.created_at.to_date %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="row">
+  <div class="small-12">
+    <%= form_for @review, url: admin_review_path(@review), method: :put do |f| %>
+      <%= f.label :follow_up_status, 'Follow Up Status' %>
+      <%= f.select(:follow_up_status, options_for_select(['None', 'Attempted', 'Contacted'], @review.follow_up_status)) %></td>
+      <%= f.label :follow_up_notes, 'Follow Up Notes' %>
+      <%= f.text_area :follow_up_notes, value: @review.follow_up_notes %></td>
+      <%= f.submit 'Update', class: 'custom-button' %></td>
+    <% end %>
+  </div>
+</div>

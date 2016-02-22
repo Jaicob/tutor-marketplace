@@ -2,13 +2,14 @@
 #
 # Table name: reviews
 #
-#  id             :integer          not null, primary key
-#  appointment_id :integer          not null
-#  rating         :integer
-#  comment        :text
-#  follow_up      :integer          default(0)
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
+#  id              :integer          not null, primary key
+#  appointment_id  :integer          not null
+#  rating          :integer
+#  comment         :text
+#  follow_up       :integer          default(0)
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  follow_up_notes :text
 #
 
 class Review < ActiveRecord::Base
@@ -19,5 +20,5 @@ class Review < ActiveRecord::Base
   delegate :student, :tutor, to: :appointment
 
   enum rating: ['Positive', 'Negative']
-  enum follow_up: ['None', 'Attempted Contact', 'Contacted Succesfully']
+  enum follow_up_status: ['None', 'Attempted', 'Contacted']
 end

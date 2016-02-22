@@ -186,6 +186,11 @@
 #                                       PATCH    /admin/promotions/:id(.:format)                                               dashboard/admin/promotions#update
 #                                       PUT      /admin/promotions/:id(.:format)                                               dashboard/admin/promotions#update
 #                                       DELETE   /admin/promotions/:id(.:format)                                               dashboard/admin/promotions#destroy
+#                  search_admin_reviews GET|POST /admin/reviews/search(.:format)                                               dashboard/admin/reviews#search
+#                         admin_reviews GET      /admin/reviews(.:format)                                                      dashboard/admin/reviews#index
+#                          admin_review GET      /admin/reviews/:id(.:format)                                                  dashboard/admin/reviews#show
+#                                       PATCH    /admin/reviews/:id(.:format)                                                  dashboard/admin/reviews#update
+#                                       PUT      /admin/reviews/:id(.:format)                                                  dashboard/admin/reviews#update
 #                api_v1_school_subjects GET      /api/v1/schools/:school_id/subjects(.:format)                                 api/v1/subjects#index {:format=>:json}
 #    api_v1_school_subjects_all_options GET      /api/v1/schools/:school_id/subjects-all-options(.:format)                     api/v1/subjects#all_options {:format=>:json}
 #                                       GET      /api/v1/schools/:school_id/subjects/:subject_id/courses(.:format)             api/v1/courses#index {:format=>:json}
@@ -349,10 +354,9 @@ Rails.application.routes.draw do
       resources :students do collection { match 'search' => 'students#search', via: [:get, :post], as: :search } end
       resources :appointments do collection { match 'search' => 'appointments#search', via: [:get, :post], as: :search } end
       resources :slots do collection { match 'search' => 'slots#search', via: [:get, :post], as: :search } end
-      resources :schools do
-        collection { match 'search' => 'schools#search', via: [:get, :post], as: :search }
-      end
+      resources :schools do collection { match 'search' => 'schools#search', via: [:get, :post], as: :search } end
       resources :promotions do collection { match 'search' => 'promotions#search', via: [:get, :post], as: :search } end
+      resources :reviews, only: [:index, :show, :update] do collection { match 'search' => 'reviews#search', via: [:get, :post], as: :search } end
     end
   end
 
