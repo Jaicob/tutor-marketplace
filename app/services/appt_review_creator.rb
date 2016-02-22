@@ -47,12 +47,24 @@ class ApptReviewCreator
 
   # public method
   def create_reviews
-    if @params[:appt_review]
-      Review.create(
-        appointment_id: @params[:appt_review][:appt_id],
-        rating: @params[:appt_review][:rating],
-        comment: @params[:appt_review][:comments],
-      )
+    if @params[:appt_reviews]
+      data = @params[:appt_reviews].to_unsafe_hash()
+      data.each do |d|
+        Review.create(
+          appointment_id: d[0].split('_').last,
+          rating: d[1]['rating'],
+          comment: d[1]['comments']
+        )
+      end
     end
   end
 end
+
+
+# "appt_reviews"=>{
+#   "review_for_appt_1"=>{
+#     "rating"=>"Positive", "comments"=>""}, 
+#   "review_for_appt_2"=>{
+#     "rating"=>"Positive", "comments"=>""}, 
+#   "review_for_appt_3"=>{
+#     "rating"=>"Positive", "comments"=>""}}

@@ -1,39 +1,46 @@
-<% @appts_to_review.each do |k,v| %>
-  <div class="review-card">
-    <%= form_for :appt_review, url: submit_appt_reviews_student_path, method: :post do |f| %>
-      <div class="row">
-        <div class="small-12 medium-2 columns">
-          <div class="tutor-box">
-            <%= image_tag(v[:tutor_pic_url], class: 'review-tutor-pic') %>
-            <p class="tutor-name"><%= v[:tutor] %></p>
+<h4 class="dash-home-header">Appointment Reviews</h4>
+<%= form_for :appt_reviews, url: submit_appt_reviews_student_path, method: :post do |f| %>
+  <% @appts_to_review.each do |k,v| %>
+    <%= f.fields_for "review_for_appt_#{v[:appt_id]}" do |ff| %>
+      <div class="review-card">
+        <div class="row">
+          <div class="small-12 medium-2 columns">
+            <div class="tutor-box">
+              <%= image_tag(v[:tutor_pic_url], class: 'review-tutor-pic') %>
+              <p class="tutor-name"><%= v[:tutor] %></p>
+            </div>
           </div>
-        </div>
-        <div class="small-12 medium-3 columns">
-          <p class="appt-details"><%= v[:subject_and_call_number] %></br><%= v[:friendly_name] %></br><%= v[:date] %></br><%= v[:time] %></p>
-        </div>
-        <div class="small-12 medium-4 columns">
-          <div class="helpful-box">
-            <h5 class="center">Was this session helpful?</h5>
-            <div class="row">
-              <div class="small-6 columns">
-                <p class="center no-bottom-margin">Yes</p>
-                <%= f.radio_button(:rating, 'Positive', class: 'rating-radio') %>
-              </div>
-              <div class="small-6 columns">
-                <p class="center no-bottom-margin">No</p>
-                <%= f.radio_button(:rating, 'Negative', class: 'rating-radio') %>
+          <div class="small-12 medium-3 columns">
+            <p class="appt-details"><%= v[:subject_and_call_number] %></br><%= v[:friendly_name] %></br><%= v[:date] %></br><%= v[:time] %></p>
+          </div>
+          <div class="small-12 medium-4 columns">
+            <div class="helpful-box">
+              <h5 class="center">Was this session helpful?</h5>
+              <div class="row">
+                <div class="small-6 columns">
+                  <p class="center no-bottom-margin">Yes</p>
+                  <%= ff.radio_button(:rating, 'Positive', class: 'rating-radio') %>
+                </div>
+                <div class="small-6 columns">
+                  <p class="center no-bottom-margin">No</p>
+                  <%= ff.radio_button(:rating, 'Negative', class: 'rating-radio') %>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="small-12 medium-3 columns">
-          <div class="comments-box">
-            <%= f.label :comments, 'Optional Comments' %>
-            <%= f.text_area :comments, size: '8x4' %>
-            <%= f.hidden_field(:appt_id, value: v[:appt_id] ) %>
+          <div class="small-12 medium-3 columns">
+            <div class="comments-box">
+              <%= ff.label :comments, 'Optional Comments' %>
+              <%= ff.text_area :comments, size: '8x4' %>
+            </div>
           </div>
         </div>
       </div>
     <% end %>
+  <% end %>
+  <div class="row">
+    <div class="small-12 medium-3 medium-offset-9 columns">
+      <%= f.submit 'Finish Reviews', class: 'custom-button blue full-width margin-top-1em' %>
+    </div>
   </div>
 <% end %>

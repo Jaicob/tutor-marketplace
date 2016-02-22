@@ -14,5 +14,7 @@
 class Review < ActiveRecord::Base
   belongs_to :appointment
 
+  validates :appointment_id, :rating, presence: true
+
   enum rating: ['Positive', 'Negative']
 end

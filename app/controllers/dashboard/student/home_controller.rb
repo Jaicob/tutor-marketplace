@@ -19,7 +19,7 @@ class Dashboard::Student::HomeController < DashboardController
 
   def submit_appt_reviews
     puts "PARAMS!!!!!!!! = #{params}"
-    if params[:appt_review]
+    if params[:appt_reviews]
       ApptReviewCreator.new(@student, params).create_reviews
     end
     redirect_to home_student_path(@student)
