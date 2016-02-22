@@ -59,12 +59,3 @@ class ApptReviewCreator
     end
   end
 end
-
-
-# "appt_reviews"=>{
-#   "review_for_appt_1"=>{
-#     "rating"=>"Positive", "comments"=>""}, 
-#   "review_for_appt_2"=>{
-#     "rating"=>"Positive", "comments"=>""}, 
-#   "review_for_appt_3"=>{
-#     "rating"=>"Positive", "comments"=>""}}
