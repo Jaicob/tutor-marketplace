@@ -38,4 +38,18 @@ class TutorAnalyzer
     return total
   end
 
+  def approval_rating
+    return @tutor.reviews.count > 0 ? @tutor.reviews.count/@tutors.reviews.where(rating: 'Positive').count : 0
+  end
+
+  # def approval_rating
+  #   if @tutor.reviews.count > 0
+  #     total = @tutor.reviews.count;
+  #     positive = @tutors.reviews.where(rating: 'Positive').count;
+  #     return positive/total
+  #   else
+  #     return 0
+  #   end
+  # end
+
 end
