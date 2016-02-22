@@ -24,7 +24,7 @@ class ProfilePicUploader < CarrierWave::Uploader::Base
   # end
 
   def default_url(*args)
-    "panda.png"
+    "panda.jpg"
   end
 
   # Process files as they are uploaded:

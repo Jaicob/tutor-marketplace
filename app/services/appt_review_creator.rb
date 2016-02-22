@@ -35,7 +35,8 @@ class ApptReviewCreator
         appt_id: appt.id,
         tutor_pic_url: appt.tutor.profile_pic_url(:thumb),
         tutor: appt.tutor.public_name,
-        course: appt.course.formatted_name,
+        subject_and_call_number: appt.course.subject.name + " " +appt.course.call_number ,
+        friendly_name: appt.course.friendly_name,
         time: appt.time,
         date: appt.date,
       }
