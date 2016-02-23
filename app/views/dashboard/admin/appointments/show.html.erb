@@ -1,37 +1,109 @@
 <div class="row">
-  <table>
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Tutor</th>
-        <th>Student</th>
-        <th>Course</th>
-        <th>Date</th>
-        <th>Time</th>
-        <th>Status</th>
-        <th>School</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><%= @appt.id %></td>
-        <td><%= @appt.slot.tutor.full_name %></td>
-        <td><%= @appt.student.full_name %></td>
-        <td><%= @appt.course.formatted_name %></td>
-        <td><%= @appt.date %>
-        <td><%= @appt.time %></td>
-        <td><%= @appt.status %></td>
-        <td><%= @appt.slot.tutor.school.name %></td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="small-12 medium-9 columns">
+    <h2>Appointment #<%= @appt.id %></h2>
+  </div>
+  <div class="small-12 medium-3 columns">
+    <%= link_to 'All Appointments', admin_appointments_path, class: 'custom-button full-width blue' %>
+  </div>
 </div>
 
-<div class="row">
-  <%= form_for @appt, url: admin_appointment_path(@appt) do |f| %>
-    <%= f.label :status %>
-    <%= f.select(:status, options_for_select(['Scheduled', 'Cancelled', 'Completed'], ["#{@appt.status.to_s}"])) %>
+<!-- General Information -->
 
-    <%= f.submit %>
-  <% end %>
+<div class="row">
+  <div class="small-12 columns">
+    <h4>General Information</h4>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Tutor</th>
+          <th>Student</th>
+          <th>Course</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Status</th>
+          <th>School</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><%= @appt.id %></td>
+          <td><%= link_to @appt.slot.tutor.full_name, admin_tutor_path(@appt.tutor), class: 'blue-link' %></td>
+          <td><%= @appt.student.full_name %></td>
+          <td><%= link_to @appt.course.formatted_name, admin_course_path(@appt.course), class: 'blue-link' %></td>
+          <td><%= @appt.date %>
+          <td><%= @appt.time %></td>
+          <td><%= @appt.status %></td>
+          <td><%= link_to @appt.slot.tutor.school.name, admin_school_path(@appt.school), class: 'blue-link' %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Review Information -->
+
+<div class="row">
+  <div class="small-12 columns">
+    <h4>Review</h4>
+    <% if @review %>
+      <table>
+        <thead>
+          <tr>
+            <th>Review ID</th>
+            <th>Rating</th>
+            <th>Comment</th>
+            <th>Submitted</th>
+            <th>Follow Up Status</th>
+            <th>Follow Up Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><%= link_to @review.id, admin_review_path(@review), class: 'blue-link' %></td>
+            <td><%= @review.rating %></td>
+            <td><%= @review.comment %></td>
+            <td><%= @review.created_at.to_date %></td>
+            <td><%= @review.follow_up_status %></td>
+            <td><%= @review.follow_up_notes %></td>
+          </tr>
+        </tbody>
+      </table>
+    <% else %>
+      <p>No review submitted</p>
+    </div>
+  </div>
+<% end %>
+
+<!-- Charge Information -->
+
+<div class="row">
+  <div class="small-12 columns">
+    <h4>Charge</h4>
+    <h6>*Charge may include payment for multiple appointments.</h4>
+    <table>
+      <thead>
+        <tr>
+          <th>Charge ID</th>
+          <th>Number of Appts</th>
+          <th>Amount</th>
+          <th>Axon Fee</th>
+          <th>Tutor Fee</th>
+          <th>Stripe Charge ID</th>
+          <th>Promotion ID</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><%= @charge.id %></td>
+          <td><%= @charge.appointments.count %></td>
+          <td>$<%= display_price(@charge.amount) %></td>
+          <td>$<%= display_price(@charge.axon_fee) %></td>
+          <td>$<%= display_price(@charge.tutor_fee) %></td>
+          <td><%= @charge.stripe_charge_id %></td>
+          <td><%= @charge.promotion_id || 'None' %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

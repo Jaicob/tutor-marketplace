@@ -1,29 +1,46 @@
 <div class="row">
-  <div class="small-12 medium-4 columns">
-    <h3>Promotion Details</h3>
+  <div class="small-12 medium-8 columns">
+    <h2>Promotion #<%= @promotion.id %></h2>
+    <%= link_to 'Edit', edit_admin_promotion_path(@promotion), class: 'custom-button' %>
   </div>
   <div class="small-12 medium-4 columns">
-    <%= link_to 'Back to All Promotions', admin_promotions_path, class: 'custom-button full-width blue' %>
-  </div>
-  <div class="small-12 medium-4 columns">
-    <%= link_to 'New Promotion', new_admin_promotion_path, class: 'custom-button full-width' %>
+    <%= link_to 'All Promotions', admin_promotions_path, class: 'custom-button full-width blue' %>
   </div>
 </div>
+
+<!-- Promotion Details -->
+
 <div class="row">
-  <div class="small-12">
+  <div class="small-12 columns">
+    <h4>Promotion Details</h4>
     <table>
       <thead>
         <tr>
           <th>ID</th>
           <th>Code</th>
-          <th>% Off</th>
+          <th>Discount Percentage</th>
           <th>Start Date</th>
           <th>End Date</th>
           <th>Redemption Limit</th>
           <th>Redemption Count</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><%= @promotion.id %></td>
+          <td><%= @promotion.code %></td>
+          <td><%= @promotion.amount %></td>
+          <td><%= @promotion.valid_from %></td>
+          <td><%= @promotion.valid_until %></td>
+          <td><%= @promotion.redemption_limit %></td>
+          <td><%= @promotion.redemption_count %></td>
+        </tr>
+      </tbody>
+      <thead>
+        <tr>
+          <th>Redeemer</th>
           <th>Single Appt/Booking</th>
           <th>Single Redemption/Student</th>
-          <th>Redeemer</th>
           <th>Student ID</th>
           <th>Course ID</th>
           <th>Tutor ID</th>
@@ -32,16 +49,9 @@
       </thead>
       <tbody>
         <tr>
-          <td><p class="id-link-for-admin"><%= @promotion.id %></p></td>
-          <td><%= @promotion.code %></td>
-          <td><%= @promotion.amount %></td>
-          <td><%= @promotion.valid_from %></td>
-          <td><%= @promotion.valid_until %></td>
-          <td><%= @promotion.redemption_limit %></td>
-          <td><%= @promotion.redemption_count %></td>
+          <td><%= @promotion.redeemer.humanize if @promotion.redeemer %></td>
           <td><%= @promotion.single_appt == 'true' ? 'True' : 'False' %></td>
           <td><%= @promotion.repeat_use == 'repeat' ? 'True' : 'False' %></td>
-          <td><%= @promotion.redeemer.humanize if @promotion.redeemer %></td>
           <td><%= @promotion.student_id if @promotion.student_id %></td>
           <td><%= @promotion.course_id if @promotion.course_id %></td>
           <td><%= @promotion.tutor_id if @promotion.tutor_id %></td>
@@ -51,66 +61,26 @@
     </table>
   </div>
 </div>
+
+<!-- Promotion Redemptions -->
+
 <div class="row">
-  <div class="small-12 medium-4 columns">
-    <h3>Update Promotion</h3>
+  <div class="small-12 columns">
+    <h4>Redemptions</h4>
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Appt. ID</th>
+          <th>Charge ID</th>
+          <th>Stripe Charge ID</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
 
-    <%= form_for :promotion, url: admin_promotion_path(@promotion), method: :put do |f| %>
-
-      <%= f.label :code %>
-      <%= f.text_field :code %>
-
-      <%= f.label :amount, 'Percent Off' %>
-      <p class="fine-print">Numbers only. Do not include percent sign.</p>
-      <p class="fine-print">Enter '100' for a free session, '10' for 10% off, etc.</p>
-      <%= f.text_field :amount, required: true %>
-
-      <%= f.label :valid_from, "Valid From:" %>
-      <%= f.date_select :valid_from, order: [:month, :day, :year], start_year: Date.today.year, end_year: Date.today.year + 1, required: true %>
-
-      <%= f.label :valid_until, "Valid Until:" %>
-      <%= f.date_select :valid_until, order: [:month, :day, :year], start_year: Date.today.year, end_year: Date.today.year + 1, required: true %>
-
-      <%= f.label :redemption_limit, 'Redemption Limit' %>
-      <p class="fine-print">How many times can this promo code be redeemed in total?</p>
-      <%= f.number_field :redemption_limit, required: true %>
-
-      <%= f.label :repeat_use, 'Single Redemption Per Student' %>
-      <p class="fine-print">An eligible student account can only redeem this promo code once.</p>
-      <%= f.select(:repeat_use, options_for_select({'True' => :no_repeat, 'False'=> :repeat, })) %>
-
-      <%= f.label :single_appt, 'Single Appointment Per Booking' %>
-      <p class="fine-print">In a booking with three appointments, this promo code will only discount one of the appointments.</p>
-      <%= f.select(:single_appt, options_for_select({'True' => :true, 'False'=> :false})) %>
-
-      <%= f.label :redeemer, 'Eligible Redeemers' %>
-      <p class="fine-print">What student accounts are eligible to redeem this promo code?</p>
-      <%= f.select(:redeemer, options_for_select({'Any Student' => :any_student, 'One Specific Student' => :specific_student, 'A Student Group' => :student_group})) %>
-  
-      <%= f.label :student_id, 'Student ID' %>
-      <p class="fine-print">If this promo code is only redeemable by a specific student, enter the Student ID here</p>
-      <%= f.text_field :student_id %>
-
-      <%= f.label :course_id, 'Course ID' %>
-      <p class="fine-print">If this promo code is only redeemable for a specific course, enter the Course ID here</p>
-      <%= f.text_field :course_id %>
-
-      <%= f.label :tutor_id, 'Tutor ID' %>
-      <p class="fine-print">If this promo code is only redeemable for a specific tutor, enter the Tutor ID here</p>
-      <%= f.text_field :tutor_id %>
-
-      <%= f.label :description %>
-      <p class="fine-print">This description will appear on Review Booking page to customer. Make sure it is descriptive and appropriate for public use.</p>
-      <%= f.text_area :description, required: true %>
-
-      <%= f.hidden_field :issuer, value: 'axon' %>
-
-      <%= f.submit 'Update Promotion', class: 'custom-button' %>
-    <% end %>
-  </div>
-  <div class="small-12 medium-4 columns">
-    <h3>Destroy Promotion</h3>
-    <p class="fine-print bottom-margin">This cannot be undone. You should only destroy a promotion that was made in error or for test purposes. Promotions that have come to an end should be disabled by updating the Redemption Limit or Valid Until date to prevent further redemptions. This way we retain a record of past promotions for information purposes.</p>
-    <%= button_to('Delete Promotion', admin_promotion_path(@promotion), method: :delete, class: 'custom-button danger') %>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>

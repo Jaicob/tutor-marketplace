@@ -1,58 +1,63 @@
 <div class="row">
-  <div class="small-12 medium-4 medium-offset-8 columns">
+  <div class="small-12 medium-8 columns">
+    <h2>Search Promotions</h2>
+  </div>
+  <div class="small-12 medium-4 columns">
     <%= link_to 'New Promotion', new_admin_promotion_path, class: 'custom-button full-width' %>
   </div>
 </div>
 <div class="row">
-  <div class="small-12">
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Code</th>
-          <th>% Off</th>
-          <th>Start Date</th>
-          <th>End Date</th>
-          <th>Redemption Limit</th>
-          <th>Redemption Count</th>
-          <th>Single Appt/Booking</th>
-          <th>Single Redemption/Student</th>
-          <th>Redeemer</th>
-          <th>Student ID</th>
-          <th>Course ID</th>
-          <th>Tutor ID</th>
-          <th>Description</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @promotions.each do |promotion| %>
-        <tr>
-          <td><%= link_to promotion.id, admin_promotion_path(promotion), class: 'id-link-for-admin' %></td>
-          <td><%= promotion.code %></td>
-          <td><%= promotion.amount %></td>
-          <td><%= promotion.valid_from %></td>
-          <td><%= promotion.valid_until %></td>
-          <td><%= promotion.redemption_limit %></td>
-          <td><%= promotion.redemption_count %></td>
-          <td><%= promotion.single_appt == 'true' ? 'True' : 'False' %></td>
-          <td><%= promotion.repeat_use == 'repeat' ? 'True' : 'False' %></td>
-          <td><%= promotion.redeemer.humanize if promotion.redeemer %></td>
-          <td><%= promotion.student_id if promotion.student_id %></td>
-          <td><%= promotion.course_id if promotion.course_id %></td>
-          <td><%= promotion.tutor_id if promotion.tutor_id %></td>
-          <td><%= promotion.description %></td>
-          <td><%= link_to 'Edit/Destroy', admin_promotion_path(promotion), class: 'custom-button blue' %></td>
-        </tr>
-        <% end %>
-      </tbody>
-    </table>
+  <div class="small-12 columns">
+    <% @promotions.each do |promotion| %>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Code</th>
+            <th>Discount Percentage</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Redemption Limit</th>
+            <th>Redemption Count</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><%= link_to promotion.id, admin_promotion_path(promotion), class: 'id-link-for-admin' %></td>
+            <td><%= promotion.code %></td>
+            <td><%= promotion.amount %></td>
+            <td><%= promotion.valid_from %></td>
+            <td><%= promotion.valid_until %></td>
+            <td><%= promotion.redemption_limit %></td>
+            <td><%= promotion.redemption_count %></td>
+          </tr>
+        </tbody>
+        <thead>
+          <tr>
+            <th>Redeemer</th>
+            <th>Single Appt/Booking</th>
+            <th>Single Redemption/Student</th>
+            <th>Student ID</th>
+            <th>Course ID</th>
+            <th>Tutor ID</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><%= promotion.redeemer.humanize if promotion.redeemer %></td>
+            <td><%= promotion.single_appt == 'true' ? 'True' : 'False' %></td>
+            <td><%= promotion.repeat_use == 'repeat' ? 'True' : 'False' %></td>
+            <td><%= promotion.student_id if promotion.student_id %></td>
+            <td><%= promotion.course_id if promotion.course_id %></td>
+            <td><%= promotion.tutor_id if promotion.tutor_id %></td>
+            <td><%= promotion.description %></td>
+          </tr>
+        </tbody>
+      </table>
+    <% end %>
   </div>
 </div>
-
-
-
-
 
 <div class="row">
   <div class="small-12 columns">

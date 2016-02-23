@@ -215,4 +215,7 @@ class Promotion < ActiveRecord::Base
     }
   end
 
+  def charges
+  end
+
 end
