@@ -9,7 +9,7 @@
 <div class="row">
   <div class="small-12 columns">
     <% @promotions.each do |promotion| %>
-      <table>
+      <table class="promo-table">
         <thead>
           <tr>
             <th>ID</th>
@@ -24,7 +24,7 @@
         <tbody>
           <tr>
             <td><%= link_to promotion.id, admin_promotion_path(promotion), class: 'id-link-for-admin' %></td>
-            <td><%= promotion.code %></td>
+            <td class="code"><%= promotion.code %></td>
             <td><%= promotion.amount %></td>
             <td><%= promotion.valid_from %></td>
             <td><%= promotion.valid_until %></td>

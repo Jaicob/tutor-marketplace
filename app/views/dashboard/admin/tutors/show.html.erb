@@ -1,24 +1,30 @@
 <div class="row">
   <div class="medium-9 columns">
-    <h3>Tutor Details</h3>
+    <h3>Tutor ID: <%= @tutor.id %></h3>
     <h1><%= @tutor.user.full_name %></h1>
   </div>
   <div class="medium-3 columns">
     <%= link_to 'Back to Tutor List', admin_tutors_path, class: 'custom-button full-width blue' %>
   </div>
 </div>
+
+<!-- Tutor Details -->
+
 <div class="row">
   <div class="medium-12 columns">
+    <h4>Details</h4>
     <table>
       <thead>
         <tr>
           <th>ID</th>
-          <th>Active Status</th>
+          <th>Status</th>
           <th>School</th>
-          <th>Email</th>
-          <th>Phone</th>
-          <th>Total Bookings</th>
+          <th>Contact</th>
+          <th>Appts.</th>
+          <th>Bookings*</th>
           <th>Joined</th>
+          <th>Last Sign In</th>
+          <th>Stripe Account ID</th>
         </tr>
       </thead>
       <tbody>
@@ -26,15 +32,83 @@
           <td><%= @tutor.id %></td>
           <td><%= @tutor.active_status %></td>
           <td><%= @tutor.school.name %></td>
-          <td><%= @tutor.user.email %></td>
-          <td><%= @tutor.phone_number %></td>
+          <td><%= @tutor.user.email %></br></br><%= @tutor.phone_number %></td>
           <td><%= @tutor.appointments.count %></td>
+          <td><%= @tutor.charges.count %></td>
           <td><%= @tutor.created_at.strftime('%-m-%d-%y') %></td>
+          <td><%= @tutor.user.last_sign_in_at.strftime('%-m-%d-%y') %></td>
+          <td><%= link_to @tutor.acct_id, stripe_account_link(@tutor.acct_id), class: 'blue-link', target: '_blank' %></td>
         </tr>
       </tbody>
     </table>
+    <p class="fine-print margin-bottom-2em no-max-width">*Bookings refers to the number of checkouts. One booking can include many appointments.</p>
   </div>
 </div>
+
+<!-- Admin actions as buttons -->
+
+<div class="row">
+  <div class="medium-12 columns">
+    <h4>Actions</h4>
+    <div class="box margin-bottom-1em">
+      <div class="row">
+        <div class="medium-3 columns">
+          <% if @tutor.active_status == 'Inactive' && @tutor.application_status != 'Approved' %>
+              <button class="custom-button short-width disabled" disabled="true">Can't Activate - Unapproved</button>
+          <% elsif @tutor.active_status == 'Inactive' && @tutor.application_status == 'Approved' %>
+            <%= form_for :tutor, url: admin_tutor_path(@tutor), method: 'patch' do |f| %>
+                <%= f.hidden_field :active_status, value: 'Active' %>
+                <%= f.submit 'Activate Tutor', class: 'custom-button short-width no-bottom-margin' %>
+            <% end %>
+          <% else %>
+            <%= form_for :tutor, url: admin_tutor_path(@tutor), method: 'patch' do |f| %>
+                <%= f.hidden_field :active_status, value: 'Inactive' %>
+                <%= f.submit 'Deactivate Tutor', class: 'custom-button short-width danger no-bottom-margin' %>
+            <% end %>
+          <% end %>
+        </div>
+        <div class="medium-3 columns">
+          <% if @tutor.application_status == 'Complete' %>
+            <%= form_for :tutor, url: admin_tutor_path(@tutor), method: 'patch' do |f| %>
+              <%= f.hidden_field :application_status, value: 'Approved' %>
+              <%= f.submit 'Approve Application', class: 'custom-button short-width no-bottom-margin' %>
+            <% end %>
+          <% else %>
+            <button class="custom-button short-width gray disabled no-bottom-margin" disabled="true">Application <%= @tutor.application_status %></button>
+          <% end %>
+        </div>
+        <div class="medium-3 columns">
+          <%= mail_to @tutor.email, 'Email Tutor', class: 'custom-button short-width blue no-bottom-margin' %>
+        </div>
+        <% if current_user.role == 'admin' %> <!-- dont allow Campus Managers to destroy tutor records -->
+          <div class="medium-3 columns">
+            <a href="#" data-reveal-id="confirmTutorDestroy" class='custom-button short-width danger no-bottom-margin'>Destroy Tutor</a>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Missing information notices -->
+
+<% if @tutor.application_status == 'Incomplete' %>
+  <div class="row">
+    <div class="medium-12 columns">
+      <h4>Missing Application Fields</h4>
+      <div class="box margin-bottom-1em">
+        <ul>
+        <% @tutor.missing_application_fields.each do |field| %>
+          <li class="left-align"><%= field %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<!-- Courses -->
+
 <div class="row">
   <div class="medium-12 columns">
     <h4>Courses</h4>
@@ -62,72 +136,8 @@
     </table>
   </div>
 </div>
-<div class="row">
-  <div class="medium-12 columns">
-    <h4>Actions</h4>
-    <div class="box margin-bottom-1em">
-      <div class="row">
-        <div class="medium-3 columns">
-          <% if @tutor.active_status == 'Inactive' && @tutor.application_status != 'Approved' %>
-              <button class="custom-button short-width disabled" disabled="true">Can't Activate - Unapproved</button>
-          <% elsif @tutor.active_status == 'Inactive' && @tutor.application_status == 'Approved' %>
-            <%= form_for :tutor, url: admin_tutor_path(@tutor), method: 'patch' do |f| %>
-                <%= f.hidden_field :active_status, value: 'Active' %>
-                <%= f.submit 'Activate Tutor', class: 'custom-button short-width' %>
-            <% end %>
-          <% else %>
-            <%= form_for :tutor, url: admin_tutor_path(@tutor), method: 'patch' do |f| %>
-                <%= f.hidden_field :active_status, value: 'Inactive' %>
-                <%= f.submit 'Deactivate Tutor', class: 'custom-button short-width danger' %>
-            <% end %>
-          <% end %>
-        </div>
-        <div class="medium-3 columns">
-          <% if @tutor.application_status == 'Complete' %>
-            <%= form_for :tutor, url: admin_tutor_path(@tutor), method: 'patch' do |f| %>
-              <%= f.hidden_field :application_status, value: 'Approved' %>
-              <%= f.submit 'Approve Application', class: 'custom-button short-width' %>
-            <% end %>
-          <% else %>
-            <button class="custom-button short-width gray disabled" disabled="true">Application <%= @tutor.application_status %></button>
-          <% end %>
-        </div>
-        <div class="medium-3 columns">
-          <%= mail_to @tutor.email, 'Email Tutor', class: 'custom-button short-width blue' %>
-        </div>
-        <% if current_user.role == 'admin' %> <!-- dont allow Campus Managers to destroy tutor records -->
-          <div class="medium-3 columns">
-            <a href="#" data-reveal-id="confirmTutorDestroy" class='custom-button short-width danger'>Destroy Tutor</a>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  </div>
-</div>
 
-<% if @tutor.application_status == 'Incomplete' %>
-  <div class="row">
-    <div class="medium-12 columns">
-      <h4>Missing Application Fields</h4>
-      <div class="box margin-bottom-1em">
-        <ul>
-        <% @tutor.missing_application_fields.each do |field| %>
-          <li class="left-align"><%= field %></li>
-        <% end %>
-        </ul>
-      </div>
-    </div>
-  </div>
-<% end %>
-
-<div class="row">
-  <div class="medium-12 columns">
-    <h4>Profile</h4>
-    <div class="box margin-bottom-1em">
-      <%= render '/dashboard/tutor/profile/tutor_profile' %>
-    </div>
-  </div>
-</div>
+<!-- Appointment Settings -->
 
 <div class="row">
   <div class="medium-12 columns">
@@ -148,6 +158,22 @@
     </table>
   </div>
 </div>
+
+
+<!-- Profile preview -->
+
+<div class="row">
+  <div class="medium-12 columns">
+    <h4>Profile</h4>
+    <div class="box margin-bottom-1em">
+      <%= render '/dashboard/tutor/profile/tutor_profile' %>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Transcript preview -->
 
 <% if @tutor.transcript_url %>
   <div class="row">
