@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160217222522) do
+ActiveRecord::Schema.define(version: 20160222220859) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -123,6 +123,18 @@ ActiveRecord::Schema.define(version: 20160217222522) do
 
   add_index "promotions", ["student_id"], name: "index_promotions_on_student_id", using: :btree
   add_index "promotions", ["tutor_id"], name: "index_promotions_on_tutor_id", using: :btree
+
+  create_table "reviews", force: :cascade do |t|
+    t.integer  "appointment_id",               null: false
+    t.integer  "rating"
+    t.text     "comment"
+    t.integer  "follow_up_status", default: 0
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.text     "follow_up_notes"
+  end
+
+  add_index "reviews", ["appointment_id"], name: "index_reviews_on_appointment_id", using: :btree
 
   create_table "schools", force: :cascade do |t|
     t.string   "name"

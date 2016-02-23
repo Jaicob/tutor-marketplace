@@ -28,7 +28,7 @@ class Slot < ActiveRecord::Base
   enum status: ['Open', 'Blocked', 'Zombie']
   enum slot_type: ['Weekly', 'OneTime']
 
-  # Ensure that datetimes are always saved as UTC 
+  # Ensure that datetimes are always saved as UTC
   def format_datetime
     self.start_time = self.start_time.in_time_zone("UTC")
   end

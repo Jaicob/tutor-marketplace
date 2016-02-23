@@ -19,11 +19,22 @@ FactoryGirl.define do
     student
     slot 
     course
-    start_time '2015-09-01 12:00'
+    start_time (Date.today + 2).to_s + ' 12:00'
     status 0
 
     trait :second do
-      start_time '2015-09-01 13:00'
+      start_time (Date.today + 2).to_s + ' 13:00'
+    end
+
+    trait :completed_without_review do 
+      status 2
+    end
+
+    trait :completed_with_review do 
+      status 2
+      after(:create) do |appt|
+        create(:review, appointment: appt)
+      end
     end
 
   end

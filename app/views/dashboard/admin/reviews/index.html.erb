@@ -1,0 +1,49 @@
+<div class="row">
+  <div class="small-12">
+    <h3>Search Reviews</h3>
+  </div>
+</div>
+<div class="row">
+  <div class="small-12">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Appt. ID</th>
+          <th>Tutor</th>
+          <th>Student</th>
+          <th>Rating</th>
+          <th>Comment</th>
+          <th>Submitted</th>
+          <th>Follow Up Status</th>
+          <th>Follow Up Notes</th>
+          <th>Save Updates</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @reviews.each do |review| %>
+        <tr>
+          <td><%= link_to review.id, admin_review_path(review), class: 'id-link-for-admin' %></td>
+          <td><%= review.appointment_id %></td>
+          <td><%= review.tutor.full_name %></td>
+          <td><%= review.student.full_name %></td>
+          <td><%= review.rating %></td>
+          <td><%= review.comment %></td>
+          <td><%= review.created_at.to_date %></td>
+          <%= form_for :review, url: admin_review_path(review), method: :put do |f| %>
+            <td><%= f.select(:follow_up_status, options_for_select(['None', 'Attempted', 'Contacted'], review.follow_up_status)) %></td>
+            <td><%= f.text_area :follow_up_notes, value: review.follow_up_notes %></td>
+            <td><%= f.submit 'Update', class: 'custom-button short-width' %></td>
+          <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="row">
+  <div class="small-12 columns">
+    <%= paginate @reviews %>
+  </div>
+</div>

@@ -6,7 +6,8 @@ module AdminNavHelper
       'Courses'       => admin_courses_path,
       'Appointments'  => admin_appointments_path,
       'Tutors'        => admin_tutors_path,
-      'Students'      => admin_students_path,      
+      'Students'      => admin_students_path,
+      'Reviews'       => admin_reviews_path      
     }
     if current_user.role == 'admin' # but not for campus_managers
       @admin_links['Promotions'] = admin_promotions_path

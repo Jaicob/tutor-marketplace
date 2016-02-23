@@ -107,6 +107,7 @@
 #       view_reschedule_options_student GET      /students/:id/reschedule/:appt_id(.:format)                                   dashboard/student/home#view_reschedule_options
 #               reschedule_appt_student PUT      /students/:id/reschedule/:appt_id(.:format)                                   dashboard/student/home#reschedule_appt
 #                   cancel_appt_student PUT      /students/:id/cancel_appt/:appt_id(.:format)                                  dashboard/student/home#cancel_appt
+#           submit_appt_reviews_student POST     /students/:id/submit_appt_reviews(.:format)                                   dashboard/student/home#submit_appt_reviews
 #                        search_student GET      /students/:id/search(.:format)                                                single_views#tutor_search
 #                       account_student GET      /students/:id/settings/account(.:format)                                      dashboard/student/settings#account
 #                  payment_info_student GET      /students/:id/settings/payment_info(.:format)                                 dashboard/student/settings#payment_info
@@ -185,6 +186,11 @@
 #                                       PATCH    /admin/promotions/:id(.:format)                                               dashboard/admin/promotions#update
 #                                       PUT      /admin/promotions/:id(.:format)                                               dashboard/admin/promotions#update
 #                                       DELETE   /admin/promotions/:id(.:format)                                               dashboard/admin/promotions#destroy
+#                  search_admin_reviews GET|POST /admin/reviews/search(.:format)                                               dashboard/admin/reviews#search
+#                         admin_reviews GET      /admin/reviews(.:format)                                                      dashboard/admin/reviews#index
+#                          admin_review GET      /admin/reviews/:id(.:format)                                                  dashboard/admin/reviews#show
+#                                       PATCH    /admin/reviews/:id(.:format)                                                  dashboard/admin/reviews#update
+#                                       PUT      /admin/reviews/:id(.:format)                                                  dashboard/admin/reviews#update
 #                api_v1_school_subjects GET      /api/v1/schools/:school_id/subjects(.:format)                                 api/v1/subjects#index {:format=>:json}
 #    api_v1_school_subjects_all_options GET      /api/v1/schools/:school_id/subjects-all-options(.:format)                     api/v1/subjects#all_options {:format=>:json}
 #                                       GET      /api/v1/schools/:school_id/subjects/:subject_id/courses(.:format)             api/v1/courses#index {:format=>:json}
@@ -226,7 +232,7 @@ Rails.application.routes.draw do
   # landing pages
   get '/get-started'          => 'single_views#landing_new_student'
   get '/become-a-tutor'       => 'single_views#landing_new_tutor'
-  
+
   # landing page and post url for registering existing tutors
   get '/welcome-back'         => 'single_views#existing_tutor_landing'
   post '/create-existing-tutor'  => 'tutor_onboarding#create_existing_tutor_account'
@@ -244,7 +250,7 @@ Rails.application.routes.draw do
   post '/change-school'       => 'cookies#change_school_id_cookie'
 
   # checkout pages
-  scope '/tutors/:id' do 
+  scope '/tutors/:id' do
     get   '/select_course'    => 'checkout#select_course', as: 'checkout_select_course'
     post  '/set_course_id'    => 'checkout#set_course_id', as: 'checkout_set_course_id'
     get   '/select_times'     => 'checkout#select_times', as: 'checkout_select_times'
@@ -318,6 +324,7 @@ Rails.application.routes.draw do
       get  '/reschedule/:appt_id'  => 'dashboard/student/home#view_reschedule_options', as: 'view_reschedule_options'
       put  '/reschedule/:appt_id'  => 'dashboard/student/home#reschedule_appt', as: 'reschedule_appt'
       put  '/cancel_appt/:appt_id' => 'dashboard/student/home#cancel_appt', as: 'cancel_appt'
+      post '/submit_appt_reviews'  => 'dashboard/student/home#submit_appt_reviews', as: 'submit_appt_reviews'
       get  '/search'               => 'single_views#tutor_search'
       scope 'settings' do
         get  '/account'               => 'dashboard/student/settings#account'
@@ -347,10 +354,9 @@ Rails.application.routes.draw do
       resources :students do collection { match 'search' => 'students#search', via: [:get, :post], as: :search } end
       resources :appointments do collection { match 'search' => 'appointments#search', via: [:get, :post], as: :search } end
       resources :slots do collection { match 'search' => 'slots#search', via: [:get, :post], as: :search } end
-      resources :schools do
-        collection { match 'search' => 'schools#search', via: [:get, :post], as: :search }
-      end
+      resources :schools do collection { match 'search' => 'schools#search', via: [:get, :post], as: :search } end
       resources :promotions do collection { match 'search' => 'promotions#search', via: [:get, :post], as: :search } end
+      resources :reviews, only: [:index, :show, :update] do collection { match 'search' => 'reviews#search', via: [:get, :post], as: :search } end
     end
   end
 
@@ -384,7 +390,7 @@ Rails.application.routes.draw do
       resources :students, only: [] do
         resources :appointments, only: [:index, :show, :create], controller: 'student_appointments' do
           collection do
-          	delete 'delete'
+            delete 'delete'
           end
           member do
             put 'reschedule'

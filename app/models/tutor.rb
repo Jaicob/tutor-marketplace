@@ -148,12 +148,6 @@ class Tutor < ActiveRecord::Base
 
   # called in update action in Dashboard::Admin::TutorsController to trigger activation/deactivation email if :active_status param is present
   def send_active_status_change_email(tutor_params)
-    # TODO-JT - remove this first statement after ETO period is over...
-    if tutor_params[:active_status] == 'Active' && ExistingTutorOnboarding.new(self.email).existing_tutor? == true
-      ExistingTutorMailer.delay.activation_email(self.user.id)
-      return
-    end
-    # end of temporary ETO method to delete - keep statements below
     if tutor_params[:active_status] == 'Active'
       TutorManagementMailer.delay.activation_email(self.user.id)
     end
