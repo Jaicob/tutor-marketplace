@@ -1,5 +1,6 @@
 class Dashboard::Admin::AppointmentsController < AdminController
   before_action :set_appt, only: [:show, :update, :destroy]
+  before_action :set_review, only: [:show]
 
   def search
     index
@@ -12,6 +13,7 @@ class Dashboard::Admin::AppointmentsController < AdminController
   end
 
   def show
+    @charge = @appt.charge
   end
 
   def update
@@ -30,6 +32,12 @@ class Dashboard::Admin::AppointmentsController < AdminController
 
     def set_appt
       @appt = Appointment.find(params[:id])
+    end
+
+    def set_review
+      if @appt.review
+        @review = @appt.review
+      end
     end
 
     def appt_params

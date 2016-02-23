@@ -1,10 +1,13 @@
 <div class="row">
-  <div class="small-12">
-    <h3>Review Details: #<%= @review.id %></h3>
+  <div class="small-12 medium-9 columns">
+    <h3>Review #<%= @review.id %></h3>
+  </div>
+  <div class="small-12 medium-3 columns">
+    <%= link_to 'All Reviews', admin_reviews_path, class: 'custom-button full-width blue' %>
   </div>
 </div>
 <div class="row">
-  <div class="small-12">
+  <div class="small-12 columns">
     <table>
       <thead>
         <tr>
@@ -21,8 +24,8 @@
       <tbody>
         <tr>
           <td><%= @review.id %></td>
-          <td><%= @review.appointment_id %></td>
-          <td><%= @review.tutor.full_name %></td>
+          <td><%= link_to @review.appointment_id, admin_appointment_path(@review.appointment), class: 'blue-link' %></td>
+          <td><%= link_to @review.tutor.full_name, admin_tutor_path(@review.tutor), class: 'blue-link' %></td>
           <td><%= @review.student.full_name %></td>
           <td><%= @review.rating %></td>
           <td><%= @review.comment %></td>
@@ -34,13 +37,15 @@
 </div>
 
 <div class="row">
-  <div class="small-12">
+  <div class="small-12 medium-3 columns">
     <%= form_for @review, url: admin_review_path(@review), method: :put do |f| %>
-      <%= f.label :follow_up_status, 'Follow Up Status' %>
-      <%= f.select(:follow_up_status, options_for_select(['None', 'Attempted', 'Contacted'], @review.follow_up_status)) %></td>
-      <%= f.label :follow_up_notes, 'Follow Up Notes' %>
-      <%= f.text_area :follow_up_notes, value: @review.follow_up_notes %></td>
-      <%= f.submit 'Update', class: 'custom-button' %></td>
+    <h5>Follow Up Status</h5>
+    <%= f.select(:follow_up_status, options_for_select(['None', 'Attempted', 'Contacted'], @review.follow_up_status)) %>
+  </div>
+  <div class="small-12 medium-9 columns">
+    <h5>Follow Up Notes</h5>
+    <%= f.text_area :follow_up_notes, value: @review.follow_up_notes, size: '10x10' %></td>
+    <%= f.submit 'Update', class: 'custom-button right' %></td>
     <% end %>
   </div>
 </div>
