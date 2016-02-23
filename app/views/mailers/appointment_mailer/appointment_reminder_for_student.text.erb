@@ -4,7 +4,8 @@ Your tutoring appointment is coming up soon! In case you forgot, here are the de
 
 Your Tutor: <%= @tutor.public_name %>
 Course: <%= @appt.course.formatted_name %>
-Date/Time: <%= @appt.start_time.in_time_zone(@school.timezone).strftime("%b %e, %l:%M %p") %>
+Date: <%= @appt.date %>
+Time: <%= @appt.time %>
 
 Keep in mind:
 

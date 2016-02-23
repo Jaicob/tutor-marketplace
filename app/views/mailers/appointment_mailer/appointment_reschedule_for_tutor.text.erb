@@ -1,11 +1,12 @@
 Hi <%= @tutor.first_name %>,
 
-Your appointment scheduled for <%= @original_time.in_time_zone(@school.timezone).strftime("%b %e, %l:%M %p") %> has been rescheduled. The new details for your appointment are below:
+Your appointment scheduled for <%= @original_time.in_time_zone(@school.timezone).strftime("%A, %b. %e at %l:%M %p") %> has been rescheduled. The new details for your appointment are below:
 
 Student Name: <%= @student.public_name %>
 Student Contact Info: <%= @student.email %>
 Course: <%= @appt.course.formatted_name %>
-Date/Time: <%= @appt.start_time.in_time_zone(@school.timezone).strftime("%b %e, %l:%M %p") %>
+Date: <%= @appt.date %>
+Time: <%= @appt.time %>
 Student’s Preferred Location: <%= @appt.location %>
 
 If you haven’t already, please reach out the student as soon as possible to pick a place to meet up. Public, on-campus locations like the library, student center, or coffee shops are best! 
