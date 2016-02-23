@@ -66,6 +66,19 @@ class Promotion < ActiveRecord::Base
     end
   end
 
+  # TODO-JT - Discuss with Jaicob - could be refactored into using a relationship? Putting an appt_id attribute on StudentsPromotions model?
+  def charges
+    charges = []
+    self.students.each do |student|
+      student.charges.each do |charge|
+        if charge.promotion_id == self.id
+          charges << charge
+        end
+      end
+    end
+    return charges
+  end
+
   # IMPORTANT - PASS IN TC_RATE in CENTS!
   def self.redeem_promo_code(promo_code, tc_rate, number_of_appts, tutor_id, course_id, student_id=nil, receipt_only=nil) # this assumes that multiple appts in one booking are all for the same tutor_course (i.e. the rate is the same for each appt)
     promotion = Promotion.find_by(code: promo_code)
@@ -213,9 +226,6 @@ class Promotion < ActiveRecord::Base
       promotion_id: self.id,
       description: self.description
     }
-  end
-
-  def charges
   end
 
 end

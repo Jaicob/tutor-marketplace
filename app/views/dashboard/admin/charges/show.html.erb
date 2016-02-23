@@ -1,0 +1,86 @@
+<div class="row">
+  <div class="medium-9 columns">
+    <h3>Charge #<%= @charge.id %></h3>
+  </div>
+  <div class="medium-3 columns">
+    <%= link_to 'All Charges', admin_charges_path, class: 'custom-button blue full-width' %>
+  </div>
+</div>
+
+<!-- Charge Details -->
+
+<div class="row">
+  <div class="medium-12 columns">
+    <h4>Details</h4>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Amount</th>
+          <th>Axon Fee</th>
+          <th>Tutor Fee</th>
+          <th>Appts.</th>
+          <th>Tutor</th>
+          <th>Student</th>
+          <th>Stripe @Charge ID</th>
+          <th>Promotion</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><%= @charge.id %></td>
+          <td>$<%= display_price(@charge.amount) %></td>
+          <td>$<%= display_price(@charge.axon_fee) %></td>
+          <td>$<%= display_price(@charge.tutor_fee) %></td>
+          <td><%= @charge.appointments.count %></td>
+          <td><%= link_to @charge.tutor.full_name, admin_tutor_path(@charge.tutor), class: 'blue-link' %></td>
+          <td><%= @charge.student.full_name %></td>
+          <td><%= @charge.stripe_charge_id %></td>
+          <td>
+            <% if @charge.promotion_id.nil? %>
+              None
+            <% else %>
+              <%= link_to @charge.promotion_id, admin_promotion_path(@charge.promotion_id), class: 'blue-link' %>
+            <% end %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Appointment Details -->
+
+<div class="row">
+  <div class="small-12 columns">
+    <h4>Appointments</h4>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Tutor</th>
+          <th>Student</th>
+          <th>Course</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Status</th>
+          <th>School</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @charge.appointments.each do |appt| %>
+          <tr>
+            <td><%= link_to appt.id, "/admin/appointments/#{appt.id}", class: 'id-link-for-admin' %></td>
+            <td><%= appt.slot.tutor.full_name if appt.slot.tutor %></td>
+            <td><%= appt.student.full_name if appt.student %></td>
+            <td><%= appt.course.formatted_name %></td>
+            <td><%= appt.date %>
+            <td><%= appt.time %></td>
+            <td><%= appt.status %></td>
+            <td><%= appt.slot.tutor.school.name if appt.slot.tutor %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

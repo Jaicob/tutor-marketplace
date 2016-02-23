@@ -357,6 +357,7 @@ Rails.application.routes.draw do
       resources :schools do collection { match 'search' => 'schools#search', via: [:get, :post], as: :search } end
       resources :promotions do collection { match 'search' => 'promotions#search', via: [:get, :post], as: :search } end
       resources :reviews, only: [:index, :show, :update] do collection { match 'search' => 'reviews#search', via: [:get, :post], as: :search } end
+      resources :charges, only: [:index, :show] do collection { match 'search' => 'charges#search', via: [:get, :post], as: :search} end
     end
   end
 

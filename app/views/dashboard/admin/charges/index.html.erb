@@ -1,0 +1,51 @@
+<div class="row">
+  <div class="medium-9 columns">
+    <h3>Search Charges</h3>
+  </div>
+</div>
+
+<div class="row">
+  <div class="medium-12 columns">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Amount</th>
+          <th>Axon Fee</th>
+          <th>Tutor Fee</th>
+          <th>Appts.</th>
+          <th>Tutor</th>
+          <th>Student</th>
+          <th>Stripe Charge ID</th>
+          <th>Promotion</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @charges.each do |charge| %>
+        <tr>
+          <td><%= link_to charge.id, admin_charge_path(charge), class: 'id-link-for-admin' %></td>
+          <td>$<%= display_price(charge.amount) %></td>
+          <td>$<%= display_price(charge.axon_fee) %></td>
+          <td>$<%= display_price(charge.tutor_fee) %></td>
+          <td><%= charge.appointments.count %></td>
+          <td><%= link_to charge.tutor.full_name, admin_tutor_path(charge.tutor), class: 'blue-link' %></td>
+          <td><%= charge.student.full_name %></td>
+          <td><%= charge.stripe_charge_id %></td>
+          <td>
+            <% if charge.promotion_id.nil? %>
+              None
+            <% else %>
+              <%= link_to charge.promotion_id, admin_promotion_path(charge.promotion_id), class: 'blue-link' %>
+            <% end %>
+          </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="row">
+  <div class="small-12 columns">
+  </div>
+</div>

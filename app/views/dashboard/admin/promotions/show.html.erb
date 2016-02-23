@@ -1,7 +1,7 @@
 <div class="row">
   <div class="small-12 medium-8 columns">
-    <h2>Promotion #<%= @promotion.id %></h2>
-    <%= link_to 'Edit', edit_admin_promotion_path(@promotion), class: 'custom-button' %>
+    <h3>Promotion #<%= @promotion.id %></h3>
+    <%= link_to 'Edit', edit_admin_promotion_path(@promotion), class: 'custom-button gray' %>
   </div>
   <div class="small-12 medium-4 columns">
     <%= link_to 'All Promotions', admin_promotions_path, class: 'custom-button full-width blue' %>
@@ -27,7 +27,7 @@
       </thead>
       <tbody>
         <tr>
-          <td><%= @promotion.id %></td>
+          <td><%= link_to @promotion.id, admin_promotion_path(@promotion), class: 'id-link-for-admin' %></td>
           <td><%= @promotion.code %></td>
           <td><%= @promotion.amount %></td>
           <td><%= @promotion.valid_from %></td>
@@ -67,20 +67,29 @@
 <div class="row">
   <div class="small-12 columns">
     <h4>Redemptions</h4>
-    <table>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Appt. ID</th>
-          <th>Charge ID</th>
-          <th>Stripe Charge ID</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-
-        </tr>
-      </tbody>
-    </table>
+    <% if @promotion.charges.any? %>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Charge ID</th>
+            <th>Appt. IDs</th>
+            <th>Stripe Charge ID</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <% @promotion.charges.each do |charge| %>
+              <td>#</td>
+              <td><%= charge.id %></td>
+              <td><%= charge.appointments.map{|appt| appt.id} %></td>
+              <td><%= charge.stripe_charge_id %></td>
+            <% end %>
+          </tr>
+        </tbody>
+      </table>
+    <% else %>
+      <p>No redemptions</p>
+    <% end %>
   </div>
 </div>
