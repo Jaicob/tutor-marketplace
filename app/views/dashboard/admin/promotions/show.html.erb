@@ -1,6 +1,6 @@
 <div class="row">
   <div class="small-12 medium-8 columns">
-    <h3>Promotion #<%= @promotion.id %></h3>
+    <h3>Promotion ID: <%= @promotion.id %></h3>
     <%= link_to 'Edit', edit_admin_promotion_path(@promotion), class: 'custom-button gray' %>
   </div>
   <div class="small-12 medium-4 columns">
@@ -12,8 +12,8 @@
 
 <div class="row">
   <div class="small-12 columns">
-    <h4>Promotion Details</h4>
-    <table>
+    <h4>Details</h4>
+    <table class="promo-table">
       <thead>
         <tr>
           <th>ID</th>
@@ -28,10 +28,10 @@
       <tbody>
         <tr>
           <td><%= link_to @promotion.id, admin_promotion_path(@promotion), class: 'id-link-for-admin' %></td>
-          <td><%= @promotion.code %></td>
+          <td class="code"><%= @promotion.code %></td>
           <td><%= @promotion.amount %></td>
-          <td><%= @promotion.valid_from %></td>
-          <td><%= @promotion.valid_until %></td>
+          <td><%= @promotion.valid_from.strftime('%-m-%d-%y') %></td>
+          <td><%= @promotion.valid_until.strftime('%-m-%d-%y') %></td>
           <td><%= @promotion.redemption_limit %></td>
           <td><%= @promotion.redemption_count %></td>
         </tr>
@@ -73,17 +73,19 @@
           <tr>
             <th>#</th>
             <th>Charge ID</th>
-            <th>Appt. IDs</th>
             <th>Stripe Charge ID</th>
+            <th>Redeemed At</th>
           </tr>
         </thead>
         <tbody>
           <tr>
+            <% n = 1 %>
             <% @promotion.charges.each do |charge| %>
-              <td>#</td>
-              <td><%= charge.id %></td>
-              <td><%= charge.appointments.map{|appt| appt.id} %></td>
-              <td><%= charge.stripe_charge_id %></td>
+              <td><%= n %></td>
+              <td><%= link_to charge.id, admin_charge_path(charge), class: 'blue-link' %></td>
+              <td><%= link_to charge.stripe_charge_id, stripe_charge_link(charge.stripe_charge_id), class: 'blue-link' %></td>
+              <td><%= charge.created_at.in_time_zone(charge.tutor.school.timezone).strftime('%A -  %-m/%d/%y - %l:%M %p') %></td>
+              <% n += 1 %>
             <% end %>
           </tr>
         </tbody>
