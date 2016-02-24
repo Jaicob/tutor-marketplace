@@ -64,6 +64,15 @@
     background-color: #DEDEDE;
     border-radius: 4px;
     padding: 0.5em;
+    .review-rating-mask {
+      font-size: 2em;
+      &.positive {
+        color: green;
+      }
+      &.negative {
+        color: red;
+      }
+    }
     .rating-radio {
       margin: 1em auto !important;
       display: block;

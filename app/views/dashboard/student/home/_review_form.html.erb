@@ -18,11 +18,27 @@
               <h5 class="center">Was this session helpful?</h5>
               <div class="row">
                 <div class="small-6 columns">
+
+
                   <p class="center no-bottom-margin">Yes</p>
-                  <%= ff.radio_button(:rating, 'Positive', class: 'rating-radio', required: true) %>
+                
+
+                  <div class="thumb-vote-box">
+                    <label>
+                      <%= ff.radio_button(:rating, 'Positive', class: 'rating-radio', required: true) %>
+                      <div class="thumb-mask"><i class="fi-like positive"></i></div>
+                    </label>
+                  </div>
+
+
+
+
+
+
                 </div>
                 <div class="small-6 columns">
                   <p class="center no-bottom-margin">No</p>
+                  <i class="fi-dislike negative"></i>
                   <%= ff.radio_button(:rating, 'Negative', class: 'rating-radio', required: true) %>
                 </div>
               </div>

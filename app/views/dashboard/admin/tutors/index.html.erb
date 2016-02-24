@@ -68,7 +68,6 @@
     <table>
       <thead>
         <tr>
-          <th>#</th>
           <th>ID</th>
           <th>Status</th>
           <th>School</th>
@@ -81,11 +80,10 @@
         </tr>
       </thead>
       <tbody>
-        <% n = 1 %>
         <% @tutors.each do |tutor| %>
           <tr>
-            <td><%= n %></td>
             <td><%= link_to tutor.id, admin_tutor_path(tutor) %></td>
+            <td><%= tutor.full_name %></td>
             <td><%= tutor.active_status %></td>
             <td><%= tutor.school.name %></td>
             <td><%= tutor.user.email %></br></br><%= tutor.phone_number %></td>
@@ -94,7 +92,6 @@
             <td><%= tutor.created_at.strftime('%-m-%d-%y') %></td>
             <td><%= tutor.user.last_sign_in_at.strftime('%-m-%d-%y') if tutor.user.last_sign_in_at %></td>
             <td><% if tutor.acct_id %><%= link_to tutor.acct_id, stripe_account_link(tutor.acct_id), target: '_blank' %><% end %></td>
-            <% n += 1 %>
           </tr>
         <% end %>
       </tbody>
