@@ -17,6 +17,7 @@ class Course < ActiveRecord::Base
   has_many :tutor_courses, dependent: :destroy
   has_many :tutors, through: :tutor_courses, dependent: :destroy
   has_many :appointments, dependent: :destroy
+  has_many :students, through: :appointments
 
   validates :call_number, presence: :true
   validates :friendly_name, presence: :true

@@ -28,13 +28,13 @@
       <tbody>
         <tr>
           <td><%= @appt.id %></td>
-          <td><%= link_to @appt.slot.tutor.full_name, admin_tutor_path(@appt.tutor), class: 'blue-link' %></td>
-          <td><%= @appt.student.full_name %></td>
-          <td><%= link_to @appt.course.formatted_name, admin_course_path(@appt.course), class: 'blue-link' %></td>
+          <td><%= link_to @appt.slot.tutor.full_name, admin_tutor_path(@appt.tutor) %></td>
+          <td><%= link_to @appt.student.full_name, admin_student_path(@appt.student) %></td>
+          <td><%= link_to @appt.course.formatted_name, admin_course_path(@appt.course) %></td>
           <td><%= @appt.date %>
           <td><%= @appt.time %></td>
           <td><%= @appt.status %></td>
-          <td><%= link_to @appt.slot.tutor.school.name, admin_school_path(@appt.school), class: 'blue-link' %></td>
+          <td><%= link_to @appt.slot.tutor.school.name, admin_school_path(@appt.school) %></td>
         </tr>
       </tbody>
     </table>
@@ -60,7 +60,7 @@
         </thead>
         <tbody>
           <tr>
-            <td><%= link_to @review.id, admin_review_path(@review), class: 'blue-link' %></td>
+            <td><%= link_to @review.id, admin_review_path(@review) %></td>
             <td><%= @review.rating %></td>
             <td><%= @review.comment %></td>
             <td><%= @review.created_at.to_date %></td>
@@ -71,9 +71,9 @@
       </table>
     <% else %>
       <p>No review submitted</p>
-    </div>
+    <% end %>
   </div>
-<% end %>
+</div>
 
 <!-- Charge Information -->
 
@@ -85,7 +85,8 @@
       <thead>
         <tr>
           <th>Charge ID</th>
-          <th>Number of Appts</th>
+          <th>Appts.</th>
+          <th>Appt IDs</th>
           <th>Amount</th>
           <th>Axon Fee</th>
           <th>Tutor Fee</th>
@@ -95,12 +96,13 @@
       </thead>
       <tbody>
         <tr>
-          <td><%= link_to @charge.id, admin_charge_path(@charge), class: 'id-link-for-admin' %></td>
+          <td><%= link_to @charge.id, admin_charge_path(@charge) %></td>
           <td><%= @charge.appointments.count %></td>
+          <td><%= @charge.appointments.map{|appt| appt.id} %></td>
           <td>$<%= display_price(@charge.amount) %></td>
           <td>$<%= display_price(@charge.axon_fee) %></td>
           <td>$<%= display_price(@charge.tutor_fee) %></td>
-          <td><%= @charge.stripe_charge_id %></td>
+          <td><% if @charge.stripe_charge_id %><%= link_to @charge.stripe_charge_id, stripe_charge_link(@charge.stripe_charge_id) %><% end %></td>
           <td><%= @charge.promotion_id || 'None' %></td>
         </tr>
       </tbody>

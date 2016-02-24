@@ -67,7 +67,7 @@
     <table>
       <thead>
         <tr>
-          <th>Count</th>
+          <th>#</th>
           <th>ID</th>
           <th>Active Status</th>
           <th>School</th>
@@ -80,8 +80,10 @@
         </tr>
       </thead>
       <tbody>
+        <% n = 1 %>
         <% @tutors.each do |tutor| %>
           <tr>
+            <td><%= n %></td>
             <td><%= link_to tutor.id, admin_tutor_path(tutor), class: 'id-link-for-admin' %></td>
             <td><%= tutor.active_status %></td>
             <td><%= tutor.school.name %></td>
@@ -92,6 +94,7 @@
             <td><%= tutor.application_status %></td>
             <td><%= tutor.created_at.strftime('%-m-%d-%y') %></td>
           </tr>
+          <% n += 1 %>
         <% end %>
       </tbody>
     </table>

@@ -31,12 +31,12 @@
           <td><%= @student.school.name %></td>
           <td><%= @student.appointments.count %></td>
           <td><%= @student.recent_appt? %></td>
-          <td><%= @student.last_appointment.start_time.strftime('%-m-%d-%y') if @student.last_appointment %>
+          <td><%= @student.last_appointment.start_time.strftime('%-m-%d-%y') if @student.last_appointment %></td>
           <td><%= @student.user.last_sign_in_at.strftime('%-m-%d-%y') if @student.user.last_sign_in_at  %></td>
           <td><%= @student.courses %></td>
           <td><%= @student.user.created_at.strftime('%-m-%d-%y') %></td>
           <td><%= @student.email %></br></br><%= @student.phone_number %></td>
-          <td><%= link_to @student.customer_id, stripe_customer_link(@student.customer_id), class: 'blue-link', target: '_blank' %></td>
+          <td><% if @student.customer_id %><%= link_to @student.customer_id, stripe_customer_link(@student.customer_id), target: '_blank' %><% end %></td>
         </tr>
       </tbody>
     </table>
@@ -63,8 +63,8 @@
         <% @student.appointments.each do |appt| %>
           <tr>
             <td><%= link_to appt.id, "/admin/appointments/#{appt.id}", class: 'id-link-for-admin' %></td>
-            <td><%= appt.slot.tutor.full_name if appt.slot.tutor %></td>
-            <td><%= appt.student.full_name if appt.student %></td>
+            <td><%= link_to appt.slot.tutor.full_name, admin_tutor_path(appt.tutor) %></td>
+            <td><%= appt.student.full_name %></td>
             <td><%= appt.course.formatted_name %></td>
             <td><%= appt.date %>
             <td><%= appt.time %></td>
@@ -97,17 +97,17 @@
       </thead>
       <tbody>
         <% @student.charges.each do |charge| %>
-        <tr>
-          <td><%= link_to charge.id, admin_charge_path(charge), class: 'id-link-for-admin' %></td>
-          <td>$<%= display_price(charge.amount) %></td>
-          <td>$<%= display_price(charge.axon_fee) %></td>
-          <td>$<%= display_price(charge.tutor_fee) %></td>
-          <td><%= charge.appointments.count %></td>
-          <td><%= charge.appointments.map{|appt| appt.id} %></td>
-          <td><%= link_to charge.tutor.full_name, admin_tutor_path(charge.tutor), class: 'blue-link' %></td>
-          <td><%= charge.student.full_name %></td>
-          <td><% if charge.stripe_charge_id %><%= link_to charge.stripe_charge_id, stripe_charge_link(charge.stripe_charge_id), class: 'blue-link', target: '_blank' %><% end %></td>
-          <td><% if charge.promotion_id.nil? %>No Promo<% else %><%= link_to charge.promotion_id, admin_promotion_path(charge.promotion_id), class: 'blue-link' %><% end %></td>
+          <tr>
+            <td><%= link_to charge.id, admin_charge_path(charge), class: 'id-link-for-admin' %></td>
+            <td>$<%= display_price(charge.amount) %></td>
+            <td>$<%= display_price(charge.axon_fee) %></td>
+            <td>$<%= display_price(charge.tutor_fee) %></td>
+            <td><%= charge.appointments.count %></td>
+            <td><%= charge.appointments.map{|appt| appt.id} %></td>
+            <td><%= link_to charge.tutor.full_name, admin_tutor_path(charge.tutor), class: 'blue-link' %></td>
+            <td><%= charge.student.full_name %></td>
+            <td><% if charge.stripe_charge_id %><%= link_to charge.stripe_charge_id, stripe_charge_link(charge.stripe_charge_id), class: 'blue-link', target: '_blank' %><% end %></td>
+            <td><% if charge.promotion_id.nil? %>No Promo<% else %><%= link_to charge.promotion_id, admin_promotion_path(charge.promotion_id), class: 'blue-link' %><% end %></td>
           </tr>
         <% end %>
       </tbody>

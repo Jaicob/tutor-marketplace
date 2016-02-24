@@ -11,10 +11,10 @@
   <div class="row">
     <div class="medium-12 columns">
       <h3>General Information</h3>
+      <p>Total Campuses: <%= @schools.count %></p>
       <table>
         <thead>
           <tr>
-            <th>#</th>
             <th>ID</th>
             <th>Name</th>
             <th>Location</th>
@@ -28,10 +28,8 @@
           </tr>
         </thead>
         <tbody>
-          <% n = 1 %>
           <% @schools.each do |school| %>
           <tr>
-            <td><%= n %>
             <td><%= link_to school.id, admin_school_path(school), class: 'id-link-for-admin' %></td>
             <td><%= school.name %></td>
             <td><%= school.location %></td>
@@ -43,7 +41,6 @@
             <td>$<%= display_price(school.revenue) %></td>
             <td>$<%= display_price(school.profit) %></td>
           </tr>
-          <% n += 1 %>
           <% end %>
         </tbody>
       </table>
