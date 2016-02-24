@@ -64,27 +64,26 @@
       <thead>
         <tr>
           <th>ID</th>
-          <th>School</th>
           <th>Name</th>
-          <th>Email</th>
-          <th>Phone</th>
-          <th>Appointments</th>
+          <th>Appts</th>
+          <th>School</th>
+          <th>Contact</th>
           <th>Joined</th>
+          <th>Last Sign In</th>
         </tr>
       </thead>
       <tbody>
-      <% n = 1 %>
-      <% @students.each do |student| %>
-        <tr>
-          <td><%= student.id %></td>
-          <td><%= student.school.name %></td>
-          <td><%= student.full_name %></td>
-          <td><%= student.email %></td>
-          <td><%= student.phone_number %></td>
-          <td><%= student.appointments.count %></td>
-          <td><%= student.user.created_at.strftime('%-m-%d-%y') %></td>
-        </tr>
-      <% end %>
+        <% @students.each do |student| %>
+          <tr>
+            <td><%= link_to student.id, admin_student_path(student), class: 'id-link-for-admin' %></td>
+            <td><%= student.full_name %></td>
+            <td><%= student.appointments.count %></td>
+            <td><%= student.school.name %></td>
+            <td><%= student.email %></br></br><%= student.phone_number %></td>
+            <td><%= student.user.created_at.strftime('%-m-%d-%y') %></td>
+            <td><%= if student.user.last_sign_in_at then student.user.last_sign_in_at.strftime('%-m-%d-%y') end %></td>
+          </tr>
+        <% end %>
       </tbody>
     </table>
   </div>

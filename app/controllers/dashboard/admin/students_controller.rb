@@ -1,5 +1,5 @@
 class Dashboard::Admin::StudentsController < AdminController
-  before_action :set_student, only: [:show, :update, :destroy]
+  before_action :set_student_admin_controller, only: [:show, :update, :destroy]
 
   def search
     index
@@ -33,7 +33,7 @@ class Dashboard::Admin::StudentsController < AdminController
       params.require(:student).permit(:user_id)
     end
 
-    def set_student
+    def set_student_admin_controller
       @student = Student.find(params[:id])
     end
 
