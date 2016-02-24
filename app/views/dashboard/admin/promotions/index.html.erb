@@ -6,6 +6,41 @@
     <%= link_to 'New Promotion', new_admin_promotion_path, class: 'custom-button full-width gray' %>
   </div>
 </div>
+
+<div class="row">
+  <div class="medium-12 columns">
+  <%= search_form_for @q, url: search_admin_promotions_path, html: { method: :post } do |f| %>
+    <div class="box margin-bottom-1em">
+      <div class="row">
+        <div class="medium-2 columns">   
+          <%= f.label :id_eq, 'ID' %>
+          <%= f.search_field :id_eq %>
+        </div>
+        <div class="medium-2 columns">   
+          <%= f.label :code_eq, 'Code' %>
+          <%= f.search_field :code_eq %>
+        </div>
+        <div class="medium-2 end columns">   
+          <%= f.label :amount_eq, 'Discount' %>
+          <%= f.search_field :amount_eq %>
+        </div>
+        <div class="medium-6 end columns">   
+          <%= f.label :description_cont, 'Description' %>
+          <%= f.search_field :description_cont %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="medium-2 medium-offset-8 columns">   
+          <%= button_to 'Reset', '/admin/promotions', class: 'custom-button short-width blue margin-top-1em' %>
+        </div>
+        <div class="medium-2 columns">   
+          <%= f.submit class: 'custom-button short-width margin-top-1em' %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
 <div class="row">
   <div class="small-12 columns">
     <% @promotions.each do |promotion| %>
