@@ -7,7 +7,7 @@
 #  school_id          :integer
 #  active_status      :integer          default(0)
 #  application_status :integer          default(0)
-#  rating             :integer
+#  approval           :integer
 #  degree             :integer          default(0)
 #  major              :string
 #  additional_degrees :string

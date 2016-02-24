@@ -36,8 +36,8 @@
           <td><%= @tutor.appointments.count %></td>
           <td><%= @tutor.charges.count %></td>
           <td><%= @tutor.created_at.strftime('%-m-%d-%y') %></td>
-          <td><%= @tutor.user.last_sign_in_at.strftime('%-m-%d-%y') %></td>
-          <td><%= link_to @tutor.acct_id, stripe_account_link(@tutor.acct_id), class: 'blue-link', target: '_blank' %></td>
+          <td><%= @tutor.user.last_sign_in_at.strftime('%-m-%d-%y') if @tutor.user.last_sign_in_at %></td>
+          <td><% if @tutor.acct_id %><%= link_to @tutor.acct_id, stripe_account_link(@tutor.acct_id), target: '_blank' %><% end %></td>
         </tr>
       </tbody>
     </table>
@@ -112,28 +112,113 @@
 <div class="row">
   <div class="medium-12 columns">
     <h4>Courses</h4>
-    <table>
-      <thead>
-        <tr>
-          <th>Subject</th>
-          <th>Call Number</th>
-          <th>Friendly Name</th>
-          <th>Tutor Rate</th>
-          <th>Full Price</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @tutor.tutor_courses.each do |tc| %>
-        <tr>
-          <td><%= tc.course.subject.name %></td>
-          <td><%= tc.course.call_number %></td>
-          <td><%= tc.course.friendly_name %></td>
-          <td>$<%= display_price(tc.rate * 100) %></td>
-          <td>$<%= display_price(full_price(tc.rate)) %></td>
-        </tr>
-        <% end %>
-      </tbody>
-    </table>
+    <% if @tutor.tutor_courses.any? %>
+      <table>
+        <thead>
+          <tr>
+            <th>Subject</th>
+            <th>Call Number</th>
+            <th>Friendly Name</th>
+            <th>Tutor Rate</th>
+            <th>Full Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @tutor.tutor_courses.each do |tc| %>
+          <tr>
+            <td><%= tc.course.subject.name %></td>
+            <td><%= tc.course.call_number %></td>
+            <td><%= tc.course.friendly_name %></td>
+            <td>$<%= display_price(tc.rate * 100) %></td>
+            <td>$<%= display_price(full_price(tc.rate)) %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p>No courses</p>
+    <% end %>
+  </div>
+</div>
+
+<!-- Appointments section -->
+
+<div class="row">
+  <div class="small-12 columns">
+    <h4>Appointments</h4>
+    <% if @tutor.appointments.any? %>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Tutor</th>
+            <th>Student</th>
+            <th>Course</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Status</th>
+            <th>School</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @tutor.appointments.each do |appt| %>
+            <tr>
+              <td><%= link_to appt.id, "/admin/appointments/#{appt.id}", class: 'id-link-for-admin' %></td>
+              <td><%= appt.tutor.full_name %></td>
+              <td><%= link_to appt.student.full_name, admin_student_path(appt.student) %></td>
+              <td><%= link_to appt.course.formatted_name, admin_course_path(appt.course) %></td>
+              <td><%= appt.date %>
+              <td><%= appt.time %></td>
+              <td><%= appt.status %></td>
+              <td><%= link_to appt.school.name, admin_school_path(appt.school) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p>No appointments</p>
+    <% end %>
+  </div>
+</div>
+
+<!-- Reviews sections -->
+
+<div class="row">
+  <div class="small-12 columns">
+    <h4>Reviews</h4>
+    <% if @tutor.reviews.any? %>
+      <h6>Percent Positive: <%= @tutor_analyzer.approval %>%</h6>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Appt. ID</th>
+            <th>Tutor</th>
+            <th>Student</th>
+            <th>Rating</th>
+            <th>Comment</th>
+            <th>Submitted</th>
+            <th>Follow Up Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @tutor.reviews.each do |review| %>
+          <tr>
+            <td><%= link_to review.id, admin_review_path(review), class: 'id-link-for-admin' %></td>
+            <td><%= link_to review.appointment_id, admin_appointment_path(review.appointment), class: 'blue-link' %></td>
+            <td><%= link_to review.tutor.full_name, admin_tutor_path(review.tutor), class: 'blue-link' %></td>
+            <td><%= link_to review.student.full_name, admin_student_path(review.student), class: 'blue-link' %></td>
+            <td><% if review.rating == 'Positive' %>Positive<% else %><span class="negative-review">Negative</span><% end %></td>
+            <td><%= review.comment %></td>
+            <td><%= review.created_at.strftime("%-m-%d-%y") %></td>
+            <td><%= review.follow_up_status %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p>No reviews</p>
+    <% end %>
   </div>
 </div>
 
@@ -158,7 +243,6 @@
     </table>
   </div>
 </div>
-
 
 <!-- Profile preview -->
 

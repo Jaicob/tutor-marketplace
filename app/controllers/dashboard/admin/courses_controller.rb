@@ -9,7 +9,8 @@ class Dashboard::Admin::CoursesController < AdminController
 
   def index
     @q = current_user.admin_scope(:courses).ransack(params[:q])
-    @courses = @q.result.includes(:school, :subject, :tutor_courses, :tutors, :appointments).page(params[:page])
+    @courses_total = @q.result.includes(:school, :subject, :tutor_courses, :tutors, :appointments).order(created_at: :desc)
+    @courses = @courses_total.page(params[:page])
   end
 
   def new

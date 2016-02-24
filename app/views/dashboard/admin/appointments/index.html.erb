@@ -47,6 +47,7 @@
 </div>
 <div class="row">
   <div class="small-12 columns">
+    <h6>Total Results: <%= @appointments_total.count %></h6>
     <table>
       <thead>
         <tr>
@@ -65,7 +66,7 @@
           <tr>
             <td><%= link_to appt.id, "/admin/appointments/#{appt.id}", class: 'id-link-for-admin' %></td>
             <td><%= link_to appt.slot.tutor.full_name, admin_tutor_path(appt.tutor) %></td>
-            <td><%= link_to appt.student.full_name, admin_student_path(appt.tutor) %></td>
+            <td><%= link_to appt.student.full_name, admin_student_path(appt.student) %></td>
             <td><%= link_to appt.course.formatted_name, admin_course_path(appt.course) %></td>
             <td><%= appt.date %>
             <td><%= appt.time %></td>

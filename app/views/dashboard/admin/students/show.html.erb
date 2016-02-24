@@ -43,6 +43,8 @@
   </div>
 </div>
 
+<!-- Appointments section -->
+
 <div class="row">
   <div class="small-12 columns">
     <h4>Appointments</h4>
@@ -76,6 +78,8 @@
     </table>
   </div>
 </div>
+
+<!-- Charges section -->
 
 <div class="row">
   <div class="small-12 columns">
@@ -112,6 +116,46 @@
         <% end %>
       </tbody>
     </table>
+  </div>
+</div>
+
+<!-- Reviews section -->
+
+<div class="row">
+  <div class="small-12 columns">
+    <h4>Reviews</h4>
+    <% if @student.reviews.any? %>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Appt. ID</th>
+            <th>Tutor</th>
+            <th>Student</th>
+            <th>Rating</th>
+            <th>Comment</th>
+            <th>Submitted</th>
+            <th>Follow Up Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @student.reviews.each do |review| %>
+          <tr>
+            <td><%= link_to review.id, admin_review_path(review), class: 'id-link-for-admin' %></td>
+            <td><%= link_to review.appointment_id, admin_appointment_path(review.appointment), class: 'blue-link' %></td>
+            <td><%= link_to review.tutor.full_name, admin_tutor_path(review.tutor), class: 'blue-link' %></td>
+            <td><%= link_to review.student.full_name, admin_student_path(review.student), class: 'blue-link' %></td>
+            <td><% if review.rating == 'Positive' %>Positive<% else %><span class="negative-review">Negative</span><% end %></td>
+            <td><%= review.comment %></td>
+            <td><%= review.created_at.strftime("%-m-%d-%y") %></td>
+            <td><%= review.follow_up_status %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p>No reviews</p>
+    <% end %>
   </div>
 </div>
 

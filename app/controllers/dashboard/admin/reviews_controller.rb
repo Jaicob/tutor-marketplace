@@ -8,7 +8,8 @@ class Dashboard::Admin::ReviewsController < AdminController
 
   def index
     @q = current_user.admin_scope(:reviews).ransack(params[:q])
-    @reviews = @q.result.page(params[:page])
+    @reviews_total = @q.result.order(created_at: :desc)
+    @reviews = @reviews_total.page(params[:page])
   end
 
   def show

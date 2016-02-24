@@ -2,14 +2,14 @@
 #
 # Table name: reviews
 #
-#  id              :integer          not null, primary key
-#  appointment_id  :integer          not null
-#  rating          :integer
-#  comment         :text
-#  follow_up       :integer          default(0)
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  follow_up_notes :text
+#  id               :integer          not null, primary key
+#  appointment_id   :integer          not null
+#  rating           :integer
+#  comment          :text
+#  follow_up_status :integer          default(0)
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  follow_up_notes  :text
 #
 
 require 'rails_helper'

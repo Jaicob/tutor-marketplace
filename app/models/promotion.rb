@@ -31,7 +31,7 @@ class Promotion < ActiveRecord::Base
   validate  :redeemer_specific_student_must_have_student_id
 
   enum issuer:      [:axon, :tutor]
-  enum single_appt: [:true, :false]
+  enum single_appt: [:single, :multiple]
   enum repeat_use:  [:no_repeat, :repeat]
   enum redeemer:    [:any_student, :specific_student, :student_group]
 
@@ -171,7 +171,7 @@ class Promotion < ActiveRecord::Base
 
     # discount calculations
     discount = (1 - (self.amount.to_f / 100)) # if promo amount is 10 (i.e. 10%), then discount equals 0.9 (i.e. 90% of normal price)
-    if self.single_appt == 'true'
+    if self.single_appt == 'single'
       discount_price = (regular_price - (single_appt_full_price) + (single_appt_full_price * discount))
     else
       discount_price = (regular_price * discount)
@@ -203,7 +203,7 @@ class Promotion < ActiveRecord::Base
 
     # discount calculations
     discount = (1 - (self.amount.to_f / 100)) # if promo amount is 10 (i.e. 10%), then discount equals 0.9 (i.e. 90% of normal price)
-    if self.single_appt == 'true'
+    if self.single_appt == 'single'
       discount_tutor_fee = (regular_tutor_fee - single_appt_tutor_fee + (single_appt_tutor_fee * discount))
     else
       discount_tutor_fee = (regular_tutor_fee * discount)

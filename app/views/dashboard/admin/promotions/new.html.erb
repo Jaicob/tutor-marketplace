@@ -30,11 +30,11 @@
 
       <%= f.label :repeat_use, 'Single Redemption Per Student' %>
       <p class="fine-print">An eligible student account can only redeem this promo code once.</p>
-      <%= f.select(:repeat_use, options_for_select({'True' => :no_repeat, 'False'=> :repeat, })) %>
+      <%= f.select(:repeat_use, options_for_select({'True' => :no_repeat, 'False'=> :repeat})) %>
 
       <%= f.label :single_appt, 'Single Appointment Per Booking' %>
       <p class="fine-print">In a booking with three appointments, this promo code will only discount one of the appointments.</p>
-      <%= f.select(:single_appt, options_for_select({'True' => :true, 'False'=> :false})) %>
+      <%= f.select(:single_appt, options_for_select({'True' => :single, 'False'=> :multiple})) %>
 
       <%= f.label :redeemer, 'Eligible Redeemers' %>
       <p class="fine-print">What student accounts are eligible to redeem this promo code?</p>

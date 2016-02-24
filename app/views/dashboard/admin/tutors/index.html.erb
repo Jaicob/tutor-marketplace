@@ -64,19 +64,20 @@
 
 <div class="row">
   <div class="medium-12 columns">
+    <h6>Total Results: <%= @tutors_total.count %></h6>
     <table>
       <thead>
         <tr>
           <th>#</th>
           <th>ID</th>
-          <th>Active Status</th>
+          <th>Status</th>
           <th>School</th>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Phone Number</th>
-          <th>Total Bookings</th>
-          <th>Application Status</th>
-          <th>Applied On</th>
+          <th>Contact</th>
+          <th>Appts.</th>
+          <th>Bookings*</th>
+          <th>Joined</th>
+          <th>Last Sign In</th>
+          <th>Stripe Account ID</th>
         </tr>
       </thead>
       <tbody>
@@ -84,20 +85,21 @@
         <% @tutors.each do |tutor| %>
           <tr>
             <td><%= n %></td>
-            <td><%= link_to tutor.id, admin_tutor_path(tutor), class: 'id-link-for-admin' %></td>
+            <td><%= link_to tutor.id, admin_tutor_path(tutor) %></td>
             <td><%= tutor.active_status %></td>
             <td><%= tutor.school.name %></td>
-            <td><%= tutor.user.full_name %></td>
-            <td><%= tutor.email %></td>
-            <td><%= tutor.phone_number %></td>
+            <td><%= tutor.user.email %></br></br><%= tutor.phone_number %></td>
             <td><%= tutor.appointments.count %></td>
-            <td><%= tutor.application_status %></td>
+            <td><%= tutor.charges.count %></td>
             <td><%= tutor.created_at.strftime('%-m-%d-%y') %></td>
+            <td><%= tutor.user.last_sign_in_at.strftime('%-m-%d-%y') if tutor.user.last_sign_in_at %></td>
+            <td><% if tutor.acct_id %><%= link_to tutor.acct_id, stripe_account_link(tutor.acct_id), target: '_blank' %><% end %></td>
+            <% n += 1 %>
           </tr>
-          <% n += 1 %>
         <% end %>
       </tbody>
     </table>
+    <p class="fine-print margin-bottom-2em no-max-width">*Bookings refers to the number of checkouts. One booking can include many appointments.</p>
   </div>
 </div>
 
