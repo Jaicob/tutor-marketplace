@@ -1,7 +1,13 @@
 class Dashboard::Admin::ChargesController < AdminController
 
+  def search
+    index
+    render :index
+  end
+
   def index
-    @charges = Charge.all
+    @q = current_user.admin_scope(:charges).ransack(params[:q])
+    @charges = @q.result.includes(:tutor, :student).page(params[:page])
   end
 
   def show
