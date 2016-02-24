@@ -7,7 +7,7 @@
 #  school_id          :integer
 #  active_status      :integer          default(0)
 #  application_status :integer          default(0)
-#  rating             :integer
+#  approval           :integer
 #  degree             :integer          default(0)
 #  major              :string
 #  additional_degrees :string
@@ -106,6 +106,14 @@ class Tutor < ActiveRecord::Base
       self.update(application_status: 'Complete')
       TutorManagementMailer.delay.application_completed_email(self.user.id)
     end
+  end
+
+  def reviews
+    reviews = []
+    self.appointments.each do |appt|
+      reviews << appt.review if !appt.review.nil?
+    end
+    return reviews
   end
 
   # method for Admin section, to show what an incomplete Tutor account is missing

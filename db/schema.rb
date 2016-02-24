@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160222220859) do
+ActiveRecord::Schema.define(version: 20160224203107) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -105,20 +105,22 @@ ActiveRecord::Schema.define(version: 20160222220859) do
   add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
 
   create_table "promotions", force: :cascade do |t|
-    t.string  "code"
-    t.integer "issuer"
-    t.integer "amount"
-    t.date    "valid_from"
-    t.date    "valid_until"
-    t.integer "redemption_limit"
-    t.integer "redemption_count", default: 0
-    t.text    "description"
-    t.integer "tutor_id"
-    t.integer "course_id"
-    t.integer "repeat_use",       default: 0
-    t.integer "student_id"
-    t.integer "single_appt"
-    t.integer "redeemer"
+    t.string   "code"
+    t.integer  "issuer"
+    t.integer  "amount"
+    t.date     "valid_from"
+    t.date     "valid_until"
+    t.integer  "redemption_limit"
+    t.integer  "redemption_count", default: 0
+    t.text     "description"
+    t.integer  "tutor_id"
+    t.integer  "course_id"
+    t.integer  "repeat_use",       default: 0
+    t.integer  "student_id"
+    t.integer  "single_appt"
+    t.integer  "redeemer"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "promotions", ["student_id"], name: "index_promotions_on_student_id", using: :btree
@@ -209,7 +211,7 @@ ActiveRecord::Schema.define(version: 20160222220859) do
     t.integer  "school_id"
     t.integer  "active_status",      default: 0
     t.integer  "application_status", default: 0
-    t.integer  "rating"
+    t.integer  "approval"
     t.integer  "degree",             default: 0
     t.string   "major"
     t.string   "additional_degrees"

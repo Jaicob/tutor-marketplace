@@ -50,8 +50,8 @@
       <tbody>
         <tr>
           <td><%= @promotion.redeemer.humanize if @promotion.redeemer %></td>
-          <td><%= @promotion.single_appt == 'true' ? 'True' : 'False' %></td>
-          <td><%= @promotion.repeat_use == 'repeat' ? 'True' : 'False' %></td>
+          <td><%= @promotion.single_appt == 'single' ? 'True' : 'False' %></td>
+          <td><%= @promotion.repeat_use == 'no_repeat' ? 'True' : 'False' %></td>
           <td><%= @promotion.student_id if @promotion.student_id %></td>
           <td><%= @promotion.course_id if @promotion.course_id %></td>
           <td><%= @promotion.tutor_id if @promotion.tutor_id %></td>

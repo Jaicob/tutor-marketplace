@@ -47,7 +47,7 @@
         <tr>
           <td><%= @promotion.redeemer.humanize if @promotion.redeemer %></td>
           <td><%= @promotion.single_appt == 'true' ? 'True' : 'False' %></td>
-          <td><%= @promotion.repeat_use == 'repeat' ? 'True' : 'False' %></td>
+          <td><%= @promotion.repeat_use == 'no_repeat' ? 'True' : 'False' %></td>
           <td><%= @promotion.student_id if @promotion.student_id %></td>
           <td><%= @promotion.course_id if @promotion.course_id %></td>
           <td><%= @promotion.tutor_id if @promotion.tutor_id %></td>
@@ -87,7 +87,7 @@
 
       <%= f.label :single_appt, 'Single Appointment Per Booking' %>
       <p class="fine-print">In a booking with three appointments, this promo code will only discount one of the appointments.</p>
-      <%= f.select(:single_appt, options_for_select({'True' => :true, 'False'=> :false})) %>
+      <%= f.select(:single_appt, options_for_select({'True' => :single, 'False'=> :multiple})) %>
 
       <%= f.label :redeemer, 'Eligible Redeemers' %>
       <p class="fine-print">What student accounts are eligible to redeem this promo code?</p>

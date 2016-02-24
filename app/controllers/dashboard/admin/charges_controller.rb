@@ -7,7 +7,8 @@ class Dashboard::Admin::ChargesController < AdminController
 
   def index
     @q = current_user.admin_scope(:charges).ransack(params[:q])
-    @charges = @q.result.includes(:tutor, :student).page(params[:page])
+    @charges_total = @q.result.includes(:tutor, :student).order(created_at: :desc)
+    @charges = @charges_total.page(params[:page])
   end
 
   def show

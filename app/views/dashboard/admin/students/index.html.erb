@@ -52,10 +52,10 @@
 
 <div class="row">
   <div class="small-12 columns">
+    <h6>Total Results: <%= @students_total.count %></h6>
     <table>
       <thead>
         <tr>
-          <th>#</th>
           <th>ID</th>
           <th>Name</th>
           <th>School</th>
@@ -63,17 +63,12 @@
           <th>Recent Appt.</th>
           <th>Last Appt.</th>
           <th>Last Sign In</th>
-          <th>Courses</th>
           <th>Joined</th>
-          <th>Contact</th>
-          <th>Stripe Customer ID</th>
         </tr>
       </thead>
       <tbody>
-        <% n = 1 %>
         <% @students.each do |student| %>
           <tr>
-            <td><%= n %></td>
             <td><%= link_to student.id, admin_student_path(student), class: 'id-link-for-admin' %></td>
             <td><%= student.full_name %></td>
             <td><%= student.school.name %></td>
@@ -81,12 +76,8 @@
             <td><%= student.recent_appt? %></td>
             <td><%= student.last_appointment.start_time.strftime('%-m-%d-%y') if student.last_appointment %></td>
             <td><%= student.user.last_sign_in_at.strftime('%-m-%d-%y') if student.user.last_sign_in_at  %></td>
-            <td><%= student.courses %></td>
             <td><%= student.user.created_at.strftime('%-m-%d-%y') %></td>
-            <td><%= student.email %></br></br><%= student.phone_number %></td>
-            <td><% if student.customer_id %><%= link_to student.customer_id, stripe_customer_link(student.customer_id), target: '_blank' %><% end %></td>
           </tr>
-          <% n += 1 %>
         <% end %>
       </tbody>
     </table>

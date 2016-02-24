@@ -8,7 +8,8 @@ class Dashboard::Admin::StudentsController < AdminController
 
   def index
     @q = current_user.admin_scope(:students).ransack(params[:q])
-    @students = @q.result.includes(:user, :appointments).page(params[:page])
+    @students_total = @q.result.includes(:user, :appointments).order(created_at: :desc)
+    @students = @students_total.page(params[:page])
   end
 
   def new
