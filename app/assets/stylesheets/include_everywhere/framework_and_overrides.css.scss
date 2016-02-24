@@ -3,6 +3,7 @@
 @import 'foundation-icons';
 @import "foundation_and_overrides";
 
+
 // override for the 'Home' navigation link
 .top-bar .name {
   font-size: rem-calc(13);
@@ -94,7 +95,6 @@ section {
 }
 
 // Custom Full-Width Class
-
 .full-width {
    width: 100%;
    margin-left: auto;
@@ -108,4 +108,9 @@ select:focus,
 textarea:focus,
 button:focus {
     outline: none;
+}
+
+// Override label background color
+.label {
+  background-color: #0095AC;
 }
