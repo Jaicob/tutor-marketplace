@@ -5,7 +5,8 @@ You have a new appointment! Here are the details:
 Student Name: <%= @student.public_name %>
 Student Contact Info: <%= @student.email %>
 Course: <%= @appt.course.formatted_name %>
-Date/Time: <%= @appt.start_time.in_time_zone(@school.timezone).strftime("%b %e, %l:%M %p") %>
+Date: <%= @appt.date %>
+Time: <%= @appt.time %>
 Student’s Preferred Location: <%= @appt.location %>
 
 Please reach out the student as soon as possible with a final location about where to meet up. Remember, not all students have cars so public, on-campus locations like the library, student center, or coffee shops are best!

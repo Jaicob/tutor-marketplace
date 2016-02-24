@@ -4,7 +4,8 @@ Thanks for choosing to book with Axon! Here are the details for your appointment
 
 Your Tutor: <%= @tutor.public_name %>
 Course: <%= @appt.course.formatted_name %>
-Date/Time: <%= @appt.start_time.in_time_zone(@school.timezone).strftime("%b %e, %l:%M %p") %>
+Date: <%= @appt.date %>
+Time: <%= @appt.time %>
 
 So what's next? 
 
