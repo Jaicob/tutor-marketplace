@@ -83,7 +83,7 @@
             <% @promotion.charges.each do |charge| %>
               <td><%= n %></td>
               <td><%= link_to charge.id, admin_charge_path(charge) %></td>
-              <td><%= link_to charge.stripe_charge_id, stripe_charge_link(charge.stripe_charge_id) %></td>
+              <td><%= link_to charge.stripe_charge_id, stripe_charge_link(charge.stripe_charge_id) if charge.stripe_charge_id %></td>
               <td><%= charge.created_at.in_time_zone(charge.tutor.school.timezone).strftime('%A -  %-m/%d/%y - %l:%M %p') %></td>
               <% n += 1 %>
             <% end %>
