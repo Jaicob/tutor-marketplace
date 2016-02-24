@@ -33,18 +33,11 @@ div.admin-header {
   }
 }
 
-// makes IDs of objects in Admin sections more clearly clickable links
-a.id-link-for-admin {
-  background-color: #58AA4D;
-  color: white;
-  padding: 0.3em;
-  border-radius: 10px;
-  display: block;
-  text-align: center;
-}
-a.id-link-for-admin:hover {
-  color: white;
-  background-color: #2BC2DE;
+// makes all info links blue to show they are clickable
+td {
+  a {
+    color: #0095AC !important;
+  }
 }
 
 // styling for pagination links

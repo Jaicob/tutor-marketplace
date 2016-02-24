@@ -44,7 +44,6 @@
     <table>
       <thead>
         <tr>
-          <th>#</th>
           <th>ID</th>
           <th>School</th>
           <th>Subject</th>
@@ -55,19 +54,16 @@
         </tr>
       </thead>
       <tbody>
-        <% n = 1 %>
         <% @courses.each do |course| %>
         <tr>
-          <td><%= n %>
-          <td><%= link_to course.id, admin_course_path(course), class: 'id-link-for-admin' %></td>
-          <td><%= course.school.name %></td>
+          <td><%= link_to course.id, admin_course_path(course) %></td>
+          <td><%= link_to course.school.name, admin_school_path(course.school) %></td>
           <td><%= course.subject.name %></td>
           <td><%= course.call_number %></td>
           <td><%= course.friendly_name %></td>
           <td><%= course.tutors.count %></td>
           <td><%= course.appointments.count %></td>
         </tr>
-        <% n += 1 %>
         <% end %>
       </tbody>
     </table>

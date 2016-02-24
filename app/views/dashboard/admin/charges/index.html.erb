@@ -1,44 +1,45 @@
 <div class="row">
   <div class="medium-12 columns">
-  <h3>Search Charges</h3>
-  <%= search_form_for @q, url: search_admin_charges_path, html: { method: :post } do |f| %>
-    <div class="box margin-bottom-1em">
-      <div class="row">
-        <div class="medium-1 columns">   
-          <%= f.label :id_eq, 'ID' %>
-          <%= f.search_field :id_eq %>
+    <h3>Search Charges</h3>
+    <%= search_form_for @q, url: search_admin_charges_path, html: { method: :post } do |f| %>
+      <div class="box margin-bottom-1em">
+        <div class="row">
+          <div class="medium-1 columns">   
+            <%= f.label :id_eq, 'ID' %>
+            <%= f.search_field :id_eq %>
+          </div>
+          <div class="medium-2 columns">   
+            <%= f.label :tutor_user_first_name_cont, 'Tutor First Name' %>
+            <%= f.search_field :tutor_user_first_name_cont %>
+          </div>
+          <div class="medium-2 columns">   
+            <%= f.label :tutor_user_last_name_cont, 'Tutor Last Name' %>
+            <%= f.search_field :tutor_user_last_name_cont %>
+          </div>
+          <div class="medium-2 columns">   
+            <%= f.label :student_user_first_name_cont, 'Student First Name' %>
+            <%= f.search_field :student_user_first_name_cont %>
+          </div>
+          <div class="medium-2 columns">   
+            <%= f.label :student_user_last_name_cont, 'Student Last Name' %>
+            <%= f.search_field :student_user_last_name_cont %>
+          </div>  
+          <div class="medium-3 columns">   
+            <%= f.label :stripe_charge_id_eq, 'Stripe Charge ID' %>
+            <%= f.search_field :stripe_charge_id_eq %>
+          </div>
         </div>
-        <div class="medium-2 columns">   
-          <%= f.label :tutor_user_first_name_cont, 'Tutor First Name' %>
-          <%= f.search_field :tutor_user_first_name_cont %>
-        </div>
-        <div class="medium-2 columns">   
-          <%= f.label :tutor_user_last_name_cont, 'Tutor Last Name' %>
-          <%= f.search_field :tutor_user_last_name_cont %>
-        </div>
-        <div class="medium-2 columns">   
-          <%= f.label :student_user_first_name_cont, 'Student First Name' %>
-          <%= f.search_field :student_user_first_name_cont %>
-        </div>
-        <div class="medium-2 columns">   
-          <%= f.label :student_user_last_name_cont, 'Student Last Name' %>
-          <%= f.search_field :student_user_last_name_cont %>
-        </div>  
-        <div class="medium-3 columns">   
-          <%= f.label :stripe_charge_id_eq, 'Stripe Charge ID' %>
-          <%= f.search_field :stripe_charge_id_eq %>
+        <div class="row">
+          <div class="medium-2 medium-offset-8 columns">   
+            <%= button_to 'Reset', '/admin/tutors', class: 'custom-button short-width blue margin-top-1em' %>
+          </div>
+          <div class="medium-2 columns">   
+            <%= f.submit class: 'custom-button short-width margin-top-1em' %>
+          </div>
         </div>
       </div>
-      <div class="row">
-        <div class="medium-2 medium-offset-8 columns">   
-          <%= button_to 'Reset', '/admin/tutors', class: 'custom-button short-width blue margin-top-1em' %>
-        </div>
-        <div class="medium-2 columns">   
-          <%= f.submit class: 'custom-button short-width margin-top-1em' %>
-        </div>
-      </div>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
 </div>
 
 <div class="row">
@@ -61,16 +62,16 @@
       <tbody>
         <% @charges.each do |charge| %>
         <tr>
-          <td><%= link_to charge.id, admin_charge_path(charge), class: 'id-link-for-admin' %></td>
+          <td><%= link_to charge.id, admin_charge_path(charge) %></td>
           <td>$<%= display_price(charge.amount) %></td>
           <td>$<%= display_price(charge.axon_fee) %></td>
           <td>$<%= display_price(charge.tutor_fee) %></td>
           <td><%= charge.appointments.count %></td>
           <td><%= charge.appointments.map{|appt| appt.id} %></td>
-          <td><%= link_to charge.tutor.full_name, admin_tutor_path(charge.tutor), class: 'blue-link' %></td>
-          <td><%= charge.student.full_name %></td>
-          <td><% if charge.stripe_charge_id %><%= link_to charge.stripe_charge_id, stripe_charge_link(charge.stripe_charge_id), class: 'blue-link', target: '_blank' %><% end %></td>
-          <td><% if charge.promotion_id.nil? %>No Promo<% else %><%= link_to charge.promotion_id, admin_promotion_path(charge.promotion_id), class: 'blue-link' %><% end %></td>
+          <td><%= link_to charge.tutor.full_name, admin_tutor_path(charge.tutor) %></td>
+          <td><%= link_to charge.student.full_name, admin_student_path(charge.tutor) %></td>
+          <td><% if charge.stripe_charge_id %><%= link_to charge.stripe_charge_id, stripe_charge_link(charge.stripe_charge_id), target: '_blank' %><% end %></td>
+          <td><% if charge.promotion_id.nil? %>No Promo<% else %><%= link_to charge.promotion_id, admin_promotion_path(charge.promotion_id) %><% end %></td>
           </tr>
         <% end %>
       </tbody>

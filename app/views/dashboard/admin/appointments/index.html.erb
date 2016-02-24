@@ -60,20 +60,20 @@
           <th>School</th>
         </tr>
       </thead>
-    <% @appointments.each do |appt| %>
       <tbody>
-        <tr>
-          <td><%= link_to appt.id, "/admin/appointments/#{appt.id}", class: 'id-link-for-admin' %></td>
-          <td><%= appt.slot.tutor.full_name if appt.slot.tutor %></td>
-          <td><%= appt.student.full_name if appt.student %></td>
-          <td><%= appt.course.formatted_name %></td>
-          <td><%= appt.date %>
-          <td><%= appt.time %></td>
-          <td><%= appt.status %></td>
-          <td><%= appt.slot.tutor.school.name if appt.slot.tutor %></td>
-        </tr>
+        <% @appointments.each do |appt| %>
+          <tr>
+            <td><%= link_to appt.id, "/admin/appointments/#{appt.id}", class: 'id-link-for-admin' %></td>
+            <td><%= link_to appt.slot.tutor.full_name, admin_tutor_path(appt.tutor) %></td>
+            <td><%= link_to appt.student.full_name, admin_student_path(appt.tutor) %></td>
+            <td><%= link_to appt.course.formatted_name, admin_course_path(appt.course) %></td>
+            <td><%= appt.date %>
+            <td><%= appt.time %></td>
+            <td><%= appt.status %></td>
+            <td><%= link_to appt.school.name, admin_school_path(appt.school) %></td>
+          </tr>
+        <% end %>
       </tbody>
-    <% end %>
     </table>
   </div>
 </div>

@@ -3,7 +3,7 @@
     <h3>Promotion ID: <%= @promotion.id %></h3>
   </div>
   <div class="small-12 medium-4 columns">
-    <%= link_to 'Back to All Promotions', admin_promotions_path, class: 'custom-button full-width blue' %>
+    <%= link_to 'All Promotions', admin_promotions_path, class: 'custom-button full-width blue' %>
   </div>
 </div>
 <div class="row">
@@ -23,7 +23,7 @@
       </thead>
       <tbody>
         <tr>
-          <td><%= link_to @promotion.id, admin_promotion_path(@promotion), class: 'id-link-for-admin' %></td>
+          <td><%= link_to @promotion.id, admin_promotion_path(@promotion) %></td>
           <td class="code"><%= @promotion.code %></td>
           <td><%= @promotion.amount %></td>
           <td><%= @promotion.valid_from.strftime('%-m-%d-%y') %></td>

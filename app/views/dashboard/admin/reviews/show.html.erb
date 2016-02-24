@@ -27,10 +27,10 @@
           <td><%= @review.id %></td>
           <td><%= link_to @review.appointment_id, admin_appointment_path(@review.appointment), class: 'blue-link' %></td>
           <td><%= link_to @review.tutor.full_name, admin_tutor_path(@review.tutor), class: 'blue-link' %></td>
-          <td><%= @review.student.full_name %></td>
+          <td><%= link_to @review.student.full_name, admin_student_path(@review.student), class: 'blue-link' %></td>
           <td><%= @review.rating %></td>
           <td><%= @review.comment %></td>
-          <td><%= @review.created_at.to_date %></td>
+          <td><%= @review.created_at.strftime("%-m-%d-%y") %></td>
         </tr>
       </tbody>
     </table>

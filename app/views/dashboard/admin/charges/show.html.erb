@@ -35,8 +35,8 @@
           <td>$<%= display_price(@charge.tutor_fee) %></td>
           <td><%= @charge.appointments.count %></td>
           <td><%= @charge.appointments.map{|appt| appt.id} %></td>
-          <td><%= link_to @charge.tutor.full_name, admin_tutor_path(@charge.tutor), class: 'blue-link' %></td>
-          <td><%= @charge.student.full_name %></td>
+          <td><%= link_to @charge.tutor.full_name, admin_tutor_path(@charge.tutor) %></td>
+          <td><%= link_to @charge.student.full_name, admin_student_path(@charge.student) %></td>
           <td><% if @charge.stripe_charge_id %><%= link_to @charge.stripe_charge_id, stripe_charge_link(@charge.stripe_charge_id), class: 'blue-link', target: '_blank' %><% end %></td>
           <td><% if @charge.promotion_id.nil? %>No Promo<% else %><%= link_to Promotion.find(@charge.promotion_id).code, admin_promotion_path(@charge.promotion_id), class: 'blue-link' %><% end %></td>
         </tr>
@@ -66,14 +66,14 @@
       <tbody>
         <% @charge.appointments.each do |appt| %>
           <tr>
-            <td><%= link_to appt.id, "/admin/appointments/#{appt.id}", class: 'id-link-for-admin' %></td>
-            <td><%= link_to appt.tutor.full_name, admin_tutor_path(appt.tutor), class: 'blue-link' %></td>
-            <td><%= appt.student.full_name if appt.student %></td>
-            <td><%= appt.course.formatted_name %></td>
+            <td><%= link_to appt.id, "/admin/appointments/#{appt.id}" %></td>
+            <td><%= link_to appt.tutor.full_name, admin_tutor_path(appt.tutor) %></td>
+            <td><%= link_to appt.student.full_name, admin_student_path(appt.student) %></td>
+            <td><%= link_to appt.course.formatted_name, admin_course_path(appt.course) %></td>
             <td><%= appt.date %>
             <td><%= appt.time %></td>
             <td><%= appt.status %></td>
-            <td><%= link_to appt.school.name, admin_school_path(appt.school), class: 'blue-link' %></td>
+            <td><%= link_to appt.school.name, admin_school_path(appt.school) %></td>
           </tr>
         <% end %>
       </tbody>
