@@ -20,6 +20,7 @@
           <th>Axon Fee</th>
           <th>Tutor Fee</th>
           <th>Appts.</th>
+          <th>Appt IDs</th>
           <th>Tutor</th>
           <th>Student</th>
           <th>Stripe Charge ID</th>
@@ -33,6 +34,7 @@
           <td>$<%= display_price(@charge.axon_fee) %></td>
           <td>$<%= display_price(@charge.tutor_fee) %></td>
           <td><%= @charge.appointments.count %></td>
+          <td><%= @charge.appointments.map{|appt| appt.id} %></td>
           <td><%= link_to @charge.tutor.full_name, admin_tutor_path(@charge.tutor), class: 'blue-link' %></td>
           <td><%= @charge.student.full_name %></td>
           <td><% if @charge.stripe_charge_id %><%= link_to @charge.stripe_charge_id, stripe_charge_link(@charge.stripe_charge_id), class: 'blue-link', target: '_blank' %><% end %></td>

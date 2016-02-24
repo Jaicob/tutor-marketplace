@@ -26,12 +26,20 @@ class Student < ActiveRecord::Base
 
   delegate :full_name, :first_name, :last_name, :public_name, :email, :password, to: :user
 
-  def subjects
-    # returns subjects that a student makes appointments for, only used in Admin section for analytics
-    subjects = []
-    self.appointments.map{ |appt|
-      subjects << appt.course.subject[:name] unless subjects.include?(appt.course.subject[:name])
+  def courses
+    self.appointments.map{|appt| appt.course}.uniq{|course| course.id}.map{|course| course.friendly_name}
+  end
+
+  def last_appointment
+    self.appointments.sort_by{|appt| appt.start_time}.first
+  end
+
+  def recent_appt?
+    appts_in_last_week = self.appointments.select{|appt| 
+      appt.start_time.to_date >= (Date.today - 7.days) &&
+      appt.start_time.to_date <= (Date.today)
     }
+    appts_in_last_week.any? ? 'Yes' : 'No'
   end
 
 end

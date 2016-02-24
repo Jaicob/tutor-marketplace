@@ -61,8 +61,8 @@
             <td><%= link_to promotion.id, admin_promotion_path(promotion), class: 'id-link-for-admin' %></td>
             <td class="code"><%= promotion.code %></td>
             <td><%= promotion.amount %></td>
-            <td><%= promotion.valid_from %></td>
-            <td><%= promotion.valid_until %></td>
+            <td><%= promotion.valid_from.strftime('%-m-%d-%y') %></td>
+            <td><%= promotion.valid_until.strftime('%-m-%d-%y') %></td>
             <td><%= promotion.redemption_limit %></td>
             <td><%= promotion.redemption_count %></td>
           </tr>

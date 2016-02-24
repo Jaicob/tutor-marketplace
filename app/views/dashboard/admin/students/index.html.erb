@@ -8,7 +8,7 @@
     <%= search_form_for @q, url: search_admin_students_path, html: { method: :post } do |f| %>
       <div class="box margin-bottom-1em">  
         <div class="row">
-          <div class="medium-1 columns">
+          <div class="medium-2 columns">
             <%= f.label :id_eq, 'ID' %>
             <%= f.search_field :id_eq %>
           </div>
@@ -20,7 +20,7 @@
             <%= f.label :user_last_name_cont, 'Last Name' %>
             <%= f.search_field :user_last_name_cont %>
           </div>
-          <div class="medium-3 medium-offset-1 columns">
+          <div class="medium-3 columns">
             <%= f.label :user_email_matches, 'Email' %>
             <%= f.search_field :user_email_matches %>
           </div>
@@ -41,18 +41,6 @@
             <%= f.submit class: 'custom-button short-width margin-top-1em' %>
           </div>
         </div>
-
-  
-<!--  TODO-JT (these metrics were requested by Katie)    
-
-        number of appointments
-        datepicker for appointments on date
-        who had appts last week
-        class booked
-        days since last appointment 
-        
--->
-
       </div>
     <% end %>
   </div>
@@ -65,11 +53,14 @@
         <tr>
           <th>ID</th>
           <th>Name</th>
-          <th>Appts</th>
           <th>School</th>
-          <th>Contact</th>
-          <th>Joined</th>
+          <th>Appts</th>
+          <th>Recent Appt.</th>
+          <th>Last Appt.</th>
           <th>Last Sign In</th>
+          <th>Courses</th>
+          <th>Joined</th>
+          <th>Contact</th>
         </tr>
       </thead>
       <tbody>
@@ -77,11 +68,14 @@
           <tr>
             <td><%= link_to student.id, admin_student_path(student), class: 'id-link-for-admin' %></td>
             <td><%= student.full_name %></td>
-            <td><%= student.appointments.count %></td>
             <td><%= student.school.name %></td>
-            <td><%= student.email %></br></br><%= student.phone_number %></td>
+            <td><%= student.appointments.count %></td>
+            <td><%= student.recent_appt? %></td>
+            <td><%= student.last_appointment.start_time.strftime('%-m-%d-%y') if student.last_appointment %>
+            <td><%= student.user.last_sign_in_at.strftime('%-m-%d-%y') if student.user.last_sign_in_at  %></td>
+            <td><%= student.courses %></td>
             <td><%= student.user.created_at.strftime('%-m-%d-%y') %></td>
-            <td><%= if student.user.last_sign_in_at then student.user.last_sign_in_at.strftime('%-m-%d-%y') end %></td>
+            <td><%= student.email %></br></br><%= student.phone_number %></td>
           </tr>
         <% end %>
       </tbody>
