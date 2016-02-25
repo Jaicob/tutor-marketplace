@@ -4,7 +4,7 @@
     <h1><%= @tutor.user.full_name %></h1>
   </div>
   <div class="medium-3 columns">
-    <%= link_to 'Back to Tutor List', admin_tutors_path, class: 'custom-button full-width blue' %>
+    <%= link_to 'All Tutors', admin_tutors_path, class: 'custom-button full-width blue' %>
   </div>
 </div>
 
@@ -187,7 +187,7 @@
   <div class="small-12 columns">
     <h4>Reviews</h4>
     <% if @tutor.reviews.any? %>
-      <h6>Percent Positive: <%= @tutor_analyzer.approval %>%</h6>
+      <h6>Approval Rating: <%= @tutor.approval %>%</h6>
       <table>
         <thead>
           <tr>

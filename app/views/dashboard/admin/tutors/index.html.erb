@@ -77,7 +77,6 @@
           <th>Bookings*</th>
           <th>Joined</th>
           <th>Last Sign In</th>
-          <th>Stripe Account ID</th>
         </tr>
       </thead>
       <tbody>
@@ -93,7 +92,6 @@
             <td><%= tutor.charges.count %></td>
             <td><%= tutor.created_at.strftime('%-m-%d-%y') %></td>
             <td><%= tutor.user.last_sign_in_at.strftime('%-m-%d-%y') if tutor.user.last_sign_in_at %></td>
-            <td><% if tutor.acct_id %><%= link_to tutor.acct_id, stripe_account_link(tutor.acct_id), target: '_blank' %><% end %></td>
             <% n += 1 %>
           </tr>
         <% end %>
