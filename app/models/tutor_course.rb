@@ -24,12 +24,6 @@ class TutorCourse < ActiveRecord::Base
     "#{self.course.subject.name} #{self.course.call_number}: #{self.course.friendly_name}"
   end
 
-  def full_price
-    transaction_fee = ((self.course.school.transaction_percentage / 100) + 1)
-    # full_price = (transaction_fee * self.rate).round(2) # rounds to two decimal places
-    # sprintf('%.2f', full_price) # always display 2 decimals - even if 2nd is 0 ('$22.50' vs. '$22.5')
-  end
-
   # custom validation
   def course_and_tutor_at_same_school
     tutor_school_id = Tutor.find(tutor_id).school.id
