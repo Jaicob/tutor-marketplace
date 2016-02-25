@@ -12,8 +12,7 @@ class ApptReviewCreator
 
   # public method
   def reviews_needed?
-    false # this disables the review cards from appearing to students until we're ready to launch the review functionality
-    # get_appts_to_review.any? ? true : false
+    get_appts_to_review.any? ? true : false
   end
 
   # private method
