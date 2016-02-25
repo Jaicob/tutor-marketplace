@@ -19,7 +19,7 @@ class Appointment < ActiveRecord::Base
   belongs_to :slot
   belongs_to :course
   belongs_to :charge
-  has_one :review, dependent: :destroy
+  has_one :review
   delegate :tutor, to: :slot
   delegate :school, to: :course
 

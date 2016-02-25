@@ -19,10 +19,10 @@ class School < ActiveRecord::Base
   has_many :tutors
   has_many :students
   has_many :student_groups
-  has_many :tutor_courses, through: :tutors, dependent: :destroy
-  has_many :appointments, through: :courses, dependent: :destroy
-  has_many :slots, through: :tutors, dependent: :destroy
-  has_one  :campus_manager, dependent: :destroy
+  has_many :tutor_courses
+  has_many :appointments, through: :courses
+  has_many :slots, through: :tutors
+  has_one  :campus_manager
 
   validates :name, :location, :transaction_percentage, :timezone, presence: true
 

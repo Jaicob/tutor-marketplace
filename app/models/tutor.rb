@@ -38,11 +38,11 @@
 class Tutor < ActiveRecord::Base
   belongs_to :user
   belongs_to :school
-  has_many :tutor_courses, dependent: :destroy
-  has_many :courses, through: :tutor_courses, dependent: :destroy
+  has_many :tutor_courses
+  has_many :courses, through: :tutor_courses
   has_many :slots, dependent: :destroy
-  has_many :appointments, through: :slots, dependent: :destroy
-  has_many :charges, dependent: :destroy
+  has_many :appointments, through: :slots
+  has_many :charges
   has_many :promotions
 
   delegate :first_name, :last_name, :full_name, :public_name, :sign_in_ip, :email, :password, to: :user
