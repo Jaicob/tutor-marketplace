@@ -13,8 +13,10 @@ class AdminDataCruncher
     tutors = @collection
     avg_rates = []
     tutors.each do |tutor|
-      avg_for_one_tutor = (tutor.tutor_courses.map{|tc| tc.rate}.reduce(:+).to_f) / (tutor.tutor_courses.count)
-      avg_rates << avg_for_one_tutor
+      if tutor.tutor_courses.any?
+        avg_for_one_tutor = (tutor.tutor_courses.map{|tc| tc.rate}.reduce(:+).to_f) / (tutor.tutor_courses.count)
+        avg_rates << avg_for_one_tutor
+      end
     end
     average_of_averages = (avg_rates.reduce(:+).to_f) / (avg_rates.count)
     average_of_averages_in_cents = average_of_averages * 100
@@ -85,7 +87,7 @@ class AdminDataCruncher
     students = @collection
     school = students.first.school
     avg = school.appointments.count.to_f / school.students.count
-    return avg
+    return avg.round(2)
   end
   
   def avg_num_of_appts_per_booking  # collection is AR collection of students
@@ -97,7 +99,7 @@ class AdminDataCruncher
       unique_charge_ids << appt.charge_id unless unique_charge_ids.include?(appt.charge_id)
     end
     avg = school.appointments.count.to_f / unique_charge_ids.count
-    if !avg.nan? then return avg else return 0 end
+    avg.nan? ? 0 : avg.round(2)
   end
 
 
