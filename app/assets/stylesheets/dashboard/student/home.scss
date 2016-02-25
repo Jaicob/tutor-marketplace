@@ -34,73 +34,58 @@
 }
 
 .review-card {
-  border: 1px solid #D8D8D8;
-  border-radius: 4px;
-  background-color: #EFEFEF;
-  padding: 1em;
-  margin-bottom: 1em;
-  .tutor-box {
-    display: inline-block;
-    background-color: #0095AC; 
+    border: 1px solid #D8D8D8;
     border-radius: 4px;
-    .review-tutor-pic {
-      display: block;
-      height: 5em;
-      margin: auto;
-      border-top-left-radius: 4px;
-      border-top-right-radius: 4px;
-    }
-    p.tutor-name {
-      font-weight: 400;
-      text-align: center;
-      color: white;
-      margin: 0.5em auto;
-    }
-  }
-  p.appt-details {
-    margin: 0;
-  }
-  .helpful-box {
-    background-color: #DEDEDE;
-    border-radius: 4px;
-    padding: 0.5em;
-    .thumb-mask-box {
-      .thumb-mask {
-        color: #A9A9A9;
-        font-size: 2.8em;
-        text-align: center;
-      }
-    }
-    // makes like button green and dislike button red ON HOVER
-    .thumb-mask-box:hover + .thumb-mask {
-        &.positive {
-            color: #58AA4D;
+    background-color: #EFEFEF;
+    padding: 1em;
+    margin-bottom: 1em;
+    box-shadow: 1px 1px 1px gray;
+    .tutor-box {
+        display: inline-block;
+        background-color: #0095AC; 
+        border-radius: 4px;
+        .review-tutor-pic {
+          display: block;
+          height: 5em;
+          margin: auto;
+          border-top-left-radius: 4px;
+          border-top-right-radius: 4px;
         }
-        &.negative {
-            color: #DE6328;
+        p.tutor-name {
+          font-weight: 400;
+          text-align: center;
+          color: white;
+          margin: 0.5em auto;
         }
     }
-
-    .thumb-mask-box label + .thumb-mask {
-        text-align: center;
-        padding: 3px 0px;
-        display: block;
+    p.appt-details {
+        margin: 0;
     }
-
-    .thumb-mask-box label input {
-      position: absolute;
-      opacity: 0;
-    }
-
-    // makes like button green and dislike button red WHEN CHECKED
-    .thumb-mask-box input:checked + .thumb-mask {
-        &.positive {
-            color: #58AA4D;
+    .helpful-box {
+        background-color: #DEDEDE;
+        border-radius: 4px;
+        padding: 0.5em;
+        .thumb-mask-box {
+            // makes normal looking radio button disappear but stay in place
+            label input {
+                position: absolute;
+                opacity: 0;
+            }
+            // sets default thumb icon style
+            .thumb-mask {
+                color: #A9A9A9;
+                font-size: 2.8em;
+                text-align: center;
+            }
+            // makes like button green and dislike button red: on hover & when checked
+            &:hover + .thumb-mask, input:checked + .thumb-mask {
+                &.positive {
+                    color: #58AA4D;
+                }
+                &.negative {
+                    color: #DE6328;
+                }
+            }
         }
-        &.negative {
-            color: #DE6328;
-        }
     }
-
-  }
 }
