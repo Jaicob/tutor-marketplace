@@ -26,6 +26,11 @@ class Dashboard::Tutor::CoursesController < DashboardController
   end
 
   def destroy
+    if @tutor_course.appointments
+      flash[:alert] = 'You cannot delete a course with currently scheduled appointments.'
+      redirect_to :back
+      return
+    end
     if @tutor_course.destroy
       redirect_to tutor_courses_path(@tutor.slug)
     end

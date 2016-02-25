@@ -1,179 +1,31 @@
 <section class="dashboard-content tutor-home-page">
-  <% if @tutor.application_status != 'Approved' %>
-  <!-- Displays welcome/awaiting-approval message for new Tutors -->
-    <%= render 'awaiting_approval_message' %>
-  <% end %>
+  <!-- Welcome/Awaiting Approval Message for New Tutors -->
   <div class="row">
     <div class="small-12 columns">
-      <h4 class="dash-home-header">Upcoming Appointments</h2>
-    </div>
-  </div>
-  <div class="row">
-    <div class="small-12 columns">
-      <% if @tutor.appointments.where(status: 'Scheduled').count == 0 %>
-        <div class="box no-appts">
-          <h5 class="no-appts-message">You currently have no scheduled appointments</h5>
-          <p class="list-title">To recieve more bookings, try:</p>
-          <p class="list-item">&#8226; Sharing your profile page link:</p>
-          <p class="list-item"><%= link_to public_profile_tutor_url, public_profile_tutor_path, class: 'blue-link' %></p>
-          <p class="list-item">&#8226; Increasing your availability in your <%= link_to 'Schedule', schedule_tutor_path(@tutor.slug), class: 'blue-link' %></p>
-          <p class="list-item">&#8226; Adding more courses in your <%= link_to 'Courses', tutor_courses_path(@tutor.slug), class: 'blue-link' %></p>
-        </div>
-      <% else %>
-        <table class="no-top-margin no-top-border-radius">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Time</th>
-              <th>Subject</th>
-              <th>Student</th>
-              <th>Phone</th>
-              <th>Email</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @tutor.appointments.where(status: 'Scheduled').sort_by{|appt| appt.start_time}.each do |appt| %>
-            <% student = Student.find(appt.student_id) %>
-              <tr>
-                <td><%= appt.date %></td>
-                <td><%= appt.time %></td>
-                <td><%= Course.find(appt.course_id).formatted_name %></td>
-                <td><%= student.public_name %></td>
-                <td><%= student.phone_number %></td>
-                <td><%= student.email %></td>
-                <td><a href="#" data-reveal-id="confirm-cancel-appt-<%= appt.id %>" class="custom-button blue">Cancel</a>
-                </td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
+      <% if @tutor.application_status != 'Approved' %>
+        <%= render 'awaiting_approval_message' %>
       <% end %>
     </div>
   </div>
-
+  <!-- Upcoming Appointments Section-->
   <div class="row">
     <div class="small-12 columns">
-      <h4 class="dash-home-header">Metrics</h2>
+      <%= render 'upcoming_appointments' %>
     </div>
   </div>
+  <!-- Metrics Section -->
   <div class="row">
     <div class="small-12 columns">
-      <div class="box metrics-box">
-        <div class="row metrics-row">
-          <div class="small-12 medium-2 columns">
-            <h4 class="center"><%= TutorAnalyzer.new(@tutor).availability_next_7_days %> hrs</h4>
-            <p>Availability</br>(next 7 days)</p>
-          </div>
-          <div class="small-12 medium-2 columns">
-            <h4 class="center"><%= TutorAnalyzer.new(@tutor).appts_next_7_days.count %></h4>
-            <p>Appointments</br>(next 7 days)</p>
-          </div>
-          <div class="small-12 medium-2 columns">
-            <h4 class="center"><%= @tutor.courses.count %></h4>
-            <p>Total Courses</p>
-          </div>
-          <div class="small-12 medium-2 columns">
-            <h4 class="center"><%= TutorAnalyzer.new(@tutor).students.count %></h4>
-            <p>Total Students</p>
-          </div>
-          <div class="small-12 medium-2 columns">
-            <h4 class="center"><%= TutorAnalyzer.new(@tutor).total_appts.count %></h4>
-            <p>Total Appointments</p>
-          </div>
-          <div class="small-12 medium-2 columns">
-            <h4 class="center">$<%= display_price(TutorAnalyzer.new(@tutor).total_income) %></h4>
-            <p>Total Revenue YTD</p>
-          </div>
-        </div>
-      </div>
+      <%= render 'metrics' %>
     </div>
   </div>
-
+  <!-- Recent Appointments & Support Sections-->
   <div class="row">
-    <div class="small-8 columns">
-      <h4 class="dash-home-header">Appointment History</h2>
-      <% if @tutor.appointments.count == 0 %>
-        <div class="box height-24em">
-          <div class="no-appts">
-            <h5 class="no-appts-message no-appt-history-message">You currently have no appointment history.</h5>
-          </div>
-        </div>
-      <% else %>
-        <table class="no-top-margin no-top-border-radius">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Time</th>
-              <th>Subject</th>
-              <th>Status</th>
-              <th>Student</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @tutor.appointments.sort_by{|appt| appt.start_time}.each do |appt| %>
-              <tr>
-                <td><%= appt.date %></td>
-                <td><%= appt.time %></td>
-                <td><%= Course.find(appt.course_id).formatted_name %></td>
-                <td><%= appt.status %></td>
-                <td><%= appt.student.full_name %></td>
-                </td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      <% end %>
+    <div class="small-12 medium-8 columns">
+      <%= render 'recent_appointments' %>
     </div>
-    <div class="small-4 columns">  
-      <h4 class="dash-home-header">Support</h2>
-      <div class="box height-24em">
-        <h5>Your Campus Manager</h5>
-        <p>Katie F.</br><%= mail_to 'katie@axontutors.com', nil, class: 'blue-link' %></p>
-        <h5>Axon Headquarters</h5>
-        <p>(762) 585-4850</br><%= mail_to 'info@axontutors.com', nil, class: 'blue-link' %></p>
-      </div>
+    <div class="small-12 medium-4 columns">
+      <%= render 'support' %>
     </div>
   </div>
 </section>
-
-<!-- Reveal modals for confirming Appointment cancellation -->
-
-<% @tutor.appointments.where(status: 'Scheduled').each do |appt| %>
-  <div id="confirm-cancel-appt-<%= appt.id %>" class="reveal-modal medium" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
-    <h3 id="modalTitle" class="margin-bottom-1em">Are you sure you want to cancel this appointment?</h3>
-          <table>
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Time</th>
-                <th>Subject</th>
-                <th>Student</th>
-                <th>Contact</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% student = Student.find(appt.student_id) %>
-              <tr>
-                <td><%= appt.start_time.in_time_zone(@school.timezone).strftime("%b %-d") %></td>
-                <td><%= appt.start_time.in_time_zone(@school.timezone).strftime("%l:%M%P") %></td>
-                <td><%= Course.find(appt.course_id).formatted_name %></td>
-                <td><%= student.full_name %></td>
-                <td><%= student.email %></td>
-              </tr>
-            </tbody>
-          </table>
-    <p><b>IMPORTANT:</b> As soon as you cancel, the student will be notified and refunded. If you have already received payment, the amount paid for this appointment will be withdrawn from your bank account. Please make a note of this to avoid potential overdrafts.</p>
-    <div class="row">
-      <div class="small-12 medium-4 columns">
-          <a class="close-reveal-modal custom-button override-foundation" aria-label="Close">Don't cancel</a>
-      </div>
-      <div class="small-12 medium-4 columns">
-        <%= form_for appt, url: cancel_appt_tutor_path(@tutor.slug, appt.id), class: 'cancel-appt-form-button', method: :put do |f| %>
-          <%= f.hidden_field :status, value: 'Cancelled' %>
-          <%= f.submit 'Cancel', class: 'custom-button danger' %>
-        <% end %>
-      </div>
-    </div>
-  </div>
-<% end %>

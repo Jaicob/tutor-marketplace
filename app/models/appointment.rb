@@ -112,7 +112,8 @@ class Appointment < ActiveRecord::Base
 
   # the next 3 helper methods format the start_time accordingly and apply the school's timezone
   def date
-    self.start_time.in_time_zone(self.school.timezone).strftime('%A -  %-m/%d/%y')
+    # self.start_time.in_time_zone(self.school.timezone).strftime('%A -  %-m/%d/%y')
+    "#{self.start_time.in_time_zone(self.school.timezone).strftime('%A')}</br>#{self.start_time.in_time_zone(self.school.timezone).strftime('%-m/%d/%y')}".html_safe()
   end
 
   def time

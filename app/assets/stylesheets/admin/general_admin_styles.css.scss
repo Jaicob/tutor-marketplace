@@ -36,11 +36,11 @@ div.admin-header {
 // makes all info links blue to show they are clickable
 td {
   a {
-    color: #0095AC !important;
+    color: #0095AC;
   }
 }
 
-// styling for pagination links
+// styling for pagination links (overrides to generic Kaminari style - the gem that provides pagination)
 nav.pagination {
   display: block;
   margin-bottom: 2em;

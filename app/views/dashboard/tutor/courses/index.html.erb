@@ -50,11 +50,11 @@
               <td><%= tutor_course.course.subject.name %></td>
               <td><%= tutor_course.course.call_number %></td>
               <td><%= tutor_course.course.friendly_name %></td>
-              <td>$<%= tutor_course.rate %></td>
-              <td>$<%= tutor_course.full_price %></td>
-              <td>--</td>
-              <td>--</td>
-              <td>--</td>
+              <td>$<%= display_price(tutor_course.rate * 100) %></td>
+              <td>$<%= display_price(full_price(tutor_course.rate)) %></td>
+              <td><%= tutor_course.students %></td>
+              <td><%= tutor_course.appointments.count %></td>
+              <td>$<%= display_price(tutor_course.revenue) %></td>
               <td><a href="#" data-reveal-id="myModal-<%= tutor_course.id %>" class="custom-button full-width gray">Edit / Delete</a></td>
             </tr>
             <% end %>
@@ -70,7 +70,11 @@
 <% @tutor.tutor_courses.each do |tutor_course| %>
 
   <div id="myModal-<%= tutor_course.id %>" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
-    <h2 id="modalTitle">Edit Course</h2>
+    <div class="row">
+      <div class="small-12 columns">
+        <h2 id="modalTitle">Edit Course</h2>
+      </div>
+    </div>
     <div class="row">
       <div class="small-12 columns">
         <table>
@@ -102,12 +106,12 @@
           <%= f.label :rate, 'Hourly Rate' %>
           <%= f.text_field :rate, size: 5 %>
           <%= hidden_field_tag(:from_onboarding_courses_page, value: 'true') %>
-          <%= f.submit 'Update Rate', class: 'custom-button' %>
+          <%= f.submit 'Update Rate', class: 'custom-button short-width' %>
         <% end %>
       </div>
       <div class="small-12 medium-3 columns">
         <h4>Delete Course</h4>
-        <%= button_to('Delete Course', "/tutors/#{@tutor.id}/courses/#{tutor_course.id}", method: :delete, class: 'custom-button danger') %>
+        <%= button_to('Delete Course', "/tutors/#{@tutor.id}/courses/#{tutor_course.id}", method: :delete, class: 'custom-button danger short-width') %>
       </div>
     </div>
   </div>

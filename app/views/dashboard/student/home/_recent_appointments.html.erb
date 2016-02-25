@@ -1,4 +1,4 @@
-<h4 class="dash-home-header">Appointment History</h4>
+<h4 class="dash-home-header">Recent Appointments</h4>
 <% if @student.appointments.count == 0 %>
   <div class="box height-22em">
     <div class="no-appts">
@@ -17,7 +17,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @student.appointments.sort_by{|appt| appt.start_time}.each do |appt| %>
+      <% @recent_appointments.each do |appt| %>
         <tr>
           <td><%= appt.date %></td>
           <td><%= appt.time %></td>
