@@ -15,8 +15,6 @@ module AdminAnalyticsHelper
     "https://dashboard.stripe.com/customers/" + customer_id
   end
 
-
-
   # used for formatting in Students section
   def list_courses(courses_collection)
     courses_collection.each do |course|

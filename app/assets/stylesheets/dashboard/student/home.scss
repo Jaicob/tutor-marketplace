@@ -33,6 +33,7 @@
   }
 }
 
+// review card - one is shown for each appointment needing review on home screen of student dashboard
 .review-card {
     border: 1px solid #D8D8D8;
     border-radius: 4px;
@@ -62,6 +63,7 @@
     p.appt-details {
         margin: 0;
     }
+    // box with "Was it helpful?" label
     .helpful-box {
         background-color: #DEDEDE;
         border-radius: 4px;
