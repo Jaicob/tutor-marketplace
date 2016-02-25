@@ -64,9 +64,43 @@
     background-color: #DEDEDE;
     border-radius: 4px;
     padding: 0.5em;
-    .rating-radio {
-      margin: 1em auto !important;
-      display: block;
+    .thumb-mask-box {
+      .thumb-mask {
+        color: #A9A9A9;
+        font-size: 2.8em;
+        text-align: center;
+      }
     }
+    // makes like button green and dislike button red ON HOVER
+    .thumb-mask-box:hover + .thumb-mask {
+        &.positive {
+            color: #58AA4D;
+        }
+        &.negative {
+            color: #DE6328;
+        }
+    }
+
+    .thumb-mask-box label + .thumb-mask {
+        text-align: center;
+        padding: 3px 0px;
+        display: block;
+    }
+
+    .thumb-mask-box label input {
+      position: absolute;
+      opacity: 0;
+    }
+
+    // makes like button green and dislike button red WHEN CHECKED
+    .thumb-mask-box input:checked + .thumb-mask {
+        &.positive {
+            color: #58AA4D;
+        }
+        &.negative {
+            color: #DE6328;
+        }
+    }
+
   }
 }
