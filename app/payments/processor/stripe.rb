@@ -99,8 +99,6 @@ module Processor
           )
         else
           cust = ::Stripe::Customer.retrieve(student.customer_id)
-          # deletes customer's old card
-          cust.sources.data.first.delete()
           # creates new card and then saves customer to refresh customer data with new card
           cust.sources.create(source: token)
           cust.save
@@ -109,6 +107,8 @@ module Processor
             last_4_digits: cust.sources.data.first.last4,
             card_brand: cust.sources.data.first.brand
           )
+          # deletes customer's old card
+          cust.sources.data.first.delete()
         end
       rescue ::Stripe::StripeError => e
         puts "STRIPE ERROR!!!!!!"
