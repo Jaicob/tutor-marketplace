@@ -17,29 +17,21 @@
             <div class="helpful-box">
               <h5 class="center">Was this session helpful?</h5>
               <div class="row">
-                <div class="small-6 columns">
-
-
-                  <p class="center no-bottom-margin">Yes</p>
-                
-
-                  <div class="thumb-vote-box">
+                <div class="small-6 columns">  
+                  <div class="thumb-mask-box">
                     <label>
                       <%= ff.radio_button(:rating, 'Positive', class: 'rating-radio', required: true) %>
-                      <div class="thumb-mask"><i class="fi-like positive"></i></div>
+                      <div class="thumb-mask positive"><i class="fi-like thumb-button"></i></div>
                     </label>
                   </div>
-
-
-
-
-
-
                 </div>
                 <div class="small-6 columns">
-                  <p class="center no-bottom-margin">No</p>
-                  <i class="fi-dislike negative"></i>
-                  <%= ff.radio_button(:rating, 'Negative', class: 'rating-radio', required: true) %>
+                  <div class="thumb-mask-box">
+                    <label>
+                      <%= ff.radio_button(:rating, 'Negative', class: 'rating-radio', required: true) %>
+                      <div class="thumb-mask negative"><i class="fi-dislike thumb-button"></i></div>
+                    </label>
+                  </div>
                 </div>
               </div>
             </div>
@@ -47,7 +39,7 @@
           <div class="small-12 medium-3 columns">
             <div class="comments-box">
               <%= ff.label :comments, 'Optional Comments*' %>
-              <%= ff.text_area :comments, size: '8x4', placeholder: '*Comments are private and will only be reviewed by Axon administrators. Tutors cannot see comments.' %>
+              <%= ff.text_area :comments, size: '8x4', placeholder: '*Comments are private and will only be reviewed by Axon administrators. Tutors will not see comments.', class: 'border-radius' %>
             </div>
           </div>
         </div>

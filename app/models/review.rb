@@ -21,4 +21,12 @@ class Review < ActiveRecord::Base
 
   enum rating: ['Positive', 'Negative']
   enum follow_up_status: ['None', 'Attempted', 'Contacted']
+
+  after_create :update_tutor_rating
+
+  def update_tutor_rating
+    tutor =  self.appointment.tutor
+    updated_approval_rating = tutor.reviews.select{|review| review.rating == 'Positive'}.count / tutor.reviews.count.to_f * 100
+    tutor.update(approval: updated_approval_rating)
+  end
 end

@@ -2,6 +2,7 @@ class Dashboard::Student::HomeController < DashboardController
   before_action :set_appt, only: [:view_reschedule_options, :reschedule_appt]
 
   def index
+    @recent_appointments = @student.appointments.order(start_time: :desc).select{|appt| appt.start_time < DateTime.now }.first(5)
     if params[:charge]
       @charge = Charge.find(params[:charge])
       @receipt_only = true # this is only set in the Student Dashboard controller home action when a receipt is diplayed, flag is necessary to bypass validations (because after the checkout has been completed a StudentsPromotions record exists and if promo is a no_repeat type then it won't pass the validation and display the formatted prices correctly)

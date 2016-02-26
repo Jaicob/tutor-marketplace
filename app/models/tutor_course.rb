@@ -24,12 +24,6 @@ class TutorCourse < ActiveRecord::Base
     "#{self.course.subject.name} #{self.course.call_number}: #{self.course.friendly_name}"
   end
 
-  def full_price
-    transaction_fee = ((self.course.school.transaction_percentage / 100) + 1)
-    full_price = (transaction_fee * self.rate).round(2) # rounds to two decimal places
-    sprintf('%.2f', full_price) # always display 2 decimals - even if 2nd is 0 ('$22.50' vs. '$22.5')
-  end
-
   # custom validation
   def course_and_tutor_at_same_school
     tutor_school_id = Tutor.find(tutor_id).school.id
@@ -37,5 +31,18 @@ class TutorCourse < ActiveRecord::Base
     if tutor_school_id != course_school_id
       errors.add(:tutor, "cannot add courses from different school")
     end
+  end
+
+  def students
+    appts = self.appointments
+    appts.any? ? appts.uniq{|appt| appt.student_id}.count : 0
+  end
+
+  def appointments
+    Appointment.all.where(course_id: self.course.id).select{|appt| appt.tutor == self.tutor && appt.status != 'Cancelled'}
+  end
+
+  def revenue
+    self.appointments.count * self.rate * 100
   end
 end

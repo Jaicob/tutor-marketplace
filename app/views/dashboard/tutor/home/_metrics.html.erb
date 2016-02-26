@@ -1,0 +1,29 @@
+<h4 class="dash-home-header">Metrics</h2>
+<div class="box metrics-box">
+  <div class="row metrics-row">
+    <div class="small-12 medium-2 columns">
+      <h4 class="center"><%= @tutor_analyzer.availability_next_7_days %> hrs</h4>
+      <p>Availability</br>(next 7 days)</p>
+    </div>
+    <div class="small-12 medium-2 columns">
+      <h4 class="center"><%= @tutor_analyzer.appts_next_7_days.count %></h4>
+      <p>Appointments</br>(next 7 days)</p>
+    </div>
+    <div class="small-12 medium-2 columns">
+      <h4 class="center"><%= @tutor.courses.count %></h4>
+      <p>Total Courses</p>
+    </div>
+    <div class="small-12 medium-2 columns">
+      <h4 class="center"><%= @tutor_analyzer.students.count %></h4>
+      <p>Total Students</p>
+    </div>
+    <div class="small-12 medium-2 columns">
+      <h4 class="center"><%= @tutor_analyzer.total_appts.count %></h4>
+      <p>Total Appointments</p>
+    </div>
+    <div class="small-12 medium-2 columns">
+      <h4 class="center">$<%= display_price(@tutor_analyzer.total_income) %></h4>
+      <p>Total Revenue YTD</p>
+    </div>
+  </div>
+</div>
