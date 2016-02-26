@@ -16,8 +16,8 @@
 class Student < ActiveRecord::Base
   belongs_to :user
   belongs_to :school
-  has_many :charges, dependent: :destroy
-  has_many :appointments, dependent: :destroy
+  has_many :charges
+  has_many :appointments
   has_many :reviews, through: :appointments
   has_many :students_promotions, class_name: StudentsPromotions
   has_many :promotions, through: :students_promotions

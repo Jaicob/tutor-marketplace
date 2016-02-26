@@ -14,9 +14,9 @@
 class Course < ActiveRecord::Base
   belongs_to :school
   belongs_to :subject
-  has_many :tutor_courses, dependent: :destroy
+  has_many :tutor_courses
   has_many :tutors, through: :tutor_courses, dependent: :destroy
-  has_many :appointments, dependent: :destroy
+  has_many :appointments
   has_many :students, through: :appointments
 
   validates :call_number, presence: :true
