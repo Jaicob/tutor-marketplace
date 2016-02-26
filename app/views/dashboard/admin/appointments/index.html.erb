@@ -1,86 +1,88 @@
-<div class="row">
-  <div class="medium-12 columns">
-    <h3>Search Appointments</h3>
-    <%= search_form_for @q, url: search_admin_appointments_path, html: { method: :post } do |f| %>
-      <div class="box margin-bottom-1em">
-        <div class="row">
-          <div class="medium-3 columns">
-            <%= f.label :slot_tutor_user_first_name_matches, "Tutor Name" %>
-            <%= f.search_field :slot_tutor_user_first_name_matches %>
+<div class="admin-wrapper">
+  <div class="row">
+    <div class="medium-12 columns">
+      <h3>Search Appointments</h3>
+      <%= search_form_for @q, url: search_admin_appointments_path, html: { method: :post } do |f| %>
+        <div class="box margin-bottom-1em">
+          <div class="row">
+            <div class="medium-3 columns">
+              <%= f.label :slot_tutor_user_first_name_matches, "Tutor Name" %>
+              <%= f.search_field :slot_tutor_user_first_name_matches %>
+            </div>
+            <div class="medium-3 columns">
+              <%= f.label :student_user_first_name_or_student_user_last_name_matches, "Student Name" %>
+              <%= f.search_field :student_user_first_name_or_student_user_last_name_matches %>
+            </div>
+            <div class="medium-3 columns">
+              <%= f.label :course_school_id_eq, "School" %>
+              <% if current_user.role == 'campus_manager' %>
+                <%= f.select(:course_school_id_eq, options_for_select(["#{@school.name}"])) %>
+              <% else %>
+                <%= f.collection_select(:course_school_id_eq, School.all, :id, :name, include_blank: true) %>
+              <% end %>
+            </div>
+            <div class="medium-3 columns">
+              <%= f.label :status_eq, "Status" %>
+              <%= f.select(:status_eq, options_for_select([['Scheduled', 0],['Cancelled', 1],['Completed', 2]]), include_blank: true) %>
+            </div>
           </div>
-          <div class="medium-3 columns">
-            <%= f.label :student_user_first_name_or_student_user_last_name_matches, "Student Name" %>
-            <%= f.search_field :student_user_first_name_or_student_user_last_name_matches %>
-          </div>
-          <div class="medium-3 columns">
-            <%= f.label :course_school_id_eq, "School" %>
-            <% if current_user.role == 'campus_manager' %>
-              <%= f.select(:course_school_id_eq, options_for_select(["#{@school.name}"])) %>
-            <% else %>
-              <%= f.collection_select(:course_school_id_eq, School.all, :id, :name, include_blank: true) %>
-            <% end %>
-          </div>
-          <div class="medium-3 columns">
-            <%= f.label :status_eq, "Status" %>
-            <%= f.select(:status_eq, options_for_select([['Scheduled', 0],['Cancelled', 1],['Completed', 2]]), include_blank: true) %>
+          <div class="row">
+            <div class="medium-3 columns">
+              <%= f.label :start_time_gteq, "From:" %>
+              <%= f.date_select :start_time_gteq, include_blank: true %>
+            </div>
+            <div class="medium-3 columns">
+              <%= f.label :start_time_lteq, "To:" %>
+              <%= f.date_select :start_time_lteq, include_blank: true %>
+            </div>
+            <div class="medium-3 columns"> 
+              <%= button_to 'Reset', '/admin/tutors', class: 'custom-button short-width blue margin-top-1em' %>
+            </div>
+            <div class="medium-3 columns">   
+              <%= f.submit class: 'custom-button short-width margin-top-1em' %>
+            </div>
           </div>
         </div>
-        <div class="row">
-          <div class="medium-3 columns">
-            <%= f.label :start_time_gteq, "From:" %>
-            <%= f.date_select :start_time_gteq, include_blank: true %>
-          </div>
-          <div class="medium-3 columns">
-            <%= f.label :start_time_lteq, "To:" %>
-            <%= f.date_select :start_time_lteq, include_blank: true %>
-          </div>
-          <div class="medium-3 columns"> 
-            <%= button_to 'Reset', '/admin/tutors', class: 'custom-button short-width blue margin-top-1em' %>
-          </div>
-          <div class="medium-3 columns">   
-            <%= f.submit class: 'custom-button short-width margin-top-1em' %>
-          </div>
-        </div>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
   </div>
-</div>
-<div class="row">
-  <div class="small-12 columns">
-    <h6>Total Results: <%= @appointments_total.count %></h6>
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Tutor</th>
-          <th>Student</th>
-          <th>Course</th>
-          <th>Date</th>
-          <th>Time</th>
-          <th>Status</th>
-          <th>School</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @appointments.each do |appt| %>
+  <div class="row">
+    <div class="small-12 columns">
+      <h6>Total Results: <%= @appointments_total.count %></h6>
+      <table>
+        <thead>
           <tr>
-            <td><%= link_to appt.id, "/admin/appointments/#{appt.id}", class: 'id-link-for-admin' %></td>
-            <td><%= link_to appt.slot.tutor.full_name, admin_tutor_path(appt.tutor) %></td>
-            <td><%= link_to appt.student.full_name, admin_student_path(appt.student) %></td>
-            <td><%= link_to appt.course.formatted_name, admin_course_path(appt.course) %></td>
-            <td><%= appt.date %>
-            <td><%= appt.time %></td>
-            <td><%= appt.status %></td>
-            <td><%= link_to appt.school.name, admin_school_path(appt.school) %></td>
+            <th>ID</th>
+            <th>Tutor</th>
+            <th>Student</th>
+            <th>Course</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Status</th>
+            <th>School</th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          <% @appointments.each do |appt| %>
+            <tr>
+              <td><%= link_to appt.id, "/admin/appointments/#{appt.id}", class: 'id-link-for-admin' %></td>
+              <td><%= link_to appt.slot.tutor.full_name, admin_tutor_path(appt.tutor) %></td>
+              <td><%= link_to appt.student.full_name, admin_student_path(appt.student) %></td>
+              <td><%= link_to appt.course.formatted_name, admin_course_path(appt.course) %></td>
+              <td><%= appt.date %>
+              <td><%= appt.time %></td>
+              <td><%= appt.status %></td>
+              <td><%= link_to appt.school.name, admin_school_path(appt.school) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
-</div>
 
-<div class="row">
-  <div class="small-12 columns">
-    <%= paginate @appointments %>
+  <div class="row">
+    <div class="small-12 columns">
+      <%= paginate @appointments %>
+    </div>
   </div>
 </div>

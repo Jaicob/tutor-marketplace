@@ -1,83 +1,85 @@
-<div class="row">
-  <div class="medium-8 columns">
-    <h3>School Details</h3>
-    <h2><%= @working_school.name if @working_school.name %></h2>
-    <h6><%= @working_school.location if @working_school.location %></h6>
-    <h6>Timezone: <%= @working_school.timezone if @working_school.timezone %></h6>
-    <h6>Fee: <%= @working_school.transaction_percentage if @working_school.transaction_percentage %>%</h6>
-    <a href="#" data-reveal-id="editSchool" class="custom-button">Edit</a>
-  </div>
-  <% if current_user.role == 'admin' %>
-    <div class="medium-4 columns">
-      <%= link_to 'Back to All Schools', admin_schools_path, class: 'custom-button full-width blue' %>
+<div class="admin-wrapper">
+  <div class="row">
+    <div class="medium-8 columns">
+      <h3>School Details</h3>
+      <h2><%= @working_school.name if @working_school.name %></h2>
+      <h6><%= @working_school.location if @working_school.location %></h6>
+      <h6>Timezone: <%= @working_school.timezone if @working_school.timezone %></h6>
+      <h6>Fee: <%= @working_school.transaction_percentage if @working_school.transaction_percentage %>%</h6>
+      <a href="#" data-reveal-id="editSchool" class="custom-button">Edit</a>
     </div>
-  <% end %>
-</div>
-
-<div class="row">
-  <div class="medium-12 columns">
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Courses</th>
-          <th>Tutors</th>
-          <th>Students</th>
-          <th>Appts</th>
-          <th>Avg. Tutor Fee</th>
-          <th>Avg. Axon Fee</th>
-          <th>YTD Rev.</th>
-          <th>Total Rev.</th>
-          <th>Fee</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><%= @working_school.id %></td>
-          <td><%= @working_school.courses.count %></td>
-          <td><%= @working_school.tutors.count %></td>
-          <td><%= @working_school.students.count %></td>
-          <td><%= @working_school.appointments.count %></td>
-          <td>--</td>
-          <td>--</td>
-          <td>--</td>
-          <td>--</td>
-          <td><%= @working_school.transaction_percentage if @working_school.transaction_percentage %>%</td>
-        </tr>
-      </tbody>
-    </table>
+    <% if current_user.role == 'admin' %>
+      <div class="medium-4 columns">
+        <%= link_to 'Back to All Schools', admin_schools_path, class: 'custom-button full-width blue' %>
+      </div>
+    <% end %>
   </div>
-</div>
 
-<div class="row margin-bottom-3em">
-  <div class="medium-12 columns">
-    <div class="box">
-      <h3>Background Image</h3>
-      <% if @working_school.campus_pic.url %>
-        <p>Current Image: <a href="<%= @working_school.campus_pic.url %>" target="_blank" class="blue-link">
-          <%= @working_school.campus_pic.url.split("/").last %></a>
-        </p>
-      <% else %>
-        <h6>None</p>
-      <% end %>
-      <a href="#" data-reveal-id="uploadCampusPicture" class="custom-button">Edit</a>
+  <div class="row">
+    <div class="medium-12 columns">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Courses</th>
+            <th>Tutors</th>
+            <th>Students</th>
+            <th>Appts</th>
+            <th>Avg. Tutor Fee</th>
+            <th>Avg. Axon Fee</th>
+            <th>YTD Rev.</th>
+            <th>Total Rev.</th>
+            <th>Fee</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><%= @working_school.id %></td>
+            <td><%= @working_school.courses.count %></td>
+            <td><%= @working_school.tutors.count %></td>
+            <td><%= @working_school.students.count %></td>
+            <td><%= @working_school.appointments.count %></td>
+            <td>--</td>
+            <td>--</td>
+            <td>--</td>
+            <td>--</td>
+            <td><%= @working_school.transaction_percentage if @working_school.transaction_percentage %>%</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
-</div>
 
-<div class="row margin-bottom-3em">
-  <div class="medium-12 columns">
-    <div class="box">
-      <h3>Campus Manager</h3>
-        <% if @working_school.campus_manager %>
-          <div class="row">		     
-           <div class="small-12 medium-6 columns">		
-             <h6><%= @working_school.campus_manager.full_name %></h6>		
-             <p><%= @working_school.campus_manager.email %></p>		
-             <p><%= @working_school.campus_manager.phone_number %></p>		
-           </div>		
-         </div>
-      <% end %>
+  <div class="row margin-bottom-3em">
+    <div class="medium-12 columns">
+      <div class="box">
+        <h3>Background Image</h3>
+        <% if @working_school.campus_pic.url %>
+          <p>Current Image: <a href="<%= @working_school.campus_pic.url %>" target="_blank" class="blue-link">
+            <%= @working_school.campus_pic.url.split("/").last %></a>
+          </p>
+        <% else %>
+          <h6>None</p>
+        <% end %>
+        <a href="#" data-reveal-id="uploadCampusPicture" class="custom-button">Edit</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="row margin-bottom-3em">
+    <div class="medium-12 columns">
+      <div class="box">
+        <h3>Campus Manager</h3>
+          <% if @working_school.campus_manager %>
+            <div class="row">		     
+             <div class="small-12 medium-6 columns">		
+               <h6><%= @working_school.campus_manager.full_name %></h6>		
+               <p><%= @working_school.campus_manager.email %></p>		
+               <p><%= @working_school.campus_manager.phone_number %></p>		
+             </div>		
+           </div>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>

@@ -1,79 +1,81 @@
-<div class="row">
-  <div class="medium-12 columns">
-    <h3>Search Reviews</h3>
-    <%= search_form_for @q, url: search_admin_reviews_path, html: { method: :post } do |f| %>
-      <div class="box margin-bottom-1em">
-        <div class="row">
-          <div class="medium-2 columns">   
-            <%= f.label :id_eq, 'ID' %>
-            <%= f.search_field :id_eq %>
+<div class="admin-wrapper">
+  <div class="row">
+    <div class="medium-12 columns">
+      <h3>Search Reviews</h3>
+      <%= search_form_for @q, url: search_admin_reviews_path, html: { method: :post } do |f| %>
+        <div class="box margin-bottom-1em">
+          <div class="row">
+            <div class="medium-2 columns">   
+              <%= f.label :id_eq, 'ID' %>
+              <%= f.search_field :id_eq %>
+            </div>
+            <div class="medium-2 columns">   
+              <%= f.label :appointment_id_eq, 'Appt. ID' %>
+              <%= f.search_field :appointment_id_eq %>
+            </div>
+            <div class="medium-2 columns">   
+              <%= f.label :rating_eq, 'Rating' %>
+              <%= f.select(:rating_eq, options_for_select([['Positive', 0],['Negative', 1]]), include_blank: true) %>
+            </div>
+            <div class="medium-2 columns">   
+              <%= f.label :follow_up_status_eq, 'Follow Up Status' %>
+              <%= f.select(:follow_up_status_eq, options_for_select([['None', 0],['Attempted', 1],['Contacted',2]]), include_blank: true) %>
+            </div>
+            <div class="medium-4 columns">   
+              <%= f.label :follow_up_notes_cont, 'Follow Up Notes' %>
+              <%= f.search_field :follow_up_notes_cont %>
+            </div>
           </div>
-          <div class="medium-2 columns">   
-            <%= f.label :appointment_id_eq, 'Appt. ID' %>
-            <%= f.search_field :appointment_id_eq %>
-          </div>
-          <div class="medium-2 columns">   
-            <%= f.label :rating_eq, 'Rating' %>
-            <%= f.select(:rating_eq, options_for_select([['Positive', 0],['Negative', 1]]), include_blank: true) %>
-          </div>
-          <div class="medium-2 columns">   
-            <%= f.label :follow_up_status_eq, 'Follow Up Status' %>
-            <%= f.select(:follow_up_status_eq, options_for_select([['None', 0],['Attempted', 1],['Contacted',2]]), include_blank: true) %>
-          </div>
-          <div class="medium-4 columns">   
-            <%= f.label :follow_up_notes_cont, 'Follow Up Notes' %>
-            <%= f.search_field :follow_up_notes_cont %>
+          <div class="row">
+            <div class="medium-2 medium-offset-8 columns">   
+              <%= button_to 'Reset', '/admin/tutors', class: 'custom-button short-width blue margin-top-1em' %>
+            </div>
+            <div class="medium-2 columns">   
+              <%= f.submit class: 'custom-button short-width margin-top-1em' %>
+            </div>
           </div>
         </div>
-        <div class="row">
-          <div class="medium-2 medium-offset-8 columns">   
-            <%= button_to 'Reset', '/admin/tutors', class: 'custom-button short-width blue margin-top-1em' %>
-          </div>
-          <div class="medium-2 columns">   
-            <%= f.submit class: 'custom-button short-width margin-top-1em' %>
-          </div>
-        </div>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
   </div>
-</div>
 
-<div class="row">
-  <div class="small-12 columns">
-    <h6>Total Results: <%= @reviews_total.count %></h6>
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Appt. ID</th>
-          <th>Tutor</th>
-          <th>Student</th>
-          <th>Rating</th>
-          <th>Comment</th>
-          <th>Submitted</th>
-          <th>Follow Up Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @reviews.each do |review| %>
-        <tr>
-          <td><%= link_to review.id, admin_review_path(review), class: 'id-link-for-admin' %></td>
-          <td><%= link_to review.appointment_id, admin_appointment_path(review.appointment), class: 'blue-link' %></td>
-          <td><%= link_to review.tutor.full_name, admin_tutor_path(review.tutor), class: 'blue-link' %></td>
-          <td><%= link_to review.student.full_name, admin_student_path(review.student), class: 'blue-link' %></td>
-          <td><% if review.rating == 'Positive' %>Positive<% else %><span class="negative-review">Negative</span><% end %></td>
-          <td><%= review.comment %></td>
-          <td><%= review.created_at.strftime("%-m-%d-%y") %></td>
-          <td><%= review.follow_up_status %></td>
+  <div class="row">
+    <div class="small-12 columns">
+      <h6>Total Results: <%= @reviews_total.count %></h6>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Appt. ID</th>
+            <th>Tutor</th>
+            <th>Student</th>
+            <th>Rating</th>
+            <th>Comment</th>
+            <th>Submitted</th>
+            <th>Follow Up Status</th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          <% @reviews.each do |review| %>
+          <tr>
+            <td><%= link_to review.id, admin_review_path(review), class: 'id-link-for-admin' %></td>
+            <td><%= link_to review.appointment_id, admin_appointment_path(review.appointment), class: 'blue-link' %></td>
+            <td><%= link_to review.tutor.full_name, admin_tutor_path(review.tutor), class: 'blue-link' %></td>
+            <td><%= link_to review.student.full_name, admin_student_path(review.student), class: 'blue-link' %></td>
+            <td><% if review.rating == 'Positive' %>Positive<% else %><span class="negative-review">Negative</span><% end %></td>
+            <td><%= review.comment %></td>
+            <td><%= review.created_at.strftime("%-m-%d-%y") %></td>
+            <td><%= review.follow_up_status %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
-</div>
 
-<div class="row">
-  <div class="small-12 columns">
-    <%= paginate @reviews %>
+  <div class="row">
+    <div class="small-12 columns">
+      <%= paginate @reviews %>
+    </div>
   </div>
 </div>

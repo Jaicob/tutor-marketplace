@@ -1,275 +1,278 @@
-<div class="row">
-  <div class="medium-9 columns">
-    <h3>Tutor ID: <%= @tutor.id %></h3>
-    <h1><%= @tutor.user.full_name %></h1>
-  </div>
-  <div class="medium-3 columns">
-    <%= link_to 'All Tutors', admin_tutors_path, class: 'custom-button full-width blue' %>
-  </div>
-</div>
-
-<!-- Tutor Details -->
-
-<div class="row">
-  <div class="medium-12 columns">
-    <h4>Details</h4>
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Status</th>
-          <th>School</th>
-          <th>Contact</th>
-          <th>Appts.</th>
-          <th>Bookings*</th>
-          <th>Joined</th>
-          <th>Last Sign In</th>
-          <th>Stripe Account ID</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><%= @tutor.id %></td>
-          <td><%= @tutor.active_status %></td>
-          <td><%= @tutor.school.name %></td>
-          <td><%= @tutor.user.email %></br></br><%= @tutor.phone_number %></td>
-          <td><%= @tutor.appointments.count %></td>
-          <td><%= @tutor.charges.count %></td>
-          <td><%= @tutor.created_at.strftime('%-m-%d-%y') %></td>
-          <td><%= @tutor.user.last_sign_in_at.strftime('%-m-%d-%y') if @tutor.user.last_sign_in_at %></td>
-          <td><% if @tutor.acct_id %><%= link_to @tutor.acct_id, stripe_account_link(@tutor.acct_id), target: '_blank' %><% end %></td>
-        </tr>
-      </tbody>
-    </table>
-    <p class="fine-print margin-bottom-2em no-max-width">*Bookings refers to the number of checkouts. One booking can include many appointments.</p>
-  </div>
-</div>
-
-<!-- Admin actions as buttons -->
-
-<div class="row">
-  <div class="medium-12 columns">
-    <h4>Actions</h4>
-    <div class="box margin-bottom-1em">
-      <div class="row">
-        <div class="medium-3 columns">
-          <% if @tutor.active_status == 'Inactive' && @tutor.application_status != 'Approved' %>
-              <button class="custom-button short-width disabled" disabled="true">Can't Activate - Unapproved</button>
-          <% elsif @tutor.active_status == 'Inactive' && @tutor.application_status == 'Approved' %>
-            <%= form_for :tutor, url: admin_tutor_path(@tutor), method: 'patch' do |f| %>
-                <%= f.hidden_field :active_status, value: 'Active' %>
-                <%= f.submit 'Activate Tutor', class: 'custom-button short-width no-bottom-margin' %>
-            <% end %>
-          <% else %>
-            <%= form_for :tutor, url: admin_tutor_path(@tutor), method: 'patch' do |f| %>
-                <%= f.hidden_field :active_status, value: 'Inactive' %>
-                <%= f.submit 'Deactivate Tutor', class: 'custom-button short-width danger no-bottom-margin' %>
-            <% end %>
-          <% end %>
-        </div>
-        <div class="medium-3 columns">
-          <% if @tutor.application_status == 'Complete' %>
-            <%= form_for :tutor, url: admin_tutor_path(@tutor), method: 'patch' do |f| %>
-              <%= f.hidden_field :application_status, value: 'Approved' %>
-              <%= f.submit 'Approve Application', class: 'custom-button short-width no-bottom-margin' %>
-            <% end %>
-          <% else %>
-            <button class="custom-button short-width gray disabled no-bottom-margin" disabled="true">Application <%= @tutor.application_status %></button>
-          <% end %>
-        </div>
-        <div class="medium-3 columns">
-          <%= mail_to @tutor.email, 'Email Tutor', class: 'custom-button short-width blue no-bottom-margin' %>
-        </div>
-        <% if current_user.role == 'admin' %> <!-- dont allow Campus Managers to destroy tutor records -->
-          <div class="medium-3 columns">
-            <a href="#" data-reveal-id="confirmTutorDestroy" class='custom-button short-width danger no-bottom-margin'>Destroy Tutor</a>
-          </div>
-        <% end %>
-      </div>
+<div class="admin-wrapper">
+  <div class="row">
+    <div class="medium-9 columns">
+      <h3>Tutor ID: <%= @tutor.id %></h3>
+      <h1><%= @tutor.user.full_name %></h1>
+    </div>
+    <div class="medium-3 columns">
+      <%= link_to 'All Tutors', admin_tutors_path, class: 'custom-button full-width blue' %>
     </div>
   </div>
-</div>
 
-<!-- Missing information notices -->
+  <!-- Tutor Details -->
 
-<% if @tutor.application_status == 'Incomplete' %>
   <div class="row">
     <div class="medium-12 columns">
-      <h4>Missing Application Fields</h4>
-      <div class="box margin-bottom-1em">
-        <ul>
-        <% @tutor.missing_application_fields.each do |field| %>
-          <li class="left-align"><%= field %></li>
-        <% end %>
-        </ul>
-      </div>
-    </div>
-  </div>
-<% end %>
-
-<!-- Courses -->
-
-<div class="row">
-  <div class="medium-12 columns">
-    <h4>Courses</h4>
-    <% if @tutor.tutor_courses.any? %>
-      <table>
-        <thead>
-          <tr>
-            <th>Subject</th>
-            <th>Call Number</th>
-            <th>Friendly Name</th>
-            <th>Tutor Rate</th>
-            <th>Full Price</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @tutor.tutor_courses.each do |tc| %>
-          <tr>
-            <td><%= tc.course.subject.name %></td>
-            <td><%= tc.course.call_number %></td>
-            <td><%= tc.course.friendly_name %></td>
-            <td>$<%= display_price(tc.rate * 100) %></td>
-            <td>$<%= display_price(full_price(tc.rate)) %></td>
-          </tr>
-          <% end %>
-        </tbody>
-      </table>
-    <% else %>
-      <p>No courses</p>
-    <% end %>
-  </div>
-</div>
-
-<!-- Appointments section -->
-
-<div class="row">
-  <div class="small-12 columns">
-    <h4>Appointments</h4>
-    <% if @tutor.appointments.any? %>
+      <h4>Details</h4>
       <table>
         <thead>
           <tr>
             <th>ID</th>
-            <th>Tutor</th>
-            <th>Student</th>
-            <th>Course</th>
-            <th>Date</th>
-            <th>Time</th>
             <th>Status</th>
             <th>School</th>
+            <th>Contact</th>
+            <th>Appts.</th>
+            <th>Bookings*</th>
+            <th>Joined</th>
+            <th>Last Sign In</th>
+            <th>Stripe Account ID</th>
           </tr>
         </thead>
         <tbody>
-          <% @tutor.appointments.each do |appt| %>
-            <tr>
-              <td><%= link_to appt.id, "/admin/appointments/#{appt.id}", class: 'id-link-for-admin' %></td>
-              <td><%= appt.tutor.full_name %></td>
-              <td><%= link_to appt.student.full_name, admin_student_path(appt.student) %></td>
-              <td><%= link_to appt.course.formatted_name, admin_course_path(appt.course) %></td>
-              <td><%= appt.date %>
-              <td><%= appt.time %></td>
-              <td><%= appt.status %></td>
-              <td><%= link_to appt.school.name, admin_school_path(appt.school) %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    <% else %>
-      <p>No appointments</p>
-    <% end %>
-  </div>
-</div>
-
-<!-- Reviews sections -->
-
-<div class="row">
-  <div class="small-12 columns">
-    <h4>Reviews</h4>
-    <% if @tutor.reviews.any? %>
-      <h6>Approval Rating: <%= @tutor.approval %>%</h6>
-      <table>
-        <thead>
           <tr>
-            <th>ID</th>
-            <th>Appt. ID</th>
-            <th>Tutor</th>
-            <th>Student</th>
-            <th>Rating</th>
-            <th>Comment</th>
-            <th>Submitted</th>
-            <th>Follow Up Status</th>
+            <td><%= @tutor.id %></td>
+            <td><%= @tutor.active_status %></td>
+            <td><%= @tutor.school.name %></td>
+            <td><%= @tutor.user.email %></br></br><%= @tutor.phone_number %></td>
+            <td><%= @tutor.appointments.count %></td>
+            <td><%= @tutor.charges.count %></td>
+            <td><%= @tutor.created_at.strftime('%-m-%d-%y') %></td>
+            <td><%= @tutor.user.last_sign_in_at.strftime('%-m-%d-%y') if @tutor.user.last_sign_in_at %></td>
+            <td><% if @tutor.acct_id %><%= link_to @tutor.acct_id, stripe_account_link(@tutor.acct_id), target: '_blank' %><% end %></td>
           </tr>
-        </thead>
-        <tbody>
-          <% @tutor.reviews.each do |review| %>
-          <tr>
-            <td><%= link_to review.id, admin_review_path(review), class: 'id-link-for-admin' %></td>
-            <td><%= link_to review.appointment_id, admin_appointment_path(review.appointment), class: 'blue-link' %></td>
-            <td><%= link_to review.tutor.full_name, admin_tutor_path(review.tutor), class: 'blue-link' %></td>
-            <td><%= link_to review.student.full_name, admin_student_path(review.student), class: 'blue-link' %></td>
-            <td><% if review.rating == 'Positive' %>Positive<% else %><span class="negative-review">Negative</span><% end %></td>
-            <td><%= review.comment %></td>
-            <td><%= review.created_at.strftime("%-m-%d-%y") %></td>
-            <td><%= review.follow_up_status %></td>
-            </tr>
-          <% end %>
         </tbody>
       </table>
-    <% else %>
-      <p>No reviews</p>
-    <% end %>
-  </div>
-</div>
-
-<!-- Appointment Settings -->
-
-<div class="row">
-  <div class="medium-12 columns">
-    <h4>Appointment Settings</h4>
-    <table>
-      <thead>
-        <tr>
-          <th>Personal Note to Students</th>
-          <th>Booking Buffer</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><%= @tutor.appt_notes.blank? ? 'None' : @tutor.appt_notes %></td>
-          <td><%= @tutor.booking_buffer %> hours</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-
-<!-- Profile preview -->
-
-<div class="row">
-  <div class="medium-12 columns">
-    <h4>Profile</h4>
-    <div class="box margin-bottom-1em">
-      <%= render '/dashboard/tutor/profile/tutor_profile' %>
+      <p class="fine-print margin-bottom-2em no-max-width">*Bookings refers to the number of checkouts. One booking can include many appointments.</p>
     </div>
   </div>
-</div>
 
+  <!-- Admin actions as buttons -->
 
-
-<!-- Transcript preview -->
-
-<% if @tutor.transcript_url %>
   <div class="row">
     <div class="medium-12 columns">
-      <h4>Transcript</h4>
+      <h4>Actions</h4>
       <div class="box margin-bottom-1em">
-        <%= image_tag(@tutor.transcript_url) %>
-        <%= link_to 'View in new window', @tutor.transcript_url, target: '_blank', class: 'blue-link' %>
+        <div class="row">
+          <div class="medium-3 columns">
+            <% if @tutor.active_status == 'Inactive' && @tutor.application_status != 'Approved' %>
+                <button class="custom-button short-width disabled" disabled="true">Can't Activate - Unapproved</button>
+            <% elsif @tutor.active_status == 'Inactive' && @tutor.application_status == 'Approved' %>
+              <%= form_for :tutor, url: admin_tutor_path(@tutor), method: 'patch' do |f| %>
+                  <%= f.hidden_field :active_status, value: 'Active' %>
+                  <%= f.submit 'Activate Tutor', class: 'custom-button short-width no-bottom-margin' %>
+              <% end %>
+            <% else %>
+              <%= form_for :tutor, url: admin_tutor_path(@tutor), method: 'patch' do |f| %>
+                  <%= f.hidden_field :active_status, value: 'Inactive' %>
+                  <%= f.submit 'Deactivate Tutor', class: 'custom-button short-width danger no-bottom-margin' %>
+              <% end %>
+            <% end %>
+          </div>
+          <div class="medium-3 columns">
+            <% if @tutor.application_status == 'Complete' %>
+              <%= form_for :tutor, url: admin_tutor_path(@tutor), method: 'patch' do |f| %>
+                <%= f.hidden_field :application_status, value: 'Approved' %>
+                <%= f.submit 'Approve Application', class: 'custom-button short-width no-bottom-margin' %>
+              <% end %>
+            <% else %>
+              <button class="custom-button short-width gray disabled no-bottom-margin" disabled="true">Application <%= @tutor.application_status %></button>
+            <% end %>
+          </div>
+          <div class="medium-3 columns">
+            <%= mail_to @tutor.email, 'Email Tutor', class: 'custom-button short-width blue no-bottom-margin' %>
+          </div>
+          <% if current_user.role == 'admin' %> <!-- dont allow Campus Managers to destroy tutor records -->
+            <div class="medium-3 columns">
+              <a href="#" data-reveal-id="confirmTutorDestroy" class='custom-button short-width danger no-bottom-margin'>Destroy Tutor</a>
+            </div>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>
-<% end %>
+
+  <!-- Missing information notices -->
+
+  <% if @tutor.application_status == 'Incomplete' %>
+    <div class="row">
+      <div class="medium-12 columns">
+        <h4>Missing Application Fields</h4>
+        <div class="box margin-bottom-1em">
+          <ul>
+          <% @tutor.missing_application_fields.each do |field| %>
+            <li class="left-align"><%= field %></li>
+          <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- Courses -->
+
+  <div class="row">
+    <div class="medium-12 columns">
+      <h4>Courses</h4>
+      <% if @tutor.tutor_courses.any? %>
+        <table>
+          <thead>
+            <tr>
+              <th>Subject</th>
+              <th>Call Number</th>
+              <th>Friendly Name</th>
+              <th>Tutor Rate</th>
+              <th>Full Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @tutor.tutor_courses.each do |tc| %>
+            <tr>
+              <td><%= tc.course.subject.name %></td>
+              <td><%= tc.course.call_number %></td>
+              <td><%= tc.course.friendly_name %></td>
+              <td>$<%= display_price(tc.rate * 100) %></td>
+              <td>$<%= display_price(full_price(tc.rate)) %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <p>No courses</p>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Appointments section -->
+
+  <div class="row">
+    <div class="small-12 columns">
+      <h4>Appointments</h4>
+      <% if @tutor.appointments.any? %>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Tutor</th>
+              <th>Student</th>
+              <th>Course</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Status</th>
+              <th>School</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @tutor.appointments.each do |appt| %>
+              <tr>
+                <td><%= link_to appt.id, "/admin/appointments/#{appt.id}", class: 'id-link-for-admin' %></td>
+                <td><%= appt.tutor.full_name %></td>
+                <td><%= link_to appt.student.full_name, admin_student_path(appt.student) %></td>
+                <td><%= link_to appt.course.formatted_name, admin_course_path(appt.course) %></td>
+                <td><%= appt.date %>
+                <td><%= appt.time %></td>
+                <td><%= appt.status %></td>
+                <td><%= link_to appt.school.name, admin_school_path(appt.school) %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <p>No appointments</p>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Reviews sections -->
+
+  <div class="row">
+    <div class="small-12 columns">
+      <h4>Reviews</h4>
+      <% if @tutor.reviews.any? %>
+        <h6>Approval Rating: <%= @tutor.approval %>%</h6>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Appt. ID</th>
+              <th>Tutor</th>
+              <th>Student</th>
+              <th>Rating</th>
+              <th>Comment</th>
+              <th>Submitted</th>
+              <th>Follow Up Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @tutor.reviews.each do |review| %>
+            <tr>
+              <td><%= link_to review.id, admin_review_path(review), class: 'id-link-for-admin' %></td>
+              <td><%= link_to review.appointment_id, admin_appointment_path(review.appointment), class: 'blue-link' %></td>
+              <td><%= link_to review.tutor.full_name, admin_tutor_path(review.tutor), class: 'blue-link' %></td>
+              <td><%= link_to review.student.full_name, admin_student_path(review.student), class: 'blue-link' %></td>
+              <td><% if review.rating == 'Positive' %>Positive<% else %><span class="negative-review">Negative</span><% end %></td>
+              <td><%= review.comment %></td>
+              <td><%= review.created_at.strftime("%-m-%d-%y") %></td>
+              <td><%= review.follow_up_status %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <p>No reviews</p>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Appointment Settings -->
+
+  <div class="row">
+    <div class="medium-12 columns">
+      <h4>Appointment Settings</h4>
+      <table>
+        <thead>
+          <tr>
+            <th>Personal Note to Students</th>
+            <th>Booking Buffer</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><%= @tutor.appt_notes.blank? ? 'None' : @tutor.appt_notes %></td>
+            <td><%= @tutor.booking_buffer %> hours</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Profile preview -->
+
+  <div class="row">
+    <div class="medium-12 columns">
+      <h4>Profile</h4>
+      <div class="box margin-bottom-1em">
+        <%= render '/dashboard/tutor/profile/tutor_profile' %>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Transcript preview -->
+
+  <% if @tutor.transcript_url %>
+    <div class="row">
+      <div class="medium-12 columns">
+        <h4>Transcript</h4>
+        <div class="box margin-bottom-1em">
+          <%= image_tag(@tutor.transcript_url) %>
+          <%= link_to 'View in new window', @tutor.transcript_url, target: '_blank', class: 'blue-link' %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+</div>
 
 <!-- Confirmation model for destroying a Tutor account -->
 

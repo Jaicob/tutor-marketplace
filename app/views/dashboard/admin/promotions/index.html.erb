@@ -1,103 +1,105 @@
-<div class="row">
-  <div class="small-12 medium-8 columns">
-    <h3>Search Promotions</h3>
+<div class="admin-wrapper">
+  <div class="row">
+    <div class="small-12 medium-8 columns">
+      <h3>Search Promotions</h3>
+    </div>
+    <div class="small-12 medium-4 columns">
+      <%= link_to 'New Promotion', new_admin_promotion_path, class: 'custom-button full-width gray' %>
+    </div>
   </div>
-  <div class="small-12 medium-4 columns">
-    <%= link_to 'New Promotion', new_admin_promotion_path, class: 'custom-button full-width gray' %>
-  </div>
-</div>
 
-<div class="row">
-  <div class="medium-12 columns">
-    <%= search_form_for @q, url: search_admin_promotions_path, html: { method: :post } do |f| %>
-      <div class="box margin-bottom-1em">
-        <div class="row">
-          <div class="medium-2 columns">   
-            <%= f.label :id_eq, 'ID' %>
-            <%= f.search_field :id_eq %>
+  <div class="row">
+    <div class="medium-12 columns">
+      <%= search_form_for @q, url: search_admin_promotions_path, html: { method: :post } do |f| %>
+        <div class="box margin-bottom-1em">
+          <div class="row">
+            <div class="medium-2 columns">   
+              <%= f.label :id_eq, 'ID' %>
+              <%= f.search_field :id_eq %>
+            </div>
+            <div class="medium-2 columns">   
+              <%= f.label :code_eq, 'Code' %>
+              <%= f.search_field :code_eq %>
+            </div>
+            <div class="medium-2 end columns">   
+              <%= f.label :amount_eq, 'Discount' %>
+              <%= f.search_field :amount_eq %>
+            </div>
+            <div class="medium-6 end columns">   
+              <%= f.label :description_cont, 'Description' %>
+              <%= f.search_field :description_cont %>
+            </div>
           </div>
-          <div class="medium-2 columns">   
-            <%= f.label :code_eq, 'Code' %>
-            <%= f.search_field :code_eq %>
-          </div>
-          <div class="medium-2 end columns">   
-            <%= f.label :amount_eq, 'Discount' %>
-            <%= f.search_field :amount_eq %>
-          </div>
-          <div class="medium-6 end columns">   
-            <%= f.label :description_cont, 'Description' %>
-            <%= f.search_field :description_cont %>
+          <div class="row">
+            <div class="medium-2 medium-offset-8 columns">   
+              <%= button_to 'Reset', '/admin/promotions', class: 'custom-button short-width blue margin-top-1em' %>
+            </div>
+            <div class="medium-2 columns">   
+              <%= f.submit class: 'custom-button short-width margin-top-1em' %>
+            </div>
           </div>
         </div>
-        <div class="row">
-          <div class="medium-2 medium-offset-8 columns">   
-            <%= button_to 'Reset', '/admin/promotions', class: 'custom-button short-width blue margin-top-1em' %>
-          </div>
-          <div class="medium-2 columns">   
-            <%= f.submit class: 'custom-button short-width margin-top-1em' %>
-          </div>
-        </div>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
   </div>
-</div>
 
-<div class="row">
-  <div class="small-12 columns">
-    <h6>Total Results: <%= @promotions_total.count %></h6>
-    <% @promotions.each do |promotion| %>
-      <table class="promo-table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Code</th>
-            <th>Discount Percentage</th>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>Redemption Limit</th>
-            <th>Redemption Count</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><%= link_to promotion.id, admin_promotion_path(promotion) %></td>
-            <td class="code"><%= promotion.code %></td>
-            <td><%= promotion.amount %></td>
-            <td><%= promotion.valid_from.strftime('%-m-%d-%y') %></td>
-            <td><%= promotion.valid_until.strftime('%-m-%d-%y') %></td>
-            <td><%= promotion.redemption_limit %></td>
-            <td><%= promotion.redemption_count %></td>
-          </tr>
-        </tbody>
-        <thead>
-          <tr>
-            <th>Redeemer</th>
-            <th>Single Appt/Booking</th>
-            <th>Single Redemption/Student</th>
-            <th>Student ID</th>
-            <th>Course ID</th>
-            <th>Tutor ID</th>
-            <th>Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><%= promotion.redeemer.humanize if promotion.redeemer %></td>
-            <td><%= promotion.single_appt == 'single' ? 'True' : 'False' %></td>
-            <td><%= promotion.repeat_use == 'no_repeat' ? 'True' : 'False' %></td>
-            <td><%= promotion.student_id if promotion.student_id %></td>
-            <td><%= promotion.course_id if promotion.course_id %></td>
-            <td><%= promotion.tutor_id if promotion.tutor_id %></td>
-            <td><%= promotion.description %></td>
-          </tr>
-        </tbody>
-      </table>
-    <% end %>
+  <div class="row">
+    <div class="small-12 columns">
+      <h6>Total Results: <%= @promotions_total.count %></h6>
+      <% @promotions.each do |promotion| %>
+        <table class="promo-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Code</th>
+              <th>Discount Percentage</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>Redemption Limit</th>
+              <th>Redemption Count</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><%= link_to promotion.id, admin_promotion_path(promotion) %></td>
+              <td class="code"><%= promotion.code %></td>
+              <td><%= promotion.amount %></td>
+              <td><%= promotion.valid_from.strftime('%-m-%d-%y') %></td>
+              <td><%= promotion.valid_until.strftime('%-m-%d-%y') %></td>
+              <td><%= promotion.redemption_limit %></td>
+              <td><%= promotion.redemption_count %></td>
+            </tr>
+          </tbody>
+          <thead>
+            <tr>
+              <th>Redeemer</th>
+              <th>Single Appt/Booking</th>
+              <th>Single Redemption/Student</th>
+              <th>Student ID</th>
+              <th>Course ID</th>
+              <th>Tutor ID</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><%= promotion.redeemer.humanize if promotion.redeemer %></td>
+              <td><%= promotion.single_appt == 'single' ? 'True' : 'False' %></td>
+              <td><%= promotion.repeat_use == 'no_repeat' ? 'True' : 'False' %></td>
+              <td><%= promotion.student_id if promotion.student_id %></td>
+              <td><%= promotion.course_id if promotion.course_id %></td>
+              <td><%= promotion.tutor_id if promotion.tutor_id %></td>
+              <td><%= promotion.description %></td>
+            </tr>
+          </tbody>
+        </table>
+      <% end %>
+    </div>
   </div>
-</div>
 
-<div class="row">
-  <div class="small-12 columns">
-    <%= paginate @promotions %>
+  <div class="row">
+    <div class="small-12 columns">
+      <%= paginate @promotions %>
+    </div>
   </div>
 </div>
