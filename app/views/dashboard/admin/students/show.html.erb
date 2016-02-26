@@ -1,161 +1,162 @@
-<div class="row">
-  <div class="small-12 medium-6 columns">
-    <h3>Student ID: <%= @student.id %></h3>
-    <h1><%= @student.full_name %></h1>
+<div class="admin-wrapper">
+  <div class="row">
+    <div class="small-12 medium-6 columns">
+      <h3>Student ID: <%= @student.id %></h3>
+      <h1><%= @student.full_name %></h1>
+    </div>
   </div>
-</div>
 
-<div class="row">
-  <div class="small-12 columns">
-    <h4>Details</h4>
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>School</th>
-          <th>Appts</th>
-          <th>Recent Appt.</th>
-          <th>Last Appt.</th>
-          <th>Last Sign In</th>
-          <th>Courses</th>
-          <th>Joined</th>
-          <th>Contact</th>
-          <th>Stripe Customer</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><%= @student.id %></td>
-          <td><%= @student.full_name %></td>
-          <td><%= @student.school.name %></td>
-          <td><%= @student.appointments.count %></td>
-          <td><%= @student.recent_appt? %></td>
-          <td><%= @student.last_appointment.start_time.strftime('%-m-%d-%y') if @student.last_appointment %></td>
-          <td><%= @student.user.last_sign_in_at.strftime('%-m-%d-%y') if @student.user.last_sign_in_at  %></td>
-          <td><%= @student.courses %></td>
-          <td><%= @student.user.created_at.strftime('%-m-%d-%y') %></td>
-          <td><%= @student.email %></br></br><%= @student.phone_number %></td>
-          <td><% if @student.customer_id %><%= link_to @student.customer_id, stripe_customer_link(@student.customer_id), target: '_blank' %><% end %></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-
-<!-- Appointments section -->
-
-<div class="row">
-  <div class="small-12 columns">
-    <h4>Appointments</h4>
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Tutor</th>
-          <th>Student</th>
-          <th>Course</th>
-          <th>Date</th>
-          <th>Time</th>
-          <th>Status</th>
-          <th>School</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @student.appointments.each do |appt| %>
-          <tr>
-            <td><%= link_to appt.id, "/admin/appointments/#{appt.id}", class: 'id-link-for-admin' %></td>
-            <td><%= link_to appt.slot.tutor.full_name, admin_tutor_path(appt.tutor) %></td>
-            <td><%= appt.student.full_name %></td>
-            <td><%= appt.course.formatted_name %></td>
-            <td><%= appt.date %>
-            <td><%= appt.time %></td>
-            <td><%= appt.status %></td>
-            <td><%= appt.slot.tutor.school.name if appt.slot.tutor %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
-</div>
-
-<!-- Charges section -->
-
-<div class="row">
-  <div class="small-12 columns">
-    <h4>Charges</h4>
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Amount</th>
-          <th>Axon Fee</th>
-          <th>Tutor Fee</th>
-          <th>Appts.</th>
-          <th>Appt IDs</th>
-          <th>Tutor</th>
-          <th>Student</th>
-          <th>Stripe Charge ID</th>
-          <th>Promotion</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @student.charges.each do |charge| %>
-          <tr>
-            <td><%= link_to charge.id, admin_charge_path(charge), class: 'id-link-for-admin' %></td>
-            <td>$<%= display_price(charge.amount) %></td>
-            <td>$<%= display_price(charge.axon_fee) %></td>
-            <td>$<%= display_price(charge.tutor_fee) %></td>
-            <td><%= charge.appointments.count %></td>
-            <td><%= charge.appointments.map{|appt| appt.id} %></td>
-            <td><%= link_to charge.tutor.full_name, admin_tutor_path(charge.tutor), class: 'blue-link' %></td>
-            <td><%= charge.student.full_name %></td>
-            <td><% if charge.stripe_charge_id %><%= link_to charge.stripe_charge_id, stripe_charge_link(charge.stripe_charge_id), class: 'blue-link', target: '_blank' %><% end %></td>
-            <td><% if charge.promotion_id.nil? %>No Promo<% else %><%= link_to charge.promotion_id, admin_promotion_path(charge.promotion_id), class: 'blue-link' %><% end %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
-</div>
-
-<!-- Reviews section -->
-
-<div class="row">
-  <div class="small-12 columns">
-    <h4>Reviews</h4>
-    <% if @student.reviews.any? %>
+  <div class="row">
+    <div class="small-12 columns">
+      <h4>Details</h4>
       <table>
         <thead>
           <tr>
             <th>ID</th>
-            <th>Appt. ID</th>
-            <th>Tutor</th>
-            <th>Student</th>
-            <th>Rating</th>
-            <th>Comment</th>
-            <th>Submitted</th>
-            <th>Follow Up Status</th>
+            <th>Name</th>
+            <th>School</th>
+            <th>Appts</th>
+            <th>Recent Appt.</th>
+            <th>Last Appt.</th>
+            <th>Last Sign In</th>
+            <th>Courses</th>
+            <th>Joined</th>
+            <th>Contact</th>
+            <th>Stripe Customer</th>
           </tr>
         </thead>
         <tbody>
-          <% @student.reviews.each do |review| %>
           <tr>
-            <td><%= link_to review.id, admin_review_path(review), class: 'id-link-for-admin' %></td>
-            <td><%= link_to review.appointment_id, admin_appointment_path(review.appointment), class: 'blue-link' %></td>
-            <td><%= link_to review.tutor.full_name, admin_tutor_path(review.tutor), class: 'blue-link' %></td>
-            <td><%= link_to review.student.full_name, admin_student_path(review.student), class: 'blue-link' %></td>
-            <td><% if review.rating == 'Positive' %>Positive<% else %><span class="negative-review">Negative</span><% end %></td>
-            <td><%= review.comment %></td>
-            <td><%= review.created_at.strftime("%-m-%d-%y") %></td>
-            <td><%= review.follow_up_status %></td>
+            <td><%= @student.id %></td>
+            <td><%= @student.full_name %></td>
+            <td><%= @student.school.name %></td>
+            <td><%= @student.appointments.count %></td>
+            <td><%= @student.recent_appt? %></td>
+            <td><%= @student.last_appointment.start_time.strftime('%-m-%d-%y') if @student.last_appointment %></td>
+            <td><%= @student.user.last_sign_in_at.strftime('%-m-%d-%y') if @student.user.last_sign_in_at  %></td>
+            <td><%= @student.courses %></td>
+            <td><%= @student.user.created_at.strftime('%-m-%d-%y') %></td>
+            <td><%= @student.email %></br></br><%= @student.phone_number %></td>
+            <td><% if @student.customer_id %><%= link_to @student.customer_id, stripe_customer_link(@student.customer_id), target: '_blank' %><% end %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Appointments section -->
+
+  <div class="row">
+    <div class="small-12 columns">
+      <h4>Appointments</h4>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Tutor</th>
+            <th>Student</th>
+            <th>Course</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Status</th>
+            <th>School</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @student.appointments.each do |appt| %>
+            <tr>
+              <td><%= link_to appt.id, "/admin/appointments/#{appt.id}", class: 'id-link-for-admin' %></td>
+              <td><%= link_to appt.slot.tutor.full_name, admin_tutor_path(appt.tutor) %></td>
+              <td><%= appt.student.full_name %></td>
+              <td><%= appt.course.formatted_name %></td>
+              <td><%= appt.date %>
+              <td><%= appt.time %></td>
+              <td><%= appt.status %></td>
+              <td><%= appt.slot.tutor.school.name if appt.slot.tutor %></td>
             </tr>
           <% end %>
         </tbody>
       </table>
-    <% else %>
-      <p>No reviews</p>
-    <% end %>
+    </div>
+  </div>
+
+  <!-- Charges section -->
+
+  <div class="row">
+    <div class="small-12 columns">
+      <h4>Charges</h4>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Amount</th>
+            <th>Axon Fee</th>
+            <th>Tutor Fee</th>
+            <th>Appts.</th>
+            <th>Appt IDs</th>
+            <th>Tutor</th>
+            <th>Student</th>
+            <th>Stripe Charge ID</th>
+            <th>Promotion</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @student.charges.each do |charge| %>
+            <tr>
+              <td><%= link_to charge.id, admin_charge_path(charge), class: 'id-link-for-admin' %></td>
+              <td>$<%= display_price(charge.amount) %></td>
+              <td>$<%= display_price(charge.axon_fee) %></td>
+              <td>$<%= display_price(charge.tutor_fee) %></td>
+              <td><%= charge.appointments.count %></td>
+              <td><%= charge.appointments.map{|appt| appt.id} %></td>
+              <td><%= link_to charge.tutor.full_name, admin_tutor_path(charge.tutor), class: 'blue-link' %></td>
+              <td><%= charge.student.full_name %></td>
+              <td><% if charge.stripe_charge_id %><%= link_to charge.stripe_charge_id, stripe_charge_link(charge.stripe_charge_id), class: 'blue-link', target: '_blank' %><% end %></td>
+              <td><% if charge.promotion_id.nil? %>No Promo<% else %><%= link_to charge.promotion_id, admin_promotion_path(charge.promotion_id), class: 'blue-link' %><% end %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Reviews section -->
+
+  <div class="row">
+    <div class="small-12 columns">
+      <h4>Reviews</h4>
+      <% if @student.reviews.any? %>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Appt. ID</th>
+              <th>Tutor</th>
+              <th>Student</th>
+              <th>Rating</th>
+              <th>Comment</th>
+              <th>Submitted</th>
+              <th>Follow Up Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @student.reviews.each do |review| %>
+            <tr>
+              <td><%= link_to review.id, admin_review_path(review), class: 'id-link-for-admin' %></td>
+              <td><%= link_to review.appointment_id, admin_appointment_path(review.appointment), class: 'blue-link' %></td>
+              <td><%= link_to review.tutor.full_name, admin_tutor_path(review.tutor), class: 'blue-link' %></td>
+              <td><%= link_to review.student.full_name, admin_student_path(review.student), class: 'blue-link' %></td>
+              <td><% if review.rating == 'Positive' %>Positive<% else %><span class="negative-review">Negative</span><% end %></td>
+              <td><%= review.comment %></td>
+              <td><%= review.created_at.strftime("%-m-%d-%y") %></td>
+              <td><%= review.follow_up_status %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <p>No reviews</p>
+      <% end %>
+    </div>
   </div>
 </div>
-

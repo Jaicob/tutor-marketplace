@@ -1,82 +1,84 @@
-<div class="row">
-  <div class="medium-9 columns">
-    <h3>Charge ID: <%= @charge.id %></h3>
+<div class="admin-wrapper">
+  <div class="row">
+    <div class="medium-9 columns">
+      <h3>Charge ID: <%= @charge.id %></h3>
+    </div>
+    <div class="medium-3 columns">
+      <%= link_to 'All Charges', admin_charges_path, class: 'custom-button blue full-width' %>
+    </div>
   </div>
-  <div class="medium-3 columns">
-    <%= link_to 'All Charges', admin_charges_path, class: 'custom-button blue full-width' %>
-  </div>
-</div>
 
-<!-- Charge Details -->
+  <!-- Charge Details -->
 
-<div class="row">
-  <div class="medium-12 columns">
-    <h4>Details</h4>
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Amount</th>
-          <th>Axon Fee</th>
-          <th>Tutor Fee</th>
-          <th>Appts.</th>
-          <th>Appt IDs</th>
-          <th>Tutor</th>
-          <th>Student</th>
-          <th>Stripe Charge ID</th>
-          <th>Promo Code</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><%= @charge.id %></td>
-          <td>$<%= display_price(@charge.amount) %></td>
-          <td>$<%= display_price(@charge.axon_fee) %></td>
-          <td>$<%= display_price(@charge.tutor_fee) %></td>
-          <td><%= @charge.appointments.count %></td>
-          <td><%= @charge.appointments.map{|appt| appt.id} %></td>
-          <td><%= link_to @charge.tutor.full_name, admin_tutor_path(@charge.tutor) %></td>
-          <td><%= link_to @charge.student.full_name, admin_student_path(@charge.student) %></td>
-          <td><% if @charge.stripe_charge_id %><%= link_to @charge.stripe_charge_id, stripe_charge_link(@charge.stripe_charge_id), class: 'blue-link', target: '_blank' %><% end %></td>
-          <td><% if @charge.promotion_id.nil? %>No Promo<% else %><%= link_to Promotion.find(@charge.promotion_id).code, admin_promotion_path(@charge.promotion_id), class: 'blue-link' %><% end %></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-
-<!-- Appointment Details -->
-
-<div class="row">
-  <div class="small-12 columns">
-    <h4>Appointments</h4>
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Tutor</th>
-          <th>Student</th>
-          <th>Course</th>
-          <th>Date</th>
-          <th>Time</th>
-          <th>Status</th>
-          <th>School</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @charge.appointments.each do |appt| %>
+  <div class="row">
+    <div class="medium-12 columns">
+      <h4>Details</h4>
+      <table>
+        <thead>
           <tr>
-            <td><%= link_to appt.id, "/admin/appointments/#{appt.id}" %></td>
-            <td><%= link_to appt.tutor.full_name, admin_tutor_path(appt.tutor) %></td>
-            <td><%= link_to appt.student.full_name, admin_student_path(appt.student) %></td>
-            <td><%= link_to appt.course.formatted_name, admin_course_path(appt.course) %></td>
-            <td><%= appt.date %>
-            <td><%= appt.time %></td>
-            <td><%= appt.status %></td>
-            <td><%= link_to appt.school.name, admin_school_path(appt.school) %></td>
+            <th>ID</th>
+            <th>Amount</th>
+            <th>Axon Fee</th>
+            <th>Tutor Fee</th>
+            <th>Appts.</th>
+            <th>Appt IDs</th>
+            <th>Tutor</th>
+            <th>Student</th>
+            <th>Stripe Charge ID</th>
+            <th>Promo Code</th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          <tr>
+            <td><%= @charge.id %></td>
+            <td>$<%= display_price(@charge.amount) %></td>
+            <td>$<%= display_price(@charge.axon_fee) %></td>
+            <td>$<%= display_price(@charge.tutor_fee) %></td>
+            <td><%= @charge.appointments.count %></td>
+            <td><%= @charge.appointments.map{|appt| appt.id} %></td>
+            <td><%= link_to @charge.tutor.full_name, admin_tutor_path(@charge.tutor) %></td>
+            <td><%= link_to @charge.student.full_name, admin_student_path(@charge.student) %></td>
+            <td><% if @charge.stripe_charge_id %><%= link_to @charge.stripe_charge_id, stripe_charge_link(@charge.stripe_charge_id), class: 'blue-link', target: '_blank' %><% end %></td>
+            <td><% if @charge.promotion_id.nil? %>No Promo<% else %><%= link_to Promotion.find(@charge.promotion_id).code, admin_promotion_path(@charge.promotion_id), class: 'blue-link' %><% end %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Appointment Details -->
+
+  <div class="row">
+    <div class="small-12 columns">
+      <h4>Appointments</h4>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Tutor</th>
+            <th>Student</th>
+            <th>Course</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Status</th>
+            <th>School</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @charge.appointments.each do |appt| %>
+            <tr>
+              <td><%= link_to appt.id, "/admin/appointments/#{appt.id}" %></td>
+              <td><%= link_to appt.tutor.full_name, admin_tutor_path(appt.tutor) %></td>
+              <td><%= link_to appt.student.full_name, admin_student_path(appt.student) %></td>
+              <td><%= link_to appt.course.formatted_name, admin_course_path(appt.course) %></td>
+              <td><%= appt.date %>
+              <td><%= appt.time %></td>
+              <td><%= appt.status %></td>
+              <td><%= link_to appt.school.name, admin_school_path(appt.school) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>

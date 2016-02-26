@@ -1,49 +1,51 @@
-<div class="row">
-  <div class="small-12 columns">
-    <h1>Edit Course</h1>
+<div class="admin-wrapper"> 
+  <div class="row">
+    <div class="small-12 columns">
+      <h1>Edit Course</h1>
+    </div>
   </div>
-</div>
 
-<div class="row">
-  <div class="large-12 columns">
-    <fieldset class="search-field-panel">
-      <legend class="search-field-legend">Edit Course</legend>  
-      <%= form_for @course, url: admin_course_path(@course) do |f| %>
-      <div class="row">
-        <div class="small-3 columns">
-          <%= f.label :school_id %>
-          <%= f.collection_select :school_id, School.all, :id, :name, include_blank: true %>
-        </div>
+  <div class="row">
+    <div class="large-12 columns">
+      <fieldset class="search-field-panel">
+        <legend class="search-field-legend">Edit Course</legend>  
+        <%= form_for @course, url: admin_course_path(@course) do |f| %>
+        <div class="row">
+          <div class="small-3 columns">
+            <%= f.label :school_id %>
+            <%= f.collection_select :school_id, School.all, :id, :name, include_blank: true %>
+          </div>
 
-        <div class="small-3 columns">
-          <%= f.fields_for :subject do |ff| %>
-            <%= ff.label :name %>
-            <%= ff.select(:name, options_for_select([['Biology'],['Chemistry'],['Math'],['Computer Science'],['Physics']], selected =["#{@course.subject[:name]}"]), include_blank: true) %>
-          <% end %>
-        </div>
+          <div class="small-3 columns">
+            <%= f.fields_for :subject do |ff| %>
+              <%= ff.label :name %>
+              <%= ff.select(:name, options_for_select([['Biology'],['Chemistry'],['Math'],['Computer Science'],['Physics']], selected =["#{@course.subject[:name]}"]), include_blank: true) %>
+            <% end %>
+          </div>
 
-        <div class="small-3 columns">
-          <%= f.label :call_number %>
-          <%= f.number_field :call_number %>
-        </div>
+          <div class="small-3 columns">
+            <%= f.label :call_number %>
+            <%= f.number_field :call_number %>
+          </div>
 
-        <div class="small-3 columns">
-          <%= f.label :friendly_name %>
-          <%= f.text_field :friendly_name %>
+          <div class="small-3 columns">
+            <%= f.label :friendly_name %>
+            <%= f.text_field :friendly_name %>
+          </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="small-3 columns small-offset-9">
-          <%= f.submit 'Update Course', class: 'button medium expand' %>
+        <div class="row">
+          <div class="small-3 columns small-offset-9">
+            <%= f.submit 'Update Course', class: 'button medium expand' %>
+          </div>
         </div>
-      </div>
-    <% end %>
-    </fieldset>
+      <% end %>
+      </fieldset>
+    </div>
   </div>
-</div>
 
-<div class="row">
-  <div class="small-12 columns">
-    <%= link_to 'All Courses', admin_courses_path, class: 'button secondary' %>
+  <div class="row">
+    <div class="small-12 columns">
+      <%= link_to 'All Courses', admin_courses_path, class: 'button secondary' %>
+    </div>
   </div>
 </div>
