@@ -80,6 +80,11 @@ class CheckoutController < ApplicationController
 
   def apply_promo_code
     # recieves promo_code, tries to retrieve promotion and redirects back to review_booking page with success or failure message
+    if session[:promo_code] == 'New Axon Tutor Auto-Discount'
+      flash[:info] = "Only one promotion per checkout. The new Axon Tutor discount is already applied."
+      redirect_to checkout_review_booking_path(@tutor.slug, anchor: 'review-booking')
+      return
+    end
     session[:promo_code] = params[:apply_promo_code][:code]
     preview = BookingPreview.new(session, @tutor, current_user).format_info
     if preview[:promo_data][:success] == true
