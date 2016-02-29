@@ -68,6 +68,9 @@ class CheckoutController < ApplicationController
     if session[:location].blank?
       redirect_to checkout_select_course_path(@tutor.slug, anchor: 'select-course')
     end
+    if @tutor.reviews.count < 3 
+      session[:promo_code] = 'New Axon Tutor Auto-Discount'
+    end
     # step 4, all booking information is set and shown to customer here
     # - if logged in, customer has option to use saved card (if one exists) or use a new card (with an option to save it)
     # - if NOT logged in, a customer has the option to sign in (moves to above step) or sign up and use a new card (with an option to save it)
