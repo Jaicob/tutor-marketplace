@@ -1,105 +1,108 @@
-<div class="row">
-  <div class="medium-6 medium-offset-6 columns">
-    <% if Tutor.applications_awaiting_approval(current_user).count > 0 %>
-      <%= search_form_for @q, url: search_admin_tutors_path, html: { method: :post } do |f| %> 
-        <%= f.hidden_field :active_status_eq, value: '0' %>
-        <%= f.hidden_field :application_status_eq, value: '1' %>
-        <%= f.submit "Applications Awaiting Approval: #{Tutor.applications_awaiting_approval(current_user).count}", class: 'button radius alert small expand' %>
+<div class="admin-wrapper">
+  <div class="row">
+    <div class="medium-6 medium-offset-6 columns">
+      <% if Tutor.applications_awaiting_approval(current_user).count > 0 %>
+        <%= search_form_for @q, url: search_admin_tutors_path, html: { method: :post } do |f| %> 
+          <%= f.hidden_field :active_status_eq, value: '0' %>
+          <%= f.hidden_field :application_status_eq, value: '1' %>
+          <%= f.submit "Applications Awaiting Approval: #{Tutor.applications_awaiting_approval(current_user).count}", class: 'button radius alert small expand' %>
+        <% end %>
       <% end %>
-    <% end %>
+    </div>
   </div>
-</div>
 
-<div class="row">
-  <div class="medium-12 columns">
-  <h3>Search Tutors</h3>
-  <%= search_form_for @q, url: search_admin_tutors_path, html: { method: :post } do |f| %>
-    <div class="box margin-bottom-1em">
-      <div class="row">
-        <div class="medium-3 columns">   
-          <%= f.label :id_eq, 'ID' %>
-          <%= f.search_field :id_eq %>
+  <div class="row">
+    <div class="medium-12 columns">
+    <h3>Search Tutors</h3>
+    <%= search_form_for @q, url: search_admin_tutors_path, html: { method: :post } do |f| %>
+      <div class="box margin-bottom-1em">
+        <div class="row">
+          <div class="medium-3 columns">   
+            <%= f.label :id_eq, 'ID' %>
+            <%= f.search_field :id_eq %>
+          </div>
+          <div class="medium-3 columns">   
+            <%= f.label :user_first_name_cont, 'First Name' %>
+            <%= f.search_field :user_first_name_cont %>
+          </div>
+          <div class="medium-3 columns">   
+            <%= f.label :user_last_name_cont, 'Last Name' %>
+            <%= f.search_field :user_last_name_cont %>
+          </div>
+          <div class="medium-3 columns">   
+            <%= f.label :user_email_matches, 'Email' %>
+            <%= f.search_field :user_email_matches %>
+          </div>
         </div>
-        <div class="medium-3 columns">   
-          <%= f.label :user_first_name_cont, 'First Name' %>
-          <%= f.search_field :user_first_name_cont %>
-        </div>
-        <div class="medium-3 columns">   
-          <%= f.label :user_last_name_cont, 'Last Name' %>
-          <%= f.search_field :user_last_name_cont %>
-        </div>
-        <div class="medium-3 columns">   
-          <%= f.label :user_email_matches, 'Email' %>
-          <%= f.search_field :user_email_matches %>
-        </div>
-      </div>
-      <div class="row">
-        <div class="medium-4 columns"> 
-          <%= f.label :school_id_eq, 'School' %>
-          <% if current_user.role == 'campus_manager' %>
-            <%= f.select(:school_id_eq, options_for_select([[@school.name, @school.id]])) %>
-          <% else %>
-            <%= f.collection_select(:school_id_eq, School.all, :id, :name, include_blank: true) %>
-          <% end %>
-        </div>
-        <div class="medium-2 columns">   
-          <%= f.label :active_status_eq, 'Active Status' %>
-          <%= f.select(:active_status_eq, options_for_select([['Active', 1],['Inactive', 0]]), include_blank: true) %>
-        </div>
-        <div class="medium-2 columns">   
-          <%= f.label :application_status_eq, 'Application Status' %>
-          <%= f.select(:application_status_eq, options_for_select([['Incomplete', 0],['Complete', 1],['Approved', 2]]), include_blank: true) %>
-        </div>
-        <div class="medium-2 columns"> 
-          <%= button_to 'Reset', '/admin/tutors', class: 'custom-button short-width blue margin-top-1em' %>
-        </div>
-        <div class="medium-2 columns">   
-          <%= f.submit class: 'custom-button short-width margin-top-1em' %>
+        <div class="row">
+          <div class="medium-4 columns"> 
+            <%= f.label :school_id_eq, 'School' %>
+            <% if current_user.role == 'campus_manager' %>
+              <%= f.select(:school_id_eq, options_for_select([[@school.name, @school.id]])) %>
+            <% else %>
+              <%= f.collection_select(:school_id_eq, School.all, :id, :name, include_blank: true) %>
+            <% end %>
+          </div>
+          <div class="medium-2 columns">   
+            <%= f.label :active_status_eq, 'Active Status' %>
+            <%= f.select(:active_status_eq, options_for_select([['Active', 1],['Inactive', 0]]), include_blank: true) %>
+          </div>
+          <div class="medium-2 columns">   
+            <%= f.label :application_status_eq, 'Application Status' %>
+            <%= f.select(:application_status_eq, options_for_select([['Incomplete', 0],['Complete', 1],['Approved', 2]]), include_blank: true) %>
+          </div>
+          <div class="medium-2 columns"> 
+            <%= button_to 'Reset', '/admin/tutors', class: 'custom-button short-width blue margin-top-1em' %>
+          </div>
+          <div class="medium-2 columns">   
+            <%= f.submit class: 'custom-button short-width margin-top-1em' %>
+          </div>
         </div>
       </div>
     </div>
+    <% end %>
   </div>
-  <% end %>
-</div>
 
-<div class="row">
-  <div class="medium-12 columns">
-    <h6>Total Results: <%= @tutors_total.count %></h6>
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Status</th>
-          <th>School</th>
-          <th>Contact</th>
-          <th>Appts.</th>
-          <th>Bookings*</th>
-          <th>Joined</th>
-          <th>Last Sign In</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @tutors.each do |tutor| %>
+  <div class="row">
+    <div class="medium-12 columns">
+      <h6>Total Results: <%= @tutors_total.count %></h6>
+      <table>
+        <thead>
           <tr>
-            <td><%= link_to tutor.id, admin_tutor_path(tutor) %></td>
-            <td><%= tutor.full_name %></td>
-            <td><%= tutor.active_status %></td>
-            <td><%= tutor.school.name %></td>
-            <td><%= tutor.user.email %></br></br><%= tutor.phone_number %></td>
-            <td><%= tutor.appointments.count %></td>
-            <td><%= tutor.charges.count %></td>
-            <td><%= tutor.created_at.strftime('%-m-%d-%y') %></td>
-            <td><%= tutor.user.last_sign_in_at.strftime('%-m-%d-%y') if tutor.user.last_sign_in_at %></td>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Status</th>
+            <th>School</th>
+            <th>Contact</th>
+            <th>Appts.</th>
+            <th>Bookings*</th>
+            <th>Joined</th>
+            <th>Last Sign In</th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
-    <p class="fine-print margin-bottom-2em no-max-width">*Bookings refers to the number of checkouts. One booking can include many appointments.</p>
+        </thead>
+        <tbody>
+          <% @tutors.each do |tutor| %>
+            <tr>
+              <td><%= link_to tutor.id, admin_tutor_path(tutor) %></td>
+              <td><%= tutor.full_name %></td>
+              <td><%= tutor.active_status %></td>
+              <td><%= tutor.school.name %></td>
+              <td><%= tutor.user.email %></br></br><%= tutor.phone_number %></td>
+              <td><%= tutor.appointments.count %></td>
+              <td><%= tutor.charges.count %></td>
+              <td><%= tutor.created_at.strftime('%-m-%d-%y') %></td>
+              <td><%= tutor.user.last_sign_in_at.strftime('%-m-%d-%y') if tutor.user.last_sign_in_at %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <p class="fine-print margin-bottom-2em no-max-width">*Bookings refers to the number of checkouts. One booking can include many appointments.</p>
+    </div>
   </div>
-</div>
 
-<div class="row">
-  <div class="small-12 columns">
-    <%= paginate @tutors %>
+  <div class="row">
+    <div class="small-12 columns">
+      <%= paginate @tutors %>
+    </div>
   </div>
 </div>

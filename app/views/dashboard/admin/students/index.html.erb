@@ -1,91 +1,93 @@
-<div class="row">
-  <div class="small-12 medium-6 columns">
-    <h3>Search Students</h3>
+<div class="admin-wrapper">
+  <div class="row">
+    <div class="small-12 medium-6 columns">
+      <h3>Search Students</h3>
+    </div>
   </div>
-</div>
-<div class="row">
-  <div class="small-12 columns">
-    <%= search_form_for @q, url: search_admin_students_path, html: { method: :post } do |f| %>
-      <div class="box margin-bottom-1em">  
-        <div class="row">
-          <div class="medium-2 columns">
-            <%= f.label :id_eq, 'ID' %>
-            <%= f.search_field :id_eq %>
+  <div class="row">
+    <div class="small-12 columns">
+      <%= search_form_for @q, url: search_admin_students_path, html: { method: :post } do |f| %>
+        <div class="box margin-bottom-1em">  
+          <div class="row">
+            <div class="medium-2 columns">
+              <%= f.label :id_eq, 'ID' %>
+              <%= f.search_field :id_eq %>
+            </div>
+            <div class="medium-2 columns">
+              <%= f.label :user_first_name_cont, 'First Name' %>
+              <%= f.search_field :user_first_name_cont %>
+            </div>
+            <div class="medium-2 columns">
+              <%= f.label :user_last_name_cont, 'Last Name' %>
+              <%= f.search_field :user_last_name_cont %>
+            </div>
+            <div class="medium-3 columns">
+              <%= f.label :user_email_matches, 'Email' %>
+              <%= f.search_field :user_email_matches %>
+            </div>
+            <div class="medium-3 columns">
+              <%= f.label :school_id_eq, 'School' %>
+              <% if current_user.role == 'campus_manager' %>
+                <%= f.select(:school_id_eq, options_for_select([[@school.name, @school.id]])) %>
+              <% else %>
+                <%= f.collection_select(:school_id_eq, School.all, :id, :name, include_blank: true) %>
+              <% end %>
+            </div>
           </div>
-          <div class="medium-2 columns">
-            <%= f.label :user_first_name_cont, 'First Name' %>
-            <%= f.search_field :user_first_name_cont %>
-          </div>
-          <div class="medium-2 columns">
-            <%= f.label :user_last_name_cont, 'Last Name' %>
-            <%= f.search_field :user_last_name_cont %>
-          </div>
-          <div class="medium-3 columns">
-            <%= f.label :user_email_matches, 'Email' %>
-            <%= f.search_field :user_email_matches %>
-          </div>
-          <div class="medium-3 columns">
-            <%= f.label :school_id_eq, 'School' %>
-            <% if current_user.role == 'campus_manager' %>
-              <%= f.select(:school_id_eq, options_for_select([[@school.name, @school.id]])) %>
-            <% else %>
-              <%= f.collection_select(:school_id_eq, School.all, :id, :name, include_blank: true) %>
-            <% end %>
+          <div class="row">
+            <div class="medium-3 columns">
+              <%= f.label :customer_id_eq, 'Stripe Customer ID' %>
+              <%= f.search_field :customer_id_eq %>
+            </div>
+            <div class="medium-3 medium-offset-3 columns">
+              <%= button_to 'Reset', '/admin/students', class: 'custom-button short-width blue margin-top-1em' %>  
+            </div>
+            <div class="medium-3 columns">
+              <%= f.submit class: 'custom-button short-width margin-top-1em' %>
+            </div>
           </div>
         </div>
-        <div class="row">
-          <div class="medium-3 columns">
-            <%= f.label :customer_id_eq, 'Stripe Customer ID' %>
-            <%= f.search_field :customer_id_eq %>
-          </div>
-          <div class="medium-3 medium-offset-3 columns">
-            <%= button_to 'Reset', '/admin/students', class: 'custom-button short-width blue margin-top-1em' %>  
-          </div>
-          <div class="medium-3 columns">
-            <%= f.submit class: 'custom-button short-width margin-top-1em' %>
-          </div>
-        </div>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
   </div>
-</div>
 
-<div class="row">
-  <div class="small-12 columns">
-    <h6>Total Results: <%= @students_total.count %></h6>
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>School</th>
-          <th>Appts</th>
-          <th>Recent Appt.</th>
-          <th>Last Appt.</th>
-          <th>Last Sign In</th>
-          <th>Joined</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @students.each do |student| %>
+  <div class="row">
+    <div class="small-12 columns">
+      <h6>Total Results: <%= @students_total.count %></h6>
+      <table>
+        <thead>
           <tr>
-            <td><%= link_to student.id, admin_student_path(student), class: 'id-link-for-admin' %></td>
-            <td><%= student.full_name %></td>
-            <td><%= student.school.name %></td>
-            <td><%= student.appointments.count %></td>
-            <td><%= student.recent_appt? %></td>
-            <td><%= student.last_appointment.start_time.strftime('%-m-%d-%y') if student.last_appointment %></td>
-            <td><%= student.user.last_sign_in_at.strftime('%-m-%d-%y') if student.user.last_sign_in_at  %></td>
-            <td><%= student.user.created_at.strftime('%-m-%d-%y') %></td>
+            <th>ID</th>
+            <th>Name</th>
+            <th>School</th>
+            <th>Appts</th>
+            <th>Recent Appt.</th>
+            <th>Last Appt.</th>
+            <th>Last Sign In</th>
+            <th>Joined</th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          <% @students.each do |student| %>
+            <tr>
+              <td><%= link_to student.id, admin_student_path(student), class: 'id-link-for-admin' %></td>
+              <td><%= student.full_name %></td>
+              <td><%= student.school.name %></td>
+              <td><%= student.appointments.count %></td>
+              <td><%= student.recent_appt? %></td>
+              <td><%= student.last_appointment.start_time.strftime('%-m-%d-%y') if student.last_appointment %></td>
+              <td><%= student.user.last_sign_in_at.strftime('%-m-%d-%y') if student.user.last_sign_in_at  %></td>
+              <td><%= student.user.created_at.strftime('%-m-%d-%y') %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
-</div>
 
-<div class="row">
-  <div class="small-12 columns">
-    <%= paginate @students %>
+  <div class="row">
+    <div class="small-12 columns">
+      <%= paginate @students %>
+    </div>
   </div>
 </div>

@@ -58,8 +58,8 @@
             <td><%= tutor_course.course.subject.name %></td>
             <td><%= tutor_course.course.call_number %></td>
             <td><%= tutor_course.course.friendly_name %></td>
-            <td>$<%= tutor_course.rate %></td>
-            <td>$<%= tutor_course.full_price %></td>
+            <td>$<%= display_price(tutor_course.rate * 100) %></td>
+            <td>$<%= display_price(full_price(tutor_course.rate)) %></td>
             <td>--</td>
             <td>--</td>
             <td>--</td>
@@ -107,8 +107,8 @@
               <td><%= tutor_course.course.subject.name %></td>
               <td><%= tutor_course.course.call_number %></td>
               <td><%= tutor_course.course.friendly_name %></td>
-              <td>$<%= tutor_course.rate %></td>
-              <td>$<%= tutor_course.full_price %></td>
+              <td>$<%= display_price(tutor_course.rate * 100) %></td>
+              <td>$<%= display_price(full_price(tutor_course.rate)) %></td>
             </tr>
           </tbody>
         </table>

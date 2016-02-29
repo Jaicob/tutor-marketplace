@@ -34,9 +34,11 @@ div.admin-header {
 }
 
 // makes all info links blue to show they are clickable
-td {
-  a {
-    color: #0095AC;
+.admin-wrapper {
+  td {
+    a {
+      color: #0095AC;
+    }
   }
 }
 

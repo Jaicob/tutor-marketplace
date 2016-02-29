@@ -1,52 +1,54 @@
-<div class="row">
-  <div class="small-12 medium-9 columns">
-    <h3>Review ID: <%= @review.id %></h3>
+<div class="admin-wrapper">
+  <div class="row">
+    <div class="small-12 medium-9 columns">
+      <h3>Review ID: <%= @review.id %></h3>
+    </div>
+    <div class="small-12 medium-3 columns">
+      <%= link_to 'All Reviews', admin_reviews_path, class: 'custom-button full-width blue' %>
+    </div>
   </div>
-  <div class="small-12 medium-3 columns">
-    <%= link_to 'All Reviews', admin_reviews_path, class: 'custom-button full-width blue' %>
+  <div class="row">
+    <div class="small-12 columns">
+      <h4>Details</h4>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Appt. ID</th>
+            <th>Tutor</th>
+            <th>Student</th>
+            <th>Rating</th>
+            <th>Comment</th>
+            <th>Submitted</th>
+            <th>Save Updates</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><%= @review.id %></td>
+            <td><%= link_to @review.appointment_id, admin_appointment_path(@review.appointment), class: 'blue-link' %></td>
+            <td><%= link_to @review.tutor.full_name, admin_tutor_path(@review.tutor), class: 'blue-link' %></td>
+            <td><%= link_to @review.student.full_name, admin_student_path(@review.student), class: 'blue-link' %></td>
+            <td><%= @review.rating %></td>
+            <td><%= @review.comment %></td>
+            <td><%= @review.created_at.strftime("%-m-%d-%y") %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
-</div>
-<div class="row">
-  <div class="small-12 columns">
-    <h4>Details</h4>
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Appt. ID</th>
-          <th>Tutor</th>
-          <th>Student</th>
-          <th>Rating</th>
-          <th>Comment</th>
-          <th>Submitted</th>
-          <th>Save Updates</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><%= @review.id %></td>
-          <td><%= link_to @review.appointment_id, admin_appointment_path(@review.appointment), class: 'blue-link' %></td>
-          <td><%= link_to @review.tutor.full_name, admin_tutor_path(@review.tutor), class: 'blue-link' %></td>
-          <td><%= link_to @review.student.full_name, admin_student_path(@review.student), class: 'blue-link' %></td>
-          <td><%= @review.rating %></td>
-          <td><%= @review.comment %></td>
-          <td><%= @review.created_at.strftime("%-m-%d-%y") %></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
 
-<div class="row">
-  <div class="small-12 medium-3 columns">
-    <%= form_for @review, url: admin_review_path(@review), method: :put do |f| %>
-    <h5>Follow Up Status</h5>
-    <%= f.select(:follow_up_status, options_for_select(['None', 'Attempted', 'Contacted'], @review.follow_up_status)) %>
-  </div>
-  <div class="small-12 medium-9 columns">
-    <h5>Follow Up Notes</h5>
-    <%= f.text_area :follow_up_notes, value: @review.follow_up_notes, size: '10x10' %></td>
-    <%= f.submit 'Update', class: 'custom-button right' %></td>
-    <% end %>
+  <div class="row">
+    <div class="small-12 medium-3 columns">
+      <%= form_for @review, url: admin_review_path(@review), method: :put do |f| %>
+      <h5>Follow Up Status</h5>
+      <%= f.select(:follow_up_status, options_for_select(['None', 'Attempted', 'Contacted'], @review.follow_up_status)) %>
+    </div>
+    <div class="small-12 medium-9 columns">
+      <h5>Follow Up Notes</h5>
+      <%= f.text_area :follow_up_notes, value: @review.follow_up_notes, size: '10x10' %></td>
+      <%= f.submit 'Update', class: 'custom-button right' %></td>
+      <% end %>
+    </div>
   </div>
 </div>
