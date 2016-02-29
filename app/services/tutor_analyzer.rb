@@ -19,13 +19,11 @@ class TutorAnalyzer
   end
 
   def total_appts
-    appt_list = []
-    @tutor.appointments.each do |appt|
-      if appt.status == 'Scheduled' || appt.status == 'Completed'
-        appt_list << appt
-      end
-    end
-    return appt_list
+    @tutor.appointments.select{|appt| appt.status == 'Scheduled' || appt.status == 'Completed'}
+  end
+
+  def completed_appts
+    @tutor.appointments.select{|appt| appt.status == 'Completed'}
   end
 
   def total_income
@@ -39,7 +37,7 @@ class TutorAnalyzer
   end
 
   def approval
-    return @tutor.reviews.count > 0 ? @tutor.reviews.count/@tutors.reviews.where(rating: 0).count * 100 : 0
+    @tutor.reviews.count > 0 ? @tutor.reviews.select{|review| review.rating == 'Positive'}.count / @tutor.reviews.count.to_f * 100 : 0
   end
 
 end
