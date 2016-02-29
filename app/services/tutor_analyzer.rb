@@ -39,7 +39,7 @@ class TutorAnalyzer
   end
 
   def approval
-    return 94
+    return 0
     return @tutor.reviews.count > 0 ? @tutor.reviews.count/@tutors.reviews.where(rating: 0).count * 100 : 0
   end
 

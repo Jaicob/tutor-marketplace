@@ -41,20 +41,20 @@
         -webkit-flex-flow: row wrap;
         justify-content: center;
         .card {
-            width: 14em;
+            width: 18em;
             margin: 1em 0.5em;
             background-color: #F3F3F3;
             box-shadow: 1px 1px 3px #a8a8a8;
             border-radius: 4px;
             overflow: hidden;
             .card-content {
-                height: 30em;
+                height: 35em;
                 .profile-pic-box {
                     display: block;
-                    height: 11em;
+                    height: 17em;
                     .profile-pic {
-                        height: 12em;
-                        width: 14em;
+                        height: 18em;
+                        width: 18em;
                     }
                 }
                 .banner-box {
@@ -74,7 +74,7 @@
                             }
                         }
                         p.name {
-                            font-size: 1.2em;
+                            font-size: 1.5em;
                             position: relative;
                             top: 0.5em;
                             margin-bottom: 0.4em;
@@ -82,11 +82,13 @@
                         }
                         p.price {
                             background-color: #0095AC;
-                            padding: 0.4em;
+                            padding: .7em;
                             border-radius: 100%;
                             float: right;
                             position: relative;
-                            right: 0.3em;
+                            right: 10px;
+                            font-size: 20px;
+                            bottom: 20px;
                             span {
                                 color: white;
                             }
@@ -100,16 +102,61 @@
                         }
                     }
                 }
+                .tutor_stats {
+                    display: block;
+                    width: 100%;
+                    background-color: #fff;
+                    padding: 5px;
+                    margin: 0 0 0 0;
+                    .stat-row {
+                        border-bottom: solid 1px #D4D3D3;
+                        padding: 10px 0;
+                        font-weight: 100 !important;
+                        .has-tip {
+                            font-weight: 100;
+                            font-size: 17px;
+                        }
+                        .stat-text {
+                            font-size: 20px;
+                        }
+                    }
+                    .even-padding {
+                        margin: 6px auto;
+                        a {
+                            border-bottom: solid 1px;
+                            font-weight: 400;
+                            font-size: 15px;
+                            color: #008CBA;
+                        }
+                    }
+                    .icon {
+                        font-size: 19px;
+                        padding-top: 2px;
+                        padding-left: 6px;
+                        float: left;
+                    }
+                    #new-tutor-container {
+                        padding-top: 25px;
+                        padding-bottom: 10px;
+                    }
+                    #new-tutor {
+                        font-size: 64px;
+                    }
+                    span {
+                        border: none;
+                    }
+                }
                 .additional_degrees {
                     background-color: #D4D3D3;
                     text-align: center;
                     p {
-                        font-size: 0.7em;
-                        padding: 0.5em 0;
+                        font-size: 1em;
+                        padding: 4px 0;
                         margin-bottom: 0;
-                        i.fi-plus {
+                        span.label {
                             font-weight: 100;
                             position: relative;
+                            font-size: 14px;
                             right: 1em;
                         }
                     }
@@ -128,7 +175,9 @@
             }
             .custom-button.full-width {
                 width: 87%;
+                font-size: 19px;
                 margin-top: 0.5em;
+                margin-bottom: 0.5em;
             }
         }
     }

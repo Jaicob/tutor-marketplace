@@ -7,35 +7,6 @@
         <div class="name-box">
           <h3 class="center"><%= @tutor.public_name %></h3>
         </div>
-
-<!--         <div class="stat-box">
-          <div class="row ">
-            <div class="columns small-8 ">
-              <span data-tooltip aria-haspopup="true" class="has-tip" data-disable-hover='false' tabindex=1 title="Students Tutored"><i class="icon fi-torsos-female-male margin-right-1em"></i>Students</span>
-            </div>
-            <div class="columns small-4 ">
-              23
-            </div>
-          </div>
-          <div class="row">
-             <div class="columns small-8 ">
-               <span data-tooltip aria-haspopup="true" class="has-tip" data-disable-hover='false' tabindex=2 title="Number of sessions tutored"><i class="icon fi-pencil margin-right-1em"></i>Appointments</span>
-            </div>
-            <div class="columns small-4 ">
-              433
-            </div>
-          </div>
-          <div class="row">
-             <div class="columns small-8 ">
-              <span data-tooltip aria-haspopup="true" class="has-tip" data-disable-hover='false' tabindex=3 title="Percent who found their session helpful"><i class="icon fi-like margin-right-1em"></i>Approval </span>
-            </div>
-            <div class="columns small-4 ">
-              89%
-            </div>
-          </div>
-        </div> -->
-
-
         <div class="school-box">
           <p class="center no-bottom-margin">Tutor at</p>
           <h5 class="center"><%= @tutor.school.name %></h5>
@@ -66,14 +37,7 @@
         </div>
         <div class="profile-text">
           <div class="row">
-
-          <% if @tutor_analyzer.students.count < 1 %> <!-- TODO: Change this to reviews once that is merged -->
-            <div class="columns small-12">
-              <div data-alert class="alert-box success radius">
-                This tutor is new to Axon!
-              </div>
-            </div>
-          <% else %>
+          <% if @tutor_analyzer.total_appts.count > 2 %>
 
             <!-- Students box -->
             <div class="columns medium-4">
@@ -112,7 +76,15 @@
               <div class="stat-box">
                 <div class="row">
                   <div class="small-centered columns small-12">
-                    <p class="text-center"><%= @tutor_analyzer.approval %>%</p>
+                    <% if @tutor_analyzer.students.count > 1 %> <!-- TODO: Change this to reviews once that is merged -->
+                      <p class="text-center"><%= @tutor_analyzer.approval %>%</p>
+                    <% else %>
+                      <p class="text-center">
+                        <span data-tooltip aria-haspopup="true" class="has-tip" data-disable-hover='false' tabindex=3 style="font-weight:100" title="There is no feedback for this tutor yet">
+                          -- 
+                        </span>
+                      </p>
+                    <% end %>
                   </div>
                 </div>
                 <div class="row">
@@ -122,8 +94,20 @@
                 </div>
               </div>
             </div>
+
+            <% else %>
+               <div class="row">
+                <div class="columns small-2">
+                  <p class="text-center">
+                    <i class="fi-trophy" style="font-size:40px" ></i>
+                  </p>
+                </div>
+                <div class="columns small-10">
+                   <p>We are excited to introduce <%= @tutor.first_name %> to Axon. Book this tutor now for 10% off!</p>
+                </div>
+              </div>
             <% end %>
-            
+
           </div>
         </div>
 
