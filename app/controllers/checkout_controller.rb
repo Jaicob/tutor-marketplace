@@ -1,15 +1,16 @@
 class CheckoutController < ApplicationController
   before_action :set_tutor
+  before_action :set_tutor_analyzer
   before_action :set_student
   before_action :set_school
   before_action :back_to_search, only: [:available_times]
 
-  def select_course 
+  def select_course
     # step 1
     # (view all courses a Tutor offers - bypassed from Search)
   end
 
-  def set_course_id 
+  def set_course_id
     # recieves step 1 input, saves it to session & redirects to step 2
     if params[:course_selection] && params[:course_selection][:course_id]
       session[:course_id] = params[:course_selection][:course_id]
@@ -35,7 +36,7 @@ class CheckoutController < ApplicationController
     end
   end
 
-  def set_times 
+  def set_times
     # recieves step 2 input, saves it to session & redirects to step 3
     session[:appt_info] = params[:appt_selection]
     if session[:appt_info] == nil
@@ -46,7 +47,7 @@ class CheckoutController < ApplicationController
     end
   end
 
-  def select_location 
+  def select_location
     # step 3
     # - view page with input for setting location
   end
@@ -98,17 +99,17 @@ class CheckoutController < ApplicationController
 
   def process_booking
     @checkout_data = PrepareCheckout.new(params, session, @tutor, @student).prepare_data_for_checkout_organizer
-    
+
     if @checkout_data[:success] == false
       # clean-up after failure - destroy new user if one was created
-        if @checkout_data[:new_user?] == true
-          User.find(@checkout_data[:new_user_id]).destroy
-        end
+      if @checkout_data[:new_user?] == true
+        User.find(@checkout_data[:new_user_id]).destroy
+      end
       flash[:alert] = @checkout_data[:error]
       redirect_to checkout_review_booking_path(@tutor.slug, anchor: 'review-booking')
       return
     end
-  
+
     @context = CheckoutOrganizer.call(@checkout_data)
 
     if @context.success?
@@ -121,15 +122,15 @@ class CheckoutController < ApplicationController
     else
 
       # for de-bugging CheckoutOrganizer, error details in server logs
-        puts "Error Message     = #{@context.error}"
-        puts "Error Type        = #{@context.error.class}"
-        puts "Failed Interactor = #{@context.failed_interactor}"
+      puts "Error Message     = #{@context.error}"
+      puts "Error Type        = #{@context.error.class}"
+      puts "Failed Interactor = #{@context.failed_interactor}"
       # end of error details
 
       # clean-up after failure - destroy new user if one was created
-        if @checkout_data[:new_user?] == true
-          User.find(@checkout_data[:new_user_id]).destroy
-        end
+      if @checkout_data[:new_user?] == true
+        User.find(@checkout_data[:new_user_id]).destroy
+      end
       flash[:alert] = "Your booking was not processed: #{@context.error}"
       # flash[:alert] = 'Your booking was not processed due to a server error. You were not charged. Please try again and if you are still unable to complete your booking contact Axon at info@axontutors.com.'
       redirect_to checkout_review_booking_path(@tutor.slug, anchor: 'review-booking')
@@ -138,12 +139,16 @@ class CheckoutController < ApplicationController
 
   private
 
-    def set_tutor
-      @tutor = Tutor.find(params[:id])
-    end
+  def set_tutor
+    @tutor = Tutor.find(params[:id])
+  end
 
-    def back_to_search
-      @from_search = true if request.referer && request.referer.split(/[^[:alpha:]]+/).include?('search')
-    end
+  def set_tutor_analyzer
+    @tutor_analyzer = TutorAnalyzer.new(Tutor.find(params[:id]))
+  end
+
+  def back_to_search
+    @from_search = true if request.referer && request.referer.split(/[^[:alpha:]]+/).include?('search')
+  end
 
 end

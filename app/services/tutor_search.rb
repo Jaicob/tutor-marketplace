@@ -1,5 +1,5 @@
-  # Use this to test it out in rails console
-  #s = TutorSearch.new(has_availability: 1, school_id: 1, course_id: 1, dow: "Sat")
+# Use this to test it out in rails console
+#s = TutorSearch.new(has_availability: 1, school_id: 1, course_id: 1, dow: "Sat")
 
 class TutorSearch
   attr_accessor :search_config
