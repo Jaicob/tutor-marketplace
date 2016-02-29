@@ -17,6 +17,8 @@
 #  student_id       :integer
 #  single_appt      :integer
 #  redeemer         :integer
+#  created_at       :datetime
+#  updated_at       :datetime
 #
 
 require 'rails_helper'

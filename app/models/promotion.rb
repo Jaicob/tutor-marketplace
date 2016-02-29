@@ -17,8 +17,9 @@
 #  student_id       :integer
 #  single_appt      :integer
 #  redeemer         :integer
+#  created_at       :datetime
+#  updated_at       :datetime
 #
-
 
 class Promotion < ActiveRecord::Base
   belongs_to :tutor # nil is OK, if nil, then promo is Axon-issed
