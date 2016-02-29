@@ -68,6 +68,9 @@ class CheckoutController < ApplicationController
     if session[:location].blank?
       redirect_to checkout_select_course_path(@tutor.slug, anchor: 'select-course')
     end
+    if TutorAnalyzer.new(@tutor).completed_appts.count < 3 
+      session[:promo_code] = 'New Axon Tutor Auto-Discount'
+    end
     # step 4, all booking information is set and shown to customer here
     # - if logged in, customer has option to use saved card (if one exists) or use a new card (with an option to save it)
     # - if NOT logged in, a customer has the option to sign in (moves to above step) or sign up and use a new card (with an option to save it)
@@ -77,6 +80,11 @@ class CheckoutController < ApplicationController
 
   def apply_promo_code
     # recieves promo_code, tries to retrieve promotion and redirects back to review_booking page with success or failure message
+    if session[:promo_code] == 'New Axon Tutor Auto-Discount'
+      flash[:info] = "Only one promotion per checkout. The new Axon Tutor discount is already applied."
+      redirect_to checkout_review_booking_path(@tutor.slug, anchor: 'review-booking')
+      return
+    end
     session[:promo_code] = params[:apply_promo_code][:code]
     preview = BookingPreview.new(session, @tutor, current_user).format_info
     if preview[:promo_data][:success] == true

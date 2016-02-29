@@ -10,8 +10,8 @@
       <p>Appointments</br>(next 7 days)</p>
     </div>
     <div class="small-12 medium-2 columns">
-      <h4 class="center"><%= @tutor.courses.count %></h4>
-      <p>Total Courses</p>
+      <h4 class="center"><%= @tutor.approval.nil? ? "--" : "#{@tutor.approval} %" %></h4>
+      <p>Approval Rating</p>
     </div>
     <div class="small-12 medium-2 columns">
       <h4 class="center"><%= @tutor_analyzer.students.count %></h4>

@@ -6,7 +6,7 @@ RSpec.describe ApptReviewCreator do
 
 
   describe '#reviews_needed?' do 
-    context 'when a student has 1+ completed appts with no review' do 
+    context 'when a student has a completed appt with no review' do 
       it 'returns true' do 
         student = completed_appt_no_review.student
         expect(ApptReviewCreator.new(student).reviews_needed?).to eq true

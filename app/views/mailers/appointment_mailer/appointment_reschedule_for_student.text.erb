@@ -4,7 +4,7 @@ Your appointment originally scheduled for <%= @original_time.in_time_zone(@schoo
 
 Your Tutor: <%= @tutor.public_name %>
 Course: <%= @appt.course.formatted_name %>
-Date: <%= @appt.date %>
+Date: <%= @appt.date_for_email %>
 Time: <%= @appt.time %>
 
 Still have questions? 

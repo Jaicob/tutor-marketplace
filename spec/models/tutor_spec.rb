@@ -39,41 +39,95 @@ require 'rails_helper'
 
 RSpec.describe Tutor, type: :model do
 
-    let(:tutor) { create(:tutor) }
-    let(:complete_tutor) { create(:tutor_with_complete_application) }
+  let(:tutor) { create(:tutor) }
+  let(:ready_to_book_tutor) { create(:tutor, :with_tutor_course_and_slot)}
+  let(:appt_with_review) { create(:appointment, :completed_with_review)}
+  let(:appt_without_review) { create(:appointment, :completed_without_review)}
+  let(:tutor_with_appts) {create(:tutor, :with_two_appointments)}
 
-    it "is valid with extra info, an attached transcript, and first tutor_course" do
-      expect(tutor).to be_valid
+  it "is valid with extra info, an attached transcript, and first tutor_course" do
+    expect(tutor).to be_valid
+  end
+
+  it "application_status is 'Incomplete' by default" do
+    expect(tutor.application_status).to eq 'Incomplete'
+  end
+
+  it "application_status is changed to 'Complete' when all required fields are complete" do
+    skip 'cant test without extra gem to enable testing an after_commit hook. dont think its worth an extra dependency'
+  end
+
+  it "active status is 'Inactive' by default" do
+    expect(tutor.active_status).to eq 'Inactive'
+  end
+
+  it "active status can be changed to 'Active'" do
+    tutor.active_status=1
+    expect(tutor.active_status).to eq 'Active'
+  end
+
+  it "shows User's full name with .full_name" do
+    expect(tutor.full_name).to eq tutor.user.full_name
+  end
+
+  it "shows User's email with .email" do
+    expect(tutor.email).to eq tutor.user.email
+  end
+
+  describe "#reviews" do
+
+    it 'returns an array' do 
+      expect(tutor.reviews.class).to eq Array
     end
 
-    it "application_status is 'Incomplete' by default" do
-      expect(tutor.application_status).to eq 'Incomplete'
+    context 'when a tutor has no appointments' do 
+      it 'returns an empty array' do
+        expect(tutor.reviews.count).to eq 0
+      end
     end
 
-    it "application_status is changed to 'Complete' when all required fields are complete" do
-      skip 'cant test without extra gem to enable testing an after_commit hook. dont think its worth an extra dependency'
+    context 'when a tutor has 1 appt, which has a review' do 
+      it 'returns an array with 1 item' do 
+        tutor = appt_with_review.tutor
+        expect(tutor.appointments.count).to eq 1
+        expect(tutor.reviews.count).to eq 1
+      end
     end
 
-    it "active status is 'Inactive' by default" do
-      expect(tutor.active_status).to eq 'Inactive'
+    context 'when a tutor has 1 appt, which does not have a review' do 
+      it 'returns an empty array' do 
+        tutor = appt_without_review.tutor
+        expect(tutor.appointments.count).to eq 1
+        expect(tutor.reviews.count).to eq 0
+      end
     end
 
-    it "active status can be changed to 'Active'" do
-      tutor.active_status=1
-      expect(tutor.active_status).to eq 'Active'
+    context 'when a tutor has 2 appts & 0 reviews' do 
+      it 'returns an array with 0 items' do
+        tutor = tutor_with_appts
+        expect(tutor.appointments.count).to eq 2
+        expect(tutor.reviews.count).to eq 0
+      end
     end
 
-    it "shows User's name with .name" do
-      expect(tutor.full_name).to eq tutor.user.full_name
+    context 'when a tutor has 2 appts & 1 review' do 
+      it 'returns an array with 1 item' do
+        tutor = tutor_with_appts
+        create(:review, appointment: tutor.appointments.first)
+        expect(tutor.appointments.count).to eq 2
+        expect(tutor.reviews.count).to eq 1
+      end
     end
 
-    it "shows User's email with .email" do
-      expect(tutor.email).to eq tutor.user.email
+    context 'when a tutor has 2 appts & 2 reviews' do 
+      it 'returns an array with 2 items' do
+        tutor = tutor_with_appts
+        create(:review, appointment: tutor.appointments.first)
+        create(:review, appointment: tutor.appointments.second)
+        expect(tutor.appointments.count).to eq 2
+        expect(tutor.reviews.count).to eq 2
+      end
     end
-
-    it "shows tutor's sign_up_date with .sign_up_date" do
-      expect(tutor.sign_up_date).to eq Date.today
-    end
-
+  end
 end
 

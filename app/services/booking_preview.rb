@@ -12,6 +12,7 @@ class BookingPreview
     @receipt_only = receipt_only # this is only set in the Student Dashboard controller home action when a receipt is diplayed, flag is necessary to bypass validations (because after the checkout has been completed a StudentsPromotions record exists and if promo is a no_repeat type then it won't pass the validation and display the formatted pricescorrectly)
   end
 
+  # private method
   def extract_appt_times_and_slot
     @appt_hash = {}
     count = 1
@@ -26,6 +27,7 @@ class BookingPreview
     return @appt_hash
   end
 
+  # public method
   def format_info
     extract_appt_times_and_slot
 
@@ -68,12 +70,14 @@ class BookingPreview
     return data
   end
 
+  # private method
   def total_price
     number_of_appts = @appt_info.count
     total_price = (number_of_appts * @full_rate).round
     return total_price
   end
 
+  # private method
   def redeem_promo_code
     Promotion.redeem_promo_code(@promo_code, @tc_rate, @appt_info.count, @tutor.id, @course.id, @student_id, @receipt_only)
   end
