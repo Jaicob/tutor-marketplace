@@ -53,7 +53,7 @@ var TutorCard = React.createClass({
                     </div>
                     )
 
-        if ( approval < 10 ) {
+        if ( approval < 33 ) {
           stats =   (
                      <div>
                         <div className="row stat-row">
