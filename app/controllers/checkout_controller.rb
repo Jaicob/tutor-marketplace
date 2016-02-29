@@ -68,7 +68,7 @@ class CheckoutController < ApplicationController
     if session[:location].blank?
       redirect_to checkout_select_course_path(@tutor.slug, anchor: 'select-course')
     end
-    if @tutor.reviews.count < 3 
+    if TutorAnalyzer.new(@tutor).completed_appts.count < 3 
       session[:promo_code] = 'New Axon Tutor Auto-Discount'
     end
     # step 4, all booking information is set and shown to customer here
