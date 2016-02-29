@@ -246,7 +246,7 @@ class Tutor < ActiveRecord::Base
       only: [:id,:user_id,:school_id,:degree,:major,:additional_degrees,:extra_info_1,:extra_info_2,:extra_info_3,:graduation_year,:profile_pic,:appt_notes,:slug,:approval,:students,:appointments,:booking_buffer,:rate]
     }
     tutor = super(additional_options.merge(options))
-    tutor[:appointments]  = tutor_stats.total_appts.count
+    tutor[:appointments]  = tutor_stats.completed_appts.count
     tutor[:students]      = tutor_stats.students.count
     tutor[:approval]      = tutor_stats.approval
     return tutor

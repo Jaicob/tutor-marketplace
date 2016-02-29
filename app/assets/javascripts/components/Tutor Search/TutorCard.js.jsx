@@ -98,7 +98,7 @@ var TutorCard = React.createClass({
                     )
         }
   
-        if ( appointments < 2 ) {
+        if ( appointments < 3 ) {
           stats = (
             <div>
               <div className="row" id="new-tutor-container">

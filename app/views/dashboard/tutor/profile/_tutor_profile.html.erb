@@ -37,7 +37,7 @@
         </div>
         <div class="profile-text">
           <div class="row">
-          <% if @tutor_analyzer.total_appts.count > 2 %>
+          <% if @tutor_analyzer.completed_appts.count > 1 %>
 
             <!-- Students box -->
             <div class="columns medium-4">
@@ -60,7 +60,7 @@
               <div class="stat-box">
                 <div class="row">
                   <div class="small-centered columns small-12">
-                    <p class="text-center"><%= @tutor_analyzer.total_appts.count %></p>
+                    <p class="text-center"><%= @tutor_analyzer.completed_appts.count %></p>
                   </div>
                 </div>
                 <div class="row">
@@ -76,7 +76,7 @@
               <div class="stat-box">
                 <div class="row">
                   <div class="small-centered columns small-12">
-                    <% if @tutor_analyzer.students.count > 1 %> <!-- TODO: Change this to reviews once that is merged -->
+                    <% if @tutor.reviews.count > 1 %> <!-- TODO: Change this to reviews once that is merged -->
                       <p class="text-center"><%= @tutor_analyzer.approval %>%</p>
                     <% else %>
                       <p class="text-center">
