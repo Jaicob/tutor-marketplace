@@ -5,7 +5,7 @@ Your tutoring appointment is coming up soon! In case you forgot, here are the de
 Student Name: <%= @student.public_name %>
 Student Contact Info: <%= @student.email %>
 Course: <%= @appt.course.formatted_name %>
-Date: <%= @appt.date %>
+Date: <%= @appt.date_for_email %>
 Time: <%= @appt.time %>
 Student’s Preferred Location: <%= @appt.location %>
 

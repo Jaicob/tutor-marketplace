@@ -116,6 +116,11 @@ class Appointment < ActiveRecord::Base
     "#{self.start_time.in_time_zone(self.school.timezone).strftime('%A')}</br>#{self.start_time.in_time_zone(self.school.timezone).strftime('%-m/%d/%y')}".html_safe()
   end
 
+  def date_for_email
+    # single line - so </br> tag doesn't show up in plain text email
+    "#{self.start_time.in_time_zone(self.school.timezone).strftime('%A')} - #{self.start_time.in_time_zone(self.school.timezone).strftime('%-m/%d/%y')}"
+  end
+
   def time
     self.start_time.in_time_zone(self.school.timezone).strftime('%l:%M %p')
   end
