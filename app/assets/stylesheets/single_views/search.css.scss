@@ -41,20 +41,19 @@
         -webkit-flex-flow: row wrap;
         justify-content: center;
         .card {
-            width: 18em;
+            width: 14em;
             margin: 1em 0.5em;
             background-color: #F3F3F3;
             box-shadow: 1px 1px 3px #a8a8a8;
             border-radius: 4px;
             overflow: hidden;
             .card-content {
-                height: 35em;
+                height: 28em;
                 .profile-pic-box {
                     display: block;
-                    height: 17em;
                     .profile-pic {
-                        height: 18em;
-                        width: 18em;
+                        height: auto;
+                        width: auto;
                     }
                 }
                 .banner-box {
@@ -76,13 +75,12 @@
                         p.name {
                             font-size: 1.5em;
                             position: relative;
-                            top: 0.5em;
-                            margin-bottom: 0.4em;
                             margin-left: 0.3em;
                         }
                         p.price {
                             background-color: #0095AC;
-                            padding: .7em;
+                            padding: 0.6em;
+                            font-weight: 400;
                             border-radius: 100%;
                             float: right;
                             position: relative;
@@ -105,12 +103,11 @@
                 .tutor_stats {
                     display: block;
                     width: 100%;
-                    background-color: #fff;
                     padding: 5px;
                     margin: 0 0 0 0;
                     .stat-row {
                         border-bottom: solid 1px #D4D3D3;
-                        padding: 10px 0;
+                        padding: 0.7em 0.2em;
                         font-weight: 100 !important;
                         .has-tip {
                             font-weight: 100;
@@ -144,6 +141,11 @@
                     }
                     span {
                         border: none;
+                    }
+                    .new-tutor-intro {
+                        height: 8.2em;
+                        font-size: 0.9em;
+                        margin-bottom: 0;
                     }
                 }
                 .statements-box {

@@ -43,11 +43,15 @@ var TutorCardContainer = React.createClass({
 		// return <TutorCardContainerLoadingScreen />;
 	},
 	showNoTutorsError: function(){
-		return "No Tutors Found";
+		return (
+			<p className="margin-top-2em">No Tutors Found</p>
+		);
 		// return <TutorCardContainerNoTutorsError />;
 	},
 	showNetworkError: function(){
-		return "Network error";
+		return (
+			<p className="margin-top-2em">There was a network error. Please refresh the page.</p>
+		);
 		// return <TutorCardContainerNetworkError />;
 	},
 	getResultScreen: function(){

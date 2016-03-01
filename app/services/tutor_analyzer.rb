@@ -37,7 +37,7 @@ class TutorAnalyzer
   end
 
   def approval
-    @tutor.reviews.count > 0 ? @tutor.reviews.select{|review| review.rating == 'Positive'}.count / @tutor.reviews.count.to_f * 100 : 0
+    @tutor.reviews.count > 0 ? (@tutor.reviews.select{|review| review.rating == 'Positive'}.count / @tutor.reviews.count.to_f * 100).round(0) : 0
   end
 
 end
