@@ -1,8 +1,9 @@
 <div id="tutor-profile">
   <div class="row">
-<!-- Profile pic column -->
+    
+    <!-- Profile pic column -->
     <div class="small-12 medium-4 columns">
-      <div class="vertical-margin-1em box-shadow border-radius">
+      <div class="vertical-margin-1em border-radius">
         <%= image_tag(@tutor.profile_pic_url(:thumb), class: 'tutor-profile-pic') %>
         <div class="name-box">
           <h3 class="center"><%= @tutor.public_name %></h3>
@@ -13,7 +14,8 @@
         </div>
       </div>
     </div>
-<!-- Experience/Education cloumn -->
+
+    <!-- Experience/Education cloumn -->
     <div class="small-12 medium-8 columns">
       <div class="vertical-padding-1em">
         <div class="section-heading">

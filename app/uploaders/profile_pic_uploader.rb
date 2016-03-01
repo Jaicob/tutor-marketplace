@@ -37,16 +37,16 @@ class ProfilePicUploader < CarrierWave::Uploader::Base
   # Create different versions of your uploaded files:
   version :thumb do
     process :crop
-    process :resize_to_limit => [375, 375]
+    process :resize_to_limit => [385, 330] # 7/6 aspect ratio
   end
 
   version :large do 
-    process :resize_to_limit => [800, 800]
+    process :resize_to_limit => [805, 690] # 7/6 aspect ratio
   end
   
   def crop
     if model.crop_x.present?
-      resize_to_limit(800, 800)
+      resize_to_limit(805, 690) # 7/6 aspect ratio
       manipulate! do |img|
         x = model.crop_x.to_i
         y = model.crop_y.to_i
@@ -55,7 +55,7 @@ class ProfilePicUploader < CarrierWave::Uploader::Base
         img.crop!(x, y, w, h)
       end
     else
-      resize_to_fill(500,500)
+      resize_to_fill(805, 690) # 7/6 aspect ratio
     end
   end
 
