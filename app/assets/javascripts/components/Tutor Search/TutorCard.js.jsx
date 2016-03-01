@@ -6,12 +6,12 @@ var TutorCard = React.createClass({
     }
 
 		var tutor = this.props.tutor;
-    var profile_pic_url = tutor.profile_pic.thumb.url + "?reload";
+    var profile_pic_url = tutor.profile_pic.thumb.url + "?reload=true";
 
 
     var degree = function (degree, major, graduation_year) {
-      if(major.length > 18) {
-        var major = major.slice(0, 18);
+      if(major.length > 16) {
+        var major = major.slice(0, 16);
       }
       return (
         <p className="degree">{degree + ', ' + major + " '" + String(graduation_year).substr(graduation_year.length - 2)}</p>
@@ -37,7 +37,7 @@ var TutorCard = React.createClass({
                             <span><p className="no-bottom-margin center"><i className="icon fi-list-thumbnails"></i><span className="stat-text">{appointments}</span></p></span>
                           </div>
                         </div>
-                         <div className="row small-collapse stat-row">
+                        <div className="row small-collapse stat-row">
                           <div className="columns small-8">
                             <span>{"Students"}</span>
                           </div>

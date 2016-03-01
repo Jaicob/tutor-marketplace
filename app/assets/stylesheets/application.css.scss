@@ -56,14 +56,13 @@
     // margin-top: 3em;
   }
 
-  .row.full-width.main-content {
-      min-height: 100%;
-  }
-
   .row{
     &.full-width{
       max-width: 100%;
       background-color: #FAFAFA;
+      &.main-content {
+        min-height: 100%;
+      }
       .row{
         margin: 0 auto;
         &.new-tutor-partial-wrapper {
