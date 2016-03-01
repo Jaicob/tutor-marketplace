@@ -41,14 +41,14 @@
         -webkit-flex-flow: row wrap;
         justify-content: center;
         .card {
-            width: 14em;
+            width: 17em;
             margin: 1em 0.5em;
             background-color: #F3F3F3;
             box-shadow: 1px 1px 3px #a8a8a8;
             border-radius: 4px;
             overflow: hidden;
             .card-content {
-                height: 28em;
+                height: 33em;
                 .profile-pic-box {
                     display: block;
                     .profile-pic {
@@ -92,7 +92,7 @@
                             }
                         }
                         p.degree {
-                            font-size: 0.8em;
+                            // font-size: 0.8em;
                         }
                         i.fi-book-bookmark {
                             padding: 0 0.5em;
@@ -139,8 +139,8 @@
                         border: none;
                     }
                     .new-tutor-intro {
-                        font-size: 0.9em;
-                        margin-bottom: 0;
+                        // font-size: 0.9em;
+                        // margin-bottom: 0;
                     }
                 }
                 .statements-box {
@@ -153,10 +153,10 @@
                 }
             }
             .custom-button.full-width {
-                width: 87%;
-                font-size: 19px;
-                margin-top: 0.5em;
-                margin-bottom: 0.5em;
+                margin: 0.5em auto;
+                width: 90%;
+                padding: 0.5em 0;
+                font-size: 1.2em;
             }
         }
     }
