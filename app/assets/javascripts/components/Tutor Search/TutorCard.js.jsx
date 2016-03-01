@@ -6,7 +6,7 @@ var TutorCard = React.createClass({
     }
 
 		var tutor = this.props.tutor;
-    var profile_pic_url = tutor.profile_pic.thumb.url;
+    var profile_pic_url = tutor.profile_pic.thumb.url + "?reload";
 
 
     var degree = function (degree, major, graduation_year) {
@@ -105,14 +105,16 @@ var TutorCard = React.createClass({
         if ( appointments < 3 ) {
           stats = (
             <div>
-              <div className="row" id="new-tutor-container">
-                <div className="columns small-3">
-                  <p className="text-center">
-                    <i id="new-tutor" className="fi-trophy margin-right-1em"></i>
+              <div className="row">
+                <div className="columns small-12">
+                  <p className="text-center no-bottom-margin">
+                    <i id="new-tutor-icon" className="fi-trophy"></i>
                   </p>
                 </div>
-                <div className="columns small-9">
-                   <p className="new-tutor-intro">{"We are excited to introduce " + tutor.user.first_name + " to Axon. Book a session with " + tutor.user.first_name + " now for 10% off!" }</p>
+                <div className="row">
+                  <div className="columns small-12">
+                     <p className="new-tutor-intro center">{"We are excited to introduce " + tutor.user.first_name + " to Axon. Book your first session with " + tutor.user.first_name + " for 10% off!" }</p>
+                  </div>
                 </div>
               </div>
               <div className="row">
@@ -153,7 +155,7 @@ var TutorCard = React.createClass({
                 <p className="degree">{degree(tutor.degree, tutor.major, tutor.graduation_year)}</p>
               </div>
             </div>
-            <div className="tutor_stats">
+            <div className="tutor-stats">
               {tutor_stats(tutor.students, tutor.appointments, tutor.approval)} 
             </div>
           </div>

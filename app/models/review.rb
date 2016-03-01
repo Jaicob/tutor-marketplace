@@ -26,7 +26,9 @@ class Review < ActiveRecord::Base
 
   def update_tutor_rating
     tutor =  self.appointment.tutor
-    updated_approval_rating = tutor.reviews.select{|review| review.rating == 'Positive'}.count / tutor.reviews.count.to_f * 100
-    tutor.update(approval: updated_approval_rating)
+    if tutor.reviews.count >= 3 # prevents a tutor with less than 3 ratings from showing percent, will show "--" until 3 reviews reached
+      updated_approval_rating = tutor.reviews.select{|review| review.rating == 'Positive'}.count / tutor.reviews.count.to_f * 100
+      tutor.update(approval: updated_approval_rating)
+    end
   end
 end
