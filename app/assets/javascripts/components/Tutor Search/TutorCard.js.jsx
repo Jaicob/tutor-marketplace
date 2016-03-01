@@ -21,33 +21,35 @@ var TutorCard = React.createClass({
     var tutor_stats = function (students, appointments, approval) {
       var stats =   (
                      <div>
-                        <div className="row stat-row">
+                        <div className="row small-collapse stat-row">
                            <div className="columns small-8">
-                            <span data-tooltip aria-haspopup="true" className="has-tip" data-disable-hover='false' tabindex="3" title="Percent who found their session helpful">{"Approval Rating"} </span>
+                            <span>{"Approval Rating"} </span>
                           </div>
                           <div className="columns small-4">
-                            <span><p className="no-bottom-margin text-right"><i className="icon fi-like"></i><span className="stat-text">{approval + "%"}</span></p></span>
+                            <span><p className="no-bottom-margin center"><i className="icon fi-like"></i><span className="stat-text">{approval + "%"}</span></p></span>
                           </div>
                         </div>
-                        <div className="row stat-row clearfix">
+                        <div className="row small-collapse stat-row clearfix">
                            <div className="columns small-8">
-                             <span data-tooltip aria-haspopup="true" className="has-tip" data-disable-hover='false' tabindex="2" title="Number of sessions tutored">{"Appointments"}</span>
+                             <span>{"Appointments"}</span>
                           </div>
                           <div className="columns small-4">
-                            <span><p className="no-bottom-margin text-right"><i className="icon fi-list-thumbnails"></i><span className="stat-text">{appointments}</span></p></span>
+                            <span><p className="no-bottom-margin center"><i className="icon fi-list-thumbnails"></i><span className="stat-text">{appointments}</span></p></span>
                           </div>
                         </div>
-                         <div className="row stat-row">
+                         <div className="row small-collapse stat-row">
                           <div className="columns small-8">
-                            <span data-tooltip aria-haspopup="true" className="has-tip"  tabindex="1" title="Students Tutored">{"Students"}</span>
+                            <span>{"Students"}</span>
                           </div>
                           <div className="columns small-4">
-                            <span><p className="no-bottom-margin text-right"><i className="icon fi-torsos-female-male"></i><span className="stat-text">{students}</span></p></span>
+                            <span><p className="no-bottom-margin center"><i className="icon fi-torsos-female-male"></i><span className="stat-text">{students}</span></p></span>
                           </div>
                         </div>
                         <div className="row">
                           <div className="columns small-12 small-centered ">
-                            <p className="text-center even-padding"><a href="#">{"See Full Profile"}</a></p>
+                            <p className="text-center even-padding">
+                              <a href={"/tutors/" + tutor.slug + search} data={"from-search"}>{"See Full Profile"}</a>
+                            </p>
                           </div>
                         </div>
                     </div>
@@ -56,16 +58,16 @@ var TutorCard = React.createClass({
         if ( approval < 33 ) {
           stats =   (
                      <div>
-                        <div className="row stat-row">
+                        <div className="row small-collapse stat-row">
                            <div className="columns small-8">
-                            <span data-tooltip aria-haspopup="true" className="has-tip" data-disable-hover='false' tabindex="3" title="There is no feedback for this tutor yet">{"Approval Rating"} </span>
+                            <span>{"Approval Rating"}</span>
                           </div>
                           <div className="columns small-4">
                             <span>
-                              <p className="no-bottom-margin text-right">
+                              <p className="no-bottom-margin center">
                                 <i className="icon fi-like"></i>
                                 <span className="stat-text">
-                                  <span data-tooltip aria-haspopup="true" className="has-tip" data-disable-hover='false' tabindex="6" title="There is no feedback for this tutor yet">
+                                  <span>
                                      {"--"} 
                                   </span>
                                 </span>
@@ -73,25 +75,27 @@ var TutorCard = React.createClass({
                             </span>
                           </div>
                         </div>
-                        <div className="row stat-row clearfix">
+                        <div className="row small-collapse stat-row clearfix">
                            <div className="columns small-8">
-                             <span data-tooltip aria-haspopup="true" className="has-tip" data-disable-hover='false' tabindex="2" title="Number of sessions tutored">{"Appointments"}</span>
+                             <span>{"Appointments"}</span>
                           </div>
                           <div className="columns small-4">
-                            <span><p className="no-bottom-margin text-right"><i className="icon fi-list-thumbnails"></i><span className="stat-text">{appointments}</span></p></span>
+                            <span><p className="no-bottom-margin center"><i className="icon fi-list-thumbnails"></i><span className="stat-text">{appointments}</span></p></span>
                           </div>
                         </div>
-                         <div className="row stat-row">
+                         <div className="row small-collapse stat-row">
                           <div className="columns small-8">
-                            <span data-tooltip aria-haspopup="true" className="has-tip"  tabindex="1" title="Students Tutored">{"Students"}</span>
+                            <span>{"Students"}</span>
                           </div>
                           <div className="columns small-4">
-                            <span><p className="no-bottom-margin text-right"><i className="icon fi-torsos-female-male"></i><span className="stat-text">{students}</span></p></span>
+                            <span><p className="no-bottom-margin center"><i className="icon fi-torsos-female-male"></i><span className="stat-text">{students}</span></p></span>
                           </div>
                         </div>
                         <div className="row">
                           <div className="columns small-12 small-centered ">
-                            <p className="text-center even-padding"><a href="#">{"See Full Profile"}</a></p>
+                            <p className="text-center even-padding">
+                              <a href={"/tutors/" + tutor.slug + search} data={"from-search"}>{"See Full Profile"}</a>
+                            </p>
                           </div>
                         </div>
                     </div>
@@ -108,12 +112,14 @@ var TutorCard = React.createClass({
                   </p>
                 </div>
                 <div className="columns small-9">
-                   <p>{"We are excited to introduce " + tutor.user.first_name + " to Axon. Book this tutor now for 10% off!" }</p>
+                   <p className="new-tutor-intro">{"We are excited to introduce " + tutor.user.first_name + " to Axon. Book a session with " + tutor.user.first_name + " now for 10% off!" }</p>
                 </div>
               </div>
               <div className="row">
                 <div className="columns small-12 small-centered ">
-                  <p className="text-center even-padding"><a href="#">{"See Full Profile"}</a></p>
+                  <p className="text-center even-padding">
+                    <a href={"/tutors/" + tutor.slug + search} data={"from-search"}>{"See Full Profile"}</a>
+                  </p>
                 </div>
               </div>
             </div>
@@ -121,19 +127,6 @@ var TutorCard = React.createClass({
         }
 
       return stats;
-    }
-
-    var desc = function (tutor, extra_info) {
-      if(extra_info.length > 100){
-        return (
-          <p>{extra_info.slice(0, 100) + "..."}</p>
-        )
-      }
-      else {
-        return (
-          <p>{extra_info}</p>
-        )
-      }
     }
 
     var full_price = function(tutor_rate) {
