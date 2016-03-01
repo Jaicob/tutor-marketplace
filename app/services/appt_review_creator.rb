@@ -19,8 +19,10 @@ class ApptReviewCreator
   def get_appts_to_review
     unreviewed_appts = []
     @student.appointments.where(status: 2).each do |appt|
-      if appt.review.nil?
-        unreviewed_appts << appt
+      if appt.start_time.to_date >= Date.strptime("2016-03-01") # day we started Reviews - don't want to make students review old appointments
+        if appt.review.nil?
+          unreviewed_appts << appt
+        end
       end
     end
     return unreviewed_appts
