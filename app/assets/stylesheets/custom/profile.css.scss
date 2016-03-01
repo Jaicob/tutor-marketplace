@@ -24,23 +24,15 @@
     }
   }
   div.stat-box {
-    // max-width: 18em;
+    max-width: 18em;
     width: 100%;
     display: block;
     margin: auto;
     background-color: #FAFAFA;
     padding: 0.5em;
-    // border-bottom: 1px dashed #8F8F8F;
-    // width: 100%;
-    // display: block;
-    // margin: auto;
-    // background-color: #FAFAFA;
-    // padding: 0.5em;
-    // background-color: #F3F3F3;
-    // box-shadow: 1px 1px 1px #D2D2D2;
-    // border-radius: 10px;
     p {
-      font-size: 50px;
+      font-size: 40px;
+      font-weight: 400;
       margin-bottom: 0px !important;
     }
   }
@@ -60,6 +52,7 @@
     padding: 0.2em 0.6em;
     margin: 0 0.6em;
     border-radius: 4px;
+    box-shadow: 1px 1px 1px #B1B1B1;
     h4 {
       margin: 0;
     }
@@ -67,7 +60,6 @@
   div.profile-text {
     padding: 1em;
     p {
-      color: #404040;
       margin: 0 0 0.8em;
     }
     p.degree {
@@ -76,6 +68,10 @@
     }
     .label {
       font-size: 15px;
+      border-radius: 4px;
+      background-color: #CECECE;
+      color: #4F5252;
+      box-shadow: 1px 1px 1px #B1B1B1;
     }
   }
 }
