@@ -100,7 +100,7 @@
                         }
                     }
                 }
-                .tutor_stats {
+                .tutor-stats {
                     display: block;
                     width: 100%;
                     padding: 5px;
@@ -132,18 +132,13 @@
                         padding-left: 6px;
                         float: left;
                     }
-                    #new-tutor-container {
-                        padding-top: 25px;
-                        padding-bottom: 10px;
-                    }
-                    #new-tutor {
-                        font-size: 64px;
+                    #new-tutor-icon {
+                        font-size: 2em;
                     }
                     span {
                         border: none;
                     }
                     .new-tutor-intro {
-                        height: 8.2em;
                         font-size: 0.9em;
                         margin-bottom: 0;
                     }
