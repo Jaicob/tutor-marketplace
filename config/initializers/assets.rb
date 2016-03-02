@@ -21,4 +21,5 @@ Rails.application.config.assets.precompile += %w(
   	vendor/modernizr.js
   	fullcalendar/dist/fullcalendar.min.css
   	overrides/schedule.css
+  hotjar.js
 )

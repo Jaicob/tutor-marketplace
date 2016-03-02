@@ -13,6 +13,7 @@ class Dashboard::Admin::TutorsController < AdminController
   end
 
   def show
+    @tutor_analyzer = TutorAnalyzer.new(@tutor)
   end
 
   def edit

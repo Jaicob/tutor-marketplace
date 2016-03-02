@@ -56,15 +56,16 @@
     // margin-top: 3em;
   }
 
-  .row{
+  .row {
     &.full-width{
       max-width: 100%;
       background-color: #FAFAFA;
       &.main-content {
         min-height: 100%;
       }
-      .row{
+      .row {
         margin: 0 auto;
+        max-width: 62.5em;
         &.new-tutor-partial-wrapper {
           margin: 1em auto;
         }
