@@ -4,6 +4,12 @@ class ApplicationController < ActionController::Base
   # But changed to code below to prevent CSRF protection blocking Stripe token being sent back
   protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
 
+  rescue_from StandardError do |e|
+    error_report = create_error_report(e)
+    ProductionErrorMailer.delay.send_error_report(error_report)
+    redirect_to standard_error_path
+  end
+
   before_filter :configure_permitted_parameters, if: :devise_controller?
   before_action :set_school
 
@@ -90,4 +96,17 @@ class ApplicationController < ActionController::Base
       Time.use_zone(timezone, &block)
     end
 
+    def create_error_report(e)
+      {
+        error: e,
+        utc_time: DateTime.now,
+        est_time: DateTime.now.in_time_zone("Eastern Time (US & Canada)"),
+        user: {
+          name: if current_user then current_user.full_name end,
+          email: if current_user then current_user.email end,
+          role: if current_user then current_user.role end,
+        },
+        url: request.original_url,
+      }
+    end
 end

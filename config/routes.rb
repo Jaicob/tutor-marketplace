@@ -14,6 +14,7 @@
 #                              partners GET      /partners(.:format)                                                           single_views#partners
 #                               contact GET      /contact(.:format)                                                            single_views#contact
 #                     privacy_and_terms GET      /privacy-and-terms(.:format)                                                  single_views#privacy_and_terms
+#                        standard_error GET      /standard-error(.:format)                                                     single_views#standard_error_message
 #                            set_school POST     /set-school(.:format)                                                         cookies#set_school_id_cookie
 #                         change_school POST     /change-school(.:format)                                                      cookies#change_school_id_cookie
 #                checkout_select_course GET      /tutors/:id/select_course(.:format)                                           checkout#select_course
@@ -191,6 +192,9 @@
 #                          admin_review GET      /admin/reviews/:id(.:format)                                                  dashboard/admin/reviews#show
 #                                       PATCH    /admin/reviews/:id(.:format)                                                  dashboard/admin/reviews#update
 #                                       PUT      /admin/reviews/:id(.:format)                                                  dashboard/admin/reviews#update
+#                  search_admin_charges GET|POST /admin/charges/search(.:format)                                               dashboard/admin/charges#search
+#                         admin_charges GET      /admin/charges(.:format)                                                      dashboard/admin/charges#index
+#                          admin_charge GET      /admin/charges/:id(.:format)                                                  dashboard/admin/charges#show
 #                api_v1_school_subjects GET      /api/v1/schools/:school_id/subjects(.:format)                                 api/v1/subjects#index {:format=>:json}
 #    api_v1_school_subjects_all_options GET      /api/v1/schools/:school_id/subjects-all-options(.:format)                     api/v1/subjects#all_options {:format=>:json}
 #                                       GET      /api/v1/schools/:school_id/subjects/:subject_id/courses(.:format)             api/v1/courses#index {:format=>:json}
@@ -246,6 +250,7 @@ Rails.application.routes.draw do
   get '/partners'             => 'single_views#partners'
   get '/contact'              => 'single_views#contact'
   get '/privacy-and-terms'    => 'single_views#privacy_and_terms'
+  get '/standard-error'       => 'single_views#standard_error_message'
   post '/set-school'          => 'cookies#set_school_id_cookie'
   post '/change-school'       => 'cookies#change_school_id_cookie'
 
