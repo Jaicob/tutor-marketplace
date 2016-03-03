@@ -5,7 +5,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
 
   rescue_from StandardError do |e|
-    ProductionErrorMailer.delay.send_error_report(e)
+    e = create_error_report(e)
+    # ProductionErrorMailer.delay.send_error_report(e)
     redirect_to standard_error_path
   end
 
@@ -93,5 +94,19 @@ class ApplicationController < ActionController::Base
     def set_time_zone(&block)
       timezone = @school.try(:timezone) || 'UTC'
       Time.use_zone(timezone, &block)
+    end
+
+    def create_error_report(e)
+      {
+        error: e,
+        utc_time: DateTime.now,
+        est_time: DateTime.now.in_time_zone("Eastern Time (US & Canada)"),
+        user: {
+          name: if current_user then current_user.full_name end,
+          email: if current_user then current_user.email end,
+          role: if current_user then current_user.role end,
+        },
+        url: request.original_url,
+      }
     end
 end
