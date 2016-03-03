@@ -5,8 +5,6 @@
 school_list = [
   [ "University of North Carolina", "Chapel Hill, NC", 15, "Eastern Time (US & Canada)"],
   [ "University of Georgia", "Athens, GA", 15, "Eastern Time (US & Canada)"],
-  [ "Duke University", "Durham, NC", 15, "Eastern Time (US & Canada)"],
-  [ "Clemson University", "Clemson, SC", 15, "Eastern Time (US & Canada)"]
 ]
 
 # Create Schools out of the school_list
@@ -32,16 +30,6 @@ course_list = [
   [2, 3, "101", "Intro to Math (U2)"],
   [2, 4, "101", "Intro to Computer Science (U2)"],
   [2, 5, "101", "Intro to Physics (U2)"],
-  [3, 1, "101", "Intro to Biology (U3)"],
-  [3, 2, "101", "Intro to Chemistry (U3)"],
-  [3, 3, "101", "Intro to Math (U3)"],
-  [3, 4, "101", "Intro to Computer Science (U3)"],
-  [3, 5, "101", "Intro to Physics (U3)"],
-  [4, 1, "101", "Intro to Biology (U4)"],
-  [4, 2, "101", "Intro to Chemistry (U4)"],
-  [4, 3, "101", "Intro to Math (U4)"],
-  [4, 4, "101", "Intro to Computer Science (U4)"],
-  [4, 5, "101", "Intro to Physics (U4)"]
 ]
 
 # Create a Course for each School using course_list above
@@ -49,8 +37,8 @@ course_list.each do |school_id, subject_id, call_number, friendly_name|
   x = Course.create!(school_id: school_id, subject_id: subject_id, call_number: call_number, friendly_name: friendly_name)
 end
 
-# Create 100 Users to become Tutors
-100.times{
+# Create 10 Users to become Tutors
+10.times{
   User.create!(
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
@@ -66,17 +54,17 @@ degree = [0,1,2,3,4,5]
 major = ['Chemistry', 'Biology', 'Business', 'English', 'Micro-Biology', 'Computer Science', 'Accounting']
 graduation_year = [2015, 2016, 2017, 2018, 2019]
 additional_degrees = [
-  'B.A. Accounting, B.S. Finance',
-  'M.F.A English, B.S. Spanish',
-  'B.S. Biology, B.A. Marine Biology',
-  'B.S. Chemistry, B.S. Micro-Biology'
+  'B.S. Finance',
+  'B.S. Spanish - USC',
+  'B.S. Biology, 2009',
+  'B.S. Chemistry, UT'
 ]
 
 n = 1
 User.all.each do |user|
   user.create_tutor!(
     school_id: n,
-    rating: 5,
+    approval: 85,
     degree: degree.sample,
     major: major.sample,
     additional_degrees: additional_degrees.sample,
@@ -87,14 +75,14 @@ User.all.each do |user|
     phone_number: Faker::Number.number(10)
   )
   x = Tutor.count
-  if (x == 25) || (x == 50) || (x == 75)
+  if (x == 5)
     n += 1
   end
 end
 
-# Remove additional degrees from every second and third tutor
+# Remove additional degrees from every other tutor
 Tutor.all.each do |tutor|
-  if tutor.id % 2 == 0 || tutor.id % 3 == 0
+  if tutor.id % 2 == 0
     tutor.additional_degrees = nil
     tutor.save
   end
@@ -121,8 +109,8 @@ Tutor.all.each do |tutor|
   tutor.update(active_status: 1)
 end
 
-# Create 100 Users to become Students, 25 for each school
-100.times{
+# Create 10 Users to become Students, 5 for each school
+10.times{
   User.create!(
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
@@ -141,7 +129,7 @@ n = 1
 new_users.each do |new_user|
   new_user.create_student!(school_id: n)
   x = Student.count
-  if (x == 25) || (x == 50) || (x == 75)
+  if (x == 5)
     n += 1
   end
 end

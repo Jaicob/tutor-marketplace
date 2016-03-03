@@ -5,7 +5,7 @@ http_interactions:
     uri: https://api.stripe.com/v1/tokens
     body:
       encoding: US-ASCII
-      string: bank_account[account_holder_type]=individual&bank_account[account_number]=000123456789&bank_account[country]=CA&bank_account[currency]=usd&bank_account[name]=Jane+Austen&bank_account[routing_number]=11000000
+      string: card[cvc]=314&card[exp_month]=12&card[exp_year]=2016&card[number]=4242424242424242
     headers:
       Accept:
       - "*/*; q=0.5, application/xml"
@@ -22,7 +22,7 @@ http_interactions:
         version 4.1.13-boot2docker (root@11aafb97cfeb) (gcc version 4.9.2 (Debian
         4.9.2-10) ) #1 SMP Fri Nov 20 19:05:50 UTC 2015","hostname":"cb19fd816d4c"}'
       Content-Length:
-      - '207'
+      - '82'
   response:
     status:
       code: 200
@@ -31,11 +31,11 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Wed, 02 Mar 2016 19:31:31 GMT
+      - Wed, 02 Mar 2016 21:45:17 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '564'
+      - '781'
       Connection:
       - keep-alive
       Access-Control-Allow-Credentials:
@@ -49,7 +49,7 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store
       Request-Id:
-      - req_80h5joHBDGr38J
+      - req_80jEUUlE8t4K6R
       Stripe-Version:
       - '2015-08-19'
       Strict-Transport-Security:
@@ -58,28 +58,38 @@ http_interactions:
       encoding: UTF-8
       string: |
         {
-          "id": "btok_80h5nq7srFE2dI",
+          "id": "tok_17khmT4Iy02hWvBEm9HcP3fL",
           "object": "token",
-          "bank_account": {
-            "id": "ba_17kfh04Iy02hWvBEPKBOf3I3",
-            "object": "bank_account",
-            "account_holder_name": "Jane Austen",
-            "account_holder_type": "individual",
-            "bank_name": null,
-            "country": "CA",
-            "currency": "usd",
-            "fingerprint": "oChakD9VMJtIlkSh",
-            "last4": "6789",
-            "routing_number": "11000-000",
-            "status": "new",
-            "name": "Jane Austen"
+          "card": {
+            "id": "card_17khmT4Iy02hWvBEmJvzsmDX",
+            "object": "card",
+            "address_city": null,
+            "address_country": null,
+            "address_line1": null,
+            "address_line1_check": null,
+            "address_line2": null,
+            "address_state": null,
+            "address_zip": null,
+            "address_zip_check": null,
+            "brand": "Visa",
+            "country": "US",
+            "cvc_check": "unchecked",
+            "dynamic_last4": null,
+            "exp_month": 12,
+            "exp_year": 2016,
+            "fingerprint": "ZmaKPeHcm3bbIjWC",
+            "funding": "credit",
+            "last4": "4242",
+            "metadata": {},
+            "name": null,
+            "tokenization_method": null
           },
           "client_ip": "96.38.241.146",
-          "created": 1456947090,
+          "created": 1456955117,
           "livemode": false,
-          "type": "bank_account",
+          "type": "card",
           "used": false
         }
     http_version: 
-  recorded_at: Wed, 02 Mar 2016 19:31:31 GMT
+  recorded_at: Wed, 02 Mar 2016 21:45:17 GMT
 recorded_with: VCR 3.0.1

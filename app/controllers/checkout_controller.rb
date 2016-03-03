@@ -99,6 +99,7 @@ class CheckoutController < ApplicationController
 
   def process_booking
     @checkout_data = PrepareCheckout.new(params, session, @tutor, @student).prepare_data_for_checkout_organizer
+    puts "CHECKOUT DATA = #{@checkout_data}"
 
     if @checkout_data[:success] == false
       # clean-up after failure - destroy new user if one was created
