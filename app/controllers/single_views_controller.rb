@@ -61,7 +61,7 @@ class SingleViewsController < ApplicationController
   def restricted_access
   end
 
-  def error_rescue
+  def standard_error_message
   end
 
 end
