@@ -23,7 +23,7 @@
         }
         select#subject, select#course, input#course-search-submit, button#course-search-submit {
           font-size: 1em;
-          font-weight: 100;
+          font-weight: 300;
           height: 2.5em;
         }
     }
@@ -108,9 +108,9 @@
                     .stat-row {
                         border-bottom: solid 1px #D4D3D3;
                         padding: 0.7em 0.2em;
-                        font-weight: 100 !important;
+                        font-weight: 300 !important;
                         .has-tip {
-                            font-weight: 100;
+                            font-weight: 300;
                             font-size: 17px;
                         }
                         .stat-text {

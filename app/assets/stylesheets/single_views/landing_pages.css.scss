@@ -4,7 +4,7 @@
     // genric section title for each section
     h4.section-title {
       font-size: 2.6em;
-      font-weight: 100;
+      font-weight: 300;
       text-align: center;
       margin: 0.5em auto 1em;
     }
@@ -46,7 +46,7 @@
         max-width: 30em;
         select#visitor_school_id, input#submit-school-selection {
           font-size: 1em;
-          font-weight: 100;
+          font-weight: 300;
           height: 2.5em;
         }
         select#visitor_school_id {
@@ -100,7 +100,7 @@
         }
         select#subject, select#course, input#course-search-submit {
           font-size: 1em;
-          font-weight: 100;
+          font-weight: 300;
           height: 2.5em;
         }
       }
@@ -136,7 +136,7 @@
       padding-bottom: 1em;
       h4 {
         color: white;
-        font-weight: 100;
+        font-weight: 300;
       }
       &.contact-banner {
         padding: 3em 0;

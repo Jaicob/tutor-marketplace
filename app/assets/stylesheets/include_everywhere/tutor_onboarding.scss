@@ -4,6 +4,20 @@
 
 // STYLING FOR PROGRESS BAR
 
+p.big-text.list {
+  line-height: 0.5em;
+}
+li.big-text {
+  font-size: 1.2em;
+  font-weight: 300;
+  text-align: left;
+  margin-left: 1em;
+}
+li {
+  font-weight: 300;
+  text-align: left;
+}
+
 .progress-bar-container {
     margin: 1em auto !important;
 
@@ -154,7 +168,7 @@ i.fi-arrow-right {
     float: right;
     background-color: #2BC2DE;
     color: #FAFAFA;
-    font-weight: 100;
+    font-weight: 300;
     text-align: center;
     line-height: 2em;
     font-size: 0.8em;
@@ -266,7 +280,7 @@ i.fi-arrow-right {
                   padding: 0.5em 0;
                   margin-bottom: 0;
                   i.fi-plus {
-                      font-weight: 100;
+                      font-weight: 300;
                       position: relative;
                       right: 1em;
                   }
