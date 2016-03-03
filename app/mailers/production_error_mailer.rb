@@ -3,7 +3,7 @@ class ProductionErrorMailer < ApplicationMailer
 
   def send_error_report(error)
     @error = error
-    mail(to: @user.email, subject: "PRODUCTION ERROR: #{@error.full_messages.first}")
+    mail(to: 'dev@axontutors.com', subject: "PRODUCTION ERROR: #{@error.full_messages.first}")
   end
 
 end
