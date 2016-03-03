@@ -64,7 +64,7 @@ n = 1
 User.all.each do |user|
   user.create_tutor!(
     school_id: n,
-    rating: 5,
+    approval: 90,
     degree: degree.sample,
     major: major.sample,
     additional_degrees: additional_degrees.sample,
@@ -72,7 +72,8 @@ User.all.each do |user|
     extra_info_2: extra_info.sample,
     extra_info_3: extra_info.sample,
     graduation_year: graduation_year.sample,
-    phone_number: Faker::Number.number(10)
+    phone_number: Faker::Number.number(10),
+    dob: Date.today - 10000,
   )
   x = Tutor.count
   if x == 5
