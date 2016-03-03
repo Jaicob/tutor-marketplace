@@ -5,8 +5,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
 
   rescue_from StandardError do |e|
-    e = create_error_report(e)
-    # ProductionErrorMailer.delay.send_error_report(e)
+    error_report = create_error_report(e)
+    ProductionErrorMailer.delay.send_error_report(error_report)
     redirect_to standard_error_path
   end
 
