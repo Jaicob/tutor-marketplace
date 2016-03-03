@@ -83,7 +83,7 @@ class TutorsController < ApplicationController
     end
 
     def tutor_params
-      params.require(:tutor).permit(:booking_buffer, :school_id, :additional_degrees, :courses_approved, :rating, :application_status, :appt_notes, :dob, :degree, :major, :extra_info_1, :extra_info_2, :extra_info_3, :graduation_year, :phone_number, :profile_pic, :transcript, :active_status, :crop_x, :crop_y, :crop_w, :crop_h, :line1, :line2, :city, :state, :postal_code, :ssn_last_4, course: [:course_id], tutor_course: [:rate], user_attributes: [:first_name, :last_name, :email, :phone_number, :password, :password_confirmation])
+      params.require(:tutor).permit(:booking_buffer, :school_id, :additional_degrees, :courses_approved, :approval, :application_status, :appt_notes, :dob, :degree, :major, :extra_info_1, :extra_info_2, :extra_info_3, :graduation_year, :phone_number, :profile_pic, :transcript, :active_status, :crop_x, :crop_y, :crop_w, :crop_h, :line1, :line2, :city, :state, :postal_code, :ssn_last_4, course: [:course_id], tutor_course: [:rate], user_attributes: [:first_name, :last_name, :email, :phone_number, :password, :password_confirmation])
     end
 
 end
