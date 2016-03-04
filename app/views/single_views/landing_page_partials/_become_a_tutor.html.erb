@@ -4,10 +4,10 @@ $(document).ready(function()
     $('#user_input').change(function () {  
       var input = document.getElementById('user_input').value;
       if (input.length < 8){
-        $('#input-error').removeClass("no-show").addClass("show");
+        $('#invalid-password').removeClass("no-show").addClass("show");
         $('#tutor-submit-btn').prop("disabled", true)
       } else {
-        $('#input-error').removeClass("show").addClass("no-show");
+        $('#invalid-password').removeClass("show").addClass("no-show");
         $('#tutor-submit-btn').prop("disabled", false)
       }
     });
@@ -26,7 +26,7 @@ $(document).ready(function()
         <%= f.text_field :last_name, placeholder: 'Last Name', required: true  %>
         <%= f.email_field :email, placeholder: 'Email', required: true %>
         <%= f.password_field :password, placeholder: 'Password', required: true, id: 'user_input' %>
-        <p id="input-error" class="no-show">Password must be at least 8 characters</p>
+        <p id="invalid-password" class="no-show">Password must be at least 8 characters</p>
         <%= f.fields_for :tutor do |tt| %>
           <%= tt.text_field :phone_number, placeholder: 'Phone Number', required: true %>
           <select name="user[tutor][school_id]" required="true">

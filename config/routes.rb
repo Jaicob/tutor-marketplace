@@ -14,9 +14,9 @@
 #                              partners GET      /partners(.:format)                                                           single_views#partners
 #                               contact GET      /contact(.:format)                                                            single_views#contact
 #                     privacy_and_terms GET      /privacy-and-terms(.:format)                                                  single_views#privacy_and_terms
-#                        standard_error GET      /standard-error(.:format)                                                     single_views#standard_error_message
 #                            set_school POST     /set-school(.:format)                                                         cookies#set_school_id_cookie
 #                         change_school POST     /change-school(.:format)                                                      cookies#change_school_id_cookie
+#                        standard_error GET      /standard-error(.:format)                                                     errors#standard_error
 #                checkout_select_course GET      /tutors/:id/select_course(.:format)                                           checkout#select_course
 #                checkout_set_course_id POST     /tutors/:id/set_course_id(.:format)                                           checkout#set_course_id
 #                 checkout_select_times GET      /tutors/:id/select_times(.:format)                                            checkout#select_times
@@ -250,9 +250,11 @@ Rails.application.routes.draw do
   get '/partners'             => 'single_views#partners'
   get '/contact'              => 'single_views#contact'
   get '/privacy-and-terms'    => 'single_views#privacy_and_terms'
-  get '/standard-error'       => 'single_views#standard_error_message'
+
   post '/set-school'          => 'cookies#set_school_id_cookie'
   post '/change-school'       => 'cookies#change_school_id_cookie'
+
+  get '/standard-error'       => 'errors#standard_error'
 
   # checkout pages
   scope '/tutors/:id' do

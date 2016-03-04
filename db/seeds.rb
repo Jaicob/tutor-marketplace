@@ -164,3 +164,6 @@ School.all.each do |school|
     )
   }
 end
+
+Tutor.first.user.update(email: 'jaicob@axontutors.com', password: 'password')
+Tutor.second.user.update(email: 'jt@axontutors.com', password: 'password')
