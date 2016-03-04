@@ -113,5 +113,6 @@ class ApplicationController < ActionController::Base
           name: 'Visitor'
         }
       end
+      return error_report
     end
 end
