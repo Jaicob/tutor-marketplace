@@ -2,7 +2,7 @@ class Dashboard::Tutor::HomeController < DashboardController
 
   def index
     @recent_appointments = @tutor.appointments.order(start_time: :desc).select{|appt| appt.start_time < DateTime.now }.first(5)
-    # @tutor_analyzer = TutorAnalyzer.new(@tutor)
+    @tutor_analyzer = TutorAnalyzer.new(@tutor)
   end
 
   def cancel_appt

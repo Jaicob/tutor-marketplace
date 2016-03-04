@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from StandardError do |e|
     error_report = create_error_report(e)
+    puts e
     ProductionErrorMailer.delay.send_error_report(error_report)
     redirect_to standard_error_path
   end
@@ -97,16 +98,21 @@ class ApplicationController < ActionController::Base
     end
 
     def create_error_report(e)
-      {
+      error_report = {
         error: e,
         utc_time: DateTime.now,
-        est_time: DateTime.now.in_time_zone("Eastern Time (US & Canada)"),
-        user: {
-          name: if current_user then current_user.full_name end,
-          email: if current_user then current_user.email end,
-          role: if current_user then current_user.role end,
-        },
-        url: request.original_url,
+        url: request.original_url
       }
+      if current_user
+        error_report[:user] = {
+          name: current_user.full_name,
+          role: current_user.role,
+          email: current_user.email,
+        }
+      else
+        error_report[:user] = {
+          name: 'Visitor'
+        }
+      end
     end
 end

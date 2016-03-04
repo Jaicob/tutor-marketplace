@@ -1,8 +1,3 @@
 An error has occured. Details below:
 
-Error: <%= @error[:error] %>
-UTC Time: <%= @error[:utc_time] %>
-User Name: <%= !@error[:user].nil? ? @error[:user][:name] : 'Visitor' %>
-User Role: <%= !@error[:user].nil? ? @error[:user].present?@error[:user][:email] : 'N/A' %>
-User Email: <%= !@error[:user].nil? ? @error[:user][:role] : 'N/A' %>
-URL: <%= @error[:url] %>
+<%= @error_report %>

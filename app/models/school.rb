@@ -91,4 +91,8 @@ class School < ActiveRecord::Base
     return profit
   end
 
+  def reviews
+    self.appointments.select{|appt| appt.review}.map{|appt| appt.review}
+  end
+
 end
