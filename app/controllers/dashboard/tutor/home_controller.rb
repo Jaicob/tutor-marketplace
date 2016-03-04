@@ -6,17 +6,19 @@ class Dashboard::Tutor::HomeController < DashboardController
   end
 
   def cancel_appt
-    @appt = Appointment.find(params[:appt_id])
-    if @appt.update_attribute('status', 'Cancelled')
-      AppointmentMailer.delay.appointment_cancellation_for_tutor(@appt.id)               
-      AppointmentMailer.delay.appointment_cancellation_for_student(@appt.id)
-      refund_status = CancelledApptRefunder.new(@appt, current_user).issue_valid_refund
-      flash[:info] = refund_status
-      redirect_to home_tutor_path(@tutor.slug)
-    else
-      flash[:alert] = "Appointment was not updated: #{@appt.errors.full_messages.first}"
-      redirect_to :back
-    end
+    flash[:info] = "Appointments cannot be cancelled online at this time. Please contact your student and Axon if a cancellation is necessary."
+    redirect_to :back
+    # @appt = Appointment.find(params[:appt_id])
+    # if @appt.update_attribute('status', 'Cancelled')
+    #   AppointmentMailer.delay.appointment_cancellation_for_tutor(@appt.id)               
+    #   AppointmentMailer.delay.appointment_cancellation_for_student(@appt.id)
+    #   refund_status = CancelledApptRefunder.new(@appt, current_user).issue_valid_refund
+    #   flash[:info] = refund_status
+    #   redirect_to home_tutor_path(@tutor.slug)
+    # else
+    #   flash[:alert] = "Appointment was not updated: #{@appt.errors.full_messages.first}"
+    #   redirect_to :back
+    # end
   end
 
   private 

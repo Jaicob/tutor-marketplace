@@ -1,5 +1,11 @@
 <section class="dashboard-content tutor-home-page">
   <!-- Welcome/Awaiting Approval Message for New Tutors -->
+  <div class="row small-collapse">
+    <div class="small-12 columns">
+        <%= render 'notice_of_online_cancellations' %>
+    </div>
+  </div>
+  <!-- Welcome/Awaiting Approval Message for New Tutors -->
   <div class="row">
     <div class="small-12 columns">
       <% if @tutor.application_status != 'Approved' %>
