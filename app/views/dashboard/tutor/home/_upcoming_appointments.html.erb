@@ -18,7 +18,6 @@
         <th>Student</th>
         <th>Phone</th>
         <th>Email</th>
-        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -31,8 +30,6 @@
           <td><%= student.public_name %></td>
           <td><%= student.phone_number %></td>
           <td><%= student.email %></td>
-          <td><a href="#" data-reveal-id="confirm-cancel-appt-<%= appt.id %>" class="custom-button blue">Cancel</a>
-          </td>
         </tr>
       <% end %>
     </tbody>

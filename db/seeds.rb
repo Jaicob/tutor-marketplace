@@ -131,7 +131,7 @@ end
 
 # Activate tutors
 Tutor.all.each do |tutor|
-  tutor.update(active_status: 1, onboarding_status: 4)
+  tutor.update(active_status: 1, onboarding_status: 4, application_status: 3)
 end
 
 # Add bank account to tutors
