@@ -6,7 +6,6 @@ class ApplicationController < ActionController::Base
 
   rescue_from StandardError do |e|
     error_report = create_error_report(e)
-    puts e
     ProductionErrorMailer.delay.send_error_report(error_report)
     redirect_to standard_error_path
   end
