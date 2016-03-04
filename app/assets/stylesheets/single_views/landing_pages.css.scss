@@ -29,11 +29,13 @@
         padding-top: 1.5em;
         &.tutor-header {
           margin-top: 1em;
-          // color: #4F5252;
-          // text-shadow: 1px 1px 1px #6F698E;
-          // font-weight: 600;
         }
       }
+      @media screen and (max-width: 768px) {
+          .main-header{ 
+            padding: 0.5em;
+          }
+        }
       .second-header {
         margin: 1em;
       }
