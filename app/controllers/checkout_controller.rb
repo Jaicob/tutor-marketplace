@@ -26,6 +26,7 @@ class CheckoutController < ApplicationController
 
   def select_times
     # step 2
+    puts "session[:appt_info] = #{session[:appt_info]}"
     service = TutorAvailability.new(@tutor.id, params[:current], params[:week])
     @start_date = service.set_week
     @availability_data = service.get_times
@@ -36,9 +37,17 @@ class CheckoutController < ApplicationController
     end
   end
 
+  # session[:appt_info] = ["2016-03-11 13:00:00 UTC----38"]
+
   def appt_time
     # puts "PARAMS = #{params}"
-    session[:appt_info] << params[:appt_info]
+    puts "PARAMS!!!!!!!!!!! = #{params[:appt_info]}"
+    if session[:appt_info] == nil
+      session[:appt_info] = [params[:appt_info]]
+    else
+      session[:appt_info] << [params[:appt_info]]
+    end
+    redirect_to checkout_select_times_path(@tutor.slug, anchor: 'select-times')
   end
 
   def set_times
