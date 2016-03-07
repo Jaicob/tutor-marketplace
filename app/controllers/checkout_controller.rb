@@ -36,6 +36,11 @@ class CheckoutController < ApplicationController
     end
   end
 
+  def appt_time
+    # puts "PARAMS = #{params}"
+    session[:appt_info] << params[:appt_info]
+  end
+
   def set_times
     # recieves step 2 input, saves it to session & redirects to step 3
     session[:appt_info] = params[:appt_selection]

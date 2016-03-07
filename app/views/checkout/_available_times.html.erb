@@ -59,6 +59,9 @@ window.onload = function start() { // calls 2 methods
 
 function disableNeighborCheckboxes(element) {
   var selected = parseInt(element.id);
+  var appt_info = element.value
+  $.post('appt_time', {appt_info: appt_info});
+
   checkboxTwoBeforeId = selected - 2;
   checkboxBeforeId = selected - 1;
   checkboxAfterId = selected + 1;

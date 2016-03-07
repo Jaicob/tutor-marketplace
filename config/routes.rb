@@ -261,6 +261,7 @@ Rails.application.routes.draw do
     get   '/select_course'    => 'checkout#select_course', as: 'checkout_select_course'
     post  '/set_course_id'    => 'checkout#set_course_id', as: 'checkout_set_course_id'
     get   '/select_times'     => 'checkout#select_times', as: 'checkout_select_times'
+    post  '/appt_time'        => 'checkout#appt_time', as: 'checkout_appt_time'
     post  '/set_appt_times'   => 'checkout#set_times', as: 'checkout_set_times'
     get   '/select_location'  => 'checkout#select_location', as: 'checkout_select_location'
     post  '/set_location'     => 'checkout#set_location', as: 'checkout_set_location'
