@@ -5,8 +5,10 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
 
   rescue_from StandardError do |e|
-    error_report = create_error_report(e)
-    ProductionErrorMailer.delay.send_error_report(error_report)
+    if !request.original_url.include?('dockerhost') && !request.original_url.include?('staging')
+      error_report = create_error_report(e)
+      ProductionErrorMailer.delay.send_error_report(error_report)
+    end
     redirect_to standard_error_path
   end
 
