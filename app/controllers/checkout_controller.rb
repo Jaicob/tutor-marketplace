@@ -26,7 +26,8 @@ class CheckoutController < ApplicationController
 
   def select_times
     # step 2
-    puts "session[:appt_info] = #{session[:appt_info]}"
+    # session[:appt_info] = nil
+    puts "SESSION VARIABLES!!!!!! = #{session[:appt_info]}"
     service = TutorAvailability.new(@tutor.id, params[:current], params[:week])
     @start_date = service.set_week
     @availability_data = service.get_times
@@ -40,8 +41,9 @@ class CheckoutController < ApplicationController
   def appt_time
     # puts "PARAMS = #{params}"
     # puts "BEFORE = #{session[:appt_info]}"
-    if session[:appt_info] == nil
-      session[:appt_info] = params[:appt_info]
+    if session[:appt_info].nil?
+      session[:appt_info] = Hash.new
+      session[:appt_info][params[:checkbox_id]] = params[:appt_info]
     elsif params[:checkbox] == 'selected'
       # puts "CALLED A"
       session[:appt_info][params[:checkbox_id]] = params[:appt_info]

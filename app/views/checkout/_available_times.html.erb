@@ -7,7 +7,7 @@
         <% @availability_data[count][:times].each do |data| %>
           <div class="appt-time-box">
             <label>
-              <input type="checkbox" id="<%=data[:uniq_id]%>" class="<%=data[:reserved]%>" value="<%=data[:datetime].to_s+'----'+data[:slot_id].to_s%>" name="appt_selection[<%= data[:uniq_id] %>]" onchange="saveApptTimeAndMarkPills(this)">
+              <input type="checkbox" id="<%=data[:uniq_id]%>" class="<%=data[:reserved]%>" value="<%=data[:datetime].strftime('%l:%M')+'--'+data[:slot_id].to_s%>" name="appt_selection[<%= data[:uniq_id] %>]" onchange="saveApptTimeAndMarkPills(this)">
               <div class="appt-time"><%= data[:datetime].in_time_zone(@school.timezone).strftime('%l:%M %p') %></div>
             </label>
           </div>
@@ -85,7 +85,7 @@ function saveApptTimeAndMarkPills(element) {
       After.classList.add("second-half-of-appt");
     }
   } else { // When a time is DE-SELECTED
-    // the time immediately before...
+    // Before is the time pill immediately before...
     if (Before != null) {
       if (TwoBefore == null) { // if TwoBefore does not exist, should turn from gray to empty (take away disabled)
         Before.disabled = false;
@@ -95,13 +95,12 @@ function saveApptTimeAndMarkPills(element) {
         Before.disabled = false;
       }
     }
-    // the time immediately after...
+    // After is the time pill immediately after...
     if (After != null) {
       if(TwoAfter == null) { // if TwoAfter does not exist, should turn from green to empty (take away disabled & second-half of appt)
         After.disabled = false;
         After.classList.remove('second-half-of-appt');
       } else if (TwoAfter.checked == true) { // if TwoAfter is selected, should turn from green to gray
-        console.log('CALLEDDDD!!!!!!!!!!!')
         After.disabled = true;
         After.classList.remove('second-half-of-appt')
       } else { // if TwoAfter is not selected, should change from green to empty
