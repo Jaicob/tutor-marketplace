@@ -37,31 +37,25 @@ class CheckoutController < ApplicationController
     end
   end
 
-  # session[:appt_info] = ["2016-03-11 13:00:00 UTC----38"]
-
   def appt_time
     # puts "PARAMS = #{params}"
-    # puts "PARAMS!!!!!!!!!!! = #{params[:appt_info]}"
-    # puts "SESSION APPT INFO = #{session[:appt_info]}"
-    # puts "CLASS!!!!! = #{session[:appt_info].class}"
-    # puts "KEYS = #{session[:appt_info].keys}"
-    # puts "VALUES = #{session[:appt_info].values}"
-    # puts "SESSION KEY 3800 = #{session[:appt_info]['3800']}"
-    # puts "PARAMS[:APPT_INFO] = #{params[:appt_info]}"
-    # puts "PARAMS[:CHECKBOX_ID] = #{params[:checkbox_id]}"
-    puts "BEFORE = #{session[:appt_info]}"
+    # puts "BEFORE = #{session[:appt_info]}"
     if session[:appt_info] == nil
       session[:appt_info] = params[:appt_info]
-    else
+    elsif params[:checkbox] == 'selected'
+      # puts "CALLED A"
       session[:appt_info][params[:checkbox_id]] = params[:appt_info]
+    else 
+      # puts "CALLED B"
+      # puts "params[:checkbox_id] = #{params[:checkbox_id]}"
+      session[:appt_info] = session[:appt_info].to_hash.except!([params[:checkbox_id]].first)
     end
-    puts "AFTER = #{session[:appt_info]}"
+    # puts "AFTER = #{session[:appt_info]}"
+    # render :select_times
     redirect_to checkout_select_times_path(@tutor.slug, anchor: 'select-times')
   end
 
-  def set_times
-    # recieves step 2 input, saves it to session & redirects to step 3
-    session[:appt_info] = params[:appt_selection]
+  def set_times # this action originally accepted form data from select_times, but now that times are saved to the 'appt_info' session variable by AJAX, this action simply serves as a next step button with a redirect back when no times are selected
     if session[:appt_info] == nil
       redirect_to checkout_select_times_path(@tutor.slug, anchor: 'select-times')
       flash[:alert] = 'Please select a meeting time'
