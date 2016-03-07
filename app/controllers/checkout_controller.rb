@@ -41,12 +41,21 @@ class CheckoutController < ApplicationController
 
   def appt_time
     # puts "PARAMS = #{params}"
-    puts "PARAMS!!!!!!!!!!! = #{params[:appt_info]}"
+    # puts "PARAMS!!!!!!!!!!! = #{params[:appt_info]}"
+    # puts "SESSION APPT INFO = #{session[:appt_info]}"
+    # puts "CLASS!!!!! = #{session[:appt_info].class}"
+    # puts "KEYS = #{session[:appt_info].keys}"
+    # puts "VALUES = #{session[:appt_info].values}"
+    # puts "SESSION KEY 3800 = #{session[:appt_info]['3800']}"
+    # puts "PARAMS[:APPT_INFO] = #{params[:appt_info]}"
+    # puts "PARAMS[:CHECKBOX_ID] = #{params[:checkbox_id]}"
+    puts "BEFORE = #{session[:appt_info]}"
     if session[:appt_info] == nil
-      session[:appt_info] = [params[:appt_info]]
+      session[:appt_info] = params[:appt_info]
     else
-      session[:appt_info] << [params[:appt_info]]
+      session[:appt_info][params[:checkbox_id]] = params[:appt_info]
     end
+    puts "AFTER = #{session[:appt_info]}"
     redirect_to checkout_select_times_path(@tutor.slug, anchor: 'select-times')
   end
 
