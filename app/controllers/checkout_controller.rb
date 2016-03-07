@@ -4,6 +4,7 @@ class CheckoutController < ApplicationController
   before_action :set_student
   before_action :set_school
   before_action :back_to_search, only: [:available_times]
+  before_action :set_cart, except: [:select_course, :set_course_id, :select_times]
 
   def select_course
     # step 1
@@ -13,21 +14,23 @@ class CheckoutController < ApplicationController
   def set_course_id
     # recieves step 1 input, saves it to session & redirects to step 2
     if params[:course_selection] && params[:course_selection][:course_id]
-      session[:course_id] = params[:course_selection][:course_id]
-    end
-    session[:tutor_id] = @tutor.id
-    if session[:course_id] == nil || session[:tutor_id] == nil
-      redirect_to checkout_select_course_path(@tutor.slug, anchor: 'select-course')
-      flash[:alert] = 'Please select a course'
+      @cart = Cart.create(checkout_hash: Hash.new)
+      @cart.checkout_hash[:course_id] = params[:course_selection][:course_id]
+      @cart.save
+      redirect_to checkout_select_times_path(@tutor.slug, anchor: 'select-times', cart_id: @cart.id)
     else
-      redirect_to checkout_select_times_path(@tutor.slug, anchor: 'select-times')
+      flash[:alert] = 'Please select a course'
+      redirect_to checkout_select_course_path(@tutor.slug, anchor: 'select-course')
     end
   end
 
   def select_times
     # step 2
+    puts "@cart = #{@cart}"
     # session[:appt_info] = nil
-    puts "SESSION VARIABLES!!!!!! = #{session[:appt_info]}"
+    # puts "SESSION VARIABLES!!!!!! = #{session[:appt_info]}"
+    # puts "PARAMS[:CURRENT] = #{params[:current]}"
+    # puts "PARAMS[:CURRENT] = #{params[:week]}"
     service = TutorAvailability.new(@tutor.id, params[:current], params[:week])
     @start_date = service.set_week
     @availability_data = service.get_times
@@ -169,5 +172,12 @@ class CheckoutController < ApplicationController
   def back_to_search
     @from_search = true if request.referer && request.referer.split(/[^[:alpha:]]+/).include?('search')
   end
+
+  # def set_cart
+  #   uri = URI.parse(request.original_url)
+  #   query = CGI.parse(uri.query)
+  #   cart_id = query['cart_id'].first 
+  #   @cart = Cart.find(cart_id)
+  # end
 
 end
