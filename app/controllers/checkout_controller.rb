@@ -4,17 +4,20 @@ class CheckoutController < ApplicationController
   before_action :set_student
   before_action :set_school
   before_action :back_to_search, only: [:available_times]
-  before_action :set_cart, except: [:select_course, :set_course_id, :select_times]
+  before_action :set_cart, except: [:select_course]
 
   def select_course
-    # step 1
-    # (view all courses a Tutor offers - bypassed from Search)
+    # step 1 (displays all courses a Tutor offers - bypassed when coming from Search)
+    session[:cart_id] = nil
   end
 
   def set_course_id
-    # recieves step 1 input, saves it to session & redirects to step 2
+    # step 1 saved to cart (still bypassed when coming from Search)
     if params[:course_selection] && params[:course_selection][:course_id]
-      @cart = Cart.create(checkout_hash: Hash.new)
+      if @cart.nil?
+        @cart = Cart.create(checkout_hash: Hash.new())
+        session[:cart_id] = @cart.id
+      end
       @cart.checkout_hash[:course_id] = params[:course_selection][:course_id]
       @cart.save
       redirect_to checkout_select_times_path(@tutor.slug, anchor: 'select-times', cart_id: @cart.id)
@@ -26,11 +29,7 @@ class CheckoutController < ApplicationController
 
   def select_times
     # step 2
-    puts "@cart = #{@cart}"
-    # session[:appt_info] = nil
-    # puts "SESSION VARIABLES!!!!!! = #{session[:appt_info]}"
-    # puts "PARAMS[:CURRENT] = #{params[:current]}"
-    # puts "PARAMS[:CURRENT] = #{params[:week]}"
+    puts "@cart.id !!!!!!!!!!!!!!!!! = #{@cart.id}"
     service = TutorAvailability.new(@tutor.id, params[:current], params[:week])
     @start_date = service.set_week
     @availability_data = service.get_times
@@ -161,23 +160,18 @@ class CheckoutController < ApplicationController
 
   private
 
-  def set_tutor
-    @tutor = Tutor.find(params[:id])
-  end
+    def set_tutor
+      @tutor = Tutor.find(params[:id])
+    end
 
-  def set_tutor_analyzer
-    @tutor_analyzer = TutorAnalyzer.new(Tutor.find(params[:id]))
-  end
+    def set_tutor_analyzer
+      @tutor_analyzer = TutorAnalyzer.new(Tutor.find(params[:id]))
+    end
 
-  def back_to_search
-    @from_search = true if request.referer && request.referer.split(/[^[:alpha:]]+/).include?('search')
-  end
-
-  # def set_cart
-  #   uri = URI.parse(request.original_url)
-  #   query = CGI.parse(uri.query)
-  #   cart_id = query['cart_id'].first 
-  #   @cart = Cart.find(cart_id)
-  # end
+    def set_cart
+      if session[:cart_id]
+        @cart = Cart.find(session[:cart_id])
+      end
+    end
 
 end

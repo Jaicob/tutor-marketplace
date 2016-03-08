@@ -7,7 +7,10 @@ class TutorsController < ApplicationController
   def show
     if @tutor.active_status == 'Active'
       if params[:course]
-        session[:course_id] = params[:course]
+        @cart = Cart.create(checkout_hash: Hash.new())
+        @cart.checkout_hash[:course_id] = params[:course]
+        @cart.save
+        session[:cart_id] = @cart.id
         redirect_to checkout_select_times_path(@tutor.slug)
       else
         redirect_to checkout_select_course_path(@tutor.slug)
