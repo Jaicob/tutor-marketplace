@@ -55,9 +55,9 @@ ActiveRecord::Schema.define(version: 20160307225641) do
   add_index "campus_managers", ["user_id"], name: "index_campus_managers_on_user_id", using: :btree
 
   create_table "carts", force: :cascade do |t|
-    t.text     "checkout_hash"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.text     "info"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "charges", force: :cascade do |t|

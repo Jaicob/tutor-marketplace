@@ -15,10 +15,10 @@ class CheckoutController < ApplicationController
     # step 1 saved to cart (still bypassed when coming from Search)
     if params[:course_selection] && params[:course_selection][:course_id]
       if @cart.nil?
-        @cart = Cart.create(checkout_hash: Hash.new())
+        @cart = Cart.create(info: Hash.new())
         session[:cart_id] = @cart.id
       end
-      @cart.checkout_hash[:course_id] = params[:course_selection][:course_id]
+      @cart.info[:course_id] = params[:course_selection][:course_id]
       @cart.save
       redirect_to checkout_select_times_path(@tutor.slug, anchor: 'select-times', cart_id: @cart.id)
     else
@@ -29,7 +29,6 @@ class CheckoutController < ApplicationController
 
   def select_times
     # step 2
-    puts "@cart.id !!!!!!!!!!!!!!!!! = #{@cart.id}"
     service = TutorAvailability.new(@tutor.id, params[:current], params[:week])
     @start_date = service.set_week
     @availability_data = service.get_times
@@ -41,20 +40,19 @@ class CheckoutController < ApplicationController
   end
 
   def appt_time
-    # puts "PARAMS = #{params}"
-    # puts "BEFORE = #{session[:appt_info]}"
-    if session[:appt_info].nil?
-      session[:appt_info] = Hash.new
-      session[:appt_info][params[:checkbox_id]] = params[:appt_info]
+    puts "BEFORE = #{@cart.info[:appt_info]}"
+    if @cart.info[:appt_info].nil?
+      @cart.info[:appt_info] = Hash.new
+      @cart.info[:appt_info][params[:checkbox_id]] = params[:appt_info]
     elsif params[:checkbox] == 'selected'
-      # puts "CALLED A"
-      session[:appt_info][params[:checkbox_id]] = params[:appt_info]
+      puts "CALLED A"
+      @cart.info[:appt_info][params[:checkbox_id]] = params[:appt_info]
     else 
-      # puts "CALLED B"
+      puts "CALLED B"
       # puts "params[:checkbox_id] = #{params[:checkbox_id]}"
-      session[:appt_info] = session[:appt_info].to_hash.except!([params[:checkbox_id]].first)
+      @cart.info[:appt_info] = session[:appt_info].to_hash.except!([params[:checkbox_id]].first)
     end
-    # puts "AFTER = #{session[:appt_info]}"
+    puts "AFTER = #{@cart.info[:appt_info]}"
     # render :select_times
     redirect_to checkout_select_times_path(@tutor.slug, anchor: 'select-times')
   end
