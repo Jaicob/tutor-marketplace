@@ -129,7 +129,6 @@ class PrepareCheckout
       formatted_appts_array << appt_hash
     end
     return formatted_appts_array
-    puts "FORMATTED ARRAY!!!!!!!! = #{formatted_appts_array}"
   end
 
 end
