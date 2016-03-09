@@ -1,6 +1,6 @@
 class TutorAvailability
 
-  def initialize(tutor_id, start_date, week_change)
+  def initialize(tutor_id, start_date=nil, week_change=nil)
     @tutor_id = tutor_id
     @tutor = Tutor.find(tutor_id)
     @timezone = @tutor.school.timezone
@@ -8,49 +8,69 @@ class TutorAvailability
     @week_change = week_change
   end
 
-  def set_week
-    if @week_change == '0'
-      @start_date -= 7
-    elsif @week_change == '1'
-      @start_date += 7
-    end
-    return @start_date
-  end
-
+  # public method
   def get_times
-    @availability = possible_appt_times_for_week(@start_date, @tutor_id)
-    return @availability
+    if zero_availability?
+      data = {
+        zero_availability: true,
+        future_availability: false,
+      }
+      return data
+    else
+      data = {
+        start_date: set_week_start,
+        times_for_week: possible_appt_times_for_week(@start_date),
+        future_availability: future_availability(@start_date),
+        zero_availability: false,
+      }
+      return data
+    end
   end
 
-  def possible_appt_times_for_week(start_date, tutor_id)
-    availability = {}
+  private
 
-    7.times do |x|
-      appt_times = possible_appt_times_for_date(tutor_id, start_date)
-      
-      availability[x] = {
-        date: start_date,
-        times: appt_times,
-        count: appt_times.count,
-      }
-
-      start_date += 1
+    def zero_availability?
+      availability = @tutor.slots.select{|slot| slot.status == 'Open' && slot.start_time.to_date > Date.today}
+      availability.any? ? false : true
     end
 
-    return availability
-  end
+    def future_availability(start_date)
+      next_week = start_date + 7.days
+      slots_after_this_week = @tutor.slots.select{|slot| slot.start_time.to_date >= next_week}
+      slots_after_this_week.any? ? true : false
+    end
 
-  def possible_appt_times_for_date(tutor_id, date)
-    # reset appt_times array
-    appt_times = nil
-    appt_times = []
-    
-    # find any slots for given date and tutor
+    def set_week_start
+      if @week_change == '0'
+        @start_date -= 7
+      elsif @week_change == '1'
+        @start_date += 7
+      end
+      return @start_date
+    end
 
-    slots_in_week = @tutor.slots.select{|slot| slot.start_time.in_time_zone(@timezone).to_date == date}
+    def possible_appt_times_for_week(start_date)
+      availability = {}
+      7.times do |x|
+        appt_times = possible_appt_times_for_date(start_date)
+        availability[x] = {
+          date: start_date,
+          times: appt_times,
+        }
+        start_date += 1
+      end
+      return availability
+    end
 
-    Slot.where(tutor_id: tutor_id).each do |slot|
-      if slot.start_time.in_time_zone(@timezone).to_date == date
+    def possible_appt_times_for_date(date)
+      # reset appt_times array
+      appt_times = nil
+      appt_times = []
+      
+      # find any slots for given date and tutor
+      slots_for_day = @tutor.slots.select{|slot| slot.start_time.in_time_zone(@timezone).to_date == date}
+
+      slots_for_day.each do |slot|
         # get number of start_times to put in array - (subtract one bc last 30 minutes of availability isn't a possible start time)
         x = ((slot.duration / 1800) - 1 )
         # find unavailable times due to existing appointments
@@ -79,39 +99,23 @@ class TutorAvailability
         
         # if date is today's date, pass to extra method to add 'unavailable' class to start times that have been passed and/or are inside a tutor's booked_buffer unavailability
         if date == Date.today
-          mark_unavailable_times(appt_times)
+          enforce_booking_buffer(appt_times)
+        end
+      end
+
+      ordered_appt_times = appt_times.sort_by{|data| data[:datetime]}
+      return ordered_appt_times
+    end
+
+    def enforce_booking_buffer(appt_times)
+      buffer = @tutor.booking_buffer * 3600 
+      earliest_avail_appt_time = Time.now + buffer
+
+      appt_times.each do |data|
+        if data[:datetime].to_datetime < earliest_avail_appt_time
+          data[:reserved] = 'reserved'
         end
       end
     end
-
-    ordered_appt_times = appt_times.sort_by{|data| data[:datetime]}
-    return ordered_appt_times
-  end
-
-  def mark_unavailable_times(appt_times)
-    buffer = Tutor.find(@tutor_id).booking_buffer * 3600 
-    earliest_avail_appt_time = Time.now + buffer
-
-    appt_times.each do |data|
-      if data[:datetime].to_datetime < earliest_avail_appt_time
-        data[:reserved] = 'reserved'
-      end
-    end
-  end
-
-  def reserved_times_for_existing_appts(tutor_id, date)
-    # necessary to reset to nil since this is called in succession and times will carry over in array
-    existing_appt_times = nil
-    existing_appt_times = []
-    # find any slots for given date and tutor
-    Slot.where(tutor_id: tutor_id).each do |slot|
-      if slot.start_time.to_date == date
-        slot.appointments.each do |appt|
-          existing_appt_times << appt.start_time
-        end
-      end
-    end
-    return existing_appt_times
-  end
 
 end

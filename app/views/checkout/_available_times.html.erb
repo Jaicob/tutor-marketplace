@@ -1,10 +1,10 @@
 <% 7.times do |count| %>
   <li>  
     <div class="calendar-column">
-      <p class="day"><%= @availability_data[count][:date].strftime('%A') %></p>
-      <p class="date"><%= @availability_data[count][:date].strftime('%m/%d') %></p>
-      <% if @availability_data[count][:times] %>
-        <% @availability_data[count][:times].each do |data| %>
+      <p class="day"><%= @times_for_week[count][:date].strftime('%A') %></p>
+      <p class="date"><%= @times_for_week[count][:date].strftime('%m/%d') %></p>
+      <% if @times_for_week[count][:times] %>
+        <% @times_for_week[count][:times].each do |data| %>
           <div class="appt-time-box">
             <label>
               <input type="checkbox" id="<%=data[:uniq_id]%>" class="<%=data[:reserved]%>" value="<%=data[:datetime].to_s+'----'+data[:slot_id].to_s%>" name="appt_selection[<%= data[:uniq_id] %>]" onchange="saveApptTimeAndMarkPills(this)">

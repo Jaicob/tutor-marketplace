@@ -32,9 +32,17 @@ class CheckoutController < ApplicationController
 
   def select_times # step 2 - view
     # everything here simply sets up calendar view
-    service = TutorAvailability.new(@tutor.id, params[:current], params[:week])
-    @start_date = service.set_week
-    @availability_data = service.get_times
+    data = TutorAvailability.new(@tutor.id, params[:current], params[:week]).get_times
+    @start_date = data[:start_date]
+    @times_for_week = data[:times_for_week]
+    @future_availability = data[:future_availability]
+    @zero_availability = data[:zero_availability]
+
+    # puts "@start_date = #{@start_date}"
+    # puts "@times_for_week = #{@times_for_week}"
+    # puts "@future_availability = #{@future_availability}"
+    # puts "@zero_availability = #{@zero_availability}"
+
     # if any appt_times are already saved in cart, sets their ID's in Gon variable to let JS select them again
     if @cart.info[:appt_times] && @cart.info[:tutor_id] == @tutor.id
       gon.selected_appt_ids = @cart.info[:appt_times].keys

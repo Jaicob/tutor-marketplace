@@ -1,0 +1,29 @@
+<div class="checkout-process-screen">
+  <a id="select-times"></a>
+  <div class="row">
+    <div class="small-12 columns">
+      <div class="checkout-step-title">
+        <div class="row">
+          <div class="small-12 medium-6 medium-offset-3 columns">
+            <p>No Availability</p>
+          </div>
+        </div>
+      </div>
+      <div class="checkout-step-body">
+        <div class="row">
+          <div class="small-12 columns">
+            <h4 class="center margin-top-1em"><%= @tutor.first_name %> does not have any availability currently listed.</h4>
+          </div>
+        </div>
+        <div class="row">
+          <div class="small-12 medium-4 medium-centered columns">
+            <%= link_to 'Back to Search Results', :back, class: 'custom-button full-width vertical-margin-1em' %>
+          </div>
+        </div> 
+      </div>
+      <div class="checkout-steps-nav">
+        <p></p>
+      </div>
+    </div>
+  </div>
+</div>

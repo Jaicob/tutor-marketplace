@@ -1,58 +1,64 @@
 <%= render '/dashboard/tutor/profile/tutor_profile' %>
 
-<div class="checkout-process-screen">
-  <a id="select-times"></a>
-  <div class="row">
-    <div class="small-12 columns">
-      <%= form_for :appt_selection, url: checkout_set_times_path, method: :post do |f| %>
-        <div class="checkout-step-title">
-          <div class="row">
-            <div class="small-12 medium-3 columns">
-              <% if @start_date != Date.today %>
-                <%= link_to checkout_select_times_path(@tutor.slug, course: 1, current: @start_date.to_s, week: 0, anchor: 'select-times') do %>
-                  <div class="week-nav-link left">
+<% if @zero_availability %>
+  <%= render 'zero_availability' %>
+<% else %>
+  <div class="checkout-process-screen">
+    <a id="select-times"></a>
+    <div class="row">
+      <div class="small-12 columns">
+        <%= form_for :appt_selection, url: checkout_set_times_path, method: :post do |f| %>
+          <div class="checkout-step-title">
+            <div class="row">
+              <div class="small-12 medium-3 columns">
+                <% if @start_date == Date.today %>
+                  <div class="week-nav-link left disabled">
                     <p><i class="fi-arrow-left"></i>Previous Week</p>
                   </div>
+                <% else %>
+                  <%= link_to checkout_select_times_path(@tutor.slug, course: 1, current: @start_date.to_s, week: 0, anchor: 'select-times') do %>
+                    <div class="week-nav-link left">
+                      <p><i class="fi-arrow-left"></i>Previous Week</p>
+                    </div>
+                  <% end %>
                 <% end %>
-              <% else %>
-                <div class="week-nav-link left disabled">
-                  <p><i class="fi-arrow-left"></i>Previous Week</p>
-                </div>
-              <% end %>
-            </div>
-            <div class="small-12 medium-6 columns">
-              <p>Select a Time</p>
-            </div>
-            <div class="small-12 medium-3 columns">
-              <%= link_to checkout_select_times_path(@tutor.slug, course: 1, current: @start_date.to_s, week: 1, anchor: 'select-times') do %>
-                <div class="week-nav-link right">
-                  <p>Next Week<i class="fi-arrow-right"></i></p>
-                </div>
-              <% end %>
-            </div>
-          </div>
-        </div>
-        <div class="checkout-step-body">
-          <div class="small-block-grid-1 medium-block-grid-7">
-            <%= render '/checkout/available_times', week_start_date: Date.today %>
-          </div>
-        </div>
-        <div class="checkout-steps-nav">
-          <div class="row small-collapse">
-            <div class="small-12 medium-3 columns zero-padding">
-              <%= link_to "Back to Select a Course", checkout_select_course_path(@tutor.slug, anchor: 'select-course'), class: 'checkout-button gray' %>
-            </div>
-            <div class="small-12 medium-3 columns zero-padding">
-              <%= f.submit "Next Step", class: 'custom-button full-width checkout-submit' %>
+              </div>
+              <div class="small-12 medium-6 columns">
+                <p>Select a Time</p>
+              </div>
+              <div class="small-12 medium-3 columns">
+                <% if @future_availability == true %>
+                  <%= link_to checkout_select_times_path(@tutor.slug, course: 1, current: @start_date.to_s, week: 1, anchor: 'select-times') do %>
+                    <div class="week-nav-link right">
+                      <p>Next Week<i class="fi-arrow-right"></i></p>
+                    </div>
+                  <% end %>
+                <% else %>
+                  <div class="week-nav-link right disabled">
+                    <p>Next Week<i class="fi-arrow-right"></i></p>
+                  </div>
+                <% end %>
+              </div>
             </div>
           </div>
-        </div>
-      <% end %>
-      <p>* All times are in local campus time</p>
+          <div class="checkout-step-body">
+            <div class="small-block-grid-1 medium-block-grid-7">
+              <%= render '/checkout/available_times', week_start_date: Date.today %>
+            </div>
+          </div>
+          <div class="checkout-steps-nav">
+            <div class="row small-collapse">
+              <div class="small-12 medium-3 columns zero-padding">
+                <%= link_to "Back to Select a Course", checkout_select_course_path(@tutor.slug, anchor: 'select-course'), class: 'checkout-button gray' %>
+              </div>
+              <div class="small-12 medium-3 columns zero-padding">
+                <%= f.submit "Next Step", class: 'custom-button full-width checkout-submit' %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+        <p>* All times are in local campus time</p>
+      </div>
     </div>
   </div>
-</div>
-<div class="row">
-  <div class="small-12 columns">
-  </div>
-</div>
+<% end %>
