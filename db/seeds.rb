@@ -54,10 +54,10 @@ degree = [0,1,2,3,4,5]
 major = ['Chemistry', 'Biology', 'Business', 'English', 'Micro-Biology', 'Computer Science', 'Accounting']
 graduation_year = [2015, 2016, 2017, 2018, 2019]
 additional_degrees = [
-  'B.A. Accounting, B.S. Finance',
-  'M.F.A English, B.S. Spanish',
-  'B.S. Biology, B.A. Marine Biology',
-  'B.S. Chemistry, B.S. Micro-Biology'
+  'B.S. Finance',
+  'B.S. Spanish - USC',
+  'B.S. Biology, 2009',
+  'B.S. Chemistry, UT'
 ]
 
 n = 1
@@ -77,7 +77,7 @@ User.all.each do |user|
       dob: Date.today - 10000,
     )
     x = Tutor.count
-    if x == 6
+    if x == 5
       n += 1
     end
   end
@@ -149,7 +149,7 @@ Tutor.all.each do |tutor|
   Processor::Stripe.new.update_managed_account(tutor, token.id)
 end
 
-# Create 10 users
+# Create 10 users (to become students)
 12.times{
   User.create!(
     first_name: Faker::Name.first_name,
@@ -169,7 +169,7 @@ n = 1
 new_users.each do |new_user|
   new_user.create_student!(school_id: n)
   x = Student.count
-  if x == 6
+  if (x == 5)
     n += 1
   end
 end
