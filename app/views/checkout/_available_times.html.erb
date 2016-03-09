@@ -61,14 +61,14 @@ window.onload = function start() {
 
 function saveApptTimeAndMarkPills(element) {
   var selected = parseInt(element.id);
-  var appt_info = element.value
+  var appt_times = element.value
 
-  // this if/else is new and acts to add/remove appt_info from session variables integral to checkout process
+  // this if/else is new and acts to add/remove appt_times from session variables integral to checkout process
   if(element.checked) {
-    $.post('appt_time', {checkbox_id: selected, appt_info: appt_info, checkbox: 'selected'});
+    $.post('appt_time', {checkbox_id: selected, appt_times: appt_times, checkbox: 'selected'});
   }
   else {
-    $.post('appt_time', {checkbox_id: selected, appt_info: appt_info, checkbox: 'deselected'});
+    $.post('appt_time', {checkbox_id: selected, appt_times: appt_times, checkbox: 'deselected'});
   }
 
   var TwoBefore = document.getElementById(selected - 2);

@@ -3,24 +3,22 @@ class CheckoutController < ApplicationController
   before_action :set_tutor_analyzer
   before_action :set_student
   before_action :set_school
-  before_action :back_to_search, only: [:available_times]
-  before_action :set_cart, except: [:select_course]
+  before_action :set_cart
 
   def select_course
     # step 1 (displays all courses a Tutor offers - bypassed when coming from Search)
-    session[:cart_id] = nil
   end
 
-  def set_course_id
-    # step 1 saved to cart (still bypassed when coming from Search)
+  def set_course_id # recieves step 1 input, saves it to cart & redirects to step 2
     if params[:course_selection] && params[:course_selection][:course_id]
-      if @cart.nil?
+      if @cart.nil? # creates a new cart if a cart doesn't exist, if a cart does exist (for this session), it's set by the :set_cart before_action 
         @cart = Cart.create(info: Hash.new())
         session[:cart_id] = @cart.id
       end
       @cart.info[:course_id] = params[:course_selection][:course_id]
+      @cart.info[:tutor_id] = @tutor.id
       @cart.save
-      redirect_to checkout_select_times_path(@tutor.slug, anchor: 'select-times', cart_id: @cart.id)
+      redirect_to checkout_select_times_path(@tutor.slug, anchor: 'select-times')
     else
       flash[:alert] = 'Please select a course'
       redirect_to checkout_select_course_path(@tutor.slug, anchor: 'select-course')
@@ -32,33 +30,30 @@ class CheckoutController < ApplicationController
     service = TutorAvailability.new(@tutor.id, params[:current], params[:week])
     @start_date = service.set_week
     @availability_data = service.get_times
-    if session[:appt_info] && session[:tutor_id] == @tutor.id
-      gon.selected_appt_ids = session[:appt_info].keys
+    if @cart.info[:appt_times] && @cart.info[:tutor_id] == @tutor.id
+      gon.selected_appt_ids = @cart.info[:appt_times].keys
     else
       gon.selected_appt_ids = nil
     end
   end
 
   def appt_time
-    puts "BEFORE = #{@cart.info[:appt_info]}"
-    if @cart.info[:appt_info].nil?
-      @cart.info[:appt_info] = Hash.new
-      @cart.info[:appt_info][params[:checkbox_id]] = params[:appt_info]
+    if @cart.info[:appt_times].nil?
+      @cart.info[:appt_times] = Hash.new
+      @cart.info[:appt_times][params[:checkbox_id]] = params[:appt_times]
+      @cart.save
     elsif params[:checkbox] == 'selected'
-      puts "CALLED A"
-      @cart.info[:appt_info][params[:checkbox_id]] = params[:appt_info]
+      @cart.info[:appt_times][params[:checkbox_id]] = params[:appt_times]
+      @cart.save
     else 
-      puts "CALLED B"
-      # puts "params[:checkbox_id] = #{params[:checkbox_id]}"
-      @cart.info[:appt_info] = session[:appt_info].to_hash.except!([params[:checkbox_id]].first)
+      @cart.info[:appt_times] = @cart.info[:appt_times].to_hash.except!([params[:checkbox_id]].first)
+      @cart.save
     end
-    puts "AFTER = #{@cart.info[:appt_info]}"
-    # render :select_times
     redirect_to checkout_select_times_path(@tutor.slug, anchor: 'select-times')
   end
 
   def set_times # this action originally accepted form data from select_times, but now that times are saved to the 'appt_info' session variable by AJAX, this action simply serves as a next step button with a redirect back when no times are selected
-    if session[:appt_info] == nil
+    if @cart.info[:appt_times] == nil # this one checks for appt_times on the cart rather than in the params, because times are saved to cart through AJAX
       redirect_to checkout_select_times_path(@tutor.slug, anchor: 'select-times')
       flash[:alert] = 'Please select a meeting time'
     else
@@ -71,42 +66,34 @@ class CheckoutController < ApplicationController
     # - view page with input for setting location
   end
 
-  def set_location
-    # recieves step 3 input, saves it to session & redirects to step 4
+  def set_location # recieves step 3 input and saves it to cart, redirects to step 4 on success, back to step 3 on failure
     if params[:location_selection] && params[:location_selection][:location]
-      session[:location] = params[:location_selection][:location]
-    end
-    if session[:location].blank?
-      redirect_to checkout_select_location_path(@tutor.slug, anchor: 'set-location')
-      flash[:alert] = 'Please enter a location preference'
-    else
+      @cart.info[:location] = params[:location_selection][:location]
+      @cart.save
       redirect_to checkout_review_booking_path(@tutor.slug, anchor: 'review-booking')
+    else
+      redirect_to checkout_select_location_path(@tutor.slug, anchor: 'set-location')
     end
   end
 
-  def review_booking
-    if session[:location].blank?
-      redirect_to checkout_select_course_path(@tutor.slug, anchor: 'select-course')
-    end
-    if TutorAnalyzer.new(@tutor).completed_appts.count < 3 
-      session[:promo_code] = 'New Axon Tutor Auto-Discount'
-    end
-    # step 4, all booking information is set and shown to customer here
+  def review_booking # step 4, all booking information is set and shown to customer here
     # - if logged in, customer has option to use saved card (if one exists) or use a new card (with an option to save it)
     # - if NOT logged in, a customer has the option to sign in (moves to above step) or sign up and use a new card (with an option to save it)
-    @booking_preview = BookingPreview.new(session, @tutor, current_user).format_info
+    if TutorAnalyzer.new(@tutor).completed_appts.count < 3 
+      @cart.info[:promo_code] = 'New Axon Tutor Auto-Discount'
+    end
+    @booking_preview = BookingPreview.new(@cart, @tutor, current_user).format_info
     @booking_preview[:no_payment_due] == true ? (gon.free_session = true) : (gon.free_session = nil)
   end
 
-  def apply_promo_code
-    # recieves promo_code, tries to retrieve promotion and redirects back to review_booking page with success or failure message
-    if session[:promo_code] == 'New Axon Tutor Auto-Discount'
+  def apply_promo_code # recieves promo_code, tries to retrieve promotion and redirects back to review_booking page with success or failure message
+    if @cart.info[:promo_code] == 'New Axon Tutor Auto-Discount' # 
       flash[:info] = "Only one promotion per checkout. The new Axon Tutor discount is already applied."
       redirect_to checkout_review_booking_path(@tutor.slug, anchor: 'review-booking')
       return
     end
-    session[:promo_code] = params[:apply_promo_code][:code]
-    preview = BookingPreview.new(session, @tutor, current_user).format_info
+    @cart.info[:promo_code] = params[:apply_promo_code][:code]
+    preview = BookingPreview.new(@cart, @tutor, current_user).format_info
     if preview[:promo_data][:success] == true
       flash[:success] = "Promo code was succesfully applied!"
       redirect_to checkout_review_booking_path(@tutor.slug, anchor: 'review-booking')
@@ -117,7 +104,7 @@ class CheckoutController < ApplicationController
   end
 
   def process_booking
-    @checkout_data = PrepareCheckout.new(params, session, @tutor, @student).prepare_data_for_checkout_organizer
+    @checkout_data = PrepareCheckout.new(params, @cart, @tutor, @student).prepare_data_for_checkout_organizer
 
     if @checkout_data[:success] == false
       # clean-up after failure - destroy new user if one was created
@@ -132,7 +119,7 @@ class CheckoutController < ApplicationController
     @context = CheckoutOrganizer.call(@checkout_data)
 
     if @context.success?
-      session[:charge_id] = @context.charge.id
+      @cart.info[:charge_id] = @context.charge.id
       if @checkout_data[:new_user?] == true
         StudentManagementMailer.delay.welcome_email(@context.charge.student.user.id)
       end

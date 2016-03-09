@@ -1,13 +1,13 @@
 class BookingPreview
 
-  def initialize(session, tutor, current_user, receipt_only=nil)
-    @appt_info = session[:appt_info]
-    @location = session[:location]
-    @course = Course.find(session[:course_id])
+  def initialize(cart, tutor, current_user, receipt_only=nil)
+    @appt_times = cart.info[:appt_times]
+    @location = cart.info[:location]
+    @course = Course.find(cart.info[:course_id])
     @tutor = tutor
     @tc_rate = TutorCourse.where(tutor_id: tutor.id, course_id: @course.id).first.rate * 100
     @full_rate = (@tc_rate * 1.15).round
-    @promo_code = session[:promo_code]
+    @promo_code = cart.info[:promo_code]
     @student_id = current_user.student.id if !current_user.nil?
     @receipt_only = receipt_only # this is only set in the Student Dashboard controller home action when a receipt is diplayed, flag is necessary to bypass validations (because after the checkout has been completed a StudentsPromotions record exists and if promo is a no_repeat type then it won't pass the validation and display the formatted pricescorrectly)
   end
@@ -16,7 +16,7 @@ class BookingPreview
   def extract_appt_times_and_slot
     @appt_hash = {}
     count = 1
-    @appt_info.each do |info|
+    @appt_times.each do |info|
       array = info.second.split('-!-')
       @appt_hash[count] = {
         start_time: array.first,
@@ -72,14 +72,14 @@ class BookingPreview
 
   # private method
   def total_price
-    number_of_appts = @appt_info.count
+    number_of_appts = @appt_times.count
     total_price = (number_of_appts * @full_rate).round
     return total_price
   end
 
   # private method
   def redeem_promo_code
-    Promotion.redeem_promo_code(@promo_code, @tc_rate, @appt_info.count, @tutor.id, @course.id, @student_id, @receipt_only)
+    Promotion.redeem_promo_code(@promo_code, @tc_rate, @appt_times.count, @tutor.id, @course.id, @student_id, @receipt_only)
   end
 
 end

@@ -3,7 +3,7 @@ class PrepareCheckout
   # {"default_or_new_card"=>"new-card", "save_card"=>"true", "stripeToken"=>"tok_17Sqid4Iy02hWvBEW7nqQAZr", "id"=>"jjobe"}
   # {"default_or_new_card"=>"default-card", "id"=>"jjobe"}
 
-  def initialize(params, session, tutor_booked, student=nil) # tutor_booked is supplied to determine school_id for new student
+  def initialize(params, cart, tutor_booked, student=nil) # tutor_booked is supplied to determine school_id for new student
     # for user creation
     if params[:user]
       @first_name = params[:user][:first_name]
@@ -19,14 +19,14 @@ class PrepareCheckout
     # boolean for Stripe customer creation
     @save_card = (params[:save_card] == 'true') ? true : false
     # for appointment creation
-    @course_id = session[:course_id]
-    @appt_info = session[:appt_info]
-    @location = session[:location]
+    @course_id = cart.info[:course_id]
+    @appt_times = cart.info[:appt_times]
+    @location = cart.info[:location]
     # for charge creation
     @default_or_new_card = params[:default_or_new_card]
     @token = params[:stripeToken]
     @tutor = tutor_booked
-    @promo_code = session[:promo_code]
+    @promo_code = cart.info[:promo_code]
   end
 
   # public method
@@ -34,7 +34,7 @@ class PrepareCheckout
     begin 
       create_student_user
       save_card_on_stripe_customer
-      appts_info = format_appt_info
+      appts_info = format_appt_times
       data = {
         success: true,
         tutor_id: @tutor.id,
@@ -117,9 +117,9 @@ class PrepareCheckout
   end
 
   # private method
-  def format_appt_info
+  def format_appt_times
     formatted_appts_array = []
-    @appt_info.each do |checkbox_id, appt_data|
+    @appt_times.each do |checkbox_id, appt_data|
       x = appt_data.split('----')
       appt_hash = {
         start_time: x.first,
