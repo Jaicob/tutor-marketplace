@@ -38,11 +38,7 @@ course_list.each do |school_id, subject_id, call_number, friendly_name|
 end
 
 # Create 10 Users to become Tutors
-<<<<<<< HEAD
-10.times{
-=======
 12.times{
->>>>>>> master
   User.create!(
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
@@ -138,10 +134,6 @@ Tutor.all.each do |tutor|
   tutor.update(active_status: 1, onboarding_status: 4, application_status: 3)
 end
 
-<<<<<<< HEAD
-# Create 10 Users to become Students, 5 for each school
-10.times{
-=======
 # Add bank account to tutors
 Tutor.all.each do |tutor|
   token = Stripe::Token.create(
@@ -157,9 +149,8 @@ Tutor.all.each do |tutor|
   Processor::Stripe.new.update_managed_account(tutor, token.id)
 end
 
-# Create 10 users
+# Create 10 users (to become students)
 12.times{
->>>>>>> master
   User.create!(
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
