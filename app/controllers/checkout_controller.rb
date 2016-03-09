@@ -5,31 +5,37 @@ class CheckoutController < ApplicationController
   before_action :set_school
   before_action :set_cart
 
-  def select_course
-    # step 1 (displays all courses a Tutor offers - bypassed when coming from Search)
+  def select_course # step 1 - view
+    # step 1 (displays all courses a tutor offers - bypassed when coming from search)
   end
 
-  def set_course_id # recieves step 1 input, saves it to cart & redirects to step 2
+  def set_course_id # step 1 - saves input
     if params[:course_selection] && params[:course_selection][:course_id]
-      if @cart.nil? # creates a new cart if a cart doesn't exist, if a cart does exist (for this session), it's set by the :set_cart before_action 
+      # creates a new cart if a cart doesn't exist (would only happen when a booking is started straight from a tutor's profile, rather than from search)
+      # if a cart does exist (for this session), it's set by the :set_cart before_action 
+      if @cart.nil? 
         @cart = Cart.create(info: Hash.new())
         session[:cart_id] = @cart.id
       end
+      # saves course_id and tutor_id to cart
       @cart.info[:course_id] = params[:course_selection][:course_id]
       @cart.info[:tutor_id] = @tutor.id
       @cart.save
+      # moves on to step 2
       redirect_to checkout_select_times_path(@tutor.slug, anchor: 'select-times')
     else
+      # redirects back to step 1 if no course is chosen
       flash[:alert] = 'Please select a course'
       redirect_to checkout_select_course_path(@tutor.slug, anchor: 'select-course')
     end
   end
 
-  def select_times
-    # step 2
+  def select_times # step 2 - view
+    # everything here simply sets up calendar view
     service = TutorAvailability.new(@tutor.id, params[:current], params[:week])
     @start_date = service.set_week
     @availability_data = service.get_times
+    # if any appt_times are already saved in cart, sets their ID's in Gon variable to let JS select them again
     if @cart.info[:appt_times] && @cart.info[:tutor_id] == @tutor.id
       gon.selected_appt_ids = @cart.info[:appt_times].keys
     else
@@ -37,23 +43,29 @@ class CheckoutController < ApplicationController
     end
   end
 
-  def appt_time
+  def save_appt_time # step 2 - saves input via AJX
+    # if no appt_times have been saved yet, the :app_times hash must first be instantiated
     if @cart.info[:appt_times].nil?
       @cart.info[:appt_times] = Hash.new
       @cart.info[:appt_times][params[:checkbox_id]] = params[:appt_times]
       @cart.save
-    elsif params[:checkbox] == 'selected'
-      @cart.info[:appt_times][params[:checkbox_id]] = params[:appt_times]
-      @cart.save
-    else 
-      @cart.info[:appt_times] = @cart.info[:appt_times].to_hash.except!([params[:checkbox_id]].first)
-      @cart.save
+    else
+    # the :appt_times hash already exists
+      # adds the appt_time if the time pill was selected
+      if params[:checkbox] == 'selected'
+        @cart.info[:appt_times][params[:checkbox_id]] = params[:appt_times]
+        @cart.save
+      # removes the appt_time if the time pill was de-selected
+      else 
+        @cart.info[:appt_times] = @cart.info[:appt_times].to_hash.except!([params[:checkbox_id]].first)
+        @cart.save
+      end
     end
     redirect_to checkout_select_times_path(@tutor.slug, anchor: 'select-times')
   end
 
-  def set_times # this action originally accepted form data from select_times, but now that times are saved to the 'appt_info' session variable by AJAX, this action simply serves as a next step button with a redirect back when no times are selected
-    if @cart.info[:appt_times] == nil # this one checks for appt_times on the cart rather than in the params, because times are saved to cart through AJAX
+  def set_times # step 2 - checkpoint of sorts, makes sure 1+ appt_time is saved before reaching step 3
+    if @cart.info[:appt_times] == nil 
       redirect_to checkout_select_times_path(@tutor.slug, anchor: 'select-times')
       flash[:alert] = 'Please select a meeting time'
     else
@@ -61,12 +73,10 @@ class CheckoutController < ApplicationController
     end
   end
 
-  def select_location
-    # step 3
-    # - view page with input for setting location
+  def select_location # step 3 - view
   end
 
-  def set_location # recieves step 3 input and saves it to cart, redirects to step 4 on success, back to step 3 on failure
+  def set_location # step 3 - saves input
     if params[:location_selection] && params[:location_selection][:location]
       @cart.info[:location] = params[:location_selection][:location]
       @cart.save
@@ -76,36 +86,34 @@ class CheckoutController < ApplicationController
     end
   end
 
-  def review_booking # step 4, all booking information is set and shown to customer here
-    # - if logged in, customer has option to use saved card (if one exists) or use a new card (with an option to save it)
-    # - if NOT logged in, a customer has the option to sign in (moves to above step) or sign up and use a new card (with an option to save it)
-    if TutorAnalyzer.new(@tutor).completed_appts.count < 3 
-      @cart.info[:promo_code] = 'New Axon Tutor Auto-Discount'
-    end
+  def review_booking # step 4 - view
+    # booking preview formats all booking info into summary for customer to view
     @booking_preview = BookingPreview.new(@cart, @tutor, current_user).format_info
+    # :no_payment_due is a flag passed to JS via Gon variable to disable payment field for completely free bookings
     @booking_preview[:no_payment_due] == true ? (gon.free_session = true) : (gon.free_session = nil)
   end
 
-  def apply_promo_code # recieves promo_code, tries to retrieve promotion and redirects back to review_booking page with success or failure message
-    if @cart.info[:promo_code] == 'New Axon Tutor Auto-Discount' # 
-      flash[:info] = "Only one promotion per checkout. The new Axon Tutor discount is already applied."
-      redirect_to checkout_review_booking_path(@tutor.slug, anchor: 'review-booking')
-      return
-    end
-    @cart.info[:promo_code] = params[:apply_promo_code][:code]
-    preview = BookingPreview.new(@cart, @tutor, current_user).format_info
-    if preview[:promo_data][:success] == true
-      flash[:success] = "Promo code was succesfully applied!"
-      redirect_to checkout_review_booking_path(@tutor.slug, anchor: 'review-booking')
-    else
-      flash[:alert] = preview[:promo_data][:error]
-      redirect_to checkout_review_booking_path(@tutor.slug, anchor: 'review-booking')
+  def apply_promo_code # step 4 - processes promo code
+    if params[:apply_promo_code][:code]
+      # save promo code to cart so it can be passed into BookingPreview service class
+      @cart.info[:promo_code] = params[:apply_promo_code][:code]
+      @cart.save
+      # run BookingPreview service class to see if promo code is valid and can be redeemed
+      preview = BookingPreview.new(@cart, @tutor, current_user).format_info
+      if preview[:promo_data][:success] == true
+        flash[:success] = "Promo code was succesfully applied!"
+        redirect_to checkout_review_booking_path(@tutor.slug, anchor: 'review-booking')
+      else
+        flash[:alert] = preview[:promo_data][:error]
+        redirect_to checkout_review_booking_path(@tutor.slug, anchor: 'review-booking')
+      end
     end
   end
 
-  def process_booking
+  def process_booking # step 5 - processes booking
+    # PrepareCheckout service formats data for CheckoutOrganizer 
+    # * flags if a new user is created so if CheckoutOrganizer fails, it knows to destroy user (so user can try to book and create account again with a new card, etc.)
     @checkout_data = PrepareCheckout.new(params, @cart, @tutor, @student).prepare_data_for_checkout_organizer
-
     if @checkout_data[:success] == false
       # clean-up after failure - destroy new user if one was created
       if @checkout_data[:new_user?] == true
@@ -115,10 +123,10 @@ class CheckoutController < ApplicationController
       redirect_to checkout_review_booking_path(@tutor.slug, anchor: 'review-booking')
       return
     end
-
+    # CheckoutOrganizer service actually processes booking
     @context = CheckoutOrganizer.call(@checkout_data)
-
     if @context.success?
+      # if booking is processed succesfully 
       @cart.info[:charge_id] = @context.charge.id
       if @checkout_data[:new_user?] == true
         StudentManagementMailer.delay.welcome_email(@context.charge.student.user.id)
@@ -126,19 +134,12 @@ class CheckoutController < ApplicationController
       sign_in(@context.charge.student.user)
       redirect_to home_student_path(@context.charge.student, charge: @context.charge.id)
     else
-
-      # for de-bugging CheckoutOrganizer, error details in server logs
-      puts "Error Message     = #{@context.error}"
-      puts "Error Type        = #{@context.error.class}"
-      puts "Failed Interactor = #{@context.failed_interactor}"
-      # end of error details
-
-      # clean-up after failure - destroy new user if one was created
+      # if booking is not processed succesfully 
+      #  destroy new user if one was created
       if @checkout_data[:new_user?] == true
         User.find(@checkout_data[:new_user_id]).destroy
       end
       flash[:alert] = "Your booking was not processed: #{@context.error}"
-      # flash[:alert] = 'Your booking was not processed due to a server error. You were not charged. Please try again and if you are still unable to complete your booking contact Axon at info@axontutors.com.'
       redirect_to checkout_review_booking_path(@tutor.slug, anchor: 'review-booking')
     end
   end

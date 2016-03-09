@@ -6,7 +6,7 @@ class TutorsController < ApplicationController
 
   def show
     if @tutor.active_status == 'Active'
-      if params[:course]
+      if params[:course] # this is where a Cart is created when a booking starts from search, rather than straight from a tutor's profile page
         @cart = Cart.create(info: Hash.new())
         @cart.info[:course_id] = params[:course]
         @cart.save
