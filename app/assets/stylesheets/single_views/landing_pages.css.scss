@@ -4,7 +4,7 @@
     // genric section title for each section
     h4.section-title {
       font-size: 2.6em;
-      font-weight: 100;
+      font-weight: 300;
       text-align: center;
       margin: 0.5em auto 1em;
     }
@@ -29,11 +29,13 @@
         padding-top: 1.5em;
         &.tutor-header {
           margin-top: 1em;
-          // color: #4F5252;
-          // text-shadow: 1px 1px 1px #6F698E;
-          // font-weight: 600;
         }
       }
+      @media screen and (max-width: 768px) {
+          .main-header{ 
+            padding: 0.5em;
+          }
+        }
       .second-header {
         margin: 1em;
       }
@@ -46,7 +48,7 @@
         max-width: 30em;
         select#visitor_school_id, input#submit-school-selection {
           font-size: 1em;
-          font-weight: 100;
+          font-weight: 300;
           height: 2.5em;
         }
         select#visitor_school_id {
@@ -100,7 +102,7 @@
         }
         select#subject, select#course, input#course-search-submit {
           font-size: 1em;
-          font-weight: 100;
+          font-weight: 300;
           height: 2.5em;
         }
       }
@@ -136,7 +138,7 @@
       padding-bottom: 1em;
       h4 {
         color: white;
-        font-weight: 100;
+        font-weight: 300;
       }
       &.contact-banner {
         padding: 3em 0;

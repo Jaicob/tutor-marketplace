@@ -29,7 +29,7 @@ class TutorAnalyzer
   def total_income
     valid_appts = @tutor.appointments.select{|appt| appt.status != 'Cancelled'}
     if valid_appts.count > 0
-      total = valid_appts.map{|appt| TutorCourse.find_by(course_id: appt.course.id, tutor_id: @tutor.id).rate}.reduce(:+) * 100
+      total = valid_appts.map{|appt| appt.charge.tutor_fee}.reduce(:+)
     else
       total = 0
     end

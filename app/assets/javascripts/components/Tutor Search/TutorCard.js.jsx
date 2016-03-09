@@ -6,7 +6,7 @@ var TutorCard = React.createClass({
     }
 
 		var tutor = this.props.tutor;
-    var profile_pic_url = tutor.profile_pic.thumb.url + "?reload=true";
+    var profile_pic_url = tutor.profile_pic.thumb.url;
 
 
     var degree = function (degree, major, graduation_year) {

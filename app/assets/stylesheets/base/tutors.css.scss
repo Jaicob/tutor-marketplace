@@ -1,0 +1,18 @@
+.profile-pic {
+  position: relative;
+}
+
+// used on tutor sign up form
+#invalid-password {
+  color: #fafafa;
+  background-color: #DE6328;
+  padding: 0.2em;
+  border-radius: 4px;
+  margin: 0.4em 0 0.8em;
+}
+
+// used in tutor onboarding and tutor dashboard settings
+.bank-errors {
+  color: #DE6328;
+  font-weight: 900;
+}

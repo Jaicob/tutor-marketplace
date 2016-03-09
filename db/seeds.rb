@@ -38,7 +38,11 @@ course_list.each do |school_id, subject_id, call_number, friendly_name|
 end
 
 # Create 10 Users to become Tutors
+<<<<<<< HEAD
 10.times{
+=======
+12.times{
+>>>>>>> master
   User.create!(
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
@@ -62,21 +66,24 @@ additional_degrees = [
 
 n = 1
 User.all.each do |user|
-  user.create_tutor!(
-    school_id: n,
-    approval: 85,
-    degree: degree.sample,
-    major: major.sample,
-    additional_degrees: additional_degrees.sample,
-    extra_info_1: extra_info.sample,
-    extra_info_2: extra_info.sample,
-    extra_info_3: extra_info.sample,
-    graduation_year: graduation_year.sample,
-    phone_number: Faker::Number.number(10)
-  )
-  x = Tutor.count
-  if (x == 5)
-    n += 1
+  if user.role != 'campus_manager'
+    user.create_tutor!(
+      school_id: n,
+      approval: 90,
+      degree: degree.sample,
+      major: major.sample,
+      additional_degrees: additional_degrees.sample,
+      extra_info_1: extra_info.sample,
+      extra_info_2: extra_info.sample,
+      extra_info_3: extra_info.sample,
+      graduation_year: graduation_year.sample,
+      phone_number: Faker::Number.number(10),
+      dob: Date.today - 10000,
+    )
+    x = Tutor.count
+    if x == 5
+      n += 1
+    end
   end
 end
 
@@ -85,6 +92,28 @@ Tutor.all.each do |tutor|
   if tutor.id % 2 == 0
     tutor.additional_degrees = nil
     tutor.save
+  end
+end
+
+# Give each tutor a profile pic
+School.all.each do |school|
+  n = 0
+  school.tutors.each do |tutor|
+    if n < 2
+      File.open(Rails.root.join('app/assets/images/unicorn.jpg')) do |f|
+        tutor.profile_pic = f
+      end
+    elsif n < 4
+      File.open(Rails.root.join('app/assets/images/panda.jpg')) do |f|
+        tutor.profile_pic = f
+      end
+    else
+      File.open(Rails.root.join('app/assets/images/bernie.jpg')) do |f|
+        tutor.profile_pic = f
+      end
+    end
+    tutor.save
+    n += 1
   end
 end
 
@@ -106,11 +135,31 @@ end
 
 # Activate tutors
 Tutor.all.each do |tutor|
-  tutor.update(active_status: 1)
+  tutor.update(active_status: 1, onboarding_status: 4, application_status: 3)
 end
 
+<<<<<<< HEAD
 # Create 10 Users to become Students, 5 for each school
 10.times{
+=======
+# Add bank account to tutors
+Tutor.all.each do |tutor|
+  token = Stripe::Token.create(
+      :bank_account => {
+      :country => "US",
+      :currency => "usd",
+      :account_holder_name => tutor.full_name,
+      :account_holder_type => "individual",
+      :routing_number => "110000000",
+      :account_number => "000123456789",
+    },
+  )
+  Processor::Stripe.new.update_managed_account(tutor, token.id)
+end
+
+# Create 10 users
+12.times{
+>>>>>>> master
   User.create!(
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
@@ -139,7 +188,7 @@ School.all.each do |school|
   @students = school.students
   @tutors = school.tutors
   @start_time = Date.today.to_s + ' 12:00'
-  25.times { |ordinal|
+  6.times { |ordinal|
     Appointment.create(
       student_id: @students[ordinal].id,
       slot_id: @tutors[ordinal].slots.first.id,
@@ -148,3 +197,46 @@ School.all.each do |school|
     )
   }
 end
+
+n = 0
+Tutor.all.each do |tutor|
+  school = tutor.school
+  students = school.students
+  if n % 2 == 0
+    # for these tutors, create 3 appointments each with a review to show stats
+    a = Appointment.create(
+      student_id: students.first.id,
+      slot_id: tutor.slots.second.id,
+      course_id: tutor.courses.first.id,
+      start_time: (Date.today + 1.week).to_s + ' 12:00'
+    )
+    Appointment.create(
+      student_id: students.second.id,
+      slot_id: tutor.slots.third.id,
+      course_id: tutor.courses.first.id,
+      start_time: (Date.today + 2.week).to_s + ' 12:00'
+    )
+    Appointment.create(
+      student_id: students.third.id,
+      slot_id: tutor.slots.fourth.id,
+      course_id: tutor.courses.first.id,
+      start_time: (Date.today + 3.weeks).to_s + ' 12:00'
+    )
+  else
+    # for these tutors, just create one to show new tutor card design
+    Appointment.create(
+      student_id: students.fourth.id,
+      slot_id: tutor.slots.first.id,
+      course_id: tutor.courses.first.id,
+      start_time: (Date.today + 4.weeks).to_s + ' 12:00'
+    )
+  end
+  tutor.appointments.each do |appt|
+    appt.update(status: 2)
+    appt.create_review(rating: 'Positive')
+  end
+  n += 1
+end
+
+Tutor.first.user.update(email: 'jaicob@axontutors.com', password: 'password')
+Tutor.second.user.update(email: 'jt@axontutors.com', password: 'password')

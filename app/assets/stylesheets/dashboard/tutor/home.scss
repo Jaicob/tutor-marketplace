@@ -34,7 +34,7 @@
 a.close-reveal-modal.custom-button.override-foundation {
   position: static;
   font-size: 1em;
-  font-weight: 100;
+  font-weight: 300;
   color: white;
 }
 form.edit_appointment {
@@ -60,5 +60,15 @@ form.edit_appointment {
   p {
     font-size: 1.2em;
     max-width: 30em !important;
+  }
+}
+
+// styling for temporary notice of no online cancellations
+#tutor-no-cancel-temp-notice {
+  margin: 1em 0;
+  text-align: left;
+  span {
+    color: #DE6328;
+    font-weight: 700;
   }
 }
