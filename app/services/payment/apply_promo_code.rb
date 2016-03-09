@@ -3,7 +3,7 @@ class ApplyPromoCode
 
   def call
     begin
-    if context.promo_code != nil
+    if !context.promo_code.blank?
       promo_code = context.promo_code
       tc_rate_in_cents = context.rates.first * 100
       appt_count = context.appointments.count
@@ -44,7 +44,7 @@ class ApplyPromoCode
   end
 
   def rollback
-    if context.promo_code
+    if !context.promo_code.blank?
       # rollback promotion's redemption_count increment
       promo = Promotion.find_by(code: context.promo_code)
       promo.redemption_count -= 1

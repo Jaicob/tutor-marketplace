@@ -2,10 +2,10 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.stripe.com/v1/tokens
+    uri: https://api.stripe.com/v1/transfers
     body:
       encoding: US-ASCII
-      string: bank_account[account_holder_type]=individual&bank_account[account_number]=000123456789&bank_account[country]=CA&bank_account[currency]=usd&bank_account[name]=Jane+Austen&bank_account[routing_number]=11000000
+      string: amount=2000&currency=usd&description=Reconciliation+for+Promo+ID+%231&destination=acct_17kfh1GUzmmEZmmK
     headers:
       Accept:
       - "*/*; q=0.5, application/xml"
@@ -22,7 +22,7 @@ http_interactions:
         version 4.1.13-boot2docker (root@11aafb97cfeb) (gcc version 4.9.2 (Debian
         4.9.2-10) ) #1 SMP Fri Nov 20 19:05:50 UTC 2015","hostname":"cb19fd816d4c"}'
       Content-Length:
-      - '207'
+      - '103'
   response:
     status:
       code: 200
@@ -31,11 +31,11 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Wed, 02 Mar 2016 19:31:31 GMT
+      - Wed, 02 Mar 2016 23:15:17 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '564'
+      - '846'
       Connection:
       - keep-alive
       Access-Control-Allow-Credentials:
@@ -49,7 +49,7 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store
       Request-Id:
-      - req_80h5joHBDGr38J
+      - req_80kgMZEvqa1XMI
       Stripe-Version:
       - '2015-08-19'
       Strict-Transport-Security:
@@ -58,28 +58,37 @@ http_interactions:
       encoding: UTF-8
       string: |
         {
-          "id": "btok_80h5nq7srFE2dI",
-          "object": "token",
-          "bank_account": {
-            "id": "ba_17kfh04Iy02hWvBEPKBOf3I3",
-            "object": "bank_account",
-            "account_holder_name": "Jane Austen",
-            "account_holder_type": "individual",
-            "bank_name": null,
-            "country": "CA",
-            "currency": "usd",
-            "fingerprint": "oChakD9VMJtIlkSh",
-            "last4": "6789",
-            "routing_number": "11000-000",
-            "status": "new",
-            "name": "Jane Austen"
-          },
-          "client_ip": "96.38.241.146",
-          "created": 1456947090,
+          "id": "tr_17kjBY4Iy02hWvBEM0JeyeZV",
+          "object": "transfer",
+          "amount": 2000,
+          "amount_reversed": 0,
+          "application_fee": null,
+          "balance_transaction": "txn_17kjBY4Iy02hWvBEi6XKa5m2",
+          "created": 1456960516,
+          "currency": "usd",
+          "date": 1456960516,
+          "description": "Reconciliation for Promo ID #1",
+          "destination": "acct_17kfh1GUzmmEZmmK",
+          "destination_payment": "py_17kjBYGUzmmEZmmKnLe5Apo7",
+          "failure_code": null,
+          "failure_message": null,
           "livemode": false,
-          "type": "bank_account",
-          "used": false
+          "metadata": {},
+          "recipient": null,
+          "reversals": {
+            "object": "list",
+            "data": [],
+            "has_more": false,
+            "total_count": 0,
+            "url": "/v1/transfers/tr_17kjBY4Iy02hWvBEM0JeyeZV/reversals"
+          },
+          "reversed": false,
+          "source_transaction": null,
+          "source_type": "card",
+          "statement_descriptor": null,
+          "status": "paid",
+          "type": "stripe_account"
         }
     http_version: 
-  recorded_at: Wed, 02 Mar 2016 19:31:31 GMT
+  recorded_at: Wed, 02 Mar 2016 23:15:17 GMT
 recorded_with: VCR 3.0.1
