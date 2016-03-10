@@ -38,11 +38,6 @@ class CheckoutController < ApplicationController
     @future_availability = data[:future_availability]
     @zero_availability = data[:zero_availability]
 
-    # puts "@start_date = #{@start_date}"
-    # puts "@times_for_week = #{@times_for_week}"
-    # puts "@future_availability = #{@future_availability}"
-    # puts "@zero_availability = #{@zero_availability}"
-
     # if any appt_times are already saved in cart, sets their ID's in Gon variable to let JS select them again
     if @cart.info[:appt_times] && @cart.info[:tutor_id] == @tutor.id
       gon.selected_appt_ids = @cart.info[:appt_times].keys
@@ -70,6 +65,11 @@ class CheckoutController < ApplicationController
       end
     end
     redirect_to checkout_select_times_path(@tutor.slug, anchor: 'select-times')
+  end
+
+  def regular_times
+    @similar_appt_times = ['1','2','3']
+    render layout: "modal_only"
   end
 
   def set_times # step 2 - checkpoint of sorts, makes sure 1+ appt_time is saved before reaching step 3
