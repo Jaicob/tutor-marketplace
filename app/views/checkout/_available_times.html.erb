@@ -7,7 +7,7 @@
         <% @times_for_week[count][:times].each do |data| %>
           <div class="appt-time-box">
             <label>
-              <input type="checkbox" id="<%=data[:uniq_id]%>" class="<%=data[:reserved]%> checkbox-id-<%=data[:uniq_id]%>" value="<%=data[:datetime].to_s+'----'+data[:slot_id].to_s%>" name="appt_selection[<%= data[:uniq_id] %>]" onchange="saveApptTimeAndMarkPills(this)">
+              <input type="checkbox" id="<%=data[:uniq_id]%>" class="appt-time-checkbox <%=data[:reserved]%>" value="<%=data[:datetime].to_s+'----'+data[:slot_id].to_s%>" name="appt_selection[<%= data[:uniq_id] %>]">
               <div class="appt-time"><%= data[:datetime].in_time_zone(@school.timezone).strftime('%l:%M %p') %></div>
             </label>
           </div>
@@ -23,12 +23,20 @@
 
 <script>
 window.onload = function start() { 
-  // Calls 2 methods
+  // Performs 3 tasks onload
   //
-  // 1. Reselects appt times selected by current user during session  (in case of page refresh)
-  // 2. Disables reserved times due to existing bookings or tutor's booking buffer
+  // 1. Addes EventListener to appt time checkboxes
+  // 2. Reselects appt times selected by current user during session (in case of page refresh, backwards navigation)
+  // 3. Disables reserved times due to existing bookings or tutor's booking buffer
 
-  // 1. Reselects appt times selected by current user during session  (in case of page refresh)
+  // 1. Adds Event Listener to all Appt Time Checkboxes
+  var apptTimeCheckboxes = document.getElementsByClassName('appt-time-checkbox');
+  for(var i=0; i < apptTimeCheckboxes.length; i++) {
+    element = apptTimeCheckboxes[i];
+    apptTimeCheckboxes[i].addEventListener('change', saveApptTimeAndMarkPills(element));
+  }
+
+  // 2. Reselects appt times selected by current user during session  (in case of page refresh)
   if (gon.selected_appt_ids != null){
     var selectedApptIds = gon.selected_appt_ids
     var arrayLength = selectedApptIds.length;
@@ -41,125 +49,97 @@ window.onload = function start() {
     }
   }
 
-  // 2. Disables checkboxes and modal links of reserved times due to existing bookings or tutor's booking buffer
-  var reservedAppts = document.getElementsByClassName("reserved")
+  // 3. Disables checkboxes and modal links of reserved times due to existing bookings or tutor's booking buffer
+  var reservedAppts = document.getElementsByClassName('reserved')
   if (reservedAppts.length > 0) {
     for (var i = 0; i < reservedAppts.length; i++) {
       // disable reserved time
       var checkbox = reservedAppts[i];
+      checkbox.dataset.reserved = true;
       checkbox.disabled = true;
-      // disabled 30 mins before and after reserved time (if those times exist)
-      var checkboxBeforeID = parseInt(checkbox.id) - 1;
-      // beforeElementsClass includes both the time pill checkbox and the modal link the checkbox is inside, both need to be disabled so had to switch to class rather than ID
-      var beforeElementsClass = 'checkbox-id-' + checkboxBeforeID;
-      var beforeElements = document.getElementsByClassName(beforeElementsClass);
-      if (beforeElements) {
-        beforeElements[0].disabled = true;
-        // beforeElements[1].disabled = true;
+      // disable time 30 mins before (if it exists)
+      var checkboxBefore = document.getElementById(parseInt(checkbox.id) - 1);
+      if (checkboxBefore != null) {
+        checkboxBefore.dataset.reserved = true;
+        checkboxBefore.disabled = true;
+        // checkboxBefore.classList.add('reserved-neighbor')
       }
-      var checkboxAfterID = parseInt(checkbox.id) + 1;
-      // afterElementsClass includes both the time pill checkbox and the modal link the checkbox is inside, both need to be disabled so had to switch to class rather than ID
-      var afterElementsClass = 'checkbox-id-' + checkboxAfterID;
-      var afterElements = document.getElementsByClassName(afterElementsClass);
-      if (afterElements) {
-        afterElements[0].disabled = true;
-        // afterElements[1].disabled = true;
+      // disable time 30 mins after (if it exists)
+      var checkboxAfter = document.getElementById(parseInt(checkbox.id) + 1)
+      if (checkboxAfter != null) {
+        checkboxAfter.dataset.reserved = true;
+        checkboxAfter.disabled = true;
+        // checkboxAfter.classList.add('reserved-neighbor')
       }
     }
   }
 }
 
-  // // 3. Adds Event Listener to all reveal modal links
-  // var modalLinks = document.getElementsByClassName('reveal-modal-link');
-  // for(var i=0; i < modalLinks.length; i++) {
-  //   modalLink = modalLinks[i]
-  //   modalLinks[i].addEventListener("click", triggerSaveApptFunction(modalLink));
-  // }
-
-
-//   // this is the first Event Responder to be triggered on a click (the above handle automatically selecting previously clicked times)
-//   $('.reveal-modal-link').click(function (event) {
-//     // first, gets the checkbox_id (*ID is stored in class rather than ID because need to keep unique link and checkbox pairs together*) 
-//     // then, if the checkbox is checked, it opens reveal modal (does not open modal when checkbox is deselected)
-//     var checkboxIDClass = event.currentTarget.className.split(' ')[0];
-//     elements = document.getElementsByClassName(checkboxIDClass);
-//     var checkbox = elements[1];
-//     if(checkbox.checked == true) {
-//       // open checkbox
-//       console.log('open!');
-//       $('#regularApptTimesModal').foundation('reveal', 'open', '/tutors/1/regular_times');
-//     } else {
-//       //do not open checkbox (when deselecting a time)
-//       console.log("don't open!");
-//     }
-//   });
-// };
-
-// function triggerSaveApptFunction(modalLink) {
-//   return function() {
-//     var checkboxIDClass = modalLink.className.split(' ')[0];
-//     elements = document.getElementsByClassName(checkboxIDClass);
-//     var checkbox = elements[1];
-//     if(checkbox.checked == true) {
-//       checkbox.checked = false;
-//       checkbox.onchange();
-//     } else {
-//       checkbox.checked = true;
-//       checkbox.onchange();
-//     }
-//   };
-// }
-
 function saveApptTimeAndMarkPills(element) {
-  var selected = parseInt(element.id);
-  var appt_times = element.value
+  return function(){
+    var selected = parseInt(element.id);
+    var appt_times = element.value
 
-  // this if/else is new and acts to add/remove appt_times from session variables integral to checkout process
-  if(element.checked) {
-    $.post('appt_time', {checkbox_id: selected, appt_times: appt_times, checkbox: 'selected'});
-    $('#regularApptTimesModal').foundation('reveal', 'open', '/tutors/1/regular_times');
-  }
-  else {
-    $.post('appt_time', {checkbox_id: selected, appt_times: appt_times, checkbox: 'deselected'});
-  }
-
-  var TwoBefore = document.getElementById(selected - 2);
-  var Before = document.getElementById(selected - 1);
-  var After = document.getElementById(selected + 1);
-  var TwoAfter = document.getElementById(selected + 2);
-
-  if (element.checked) { // When a time is SELECTED
-    if (Before != null) {
-      Before.disabled = true;
+    // adds or removes appt_time based on selection/de-selection, if it's being added also launches modal prompting regular sessions
+    if(element.checked) {
+      $.post('appt_time', {checkbox_id: selected, appt_times: appt_times, checkbox: 'selected'});
+      $('#regularApptTimesModal').foundation('reveal', 'open', '/tutors/1/regular_times');
     }
-    if (After != null) {
-      After.disabled = true;
-      After.classList.add("second-half-of-appt");
+    else {
+      $.post('appt_time', {checkbox_id: selected, appt_times: appt_times, checkbox: 'deselected'});
     }
-  } else { // When a time is DE-SELECTED
-    // Before is the time pill immediately before...
-    if (Before != null) {
-      if (TwoBefore == null) { // if TwoBefore does not exist, should turn from gray to empty (take away disabled)
-        Before.disabled = false;
-      } else if (TwoBefore.checked == true) { // if 2before is selected, should do nothing (stay green and disabled)
-        // do nothing
-      } else { // if TwoBefore is not selected, should turn from gray to empty
-        Before.disabled = false;
+
+    var TwoBefore = document.getElementById(selected - 2);
+    var Before = document.getElementById(selected - 1);
+    var After = document.getElementById(selected + 1);
+    var TwoAfter = document.getElementById(selected + 2);
+
+    // console.log('Reserved Data');
+    // console.log('Before: ' + Before.dataset.reserved );
+    // console.log('After: ' + After.dataset.reserved );
+
+    // function isReserved(element) {
+    //   $(element).hasClass('reserved') || $(element).hasClass('reserved-neighbor');
+    // }
+
+    if (element.checked) { // When a time is SELECTED
+      if (Before != null) {
+        Before.disabled = true;
       }
-    }
-    // After is the time pill immediately after...
-    if (After != null) {
-      if(TwoAfter == null) { // if TwoAfter does not exist, should turn from green to empty (take away disabled & second-half of appt)
-        After.disabled = false;
-        After.classList.remove('second-half-of-appt');
-      } else if (TwoAfter.checked == true) { // if TwoAfter is selected, should turn from green to gray
+      if (After != null) {
         After.disabled = true;
-        After.classList.remove('second-half-of-appt')
-      } else { // if TwoAfter is not selected, should change from green to empty
-        After.disabled = false;
-        After.classList.remove('second-half-of-appt');
+        After.classList.add("second-half-of-appt");
+      }
+    } else { // When a time is DE-SELECTED
+      // Before is the time pill immediately (i.e. 30 mins.) before...
+      if ((Before != null) &&  (Before.dataset.reserved != 'true')) {
+        if (TwoBefore == null) { // if TwoBefore does not exist, should turn from gray to empty (take away disabled)
+          Before.disabled = false;
+        } else if (TwoBefore.checked == true) { // if 2before is selected, should do nothing (stay green and disabled)
+          // do nothing
+        } else {
+          Before.disabled = false;
+        }
+      }
+      // After is the time pill immediately (i.e. 30 mins.) after...
+      if (After != null) {
+        if (After.dataset.reserved != 'true') {
+          if(TwoAfter == null) { // if TwoAfter does not exist, should turn from green to empty (take away disabled & second-half of appt)
+            After.disabled = false;
+            After.classList.remove('second-half-of-appt');
+          } else if (TwoAfter.checked == true) { // if TwoAfter is selected, should turn from green to gray
+            After.disabled = true;
+            After.classList.remove('second-half-of-appt')
+          } else { // if TwoAfter is not selected, should change from green to empty
+            After.disabled = false;
+            After.classList.remove('second-half-of-appt');
+          }
+        } else { // if After is reserved, but not selected
+          After.disabled = true;
+          After.classList.remove('second-half-of-appt');
+        }
       }
     }
-  }
+  };
 }
 </script>
