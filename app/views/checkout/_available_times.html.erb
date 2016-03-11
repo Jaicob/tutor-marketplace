@@ -83,16 +83,14 @@ function saveApptTimeAndMarkPills(element) {
       // if no previously selected times, open modal
       $('#regularApptTimesModal').foundation('reveal', 'open', {
         url: '/tutors/1/regular_times/',
-        data: {checkbox_value: element.value},
+        data: {appt_info: element.value},
       });
     } else { // if previously selected times exist, check if the appt_time of current element is already saved to the cart
       appt_exists = ($.inArray(element.id, gon.selected_appt_ids));
-      console.log('appt exists: ' + appt_exists);
-      console.log('greater than -1? : ' + (appt_exists > -1));
       if (appt_exists == -1){
         $('#regularApptTimesModal').foundation('reveal', 'open', {
           url: '/tutors/1/regular_times/',
-          data: {checkbox_value: element.value},
+          data: {appt_info: element.value},
         });
       } else {
         // don't open modal, because this appt was selected earlier and is just being selected on page reload

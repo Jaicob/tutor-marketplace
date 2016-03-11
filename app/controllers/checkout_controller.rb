@@ -70,8 +70,12 @@ class CheckoutController < ApplicationController
   end
 
   def regular_times
-    puts "@cart.attributes = #{@cart.attributes}"
-    @similar_appt_times = RegularApptScheduler.new(@cart, params).similar_appt_times
+    @similar_appt_times = RegularApptScheduler.new(@tutor.id, params[:appt_info]).similar_appt_times
+    if @similar_appt_times.any?
+      gon.similar_appts = @similar_appt_times.count
+    else
+      gon.similar_appts = nil # if this is nil, then the reveal modal shouldn't open, needs to be done in JS on _available_times partial
+    end
     render layout: "modal_only"
   end
 

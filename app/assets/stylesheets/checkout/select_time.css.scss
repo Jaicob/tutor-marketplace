@@ -33,7 +33,6 @@ div.week-nav-link:hover {
   background-color: #2BC2DE;
 }
 
-
 .checkout-button.gray.disabled-text-color {
   font-family: 'Lato';
   color: #7D7D7D;
@@ -99,3 +98,63 @@ li {
   background-color: #C3C3C3;
   color: #7D7D7D;
 }
+
+
+// Regular Appt Modal
+
+
+.similar-appt-time-box {
+  padding: 0.5em;
+  width: 66%;
+  margin: 0.5em auto;
+  border-radius: 4px;
+  border: 2px solid #D0D0D0;
+  p {
+    font-size: 1.2em;
+    font-weight: 700
+  }
+}
+
+.similar-appt-time-box:hover {
+  background: #0095AC;
+  .appt-time {
+    color: white;
+  }
+}
+
+.similar-appt-time-box label + .appt-time {
+    text-align: center;
+    padding: 3px 0px;
+    display: block;
+}
+
+.similar-appt-time-box label input {
+  position: absolute;
+  opacity: 0;
+}
+
+.similar-appt-time-box input:checked + .appt-time {
+  background-color: #58AA4D;
+  color: white;
+}
+
+.appt-time {
+  padding: 0.5em;
+  font-family: 'Lato';
+}
+
+.similar-appt-time-box input:disabled + .appt-time {
+  background-color: #C3C3C3;
+  color: #7D7D7D;
+}
+
+.similar-appt-time-box input.second-half-of-appt:disabled + .appt-time  {
+  background-color: #58AA4D;
+  color: #58AA4D;
+}
+
+.similar-appt-time-box input.second-half-of-appt.override-gray:disabled + .appt-time  {
+  background-color: #C3C3C3;
+  color: #7D7D7D;
+}
+

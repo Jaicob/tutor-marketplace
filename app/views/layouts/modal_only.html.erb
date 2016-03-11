@@ -1,13 +1,13 @@
 <div class="row">
   <div class="small-12 columns">
     <div class="center">
-      <h3>You have selected an appointment for 2:30 pm on Wednesday, March 3rd.</h3>
-      <h2>Would you like to make this a weekly appointment?</h2>
+      <h4>You have selected an appointment for 2:30 pm on Wednesday, March 3rd.</h4>
+      <h3>Would you like to make this a weekly appointment?</h3>
 
-      <h3>Similar Available Appointments</h3>
-      <%= @similar_appt_times.each do |appt_time| %>
-        <div class="similar-appt-time">
-          <p><%= appt_time %></p>
+      <h5>Similar Available Appointments</h5>
+      <% @similar_appt_times.each do |appt_info| %>
+        <div class="similar-appt-time-box">
+          <p class="no-bottom-margin"><%= appt_info[:time_display] %></p>
         </div>
       <% end %>
     </div>
