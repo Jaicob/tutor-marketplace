@@ -4,6 +4,8 @@ class CheckoutController < ApplicationController
   before_action :set_student
   before_action :set_school
   before_action :set_cart
+  # before_action :start_over_for_missing_cart, only: [:select_times, :select_location, :review_booking]
+
 
   def select_course # step 1 - view
     # step 1 (displays all courses a tutor offers - bypassed when coming from search)
@@ -68,7 +70,8 @@ class CheckoutController < ApplicationController
   end
 
   def regular_times
-    @similar_appt_times = ['1','2','3']
+    puts "@cart.attributes = #{@cart.attributes}"
+    @similar_appt_times = RegularApptScheduler.new(@cart, params).similar_appt_times
     render layout: "modal_only"
   end
 
@@ -167,5 +170,12 @@ class CheckoutController < ApplicationController
         @cart = Cart.find(session[:cart_id])
       end
     end
+
+    # def start_over_for_missing_cart
+    #   if session[:cart_id].nil?
+    #     redirect_to redirect_to checkout_select_course_path(@tutor.slug, anchor: 'select-course')
+    #     return
+    #   end
+    # end
 
 end

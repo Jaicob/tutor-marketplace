@@ -9,6 +9,7 @@ class TutorsController < ApplicationController
       if params[:course] # this is where a Cart is created when a booking starts from search, rather than straight from a tutor's profile page
         @cart = Cart.create(info: Hash.new())
         @cart.info[:course_id] = params[:course]
+        @cart.info[:tutor_id] = @tutor.id
         @cart.save
         session[:cart_id] = @cart.id
         redirect_to checkout_select_times_path(@tutor.slug)
