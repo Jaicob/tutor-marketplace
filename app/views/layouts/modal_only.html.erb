@@ -1,15 +1,32 @@
-<div class="row">
-  <div class="small-12 columns">
-    <div class="center">
-      <h4>You have selected an appointment for 2:30 pm on Wednesday, March 3rd.</h4>
-      <h3>Would you like to make this a weekly appointment?</h3>
-
-      <h5>Similar Available Appointments</h5>
-      <% @similar_appt_times.each do |appt_info| %>
-        <div class="similar-appt-time-box">
-          <p class="no-bottom-margin"><%= appt_info[:time_display] %></p>
+<div id="similar-appts-modal">
+  <div class="row">
+    <div class="small-12 columns">
+      <div class="center">
+        <h4>You have selected an appointment for:</h4>
+        <h4 class="bold"><%= @original_time %></h4>
+          <div class="better-grades">
+            <h4>Want to make it a regular meeting?</h4>
+            <h5>2/3 of students who book an Axon tutor 2+ times report a whole letter grade improvement!</h5>
+          </div>
+          <h4 class="bold">Meet with <%= @tutor.public_name %> on a regular basis to do your best!</h4>
+          <%= form_for :regular_appt_selections, url: checkout_save_appt_time_path, method: :post do |f| %>
+            <div class="similar-appts-scroll-box">
+              <% @similar_appt_times.each do |appt_info| %>
+                <div class="similar-appt-time-box">
+                  <label>
+                    <input type="checkbox" name="regular_appt_selections[appt_info[:slot_id]]" value="appt_info[:start_time]">
+                    <div class="appt-time"><%= appt_info[:time_display] %></div>
+                  </label>
+                </div>
+              <% end %>
+            </div>
+            <div class="button-container">
+              <%= f.submit 'Add Additional Appointments', class: 'custom-button full-width regular-appt-modal-button' %> 
+              <button class="custom-button full-width blue regular-appt-modal-button">Continue with One Appointment</button>
+            </div>
+          <% end %>
         </div>
-      <% end %>
+      </div>
     </div>
   </div>
 </div>

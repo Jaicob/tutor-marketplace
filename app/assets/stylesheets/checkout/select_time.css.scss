@@ -1,160 +1,195 @@
-div.week-nav-link {
-  background-color: #A3A5A5;
-  border-radius: 4px;
-  margin-top: 1em;
-  width: 100%;
-  text-align: center;
-  p {
-    font-size: 1em;
-  }
-  &.left {
-    i {
-      color: white;
-      margin-right: 1em;
-    }
-  }
-  &.right {
-    i {
-      color: white;
-      // no margin-left needed, seems to automatically have some following text
-    }
-  }
-  &.disabled {
-    p,i {
-      color: #6B6B6B;
-    }
-  }
-  &.disabled:hover {
+// Checkout Step base, top and bottom sections (title and nav)
+div.checkout-step-title, div.checkout-steps-nav {
+  div.week-nav-link {
     background-color: #A3A5A5;
-  }
-}
-
-div.week-nav-link:hover {
-  background-color: #2BC2DE;
-}
-
-.checkout-button.gray.disabled-text-color {
-  font-family: 'Lato';
-  color: #7D7D7D;
-}
-
-li {
-  text-align: center;
-}
-
-.calendar-column {
-  text-align: center;
-  p.day {
-    margin: 0.5em 0 0;
-  }
-}
-
-.appt-time-box {
-    margin: 0.2em 0;
     border-radius: 4px;
-    border: 1px solid #D0D0D0;
+    margin-top: 1em;
+    width: 100%;
+    text-align: center;
+    p {
+      font-size: 1em;
+    }
+    &.left {
+      i {
+        color: white;
+        margin-right: 1em;
+      }
+    }
+    &.right {
+      i {
+        color: white;
+        // no margin-left needed, seems to automatically have some following text
+      }
+    }
+    &.disabled {
+      p,i {
+        color: #6B6B6B;
+      }
+    }
+    &.disabled:hover {
+      background-color: #A3A5A5;
+    }
+  }
+
+  div.week-nav-link:hover {
+    background-color: #2BC2DE;
+  }
+
+  .checkout-button.gray.disabled-text-color {
+    font-family: 'Lato';
+    color: #7D7D7D;
+  }
+}
+
+
+
+// Checkout Step Body - appt time selectors
+
+div.checkout-step-body {
+  li {
+    text-align: center;
+    .calendar-column {
+      text-align: center;
+      p.day {
+        margin: 0.5em 0 0;
+        font-weight: 700;
+      }
+      p.date {
+        font-weight: 400;
+      }
+      div.scroll-box {
+        height: 25em;
+        overflow: auto;
+        position: relative;
+        left: 0.5em; // to offset scrollbar on right side and make times appear more centered under day/date label
+      }
+    }
+    .appt-time-box {
+      margin: 0.5em 0;
+      border-radius: 3px;
+      border: 1px solid #D0D0D0;
+    }
+    .appt-time-box:hover {
+      background: #0095AC;
+      .appt-time {
+        color: white;
+      }
+    }
+    .appt-time-box label + .appt-time {
+      text-align: center;
+      padding: 3px 0px;
+      display: block;
+    }
+    .appt-time-box label input {
+      position: absolute;
+      opacity: 0;
+    }
+    .appt-time-box input:checked + .appt-time {
+      background-color: #58AA4D;
+      color: white;
+    }
+    .appt-time {
+      padding: 0.5em;
+      font-family: 'Lato';
+    }
+    .appt-time-box input:disabled + .appt-time {
+      background-color: #C3C3C3;
+      color: #7D7D7D;
+    }
+    .appt-time-box input.second-half-of-appt:disabled + .appt-time  {
+      background-color: #58AA4D;
+      color: #58AA4D;
+    }
+    .appt-time-box input.second-half-of-appt.override-gray:disabled + .appt-time  {
+      background-color: #C3C3C3;
+      color: #7D7D7D;
+    }
+  }
+}
+
+
+
+// Similar Appt Times Modal for booking Regular Appts
+
+div#similar-appts-modal {
+  .better-grades {
+    border-radius: 4px;
+    background-color: #58AA4D;
+    padding: 0.5em 1em;
+    max-width: 30em;
+    margin: 2em auto;
+    h4, h5 {
+      color: white;
+      font-weight: 700;
+    }
+    h5 {
+      max-width: 20em;
+      margin: 0.5em auto;
+    }
+  }
+  .similar-appts-scroll-box {
+    max-height: 25em;
+    max-width: 30em;
     overflow: auto;
-}
-
-.appt-time-box:hover {
-  background: #0095AC;
-  .appt-time {
-    color: white;
+    margin: 2em auto;
+    border-radius: 4px;
+    background-color: #DDDDDD;
+    .similar-appt-time-box {
+      margin: 0.8em;
+      border-radius: 4px;
+      background-color: #FAFAFA;
+      .appt-time {
+        font-size: 1.2em;
+        font-weight: 700
+      }
+    }
+    .similar-appt-time-box:hover {
+      background: #0095AC;
+      .appt-time {
+        color: white;
+      }
+    }
+    .similar-appt-time-box label + .appt-time {
+      text-align: center;
+      padding: 3px 0px;
+      display: block;
+    }
+    .similar-appt-time-box label input {
+      position: absolute;
+      opacity: 0;
+    }
+    .similar-appt-time-box input:checked + .appt-time {
+      background-color: #58AA4D;
+      border-radius: 4px;
+      color: white;
+    }
+    .appt-time {
+      padding: 0.5em;
+      font-family: 'Lato';
+    }
+    .similar-appt-time-box input:disabled + .appt-time {
+      background-color: #C3C3C3;
+      color: #7D7D7D;
+    }
+    .similar-appt-time-box input.second-half-of-appt:disabled + .appt-time  {
+      background-color: #58AA4D;
+      color: #58AA4D;
+    }
+    .similar-appt-time-box input.second-half-of-appt.override-gray:disabled + .appt-time  {
+      background-color: #C3C3C3;
+      color: #7D7D7D;
+    }
   }
-}
-
-.appt-time-box label + .appt-time {
-    text-align: center;
-    padding: 3px 0px;
+  .button-container {
+    max-width: 30em;
+    margin: auto;
     display: block;
-}
-
-.appt-time-box label input {
-  position: absolute;
-  opacity: 0;
-}
-
-.appt-time-box input:checked + .appt-time {
-  background-color: #58AA4D;
-  color: white;
-}
-
-.appt-time {
-  padding: 0.5em;
-  font-family: 'Lato';
-}
-
-.appt-time-box input:disabled + .appt-time {
-  background-color: #C3C3C3;
-  color: #7D7D7D;
-}
-
-.appt-time-box input.second-half-of-appt:disabled + .appt-time  {
-  background-color: #58AA4D;
-  color: #58AA4D;
-}
-
-.appt-time-box input.second-half-of-appt.override-gray:disabled + .appt-time  {
-  background-color: #C3C3C3;
-  color: #7D7D7D;
-}
-
-
-// Regular Appt Modal
-
-
-.similar-appt-time-box {
-  padding: 0.5em;
-  width: 66%;
-  margin: 0.5em auto;
-  border-radius: 4px;
-  border: 2px solid #D0D0D0;
-  p {
-    font-size: 1.2em;
-    font-weight: 700
+    .regular-appt-modal-button { 
+      display: block;
+      margin: 1em auto;
+      font-weight: 700;
+      font-size: 1.3em;
+      padding: 1em;
+    }
   }
 }
-
-.similar-appt-time-box:hover {
-  background: #0095AC;
-  .appt-time {
-    color: white;
-  }
-}
-
-.similar-appt-time-box label + .appt-time {
-    text-align: center;
-    padding: 3px 0px;
-    display: block;
-}
-
-.similar-appt-time-box label input {
-  position: absolute;
-  opacity: 0;
-}
-
-.similar-appt-time-box input:checked + .appt-time {
-  background-color: #58AA4D;
-  color: white;
-}
-
-.appt-time {
-  padding: 0.5em;
-  font-family: 'Lato';
-}
-
-.similar-appt-time-box input:disabled + .appt-time {
-  background-color: #C3C3C3;
-  color: #7D7D7D;
-}
-
-.similar-appt-time-box input.second-half-of-appt:disabled + .appt-time  {
-  background-color: #58AA4D;
-  color: #58AA4D;
-}
-
-.similar-appt-time-box input.second-half-of-appt.override-gray:disabled + .appt-time  {
-  background-color: #C3C3C3;
-  color: #7D7D7D;
-}
-

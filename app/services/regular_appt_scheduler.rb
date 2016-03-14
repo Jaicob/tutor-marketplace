@@ -30,6 +30,10 @@ class RegularApptScheduler
     return array
   end
 
+  def original_time
+    @appt_datetime.strftime('%A, %B %e at %l:%M %p')
+  end
+
   private
 
     def format_time_and_date(slot)

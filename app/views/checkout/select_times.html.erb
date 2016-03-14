@@ -7,7 +7,6 @@
     <a id="select-times"></a>
     <div class="row">
       <div class="small-12 columns">
-        <%= form_for :appt_selection, url: checkout_set_times_path, method: :post do |f| %>
           <div class="checkout-step-title">
             <div class="row">
               <div class="small-12 medium-3 columns">
@@ -52,11 +51,9 @@
                 <%= link_to "Back to Select a Course", checkout_select_course_path(@tutor.slug, anchor: 'select-course'), class: 'checkout-button gray' %>
               </div>
               <div class="small-12 medium-3 columns zero-padding">
-                <%= f.submit "Next Step", class: 'custom-button full-width checkout-submit' %>
               </div>
             </div>
           </div>
-        <% end %>
         <p>* All times are in local campus time</p>
       </div>
     </div>
