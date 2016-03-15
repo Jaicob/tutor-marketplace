@@ -4,7 +4,16 @@ class CheckoutController < ApplicationController
   before_action :set_student
   before_action :set_school
   before_action :set_cart
-  # before_action :start_over_for_missing_cart, only: [:select_times, :select_location, :review_booking]
+
+  rescue_from StandardError do |e|
+    if !request.original_url.include?('dockerhost') && !request.original_url.include?('staging')
+      error_report = create_error_report(e)
+      ProductionErrorMailer.delay.send_error_report(error_report)
+    end
+    session[:cart_id] = nil
+    flash[:info] = "Uh oh! There was a network timeout. Please attempt your booking again. We apologize for the inconvenience."
+    redirect_to checkout_select_course_path(@tutor.slug, anchor: 'select-course')
+  end
 
   # step 1 - view
   def select_course 
@@ -56,7 +65,7 @@ class CheckoutController < ApplicationController
     end
   end
 
-  # step 2 - saves input via AJAX
+  # step 2 - saves input via AJAX (except for middle condition - params[:regular_appt_selections] are submitted via standard form)
   def save_appt_time 
     # if no appt_times have been saved yet, the :app_times hash must first be instantiated
     if @cart.info[:appt_times].nil?
@@ -69,7 +78,12 @@ class CheckoutController < ApplicationController
       appt_info_hash.each do |k,v|
         @cart.info[:appt_times][k] = v
       end
-      @cart.save
+      if @cart.save
+        appt_count = appt_info_hash.count
+        flash[:info] = "#{appt_count} regular appointments were succesfully added to your cart."
+      else
+        flash[:info] = "Regular appointments were not added. Please try again."
+      end
     # if the :app_times hash already exists and just one appt at a time is being saved via AJAX from select_times view
     else
       # adds the appt_time if the time pill was selected
@@ -204,11 +218,11 @@ class CheckoutController < ApplicationController
       end
     end
 
-    # def start_over_for_missing_cart
-    #   if session[:cart_id].nil?
-    #     redirect_to redirect_to checkout_select_course_path(@tutor.slug, anchor: 'select-course')
-    #     return
-    #   end
-    # end
+    def start_over_for_missing_cart
+      if session[:cart_id].nil?
+        redirect_to redirect_to checkout_select_course_path(@tutor.slug, anchor: 'select-course')
+        return
+      end
+    end
 
 end

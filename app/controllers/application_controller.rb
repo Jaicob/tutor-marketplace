@@ -4,13 +4,13 @@ class ApplicationController < ActionController::Base
   # But changed to code below to prevent CSRF protection blocking Stripe token being sent back
   protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
 
-  # rescue_from StandardError do |e|
-  #   if !request.original_url.include?('dockerhost') && !request.original_url.include?('staging')
-  #     error_report = create_error_report(e)
-  #     ProductionErrorMailer.delay.send_error_report(error_report)
-  #   end
-  #   redirect_to standard_error_path
-  # end
+  rescue_from StandardError do |e|
+    if !request.original_url.include?('dockerhost') && !request.original_url.include?('staging')
+      error_report = create_error_report(e)
+      ProductionErrorMailer.delay.send_error_report(error_report)
+    end
+    redirect_to standard_error_path
+  end
 
   before_filter :configure_permitted_parameters, if: :devise_controller?
   before_action :set_school

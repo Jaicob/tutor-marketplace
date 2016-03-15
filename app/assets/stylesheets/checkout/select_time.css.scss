@@ -39,6 +39,13 @@ div.checkout-step-title, div.checkout-steps-nav {
     font-family: 'Lato';
     color: #7D7D7D;
   }
+
+  p#number-of-appts {
+    text-align: center;
+    margin: 0;
+    font-weight: 400;
+    padding: 0.8em;
+  }
 }
 
 
@@ -112,26 +119,24 @@ div.checkout-step-body {
 // Similar Appt Times Modal for booking Regular Appts
 
 div#similar-appts-modal {
-  .better-grades {
-    border-radius: 4px;
-    background-color: #58AA4D;
-    padding: 0.5em 1em;
-    max-width: 30em;
-    margin: 2em auto;
-    h4, h5 {
-      color: white;
-      font-weight: 700;
-    }
-    h5 {
-      max-width: 20em;
-      margin: 0.5em auto;
-    }
+  h3#regular-meeting-cta {
+    margin: 1em auto;
+    background-color: #0095AC;
+    padding: 0.2em;
+    color: white;
+    border-radius: 3px
+  }
+  h4 span {
+    font-weight: 700;
+  }
+  img.modal-graphic {
+    width: 90%;
+    padding: 1em
   }
   .similar-appts-scroll-box {
-    max-height: 25em;
-    max-width: 30em;
+    height: 25em;
     overflow: auto;
-    margin: 2em auto;
+    margin: 0 auto 1em;
     border-radius: 4px;
     background-color: #DDDDDD;
     .similar-appt-time-box {
