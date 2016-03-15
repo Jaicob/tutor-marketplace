@@ -4,6 +4,7 @@ RSpec.describe RegularApptScheduler do
   let(:tutor) { create(:tutor, :with_semester_availability) }
   let(:tutor_2) { create(:tutor, :with_2_weeks_availability) }
   let(:tutor_1) { create(:tutor, :with_1_week_availability) } # default tutor factory has no availability
+  let(:tutor_booked_two_weeks) { create(:tutor, :booked_two_weeks) }
 
   describe '.initialize' do 
     context 'with valid input (tutor_id and appt_info)' do 
@@ -17,7 +18,7 @@ RSpec.describe RegularApptScheduler do
 
   describe '#similar_appt_times' do
 
-    context 'with tutor availability at time all semester' do 
+    context 'with tutor availability at same time all semester' do 
       
       before :each do 
         appt_info = (Date.today + 2.days).to_s + " 12:00" + '----' + tutor.slots.first.id.to_s
@@ -38,7 +39,7 @@ RSpec.describe RegularApptScheduler do
       end
     end
 
-    context 'with tutor availability for only 2 weeks' do
+    context 'with tutor availability at same time for only 2 weeks' do
 
       it 'returns an array of 1 items' do 
         appt_info = (Date.today + 2.days).to_s + " 12:00" + '----' + tutor.slots.first.id.to_s
@@ -47,11 +48,19 @@ RSpec.describe RegularApptScheduler do
       end
     end
 
-    context 'with tutor availabilty for only the present week' do
+    context 'with tutor availabilty at same time for only the present week' do
       it 'returns an array of 0 items' do 
         appt_info = (Date.today + 2.days).to_s + " 12:00" + '----' + tutor.slots.first.id.to_s
         service = RegularApptScheduler.new(tutor_1.id, appt_info)
         expect(service.similar_appt_times.count).to eq 0
+      end
+    end
+
+    context 'with tutor availability at same time all semester, but with scheduled appts for 2 weeks' do
+      it 'returns an array with 2 less items due to booked appts' do 
+        appt_info = (Date.today + 2.days).to_s + " 12:00" + '----' + tutor.slots.first.id.to_s
+        service = RegularApptScheduler.new(tutor_booked_two_weeks.id, appt_info)
+        expect(service.similar_appt_times.count).to eq 15
       end
     end
   end

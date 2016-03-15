@@ -23,6 +23,11 @@ class RegularApptScheduler
     array = []
     slots.each do |slot|
       appt_start_time = slot.start_time.to_date.to_s + " " + @appt_hour_24
+      # end iteration and go to next slot in collection if a slot has an appointment that blocks the selected appt_time (includes exact appt time + 30 min. before and after)
+      if blocked_by_scheduled_appts?(slot)
+        next
+      end
+      # seems to repeat the condition in the first select block, but somehow some times were displaying slots from the same week while others weren't, maybe a timezone thing? either way, this extra validation here keeps the unwanted same day/identical appt out of the modal list 
       if DateTime.parse(appt_start_time) != @appt_datetime
         array << {
           slot_id: slot.id, 
@@ -31,8 +36,6 @@ class RegularApptScheduler
         }
       end
     end
-    # remove the first appt/slot since it corresponds to the time just selected by user
-    # array.shift
     return array
   end
 
@@ -46,6 +49,26 @@ class RegularApptScheduler
       display_date = slot.start_time.strftime('%A, %B %e')
       display_hour = @appt_datetime.strftime('%l:%M %p')
       return display_date + ' at ' + display_hour
+    end
+
+    def blocked_by_scheduled_appts?(slot)
+      # returns either true or false
+      if slot.appointments.any?
+        # run through all of a slots appointments to check start times
+        slot.appointments.each do |appt|
+          start_time = DateTime.parse(appt.start_time.to_s)
+          # if start time of any appt in slot is the same, 30 mins before, or after the original start_time, the appt is not available that week
+          if start_time.strftime('%H:%M') == @appt_datetime.strftime('%H:%M') ||
+          (start_time).strftime('%H:%M') == (@appt_datetime + 30.minutes).strftime('%H:%M') ||
+          (start_time).strftime('%H:%M') == (@appt_datetime - 30.minutes).strftime('%H:%M')
+            return true
+          else
+            return false
+          end
+        end
+      else
+        return false
+      end
     end
 
 end

@@ -120,5 +120,15 @@ FactoryGirl.define do
         end
       end
     end
+
+    trait :booked_two_weeks do 
+      with_semester_availability
+      after(:create) do |tutor|
+        first_slot = tutor.slots.second
+        second_slot = tutor.slots.third
+        create(:appointment, slot: first_slot, start_time: first_slot.start_time.to_date.to_s + " 12:00")
+        create(:appointment, slot: second_slot, start_time: second_slot.start_time.to_date.to_s + " 12:00")
+      end
+    end
   end
 end
