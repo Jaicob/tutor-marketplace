@@ -65,8 +65,11 @@ class CheckoutController < ApplicationController
       @cart.save
     # if 1 or more appts are being added from the regular_times modal
     elsif params[:regular_appt_selections]
-      puts "PARAMS = #{params}"
-      # handle form data for creating multiple appts at once
+      appt_info_hash = params[:regular_appt_selections]
+      appt_info_hash.each do |k,v|
+        @cart.info[:appt_times][k] = v
+      end
+      @cart.save
     # if the :app_times hash already exists and just one appt at a time is being saved via AJAX from select_times view
     else
       # adds the appt_time if the time pill was selected

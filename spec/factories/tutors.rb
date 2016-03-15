@@ -97,5 +97,28 @@ FactoryGirl.define do
         create(:appointment, :second, slot: tutor.slots.first)
       end
     end
+
+    trait :with_1_week_availability do 
+      after(:create) do |tutor|
+        create(:slot, tutor: tutor, start_time: (Date.today + 2.days).to_s + " 12:00")
+      end
+    end
+
+    trait :with_2_weeks_availability do
+      after(:create) do |tutor|
+        create(:slot, tutor: tutor, start_time: (Date.today + 2.days).to_s + " 12:00")
+        create(:slot, tutor: tutor, start_time: (Date.today + 9.days).to_s + " 12:00")
+      end 
+    end
+
+    trait :with_semester_availability do 
+      after(:create) do |tutor|
+        start_date = Date.today + 2.days 
+        18.times do
+          create(:slot, tutor: tutor, start_time: start_date.to_s + " 12:00")
+          start_date = start_date + 7.days
+        end
+      end
+    end
   end
 end
