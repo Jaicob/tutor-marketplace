@@ -9,7 +9,7 @@ class ApptReminderWorker
   def perform(appointment_id)
     @appt = Appointment.find(appointment_id)
     @date = @appt.appt_reminder_email_time.to_date
-    if @date == Date.today && @appt.status == 'Scheduled'
+    if @date == Date.today && @appt.status != 'Cancelled'
       AppointmentMailer.appointment_reminder_for_tutor(appointment_id)
       AppointmentMailer.appointment_reminder_for_student(appointment_id)
     end

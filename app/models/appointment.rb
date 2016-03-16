@@ -93,7 +93,7 @@ class Appointment < ActiveRecord::Base
   end
 
   def update_status_for_complete_appts
-    if self.start_time < DateTime.now && self.status == 'Scheduled'
+    if (self.start_time + 1.hour) < DateTime.now && self.status == 'Scheduled'
       self.update_attribute('status', 2)
     end
   end
