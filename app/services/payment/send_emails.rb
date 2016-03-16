@@ -13,7 +13,6 @@ class SendEmails
         end
         # initliaze Sidekiq workers to send appt_follow_up email
         ApptFollowUpWorker.perform_at(appt.appt_follow_up_email_time, appt.id)
-        ApptFollowUpWorker.perform_at(appt.appt_follow_up_email_time, appt.id)
       end
     rescue => error
       context.fail!(
