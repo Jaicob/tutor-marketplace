@@ -9,7 +9,7 @@ class ApptFollowUpWorker
   def perform(appointment_id)
     @appt = Appointment.find(appointment_id)
     @date = @appt.appt_follow_up_email_time.to_date
-    if @date == Date.today && @appt.status == 'Scheduled'
+    if @date == Date.today && @appt.status != 'Cancelled'
       AppointmentMailer.appointment_follow_up_for_student(appointment_id)
     end
   end
