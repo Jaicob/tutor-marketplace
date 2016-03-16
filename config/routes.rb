@@ -25,6 +25,7 @@
 #              checkout_select_location GET      /tutors/:id/select_location(.:format)                                         checkout#select_location
 #                 checkout_set_location POST     /tutors/:id/set_location(.:format)                                            checkout#set_location
 #               checkout_review_booking GET      /tutors/:id/review_booking(.:format)                                          checkout#review_booking
+#           checkout_review_remove_appt POST     /tutors/:id/remove_appt_time(.:format)                                        checkout#remove_appt_time
 #             checkout_apply_promo_code POST     /tutors/:id/apply_promo_code(.:format)                                        checkout#apply_promo_code
 #              checkout_process_booking POST     /tutors/:id/process_booking(.:format)                                         checkout#process_booking
 #                 checkout_confirmation GET      /tutors/:id/confirmation(.:format)                                            checkout#confirmation
@@ -267,6 +268,7 @@ Rails.application.routes.draw do
     get   '/select_location'  => 'checkout#select_location', as: 'checkout_select_location'
     post  '/set_location'     => 'checkout#set_location', as: 'checkout_set_location'
     get   '/review_booking'   => 'checkout#review_booking', as: 'checkout_review_booking'
+    post  '/remove_appt_time' => 'checkout#remove_appt_time', as: 'checkout_review_remove_appt'
     post  '/apply_promo_code' => 'checkout#apply_promo_code', as: 'checkout_apply_promo_code'
     post  '/process_booking'  => 'checkout#process_booking', as: 'checkout_process_booking'
     get   '/confirmation'     => 'checkout#confirmation', as: 'checkout_confirmation'

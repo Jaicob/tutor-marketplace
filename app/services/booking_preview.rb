@@ -20,7 +20,7 @@ class BookingPreview
       array = info.second.split('-!-')
       @appt_hash[count] = {
         start_time: array.first,
-        slot_id: array.second
+        slot_id: array.second,
       }
       count += 1
     end

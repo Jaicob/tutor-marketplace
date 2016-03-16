@@ -10,6 +10,7 @@ class CheckoutController < ApplicationController
       error_report = create_error_report(e)
       ProductionErrorMailer.delay.send_error_report(error_report)
     end
+    puts "ERROR!!!!!!!!!!!!!!!!!!!!!!! = #{e}"
     session[:cart_id] = nil
     flash[:info] = "Uh oh! There was a network timeout. Please attempt your booking again. We apologize for the inconvenience."
     redirect_to checkout_select_course_path(@tutor.slug, anchor: 'select-course')
@@ -143,10 +144,30 @@ class CheckoutController < ApplicationController
       flash[:info] = 'Please select a meeting time'
       redirect_to checkout_select_times_path(@tutor.slug, anchor: 'select-times')
     end
+    if @cart.info[:promo_code].blank? && TutorAnalyzer.new(@tutor).completed_appts.count < 3
+      @cart.info[:promo_code] = 'New Axon Tutor Auto-Discount'
+      @cart.save
+    end
     # booking preview formats all booking info into summary for customer to view
     @booking_preview = BookingPreview.new(@cart, @tutor, current_user).format_info
     # :no_payment_due is a flag passed to JS via Gon variable to disable payment field for completely free bookings
     @booking_preview[:no_payment_due] == true ? (gon.free_session = true) : (gon.free_session = nil)
+  end
+
+  # step 4 - action to process appt times being removed from review booking screen
+  def remove_appt_time
+    @appt_value = params[:remove_appt_time][:start_time]
+    # iterate through appt_times array in cart to find matching start_time
+    @cart.info[:appt_times].each do |k,v|
+      if v == @appt_value
+        @key_to_remove = k
+        break
+      end
+    end
+    # remove key from hash
+    @cart.info[:appt_times] = @cart.info[:appt_times].to_hash.except!(@key_to_remove)
+    @cart.save
+    redirect_to checkout_review_booking_path(@tutor.slug, anchor: 'review-booking')
   end
 
   # step 4 - processes promo code
@@ -159,11 +180,10 @@ class CheckoutController < ApplicationController
       preview = BookingPreview.new(@cart, @tutor, current_user).format_info
       if preview[:promo_data][:success] == true
         flash[:success] = "Promo code was succesfully applied!"
-        redirect_to checkout_review_booking_path(@tutor.slug, anchor: 'review-booking')
       else
         flash[:alert] = preview[:promo_data][:error]
-        redirect_to checkout_review_booking_path(@tutor.slug, anchor: 'review-booking')
       end
+      redirect_to checkout_review_booking_path(@tutor.slug, anchor: 'review-booking')
     end
   end
 
