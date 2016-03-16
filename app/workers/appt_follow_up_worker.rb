@@ -1,4 +1,4 @@
-class ApptReminderWorker
+class ApptFollowUpWorker
   include Sidekiq::Worker 
 
   # This worker handles the appointment follow-up emails. It only 
