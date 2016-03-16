@@ -30,7 +30,7 @@ build()
 deploy()
 {
   echo "Building jaicob/web-app:$1-$2"
-  sed -i '' -e "s/.*ENV AWS_EB_ENV.*/ENV AWS_EB_ENV $1/"  ./Dockerfile
+  sed -i '' -e "s/.*ENV RAILS_ENV.*/ENV RAILS_ENV $1/"  ./Dockerfile
   search=""
   replace=""
   sed -i '' -e 's|.*"image" : "jaicob/web-app:.*|            "image" : "jaicob/web-app:'"$1"'-'"$2"'",|' ./.elasticbeanstalk/Docker/Dockerrun.aws.json

@@ -1,5 +1,5 @@
 RAILS_ENV=$RAILS_ENV
-: ${RAILS_ENV:="production"}
+: ${RAILS_ENV:="staging"}
 export RAILS_ENV
 
 SECRET_KEY_BASE=$SECRET_KEY_BASE
@@ -34,4 +34,5 @@ echo "Preparing the gems"
 bundle binstubs unicorn
 rbenv rehash
 rake bower:install
-RAILS_ENV=production bundle exec rake assets:precompile --trace
+bundle exec rake assets:precompile --trace
+
