@@ -2,7 +2,7 @@ FROM jaicob/rails-nginx-unicorn
 MAINTAINER jaicob(jaicob@icloud.com)
 
 # Environment set in deploy script 
-ENV AWS_EB_ENV production
+ENV AWS_EB_ENV staging
 
 # Install tools needed
 RUN sudo npm install -g bower && \
@@ -12,9 +12,9 @@ RUN sudo npm install -g bower && \
 	gem install bundler
 
 # Place correct Application.yml
-COPY config/application.${AWS_EB_ENV}.yml /home/rails/my-app/config/application.yml
+COPY config/application.yml /home/rails/my-app/config/application.yml
 
-RUN bundle install
+RUN RAILS_ENV=staging bundle install
 
 # Place custom unicorn configs/scripts here
 COPY config/unicorn.rb /etc/my-app/config/unicorn.rb
