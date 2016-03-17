@@ -3,17 +3,19 @@
     <div class="calendar-column">
       <p class="day"><%= @times_for_week[count][:date].strftime('%A') %></p>
       <p class="date"><%= @times_for_week[count][:date].strftime('%m/%d') %></p>
-      <div class="scroll-box">
-        <% if @times_for_week[count][:times] %>
-          <% @times_for_week[count][:times].each do |data| %>
-            <div class="appt-time-box">
-              <label>
-                <input type="checkbox" id="<%=data[:uniq_id]%>" class="appt-time-checkbox <%=data[:reserved]%>" value="<%=data[:datetime].to_s+'----'+data[:slot_id].to_s%>" name="appt_selection[<%= data[:uniq_id] %>]" onchange="saveApptTimeAndMarkPills(this)">
-                <div class="appt-time"><%= data[:datetime].in_time_zone(@school.timezone).strftime('%l:%M %p') %></div>
-              </label>
-            </div>
+      <div class="scroll-box-container">
+        <div class="scroll-box">
+          <% if @times_for_week[count][:times] %>
+            <% @times_for_week[count][:times].each do |data| %>
+              <div class="appt-time-box">
+                <label>
+                  <input type="checkbox" id="<%=data[:uniq_id]%>" class="appt-time-checkbox <%=data[:reserved]%>" value="<%=data[:datetime].to_s+'----'+data[:slot_id].to_s%>" name="appt_selection[<%= data[:uniq_id] %>]" onchange="saveApptTimeAndMarkPills(this)">
+                  <div class="appt-time"><%= data[:datetime].in_time_zone(@school.timezone).strftime('%l:%M %p') %></div>
+                </label>
+              </div>
+            <% end %>
           <% end %>
-        <% end %>
+        </div>
       </div>
     </div>
   </li>

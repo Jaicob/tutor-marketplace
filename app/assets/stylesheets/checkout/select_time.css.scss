@@ -66,9 +66,12 @@ div.checkout-step-body {
       }
       div.scroll-box {
         height: 25em;
-        overflow: auto;
+        overflow: hidden;
         position: relative;
         left: 0.5em; // to offset scrollbar on right side and make times appear more centered under day/date label
+        &:hover {
+          overflow: auto;
+        }
       }
     }
     .appt-time-box {
