@@ -55,7 +55,7 @@
   </div>
 </div>
 
-<%= content_tag "div", id: "axoncalendar", data: { tutor: @user.tutor.id, utcoffset: ActiveSupport::TimeZone[@school.timezone].utc_offset/60 } do %>
+<%= content_tag "div", id: "axoncalendar", data: { tutor: @user.tutor.id, utcoffset: ActiveSupport::TimeZone[@school.timezone].now.utc_offset/60 } do %>
   <div class="row">
     <div id="scheduling-container">
       
