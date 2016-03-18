@@ -4,6 +4,7 @@ class CheckoutController < ApplicationController
   before_action :set_student
   before_action :set_school
   before_action :set_cart
+  before_action :start_over_for_missing_cart, except: [:select_course, :set_course_id]
 
   rescue_from StandardError do |e|
     # send error report emails for production
@@ -56,18 +57,19 @@ class CheckoutController < ApplicationController
       flash[:alert] = 'Please select a course'
       redirect_to checkout_select_course_path(@tutor.slug, anchor: 'select-course')
     end
-    # everything here simply sets up calendar view
+    # everything here simply sets up calendar view using TutorAvailability service class
     data = TutorAvailability.new(@tutor.id, params[:current], params[:week]).get_times
     @start_date = data[:start_date]
     @times_for_week = data[:times_for_week]
+    # @future_availability is boolean which determines whether or not 'Next Week' button should be disabled
     @future_availability = data[:future_availability]
+    # @zero_availability is boolean which determines whether to show normal calendar view or special message for tutors with no availability set
     @zero_availability = data[:zero_availability]
     # set tutorID with Gon
     gon.tutor_id = @tutor.id
     # if any appt_times are already saved in cart, sets their ID's in Gon variable to let JS select them again
     if @cart.info[:appt_times] && @cart.info[:tutor_id] == @tutor.id
       gon.selected_appt_ids = @cart.info[:appt_times].keys
-      puts "KEYS BITCHES!!!!!!! = #{@cart.info[:appt_times].keys} "
     else
       gon.selected_appt_ids = nil
     end
@@ -79,31 +81,25 @@ class CheckoutController < ApplicationController
     if @cart.info[:appt_times].nil?
       @cart.info[:appt_times] = Hash.new
       @cart.info[:appt_times][params[:checkbox_id]] = params[:appt_times]
-      @cart.save
     # if 1 or more appts are being added from the regular_times modal
     elsif params[:regular_appt_selections]
       appt_info_hash = params[:regular_appt_selections]
       appt_info_hash.each do |k,v|
         @cart.info[:appt_times][k] = v
       end
-      if @cart.save
-        appt_count = appt_info_hash.count
-        flash[:info] = "#{appt_count} regular appointments were succesfully added to your cart."
-      else
-        flash[:info] = "Regular appointments were not added. Please try again."
-      end
+      appt_count = appt_info_hash.count
+      flash[:info] = "#{appt_count} regular appointments were succesfully added to your cart."
     # if the :app_times hash already exists and just one appt at a time is being saved via AJAX from select_times view
     else
       # adds the appt_time if the time pill was selected
       if params[:checkbox] == 'selected'
         @cart.info[:appt_times][params[:checkbox_id]] = params[:appt_times]
-        @cart.save
       # removes the appt_time if the time pill was de-selected
       else 
         @cart.info[:appt_times] = @cart.info[:appt_times].to_hash.except!([params[:checkbox_id]].first)
-        @cart.save
       end
     end
+    @cart.save
     redirect_to :back
   end
 
@@ -113,11 +109,9 @@ class CheckoutController < ApplicationController
     service = RegularApptScheduler.new(@tutor.id, params[:appt_info])
     @similar_appt_times = service.similar_appt_times
     @original_time = service.original_time
-    @tutor 
     if @similar_appt_times.any?
       gon.similar_appts = @similar_appt_times.count
     else
-      # if this is nil, then the reveal modal shouldn't open, needs to be done in JS on _available_times partial
       gon.similar_appts = nil 
     end
     # uses special layout view to load separate page w/o normal header and footer (views/layouts/modal_only.html.erb)
@@ -151,6 +145,7 @@ class CheckoutController < ApplicationController
       flash[:info] = 'Please select a meeting time'
       redirect_to checkout_select_times_path(@tutor.slug, anchor: 'select-times')
     end
+    # apply auto discount for new tutors if tutor has less than 3 completed appts
     if @cart.info[:promo_code].blank? && TutorAnalyzer.new(@tutor).completed_appts.count < 3
       @cart.info[:promo_code] = 'New Axon Tutor Auto-Discount'
       @cart.save
@@ -197,7 +192,7 @@ class CheckoutController < ApplicationController
   # step 5 - processes booking
   def process_booking 
     # PrepareCheckout service formats data for CheckoutOrganizer 
-    # * flags if a new user is created so if CheckoutOrganizer fails, it knows to destroy user (so user can try to book and create account again with a new card, etc.)
+    # flags if a new user is created so if CheckoutOrganizer fails, it knows to destroy user (so user can try to book and create account again with a new card, etc.)
     @checkout_data = PrepareCheckout.new(params, @cart, @tutor, @student).prepare_data_for_checkout_organizer
     if @checkout_data[:success] == false
       # clean-up after failure - destroy new user if one was created

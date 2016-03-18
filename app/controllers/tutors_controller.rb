@@ -5,8 +5,9 @@ class TutorsController < ApplicationController
   # TUTOR CREATION IS HANDLED THROUGH THE DEVISE REGISTRATION CONTROLLER - ONE FORM CREATES USER AND TUTOR
 
   def show
+    # this is where a Cart is created when a booking starts from search, rather than straight from a tutor's profile page
     if @tutor.active_status == 'Active'
-      if params[:course] # this is where a Cart is created when a booking starts from search, rather than straight from a tutor's profile page
+      if params[:course] 
         @cart = Cart.create(info: Hash.new())
         @cart.info[:course_id] = params[:course]
         @cart.info[:tutor_id] = @tutor.id
