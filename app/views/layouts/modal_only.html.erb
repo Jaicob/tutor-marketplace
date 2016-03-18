@@ -25,7 +25,7 @@
                 </div>
               <% end %>
             <% else %>
-              <h4 class="margin-top-5em"><%= @tutor.public_name %> does not currently have any future availabilty at this weekly meeting time.</h4>
+              <h4 class="margin-top-5em padding-1em"><%= @tutor.public_name %> does not currently have any future availabilty at this weekly meeting time.</h4>
             <% end %>
           </div>
         </div>
@@ -34,21 +34,22 @@
     <div class="row">
       <div class="small-12 medium-6 columns">
         <div class="button-container">
-          <button class="custom-button full-width gray regular-appt-modal-button">Continue with One Appointment</button>
+          <% if @similar_appt_times.any? %>
+            <button class="custom-button full-width gray regular-appt-modal-button">Continue with One Appointment</button>
+          <% else %>
+            <button class="custom-button full-width regular-appt-modal-button">Continue with One Appointment</button>
+          <% end %>      
         </div>
       </div>
       <div class="small-12 medium-6 columns">
         <div class="button-container">
-          <%= f.submit 'Add Additional Appointments', class: 'custom-button full-width regular-appt-modal-button' %> 
+          <% if @similar_appt_times.any? %>
+            <%= f.submit 'Add Additional Appointments', class: 'custom-button full-width regular-appt-modal-button' %> 
+          <% else %>
+            <%= f.submit 'Add Additional Appointments', class: 'custom-button full-width gray regular-appt-modal-button disabled', disabled: true %> 
+          <% end %>
         </div>
       </div>
     </div>
   <% end %>
 </div>
-
-
-
-
-
-
-              
