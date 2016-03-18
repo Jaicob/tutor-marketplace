@@ -53,7 +53,7 @@ class CheckoutController < ApplicationController
   # step 2 - view
   def select_times 
     # redirect to previous step if no times are in cart
-    if @cart.info[:course_id].blank? || @cart.info[:tutor_id].blank?
+    if @cart.info[:course_id].blank? || @cart.info[:tutor_id].blank? || @cart.info[:tutor_id] != @tutor.id
       flash[:alert] = 'Please select a course'
       redirect_to checkout_select_course_path(@tutor.slug, anchor: 'select-course')
     end
@@ -106,9 +106,9 @@ class CheckoutController < ApplicationController
   # this is the modal that pops up to encourage repeat regular bookings
   # uses special base layout view to load AJAX page (views/layouts/modal_only.html.erb)
   def regular_times 
-    service = RegularApptScheduler.new(@tutor.id, params[:appt_info])
-    @similar_appt_times = service.similar_appt_times
-    @original_time = service.original_time
+    scheduler = RegularApptScheduler.new(@tutor.id, params[:appt_info])
+    @similar_appt_times = scheduler.similar_appt_times
+    @original_time = scheduler.original_time
     if @similar_appt_times.any?
       gon.similar_appts = @similar_appt_times.count
     else
