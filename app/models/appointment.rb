@@ -36,7 +36,7 @@ class Appointment < ActiveRecord::Base
 
   enum status: ['Scheduled', 'Cancelled', 'Completed']
 
-  attr_accessor :appt_reminder_email_date
+  attr_accessor :appt_reminder_email_time, :appt_follow_up_email_time
 
   # custom validation
   def start_time_uniqueness
@@ -93,16 +93,21 @@ class Appointment < ActiveRecord::Base
   end
 
   def update_status_for_complete_appts
-    if self.start_time < DateTime.now && self.status == 'Scheduled'
+    if (self.start_time + 1.hour) < DateTime.now && self.status == 'Scheduled'
       self.update_attribute('status', 2)
     end
   end
 
   # This sets the delivery time for reminder emails as 12 hours before the appointment, except in the case where the appointment is tomorrow and no reminder is needed
-  def appt_reminder_email_date
+  def appt_reminder_email_time
     if self.start_time.to_date > (self.created_at.to_date + 1)
-      (self.start_time.to_time - 43200).to_datetime
+      self.start_time - 12.hours
     end
+  end
+
+  # This sets the delivery time for follow_up emails as 3 hours after the appointment
+  def appt_follow_up_email_time
+    self.start_time + 4.hours
   end
 
   # Ensure that datetimes are always saved as UTC

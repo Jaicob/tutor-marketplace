@@ -33,6 +33,16 @@ class AppointmentMailer < ApplicationMailer
     mail(to: @student.email, subject: "Your upcoming Axon tutoring appointment")
   end
 
+  # ==============================
+  #  Appointment Follow-Up Emails
+  # ==============================
+
+  def appointment_follow_up_for_student(appointment_id)
+    @appt = Appointment.find(appointment_id)
+    set_appt_variables
+    mail(to: @student.email, subject:  "How did your session go?")
+  end
+
   # ================================
   #   Appointment Rescheduled Emails
   # ================================

@@ -52,18 +52,18 @@ RSpec.describe Appointment, type: :model do
     expect(build(:appointment, slot_id: slot.id, start_time: '2015-09-01 16:00')).not_to be_valid
   end
 
-  it 'sets appt_reminder_email_date to nil for an appt booked less than 24 hours in advance' do 
+  it 'sets appt_reminder_email_time to nil for an appt booked less than 24 hours in advance' do 
     slot = create(:slot, start_time: DateTime.now)
     appt = create(:appointment, slot: slot, start_time: slot.start_time)
-    expect(appt.appt_reminder_email_date).to be_nil
+    expect(appt.appt_reminder_email_time).to be_nil
   end
 
-  it 'sets appt_reminder_email_date for an appt booked more than 24 hours in advance' do
+  it 'sets appt_reminder_email_time for an appt booked more than 24 hours in advance' do
     appt_date_time = DateTime.now + 3
     reminder_email_time = (appt_date_time - 0.5).to_time # reminder emails are sent 12 hours prior to appt
     slot = create(:slot, start_time: appt_date_time)
     appt = create(:appointment, slot: slot, start_time: appt_date_time)
-    expect(appt.appt_reminder_email_date).to eq(reminder_email_time)
+    expect(appt.appt_reminder_email_time).to eq(reminder_email_time)
     expect(reminder_email_time).to be_a Time
   end
 
