@@ -78,12 +78,11 @@ class TutorAvailability
         # set slot's first start_time (then incremented by '1800' or 30 min. at end of each loop)
         start_time = slot.start_time
         # used to create unique IDs for all time pills for correct targeting with selection, de-selection via JS
-        uniq_id = 0
         x.times do
           data = {
             time: start_time.strftime('%l:%M %p'),
             datetime: start_time,
-            uniq_id: slot.id.to_s + sprintf('%02i', uniq_id).to_s, # have to add slot_id to make unique + sprintf adds zero-padding to numbers under 10 which allows the disabledNeigboringCheckboxes to function (otherwise the number jumps a whole tens place from id 9 to id 10)
+            uniq_id: start_time.strftime('%j-%H-%M'),
             slot_id: slot.id
           }
           # mark time pills requiring disabling by JS
@@ -92,9 +91,8 @@ class TutorAvailability
           end
           # add data hash to appt_times array
           appt_times << data
-          # increment uniq_id and start_time
-          uniq_id += 1
-          start_time += 1800 # adds a 1/2 hour to the start_time each iteration
+          # increment start_time - adds a 1/2 hour to the start_time each iteration
+          start_time += 1800 
         end
         
         # if date is today's date, pass to extra method to add 'unavailable' class to start times that have been passed and/or are inside a tutor's booked_buffer unavailability

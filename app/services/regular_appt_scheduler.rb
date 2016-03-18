@@ -22,14 +22,15 @@ class RegularApptScheduler
     # now create an array of slot_id, start_time and display time in hashes
     array = []
     slots.each do |slot|
-      appt_start_time = slot.start_time.to_date.to_s + " " + @appt_hour_24
+      appt_start_time = DateTime.parse(slot.start_time.to_date.to_s + " " + @appt_hour_24)
       # end iteration and go to next slot in collection if a slot has an appointment that blocks the selected appt_time (includes exact appt time + 30 min. before and after)
       if blocked_by_scheduled_appts?(slot)
         next
       end
       # seems to repeat the condition in the first select block, but somehow some times were displaying slots from the same week while others weren't, maybe a timezone thing? either way, this extra validation here keeps the unwanted same day/identical appt out of the modal list 
-      if DateTime.parse(appt_start_time) != @appt_datetime
+      if appt_start_time != @appt_datetime
         array << {
+          uniq_id: appt_start_time.strftime('%j-%H-%M'),
           slot_id: slot.id, 
           start_time: appt_start_time,
           time_display: format_time_and_date(slot)

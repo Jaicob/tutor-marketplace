@@ -61,6 +61,7 @@ class CheckoutController < ApplicationController
     # if any appt_times are already saved in cart, sets their ID's in Gon variable to let JS select them again
     if @cart.info[:appt_times] && @cart.info[:tutor_id] == @tutor.id
       gon.selected_appt_ids = @cart.info[:appt_times].keys
+      puts "KEYS BITCHES!!!!!!! = #{@cart.info[:appt_times].keys} "
     else
       gon.selected_appt_ids = nil
     end
@@ -97,7 +98,7 @@ class CheckoutController < ApplicationController
         @cart.save
       end
     end
-    redirect_to checkout_select_times_path(@tutor.slug, anchor: 'select-times')
+    redirect_to :back
   end
 
   # this is the modal that pops up to encourage repeat regular bookings

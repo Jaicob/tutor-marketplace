@@ -19,7 +19,7 @@
                 <div class="similar-appt-time-box">
                   <label>
                     <!-- the dynamically set value for checkboxes here looks a little ugly and overcomplicated, but it's structure (datetime + '----' + slot_id) is necessary on the normal available times view and for consistency (and so it works the same with the create_appointments checkout interactor) it's the same here -->
-                    <input type="checkbox" name="regular_appt_selections[<%= appt_info[:slot_id] %>]" value="<%= appt_info[:start_time] %>----<%= appt_info[:slot_id] %>">
+                    <input type="checkbox" id="<%= appt_info[:uniq_id] %>" name="regular_appt_selections[<%= appt_info[:uniq_id] %>]" value="<%= appt_info[:start_time] %>----<%= appt_info[:slot_id] %>">
                     <div class="appt-time"><%= appt_info[:time_display] %></div>
                   </label>
                 </div>
