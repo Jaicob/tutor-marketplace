@@ -16,6 +16,7 @@ class RegularApptScheduler
     slots = @tutor.slots.select do |slot|
       slot.start_time.to_date > DateTime.now.to_date && 
       slot.start_time.wday == @appt_datetime.wday && 
+      slot.status == 'Open' &&
       # this last condition sets a DateTime range and then makes sure the appt_time is inside that range
       ((slot.start_time)..(slot.start_time + slot.duration.seconds)).cover?(DateTime.parse(slot.start_time.to_date.to_s + " " + @appt_hour_24))
     end

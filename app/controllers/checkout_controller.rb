@@ -96,7 +96,7 @@ class CheckoutController < ApplicationController
         @cart.info[:appt_times][params[:checkbox_id]] = params[:appt_times]
       # removes the appt_time if the time pill was de-selected
       else 
-        @cart.info[:appt_times] = @cart.info[:appt_times].to_hash.except!([params[:checkbox_id]].first)
+        @cart.info[:appt_times] = @cart.info[:appt_times].except![params[:checkbox_id]].first)
       end
     end
     @cart.save
