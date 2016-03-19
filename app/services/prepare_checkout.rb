@@ -27,6 +27,7 @@ class PrepareCheckout
     @token = params[:stripeToken]
     @tutor = tutor_booked
     @promo_code = cart.info[:promo_code]
+    @cart_id = cart.id
   end
 
   # public method
@@ -43,6 +44,7 @@ class PrepareCheckout
         stripe_token: @token,
         appts_info: appts_info,
         promo_code: @promo_code,
+        cart_id: @cart_id,
         new_user?: @new_user,
         new_user_id: @new_user_id,
         one_time_card: @one_time_card
