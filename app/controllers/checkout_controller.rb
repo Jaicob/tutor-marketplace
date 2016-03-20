@@ -4,24 +4,23 @@ class CheckoutController < ApplicationController
   before_action :set_student
   before_action :set_school
   before_action :set_cart
-  before_action :start_over_for_missing_cart, except: [:select_course, :set_course_id]
 
-  rescue_from StandardError do |e|
-    # send error report emails for production
-    if !request.original_url.include?('dockerhost') && !request.original_url.include?('staging')
-      error_report = create_error_report(e)
-      ProductionErrorMailer.delay.send_error_report('PRODUCTION', error_report)
-    # send error report emails for staging
-    elsif !request.original_url.include?('dockerhost')
-      error_report = create_error_report(e)
-      ProductionErrorMailer.delay.send_error_report('STAGING', error_report)
-    end
-    # (no emails sent for local)
-    # reset card_id in session to allow user to begin again with a new cart (and hopefully avoid the same problem again)
-    session[:cart_id] = nil
-    flash[:info] = "Uh oh! There was a network timeout. Please attempt your booking again. We apologize for the inconvenience."
-    redirect_to checkout_select_course_path(@tutor.slug, anchor: 'select-course')
-  end
+  # rescue_from StandardError do |e|
+  #   # send error report emails for production
+  #   if !request.original_url.include?('dockerhost') && !request.original_url.include?('staging')
+  #     error_report = create_error_report(e)
+  #     ProductionErrorMailer.delay.send_error_report('PRODUCTION', error_report)
+  #   # send error report emails for staging
+  #   elsif !request.original_url.include?('dockerhost')
+  #     error_report = create_error_report(e)
+  #     ProductionErrorMailer.delay.send_error_report('STAGING', error_report)
+  #   end
+  #   # (no emails sent for local)
+  #   # reset card_id in session to allow user to begin again with a new cart (and hopefully avoid the same problem again)
+  #   session[:cart_id] = nil
+  #   flash[:info] = "Uh oh! There was a network timeout. Please attempt your booking again. We apologize for the inconvenience."
+  #   redirect_to checkout_select_course_path(@tutor.slug, anchor: 'select-course')
+  # end
 
   # step 1 - view
   def select_course 
@@ -52,10 +51,11 @@ class CheckoutController < ApplicationController
 
   # step 2 - view
   def select_times 
-    # redirect to previous step if no times are in cart
+    # redirect to previous step if no cart exists or times are in cart
     if @cart.info[:course_id].blank? || @cart.info[:tutor_id].blank? || @cart.info[:tutor_id] != @tutor.id
       flash[:alert] = 'Please select a course'
       redirect_to checkout_select_course_path(@tutor.slug, anchor: 'select-course')
+      return
     end
     # everything here simply sets up calendar view using TutorAvailability service class
     data = TutorAvailability.new(@tutor.id, params[:current], params[:week]).get_times
@@ -96,7 +96,10 @@ class CheckoutController < ApplicationController
         @cart.info[:appt_times][params[:checkbox_id]] = params[:appt_times]
       # removes the appt_time if the time pill was de-selected
       else 
-        @cart.info[:appt_times] = @cart.info[:appt_times].except![params[:checkbox_id]].first)
+        # key_to_remove = params[:checkbox_id].first
+        # @cart.info[:appt_times] = @cart.info[:appt_times].to_hash.except!(params[:checkbox_id].first)
+        @cart.info[:appt_times] = @cart.info[:appt_times].to_hash.except!([params[:checkbox_id]].first)
+        @cart.save
       end
     end
     @cart.save
@@ -115,15 +118,17 @@ class CheckoutController < ApplicationController
       gon.similar_appts = nil 
     end
     # uses special layout view to load separate page w/o normal header and footer (views/layouts/modal_only.html.erb)
-    render layout: "modal_only" 
+    @modal = 'regular_times'
+    render layout: "modal_only"
   end
 
   # step 3 - view
   def select_location 
     # redirect to previous step if no times are in cart // this is also checked in above set_times step, but checking twice can't hurt, right? in case someone comes back to this page directly...
-    if @cart.info[:appt_times].blank?
+    if @cart.nil? || @cart.info[:appt_times].blank?
       flash[:info] = 'Please select a meeting time'
       redirect_to checkout_select_times_path(@tutor.slug, anchor: 'select-times')
+      return
     end
   end
   
@@ -141,9 +146,10 @@ class CheckoutController < ApplicationController
   # step 4 - view
   def review_booking 
     # redirect to previous step if no location is in cart
-    if @cart.info[:location].blank?
+    if @cart.nil? || @cart.info[:location].blank?
       flash[:info] = 'Please select a meeting time'
       redirect_to checkout_select_times_path(@tutor.slug, anchor: 'select-times')
+      return
     end
     # apply auto discount for new tutors if tutor has less than 3 completed appts
     if @cart.info[:promo_code].blank? && TutorAnalyzer.new(@tutor).completed_appts.count < 3
@@ -235,15 +241,13 @@ class CheckoutController < ApplicationController
     end
 
     def set_cart
-      if session[:cart_id]
-        @cart = Cart.find(session[:cart_id])
-      end
-    end
-
-    def start_over_for_missing_cart
-      if session[:cart_id].nil?
-        redirect_to redirect_to checkout_select_course_path(@tutor.slug, anchor: 'select-course')
-        return
+      begin 
+        if session[:cart_id]
+          @cart = Cart.find(session[:cart_id])
+        end
+      rescue
+        @cart = nil
+        session[:cart_id] = nil
       end
     end
 
