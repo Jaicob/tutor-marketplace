@@ -20,10 +20,12 @@
 #                checkout_select_course GET      /tutors/:id/select_course(.:format)                                           checkout#select_course
 #                checkout_set_course_id POST     /tutors/:id/set_course_id(.:format)                                           checkout#set_course_id
 #                 checkout_select_times GET      /tutors/:id/select_times(.:format)                                            checkout#select_times
-#                    checkout_set_times POST     /tutors/:id/set_appt_times(.:format)                                          checkout#set_times
+#                checkout_regular_times GET      /tutors/:id/regular_times(.:format)                                           checkout#regular_times
+#               checkout_save_appt_time POST     /tutors/:id/appt_time(.:format)                                               checkout#save_appt_time
 #              checkout_select_location GET      /tutors/:id/select_location(.:format)                                         checkout#select_location
 #                 checkout_set_location POST     /tutors/:id/set_location(.:format)                                            checkout#set_location
 #               checkout_review_booking GET      /tutors/:id/review_booking(.:format)                                          checkout#review_booking
+#           checkout_review_remove_appt POST     /tutors/:id/remove_appt_time(.:format)                                        checkout#remove_appt_time
 #             checkout_apply_promo_code POST     /tutors/:id/apply_promo_code(.:format)                                        checkout#apply_promo_code
 #              checkout_process_booking POST     /tutors/:id/process_booking(.:format)                                         checkout#process_booking
 #                 checkout_confirmation GET      /tutors/:id/confirmation(.:format)                                            checkout#confirmation
@@ -261,10 +263,12 @@ Rails.application.routes.draw do
     get   '/select_course'    => 'checkout#select_course', as: 'checkout_select_course'
     post  '/set_course_id'    => 'checkout#set_course_id', as: 'checkout_set_course_id'
     get   '/select_times'     => 'checkout#select_times', as: 'checkout_select_times'
-    post  '/set_appt_times'   => 'checkout#set_times', as: 'checkout_set_times'
+    get   '/regular_times'    => 'checkout#regular_times', as: 'checkout_regular_times'
+    post  '/appt_time'        => 'checkout#save_appt_time', as: 'checkout_save_appt_time'
     get   '/select_location'  => 'checkout#select_location', as: 'checkout_select_location'
     post  '/set_location'     => 'checkout#set_location', as: 'checkout_set_location'
     get   '/review_booking'   => 'checkout#review_booking', as: 'checkout_review_booking'
+    post  '/remove_appt_time' => 'checkout#remove_appt_time', as: 'checkout_review_remove_appt'
     post  '/apply_promo_code' => 'checkout#apply_promo_code', as: 'checkout_apply_promo_code'
     post  '/process_booking'  => 'checkout#process_booking', as: 'checkout_process_booking'
     get   '/confirmation'     => 'checkout#confirmation', as: 'checkout_confirmation'

@@ -77,7 +77,7 @@ User.all.each do |user|
       dob: Date.today - 10000,
     )
     x = Tutor.count
-    if x == 5
+    if x == 6
       n += 1
     end
   end
@@ -131,7 +131,7 @@ end
 
 # Activate tutors
 Tutor.all.each do |tutor|
-  tutor.update(active_status: 1, onboarding_status: 4, application_status: 3)
+  tutor.update(active_status: 1, onboarding_status: 4, application_status: 2)
 end
 
 # Add bank account to tutors
@@ -169,7 +169,7 @@ n = 1
 new_users.each do |new_user|
   new_user.create_student!(school_id: n)
   x = Student.count
-  if (x == 5)
+  if (x == 6)
     n += 1
   end
 end

@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe CheckoutOrganizer do
+  let(:cart) { create(:cart) }
 
   describe 'create_appointments interactor' do 
     
@@ -65,7 +66,8 @@ RSpec.describe CheckoutOrganizer do
             {slot_id: @tutor.slots.first.id, course_id: @tutor_course.course_id, start_time: @tutor.slots.first.start_time},
             {slot_id: @tutor.slots.first.id, course_id: @tutor_course.course_id, start_time: @tutor.slots.first.start_time}
           ],
-          promo_code: nil
+          promo_code: nil,
+          cart_id: cart.id,
         }
         VCR.use_cassette('run_checkout_organizer') do
           @context = CheckoutOrganizer.call(params)

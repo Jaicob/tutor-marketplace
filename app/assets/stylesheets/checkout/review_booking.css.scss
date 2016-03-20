@@ -1,3 +1,15 @@
+input.remove-appt-link {
+  border: none;
+  background: none;
+  color: red;
+  width: 100%;
+  font-size: 1em;
+  font-weight: 300;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 .row.sign-in-bar {
   background-color: #2bc2de;
   padding-top: 1em;

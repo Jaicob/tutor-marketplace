@@ -28,6 +28,7 @@ class CreateCharge
       @course = Course.find(context.appointments.first.course_id)
       @timezone = @course.school.timezone
       @appt_times = context.appointments.map{|appt| appt.start_time.in_time_zone(@timezone).strftime("%A, %B %e at %l:%M %p")}
+      @cart = Cart.find(context.cart_id)
 
       context.transaction_percentage = School.find(@tutor.school_id).transaction_percentage
       axon_fee_multiplier = ((context.transaction_percentage.to_f / 100) + 1)
@@ -54,6 +55,10 @@ class CreateCharge
         token: context.stripe_token
       )
 
+      # attach charge id to 
+      @cart.update(charge_id: charge.id)
+      @cart.save
+
       # TODO-JT - error message for charge creation failure?
 
       context.charge_description = "Student: #{@student.full_name}, Tutor: #{@tutor.full_name}, Course: #{@course.formatted_name}, School: #{@course.school.name}, Appts: #{context.appointments.count}, Time(s): #{@appt_times}"
@@ -71,6 +76,9 @@ class CreateCharge
 
   def rollback
     context.charge.destroy
+    cart = Cart.find(context.cart_id)
+    cart.update(charge_id: nil)
+    cart.save
   end
 
 end

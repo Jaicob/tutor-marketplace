@@ -385,7 +385,7 @@ $(document).ready(function() {
         if ($.isNumeric($("#weeksToRepeat").val()) && $("#weeksToRepeat").val() > 1){
           weeks = $("#weeksToRepeat").val();
         } else {
-          weeks = 2;
+          weeks = 6;
         }
         return weeks;
       },

@@ -5,6 +5,15 @@
       <tr>
         <td class="center">#<%= appt_count %></td>
         <td><%= v[:start_time].to_datetime.in_time_zone(@school.timezone).strftime('%B %e, %Y at %l:%M %p') %></td>
+        <!-- only display remove links on review booking page before checkout, not for receipt in student dashboard (where no @tutor is set) -->
+        <% if @tutor %>
+          <td>
+            <%= form_for :remove_appt_time, url: checkout_review_remove_appt_path(@tutor.slug), method: :post do |f| %>
+              <%= f.hidden_field :start_time, value: v[:start_time] %>
+              <%= f.submit 'Remove', class: 'remove-appt-link' %>
+            <% end %>
+          </td>
+        <% end %>
       </tr>
       <% appt_count += 1 %>
     <% end %>

@@ -1,32 +1,49 @@
 <% 7.times do |count| %>
   <li>  
     <div class="calendar-column">
-      <p class="day"><%= @availability_data[count][:date].strftime('%A') %></p>
-      <p class="date"><%= @availability_data[count][:date].strftime('%m/%d') %></p>
-      <% if @availability_data[count][:times] %>
-        <% @availability_data[count][:times].each do |data| %>
-          <div class="appt-time-box">
-            <label>
-              <input type="checkbox" id="<%=data[:uniq_id]%>" class="<%=data[:reserved]%>" value="<%=data[:datetime].to_s+'----'+data[:slot_id].to_s%>" name="appt_selection[<%= data[:uniq_id] %>]" onchange="disableNeighborCheckboxes(this)">
-              <div class="appt-time"><%= data[:datetime].in_time_zone(@school.timezone).strftime('%l:%M %p') %></div>
-            </label>
-          </div>
-        <% end %>
-      <% end %>
+      <p class="day"><%= @times_for_week[count][:date].strftime('%A') %></p>
+      <p class="date"><%= @times_for_week[count][:date].strftime('%m/%d') %></p>
+      <div class="scroll-box-container">
+        <div class="scroll-box">
+          <% if @times_for_week[count][:times] %>
+            <% @times_for_week[count][:times].each do |data| %>
+              <div class="appt-time-box">
+                <label>
+                  <input type="checkbox" id="<%=data[:uniq_id]%>" class="appt-time-checkbox <%=data[:reserved]%>" value="<%=data[:datetime].to_s+'----'+data[:slot_id].to_s%>" name="appt_selection[<%= data[:uniq_id] %>]" onchange="saveApptTimeAndMarkPills(this)">
+                  <div class="appt-time"><%= data[:datetime].in_time_zone(@school.timezone).strftime('%l:%M %p') %></div>
+                </label>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
     </div>
   </li>
 <% end %>
 
-<script>
-window.onload = function start() { // calls 2 methods
-      // 1. Check appt times selected by current user during session
-      // 2. Disable reserved times due to existing bookings
+<!-- The empty div below is necessary to hold the regular_appt modal that is dynamically generated via Foundation's Reveal modal -->
+<div id="regularApptTimesModal" class="reveal-modal xlarge" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+</div>
 
-  // 1. Check appt times selected by current user during session
+<script>
+window.onload = function start() { 
+  // Performs 3 tasks onload
+  //
+  // 1. Adds EventListener to appt time checkboxes -- removed b/c couldn't get onchange event to fire programatically (in #2 method here) when onchange was attached via addEventListener, but fires easily in method #2 with onchange event set directly in HTML above
+  // 2. Reselects appt times selected by current user during session (in case of page refresh, going back to this step)
+  // 3. Disables reserved times due to existing bookings or tutor's booking buffer
+
+  // // 1. Adds Event Listener to all Appt Time Checkboxes
+  // var apptTimeCheckboxes = document.getElementsByClassName('appt-time-checkbox');
+  // for(var i=0; i < apptTimeCheckboxes.length; i++) {
+  //   element = apptTimeCheckboxes[i];
+  //   apptTimeCheckboxes[i].addEventListener('change', saveApptTimeAndMarkPills(element));
+  // }
+
+  // 2. Reselects appt times selected by current user during session (in case of page refresh, going back to this step)
   if (gon.selected_appt_ids != null){
     var selectedApptIds = gon.selected_appt_ids
-    var arrayLength = selectedApptIds.length;
-    for (var i = 0; i < arrayLength; i++) {
+    for (var i = 0; i < selectedApptIds.length; i++) {
       var checkbox = document.getElementById(selectedApptIds[i]);
       if(checkbox != null) {
         checkbox.checked = true;
@@ -35,77 +52,169 @@ window.onload = function start() { // calls 2 methods
     }
   }
 
-  // 2. Disable reserved times due to existing bookings or booking_buffer
-  var reservedAppts = document.getElementsByClassName("reserved")
+  // 3. Disables checkboxes of reserved times due to existing bookings or tutor's booking buffer
+  var reservedAppts = document.getElementsByClassName('reserved')
   if (reservedAppts.length > 0) {
     for (var i = 0; i < reservedAppts.length; i++) {
       // disable reserved time
       var checkbox = reservedAppts[i];
+      checkbox.dataset.reserved = true;
       checkbox.disabled = true;
-      // disabled 30 mins before and after reserved time (if those times exist)
-      var checkboxID = parseInt(checkbox.id);
-      var checkboxBefore = document.getElementById(checkboxID - 1);
-      if (checkboxBefore) {
-        checkboxBefore.disabled = true;
+      // disable time 30 mins before (if it exists)
+      var BeforeId = getTimePillBeforeId(checkbox.id);
+      var Before = document.getElementById(BeforeId);
+      if (Before != null) {
+        Before.dataset.reserved = true;
+        Before.disabled = true;
       }
-      var checkboxAfter = document.getElementById(checkboxID + 1);
-      if (checkboxAfter) {
-        checkboxAfter.disabled = true;
-        checkboxAfter.classList.add('override-gray');
+      // disable time 30 mins after (if it exists)
+      var AfterId = getTimePillAfterId(checkbox.id);
+      var After = document.getElementById(AfterId);
+      if (After != null) {
+        After.dataset.reserved = true;
+        After.disabled = true;
       }
     }
   }
-};
+}
 
-function disableNeighborCheckboxes(element) {
-  var selected = parseInt(element.id);
-  checkboxTwoBeforeId = selected - 2;
-  checkboxBeforeId = selected - 1;
-  checkboxAfterId = selected + 1;
-  checkboxTwoAfterId = selected + 2;
-  
-  var checkboxTwoBefore = document.getElementById(checkboxTwoBeforeId);
-  var checkboxBefore = document.getElementById(checkboxBeforeId);
-  var checkboxAfter = document.getElementById(checkboxAfterId);
-  var checkboxTwoAfter = document.getElementById(checkboxTwoAfterId);
+function getTimePillBeforeId(selected_id) {
+  var split_selected = selected_id.split("-");
+  var doy = parseInt(split_selected[0]);
+  var hour = parseInt(split_selected[1]);
+  var minute = parseInt(split_selected[2]);
+  // make adjustments to time to get id of before time pill
+  if (minute == '00') {
+    hour = hour - 1;
+    minute = '30';
+  } else { // minute == '30'
+    minute = '00';
+  }
+  // TODO-JT - refactor this and the method below (both are identical in the bottom portion)
+  // make sure hour is a two character string
+  hour = hour.toString();
+  if(hour.length == 1) {
+    hour = '0' + hour;
+  }
+  // make sure doy is a three character string
+  doy = doy.toString();
+  if(doy.length == 1) {
+    doy = '00' + doy;
+  } else if (doy.length == 2) {
+    doy = '0' + doy;
+  }
+  var id = doy + '-' + hour + '-' + minute;
+  return id;
+}
 
-  if (element.checked) {
-    // element checked - triggered when click event makes it checked
-    if (checkboxBefore != null) {
-      checkboxBefore.disabled = true;
-    }
-    if (checkboxAfter != null) {
-      checkboxAfter.disabled = true;
-      checkboxAfter.classList.add("second-half-of-appt");
-    }
-  } else {
-    // when checkbox is un-checked...(ex: 5:00 is de-selected)
-    if (checkboxBefore != null && checkboxTwoBefore != null) { // (4:00 and 4:30 exist)
-      if (!checkboxTwoBefore.classList.contains("reserved")) {    // (4:00 is not booked)
-        checkboxBefore.disabled = false;                        // (remove disabled state from 4:30)
+function getTimePillAfterId(selected_id) {
+  var split_selected = selected_id.split("-");
+  var doy = parseInt(split_selected[0]);
+  var hour = parseInt(split_selected[1]);
+  var minute = parseInt(split_selected[2]);
+  // make adjustments to time to get id of after time pill
+  if (minute == '00') {
+    minute = '30';
+  } else { // minute == '30'
+    hour = hour + 1;
+    minute = '00'
+  }
+  // make sure hour is a two character string
+  hour = hour.toString();
+  if(hour.length == 1) {
+    hour = '0' + hour;
+  }
+  // make sure doy is a three character string
+  doy = doy.toString();
+  if(doy.length == 1) {
+    doy = '00' + doy;
+  } else if (doy.length == 2) {
+    doy = '0' + doy;
+  }
+  var id = doy + '-' + hour + '-' + minute;
+  return id;
+}
+
+
+function saveApptTimeAndMarkPills(element) {
+  var selected = element.id;
+  var apptTimes = element.value;
+  var tutorID = gon.tutor_id;
+
+  //adds or removes appt_time based on selection/de-selection, if it's being added also launches modal prompting regular sessions
+  if(element.checked) {
+    if (gon.selected_appt_ids == null){
+      // if no previously selected times, open modal
+      $('#regularApptTimesModal').foundation('reveal', 'open', {
+        url: '/tutors/' + tutorID + '/regular_times/',
+        data: {appt_info: element.value},
+      });
+    // if previously selected times exist, check if the appt_time of current element is already saved to the cart
+    } else { 
+      appt_exists = ($.inArray(element.id, gon.selected_appt_ids));
+      if (appt_exists == -1){
+        $('#regularApptTimesModal').foundation('reveal', 'open', {
+          url: '/tutors/' + tutorID + '/regular_times/',
+          data: {appt_info: element.value},
+        });
+      } else {
+        // don't open modal, because this appt was selected earlier and is just being selected on page reload
       }
     }
-    if (checkboxAfter != null && checkboxTwoAfter != null) {                            // (5:30 exists)
-      if (!checkboxTwoAfter.classList.contains("reserved")) {   // (6:00 is not booked)
-        checkboxAfter.disabled = false;                       // (removed disabled state from 5:30)
+    $.post('appt_time', {checkbox_id: selected, appt_times: apptTimes, checkbox: 'selected'});
+  }
+  else {
+    $.post('appt_time', {checkbox_id: selected, appt_times: apptTimes, checkbox: 'deselected'});
+  }
+
+  // get ID of all four relevant checkboxes
+  var BeforeId = getTimePillBeforeId(selected)
+  var TwoBeforeId = getTimePillBeforeId(BeforeId);
+  var AfterId = getTimePillAfterId(selected);
+  var TwoAfterId = getTimePillAfterId(AfterId);
+
+  // get relevant checkbox elements with IDs from above
+  var Before = document.getElementById(BeforeId);
+  var TwoBefore = document.getElementById(TwoBeforeId);
+  var After = document.getElementById(AfterId);
+  var TwoAfter = document.getElementById(TwoAfterId);
+
+  if (element.checked) { // When a time is SELECTED
+    if (Before != null) {
+      Before.disabled = true;
+    }
+    if (After != null) {
+      After.disabled = true;
+      After.classList.add("second-half-of-appt");
+    }
+  } else { // When a time is DE-SELECTED
+    // Before is the time pill immediately (i.e. 30 mins.) before...
+    if ((Before != null) && (Before.dataset.reserved != 'true')) {
+      if (TwoBefore == null) { // if TwoBefore does not exist, should turn from gray to empty (take away disabled)
+        Before.disabled = false;
+      } else if (TwoBefore.checked == true) { // if 2before is selected, should do nothing (stay green and disabled)
+        // do nothing
+      } else {
+        Before.disabled = false;
       }
-      checkboxAfter.classList.remove("second-half-of-appt");  // (remove 'second-half' class from 5:30)
     }
-    if (checkboxTwoBefore == null && checkboxBefore != null) {  // (4:00 does not exist, 4:30 does exist)
-      checkboxBefore.disabled = false;                          // (remove disabled state from 4:30)
-    } else if (checkboxTwoBefore != null && checkboxTwoBefore.checked != true && !checkboxTwoBefore.classList.contains("reserved")) {
-      // (4:00 exists, 4:00 is not checked, 4:00 is not booked)
-      checkboxBefore.disabled = false; // (remove disabled state from 4:30)
-    }
-    if (checkboxTwoAfter != null && checkboxTwoAfter.checked) { // (6:00 exists, 6:00 is checked)
-      checkboxAfter.disabled = true;                            // (disable 5:30)
-    }
-    if (checkboxTwoBefore != null && checkboxTwoBefore.checked == true) { // (4:00 exists and is booked)
-      checkboxBefore.disabled = true; // (disable 4:30)
-    }
-    if (checkboxTwoAfter == null) {
-      checkboxAfter.disabled = false;
-      checkboxAfter.classList.remove("second-half-of-appt");
+    // After is the time pill immediately (i.e. 30 mins.) after...
+    if (After != null) {
+      if (After.dataset.reserved != 'true') {
+        if(TwoAfter == null) { // if TwoAfter does not exist, should turn from green to empty (take away disabled & second-half of appt)
+          After.disabled = false;
+          After.classList.remove('second-half-of-appt');
+        } else if (TwoAfter.checked == true) { // if TwoAfter is selected, should turn from green to gray
+          After.disabled = true;
+          After.classList.remove('second-half-of-appt')
+        } else { // if TwoAfter is not selected, should change from green to empty
+          After.disabled = false;
+          After.classList.remove('second-half-of-appt');
+        }
+      } else { // if After is reserved, but not selected
+        After.disabled = true;
+        After.classList.remove('second-half-of-appt');
+      }
     }
   }
 }
