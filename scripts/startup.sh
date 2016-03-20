@@ -9,13 +9,19 @@ export SECRET_KEY_BASE=$SECRET_KEY_BASE
 # Setting DB
 DB_NAME="my_app_${RAILS_ENV}"
 
+# Set the correct nginx config
+sudo cp /etc/nginx/sites-available/${RAILS_ENV}.conf /etc/nginx/sites-enabled/default
+
+#set the correct env in unicorn
+sudo sed -i '' -e 's|.*CMD="$APP_ROOT/bin/unicorn -D -c /etc/my-app/config/unicorn.rb -E.*|CMD="$APP_ROOT/bin/unicorn -D -c /etc/my-app/config/unicorn.rb -E'"${RAILS_ENV}"'"|' /etc/init.d/unicorn
+
 # Trap sigkill and sigterm: otherwise dockr stop/start will complain for stale unicorn pid
 trap "pkill unicorn_rails ; exit " SIGINT SIGTERM SIGKILL
 
 echo "Stopping  unicorn_rails, if already running"
 pkill unicorn_rails
 
-#TODO Only run if environment is production
+# TODO Only run if environment is production
 echo "Setting up tmp and shared directories & removing old pids"
 rm -rf ./tmp/pids && \
 rm -rf ./tmp/sessions && \
@@ -31,10 +37,13 @@ ln -s /home/rails/my-app/tmp/sockets /home/rails/my-app/shared/sockets && \
 ln -s /home/rails/my-app/log /home/rails/my-app/shared/log
 
 echo "Preparing the gems"
+# TODO check to see if gems are already there or not
+RAILS_ENV=${RAILS_ENV} bundle install
 bundle binstubs unicorn
 rbenv rehash
 rake bower:install
 bundle exec rake assets:precompile --trace
+# TODO: Try using sed to set env var in unicorn init.d script
 
 /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
 wait
