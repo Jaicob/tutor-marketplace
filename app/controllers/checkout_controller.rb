@@ -119,7 +119,7 @@ class CheckoutController < ApplicationController
     end
     # uses special layout view to load separate page w/o normal header and footer (views/layouts/modal_only.html.erb)
     @modal = 'regular_times'
-    render layout: "modal_only"
+    render layout: "../checkout/regular_times"
   end
 
   # step 3 - view
