@@ -55,7 +55,9 @@ class CreateCharge
         token: context.stripe_token
       )
 
-      @cart.update(charge_id: charge)
+      # attach charge id to 
+      @cart.update(charge_id: charge.id)
+      @cart.save
 
       # TODO-JT - error message for charge creation failure?
 
@@ -74,7 +76,9 @@ class CreateCharge
 
   def rollback
     context.charge.destroy
-    Cart.find(context.cart_id).update(charge_id: nil)
+    cart = Cart.find(context.cart_id)
+    cart.update(charge_id: nil)
+    cart.save
   end
 
 end

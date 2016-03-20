@@ -6,6 +6,7 @@
 #  info       :text
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  charge_id  :integer
 #
 
 class Cart < ActiveRecord::Base

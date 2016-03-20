@@ -1,8 +1,5 @@
 class PrepareCheckout
 
-  # {"default_or_new_card"=>"new-card", "save_card"=>"true", "stripeToken"=>"tok_17Sqid4Iy02hWvBEW7nqQAZr", "id"=>"jjobe"}
-  # {"default_or_new_card"=>"default-card", "id"=>"jjobe"}
-
   def initialize(params, cart, tutor_booked, student=nil) # tutor_booked is supplied to determine school_id for new student
     # for user creation
     if params[:user]
