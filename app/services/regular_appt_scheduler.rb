@@ -49,8 +49,8 @@ class RegularApptScheduler
   private
 
     def format_time_and_date(slot)
-      display_date = slot.start_time.strftime('%A, %B %e')
-      display_hour = @appt_datetime.strftime('%l:%M %p')
+      display_date = slot.start_time.in_time_zone(@timezone).strftime('%A, %B %e')
+      display_hour = @appt_datetime.in_time_zone(@timezone).strftime('%l:%M %p')
       return display_date + ' at ' + display_hour
     end
 
