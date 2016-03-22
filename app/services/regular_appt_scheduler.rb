@@ -9,6 +9,7 @@ class RegularApptScheduler
     @appt_hour_24 = @appt_datetime.strftime('%H:%M') # gets hour and minute in a string
     @appt_dow = @appt_datetime.wday # gets day of week in integer (0-6), where 0 = Sunday
     @tutor = Tutor.find(tutor_id)
+    @timezone = @tutor.school.timezone
   end
 
   def similar_appt_times
@@ -23,7 +24,7 @@ class RegularApptScheduler
     # now create an array of slot_id, start_time and display time in hashes
     array = []
     slots.each do |slot|
-      appt_start_time = DateTime.parse(slot.start_time.to_date.to_s + " " + @appt_hour_24)
+      appt_start_time = DateTime.parse(slot.start_time.to_date.to_s + " " + @appt_hour_24).in_time_zone(@timezone)
       # end iteration and go to next slot in collection if a slot has an appointment that blocks the selected appt_time (includes exact appt time + 30 min. before and after)
       if blocked_by_scheduled_appts?(slot)
         next
@@ -42,7 +43,7 @@ class RegularApptScheduler
   end
 
   def original_time
-    @appt_datetime.strftime('%A, %B %e at %l:%M %p')
+    @appt_datetime.in_time_zone(@timezone).strftime('%A, %B %e at %l:%M %p')
   end
 
   private
