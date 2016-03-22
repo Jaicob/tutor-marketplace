@@ -4,20 +4,20 @@ class ApplicationController < ActionController::Base
   # But changed to code below to prevent CSRF protection blocking Stripe token being sent back
   protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
 
-  # rescue_from StandardError do |e|
-  #   # send error report emails for production
-  #   if !request.original_url.include?('dockerhost') && !request.original_url.include?('staging')
-  #     error_report = create_error_report(e)
-  #     ProductionErrorMailer.delay.send_error_report('PRODUCTION', error_report)
-  #   # send error report emails for staging
-  #   elsif !request.original_url.include?('dockerhost')
-  #     error_report = create_error_report(e)
-  #     ProductionErrorMailer.delay.send_error_report('STAGING', error_report)
-  #   end
-  #   # (no emails sent for local)
-  #   # redirect to Axon branded error page
-  #   redirect_to standard_error_path
-  # end
+  rescue_from StandardError do |e|
+    # send error report emails for production
+    if !request.original_url.include?('dockerhost') && !request.original_url.include?('staging')
+      error_report = create_error_report(e)
+      ProductionErrorMailer.delay.send_error_report('PRODUCTION', error_report)
+    # send error report emails for staging
+    elsif !request.original_url.include?('dockerhost')
+      error_report = create_error_report(e)
+      ProductionErrorMailer.delay.send_error_report('STAGING', error_report)
+    end
+    # (no emails sent for local)
+    # redirect to Axon branded error page
+    redirect_to standard_error_path
+  end
 
   before_filter :configure_permitted_parameters, if: :devise_controller?
   before_action :set_school
