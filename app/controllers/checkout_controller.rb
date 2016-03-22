@@ -88,12 +88,13 @@ class CheckoutController < ApplicationController
         @cart.info[:appt_times][k] = v
       end
       appt_count = appt_info_hash.count
-      flash[:info] = "#{appt_count} regular appointments were succesfully added to your booking."
+      flash[:info] = "#{appt_count} regular appointment(s) were succesfully added to your booking."
     # if the :app_times hash already exists and just one appt at a time is being saved via AJAX from select_times view
     else
       # adds the appt_time if the time pill was selected
       if params[:checkbox] == 'selected'
         @cart.info[:appt_times][params[:checkbox_id]] = params[:appt_times]
+        flash[:info] = "Appointment time was succesfully added to your booking. Select more times or click 'Next Step' to complete your booking."
       # removes the appt_time if the time pill was de-selected
       else 
         # key_to_remove = params[:checkbox_id].first
