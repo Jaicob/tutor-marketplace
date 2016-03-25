@@ -23,7 +23,7 @@ COPY config/nginx.conf /etc/nginx/nginx.conf
 # Configure supervisor
 COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-# Add and Run setup script. This sets up the tmp folder and symlinks it to shared
+# Copy in the script used at startup
 COPY scripts/startup.sh /etc/my-app/startup.sh
 
 # Expose port 80
