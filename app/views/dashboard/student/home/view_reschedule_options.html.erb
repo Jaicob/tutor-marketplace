@@ -1,83 +1,55 @@
 <section class="dashboard-content student-home-page">
   <div class="row">
-    <div class="small-12 columns">
-      <h1>Rescheduling Options</h1>
+    <div class="small-12 medium-8 columns">
+      <h2 class="margin-bottom-1em">Reschedule Your Appointment</h2>
+    </div>
+    <div class="small-12 medium-4 columns">
+      <%= link_to 'Return to Dashboard', home_student_path(@student), class: 'custom-button full-width margin-top-1em' %>
     </div>
   </div>
   <div class="row">
     <div class="small-12 columns">
-      <h4 class="margin-top-1em">Current Details</h4>
-    </div>
-  </div>
-  <div class="row">
-    <div class="small-12 columns">
-      <table>
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Subject</th>
-            <th>Tutor</th>
-            <th>Contact</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><%= @appt.date %></td>
-            <td><%= @appt.time %></td>
-            <td><%= Course.find(@appt.course_id).formatted_name %></td>
-            <td><%= @appt.tutor.full_name %></td>
-            <td><%= @appt.tutor.email %></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-  <div class="row">
-    <div class="small-12 columns">
-      <%= form_for :reschedule_appt, url: reschedule_appt_student_path(@student, @appt), method: :put do |f| %>
-        <div class="checkout-step-title">
-          <div class="row">
-            <div class="small-12 medium-3 columns">
-              <%= link_to view_reschedule_options_student_path(@student, @appt, current: @start_date.to_s, week: 0) do %>
-                <div class="week-nav-link left">
-                  <p><i class="fi-arrow-left"></i>Previous Week</p>
-                </div>
-              <% end %>
-            </div>
-            <div class="small-12 medium-6 columns">
-              <p>Select a Time</p>
-            </div>
-            <div class="small-12 medium-3 columns">
+      <div class="checkout-step-title">
+        <div class="row">
+          <div class="small-12 medium-3 columns">
+            <%= link_to view_reschedule_options_student_path(@student, @appt, current: @start_date.to_s, week: 0) do %>
+              <div class="week-nav-link left">
+                <p><i class="fi-arrow-left"></i>Previous Week</p>
+              </div>
+            <% end %>
+          </div>
+          <div class="small-12 medium-6 columns">
+            <p>Select a Time</p>
+          </div>
+          <div class="small-12 medium-3 columns">
+            <% if @future_availability == true %>
+              <!-- enabled 'Next Week' button -->
               <%= link_to view_reschedule_options_student_path(@student, @appt, current: @start_date.to_s, week: 1) do %>
                 <div class="week-nav-link right">
                   <p>Next Week<i class="fi-arrow-right"></i></p>
                 </div>
               <% end %>
-            </div>
-          </div>
-        </div>
-        <div class="checkout-step-body">
-          <div class="row">
-            <div class="small-12 columns">
-              <div class="small-block-grid-1 medium-block-grid-7">
-                <%= render '/checkout/available_times', week_start_date: Date.today %>
+            <% else %>
+              <!-- disabled 'Next Week' button -->
+              <div class="week-nav-link right disabled">
+                <p>Next Week<i class="fi-arrow-right"></i></p>
               </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="checkout-step-body">
+        <div class="row">
+          <div class="small-12 columns">
+            <div class="small-block-grid-1 medium-block-grid-7">
+              <%= render 'available_times_for_reschedule', week_start_date: Date.today %>
             </div>
           </div>
         </div>
-        <div class="checkout-steps-nav">
-          <div class="row small-collapse">
-            <div class="small-12 columns">
-              <div class="row small-collapse">
-                <div class="small-12 medium-3 medium-offset-9 columns zero-padding">
-                  <%= f.submit "Reschedule", class: 'custom-button full-width checkout-submit' %>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      <% end %>
+      </div>
+      <div class="checkout-steps-nav">
+        <p><!-- empty p used as filler to give div some height, thus making bottom border show --></p> 
+      </div>
     </div>
   </div>
 </section>

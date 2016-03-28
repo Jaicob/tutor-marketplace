@@ -1,5 +1,5 @@
 class Dashboard::Student::HomeController < DashboardController
-  before_action :set_appt, only: [:view_reschedule_options, :reschedule_appt]
+  before_action :set_appt, only: [:view_reschedule_options, :confirm_reschedule, :reschedule_appt]
 
   def index
     @recent_appointments = @student.appointments.order(start_time: :desc).select{|appt| appt.start_time < DateTime.now }.first(5)
@@ -46,10 +46,22 @@ class Dashboard::Student::HomeController < DashboardController
       redirect_to :back
       return
     end
-    service = TutorAvailability.new(@appt.tutor.id, params[:current], params[:week])
-    @start_date = service.set_week
-    @availability_data = service.get_times
-    gon.selected_appt_ids = nil
+    data = TutorAvailability.new(@appt.tutor.id, params[:current], params[:week]).get_times
+    @start_date = data[:start_date]
+    @times_for_week = data[:times_for_week]
+    # @future_availability is boolean which determines whether or not 'Next Week' button should be disabled
+    @future_availability = data[:future_availability]
+    gon.student_id = @student.id
+    gon.appt_id = @appt.id
+  end
+
+  # modal that displays selected time and old time + asks for confirmation to reschedule
+  def confirm_reschedule
+    get_new_time = ApptRescheduler.new(@appt.id, params).format_new_time
+    if get_new_time[:success] == true
+      @new_start_time = get_new_time[:start_time]
+    end
+    render layout: '../dashboard/student/home/confirm_reschedule'
   end
 
   # reschedule_appt_student_path

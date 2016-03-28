@@ -92,3 +92,22 @@
         }
     }
 }
+
+#reschedule-confirm {
+  h3, p {
+    text-align: center;
+  }
+  h3 {
+    color: white;
+    background-color: #0095AC;
+    padding: 0.7em 1em;
+    border-radius: 4px;
+  }
+  p {
+    font-size: 1.5em;
+    font-weight: 400;
+    span {
+      font-weight: 900;
+    }
+  }
+}

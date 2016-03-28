@@ -5,22 +5,22 @@ class CheckoutController < ApplicationController
   before_action :set_school
   before_action :set_cart
 
-  rescue_from StandardError do |e|
-    # send error report emails for production
-    if !request.original_url.include?('dockerhost') && !request.original_url.include?('staging')
-      error_report = create_error_report(e)
-      ProductionErrorMailer.delay.send_error_report('PRODUCTION', error_report)
-    # send error report emails for staging
-    elsif !request.original_url.include?('dockerhost')
-      error_report = create_error_report(e)
-      ProductionErrorMailer.delay.send_error_report('STAGING', error_report)
-    end
-    # (no emails sent for local)
-    # reset card_id in session to allow user to begin again with a new cart (and hopefully avoid the same problem again)
-    session[:cart_id] = nil
-    flash[:info] = "Uh oh! There was a network timeout. Please attempt your booking again. We apologize for the inconvenience."
-    redirect_to checkout_select_course_path(@tutor.slug, anchor: 'select-course')
-  end
+  # rescue_from StandardError do |e|
+  #   # send error report emails for production
+  #   if !request.original_url.include?('dockerhost') && !request.original_url.include?('staging')
+  #     error_report = create_error_report(e)
+  #     ProductionErrorMailer.delay.send_error_report('PRODUCTION', error_report)
+  #   # send error report emails for staging
+  #   elsif !request.original_url.include?('dockerhost')
+  #     error_report = create_error_report(e)
+  #     ProductionErrorMailer.delay.send_error_report('STAGING', error_report)
+  #   end
+  #   # (no emails sent for local)
+  #   # reset card_id in session to allow user to begin again with a new cart (and hopefully avoid the same problem again)
+  #   session[:cart_id] = nil
+  #   flash[:info] = "Uh oh! There was a network timeout. Please attempt your booking again. We apologize for the inconvenience."
+  #   redirect_to checkout_select_course_path(@tutor.slug, anchor: 'select-course')
+  # end
 
   # step 1 - view
   def select_course 
