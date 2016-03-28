@@ -3,16 +3,20 @@ class ApptRescheduler
   def initialize(appt_id, params)
     @appt = Appointment.find(appt_id)
     @original_time = @appt.start_time
-    @raw_data = params[:appt_info]
+    @unformatted_appt_info = params[:appt_info]
+    if params[:reschedule_appt]
+      @slot_id = params[:reschedule_appt][:slot_id]
+      @start_time = params[:reschedule_appt][:start_time]
+    end
   end
 
   def format_new_time
-    if @raw_data != nil
-      data = @raw_data.split("----")
+    if @unformatted_appt_info != nil
+      data = @unformatted_appt_info.split("----")
       return {
         success: true,
-        start_time: data.first,
-        slot_id: data.second,
+        new_start_time: data.first,
+        new_slot_id: data.second,
       }
     else
       return {

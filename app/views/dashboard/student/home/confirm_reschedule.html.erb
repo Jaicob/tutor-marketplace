@@ -5,21 +5,27 @@
       <p class="margin-top-1em"><span>Course</span></br><%= @appt.course.formatted_name %></p>
       <p><span>Tutor</span></br><%= @appt.tutor.public_name %></p>
       <p><span>Current Time</span></br><%= @appt.start_time.in_time_zone(@appt.school.timezone).strftime('%A, %B %e at %l:%M %p') %></p>
-      <p class="margin-bottom-1em"><span>New Time</span></br><%= @new_start_time.in_time_zone(@appt.school.timezone).strftime('%A, %B %e at %l:%M %p') %></p>
+      <p class="margin-bottom-2em"><span>New Time</span></br><%= @new_start_time.in_time_zone(@appt.school.timezone).strftime('%A, %B %e at %l:%M %p') %></p>
     </div>
   </div>
   <div class="row">
     <div class="small-12 medium-6 columns">
-      <%= link_to view_reschedule_options_student_path(@student, @appt.id) do %>
+      <a href="#" id="close-modal">
         <button class="custom-button full-width gray large">Do not reschedule</button>
-      <% end %>
+      </a>
     </div>
     <div class="small-12 medium-6 columns">
       <%= form_for :reschedule_appt, url: reschedule_appt_student_path(@student, @appt), method: :put do |f| %>
         <%= f.hidden_field(:start_time, value: @new_start_time) %>
-        <%= f.hidden_field(:slot_id, value: @slot_id)
+        <%= f.hidden_field(:slot_id, value: @new_slot_id) %>
         <%= f.submit "Reschedule", class: 'custom-button full-width large' %>
       <% end %>
     </div>
   </div>
 </div>
+
+<script>
+$('#close-modal').on('click', function() {
+  $('#rescheduleApptModal').foundation('reveal', 'close');
+});
+</script>

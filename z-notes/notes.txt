@@ -1,0 +1,72 @@
+# for removing ALL containers
+  # Delete all images
+  docker rmi $(docker images -q)
+
+# deploy script
+./bin/deploy -e [ENVIRONMENT] -v 0.0.0
+
+
+
+3606
+
+
+
+SCHEDULED APPT / ZOMBIE SLOT - {"id"=>782, "student_id"=>187, "slot_id"=>12004, "course_id"=>681, "start_time"=>Mon, 28 Mar 2016 17:30:00 UTC +00:00, "status"=>0, "created_at"=>Mon, 21 Mar 2016 19:43:50 UTC +00:00, "updated_at"=>Mon, 21 Mar 2016 19:43:50 UTC +00:00, "charge_id"=>646, "location"=>"mlc"}
+Student: Michael-Carson Clement
+Mon, 28 Mar 2016 17:30:00 UTC +00:00
+==============
+
+SCHEDULED APPT / ZOMBIE SLOT - {"id"=>783, "student_id"=>187, "slot_id"=>13606, "course_id"=>681, "start_time"=>Mon, 28 Mar 2016 18:30:00 UTC +00:00, "status"=>0, "created_at"=>Mon, 21 Mar 2016 19:43:50 UTC +00:00, "updated_at"=>Mon, 21 Mar 2016 19:43:50 UTC +00:00, "charge_id"=>646, "location"=>"mlc"}
+Student: Michael-Carson Clements
+Mon, 28 Mar 2016 18:30:00 UTC +00:00
+==============
+
+=> #<Slot id: 13606, tutor_id: 230, status: 2, start_time: "2016-03-28 16:30:00", duration: 10800, reservation_min: nil, reservation_max: nil, created_at: "2016-03-20 21:19:03", updated_at: "2016-03-21 23:22:25", slot_type: 0>
+=> #<Slot id: 12004, tutor_id: 230, status: 2, start_time: "2016-03-28 16:00:00", duration: 10800, reservation_min: nil, reservation_max: nil, created_at: "2016-02-29 15:21:15", updated_at: "2016-03-20 21:18:41", slot_type: 0>
+
+
+COMPLETED - {"id"=>707, "student_id"=>133, "slot_id"=>12004, "course_id"=>680, "start_time"=>Mon, 21 Mar 2016 17:30:00 UTC +00:00, "status"=>2, "created_at"=>Tue, 15 Mar 2016 17:14:58 UTC +00:00, "updated_at"=>Mon, 21 Mar 2016 18:30:25 UTC +00:00, "charge_id"=>585, "location"=>"MLC or Main Library"}
+Mon, 21 Mar 2016 17:30:00 UTC +00:00
+==============
+
+=> #<Slot id: 12004, tutor_id: 230, status: 2, start_time: "2016-03-28 16:00:00", duration: 10800, reservation_min: nil, reservation_max: nil, created_at: "2016-02-29 15:21:15", updated_at: "2016-03-20 21:18:41", slot_type: 0>
+
+
+{"id"=>782, "student_id"=>187, "slot_id"=>13606, "course_id"=>681, "start_time"=>Mon, 28 Mar 2016 17:30:00 UTC +00:00, "status"=>0, "created_at"=>Mon, 21 Mar 2016 19:43:50 UTC +00:00, "updated_at"=>Wed, 23 Mar 2016 19:22:13 UTC +00:00, "charge_id"=>646, "location"=>"mlc"}
+{"id"=>783, "student_id"=>187, "slot_id"=>13606, "course_id"=>681, "start_time"=>Mon, 28 Mar 2016 18:30:00 UTC +00:00, "status"=>0, "created_at"=>Mon, 21 Mar 2016 19:43:50 UTC +00:00, "updated_at"=>Mon, 21 Mar 2016 19:43:50 UTC +00:00, "charge_id"=>646, "location"=>"mlc"}
+
+
+
+<div id="reschedule-confirm">
+  <div class="row">
+    <div class="small-12 columns">
+      <h2 class="margin-bottom-1em">Are you sure you want to confirm this appointment?</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="small-12 medium-4 columns">
+      <h4>Course & Tutor</h4>
+      <div class="box">
+        <h4><%= @appt.course.formatted_name %></h4>
+        <h4><%= @appt.tutor.public_name %></h4>
+      </div>
+    </div>
+    <div class="small-12 medium-4 columns">
+      <h4>Current Time</h4>
+      <div class="box">
+        <h4><%= @appt.start_time.in_time_zone(@appt.school.timezone).strftime('%A, %B %e at %l:%M %p') %></h4>
+      </div>
+    </div>
+    <div class="small-12 medium-4 columns">
+      <h4>New Time</h4>
+      <div class="box">
+        <h4><%= @appt.start_time.in_time_zone(@appt.school.timezone).strftime('%A, %B %e at %l:%M %p') %></h4>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+                  <%= form_for :reschedule_appt, url: reschedule_appt_student_path(@student, @appt), method: :put do |f| %>
+
+                  <%= f.submit "Reschedule", class: 'custom-button full-width checkout-submit' %>

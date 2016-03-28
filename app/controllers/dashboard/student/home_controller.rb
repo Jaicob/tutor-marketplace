@@ -57,9 +57,10 @@ class Dashboard::Student::HomeController < DashboardController
 
   # modal that displays selected time and old time + asks for confirmation to reschedule
   def confirm_reschedule
-    get_new_time = ApptRescheduler.new(@appt.id, params).format_new_time
-    if get_new_time[:success] == true
-      @new_start_time = get_new_time[:start_time]
+    reschedule = ApptRescheduler.new(@appt.id, params).format_new_time
+    if reschedule[:success] == true
+      @new_start_time = reschedule[:new_start_time]
+      @new_slot_id = reschedule[:new_slot_id]
     end
     render layout: '../dashboard/student/home/confirm_reschedule'
   end
