@@ -27,5 +27,7 @@
 <script>
 $('#close-modal').on('click', function() {
   $('#rescheduleApptModal').foundation('reveal', 'close');
+  $("input:checkbox").attr('checked', false);
+  $("input:checkbox").attr('disabled', false);
 });
 </script>
