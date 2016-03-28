@@ -92,8 +92,9 @@ pickle-email-*.html
 /config/application*
 .ruby-version
 
-# My personal notes & to-do list
-z-notes.txt
+# My personal notes, to-do lists, bug reports, anything else worth saving
+/z-notes
+
 
 # Ignore file uploads
 /public/uploads/
