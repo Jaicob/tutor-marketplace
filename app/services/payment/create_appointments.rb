@@ -23,6 +23,7 @@ class CreateAppointments
         if new_appt.save
           context.appointments << new_appt
         else
+          new_appt.destroy
           raise "Appointment was not created: #{new_appt.errors.full_messages.first}"
         end
       end  
