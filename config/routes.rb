@@ -108,6 +108,7 @@
 #                                       DELETE   /tutors/:id(.:format)                                                         tutors#destroy
 #                          home_student GET      /students/:id/home(.:format)                                                  dashboard/student/home#index
 #       view_reschedule_options_student GET      /students/:id/reschedule/:appt_id(.:format)                                   dashboard/student/home#view_reschedule_options
+#       confirm_appt_reschedule_student GET      /students/:id/confirm_reschedule/:appt_id(.:format)                           dashboard/student/home#confirm_reschedule
 #               reschedule_appt_student PUT      /students/:id/reschedule/:appt_id(.:format)                                   dashboard/student/home#reschedule_appt
 #                   cancel_appt_student PUT      /students/:id/cancel_appt/:appt_id(.:format)                                  dashboard/student/home#cancel_appt
 #           submit_appt_reviews_student POST     /students/:id/submit_appt_reviews(.:format)                                   dashboard/student/home#submit_appt_reviews
@@ -333,6 +334,7 @@ Rails.application.routes.draw do
     member do
       get  '/home'                 => 'dashboard/student/home#index'
       get  '/reschedule/:appt_id'  => 'dashboard/student/home#view_reschedule_options', as: 'view_reschedule_options'
+      get  '/confirm_reschedule/:appt_id' => 'dashboard/student/home#confirm_reschedule', as: 'confirm_appt_reschedule'
       put  '/reschedule/:appt_id'  => 'dashboard/student/home#reschedule_appt', as: 'reschedule_appt'
       put  '/cancel_appt/:appt_id' => 'dashboard/student/home#cancel_appt', as: 'cancel_appt'
       post '/submit_appt_reviews'  => 'dashboard/student/home#submit_appt_reviews', as: 'submit_appt_reviews'

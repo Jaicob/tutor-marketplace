@@ -2,7 +2,7 @@ button, .custom-button {
   transition: background-color 0.5s ease;
   display: inline-block;
   background-color: #58AA4D;  
-  font-weight: 300;
+  font-weight: 400 !important;
   font-family: 'Lato';
   font-size: 1em;
   border-radius: 4px !important;
@@ -47,7 +47,10 @@ button, .custom-button {
   }
   &.gray {
     background-color: #DDDDDD;
-    color: #4F5252;
+    color: #4F5252 !important;
+  }
+  &.darkgray {
+    background-color: #D3D3D3;
   }
   &.hover-light-blue:hover {
     background-color: #2BC2DE;
