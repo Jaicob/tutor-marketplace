@@ -59,10 +59,10 @@ gon.watch('selected_appt_ids', {interval: 1000}, function(selected_appt_ids) {
 });
 
 function getTimePillBeforeId(selected_id) {
-  var split_selected = selected_id.split("-");
-  var doy = parseInt(split_selected[0]);
-  var hour = parseInt(split_selected[1]);
-  var minute = parseInt(split_selected[2]);
+  var split_id = selected_id.split("-");
+  var doy = parseInt(split_id[0]);
+  var hour = parseInt(split_id[1]);
+  var minute = parseInt(split_id[2]);
   // make adjustments to time to get id of before time pill
   if (minute == '00') {
     hour = hour - 1;
@@ -75,10 +75,10 @@ function getTimePillBeforeId(selected_id) {
 }
 
 function getTimePillAfterId(selected_id) {
-  var split_selected = selected_id.split("-");
-  var doy = parseInt(split_selected[0]);
-  var hour = parseInt(split_selected[1]);
-  var minute = parseInt(split_selected[2]);
+  var split_id = selected_id.split("-");
+  var doy = parseInt(split_id[0]);
+  var hour = parseInt(split_id[1]);
+  var minute = parseInt(split_id[2]);
   // make adjustments to time to get id of after time pill
   if (minute == '00') {
     minute = '30';
