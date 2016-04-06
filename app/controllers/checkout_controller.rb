@@ -73,7 +73,6 @@ class CheckoutController < ApplicationController
     else
       gon.watch.selected_appt_ids = nil
     end
-    puts "GON SELECTED APPT IDS!!!!!!!! = #{gon.selected_appt_ids}" 
   end
 
   # step 2 - saves input via AJAX (except for middle condition - params[:regular_appt_selections] are submitted via standard form)

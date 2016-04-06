@@ -46,26 +46,6 @@ window.onload = function start() {
   }
 }
 
-// function updateApptCount(selectedOrDeselected) {
-//   var p = document.getElementById("number-of-appts");
-//   var selectedApptIds = gon.selected_appt_ids;
-//   var apptCount = selectedApptIds.length;
-
-//   if (selectedOrDeselected == 'selected') {
-//     apptCount += 1;
-//   } else if (selectedOrDeselected == 'deselected') {
-//     apptCount -= 1;
-//   }
-
-//   if (apptCount > 1) {
-//     p.innerHTML = apptCount + " Appointments Selected";
-//   } else if (apptCount == 1) {
-//     p.innerHTML = "1 Appointment Selected"
-//   } else {
-//     p.innerHTML = "No Appointments Selected"
-//   }
-// }
-
 gon.watch('selected_appt_ids', {interval: 1000}, function(selected_appt_ids) {
   var p = document.getElementById("number-of-appts");
   var apptCount = selected_appt_ids.length;
