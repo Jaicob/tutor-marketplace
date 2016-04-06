@@ -15,11 +15,12 @@ Rails.application.config.assets.precompile += %w(
 	dashboard/courses.js
 	dashboard/schedule.js
 	single_views/search.js
-  	single_views/indirect_search.js
-  	custom/admin_panel.css.scss
-  	custom/dashboard_nav.css.scss
-  	vendor/modernizr.js
-  	fullcalendar/dist/fullcalendar.min.css
-  	overrides/schedule.css
+	single_views/indirect_search.js
+	custom/admin_panel.css.scss
+	custom/dashboard_nav.css.scss
+	vendor/modernizr.js
+	fullcalendar/dist/fullcalendar.min.css
+	overrides/schedule.css
   hotjar.js
+  checkout/available_times.js
 )

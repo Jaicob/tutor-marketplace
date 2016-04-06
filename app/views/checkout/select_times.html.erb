@@ -51,7 +51,7 @@
                 <%= link_to "Back to Select a Course", checkout_select_course_path(@tutor.slug, anchor: 'select-course'), class: 'checkout-button gray' %>
               </div>
               <div class="small-12 medium-6 columns">
-                <p id="number-of-appts"></p>
+                <p id="number-of-appts"><!-- this is filled via AJAX based on number of times selected --></p>
               </div>
               <div class="small-12 medium-3 columns zero-padding">
                 <%= link_to "Next Step", checkout_select_location_path(@tutor.slug, anchor: 'set-location'), class: 'checkout-button' %>
