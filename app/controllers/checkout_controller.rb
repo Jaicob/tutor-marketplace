@@ -52,7 +52,7 @@ class CheckoutController < ApplicationController
   # step 2 - view
   def select_times 
     # redirect to previous step if no cart exists or times are in cart
-    if @cart.info[:course_id].blank? || @cart.info[:tutor_id].blank? || @cart.info[:tutor_id] != @tutor.id
+    if @cart.nil? || @cart.info[:course_id].blank? || @cart.info[:tutor_id].blank? || @cart.info[:tutor_id] != @tutor.id
       flash[:alert] = 'Please select a course'
       redirect_to checkout_select_course_path(@tutor.slug, anchor: 'select-course')
       return
@@ -69,10 +69,11 @@ class CheckoutController < ApplicationController
     gon.tutor_id = @tutor.id
     # if any appt_times are already saved in cart, sets their ID's in Gon variable to let JS select them again
     if @cart.info[:appt_times] && @cart.info[:tutor_id] == @tutor.id
-      gon.selected_appt_ids = @cart.info[:appt_times].keys
+      gon.watch.selected_appt_ids = @cart.info[:appt_times].keys
     else
-      gon.selected_appt_ids = nil
+      gon.watch.selected_appt_ids = nil
     end
+    puts "GON SELECTED APPT IDS!!!!!!!! = #{gon.selected_appt_ids}" 
   end
 
   # step 2 - saves input via AJAX (except for middle condition - params[:regular_appt_selections] are submitted via standard form)
@@ -88,13 +89,11 @@ class CheckoutController < ApplicationController
         @cart.info[:appt_times][k] = v
       end
       appt_count = appt_info_hash.count
-      flash[:info] = "#{appt_count} regular appointment(s) were succesfully added to your booking."
     # if the :app_times hash already exists and just one appt at a time is being saved via AJAX from select_times view
     else
       # adds the appt_time if the time pill was selected
       if params[:checkbox] == 'selected'
         @cart.info[:appt_times][params[:checkbox_id]] = params[:appt_times]
-        flash[:info] = "Appointment time was succesfully added to your booking. Select more times or click 'Next Step' to complete your booking."
       # removes the appt_time if the time pill was de-selected
       else 
         # key_to_remove = params[:checkbox_id].first
@@ -104,7 +103,7 @@ class CheckoutController < ApplicationController
       end
     end
     @cart.save
-    redirect_to :back
+    redirect_to checkout_select_times_path(@tutor.slug, anchor: 'select-times')
   end
 
   # this is the modal that pops up to encourage repeat regular bookings
