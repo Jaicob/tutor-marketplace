@@ -70,20 +70,7 @@ function getTimePillBeforeId(selected_id) {
   } else { // minute == '30'
     minute = '00';
   }
-  // TODO-JT - refactor this and the method below (both are identical in the bottom portion)
-  // make sure hour is a two character string
-  hour = hour.toString();
-  if(hour.length == 1) {
-    hour = '0' + hour;
-  }
-  // make sure doy is a three character string
-  doy = doy.toString();
-  if(doy.length == 1) {
-    doy = '00' + doy;
-  } else if (doy.length == 2) {
-    doy = '0' + doy;
-  }
-  var id = doy + '-' + hour + '-' + minute;
+  id = formatHourAndDOY(minute, hour, doy)
   return id;
 }
 
@@ -99,13 +86,18 @@ function getTimePillAfterId(selected_id) {
     hour = hour + 1;
     minute = '00'
   }
-  // make sure hour is a two character string
+  id = formatHourAndDOY(minute, hour, doy)
+  return id;
+}
+
+function formatHourAndDOY(minute, hour, doy) {
   hour = hour.toString();
+  // make sure hour is a two character string
   if(hour.length == 1) {
-    hour = '0' + hour;
+    hour = '0' + hour
   }
-  // make sure doy is a three character string
   doy = doy.toString();
+  // make sure Day Of Year (doy) is a three character string
   if(doy.length == 1) {
     doy = '00' + doy;
   } else if (doy.length == 2) {
@@ -115,13 +107,12 @@ function getTimePillAfterId(selected_id) {
   return id;
 }
 
-
 function saveApptTime(element) {
   var selected = element.id;
   var apptTimes = element.value;
   var tutorID = gon.tutor_id;
 
-  //adds or removes appt_time based on selection/de-selection, if it's being added also launches modal prompting regular sessions
+  // adds or removes appt_time based on selection/de-selection, if it's being added also launches modal prompting regular sessions
   if(element.checked) {
     if (gon.selected_appt_ids == null){
       // if no previously selected times, open modal
