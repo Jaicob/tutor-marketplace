@@ -49,7 +49,7 @@ class User < ActiveRecord::Base
 
   def create_tutor_account(user, params)
     # used in Devise::RegistrationsController to create a Tutor while creating a User
-    user.create_tutor!(
+    user.create_tutor(
       phone_number: params[:user][:tutor][:phone_number],
       school_id: params[:user][:tutor][:school_id]
     )
@@ -59,7 +59,7 @@ class User < ActiveRecord::Base
 
   def create_student_account(user, params)
     # used in Devise::RegistrationsController to create a Student while creating a User
-    user.create_student!(
+    user.create_student(
       school_id: params[:user][:student][:school_id]
     )
     # additional logic for sign-up during checkout below, creates a Stripe customer and saves default_card
