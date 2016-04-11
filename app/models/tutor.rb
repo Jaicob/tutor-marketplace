@@ -48,6 +48,7 @@ class Tutor < ActiveRecord::Base
   delegate :first_name, :last_name, :full_name, :public_name, :sign_in_ip, :email, :password, to: :user
 
   validates :user, presence: true
+  validates :school, presence: true
 
   extend FriendlyId
   friendly_id :slug_candidates, use: :slugged
