@@ -68,7 +68,7 @@ class TutorAvailability
       appt_times = []
       
       # find any slots for given date and tutor
-      slots_for_day = @tutor.slots.select{|slot| slot.start_time.in_time_zone(@timezone).to_date == date}
+      slots_for_day = @tutor.slots.select{|slot| slot.start_time.in_time_zone(@timezone).to_date == date && slot.status != 'Zombie'}
 
       slots_for_day.each do |slot|
         # get number of start_times to put in array - (subtract one bc last 30 minutes of availability isn't a possible start time)
