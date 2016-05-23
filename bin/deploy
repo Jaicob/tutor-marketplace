@@ -48,9 +48,13 @@ deploy()
     docker push jaicob/web-app:$2
     if [ $? -eq 0 ]; then
       echo OK
-      if [[ -z $(git status -s) ]]; then
-       git add --all
-       git commit -m "Update dockerrun.aws.json to version $2"
+      if [[ -z $(git status -uno --porcelain) ]];
+        then
+        echo "Nothing to commit"
+      else
+        echo "Updating Dockerrun.aws.json"
+        git add --all
+        git commit -m "Update Dockerrun.aws.json to version $2"
       fi
        eb deploy $1 -l $2 
       if [ $? -eq 0 ]; then
