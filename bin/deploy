@@ -56,7 +56,7 @@ deploy()
         git add --all
         git commit -m "Update Dockerrun.aws.json to version $2"
       fi
-       eb deploy $1 -l $2 
+       eb deploy $1 -l $2 --profile default
       if [ $? -eq 0 ]; then
         echo "Deployment completed at $(date)"
       else

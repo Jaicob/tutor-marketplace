@@ -22,7 +22,7 @@ production:
   adapter: postgresql
   encoding: unicode
   template: template0
-  pool:     5
+  pool:     4
   host: <%= ENV['RDS_HOSTNAME'] %>
   username: <%= ENV['RDS_USERNAME'] %>
   password: <%= ENV['RDS_PASSWORD'] %>
@@ -33,7 +33,7 @@ staging:
   adapter: postgresql
   encoding: unicode
   template: template0
-  pool:     5
+  pool:     4
   host: <%= ENV['RDS_HOSTNAME'] %>
   username: <%= ENV['RDS_USERNAME'] %>
   password: <%= ENV['RDS_PASSWORD'] %>
