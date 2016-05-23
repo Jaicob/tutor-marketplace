@@ -39,11 +39,11 @@ ln -s /home/rails/my-app/log /home/rails/my-app/shared/log
 echo "Preparing the gems"
 # TODO check to see if gems are already there or not
 if [ ${RAILS_ENV} = 'production' ]; then
-	bundle install --without development test                                                              
+	bundle check || bundle install --without development test                                                              
 elif [ ${RAILS_ENV} = 'staging' ]; then                                          
-  	bundle install --without development test                                                                 
+  	bundle check || bundle install --without development test                                                                 
 else                                                                             
-  	bundle install --all                                                                   
+  	bundle check || bundle install --all                                                                   
 fi
 
 bundle binstubs unicorn
