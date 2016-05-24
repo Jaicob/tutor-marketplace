@@ -18,30 +18,26 @@ Learn more about [Installing Rails](http://railsapps.github.io/installing-rails.
 Getting Started
 ---------------
 - Clone the repo
-- Install Boot2Docker if on Windows or OS X
-- Install Docker-Compose and Docker
-- Request a copy of the application.yml and place in config/application.yml
+- Install dockertoolbox, this can be done via brew if on OS X
+  - This includes the suite of tools you need to run the app locally
+  - Follow instructions here to get that setup https://www.docker.com/products/docker-toolbox
+- Request a copy of the application.yml from jaicob@axontutors.com and place in config/application.yml
 - Run `docker-compose up`
-- Get your boot2docker ip using `boot2docker ip 2`
-- Inside the container run `rake db:create db:migrate`
-- Inside the container run `rake bower:install` 
-- You can visit the running application at that ip on port 3000
-- I would recommend adding dockerhost as known host on your machine for ease of access
-- open a shell using `docker exec -it webapp_web_1 /bin/bash`
+- Open a shell using `docker exec -it webapp_web_1 /bin/bash`
+- Inside the container run `rake db:create db:migrate` to setup your database
+- Inside the container run `rake bower:install` to get assets
+- You can visit the running application at the ip of you docker-machine on port 3000
+  - I would recommend adding dockerhost as known host on your machine for ease of access 
 - Restart the server by using `docker-compose stop` then   `docker-compose up` or  `docker-compose start`
--  `docker-compose start` will run it as a daemon where as  `docker-compose up` is in the foreground
+- `docker-compose start` will run it as a daemon where as  `docker-compose up` is in the foreground
 -  All file changes should be made locally and any rake or bundle commands should be run inside the container
 
 Redis Server for Background Jobs
 --------------------------------
 - Sidekiq and Redis handle our background processes, currently just sending emails
 - Even Devise sends email in the background (as well as all appointment emails) and Redis and Sidekiq must be running for Devise emails to work
-- To start Sidekiq
-  -- 'bundle exec sidekiq'
-- Also, to monitor background processes, visit dockerhost:3000/sidekiq
-
-Documentation and Support
--------------------------
+- Docker compose handles starting/running both of these
+- To monitor background processes, visit dockerhost:3000/sidekiq
 
 Issues
 -------------
