@@ -33,8 +33,4 @@ after_fork do |server, worker|
   end
   Rails.logger.info "Databse hostname and environment #{ENV['RDS_HOSTNAME']}  |  #{ENV['RAILS_ENV']}"
   defined?(ActiveRecord::Base) and ActiveRecord::Base.establish_connection
-
-  # Sidekiq.configure_client do |config|
-  #   config.redis = { size: 1 }
-  # end
 end

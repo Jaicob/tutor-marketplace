@@ -21,7 +21,6 @@ trap "pkill unicorn_rails ; exit " SIGINT SIGTERM SIGKILL
 echo "Stopping  unicorn_rails, if already running"
 pkill unicorn_rails
 
-# TODO Only run if environment is production
 echo "Setting up tmp and shared directories & removing old pids"
 rm -rf ./tmp/pids && \
 rm -rf ./tmp/sessions && \
