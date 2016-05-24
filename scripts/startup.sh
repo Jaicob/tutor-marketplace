@@ -39,10 +39,13 @@ ln -s /home/rails/my-app/log /home/rails/my-app/shared/log
 echo "Preparing the gems"
 # TODO check to see if gems are already there or not
 if [ ${RAILS_ENV} = 'production' ]; then
+	echo "Installing productino gems"
 	bundle check || bundle install --without development test                                                              
-elif [ ${RAILS_ENV} = 'staging' ]; then                                          
+elif [ ${RAILS_ENV} = 'staging' ]; then   
+	echo "Installing staging gems"                                       
   	bundle check || bundle install --without development test                                                                 
-else                                                                             
+else             
+	echo "Installing dev gems"                                                                
   	bundle check || bundle install --all                                                                   
 fi
 

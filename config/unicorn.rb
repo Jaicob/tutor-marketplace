@@ -28,13 +28,13 @@ end
 
 after_fork do |server, worker|
   Signal.trap 'TERM' do
-    puts 'Unicorn worker intercepting TERM and doing nothing. Wait for master to send QUIT'
+    Rails.logger.info 'Unicorn worker intercepting TERM and doing nothing. Wait for master to send QUIT'
 
   end
-  puts "Databse hostname and environment #{ENV['RDS_HOSTNAME']}  |  #{ENV['RAILS_ENV']}"
+  Rails.logger.info "Databse hostname and environment #{ENV['RDS_HOSTNAME']}  |  #{ENV['RAILS_ENV']}"
   defined?(ActiveRecord::Base) and ActiveRecord::Base.establish_connection
 
-  Sidekiq.configure_client do |config|
-    config.redis = { size: 1 }
-  end
+  # Sidekiq.configure_client do |config|
+  #   config.redis = { size: 1 }
+  # end
 end

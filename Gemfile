@@ -53,7 +53,7 @@ source 'https://rubygems.org' do
   gem 'rmagick', '~> 2.15'
   gem 'simple_form'
   gem 'sidekiq' # for info on redis, which must be running for sidekiq: http://redis.io/topics/quickstart
-  gem 'sinatra', require: false
+  gem 'sinatra', require: true
   gem 'uglifier', '~> 2.7' 
   gem 'kaminari'
 
