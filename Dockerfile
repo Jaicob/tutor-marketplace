@@ -28,6 +28,5 @@ COPY scripts/startup.sh /etc/my-app/startup.sh
 
 # Expose port 80
 EXPOSE 80
-RUN bundle install
 
 CMD ["sh", "-c", "/etc/my-app/startup.sh"]
