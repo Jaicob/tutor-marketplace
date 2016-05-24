@@ -7,7 +7,6 @@ if redis_domain && redis_port
 
   Sidekiq.configure_server do |config|
     config.redis = {
-      size: 1,
       namespace: "sidekiq",
       url: redis_url,
       network_timeout: 5
