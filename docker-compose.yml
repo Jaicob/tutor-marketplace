@@ -30,7 +30,7 @@ web:
     - RAILS_ENV=development
 
 sidekiq:
-  build: .
+  image: webapp_web
   command: bundle exec sidekiq -e development -c 25
   environment:
     SECRET_KEY_BASE: abcdefg
@@ -38,3 +38,6 @@ sidekiq:
   links:
     - db
     - redis
+
+
+

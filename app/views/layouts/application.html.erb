@@ -16,6 +16,23 @@
   </head>
   <body>
     <header>
+
+      <div id="tms-announcement">
+
+        <div class="row full-width">
+          <div class="small-12 medium-8 medium-centered columns">
+            <%= image_tag('tms_header.png', class: 'tms-announcement-logo', id: 'tms-logo') %>
+          </div>
+        </div>
+
+        <div class="row full-width">
+          <div class="large-12 large-centered columns">
+            <p class="text-center">We're excited to announce that Axon has joined Tutor Matching Service! <a style="color:#A4E8BC" href="https://medium.com/@axontutors/axon-joining-the-tutor-matching-service-team-4df51c6239cf#.l4frygydn">Read more here.</a></p>
+          </div>
+        </div>
+
+      </div>
+
       <div class="row full-width">
         <%= render 'layouts/partials/navigation' unless content_for? (:special_nav) %>
         <%= yield(:special_nav) if content_for? (:special_nav) %>

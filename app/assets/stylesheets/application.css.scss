@@ -23,6 +23,37 @@
  *= require qTip2/jquery.qtip.min.css
  */
 
+  #tms-announcement {
+    .row {
+        background: #0095AC !important;
+    }
+  }
+
+  #tms-announcement p, #tms-announcement h5 {
+      margin: 0 auto;
+      color: white;
+      letter-spacing: 1.2px;
+      margin-bottom:15px;
+  }
+
+  #tms-logo {
+       padding-top:20px;
+  }
+
+  .tms-announcement-logo {
+     margin: 0 auto 15px 0;
+     float: none !important;
+  }
+
+  tms-centered {
+    margin-left: auto;
+    margin-right: auto;
+    float: none !important; 
+  }
+
+
+
+
   p, h1, h2, h3, h4, h5, h6, th, td, li, a, label, input, select, textarea, span, button {
     font-family: 'Lato' !important;
     color: #4F5252;
