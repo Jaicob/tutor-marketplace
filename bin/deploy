@@ -19,7 +19,13 @@ EOF
 
 build() 
 { 
-  echo "docker build -t jaicob/web-app:$1-$2 ."
+  echo "Building jaicob/web-app:$2"
+  sed -i '' -e "s/.*ENV RAILS_ENV.*/ENV RAILS_ENV $1/"  ./Dockerfile
+  search=""
+  replace=""
+  sed -i '' -e 's|.*"image" : "jaicob/web-app:.*|            "image" : "jaicob/web-app:'"$2"'",|' ./.elasticbeanstalk/Docker/Dockerrun.aws.json
+
+  docker build -t jaicob/web-app:$2 .
   if [ $? -eq 0 ]; then
     echo OK
   else
@@ -29,20 +35,28 @@ build()
 
 deploy()
 {
-  echo "Building jaicob/web-app:$1-$2"
-  sed -i '' -e "s/.*ENV AWS_EB_ENV.*/ENV AWS_EB_ENV $1/"  ./Dockerfile
+  echo "Building jaicob/web-app:$2"
+  sed -i '' -e "s/.*ENV RAILS_ENV.*/ENV RAILS_ENV $1/"  ./Dockerfile
   search=""
   replace=""
-  sed -i '' -e 's|.*"image" : "jaicob/web-app:.*|            "image" : "jaicob/web-app:'"$1"'-'"$2"'",|' ./.elasticbeanstalk/Docker/Dockerrun.aws.json
+  sed -i '' -e 's|.*"image" : "jaicob/web-app:.*|            "image" : "jaicob/web-app:'"$2"'",|' ./.elasticbeanstalk/Docker/Dockerrun.aws.json
 
-  docker build -t jaicob/web-app:$1-$2 .
+  docker build -t jaicob/web-app:$2 .
   if [ $? -eq 0 ]; then
     echo OK
-    echo "Pushing jaicob/web-app:$1-$2"
-    docker push jaicob/web-app:$1-$2
+    echo "Pushing jaicob/web-app:$2"
+    docker push jaicob/web-app:$2
     if [ $? -eq 0 ]; then
       echo OK
-       eb deploy $1 -l $1-$2 
+      if [[ -z $(git status -uno --porcelain) ]];
+        then
+        echo "Nothing to commit"
+      else
+        echo "Updating Dockerrun.aws.json"
+        git add --all
+        git commit -m "Update Dockerrun.aws.json to version $2"
+      fi
+       eb deploy $1 -l $2 --profile default
       if [ $? -eq 0 ]; then
         echo "Deployment completed at $(date)"
       else
